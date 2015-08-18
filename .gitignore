@@ -1,0 +1,9 @@
+.DS_Store
+.gutter.json
+*.gcda
+*.gcno
+*.xccheckout
+xcuserdata
+.idea
+Pods
+build
