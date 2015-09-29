@@ -1,10 +1,14 @@
 PODS:
+  - CatchingFire (0.2.0)
+  - Decodable (0.3.2)
   - Interstellar (1.1.0)
   - Nimble (2.0.0-rc.3)
   - Quick (0.6.0)
 
 DEPENDENCIES:
-  - Interstellar
+  - CatchingFire
+  - Decodable (~> 0.3.2)
+  - Interstellar (~> 1.1.0)
   - Nimble (from `https://github.com/Quick/Nimble.git`)
   - Quick (from `https://github.com/Quick/Quick.git`)
 
@@ -23,6 +27,8 @@ CHECKOUT OPTIONS:
     :git: https://github.com/Quick/Quick.git
 
 SPEC CHECKSUMS:
+  CatchingFire: 935ecc35fc5864f12ef1c033a97e9a9affbf6056
+  Decodable: 467819459fd22e7852f1f5244916e2e170016004
   Interstellar: 142ef2abc4da56482e2fa186ef75e1554d6deae6
   Nimble: 2f64d173ad23dc39f10110840a1ed15f29ef75e8
   Quick: aaa961333f0bec39bfefa4b759128e4eb39f0d0e

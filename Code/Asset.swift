@@ -6,14 +6,13 @@
 //  Copyright © 2015 Contentful GmbH. All rights reserved.
 //
 
-public class Asset : Resource {
-    var scheme = "https"
+import Foundation
 
-    public var fields: NSDictionary { return json["fields"] as! NSDictionary }
+public struct Asset : Resource {
+    public let sys: NSDictionary
+    public let fields: NSDictionary
 
-    public var URL: NSURL {
-        
-        let urlString = self.fields["file"]?["url"] as! String
-        return NSURL(string: "\(scheme):\(urlString)")!
-    }
+    public let identifier: String
+    public let type: String
+    public let URL: NSURL
 }

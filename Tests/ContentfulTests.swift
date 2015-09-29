@@ -6,13 +6,13 @@
 //  Copyright © 2015 Contentful GmbH. All rights reserved.
 //
 
-import Quick
 import Nimble
+import Quick
 
 @testable import Contentful
 
 class ContentfulTests: QuickSpec {
-    var client: CDAClient!
+    var client: ContentfulClient!
 
     override func spec() {
         describe("Configuration") {
@@ -24,7 +24,7 @@ class ContentfulTests: QuickSpec {
         }
 
         beforeEach {
-            self.client = CDAClient(spaceIdentifier: "cfexampleapi", accessToken: "b4c0n73n7fu1")
+            self.client = ContentfulClient(spaceIdentifier: "cfexampleapi", accessToken: "b4c0n73n7fu1")
         }
 
         describe("Scenarios from CDA documentation") {
@@ -72,7 +72,7 @@ class ContentfulTests: QuickSpec {
                             expect(type.type).to(equal("ContentType"))
 
                             let field = type.fields[0]
-                            expect(field["id"] as? String).to(equal("name"))
+                            expect(field.identifier).to(equal("name"))
                         case .Error(_):
                             fail()
                         }
@@ -107,7 +107,7 @@ class ContentfulTests: QuickSpec {
                         case let .Success(asset):
                             expect(asset.identifier).to(equal("nyancat"))
                             expect(asset.type).to(equal("Asset"))
-                            expect(asset.URL.absoluteString).to(equal("https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png>"))
+                            expect(asset.URL.absoluteString).to(equal("https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png"))
                         case .Error(_):
                             fail()
                         }

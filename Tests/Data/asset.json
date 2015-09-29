@@ -1,0 +1,56 @@
+{
+  "fields": {
+    "title": "11722607_909300049108362_4074365705921537013_o",
+    "file": {
+      "contentType": "image/jpeg",
+      "fileName": "3D5423B9-558E-41DB-95B5-EF7406FC1AB7.jpg?dl=1",
+      "details": {
+        "image": {
+          "width": 2048,
+          "height": 1366
+        },
+        "size": 253951
+      },
+      "url": "//images.contentful.com/fsnczri66h17/5VPbSI9VSM2Suq4eMEIGOS/937e4ebd25917ae20be0d3bacd0511af/3D5423B9-558E-41DB-95B5-EF7406FC1AB7.jpg_dl_1"
+    }
+  },
+  "sys": {
+    "id": "5VPbSI9VSM2Suq4eMEIGOS",
+    "type": "Asset",
+    "createdAt": "2015-07-27T09:06:14.657Z",
+    "createdBy": {
+      "sys": {
+        "type": "Link",
+        "linkType": "User",
+        "id": "4FLrUHftHW3v2BLi9fzfjU"
+      }
+    },
+    "space": {
+      "sys": {
+        "type": "Link",
+        "linkType": "Space",
+        "id": "fsnczri66h17"
+      }
+    },
+    "firstPublishedAt": "2015-07-27T09:06:35.041Z",
+    "publishedCounter": 1,
+    "publishedAt": "2015-07-27T09:06:35.041Z",
+    "publishedBy": {
+      "sys": {
+        "type": "Link",
+        "linkType": "User",
+        "id": "4FLrUHftHW3v2BLi9fzfjU"
+      }
+    },
+    "publishedVersion": 3,
+    "version": 4,
+    "updatedAt": "2015-07-27T09:06:35.084Z",
+    "updatedBy": {
+      "sys": {
+        "type": "Link",
+        "linkType": "User",
+        "id": "4FLrUHftHW3v2BLi9fzfjU"
+      }
+    }
+  }
+}

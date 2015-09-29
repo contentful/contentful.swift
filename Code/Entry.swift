@@ -6,6 +6,12 @@
 //  Copyright © 2015 Contentful GmbH. All rights reserved.
 //
 
-public class Entry : Resource {
-    public var fields: NSDictionary { return json["fields"] as! NSDictionary }
+import Foundation
+
+public struct Entry : Resource {
+    public let sys: NSDictionary
+    public let fields: NSDictionary
+
+    public let identifier: String
+    public let type: String
 }

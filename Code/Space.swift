@@ -6,6 +6,12 @@
 //  Copyright © 2015 Contentful GmbH. All rights reserved.
 //
 
-public class Space : Resource {
-    public var name: String { return self.json["name"] as! String }
+import Foundation
+
+public struct Space : Resource {
+    public let sys: NSDictionary
+
+    public let identifier: String
+    public let name: String
+    public let type: String
 }

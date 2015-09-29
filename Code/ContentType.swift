@@ -8,6 +8,10 @@
 
 import Foundation
 
-public class ContentType : Resource {
-    public var fields: [NSDictionary] { return self.json["fields"] as! [NSDictionary] }
+public struct ContentType : Resource {
+    public let sys: NSDictionary
+    public let fields: [Field]
+
+    public let identifier: String
+    public let type: String
 }
