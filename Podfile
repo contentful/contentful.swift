@@ -2,7 +2,7 @@ use_frameworks!
 
 target 'Contentful' do
 
-pod 'Interstellar'
+podspec :path => 'Contentful.podspec'
 
 end
 
