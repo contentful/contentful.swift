@@ -26,53 +26,63 @@ public class ContentfulClient {
         self.spaceIdentifier = spaceIdentifier
     }
 
-    public func fetchAsset(identifier: String, completion: Result<Asset> -> Void) -> NSURLSessionDataTask {
+    public func fetchAsset(identifier: String, completion: Result<Asset> -> Void) -> NSURLSessionDataTask? {
         return fetch(URLForFragment("assets/\(identifier)"), completion)
     }
 
-    public func fetchContentType(identifier: String, completion: Result<ContentType> -> Void) -> NSURLSessionDataTask {
+    public func fetchContentType(identifier: String, completion: Result<ContentType> -> Void) -> NSURLSessionDataTask? {
         return fetch(URLForFragment("content_types/\(identifier)"), completion)
     }
 
-    public func fetchEntries(completion: Result<ContentfulArray<Entry>> -> Void) -> NSURLSessionDataTask {
+    public func fetchEntries(completion: Result<ContentfulArray<Entry>> -> Void) -> NSURLSessionDataTask? {
         return fetch(URLForFragment("entries"), completion)
     }
 
-    public func fetchEntry(identifier: String, completion: Result<Entry> -> Void) -> NSURLSessionDataTask {
+    public func fetchEntry(identifier: String, completion: Result<Entry> -> Void) -> NSURLSessionDataTask? {
         return fetch(URLForFragment("entries/\(identifier)"), completion)
     }
 
-    public func fetchSpace(completion: Result<Space> -> Void) -> NSURLSessionDataTask {
+    public func fetchSpace(completion: Result<Space> -> Void) -> NSURLSessionDataTask? {
         return fetch(URLForFragment(), completion)
     }
 
-    private func fetch<T: Decodable>(url: NSURL, _ completion: Result<T> -> Void) -> NSURLSessionDataTask {
-        let task = session.dataTaskWithURL(url) { (data, response, error) in
-            if let data = data {
-                do {
-                    let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
-                    completion(.Success(try T.decode(json)))
-                } catch _ {
-                    completion(.Error(ContentfulError.UnparseableJSON(data: data)))
+    private func fetch<T: Decodable>(url: NSURL?, _ completion: Result<T> -> Void) -> NSURLSessionDataTask? {
+        if let url = url {
+            let task = session.dataTaskWithURL(url) { (data, response, error) in
+                if let data = data {
+                    do {
+                        let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
+                        completion(.Success(try T.decode(json)))
+                    } catch _ {
+                        completion(.Error(ContentfulError.UnparseableJSON(data: data)))
+                    }
+
+                    return
+                } else {
+                    if let error = error {
+                        completion(.Error(error))
+                        return
+                    }
                 }
 
-                return
-            } else {
-                if let error = error {
-                    completion(.Error(error))
-                    return
-                }
+                completion(.Error(ContentfulError.InvalidHTTPResponse(response: response)))
             }
 
-            completion(.Error(ContentfulError.InvalidHTTPResponse(response: response)))
+            task.resume()
+            return task
         }
 
-        task.resume()
-        return task
+        completion(.Error(ContentfulError.InvalidURL(string: "")))
+        return nil
     }
 
-    private func URLForFragment(fragment: String = "", parameters: [NSObject: AnyObject]? = nil) -> NSURL {
-        let components = NSURLComponents(string: "\(scheme)://\(configuration.server)/spaces/\(spaceIdentifier)/\(fragment)")
-        return (components!.URL)!
+    private func URLForFragment(fragment: String = "", parameters: [NSObject: AnyObject]? = nil) -> NSURL? {
+        if let components = NSURLComponents(string: "\(scheme)://\(configuration.server)/spaces/\(spaceIdentifier)/\(fragment)") {
+            if let url = components.URL {
+                return url
+            }
+        }
+
+        return nil
     }
 }
