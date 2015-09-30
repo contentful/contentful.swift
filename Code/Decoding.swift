@@ -31,13 +31,8 @@ extension Asset: Decodable {
 
 extension ContentfulArray: Decodable {
     public static func decode(json: AnyObject) throws -> ContentfulArray {
-        var items = [T]()
-        for item in (try json => "items") as Array<Dictionary<NSObject, AnyObject>> {
-            items.append(try T.decode(item))
-        }
-
         return try ContentfulArray(
-            items: items,
+            items: json => "items",
 
             limit: json => "limit",
             skip: json => "skip",
@@ -48,14 +43,9 @@ extension ContentfulArray: Decodable {
 
 extension ContentType: Decodable {
     public static func decode(json: AnyObject) throws -> ContentType {
-        var fields = [Field]()
-        for field in (try json => "fields") as Array<Dictionary<NSObject, AnyObject>> {
-            fields.append(try Field.decode(field))
-        }
-
         return try ContentType(
             sys: json => "sys",
-            fields: fields,
+            fields: json => "fields",
 
             identifier: json => "sys" => "id",
             type: json => "sys" => "type"
