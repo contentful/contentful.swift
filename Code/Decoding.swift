@@ -48,6 +48,7 @@ extension ContentType: Decodable {
             fields: json => "fields",
 
             identifier: json => "sys" => "id",
+            name: json => "name",
             type: json => "sys" => "type"
         )
     }

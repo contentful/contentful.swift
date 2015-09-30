@@ -13,5 +13,6 @@ public struct ContentType : Resource {
     public let fields: [Field]
 
     public let identifier: String
+    public let name: String
     public let type: String
 }
