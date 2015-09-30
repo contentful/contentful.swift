@@ -34,6 +34,10 @@ public class ContentfulClient {
         return fetch(URLForFragment("content_types/\(identifier)"), completion)
     }
 
+    public func fetchContentTypes(completion: Result<ContentfulArray<ContentType>> -> Void) -> NSURLSessionDataTask? {
+        return fetch(URLForFragment("content_types"), completion)
+    }
+
     public func fetchEntries(completion: Result<ContentfulArray<Entry>> -> Void) -> NSURLSessionDataTask? {
         return fetch(URLForFragment("entries"), completion)
     }

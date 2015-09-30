@@ -82,6 +82,28 @@ class ContentfulTests: QuickSpec {
                 }
             }
 
+            it("can fetch all content types of a space") {
+                waitUntil(timeout: 10) { done in
+                    self.client.fetchContentTypes { (result) in
+                        switch result {
+                        case let .Success(array):
+                            expect(array.total).to(equal(5))
+                            expect(array.limit).to(equal(100))
+                            expect(array.skip).to(equal(0))
+                            expect(array.items.count).to(equal(5))
+
+                            let _ = array.items.first.flatMap { (type: ContentType) in
+                                expect(type.name).to(equal("City"))
+                            }
+                        case .Error(_):
+                            fail()
+                        }
+
+                        done()
+                    }
+                }
+            }
+
             it("can fetch all entries of a space") {
                 waitUntil(timeout: 10) { done in
                     self.client.fetchEntries() { (result) in
