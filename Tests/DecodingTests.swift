@@ -30,6 +30,19 @@ class DecondingTests: QuickSpec {
                     expect(asset.URL).to(equal(NSURL(string: "https://images.contentful.com/fsnczri66h17/5VPbSI9VSM2Suq4eMEIGOS/937e4ebd25917ae20be0d3bacd0511af/3D5423B9-558E-41DB-95B5-EF7406FC1AB7.jpg_dl_1")))
                 }
             }
+
+            it("can decode spaces") {
+                AssertNoThrow {
+                    let space = try Space.decode(self.jsonData("space"))
+
+                    expect(space.identifier).to(equal("cfexampleapi"))
+                    expect(space.name).to(equal("Contentful Example API"))
+                    expect(space.locales.count).to(equal(2))
+                    expect(space.locales[0].name).to(equal("English"))
+                    expect(space.locales[0].code).to(equal("en-US"))
+                    expect(space.locales[0].isDefault).to(equal(true))
+                }
+            }
         }
     }
 }

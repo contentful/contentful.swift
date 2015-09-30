@@ -84,12 +84,23 @@ extension Field: Decodable {
     }
 }
 
+extension Locale: Decodable {
+    public static func decode(json: AnyObject) throws -> Locale {
+        return try Locale(
+            code: json => "code",
+            isDefault: json => "default",
+            name: json => "name"
+        )
+    }
+}
+
 extension Space: Decodable {
     public static func decode(json: AnyObject) throws -> Space {
         return try Space(
             sys: json => "sys",
 
             identifier: json => "sys" => "id",
+            locales: json => "locales",
             name: json => "name",
             type: json => "sys" => "type"
         )

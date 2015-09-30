@@ -1,0 +1,19 @@
+{
+  "sys": {
+    "type": "Space",
+    "id": "cfexampleapi"
+  },
+  "name": "Contentful Example API",
+  "locales": [
+    {
+      "code": "en-US",
+      "default": true,
+      "name": "English"
+    },
+    {
+      "code": "tlh",
+      "default": false,
+      "name": "Klingon"
+    }
+  ]
+}
