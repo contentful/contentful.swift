@@ -57,8 +57,10 @@ public class ContentfulClient {
                     do {
                         let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
                         completion(.Success(try T.decode(json)))
+                    } catch let error as DecodingError {
+                        completion(.Error(ContentfulError.UnparseableJSON(data: data, errorMessage: error.debugDescription)))
                     } catch _ {
-                        completion(.Error(ContentfulError.UnparseableJSON(data: data)))
+                        completion(.Error(ContentfulError.UnparseableJSON(data: data, errorMessage: "")))
                     }
 
                     return

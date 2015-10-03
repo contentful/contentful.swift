@@ -11,5 +11,5 @@ import Foundation
 public enum ContentfulError : ErrorType {
     case InvalidHTTPResponse(response: NSURLResponse?)
     case InvalidURL(string: String)
-    case UnparseableJSON(data: NSData)
+    case UnparseableJSON(data: NSData, errorMessage: String)
 }
