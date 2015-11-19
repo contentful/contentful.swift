@@ -9,8 +9,8 @@
 import Foundation
 
 public struct Entry : Resource {
-    public let sys: NSDictionary
-    public let fields: NSDictionary
+    public let sys: [String:AnyObject]
+    public let fields: [String:AnyObject]
 
     public let identifier: String
     public let type: String

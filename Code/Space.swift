@@ -15,7 +15,7 @@ public struct Locale {
 }
 
 public struct Space : Resource {
-    public let sys: NSDictionary
+    public let sys: [String:AnyObject]
 
     public let identifier: String
     public let locales: [Locale]

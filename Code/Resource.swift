@@ -6,8 +6,10 @@
 //  Copyright © 2015 Contentful GmbH. All rights reserved.
 //
 
+import Foundation
+
 public protocol Resource {
-    var sys: NSDictionary { get }
+    var sys: [String:AnyObject] { get }
     var identifier: String { get }
     var type: String { get }
 }

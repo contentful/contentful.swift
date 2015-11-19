@@ -9,7 +9,7 @@ end
 target 'ContentfulTests' do
 
 pod 'CatchingFire'
-pod 'Nimble', :git => 'https://github.com/Quick/Nimble.git'
-pod 'Quick', :git => 'https://github.com/Quick/Quick.git'
+pod 'Nimble'
+pod 'Quick'
 
 end

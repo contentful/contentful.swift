@@ -1,36 +1,27 @@
 PODS:
   - CatchingFire (0.2.0)
-  - Decodable (0.3.2)
-  - Interstellar (1.1.0)
-  - Nimble (2.0.0-rc.3)
-  - Quick (0.6.0)
+  - Decodable (0.3.3)
+  - Interstellar (1.3.0):
+    - Interstellar/Core (= 1.3.0)
+    - Interstellar/Warpdrive (= 1.3.0)
+  - Interstellar/Core (1.3.0)
+  - Interstellar/Warpdrive (1.3.0):
+    - Interstellar/Core
+  - Nimble (3.0.0)
+  - Quick (0.8.0)
 
 DEPENDENCIES:
   - CatchingFire
   - Decodable (~> 0.3.2)
-  - Interstellar (~> 1.1.0)
-  - Nimble (from `https://github.com/Quick/Nimble.git`)
-  - Quick (from `https://github.com/Quick/Quick.git`)
-
-EXTERNAL SOURCES:
-  Nimble:
-    :git: https://github.com/Quick/Nimble.git
-  Quick:
-    :git: https://github.com/Quick/Quick.git
-
-CHECKOUT OPTIONS:
-  Nimble:
-    :commit: 70b901e55bad427d211b93586a83e0e3bca32034
-    :git: https://github.com/Quick/Nimble.git
-  Quick:
-    :commit: 4c19d1257813c44df9c3c56b296b2b11ca40d4a9
-    :git: https://github.com/Quick/Quick.git
+  - Interstellar (~> 1.3.0)
+  - Nimble
+  - Quick
 
 SPEC CHECKSUMS:
   CatchingFire: 935ecc35fc5864f12ef1c033a97e9a9affbf6056
-  Decodable: 467819459fd22e7852f1f5244916e2e170016004
-  Interstellar: 142ef2abc4da56482e2fa186ef75e1554d6deae6
-  Nimble: 2f64d173ad23dc39f10110840a1ed15f29ef75e8
-  Quick: aaa961333f0bec39bfefa4b759128e4eb39f0d0e
+  Decodable: 5997b5e329e651f828dfcd458216b4c8286867cf
+  Interstellar: 3d47f37eff7e81fbaa9a74bd903f362eb165b159
+  Nimble: 4c353d43735b38b545cbb4cb91504588eb5de926
+  Quick: 563d0f6ec5f72e394645adb377708639b7dd38ab
 
-COCOAPODS: 0.39.0.beta.4
+COCOAPODS: 0.39.0

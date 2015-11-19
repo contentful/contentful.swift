@@ -9,7 +9,7 @@
 import Foundation
 
 public struct ContentType : Resource {
-    public let sys: NSDictionary
+    public let sys: [String:AnyObject]
     public let fields: [Field]
 
     public let identifier: String

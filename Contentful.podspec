@@ -18,10 +18,10 @@ Pod::Spec.new do |s|
   s.source_files         = 'Code/*.swift'
 
   s.ios.deployment_target     = '9.0'
-  #s.osx.deployment_target     = '10.11'
-  #s.watchos.deployment_target = '2.0'
-  #s.tvos.deployment_target    = '9.0'
+  s.osx.deployment_target     = '10.11'
+  s.watchos.deployment_target = '2.0'
+  s.tvos.deployment_target    = '9.0'
 
   s.dependency 'Decodable', '~> 0.3.2'
-  s.dependency 'Interstellar', '~> 1.1.0'
+  s.dependency 'Interstellar', '~> 1.3.0'
 end
