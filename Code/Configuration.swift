@@ -6,6 +6,8 @@
 //  Copyright © 2015 Contentful GmbH. All rights reserved.
 //
 
+import Foundation
+
 public struct Configuration {
     public var previewMode = false
     public var rateLimiting = false
