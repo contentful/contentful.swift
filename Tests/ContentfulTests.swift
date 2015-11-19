@@ -17,9 +17,10 @@ class ContentfulTests: QuickSpec {
     override func spec() {
         describe("Configuration") {
             it("can generate an user-agent string") {
+                let osVersion = NSProcessInfo.processInfo().operatingSystemVersionString
                 let userAgentString = Configuration().userAgent
 
-                expect(userAgentString).to(equal("contentful.swift/0.1.0 (iOS Version 9.0 (Build 13A340))"))
+                expect(userAgentString).to(equal("contentful.swift/0.1.0 (iOS \(osVersion))"))
             }
         }
 
