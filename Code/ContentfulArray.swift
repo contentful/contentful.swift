@@ -9,11 +9,11 @@
 import Decodable
 
 public struct ContentfulArray<T: Decodable> {
-    let errors: [ContentfulError]? = nil
+    public let errors: [ContentfulError]? = nil
 
-    let items: [T]
+    public let items: [T]
 
-    let limit: UInt
-    let skip: UInt
-    let total: UInt
+    public let limit: UInt
+    public let skip: UInt
+    public let total: UInt
 }
