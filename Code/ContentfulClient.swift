@@ -42,6 +42,10 @@ public class ContentfulClient {
         return fetch(URLForFragment("entries"), completion)
     }
 
+    public func fetchEntries(matching: [String:AnyObject], completion: Result<ContentfulArray<Entry>> -> Void) -> NSURLSessionDataTask? {
+        return fetch(URLForFragment("entries", parameters: matching), completion)
+    }
+
     public func fetchEntry(identifier: String, completion: Result<Entry> -> Void) -> NSURLSessionDataTask? {
         return fetch(URLForFragment("entries/\(identifier)"), completion)
     }
@@ -82,8 +86,12 @@ public class ContentfulClient {
         return nil
     }
 
-    private func URLForFragment(fragment: String = "", parameters: [NSObject: AnyObject]? = nil) -> NSURL? {
+    private func URLForFragment(fragment: String = "", parameters: [String: AnyObject]? = nil) -> NSURL? {
         if let components = NSURLComponents(string: "\(scheme)://\(configuration.server)/spaces/\(spaceIdentifier)/\(fragment)") {
+            if let parameters = parameters {
+                components.queryItems = parameters.map() { (key, value) in NSURLQueryItem(name: key, value: value.description) }
+            }
+
             if let url = components.URL {
                 return url
             }

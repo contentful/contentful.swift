@@ -123,6 +123,22 @@ class ContentfulTests: QuickSpec {
                 }
             }
 
+            it("can fetch entries using a search query") {
+                waitUntil(timeout: 10) { done in
+                    self.client.fetchEntries(["sys.id": "nyancat"]) { (result) in
+                        switch result {
+                        case let .Success(array):
+                            expect(array.total).to(equal(1))
+                            expect(array.items.first!.fields["name"] as? String).to(equal("Nyan Cat"))
+                        case let .Error(error):
+                            fail("\(error)")
+                        }
+
+                        done()
+                    }
+                }
+            }
+
             it("can fetch a single asset") {
                 waitUntil(timeout: 10) { done in
                     self.client.fetchAsset("nyancat") { (result) in
