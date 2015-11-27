@@ -38,8 +38,8 @@ class ContentfulTests: QuickSpec {
                             expect(entry.identifier).to(equal("nyancat"))
                             expect(entry.type).to(equal("Entry"))
                             expect(entry.fields["name"] as? String).to(equal("Nyan Cat"))
-                        case .Error(_):
-                            fail()
+                        case let .Error(error):
+                            fail("\(error)")
                         }
 
                         done()
@@ -55,8 +55,8 @@ class ContentfulTests: QuickSpec {
                             expect(space.identifier).to(equal("cfexampleapi"))
                             expect(space.type).to(equal("Space"))
                             expect(space.name).to(equal("Contentful Example API"))
-                        case .Error(_):
-                            fail()
+                        case let .Error(error):
+                            fail("\(error)")
                         }
 
                         done()
@@ -74,8 +74,8 @@ class ContentfulTests: QuickSpec {
 
                             let field = type.fields[0]
                             expect(field.identifier).to(equal("name"))
-                        case .Error(_):
-                            fail()
+                        case let .Error(error):
+                            fail("\(error)")
                         }
 
                         done()
@@ -96,8 +96,8 @@ class ContentfulTests: QuickSpec {
                             let _ = array.items.first.flatMap { (type: ContentType) in
                                 expect(type.name).to(equal("City"))
                             }
-                        case .Error(_):
-                            fail()
+                        case let .Error(error):
+                            fail("\(error)")
                         }
 
                         done()
@@ -114,8 +114,8 @@ class ContentfulTests: QuickSpec {
                             expect(array.limit).to(equal(100))
                             expect(array.skip).to(equal(0))
                             expect(array.items.count).to(equal(11))
-                        case .Error(_):
-                            fail()
+                        case let .Error(error):
+                            fail("\(error)")
                         }
 
                         done()
@@ -131,8 +131,8 @@ class ContentfulTests: QuickSpec {
                             expect(asset.identifier).to(equal("nyancat"))
                             expect(asset.type).to(equal("Asset"))
                             expect(asset.URL.absoluteString).to(equal("https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png"))
-                        case .Error(_):
-                            fail()
+                        case let .Error(error):
+                            fail("\(error)")
                         }
 
                         done()
