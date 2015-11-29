@@ -27,4 +27,7 @@ public struct Configuration {
 
         return "\(userAgentClient) (\(osName) \(osVersion))"
     }
+
+    public init() {
+    }
 }

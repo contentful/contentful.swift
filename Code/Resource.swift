@@ -9,7 +9,7 @@
 import Decodable
 import Foundation
 
-public protocol Resource: Decodable {
+protocol Resource: Decodable {
     var sys: [String:AnyObject] { get }
     var identifier: String { get }
     var type: String { get }

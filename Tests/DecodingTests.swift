@@ -10,7 +10,7 @@ import CatchingFire
 import Nimble
 import Quick
 
-@testable import Contentful
+import Contentful
 
 class DecondingTests: QuickSpec {
     func jsonData(fileName: String) -> AnyObject {

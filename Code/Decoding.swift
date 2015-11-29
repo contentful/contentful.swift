@@ -130,7 +130,7 @@ extension Locale: Decodable {
     }
 }
 
-extension Resource {
+private extension Resource {
     static func decode(jsonIncludes: [String:AnyObject], inout _ includes: [String:Resource]) throws {
         let typename = "\(Self.self)"
 

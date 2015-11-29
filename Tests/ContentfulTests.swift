@@ -9,7 +9,7 @@
 import Nimble
 import Quick
 
-@testable import Contentful
+import Contentful
 
 class ContentfulTests: QuickSpec {
     var client: ContentfulClient!
