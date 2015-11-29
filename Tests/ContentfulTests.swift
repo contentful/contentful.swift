@@ -6,6 +6,8 @@
 //  Copyright © 2015 Contentful GmbH. All rights reserved.
 //
 
+import CryptoSwift
+import Interstellar
 import Nimble
 import Quick
 
@@ -13,6 +15,23 @@ import Contentful
 
 class ContentfulTests: QuickSpec {
     var client: ContentfulClient!
+
+    func md5(image: UIImage) -> String {
+        return UIImagePNGRepresentation(image)!.md5().toHexString()
+    }
+
+    // Linker error with two many levels of closures 😭
+    func testFetchImageFromAsset(done: () -> ()) {
+        self.client.fetchAsset("nyancat").1.next { (asset) in
+            asset.fetchImage().1.next { (image) in
+                expect(self.md5(image)).to(equal("94fd9a22b0b6ecab15d91486922b8d7e"))
+                done()
+            }
+        }.error {
+            fail("\($0)")
+            done()
+        }
+    }
 
     override func spec() {
         describe("Configuration") {
@@ -158,6 +177,12 @@ class ContentfulTests: QuickSpec {
 
                         done()
                     }
+                }
+            }
+
+            it("can fetch an image from an asset") {
+                waitUntil(timeout: 10) { done in
+                    self.testFetchImageFromAsset(done)
                 }
             }
         }

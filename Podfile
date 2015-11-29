@@ -9,6 +9,7 @@ end
 target 'ContentfulTests' do
 
 pod 'CatchingFire'
+pod 'CryptoSwift'
 pod 'Nimble'
 pod 'Quick'
 

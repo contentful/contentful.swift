@@ -30,6 +30,12 @@ public class ContentfulClient {
         return fetch(URLForFragment("assets/\(identifier)"), completion)
     }
 
+    public func fetchAsset(identifier: String) -> (NSURLSessionDataTask?, Signal<Asset>) {
+        let signal = Signal<Asset>()
+        let task = fetchAsset(identifier) { signal.update($0) }
+        return (task, signal)
+    }
+
     public func fetchContentType(identifier: String, completion: Result<ContentType> -> Void) -> NSURLSessionDataTask? {
         return fetch(URLForFragment("content_types/\(identifier)"), completion)
     }
