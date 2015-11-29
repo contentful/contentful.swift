@@ -129,7 +129,12 @@ class ContentfulTests: QuickSpec {
                         switch result {
                         case let .Success(array):
                             expect(array.total).to(equal(1))
-                            expect(array.items.first!.fields["name"] as? String).to(equal("Nyan Cat"))
+
+                            let entry = array.items.first!
+                            expect(entry.fields["name"] as? String).to(equal("Nyan Cat"))
+
+                            let image = entry.fields["image"] as? Asset
+                            expect(image?.URL.absoluteString).to(equal("https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png"))
                         case let .Error(error):
                             fail("\(error)")
                         }

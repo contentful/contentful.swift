@@ -10,7 +10,7 @@ import Foundation
 
 public struct Entry : Resource {
     public let sys: [String:AnyObject]
-    public let fields: [String:AnyObject]
+    public let fields: [String:Any]
 
     public let identifier: String
     public let type: String

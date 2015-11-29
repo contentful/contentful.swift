@@ -30,9 +30,48 @@ extension Asset: Decodable {
 }
 
 extension ContentfulArray: Decodable {
+    private static func resolveLinks(entry: Entry, _ includes: [String:Resource]) -> Entry {
+        var fields = entry.fields
+
+        for field in entry.fields {
+            if let link = field.1 as? [String:AnyObject],
+                sys = link["sys"] as? [String:AnyObject],
+                identifier = sys["id"] as? String,
+                type = sys["linkType"] as? String,
+                include = includes["\(type)_\(identifier)"] {
+                    fields[field.0] = include
+            }
+        }
+
+        return Entry(sys: entry.sys, fields: fields, identifier:  entry.identifier, type: entry.type)
+    }
+
     public static func decode(json: AnyObject) throws -> ContentfulArray {
+        var includes = [String:Resource]()
+        let jsonIncludes = try? json => "includes" as [String:AnyObject]
+
+        if let jsonIncludes = jsonIncludes {
+            try Asset.decode(jsonIncludes, &includes)
+            try Entry.decode(jsonIncludes, &includes)
+        }
+
+        var items: [T] = try json => "items"
+
+        for item in items {
+            if let resource = item as? Resource {
+                includes[resource.key] = resource
+            }
+        }
+
+        items = items.map { (item) in
+            if let entry = item as? Entry {
+                return resolveLinks(entry, includes) as! T
+            }
+            return item
+        }
+
         return try ContentfulArray(
-            items: json => "items",
+            items: items,
 
             limit: json => "limit",
             skip: json => "skip",
@@ -56,9 +95,15 @@ extension ContentType: Decodable {
 
 extension Entry: Decodable {
     public static func decode(json: AnyObject) throws -> Entry {
+        // Cannot cast directly from [String:AnyObject] => [String:Any]
+        var fields = [String:Any]()
+        for field in (try json => "fields" as [String:AnyObject]) {
+            fields[field.0] = field.1
+        }
+
         return try Entry(
             sys: json => "sys",
-            fields: json => "fields",
+            fields: fields,
 
             identifier: json => "sys" => "id",
             type: json => "sys" => "type"
@@ -83,6 +128,21 @@ extension Locale: Decodable {
             name: json => "name"
         )
     }
+}
+
+extension Resource {
+    static func decode(jsonIncludes: [String:AnyObject], inout _ includes: [String:Resource]) throws {
+        let typename = "\(Self.self)"
+
+        if let resources = jsonIncludes[typename] as? [[String:AnyObject]] {
+            for resource in resources {
+                let value = try self.decode(resource) as Resource
+                includes[value.key] = value
+            }
+        }
+    }
+
+    var key: String { return "\(self.dynamicType)_\(self.identifier)" }
 }
 
 extension Space: Decodable {
