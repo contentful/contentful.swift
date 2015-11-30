@@ -102,6 +102,14 @@ class ContentfulTests: QuickSpec {
                                 fail()
                             }
 
+                            if let field = type.fields.filter({ $0.identifier == "likes" }).first {
+                                expect(field.itemType).to(equal(FieldType.Symbol))
+                            }
+
+                            if let field = type.fields.filter({ $0.identifier == "image" }).first {
+                                expect(field.itemType).to(equal(FieldType.Asset))
+                            }
+
                             let field = type.fields[0]
                             expect(field.identifier).to(equal("name"))
                         case let .Error(error):
