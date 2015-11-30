@@ -91,6 +91,17 @@ class ContentfulTests: QuickSpec {
                             expect(type.identifier).to(equal("cat"))
                             expect(type.type).to(equal("ContentType"))
 
+                            if let field = type.fields.first {
+                                expect(field.disabled).to(equal(false))
+                                expect(field.localized).to(equal(true))
+                                expect(field.required).to(equal(true))
+
+                                expect(field.type).to(equal(FieldType.Text))
+                                expect(field.itemType).to(equal(FieldType.None))
+                            } else {
+                                fail()
+                            }
+
                             let field = type.fields[0]
                             expect(field.identifier).to(equal("name"))
                         case let .Error(error):

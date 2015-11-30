@@ -113,9 +113,21 @@ extension Entry: Decodable {
 
 extension Field: Decodable {
     public static func decode(json: AnyObject) throws -> Field {
+        var itemType: FieldType = .None
+        if let itemTypeString = (try? json => "item" => "type") as? String {
+            itemType = FieldType(rawValue: itemTypeString) ?? .None
+        }
+
         return try Field(
             identifier: json => "id",
-            name: json => "name"
+            name: json => "name",
+
+            disabled: (try? json => "disabled") ?? false,
+            localized: (try? json => "localized") ?? false,
+            required: (try? json => "required") ?? false,
+
+            type: FieldType(rawValue: try json => "type") ?? .None,
+            itemType: itemType
         )
     }
 }
