@@ -21,8 +21,10 @@ public struct Configuration {
 
         #if os(OSX)
             osName = "OS X"
+        #elseif os(tvOS)
+            osName = "tvOS"
         #elseif os(watchOS)
-            osName = "watch OS"
+            osName = "watchOS"
         #endif
 
         return "\(userAgentClient) (\(osName) \(osVersion))"
