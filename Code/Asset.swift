@@ -21,46 +21,15 @@ public struct Asset : Resource {
     public let type: String
     public let URL: NSURL
 
-    private var session: NSURLSession {
-        let sessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        return NSURLSession(configuration: sessionConfiguration)
-    }
-
-    private func fetch(completion: Result<NSData> -> Void) -> NSURLSessionDataTask {
-        let task = session.dataTaskWithURL(URL) { (data, response, error) in
-            if let data = data {
-                completion(.Success(data))
-                return
-            }
-
-            if let error = error {
-                completion(.Error(error))
-                return
-            }
-
-            completion(.Error(ContentfulError.InvalidHTTPResponse(response: response)))
-        }
-
-        task.resume()
-        return task
-    }
+    private let network = Network()
 
     public func fetch() -> (NSURLSessionDataTask, Signal<NSData>) {
-        let signal = Signal<NSData>()
-        let task = fetch { signal.update($0) }
-        return (task, signal)
+        return network.fetch(URL)
     }
 
 #if os(iOS)
     public func fetchImage() -> (NSURLSessionDataTask, Signal<UIImage>) {
-        let signal = Signal<UIImage>()
-        let (task, dataSignal) = fetch()
-        dataSignal.next() {
-            if let image = UIImage(data: $0) {
-                signal.update(image)
-            }
-        }.error() { signal.update($0) }
-        return (task, signal)
+        return convert_signal(fetch) { UIImage(data: $0) }
     }
 #endif
 }

@@ -24,6 +24,7 @@
 		A19CA3E21B8386CC00A0EFCD /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E11B8386CC00A0EFCD /* Configuration.swift */; };
 		A19CA3E81B83890D00A0EFCD /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E71B83890D00A0EFCD /* Resource.swift */; };
 		A1B2E3651BBACF2C00814D63 /* Decoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2E3641BBACF2C00814D63 /* Decoding.swift */; };
+		A1BF6BBC1C0D0FBD00049712 /* SignalUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BF6BBB1C0D0FBD00049712 /* SignalUtils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		A19CA3E71B83890D00A0EFCD /* Resource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
 		A1B2E3641BBACF2C00814D63 /* Decoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Decoding.swift; sourceTree = "<group>"; };
 		A1B2E3661BBAD06000814D63 /* DecodingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecodingTests.swift; sourceTree = "<group>"; };
+		A1BF6BBB1C0D0FBD00049712 /* SignalUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignalUtils.swift; sourceTree = "<group>"; };
 		C9CC31E384439486E48213D2 /* Pods_Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF23C646C76CC48D89A01EFA /* Pods-ContentfulTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ContentfulTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ContentfulTests/Pods-ContentfulTests.release.xcconfig"; sourceTree = "<group>"; };
 		E6F28B2AD4892FD0DCC0A96D /* Pods-Contentful.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Contentful.release.xcconfig"; path = "Pods/Target Support Files/Pods-Contentful/Pods-Contentful.release.xcconfig"; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				A19CA3E51B8388ED00A0EFCD /* Entry.swift */,
 				A10FF9DB1BBB4692001AA4E9 /* Field.swift */,
 				A19CA3E71B83890D00A0EFCD /* Resource.swift */,
+				A1BF6BBB1C0D0FBD00049712 /* SignalUtils.swift */,
 				A15193A91BB91DE700FB83CD /* Space.swift */,
 			);
 			path = Code;
@@ -360,6 +363,7 @@
 				A10FF9D91BBB3BE1001AA4E9 /* ContentfulArray.swift in Sources */,
 				A19CA3E01B836F2500A0EFCD /* ContentfulClient.swift in Sources */,
 				A10FF9D31BBB32FD001AA4E9 /* Asset.swift in Sources */,
+				A1BF6BBC1C0D0FBD00049712 /* SignalUtils.swift in Sources */,
 				A10FF9DC1BBB4692001AA4E9 /* Field.swift in Sources */,
 				A19CA3E81B83890D00A0EFCD /* Resource.swift in Sources */,
 				A1B2E3651BBACF2C00814D63 /* Decoding.swift in Sources */,
