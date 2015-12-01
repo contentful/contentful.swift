@@ -11,80 +11,35 @@ import Interstellar
 
 public class ContentfulClient {
     private let configuration: Configuration
-    private let session: NSURLSession
+    private let network = Network()
     private let spaceIdentifier: String
 
     private var scheme: String { return configuration.secure ? "https" : "http" }
 
     public init(spaceIdentifier: String, accessToken: String, configuration: Configuration = Configuration()) {
-        let sessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        sessionConfiguration.HTTPAdditionalHeaders = [ "Authorization": "Bearer \(accessToken)" ]
-
-        session = NSURLSession(configuration: sessionConfiguration)
+        network.sessionConfigurator = { (sessionConfiguration) in
+            sessionConfiguration.HTTPAdditionalHeaders = [ "Authorization": "Bearer \(accessToken)" ]
+        }
 
         self.configuration = configuration
         self.spaceIdentifier = spaceIdentifier
     }
 
-    public func fetchAsset(identifier: String, completion: Result<Asset> -> Void) -> NSURLSessionDataTask? {
-        return fetch(URLForFragment("assets/\(identifier)"), completion)
-    }
-
-    public func fetchAsset(identifier: String) -> (NSURLSessionDataTask?, Signal<Asset>) {
-        let signal = Signal<Asset>()
-        let task = fetchAsset(identifier) { signal.update($0) }
-        return (task, signal)
-    }
-
-    public func fetchContentType(identifier: String, completion: Result<ContentType> -> Void) -> NSURLSessionDataTask? {
-        return fetch(URLForFragment("content_types/\(identifier)"), completion)
-    }
-
-    public func fetchContentTypes(completion: Result<ContentfulArray<ContentType>> -> Void) -> NSURLSessionDataTask? {
-        return fetch(URLForFragment("content_types"), completion)
-    }
-
-    public func fetchEntries(completion: Result<ContentfulArray<Entry>> -> Void) -> NSURLSessionDataTask? {
-        return fetch(URLForFragment("entries"), completion)
-    }
-
-    public func fetchEntries(matching: [String:AnyObject], completion: Result<ContentfulArray<Entry>> -> Void) -> NSURLSessionDataTask? {
-        return fetch(URLForFragment("entries", parameters: matching), completion)
-    }
-
-    public func fetchEntry(identifier: String, completion: Result<Entry> -> Void) -> NSURLSessionDataTask? {
-        return fetch(URLForFragment("entries/\(identifier)"), completion)
-    }
-
-    public func fetchSpace(completion: Result<Space> -> Void) -> NSURLSessionDataTask? {
-        return fetch(URLForFragment(), completion)
-    }
-
     private func fetch<T: Decodable>(url: NSURL?, _ completion: Result<T> -> Void) -> NSURLSessionDataTask? {
         if let url = url {
-            let task = session.dataTaskWithURL(url) { (data, response, error) in
-                if let data = data {
-                    do {
-                        let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
-                        completion(.Success(try T.decode(json)))
-                    } catch let error as DecodingError {
-                        completion(.Error(ContentfulError.UnparseableJSON(data: data, errorMessage: error.debugDescription)))
-                    } catch _ {
-                        completion(.Error(ContentfulError.UnparseableJSON(data: data, errorMessage: "")))
-                    }
+            let (task, signal) = network.fetch(url)
 
-                    return
-                } else {
-                    if let error = error {
-                        completion(.Error(error))
-                        return
-                    }
+            signal.next { (data) in
+                do {
+                    let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
+                    completion(.Success(try T.decode(json)))
+                } catch let error as DecodingError {
+                    completion(.Error(ContentfulError.UnparseableJSON(data: data, errorMessage: error.debugDescription)))
+                } catch _ {
+                    completion(.Error(ContentfulError.UnparseableJSON(data: data, errorMessage: "")))
                 }
+            }.error { completion(.Error($0)) }
 
-                completion(.Error(ContentfulError.InvalidHTTPResponse(response: response)))
-            }
-
-            task.resume()
             return task
         }
 
@@ -102,7 +57,71 @@ public class ContentfulClient {
                 return url
             }
         }
-
+        
         return nil
+    }
+}
+
+extension ContentfulClient {
+    public func fetchAsset(identifier: String, completion: Result<Asset> -> Void) -> NSURLSessionDataTask? {
+        return fetch(URLForFragment("assets/\(identifier)"), completion)
+    }
+
+    public func fetchAsset(identifier: String) -> (NSURLSessionDataTask?, Signal<Asset>) {
+        return signalify(identifier, fetchAsset)
+    }
+
+    public func fetchAssets(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<ContentfulArray<Entry>> -> Void) -> NSURLSessionDataTask? {
+        return fetch(URLForFragment("assets", parameters: matching), completion)
+    }
+
+    public func fetchAssets(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<ContentfulArray<Entry>>) {
+        return signalify(matching, fetchAssets)
+    }
+}
+
+extension ContentfulClient {
+    public func fetchContentType(identifier: String, completion: Result<ContentType> -> Void) -> NSURLSessionDataTask? {
+        return fetch(URLForFragment("content_types/\(identifier)"), completion)
+    }
+
+    public func fetchContentType(identifier: String) -> (NSURLSessionDataTask?, Signal<ContentType>) {
+        return signalify(identifier, fetchContentType)
+    }
+
+    public func fetchContentTypes(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<ContentfulArray<ContentType>> -> Void) -> NSURLSessionDataTask? {
+        return fetch(URLForFragment("content_types", parameters: matching), completion)
+    }
+
+    public func fetchContentTypes(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<ContentfulArray<ContentType>>) {
+        return signalify(matching, fetchContentTypes)
+    }
+}
+
+extension ContentfulClient {
+    public func fetchEntries(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<ContentfulArray<Entry>> -> Void) -> NSURLSessionDataTask? {
+        return fetch(URLForFragment("entries", parameters: matching), completion)
+    }
+
+    public func fetchEntries(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<ContentfulArray<Entry>>) {
+        return signalify(matching, fetchEntries)
+    }
+
+    public func fetchEntry(identifier: String, completion: Result<Entry> -> Void) -> NSURLSessionDataTask? {
+        return fetch(URLForFragment("entries/\(identifier)"), completion)
+    }
+
+    public func fetchEntry(identifier: String) -> (NSURLSessionDataTask?, Signal<Entry>) {
+        return signalify(identifier, fetchEntry)
+    }
+}
+
+extension ContentfulClient {
+    public func fetchSpace(completion: Result<Space> -> Void) -> NSURLSessionDataTask? {
+        return fetch(URLForFragment(), completion)
+    }
+
+    public func fetchSpace() -> (NSURLSessionDataTask?, Signal<Space>) {
+        return signalify(fetchSpace)
     }
 }

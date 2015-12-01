@@ -68,18 +68,11 @@ class ContentfulTests: QuickSpec {
 
             it("can fetch a space") {
                 waitUntil(timeout: 10) { done in
-                    self.client.fetchSpace() { (result) in
-                        switch result {
-                        case let .Success(space):
-                            expect(space.identifier).to(equal("cfexampleapi"))
-                            expect(space.type).to(equal("Space"))
-                            expect(space.name).to(equal("Contentful Example API"))
-                        case let .Error(error):
-                            fail("\(error)")
-                        }
-
-                        done()
-                    }
+                    self.client.fetchSpace().1.next { (space) in
+                        expect(space.identifier).to(equal("cfexampleapi"))
+                        expect(space.type).to(equal("Space"))
+                        expect(space.name).to(equal("Contentful Example API"))
+                    }.error { fail("\($0)") }.subscribe { _ in done() }
                 }
             }
 
