@@ -7,6 +7,7 @@
 //
 
 import Decodable
+import Foundation
 
 extension UInt: Castable {}
 
@@ -19,8 +20,8 @@ extension Asset: Decodable {
         }
 
         return try Asset(
-            sys: json => "sys",
-            fields: json => "fields",
+            sys: (json => "sys") as! [String : AnyObject],
+            fields: (json => "fields") as! [String : AnyObject],
 
             identifier: json => "sys" => "id",
             type: json => "sys" => "type",
@@ -48,7 +49,7 @@ extension ContentfulArray: Decodable {
 
     public static func decode(json: AnyObject) throws -> ContentfulArray {
         var includes = [String:Resource]()
-        let jsonIncludes = try? json => "includes" as [String:AnyObject]
+        let jsonIncludes = try? json => "includes" as! [String:AnyObject]
 
         if let jsonIncludes = jsonIncludes {
             try Asset.decode(jsonIncludes, &includes)
@@ -83,7 +84,7 @@ extension ContentfulArray: Decodable {
 extension ContentType: Decodable {
     public static func decode(json: AnyObject) throws -> ContentType {
         return try ContentType(
-            sys: json => "sys",
+            sys: (json => "sys") as! [String : AnyObject],
             fields: json => "fields",
 
             identifier: json => "sys" => "id",
@@ -97,12 +98,12 @@ extension Entry: Decodable {
     public static func decode(json: AnyObject) throws -> Entry {
         // Cannot cast directly from [String:AnyObject] => [String:Any]
         var fields = [String:Any]()
-        for field in (try json => "fields" as [String:AnyObject]) {
+        for field in (try json => "fields" as! [String:AnyObject]) {
             fields[field.0] = field.1
         }
 
         return try Entry(
-            sys: json => "sys",
+            sys: (json => "sys") as! [String : AnyObject],
             fields: fields,
 
             identifier: json => "sys" => "id",
@@ -166,7 +167,7 @@ private extension Resource {
 extension Space: Decodable {
     public static func decode(json: AnyObject) throws -> Space {
         return try Space(
-            sys: json => "sys",
+            sys: (json => "sys") as! [String : AnyObject],
 
             identifier: json => "sys" => "id",
             locales: json => "locales",

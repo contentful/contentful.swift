@@ -6,6 +6,7 @@
 //  Copyright © 2015 Contentful GmbH. All rights reserved.
 //
 
+import Foundation
 import Interstellar
 
 func convert_signal<U, V, W>(closure: () -> (V, Signal<U>), mapper: (U) -> W?) -> (V, Signal<W>) {

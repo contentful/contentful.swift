@@ -143,7 +143,8 @@
 				A1BF6BBB1C0D0FBD00049712 /* SignalUtils.swift */,
 				A15193A91BB91DE700FB83CD /* Space.swift */,
 			);
-			path = Code;
+			name = Code;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		A19CA3D21B836EDD00A0EFCD /* Tests */ = {
