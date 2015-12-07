@@ -13,6 +13,10 @@ import Interstellar
 import UIKit
 #endif
 
+#if os(Linux)
+import Curly
+#endif
+
 public struct Asset : Resource {
     public let sys: [String:AnyObject]
     public let fields: [String:AnyObject]
@@ -23,12 +27,12 @@ public struct Asset : Resource {
 
     private let network = Network()
 
-    public func fetch() -> (NSURLSessionDataTask, Signal<NSData>) {
+    public func fetch() -> (HTTPSessionDataTask, Signal<NSData>) {
         return network.fetch(URL)
     }
 
 #if os(iOS)
-    public func fetchImage() -> (NSURLSessionDataTask, Signal<UIImage>) {
+    public func fetchImage() -> (HTTPSessionDataTask, Signal<UIImage>) {
         return convert_signal(fetch) { UIImage(data: $0) }
     }
 #endif

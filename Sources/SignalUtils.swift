@@ -32,18 +32,26 @@ func signalify<U, V>(closure: ((Result<U>) -> ()) -> V) -> (V, Signal<U>) {
     return (value, signal)
 }
 
-class Network {
-    var sessionConfigurator: ((NSURLSessionConfiguration) -> ())?
+#if os(Linux)
+import Curly
+#else
+public typealias HTTPSession = NSURLSession
+public typealias HTTPSessionConfiguration = NSURLSessionConfiguration
+public typealias HTTPSessionDataTask = NSURLSessionDataTask
+#endif
 
-    private var session: NSURLSession {
-        let sessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
+class Network {
+    var sessionConfigurator: ((HTTPSessionConfiguration) -> ())?
+
+    private var session: HTTPSession {
+        let sessionConfiguration = HTTPSessionConfiguration.defaultSessionConfiguration()
         if let sessionConfigurator = sessionConfigurator {
             sessionConfigurator(sessionConfiguration)
         }
-        return NSURLSession(configuration: sessionConfiguration)
+        return HTTPSession(configuration: sessionConfiguration)
     }
 
-    func fetch(url: NSURL, _ completion: Result<NSData> -> Void) -> NSURLSessionDataTask {
+    func fetch(url: NSURL, _ completion: Result<NSData> -> Void) -> HTTPSessionDataTask {
         let task = session.dataTaskWithURL(url) { (data, response, error) in
             if let data = data {
                 completion(.Success(data))
@@ -62,7 +70,7 @@ class Network {
         return task
     }
 
-    func fetch(url: NSURL) -> (NSURLSessionDataTask, Signal<NSData>) {
+    func fetch(url: NSURL) -> (HTTPSessionDataTask, Signal<NSData>) {
         return signalify(url, fetch)
     }
 }
