@@ -155,7 +155,12 @@ private extension Resource {
 
         if let resources = jsonIncludes[typename] as? [[String:AnyObject]] {
             for resource in resources {
-                let value = try self.decode(resource) as Resource
+                #if os(Linux)
+                let castedResource = resource as! AnyObject
+                #else
+                let castedResource = resource as AnyObject
+                #endif
+                let value = try self.decode(castedResource) as Resource
                 includes[value.key] = value
             }
         }
