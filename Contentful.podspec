@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
                      :tag => s.version.to_s }
   s.requires_arc = true
 
-  s.source_files         = 'Code/*.swift'
+  s.source_files         = 'Sources/*.swift'
 
   s.ios.deployment_target     = '8.0'
   s.osx.deployment_target     = '10.10'

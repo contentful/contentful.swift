@@ -2,3 +2,4 @@ language: objective-c
 osx_image: xcode7.1
 script:
 - xcodebuild -workspace Contentful.xcworkspace -scheme Contentful test -sdk iphonesimulator
+- pod lib lint Contentful.podspec
