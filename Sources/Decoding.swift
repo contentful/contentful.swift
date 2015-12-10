@@ -31,16 +31,32 @@ extension Asset: Decodable {
 }
 
 extension ContentfulArray: Decodable {
+    private static func resolveLink(value: Any, _ includes: [String:Resource]) -> Any? {
+        if let link = value as? [String:AnyObject],
+            sys = link["sys"] as? [String:AnyObject],
+            identifier = sys["id"] as? String,
+            type = sys["linkType"] as? String,
+            include = includes["\(type)_\(identifier)"] {
+                return include
+        }
+
+        return nil
+    }
+
     private static func resolveLinks(entry: Entry, _ includes: [String:Resource]) -> Entry {
         var fields = entry.fields
 
         for field in entry.fields {
-            if let link = field.1 as? [String:AnyObject],
-                sys = link["sys"] as? [String:AnyObject],
-                identifier = sys["id"] as? String,
-                type = sys["linkType"] as? String,
-                include = includes["\(type)_\(identifier)"] {
-                    fields[field.0] = include
+            if let include = resolveLink(field.1, includes) {
+                fields[field.0] = include
+            }
+
+            if let links = field.1 as? [[String:AnyObject]] {
+                // This drops any unresolvable links automatically
+                let includes = links.map { resolveLink($0, includes) }.flatMap { $0 }
+                if includes.count > 0 {
+                    fields[field.0] = includes
+                }
             }
         }
 
