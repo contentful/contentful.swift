@@ -27,7 +27,7 @@ public struct Asset : Resource {
         return network.fetch(URL)
     }
 
-#if os(iOS)
+#if os(iOS) || os(tvOS)
     public func fetchImage() -> (NSURLSessionDataTask, Signal<UIImage>) {
         return convert_signal(fetch) { UIImage(data: $0) }
     }
