@@ -1,8 +1,16 @@
+__SIM_ID=`xcrun simctl list|egrep -m 1 '$(SIM_NAME) \([^(]*\) \([^(]*\)$$'|sed -e 's/.* (\(.*\)) (.*)/\1/'`
+SIM_NAME=iPhone 4s
+SIM_ID=$(shell echo $(__SIM_ID))
+
+ifeq ($(strip $(SIM_ID)),)
+$(error Could not find $(SIM_NAME) simulator)
+endif
+
 .PHONY: test setup lint
 
 test:
 	xcodebuild -workspace Contentful.xcworkspace \
-		-scheme Contentful -sdk iphonesimulator test
+		-scheme Contentful -destination 'id=$(SIM_ID)' test
 
 setup:
 	bundle install
