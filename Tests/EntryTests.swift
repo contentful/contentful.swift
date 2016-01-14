@@ -10,7 +10,27 @@ import Contentful
 import Nimble
 import Quick
 
+extension Entry {
+    var contentTypeId : String {
+        // TODO: We should probably resolve content type on Entry creation to avoid this awfulness
+        let id = ((sys["contentType"] as? [String:AnyObject])?["sys"] as? [String:AnyObject])?["id"]
+        return (id as? String) ?? ""
+    }
+}
+
 class EntryTests: ContentfulBaseTests {
+    func waitUntilMatchingEntries(matching: [String:AnyObject], action: (entries: ContentfulArray<Entry>) -> ()) {
+        waitUntil(timeout: 10) { done in
+            self.client.fetchEntries(matching).1.next {
+                action(entries: $0)
+                done()
+            }.error {
+                fail("\($0)")
+                done()
+            }
+        }
+    }
+
     override func spec() {
         super.spec()
 
@@ -49,7 +69,20 @@ class EntryTests: ContentfulBaseTests {
             }
         }
 
-        it("can fetch entries using a search query") {
+        it("can fetch entries of a specific content type") {
+            waitUntil(timeout: 10) { done in
+                self.client.fetchEntries(["content_type": "cat"]).1.next {
+                    let cats = $0.items.filter { $0.contentTypeId == "cat" }
+                    expect(cats.count).to(equal($0.items.count))
+                    done()
+                }.error {
+                    fail("\($0)")
+                    done()
+                }
+            }
+        }
+
+        it("can fetch entries using an equality search query") {
             waitUntil(timeout: 10) { done in
                 self.client.fetchEntries(["sys.id": "nyancat"]) { (result) in
                     switch result {
@@ -67,6 +100,21 @@ class EntryTests: ContentfulBaseTests {
 
                     done()
                 }
+            }
+        }
+
+        it("can fetch entries using an inequality search query") {
+            self.waitUntilMatchingEntries(["sys.id[ne]": "nyancat"]) {
+                expect($0.items.count).to(equal(10))
+                let nyancat = $0.items.filter { $0.identifier == "nyancat" }
+                expect(nyancat.count).to(equal(0))
+            }
+        }
+
+        it ("can fetch entries using an equality search query for arrays") {
+            self.waitUntilMatchingEntries(["content_type": "cat", "fields.likes": "lasagna"]) {
+                expect($0.items.count).to(equal(1))
+                expect($0.items.first?.identifier).to(equal("garfield"))
             }
         }
     }
