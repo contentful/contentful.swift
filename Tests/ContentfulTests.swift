@@ -20,7 +20,7 @@ class ContentfulTests: QuickSpec {
         return UIImagePNGRepresentation(image)!.md5().toHexString()
     }
 
-    // Linker error with two many levels of closures 😭
+    // Linker error with too many levels of closures 😭
     func testFetchImageFromAsset(done: () -> ()) {
         self.client.fetchAsset("nyancat").1.next { (asset) in
             asset.fetchImage().1.next { (image) in
