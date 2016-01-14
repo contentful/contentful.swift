@@ -72,11 +72,11 @@ extension ContentfulClient {
         return signalify(identifier, fetchAsset)
     }
 
-    public func fetchAssets(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<ContentfulArray<Entry>> -> Void) -> NSURLSessionDataTask? {
+    public func fetchAssets(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<ContentfulArray<Asset>> -> Void) -> NSURLSessionDataTask? {
         return fetch(URLForFragment("assets", parameters: matching), completion)
     }
 
-    public func fetchAssets(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<ContentfulArray<Entry>>) {
+    public func fetchAssets(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<ContentfulArray<Asset>>) {
         return signalify(matching, fetchAssets)
     }
 }
