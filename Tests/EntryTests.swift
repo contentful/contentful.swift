@@ -111,10 +111,35 @@ class EntryTests: ContentfulBaseTests {
             }
         }
 
-        it ("can fetch entries using an equality search query for arrays") {
+        it("can fetch entries using an equality search query for arrays") {
             self.waitUntilMatchingEntries(["content_type": "cat", "fields.likes": "lasagna"]) {
                 expect($0.items.count).to(equal(1))
                 expect($0.items.first?.identifier).to(equal("garfield"))
+            }
+        }
+
+        it("can fetch entries using an inclusion search query") {
+            let action: (ContentfulArray<Entry>) -> () = {
+                expect($0.items.count).to(equal(2))
+                let ids = $0.items.map { $0.identifier }
+                expect(ids).to(equal(["finn", "jake"]))
+            }
+
+            self.waitUntilMatchingEntries(["sys.id[in]": ["finn", "jake"]], action: action)
+            self.waitUntilMatchingEntries(["sys.id[in]": "finn,jake"], action: action)
+        }
+
+        it("can fetch entries using an exclusion search query") {
+            self.waitUntilMatchingEntries(["content_type": "cat", "fields.likes[nin]": ["rainbows", "lasagna"]]) {
+                expect($0.items.count).to(equal(1))
+                let ids = $0.items.map { $0.identifier }
+                expect(ids).to(equal(["happycat"]))
+            }
+        }
+
+        it("can fetch entries using an existence search query") {
+            self.waitUntilMatchingEntries(["sys.archivedVersion[exists]": false]) {
+                expect($0.items.count).to(equal(11))
             }
         }
     }
