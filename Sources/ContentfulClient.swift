@@ -51,7 +51,13 @@ public class ContentfulClient {
     private func URLForFragment(fragment: String = "", parameters: [String: AnyObject]? = nil) -> NSURL? {
         if let components = NSURLComponents(string: "\(scheme)://\(configuration.server)/spaces/\(spaceIdentifier)/\(fragment)") {
             if let parameters = parameters {
-                components.queryItems = parameters.map() { (key, value) in NSURLQueryItem(name: key, value: value.description) }
+                components.queryItems = parameters.map() { (key, var value) in
+                    if let array = value as? NSArray {
+                        value = array.componentsJoinedByString(",")
+                    }
+
+                    return NSURLQueryItem(name: key, value: value.description)
+                }
             }
 
             if let url = components.URL {
