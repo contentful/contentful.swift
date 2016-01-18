@@ -18,6 +18,18 @@ extension Entry {
     }
 }
 
+extension NSDate {
+    static func fromComponents(year year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int) -> NSDate {
+        let components = NSDateComponents()
+        (components.year, components.month, components.day) = (year, month, day)
+        (components.hour, components.minute, components.second) = (hour, minute, second)
+        components.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+
+        let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
+        return calendar!.dateFromComponents(components)!
+    }
+}
+
 class EntryTests: ContentfulBaseTests {
     func waitUntilMatchingEntries(matching: [String:AnyObject], action: (entries: ContentfulArray<Entry>) -> ()) {
         waitUntil(timeout: 10) { done in
@@ -140,6 +152,29 @@ class EntryTests: ContentfulBaseTests {
         it("can fetch entries using an existence search query") {
             self.waitUntilMatchingEntries(["sys.archivedVersion[exists]": false]) {
                 expect($0.items.count).to(equal(11))
+            }
+        }
+
+        it("can fetch entries using a range search query") {
+            let date = NSDate.fromComponents(year: 2015, month: 1, day: 1, hour: 0, minute: 0, second: 0)
+            self.waitUntilMatchingEntries(["sys.updatedAt[lte]": date]) {
+                expect($0.items.count).to(equal(11))
+            }
+
+            self.waitUntilMatchingEntries(["sys.updatedAt[lte]": "2015-01-01T00:00:00Z"]) {
+                expect($0.items.count).to(equal(11))
+            }
+        }
+
+        it("can fetch entries using full-text search") {
+            self.waitUntilMatchingEntries(["query": "bacon"]) {
+                expect($0.items.count).to(equal(1))
+            }
+        }
+
+        it("can fetch entries using full-text search on a specific field") {
+            self.waitUntilMatchingEntries(["content_type": "dog", "fields.description[match]": "bacon pancakes"]) {
+                expect($0.items.count).to(equal(1))
             }
         }
     }
