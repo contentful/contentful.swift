@@ -9,3 +9,4 @@ Pods
 build
 .build
 Packages
+*.xcscmblueprint
