@@ -24,4 +24,5 @@ Pod::Spec.new do |s|
 
   s.dependency 'Decodable', '~> 0.3.2'
   s.dependency 'Interstellar', '~> 1.3.0'
+  s.dependency '🕕'
 end

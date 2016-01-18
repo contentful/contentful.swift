@@ -6,6 +6,7 @@
 //  Copyright © 2015 Contentful GmbH. All rights reserved.
 //
 
+import Clock
 import Decodable
 import Foundation
 import Interstellar
@@ -52,6 +53,10 @@ public class ContentfulClient {
         if let components = NSURLComponents(string: "\(scheme)://\(configuration.server)/spaces/\(spaceIdentifier)/\(fragment)") {
             if let parameters = parameters {
                 components.queryItems = parameters.map() { (key, var value) in
+                    if let date = value as? NSDate, dateString = date.toISO8601GMTString() {
+                        value = dateString
+                    }
+
                     if let array = value as? NSArray {
                         value = array.componentsJoinedByString(",")
                     }
