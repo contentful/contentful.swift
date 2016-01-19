@@ -52,7 +52,7 @@ public class ContentfulClient {
     private func URLForFragment(fragment: String = "", parameters: [String: AnyObject]? = nil) -> NSURL? {
         if let components = NSURLComponents(string: "\(scheme)://\(configuration.server)/spaces/\(spaceIdentifier)/\(fragment)") {
             if let parameters = parameters {
-                components.queryItems = parameters.map() { (key, var value) in
+                let queryItems: [NSURLQueryItem] = parameters.map() { (key, var value) in
                     if let date = value as? NSDate, dateString = date.toISO8601GMTString() {
                         value = dateString
                     }
@@ -62,6 +62,10 @@ public class ContentfulClient {
                     }
 
                     return NSURLQueryItem(name: key, value: value.description)
+                }
+
+                if queryItems.count > 0 {
+                    components.queryItems = queryItems
                 }
             }
 
