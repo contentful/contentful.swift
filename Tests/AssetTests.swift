@@ -76,5 +76,17 @@ class AssetTests: ContentfulBaseTests {
                 self.testFetchImageFromAsset(done)
             }
         }
+
+        it("can filter assets by MIMEType group") {
+            waitUntil { done in
+                self.client.fetchAssets(["mimetype_group": "image"]).1.next {
+                    expect($0.items.count).to(equal(4))
+                    done()
+                }.error {
+                    fail("\($0)")
+                    done()
+                }
+            }
+        }
     }
 }
