@@ -46,6 +46,65 @@ class EntryTests: ContentfulBaseTests {
     override func spec() {
         super.spec()
 
+        describe("Array related queries") {
+            it("can limit the number of entries being retrieved") {
+                self.waitUntilMatchingEntries(["limit": 5]) {
+                    expect($0.limit).to(equal(5))
+                    expect($0.items.count).to(equal(5))
+                }
+            }
+
+            it("can skip entries in a query") {
+                self.waitUntilMatchingEntries(["order": "sys.createdAt", "skip": 10]) {
+                    expect($0.items.count).to(equal(1))
+                    expect($0.items.first?.identifier).to(equal("7qVBlCjpWE86Oseo40gAEY"))
+                }
+            }
+
+            it("can change the number of include levels being part of the response") {
+                self.waitUntilMatchingEntries(["sys.id": "nyancat", "include": 2]) {
+                    if let entry = $0.items.first?.fields["bestFriend"] as? Entry {
+                        if let asset = entry.fields["image"] as? Asset {
+                            expect(asset.URL.absoluteString).to(equal("https://images.contentful.com/cfexampleapi/3MZPnjZTIskAIIkuuosCss/382a48dfa2cb16c47aa2c72f7b23bf09/happycatw.jpg"))
+                            return
+                        }
+                    }
+
+                    fail("Includes were not resolved successfully.")
+                }
+            }
+        }
+
+        describe("Order related queries") {
+            let orderedEntries = ["CVebBDcQsSsu6yKKIayy", "nyancat", "happycat", "garfield",
+                "finn", "jake", "6KntaYXaHSyIw8M6eo26OK", "4MU1s3potiUEM2G4okYOqw",
+                "5ETMRzkl9KM4omyMwKAOki", "ge1xHyH3QOWucKWCCAgIG", "7qVBlCjpWE86Oseo40gAEY"]
+            let orderedEntriesByMultiple = ["4MU1s3potiUEM2G4okYOqw", "CVebBDcQsSsu6yKKIayy",
+                "ge1xHyH3QOWucKWCCAgIG", "6KntaYXaHSyIw8M6eo26OK", "7qVBlCjpWE86Oseo40gAEY",
+                "garfield", "5ETMRzkl9KM4omyMwKAOki", "jake", "nyancat", "finn", "happycat"]
+
+            it("can fetch entries in a specified order") {
+                self.waitUntilMatchingEntries(["order": "sys.createdAt"]) {
+                    let ids = $0.items.map { $0.identifier }
+                    expect(ids).to(equal(orderedEntries))
+                }
+            }
+
+            it("can fetch entries in reverse order") {
+                self.waitUntilMatchingEntries(["order": "-sys.createdAt"]) {
+                    let ids = $0.items.map { $0.identifier }
+                    expect(ids).to(equal(orderedEntries.reverse()))
+                }
+            }
+
+            it("can fetch entries ordered by multiple attributes") {
+                self.waitUntilMatchingEntries(["order": ["sys.revision", "sys.id"]]) {
+                    let ids = $0.items.map { $0.identifier }
+                    expect(ids).to(equal(orderedEntriesByMultiple))
+                }
+            }
+        }
+
         it("can fetch a single entry") {
             waitUntil(timeout: 10) { done in
                 self.client.fetchEntry("nyancat") { (result) in

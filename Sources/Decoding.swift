@@ -80,6 +80,12 @@ extension ContentfulArray: Decodable {
             }
         }
 
+        for (key, resource) in includes {
+            if let entry = resource as? Entry {
+                includes[key] = resolveLinks(entry, includes)
+            }
+        }
+
         items = items.map { (item) in
             if let entry = item as? Entry {
                 return resolveLinks(entry, includes) as! T
