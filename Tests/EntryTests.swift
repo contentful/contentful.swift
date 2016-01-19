@@ -248,5 +248,12 @@ class EntryTests: ContentfulBaseTests {
                 expect($0.items.count).to(equal(0))
             }
         }
+
+        it("can filter entries by their linked entries") {
+            self.waitUntilMatchingEntries(["content_type": "cat", "fields.bestFriend.sys.id": "nyancat"]) {
+                expect($0.items.count).to(equal(1))
+                expect($0.items.first?.identifier).to(equal("happycat"))
+            }
+        }
     }
 }
