@@ -1,0 +1,62 @@
+{
+  "fields": {
+    "name": {
+      "en-US": "Nyan Cat",
+      "tlh": "Nyan vIghro'"
+    },
+    "likes": {
+      "en-US": [
+        "rainbows",
+        "fish"
+      ]
+    },
+    "color": {
+      "en-US": "rainbow"
+    },
+    "bestFriend": {
+      "en-US": {
+        "sys": {
+          "type": "Link",
+          "linkType": "Entry",
+          "id": "happycat"
+        }
+      }
+    },
+    "birthday": {
+      "en-US": "2011-04-04T22:00:00+00:00"
+    },
+    "lives": {
+      "en-US": 1337
+    },
+    "image": {
+      "en-US": {
+        "sys": {
+          "type": "Link",
+          "linkType": "Asset",
+          "id": "nyancat"
+        }
+      }
+    }
+  },
+  "sys": {
+    "space": {
+      "sys": {
+        "type": "Link",
+        "linkType": "Space",
+        "id": "cfexampleapi"
+      }
+    },
+    "type": "Entry",
+    "contentType": {
+      "sys": {
+        "type": "Link",
+        "linkType": "ContentType",
+        "id": "cat"
+      }
+    },
+    "id": "nyancat",
+    "revision": 5,
+    "createdAt": "2013-06-27T22:46:19.513Z",
+    "updatedAt": "2013-09-04T09:19:39.027Z"
+  }
+}

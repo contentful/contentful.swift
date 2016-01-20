@@ -43,6 +43,19 @@ class DecondingTests: QuickSpec {
                     expect(space.locales[0].isDefault).to(equal(true))
                 }
             }
+
+            it("can decode localized entries") {
+                AssertNoThrow {
+                    var entry = try Entry.decode(self.jsonData("localized"))
+
+                    expect(entry.identifier).to(equal("nyancat"))
+                    expect(entry.fields["name"] as? String).to(equal("Nyan Cat"))
+
+                    entry.locale = "tlh"
+
+                    expect(entry.fields["name"] as? String).to(equal("Nyan vIghro'"))
+                }
+            }
         }
     }
 }

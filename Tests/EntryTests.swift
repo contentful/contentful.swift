@@ -122,6 +122,16 @@ class EntryTests: ContentfulBaseTests {
             }
         }
 
+        it("can fetch entries with a specified locale") {
+            self.waitUntilMatchingEntries([ "locale": "tlh", "sys.id": "nyancat" ]) {
+                let entry = $0.items.first
+
+                expect(entry?.identifier).to(equal("nyancat"))
+                expect(entry?.fields["name"] as? String).to(equal("Nyan vIghro'"))
+                expect(entry?.locale).to(equal("tlh"))
+            }
+        }
+
         it("can fetch all entries of a space") {
             waitUntil(timeout: 10) { done in
                 self.client.fetchEntries() { (result) in

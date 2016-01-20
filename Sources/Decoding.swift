@@ -9,6 +9,8 @@
 import Decodable
 import Foundation
 
+private let DEFAULT_LOCALE = "en-US"
+
 extension UInt: Castable {}
 
 extension Asset: Decodable {
@@ -45,23 +47,29 @@ extension ContentfulArray: Decodable {
     }
 
     private static func resolveLinks(entry: Entry, _ includes: [String:Resource]) -> Entry {
-        var fields = entry.fields
+        var localizedFields = [String:[String:Any]]()
 
-        for field in entry.fields {
-            if let include = resolveLink(field.1, includes) {
-                fields[field.0] = include
-            }
+        entry.localizedFields.forEach { locale, entryFields in
+            var fields = entryFields
 
-            if let links = field.1 as? [[String:AnyObject]] {
-                // This drops any unresolvable links automatically
-                let includes = links.map { resolveLink($0, includes) }.flatMap { $0 }
-                if includes.count > 0 {
-                    fields[field.0] = includes
+            entryFields.forEach { field in
+                if let include = resolveLink(field.1, includes) {
+                    fields[field.0] = include
+                }
+
+                if let links = field.1 as? [[String:AnyObject]] {
+                    // This drops any unresolvable links automatically
+                    let includes = links.map { resolveLink($0, includes) }.flatMap { $0 }
+                    if includes.count > 0 {
+                        fields[field.0] = includes
+                    }
                 }
             }
+
+            localizedFields[locale] = fields
         }
 
-        return Entry(sys: entry.sys, fields: fields, identifier:  entry.identifier, type: entry.type)
+        return Entry(entry: entry, localizedFields: localizedFields)
     }
 
     /// Decode JSON for an Array
@@ -120,20 +128,41 @@ extension ContentType: Decodable {
 }
 
 extension Entry: Decodable {
+    // Cannot cast directly from [String:AnyObject] => [String:Any]
+    private static func convert(fields: [String:AnyObject]) -> [String:Any] {
+        var result = [String:Any]()
+        fields.forEach { result[$0.0] = $0.1 }
+        return result
+    }
+
     /// Decode JSON for an Entry
     public static func decode(json: AnyObject) throws -> Entry {
-        // Cannot cast directly from [String:AnyObject] => [String:Any]
-        var fields = [String:Any]()
-        for field in (try json => "fields" as! [String:AnyObject]) {
-            fields[field.0] = field.1
+        let fields: [String:AnyObject] = try json => "fields"
+        let locale: String? = try? json => "sys" => "locale"
+
+        var localizedFields = [String:[String:Any]]()
+
+        if let locale = locale {
+            localizedFields[locale] = convert(fields)
+        } else {
+            fields.forEach { field, fields in
+                (fields as? [String:AnyObject])?.forEach { locale, value in
+                    if localizedFields[locale] == nil {
+                        localizedFields[locale] = [String:Any]()
+                    }
+
+                    localizedFields[locale]?[field] = value
+                }
+            }
         }
 
         return try Entry(
             sys: (json => "sys") as! [String : AnyObject],
-            fields: fields,
+            localizedFields: localizedFields,
 
             identifier: json => "sys" => "id",
-            type: json => "sys" => "type"
+            type: json => "sys" => "type",
+            locale: locale ?? DEFAULT_LOCALE
         )
     }
 }
