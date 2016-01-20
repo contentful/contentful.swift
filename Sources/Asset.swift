@@ -14,18 +14,36 @@ import UIKit
 #endif
 
 /// An asset represents a media file in Contentful
-public struct Asset : Resource {
+public struct Asset : Resource, LocalizedResource {
     /// System fields
     public let sys: [String:AnyObject]
     /// Content fields
-    public let fields: [String:AnyObject]
+    public var fields: [String:Any] {
+        return localizedFields[locale] ?? [String:Any]()
+    }
+
+    let localizedFields: [String:[String:Any]]
 
     /// The unique identifier of this Asset
     public let identifier: String
     /// Resource type ("Asset")
     public let type: String
     /// The URL for the underlying media file
-    public let URL: NSURL
+    public func URL() throws -> NSURL {
+        if let urlString = (fields["file"] as? [String:AnyObject])?["url"] as? String {
+            // FIXME: Scheme should not be hardcoded
+            if let URL = NSURL(string: "https:\(urlString)") {
+                return URL
+            }
+
+            throw ContentfulError.InvalidURL(string: urlString)
+        }
+
+        throw ContentfulError.InvalidURL(string: "")
+    }
+
+    /// Currently selected locale
+    public var locale: String
 
     private let network = Network()
 
@@ -35,7 +53,13 @@ public struct Asset : Resource {
      - returns: Tuple of the data task and a signal for the `NSData` result
      */
     public func fetch() -> (NSURLSessionDataTask, Signal<NSData>) {
-        return network.fetch(URL)
+        do {
+            return network.fetch(try URL())
+        } catch {
+            let signal = Signal<NSData>()
+            signal.update(error)
+            return (NSURLSessionDataTask(), signal)
+        }
     }
 
 #if os(iOS) || os(tvOS)

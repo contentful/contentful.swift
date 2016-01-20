@@ -9,7 +9,7 @@
 import Foundation
 
 /// An Entry represents a typed collection of data in Contentful
-public struct Entry : Resource {
+public struct Entry : Resource, LocalizedResource {
     /// System fields
     public let sys: [String:AnyObject]
     /// Content fields

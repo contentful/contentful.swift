@@ -1,56 +1,32 @@
 {
   "fields": {
-    "title": "11722607_909300049108362_4074365705921537013_o",
+    "title": "Nyan Cat",
     "file": {
-      "contentType": "image/jpeg",
-      "fileName": "3D5423B9-558E-41DB-95B5-EF7406FC1AB7.jpg?dl=1",
+      "fileName": "Nyan_cat_250px_frame.png",
+      "contentType": "image/png",
       "details": {
         "image": {
-          "width": 2048,
-          "height": 1366
+          "width": 250,
+          "height": 250
         },
-        "size": 253951
+        "size": 12273
       },
-      "url": "//images.contentful.com/fsnczri66h17/5VPbSI9VSM2Suq4eMEIGOS/937e4ebd25917ae20be0d3bacd0511af/3D5423B9-558E-41DB-95B5-EF7406FC1AB7.jpg_dl_1"
+      "url": "//images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png"
     }
   },
   "sys": {
-    "id": "5VPbSI9VSM2Suq4eMEIGOS",
-    "type": "Asset",
-    "createdAt": "2015-07-27T09:06:14.657Z",
-    "createdBy": {
-      "sys": {
-        "type": "Link",
-        "linkType": "User",
-        "id": "4FLrUHftHW3v2BLi9fzfjU"
-      }
-    },
     "space": {
       "sys": {
         "type": "Link",
         "linkType": "Space",
-        "id": "fsnczri66h17"
+        "id": "cfexampleapi"
       }
     },
-    "firstPublishedAt": "2015-07-27T09:06:35.041Z",
-    "publishedCounter": 1,
-    "publishedAt": "2015-07-27T09:06:35.041Z",
-    "publishedBy": {
-      "sys": {
-        "type": "Link",
-        "linkType": "User",
-        "id": "4FLrUHftHW3v2BLi9fzfjU"
-      }
-    },
-    "publishedVersion": 3,
-    "version": 4,
-    "updatedAt": "2015-07-27T09:06:35.084Z",
-    "updatedBy": {
-      "sys": {
-        "type": "Link",
-        "linkType": "User",
-        "id": "4FLrUHftHW3v2BLi9fzfjU"
-      }
-    }
+    "type": "Asset",
+    "id": "nyancat",
+    "revision": 1,
+    "createdAt": "2013-09-02T14:56:34.240Z",
+    "updatedAt": "2013-09-02T14:56:34.240Z",
+    "locale": "en-US"
   }
 }

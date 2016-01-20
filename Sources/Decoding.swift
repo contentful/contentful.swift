@@ -11,24 +11,50 @@ import Foundation
 
 private let DEFAULT_LOCALE = "en-US"
 
+// Cannot cast directly from [String:AnyObject] => [String:Any]
+private func convert(fields: [String:AnyObject]) -> [String:Any] {
+    var result = [String:Any]()
+    fields.forEach { result[$0.0] = $0.1 }
+    return result
+}
+
+private func parseLocalizedFields(json: AnyObject) throws -> (String, [String:[String:Any]]) {
+    let fields: [String:AnyObject] = try json => "fields"
+    let locale: String? = try? json => "sys" => "locale"
+
+    var localizedFields = [String:[String:Any]]()
+
+    if let locale = locale {
+        localizedFields[locale] = convert(fields)
+    } else {
+        fields.forEach { field, fields in
+            (fields as? [String:AnyObject])?.forEach { locale, value in
+                if localizedFields[locale] == nil {
+                    localizedFields[locale] = [String:Any]()
+                }
+
+                localizedFields[locale]?[field] = value
+            }
+        }
+    }
+
+    return (locale ?? DEFAULT_LOCALE, localizedFields)
+}
+
 extension UInt: Castable {}
 
 extension Asset: Decodable {
     /// Decode JSON for an Asset
     public static func decode(json: AnyObject) throws -> Asset {
-        let urlString: String = try json => "fields" => "file" => "url"
-        // FIXME: Scheme should not be hardcoded
-        guard let url = NSURL(string: "https:\(urlString)") else {
-            throw ContentfulError.InvalidURL(string: urlString)
-        }
+        let (locale, localizedFields) = try parseLocalizedFields(json)
 
         return try Asset(
             sys: (json => "sys") as! [String : AnyObject],
-            fields: (json => "fields") as! [String : AnyObject],
+            localizedFields: localizedFields,
 
             identifier: json => "sys" => "id",
             type: json => "sys" => "type",
-            URL: url
+            locale: locale
         )
     }
 }
@@ -128,33 +154,9 @@ extension ContentType: Decodable {
 }
 
 extension Entry: Decodable {
-    // Cannot cast directly from [String:AnyObject] => [String:Any]
-    private static func convert(fields: [String:AnyObject]) -> [String:Any] {
-        var result = [String:Any]()
-        fields.forEach { result[$0.0] = $0.1 }
-        return result
-    }
-
     /// Decode JSON for an Entry
     public static func decode(json: AnyObject) throws -> Entry {
-        let fields: [String:AnyObject] = try json => "fields"
-        let locale: String? = try? json => "sys" => "locale"
-
-        var localizedFields = [String:[String:Any]]()
-
-        if let locale = locale {
-            localizedFields[locale] = convert(fields)
-        } else {
-            fields.forEach { field, fields in
-                (fields as? [String:AnyObject])?.forEach { locale, value in
-                    if localizedFields[locale] == nil {
-                        localizedFields[locale] = [String:Any]()
-                    }
-
-                    localizedFields[locale]?[field] = value
-                }
-            }
-        }
+        let (locale, localizedFields) = try parseLocalizedFields(json)
 
         return try Entry(
             sys: (json => "sys") as! [String : AnyObject],
@@ -162,7 +164,7 @@ extension Entry: Decodable {
 
             identifier: json => "sys" => "id",
             type: json => "sys" => "type",
-            locale: locale ?? DEFAULT_LOCALE
+            locale: locale
         )
     }
 }

@@ -25,9 +25,9 @@ class DecondingTests: QuickSpec {
                 AssertNoThrow {
                     let asset = try Asset.decode(self.jsonData("asset"))
 
-                    expect(asset.identifier).to(equal("5VPbSI9VSM2Suq4eMEIGOS"))
+                    expect(asset.identifier).to(equal("nyancat"))
                     expect(asset.type).to(equal("Asset"))
-                    expect(asset.URL).to(equal(NSURL(string: "https://images.contentful.com/fsnczri66h17/5VPbSI9VSM2Suq4eMEIGOS/937e4ebd25917ae20be0d3bacd0511af/3D5423B9-558E-41DB-95B5-EF7406FC1AB7.jpg_dl_1")))
+                    expect(try asset.URL()).to(equal(NSURL(string: "https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png")))
                 }
             }
 

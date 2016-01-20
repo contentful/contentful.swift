@@ -65,7 +65,7 @@ class EntryTests: ContentfulBaseTests {
                 self.waitUntilMatchingEntries(["sys.id": "nyancat", "include": 2]) {
                     if let entry = $0.items.first?.fields["bestFriend"] as? Entry {
                         if let asset = entry.fields["image"] as? Asset {
-                            expect(asset.URL.absoluteString).to(equal("https://images.contentful.com/cfexampleapi/3MZPnjZTIskAIIkuuosCss/382a48dfa2cb16c47aa2c72f7b23bf09/happycatw.jpg"))
+                            expect(url(asset).absoluteString).to(equal("https://images.contentful.com/cfexampleapi/3MZPnjZTIskAIIkuuosCss/382a48dfa2cb16c47aa2c72f7b23bf09/happycatw.jpg"))
                             return
                         }
                     }
@@ -132,6 +132,18 @@ class EntryTests: ContentfulBaseTests {
             }
         }
 
+        it("can fetch entries with all locales") {
+            self.waitUntilMatchingEntries([ "locale": "*", "sys.id": "nyancat" ]) {
+                var entry = $0.items.first
+
+                expect(entry?.identifier).to(equal("nyancat"))
+                expect(entry?.fields["name"] as? String).to(equal("Nyan Cat"))
+
+                entry?.locale = "tlh"
+                expect(entry?.fields["name"] as? String).to(equal("Nyan vIghro'"))
+            }
+        }
+
         it("can fetch all entries of a space") {
             waitUntil(timeout: 10) { done in
                 self.client.fetchEntries() { (result) in
@@ -174,7 +186,7 @@ class EntryTests: ContentfulBaseTests {
                         expect(entry.fields["name"] as? String).to(equal("Nyan Cat"))
 
                         let image = entry.fields["image"] as? Asset
-                        expect(image?.URL.absoluteString).to(equal("https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png"))
+                        expect(url(image!).absoluteString).to(equal("https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png"))
                     case let .Error(error):
                         fail("\(error)")
                     }

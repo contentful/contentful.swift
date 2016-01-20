@@ -18,3 +18,10 @@ protocol Resource: Decodable {
     /// Resource type
     var type: String { get }
 }
+
+protocol LocalizedResource {
+    var fields: [String:Any] { get }
+
+    var locale: String { get set }
+    var localizedFields: [String:[String:Any]] { get }
+}

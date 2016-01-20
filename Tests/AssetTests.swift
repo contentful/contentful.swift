@@ -6,9 +6,16 @@
 //  Copyright © 2016 Contentful GmbH. All rights reserved.
 //
 
+import CatchingFire
 import Contentful
 import Nimble
 import Quick
+
+func url(asset: Asset) -> NSURL {
+    var url = NSURL(string: "http://example.com")
+    AssertNoThrow { url = try asset.URL() }
+    return url!
+}
 
 class AssetTests: ContentfulBaseTests {
     func md5(image: UIImage) -> String {
@@ -31,7 +38,7 @@ class AssetTests: ContentfulBaseTests {
     func testNyanCatAssetObject(asset: Asset) {
         expect(asset.identifier).to(equal("nyancat"))
         expect(asset.type).to(equal("Asset"))
-        expect(asset.URL.absoluteString).to(equal("https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png"))
+        expect(url(asset).absoluteString).to(equal("https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png"))
     }
 
     override func spec() {
