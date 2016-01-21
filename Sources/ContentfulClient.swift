@@ -253,3 +253,30 @@ extension ContentfulClient {
         return signalify(fetchSpace)
     }
 }
+
+extension ContentfulClient {
+    public func initialSync(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<SyncSpace> -> Void) -> NSURLSessionDataTask? {
+        var parameters = matching
+        parameters["initial"] = true
+        return sync(parameters, completion: completion)
+    }
+
+    public func initialSync(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<SyncSpace>) {
+        return signalify(matching, initialSync)
+    }
+
+    func sync(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<SyncSpace> -> Void) -> NSURLSessionDataTask? {
+        return fetch(URLForFragment("sync", parameters: matching), { (result: Result<SyncSpace>) in
+            if let value = result.value {
+                value.client = self
+                completion(.Success(value))
+            } else {
+                completion(result)
+            }
+        })
+    }
+
+    func sync(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<SyncSpace>) {
+        return signalify(matching, sync)
+    }
+}

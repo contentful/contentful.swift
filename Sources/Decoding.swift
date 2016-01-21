@@ -98,8 +98,7 @@ extension ContentfulArray: Decodable {
         return Entry(entry: entry, localizedFields: localizedFields)
     }
 
-    /// Decode JSON for an Array
-    public static func decode(json: AnyObject) throws -> ContentfulArray {
+    static func parseItems(json: AnyObject) throws -> [Resource] {
         var includes = [String:Resource]()
         let jsonIncludes = try? json => "includes" as! [String:AnyObject]
 
@@ -108,12 +107,21 @@ extension ContentfulArray: Decodable {
             try Entry.decode(jsonIncludes, &includes)
         }
 
-        var items: [T] = try json => "items"
+        let items: [Resource] = try (try json => "items" as! [AnyObject]).flatMap {
+            let type: String = try $0 => "sys" => "type"
+
+            switch type {
+            case "Asset": return try Asset.decode($0)
+            case "ContentType": return try ContentType.decode($0)
+            case "DeletedAsset": return try DeletedResource.decode($0)
+            case "DeletedEntry": return try DeletedResource.decode($0)
+            case "Entry": return try Entry.decode($0)
+            default: fatalError("Unsupported resource type '\(type)'")
+            }
+        }
 
         for item in items {
-            if let resource = item as? Resource {
-                includes[resource.key] = resource
-            }
+            includes[item.key] = item
         }
 
         for (key, resource) in includes {
@@ -122,15 +130,18 @@ extension ContentfulArray: Decodable {
             }
         }
 
-        items = items.map { (item) in
+        return items.map { (item) in
             if let entry = item as? Entry {
-                return resolveLinks(entry, includes) as! T
+                return resolveLinks(entry, includes)
             }
             return item
         }
+    }
 
+    /// Decode JSON for an Array
+    public static func decode(json: AnyObject) throws -> ContentfulArray {
         return try ContentfulArray(
-            items: items,
+            items: parseItems(json).flatMap { $0 as? T },
 
             limit: json => "limit",
             skip: json => "skip",
@@ -148,6 +159,17 @@ extension ContentType: Decodable {
 
             identifier: json => "sys" => "id",
             name: json => "name",
+            type: json => "sys" => "type"
+        )
+    }
+}
+
+extension DeletedResource: Decodable {
+    /// Decode JSON for a deleted resource
+    static func decode(json: AnyObject) throws -> DeletedResource {
+        return try DeletedResource(
+            sys: (json => "sys") as! [String : AnyObject],
+            identifier: json => "sys" => "id",
             type: json => "sys" => "type"
         )
     }
@@ -234,5 +256,30 @@ extension Space: Decodable {
             name: json => "name",
             type: json => "sys" => "type"
         )
+    }
+}
+
+extension SyncSpace: Decodable {
+    /// Decode JSON for a SyncSpace
+    public static func decode(json: AnyObject) throws -> SyncSpace {
+        let syncSpace = SyncSpace()
+
+        NSURLComponents(string: try json => "nextSyncUrl")?.queryItems?.forEach {
+            if let value = $0.value where $0.name == "sync_token" {
+                syncSpace.syncToken = value
+            }
+        }
+
+        try ContentfulArray<Entry>.parseItems(json).forEach {
+            if let asset = $0 as? Asset {
+                syncSpace.assets.append(asset)
+            }
+
+            if let entry = $0 as? Entry {
+                syncSpace.entries.append(entry)
+            }
+        }
+
+        return syncSpace
     }
 }

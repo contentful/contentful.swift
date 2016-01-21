@@ -10,6 +10,9 @@ import Foundation
 
 /// Possible errors being thrown by the SDK
 public enum ContentfulError : ErrorType {
+    /// Thrown when no valid client is available during sync
+    case InvalidClient()
+
     /**
      *  Thrown when receiving an invalid HTTP response
      *

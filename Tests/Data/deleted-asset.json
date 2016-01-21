@@ -1,0 +1,25 @@
+{
+  "sys": {
+    "type": "Array"
+  },
+  "items": [
+    {
+      "sys": {
+        "type": "DeletedAsset",
+        "id": "2q1Ns7Oygo2mAgoweuMCAA",
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "emh6o2ireilu"
+          }
+        },
+        "revision": 1,
+        "createdAt": "2014-03-25T11:09:14.488Z",
+        "updatedAt": "2014-03-25T11:09:14.488Z",
+        "deletedAt": "2014-03-25T11:09:14.488Z"
+      }
+    }
+  ],
+  "nextSyncUrl": "https://cdn.contentful.com/spaces/emh6o2ireilu/sync?sync_token=w5ZGw6JFwqZmVcKsE8Kow4grw45QdyYHPUPDhggxwr5qw5RBbMKWw4VjOg3DumTDg0_CgsKcYsO8UcOZfMKLw4sKUcOnJcKxfDUkGWwxNMOVw4AiacK5Bmo4ScOhI0g2cXLClxTClsOyE8OOc8O3"
+}

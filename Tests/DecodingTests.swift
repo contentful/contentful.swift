@@ -56,6 +56,34 @@ class DecondingTests: QuickSpec {
                     expect(entry.fields["name"] as? String).to(equal("Nyan vIghro'"))
                 }
             }
+
+            it("can decode sync responses") {
+                AssertNoThrow {
+                    let syncSpace = try SyncSpace.decode(self.jsonData("sync"))
+
+                    expect(syncSpace.assets.count).to(equal(4))
+                    expect(syncSpace.entries.count).to(equal(11))
+                    expect(syncSpace.syncToken).to(equal("w5ZGw6JFwqZmVcKsE8Kow4grw45QdybCnV_Cg8OASMKpwo1UY8K8bsKFwqJrw7DDhcKnM2RDOVbDt1E-wo7CnDjChMKKGsK1wrzCrBzCqMOpZAwOOcOvCcOAwqHDv0XCiMKaOcOxZA8BJUzDr8K-wo1lNx7DnHE"))
+                }
+            }
+
+            it("can decode sync responses with deleted assets") {
+                AssertNoThrow {
+                    let syncSpace = try SyncSpace.decode(self.jsonData("deleted-asset"))
+
+                    expect(syncSpace.assets.count).to(equal(0))
+                    expect(syncSpace.entries.count).to(equal(0))
+                }
+            }
+
+            it("can decode sync responses with deleted entries") {
+                AssertNoThrow {
+                    let syncSpace = try SyncSpace.decode(self.jsonData("deleted"))
+
+                    expect(syncSpace.assets.count).to(equal(0))
+                    expect(syncSpace.entries.count).to(equal(0))
+                }
+            }
         }
     }
 }
