@@ -262,24 +262,9 @@ extension Space: Decodable {
 extension SyncSpace: Decodable {
     /// Decode JSON for a SyncSpace
     public static func decode(json: AnyObject) throws -> SyncSpace {
-        let syncSpace = SyncSpace()
-
-        NSURLComponents(string: try json => "nextSyncUrl")?.queryItems?.forEach {
-            if let value = $0.value where $0.name == "sync_token" {
-                syncSpace.syncToken = value
-            }
-        }
-
-        try ContentfulArray<Entry>.parseItems(json).forEach {
-            if let asset = $0 as? Asset {
-                syncSpace.assets.append(asset)
-            }
-
-            if let entry = $0 as? Entry {
-                syncSpace.entries.append(entry)
-            }
-        }
-
-        return syncSpace
+        return SyncSpace(
+            nextSyncUrl: try json => "nextSyncUrl",
+            items: try ContentfulArray<Entry>.parseItems(json)
+        )
     }
 }
