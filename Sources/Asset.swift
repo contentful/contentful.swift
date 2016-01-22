@@ -19,10 +19,11 @@ public struct Asset : Resource, LocalizedResource {
     public let sys: [String:AnyObject]
     /// Content fields
     public var fields: [String:Any] {
-        return Contentful.fields(localizedFields, forLocale: locale)
+        return Contentful.fields(localizedFields, forLocale: locale, defaultLocale: defaultLocale)
     }
 
     let localizedFields: [String:[String:Any]]
+    let defaultLocale: String
 
     /// The unique identifier of this Asset
     public let identifier: String

@@ -17,6 +17,8 @@ public class ContentfulClient {
     private let network = Network()
     private let spaceIdentifier: String
 
+    private(set) var space: Space?
+
     private var scheme: String { return configuration.secure ? "https" : "http" }
 
     /**
@@ -41,9 +43,19 @@ public class ContentfulClient {
         if let url = url {
             let (task, signal) = network.fetch(url)
 
-            signal
-                .next { self.handleJSON($0, completion) }
-                .error { completion(.Error($0)) }
+            if T.self == Space.self {
+                signal
+                    .next { self.handleJSON($0, completion) }
+                    .error { completion(.Error($0)) }
+            } else {
+                fetchSpace().1
+                    .next { _ in
+                        signal
+                            .next { self.handleJSON($0, completion) }
+                            .error { completion(.Error($0)) }
+                    }
+                    .error { completion(.Error($0)) }
+            }
 
             return task
         }
@@ -55,6 +67,7 @@ public class ContentfulClient {
     private func handleJSON<T: Decodable>(data: NSData, _ completion: Result<T> -> Void) {
         do {
             let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
+            if let json = json as? NSDictionary { json.client = self }
             completion(.Success(try T.decode(json)))
         } catch let error as DecodingError {
             completion(.Error(ContentfulError.UnparseableJSON(data: data, errorMessage: error.debugDescription)))
@@ -242,9 +255,14 @@ extension ContentfulClient {
 
      - parameter completion: A handler being called on completion of the request
 
-     - returns: The data task being used, enables cancellation of requests
+     - returns: The data task being used, which enables cancellation of requests, or `nil` if the
+        Space was already cached locally
      */
     public func fetchSpace(completion: Result<Space> -> Void) -> NSURLSessionDataTask? {
+        if let space = self.space {
+            completion(.Success(space))
+            return nil
+        }
         return fetch(URLForFragment(), completion)
     }
 

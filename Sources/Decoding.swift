@@ -18,6 +18,16 @@ private func convert(fields: [String:AnyObject]) -> [String:Any] {
     return result
 }
 
+private func determineDefaultLocale(json: AnyObject) -> String {
+    if let json = json as? NSDictionary, space = json.client?.space {
+        if let locale = (space.locales.filter { $0.isDefault }).first {
+            return locale.code
+        }
+    }
+
+    return DEFAULT_LOCALE
+}
+
 private func parseLocalizedFields(json: AnyObject) throws -> (String, [String:[String:Any]]) {
     let fields: [String:AnyObject] = try json => "fields"
     let locale: String? = try? json => "sys" => "locale"
@@ -51,6 +61,7 @@ extension Asset: Decodable {
         return try Asset(
             sys: (json => "sys") as! [String : AnyObject],
             localizedFields: localizedFields,
+            defaultLocale: determineDefaultLocale(json),
 
             identifier: json => "sys" => "id",
             type: json => "sys" => "type",
@@ -183,6 +194,7 @@ extension Entry: Decodable {
         return try Entry(
             sys: (json => "sys") as! [String : AnyObject],
             localizedFields: localizedFields,
+            defaultLocale: determineDefaultLocale(json),
 
             identifier: json => "sys" => "id",
             type: json => "sys" => "type",
