@@ -41,22 +41,26 @@ public class ContentfulClient {
         if let url = url {
             let (task, signal) = network.fetch(url)
 
-            signal.next { (data) in
-                do {
-                    let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
-                    completion(.Success(try T.decode(json)))
-                } catch let error as DecodingError {
-                    completion(.Error(ContentfulError.UnparseableJSON(data: data, errorMessage: error.debugDescription)))
-                } catch _ {
-                    completion(.Error(ContentfulError.UnparseableJSON(data: data, errorMessage: "")))
-                }
-            }.error { completion(.Error($0)) }
+            signal
+                .next { self.handleJSON($0, completion) }
+                .error { completion(.Error($0)) }
 
             return task
         }
 
         completion(.Error(ContentfulError.InvalidURL(string: "")))
         return nil
+    }
+
+    private func handleJSON<T: Decodable>(data: NSData, _ completion: Result<T> -> Void) {
+        do {
+            let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
+            completion(.Success(try T.decode(json)))
+        } catch let error as DecodingError {
+            completion(.Error(ContentfulError.UnparseableJSON(data: data, errorMessage: error.debugDescription)))
+        } catch _ {
+            completion(.Error(ContentfulError.UnparseableJSON(data: data, errorMessage: "")))
+        }
     }
 
     private func URLForFragment(fragment: String = "", parameters: [String: AnyObject]? = nil) -> NSURL? {
