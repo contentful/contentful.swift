@@ -1,5 +1,5 @@
 //
-//  ContentfulClient.swift
+//  Client.swift
 //  Contentful
 //
 //  Created by Boris Bügling on 18/08/15.
@@ -12,7 +12,7 @@ import Foundation
 import Interstellar
 
 /// Client object for performing requests against the Contentful API
-public class ContentfulClient {
+public class Client {
     private let configuration: Configuration
     private let network = Network()
     private let spaceIdentifier: String
@@ -105,7 +105,7 @@ public class ContentfulClient {
     }
 }
 
-extension ContentfulClient {
+extension Client {
     /**
      Fetch a single Asset from Contentful
 
@@ -153,7 +153,7 @@ extension ContentfulClient {
     }
 }
 
-extension ContentfulClient {
+extension Client {
     /**
      Fetch a single Content Type from Contentful
 
@@ -201,7 +201,7 @@ extension ContentfulClient {
     }
 }
 
-extension ContentfulClient {
+extension Client {
     /**
      Fetch a collection of Entries from Contentful
 
@@ -249,7 +249,7 @@ extension ContentfulClient {
     }
 }
 
-extension ContentfulClient {
+extension Client {
     /**
      Fetch the space this client is constrained to
 
@@ -276,7 +276,7 @@ extension ContentfulClient {
     }
 }
 
-extension ContentfulClient {
+extension Client {
     public func initialSync(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<SyncSpace> -> Void) -> NSURLSessionDataTask? {
         var parameters = matching
         parameters["initial"] = true

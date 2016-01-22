@@ -14,11 +14,11 @@ import Quick
 import Contentful
 
 class ContentfulBaseTests: QuickSpec {
-    var client: ContentfulClient!
+    var client: Client!
 
     override func spec() {
         beforeEach {
-            self.client = ContentfulClient(spaceIdentifier: "cfexampleapi", accessToken: "b4c0n73n7fu1")
+            self.client = Client(spaceIdentifier: "cfexampleapi", accessToken: "b4c0n73n7fu1")
         }
     }
 }

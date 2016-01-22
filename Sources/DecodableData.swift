@@ -12,9 +12,9 @@ import ObjectiveC.runtime
 private var key = "ContentfulClientKey"
 
 extension NSDictionary {
-    var client: ContentfulClient? {
+    var client: Client? {
         get {
-            return objc_getAssociatedObject(self, &key) as? ContentfulClient
+            return objc_getAssociatedObject(self, &key) as? Client
         }
         set {
             objc_setAssociatedObject(self, &key, newValue, .OBJC_ASSOCIATION_RETAIN)

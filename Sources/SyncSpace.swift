@@ -26,7 +26,7 @@ public final class SyncSpace {
         return Array(entriesMap.values)
     }
 
-    internal(set) public var client: ContentfulClient? = nil
+    internal(set) public var client: Client? = nil
 
     internal init(nextSyncUrl: String, items: [Resource]) {
         NSURLComponents(string: nextSyncUrl)?.queryItems?.forEach {

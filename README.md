@@ -16,7 +16,7 @@ The Contentful Swift SDK hasn't reached 1.0, yet, but provides a much nicer API 
 
 
 ```swift
-let client = ContentfulClient(spaceIdentifier: "cfexampleapi", accessToken: "b4c0n73n7fu1")
+let client = Client(spaceIdentifier: "cfexampleapi", accessToken: "b4c0n73n7fu1")
 client.fetchEntry("nyancat") { (result) in
     switch result {
         case let .Success(entry):
