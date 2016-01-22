@@ -70,7 +70,7 @@ extension Asset: Decodable {
     }
 }
 
-extension ContentfulArray: Decodable {
+extension Array: Decodable {
     private static func resolveLink(value: Any, _ includes: [String:Resource]) -> Any? {
         if let link = value as? [String:AnyObject],
             sys = link["sys"] as? [String:AnyObject],
@@ -150,8 +150,8 @@ extension ContentfulArray: Decodable {
     }
 
     /// Decode JSON for an Array
-    public static func decode(json: AnyObject) throws -> ContentfulArray {
-        return try ContentfulArray(
+    public static func decode(json: AnyObject) throws -> Array {
+        return try Array(
             items: parseItems(json).flatMap { $0 as? T },
 
             limit: json => "limit",
@@ -276,7 +276,7 @@ extension SyncSpace: Decodable {
     public static func decode(json: AnyObject) throws -> SyncSpace {
         return SyncSpace(
             nextSyncUrl: try json => "nextSyncUrl",
-            items: try ContentfulArray<Entry>.parseItems(json)
+            items: try Array<Entry>.parseItems(json)
         )
     }
 }

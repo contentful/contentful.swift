@@ -31,7 +31,7 @@ extension NSDate {
 }
 
 class EntryTests: ContentfulBaseTests {
-    func waitUntilMatchingEntries(matching: [String:AnyObject], action: (entries: ContentfulArray<Entry>) -> ()) {
+    func waitUntilMatchingEntries(matching: [String:AnyObject], action: (entries: Contentful.Array<Entry>) -> ()) {
         waitUntil(timeout: 10) { done in
             self.client.fetchEntries(matching).1.next {
                 action(entries: $0)
@@ -214,7 +214,7 @@ class EntryTests: ContentfulBaseTests {
         }
 
         it("can fetch entries using an inclusion search query") {
-            let action: (ContentfulArray<Entry>) -> () = {
+            let action: (Contentful.Array<Entry>) -> () = {
                 expect($0.items.count).to(equal(2))
                 let ids = $0.items.map { $0.identifier }
                 expect(ids).to(equal(["finn", "jake"]))

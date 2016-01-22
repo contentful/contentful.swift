@@ -1,5 +1,5 @@
 //
-//  ContentfulArray.swift
+//  Array.swift
 //  Contentful
 //
 //  Created by Boris Bügling on 18/08/15.
@@ -13,7 +13,7 @@ import Decodable
 
  This is the result type for any request of a collection of resources.
 **/
-public struct ContentfulArray<T: Decodable> {
+public struct Array<T: Decodable> {
     /**
      Optional list of errors which happened while fetching this result.
 

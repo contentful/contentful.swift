@@ -137,7 +137,7 @@ extension Client {
 
      - returns: The data task being used, enables cancellation of requests
      */
-    public func fetchAssets(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<ContentfulArray<Asset>> -> Void) -> NSURLSessionDataTask? {
+    public func fetchAssets(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<Array<Asset>> -> Void) -> NSURLSessionDataTask? {
         return fetch(URLForFragment("assets", parameters: matching), completion)
     }
 
@@ -148,7 +148,7 @@ extension Client {
 
      - returns: A tuple of data task and a signal for the resulting array of Assets
      */
-    public func fetchAssets(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<ContentfulArray<Asset>>) {
+    public func fetchAssets(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<Array<Asset>>) {
         return signalify(matching, fetchAssets)
     }
 }
@@ -185,7 +185,7 @@ extension Client {
 
      - returns: The data task being used, enables cancellation of requests
      */
-    public func fetchContentTypes(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<ContentfulArray<ContentType>> -> Void) -> NSURLSessionDataTask? {
+    public func fetchContentTypes(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<Array<ContentType>> -> Void) -> NSURLSessionDataTask? {
         return fetch(URLForFragment("content_types", parameters: matching), completion)
     }
 
@@ -196,7 +196,7 @@ extension Client {
 
      - returns: A tuple of data task and a signal for the resulting array of Content Types
      */
-    public func fetchContentTypes(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<ContentfulArray<ContentType>>) {
+    public func fetchContentTypes(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<Array<ContentType>>) {
         return signalify(matching, fetchContentTypes)
     }
 }
@@ -210,7 +210,7 @@ extension Client {
 
      - returns: The data task being used, enables cancellation of requests
      */
-    public func fetchEntries(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<ContentfulArray<Entry>> -> Void) -> NSURLSessionDataTask? {
+    public func fetchEntries(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<Array<Entry>> -> Void) -> NSURLSessionDataTask? {
         return fetch(URLForFragment("entries", parameters: matching), completion)
     }
 
@@ -221,7 +221,7 @@ extension Client {
 
      - returns: A tuple of data task and a signal for the resulting array of Entries
      */
-    public func fetchEntries(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<ContentfulArray<Entry>>) {
+    public func fetchEntries(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<Array<Entry>>) {
         return signalify(matching, fetchEntries)
     }
 

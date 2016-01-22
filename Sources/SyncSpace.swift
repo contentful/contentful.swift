@@ -19,11 +19,11 @@ public final class SyncSpace {
     private(set) public var syncToken = ""
 
     public var assets: [Asset] {
-        return Array(assetsMap.values)
+        return Swift.Array(assetsMap.values)
     }
 
     public var entries: [Entry] {
-        return Array(entriesMap.values)
+        return Swift.Array(entriesMap.values)
     }
 
     internal(set) public var client: Client? = nil
