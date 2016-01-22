@@ -9,6 +9,7 @@
 import Foundation
 import Interstellar
 
+/// A container for the synchronized state of a Space
 public final class SyncSpace {
     private var assetsMap = [String:Asset]()
     private var entriesMap = [String:Entry]()
@@ -16,17 +17,20 @@ public final class SyncSpace {
     private var deletedAssets = [String]()
     private var deletedEntries = [String]()
 
+    /// A token which needs to be present to perform a subsequent synchronization operation
     private(set) public var syncToken = ""
 
+    /// List of Assets currently published on the Space being synchronized
     public var assets: [Asset] {
         return Swift.Array(assetsMap.values)
     }
 
+    /// List of Entries currently published on the Space being synchronized
     public var entries: [Entry] {
         return Swift.Array(entriesMap.values)
     }
 
-    internal(set) public var client: Client? = nil
+    var client: Client? = nil
 
     internal init(nextSyncUrl: String, items: [Resource]) {
         NSURLComponents(string: nextSyncUrl)?.queryItems?.forEach {
@@ -54,6 +58,18 @@ public final class SyncSpace {
         }
     }
 
+    /**
+     Perform a subsequent synchronization operation, updating this object with the latest content from
+     Contentful. 
+     
+     Calling this will mutate the instance and also return a reference to itself to the completion
+     handler in order to allow chaining of operations.
+
+     - parameter matching:   Additional options for the synchronization
+     - parameter completion: A handler which will be called on completion of the operation
+
+     - returns: The data task being used, enables cancellation of requests
+     **/
     public func sync(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<SyncSpace> -> Void) -> NSURLSessionDataTask? {
         guard let client = self.client else {
             completion(.Error(Error.InvalidClient()))
@@ -79,5 +95,20 @@ public final class SyncSpace {
         }
 
         return task
+    }
+
+    /**
+     Perform a subsequent synchronization operation, updating this object with the latest content from
+     Contentful.
+
+     Calling this will mutate the instance and also return a reference to itself to the completion
+     handler in order to allow chaining of operations.
+
+     - parameter matching: Additional options for the synchronization
+
+     - returns: A tuple of data task and a signal which fires on completion
+     **/
+    public func sync(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<SyncSpace>) {
+        return signalify(matching, sync)
     }
 }

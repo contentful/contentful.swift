@@ -279,12 +279,27 @@ extension Client {
 }
 
 extension Client {
+    /**
+     Perform an initial synchronization of the Space this client is constrained to.
+
+     - parameter matching:   Additional options for the synchronization
+     - parameter completion: A handler being called on completion of the request
+
+     - returns: The data task being used, enables cancellation of requests
+     */
     public func initialSync(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<SyncSpace> -> Void) -> NSURLSessionDataTask? {
         var parameters = matching
         parameters["initial"] = true
         return sync(parameters, completion: completion)
     }
 
+    /**
+     Perform an initial synchronization of the Space this client is constrained to.
+
+     - parameter matching: Additional options for the synchronization
+
+     - returns: A tuple of data task and a signal for the resulting SyncSpace
+     */
     public func initialSync(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<SyncSpace>) {
         return signalify(matching, initialSync)
     }
