@@ -14,7 +14,7 @@ public struct Entry : Resource, LocalizedResource {
     public let sys: [String:AnyObject]
     /// Content fields
     public var fields: [String:Any] {
-        return localizedFields[locale] ?? [String:Any]()
+        return Contentful.fields(localizedFields, forLocale: locale)
     }
 
     let localizedFields: [String:[String:Any]]

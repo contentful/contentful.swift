@@ -25,3 +25,7 @@ protocol LocalizedResource {
     var locale: String { get set }
     var localizedFields: [String:[String:Any]] { get }
 }
+
+func fields(localizedFields: [String:[String:Any]], forLocale locale: String) -> [String:Any] {
+    return localizedFields[locale] ?? [String:Any]()
+}
