@@ -56,7 +56,7 @@ public final class SyncSpace {
 
     public func sync(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<SyncSpace> -> Void) -> NSURLSessionDataTask? {
         guard let client = self.client else {
-            completion(.Error(ContentfulError.InvalidClient()))
+            completion(.Error(Error.InvalidClient()))
             return nil
         }
 

@@ -19,7 +19,7 @@ public struct Array<T: Decodable> {
 
      For example, information about references which could not be resolved.
     */
-    public let errors: [ContentfulError]? = nil
+    public let errors: [Error]? = nil
 
     /// The resources which are part of the given array
     public let items: [T]

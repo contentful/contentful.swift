@@ -1,5 +1,5 @@
 //
-//  ContentfulError.swift
+//  Error.swift
 //  Contentful
 //
 //  Created by Boris Bügling on 29/09/15.
@@ -9,7 +9,7 @@
 import Foundation
 
 /// Possible errors being thrown by the SDK
-public enum ContentfulError : ErrorType {
+public enum Error : ErrorType {
     /// Thrown when no valid client is available during sync
     case InvalidClient()
 

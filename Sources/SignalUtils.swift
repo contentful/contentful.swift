@@ -55,7 +55,7 @@ class Network {
                 return
             }
 
-            completion(.Error(ContentfulError.InvalidHTTPResponse(response: response)))
+            completion(.Error(Error.InvalidHTTPResponse(response: response)))
         }
 
         task.resume()

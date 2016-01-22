@@ -37,10 +37,10 @@ public struct Asset : Resource, LocalizedResource {
                 return URL
             }
 
-            throw ContentfulError.InvalidURL(string: urlString)
+            throw Error.InvalidURL(string: urlString)
         }
 
-        throw ContentfulError.InvalidURL(string: "")
+        throw Error.InvalidURL(string: "")
     }
 
     /// Currently selected locale

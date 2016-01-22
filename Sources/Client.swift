@@ -60,7 +60,7 @@ public class Client {
             return task
         }
 
-        completion(.Error(ContentfulError.InvalidURL(string: "")))
+        completion(.Error(Error.InvalidURL(string: "")))
         return nil
     }
 
@@ -70,9 +70,9 @@ public class Client {
             if let json = json as? NSDictionary { json.client = self }
             completion(.Success(try T.decode(json)))
         } catch let error as DecodingError {
-            completion(.Error(ContentfulError.UnparseableJSON(data: data, errorMessage: error.debugDescription)))
+            completion(.Error(Error.UnparseableJSON(data: data, errorMessage: error.debugDescription)))
         } catch _ {
-            completion(.Error(ContentfulError.UnparseableJSON(data: data, errorMessage: "")))
+            completion(.Error(Error.UnparseableJSON(data: data, errorMessage: "")))
         }
     }
 
