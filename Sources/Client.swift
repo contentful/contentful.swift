@@ -79,7 +79,9 @@ public class Client {
     private func URLForFragment(fragment: String = "", parameters: [String: AnyObject]? = nil) -> NSURL? {
         if let components = NSURLComponents(string: "\(scheme)://\(configuration.server)/spaces/\(spaceIdentifier)/\(fragment)") {
             if let parameters = parameters {
-                let queryItems: [NSURLQueryItem] = parameters.map() { (key, var value) in
+                let queryItems: [NSURLQueryItem] = parameters.map() { (key, value) in
+                    var value = value
+
                     if let date = value as? NSDate, dateString = date.toISO8601GMTString() {
                         value = dateString
                     }

@@ -29,7 +29,7 @@ private func determineDefaultLocale(json: AnyObject) -> String {
 }
 
 private func parseLocalizedFields(json: AnyObject) throws -> (String, [String:[String:Any]]) {
-    let fields: [String:AnyObject] = try json => "fields"
+    let fields = try json => "fields" as! [String:AnyObject]
     let locale: String? = try? json => "sys" => "locale"
 
     var localizedFields = [String:[String:Any]]()
