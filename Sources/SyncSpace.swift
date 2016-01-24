@@ -128,7 +128,7 @@ public final class SyncSpace {
         }
 
         var parameters = matching
-        parameters["sync_token"] = syncToken
+        parameters["sync_token"] = NSString(string: syncToken)
         let (task, signal) = client.sync(parameters)
 
         signal.next { space in

@@ -262,7 +262,7 @@ private extension Resource {
 
         if let resources = jsonIncludes[typename] as? [[String:AnyObject]] {
             for resource in resources {
-                let value = try self.decode(resource) as Resource
+                let value = try self.decode(resource as! AnyObject) as Resource
                 includes[value.key] = value
             }
         }
