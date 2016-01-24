@@ -57,9 +57,13 @@ public struct Asset : Resource, LocalizedResource {
         do {
             return network.fetch(try URL())
         } catch {
+#if os(Linux)
+            fatalError()
+#else
             let signal = Signal<NSData>()
             signal.update(error)
             return (NSURLSessionDataTask(), signal)
+#endif
         }
     }
 

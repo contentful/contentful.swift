@@ -6,10 +6,19 @@
 //  Copyright © 2015 Contentful GmbH. All rights reserved.
 //
 
-import Clock
 import Decodable
 import Foundation
 import Interstellar
+
+#if os(Linux)
+import RequestSession
+
+typealias NSURLSession = RequestSession.HTTPSession
+typealias NSURLSessionConfiguration = RequestSession.HTTPSessionConfiguration
+public typealias NSURLSessionDataTask = RequestSession.HTTPSessionDataTask
+#else
+import Clock
+#endif
 
 /// Client object for performing requests against the Contentful API
 public class Client {
@@ -66,7 +75,7 @@ public class Client {
 
     private func handleJSON<T: Decodable>(data: NSData, _ completion: Result<T> -> Void) {
         do {
-            let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
+            let json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as! AnyObject
             if let json = json as? NSDictionary { json.client = self }
             completion(.Success(try T.decode(json)))
         } catch let error as DecodingError {
@@ -80,14 +89,16 @@ public class Client {
         if let components = NSURLComponents(string: "\(scheme)://\(configuration.server)/spaces/\(spaceIdentifier)/\(fragment)") {
             if let parameters = parameters {
                 let queryItems: [NSURLQueryItem] = parameters.map() { (key, value) in
-                    var value = value
+                    var value = value as! CustomStringConvertible
 
+#if !os(Linux)
                     if let date = value as? NSDate, dateString = date.toISO8601GMTString() {
-                        value = dateString
+                        value = NSString(string: dateString)
                     }
+#endif
 
                     if let array = value as? NSArray {
-                        value = array.componentsJoinedByString(",")
+                        value = NSString(string: array.componentsJoinedByString(","))
                     }
 
                     return NSURLQueryItem(name: key, value: value.description)
@@ -289,7 +300,7 @@ extension Client {
      */
     public func initialSync(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<SyncSpace> -> Void) -> NSURLSessionDataTask? {
         var parameters = matching
-        parameters["initial"] = true
+        parameters["initial"] = true as? AnyObject
         return sync(parameters, completion: completion)
     }
 
