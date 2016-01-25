@@ -13,6 +13,7 @@ import Interstellar
 #if os(Linux)
 import RequestSession
 
+public typealias NSURLResponse = RequestSession.HTTPURLResponse
 typealias NSURLSession = RequestSession.HTTPSession
 typealias NSURLSessionConfiguration = RequestSession.HTTPSessionConfiguration
 public typealias NSURLSessionDataTask = RequestSession.HTTPSessionDataTask
@@ -75,8 +76,12 @@ public class Client {
 
     private func handleJSON<T: Decodable>(data: NSData, _ completion: Result<T> -> Void) {
         do {
-            let json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as! AnyObject
+#if os(Linux)
+            let json = bridge(try NSJSONSerialization.JSONObjectWithData(data, options: []) as! [String : Any])
+#else
+            let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
             if let json = json as? NSDictionary { json.client = self }
+#endif
             completion(.Success(try T.decode(json)))
         } catch let error as DecodingError {
             completion(.Error(Error.UnparseableJSON(data: data, errorMessage: error.debugDescription)))
@@ -300,7 +305,11 @@ extension Client {
      */
     public func initialSync(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<SyncSpace> -> Void) -> NSURLSessionDataTask? {
         var parameters = matching
-        parameters["initial"] = true as? AnyObject
+#if os(Linux)
+        parameters["initial"] = NSNumber(bool: true)
+#else
+        parameters["initial"] = true
+#endif
         return sync(parameters, completion: completion)
     }
 
