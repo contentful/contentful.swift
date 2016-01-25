@@ -308,7 +308,14 @@ extension Client {
         return fetch(URLForFragment("sync", parameters: matching), { (result: Result<SyncSpace>) in
             if let value = result.value {
                 value.client = self
-                completion(.Success(value))
+
+                if value.nextPage {
+                    var parameters = matching
+                    parameters.removeValueForKey("initial")
+                    value.sync(parameters, completion: completion)
+                } else {
+                    completion(.Success(value))
+                }
             } else {
                 completion(result)
             }

@@ -274,8 +274,17 @@ extension Space: Decodable {
 extension SyncSpace: Decodable {
     /// Decode JSON for a SyncSpace
     public static func decode(json: AnyObject) throws -> SyncSpace {
+        var nextPage = true
+        var syncUrl: String? = try? json => "nextPageUrl"
+
+        if syncUrl == nil {
+            nextPage = false
+            syncUrl = try json => "nextSyncUrl"
+        }
+
         return SyncSpace(
-            nextSyncUrl: try json => "nextSyncUrl",
+            nextPage: nextPage,
+            nextUrl: syncUrl!,
             items: try Array<Entry>.parseItems(json)
         )
     }

@@ -17,6 +17,7 @@ public final class SyncSpace {
     private var deletedAssets = [String]()
     private var deletedEntries = [String]()
 
+    let nextPage: Bool
     /// A token which needs to be present to perform a subsequent synchronization operation
     private(set) public var syncToken = ""
 
@@ -32,8 +33,10 @@ public final class SyncSpace {
 
     var client: Client? = nil
 
-    internal init(nextSyncUrl: String, items: [Resource]) {
-        NSURLComponents(string: nextSyncUrl)?.queryItems?.forEach {
+    internal init(nextPage: Bool, nextUrl: String, items: [Resource]) {
+        self.nextPage = nextPage
+
+        NSURLComponents(string: nextUrl)?.queryItems?.forEach {
             if let value = $0.value where $0.name == "sync_token" {
                 self.syncToken = value
             }
