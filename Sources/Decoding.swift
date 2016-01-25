@@ -29,8 +29,13 @@ private func determineDefaultLocale(json: AnyObject) -> String {
 }
 
 private func parseLocalizedFields(json: AnyObject) throws -> (String, [String:[String:Any]]) {
+#if os(Linux)
+    let fields = bridge((try json => "fields" as! NSDictionary).bridge())
+    let locale: String? = ((try? json => "sys" => "locale") as? NSString)?.bridge()
+#else
     let fields = try json => "fields" as! [String:AnyObject]
     let locale: String? = try? json => "sys" => "locale"
+#endif
 
     var localizedFields = [String:[String:Any]]()
 
@@ -205,6 +210,17 @@ extension Entry: Decodable {
     public static func decode(json: AnyObject) throws -> Entry {
         let (locale, localizedFields) = try parseLocalizedFields(json)
 
+#if os(Linux)
+        return try Entry(
+            sys: bridge((json => "sys" as! NSDictionary).bridge()),
+            localizedFields: localizedFields,
+            defaultLocale: determineDefaultLocale(json),
+
+            identifier: (json => "sys" => "id" as! NSString).bridge(),
+            type: (json => "sys" => "type" as! NSString).bridge(),
+            locale: locale
+        )
+#else
         return try Entry(
             sys: (json => "sys") as! [String : AnyObject],
             localizedFields: localizedFields,
@@ -214,6 +230,7 @@ extension Entry: Decodable {
             type: json => "sys" => "type",
             locale: locale
         )
+#endif
     }
 }
 
@@ -248,11 +265,19 @@ extension Field: Decodable {
 extension Locale: Decodable {
     /// Decode JSON for a Locale
     public static func decode(json: AnyObject) throws -> Locale {
+#if os(Linux)
+        return try Locale(
+            code: (json => "code" as! NSString).bridge(),
+            isDefault: (json => "default" as! NSNumber).boolValue,
+            name: (json => "name" as! NSString).bridge()
+        )
+#else
         return try Locale(
             code: json => "code",
             isDefault: json => "default",
             name: json => "name"
         )
+#endif
     }
 }
 
@@ -274,6 +299,16 @@ private extension Resource {
 extension Space: Decodable {
     /// Decode JSON for a Space
     public static func decode(json: AnyObject) throws -> Space {
+#if os(Linux)
+        return try Space(
+            sys: bridge((json => "sys" as! NSDictionary).bridge()),
+
+            identifier: (json => "sys" => "id" as! NSString).bridge(),
+            locales: json => "locales",
+            name: (json => "name" as! NSString).bridge(),
+            type: (json => "sys" => "type" as! NSString).bridge()
+        )
+#else
         return try Space(
             sys: (json => "sys") as! [String : AnyObject],
 
@@ -282,6 +317,7 @@ extension Space: Decodable {
             name: json => "name",
             type: json => "sys" => "type"
         )
+#endif
     }
 }
 
