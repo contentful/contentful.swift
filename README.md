@@ -3,8 +3,8 @@
 <!-- [![Version](https://img.shields.io/cocoapods/v/Contentful.svg?style=flat)](http://cocoadocs.org/docsets/Contentful)
 [![Platform](https://img.shields.io/cocoapods/p/Contentful.svg?style=flat)](http://cocoadocs.org/docsets/Contentful)
 [![License](https://img.shields.io/cocoapods/l/Contentful.svg?style=flat)](http://cocoadocs.org/docsets/Contentful) -->
-[![Build Status](https://img.shields.io/travis/contentful/contentful/master.svg?style=flat)](https://travis-ci.org/contentful/contentful)
-[![Coverage Status](https://img.shields.io/coveralls/contentful/contentful.svg)](https://coveralls.io/github/contentful/contentful)
+[![Build Status](https://img.shields.io/travis/contentful/contentful.swift/master.svg?style=flat)](https://travis-ci.org/contentful/contentful.swift)
+[![Coverage Status](https://img.shields.io/coveralls/contentful/contentful.swift.svg)](https://coveralls.io/github/contentful/contentful.swift)
 
 Swift SDK for [Contentful's][1] Content Delivery API.
 
