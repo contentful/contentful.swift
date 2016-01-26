@@ -52,6 +52,27 @@ class ContentfulTests: ContentfulBaseTests {
                     }
                 }
             }
+
+            it("fails when accessing the preview API with a production token") {
+                var configuration = Contentful.Configuration()
+                configuration.previewMode = true
+                let client = Client(spaceIdentifier: "cfexampleapi", accessToken: "b4c0n73n7fu1", configuration: configuration)
+
+                waitUntil { done in
+                    client.fetchSpace().1.next { _ in
+                        fail("expected error not received")
+                        done()
+                    }.error {
+                        if let error = $0 as? ContentfulError {
+                            expect(error.identifier).to(equal("AccessTokenInvalid"))
+                        } else {
+                            fail("expected error not received")
+                        }
+
+                        done()
+                    }
+                }
+            }
         }
 
         describe("Scenarios from CDA documentation") {

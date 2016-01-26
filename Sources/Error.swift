@@ -38,3 +38,19 @@ public enum Error : ErrorType {
      */
     case UnparseableJSON(data: NSData, errorMessage: String)
 }
+
+/// Information regarding an error received from Contentful
+public struct ContentfulError: Resource, ErrorType {
+    /// System fields
+    public let sys: [String:AnyObject]
+
+    /// The unique identifier of this error
+    public let identifier: String
+    /// Resource type ("Error")
+    public let type: String
+
+    /// Human readable error message
+    public let message: String
+    /// Identifier of the request, can be useful when making support requests
+    public let requestId: String
+}

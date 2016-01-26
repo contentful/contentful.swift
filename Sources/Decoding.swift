@@ -161,6 +161,20 @@ extension Array: Decodable {
     }
 }
 
+extension ContentfulError: Decodable {
+    /// Decode JSON for a Contentful error
+    public static func decode(json: AnyObject) throws -> ContentfulError {
+        return try ContentfulError(
+            sys: (json => "sys") as! [String : AnyObject],
+            identifier: json => "sys" => "id",
+            type: json => "sys" => "type",
+
+            message: json => "message",
+            requestId: json => "requestId"
+        )
+    }
+}
+
 extension ContentType: Decodable {
     /// Decode JSON for a Content Type
     public static func decode(json: AnyObject) throws -> ContentType {

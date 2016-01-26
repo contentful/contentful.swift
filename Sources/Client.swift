@@ -75,6 +75,12 @@ public class Client {
         do {
             let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
             if let json = json as? NSDictionary { json.client = self }
+
+            if let error = try? ContentfulError.decode(json) {
+                completion(.Error(error))
+                return
+            }
+
             completion(.Success(try T.decode(json)))
         } catch let error as DecodingError {
             completion(.Error(Error.UnparseableJSON(data: data, errorMessage: error.debugDescription)))
