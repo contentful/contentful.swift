@@ -36,6 +36,24 @@ class ContentfulTests: ContentfulBaseTests {
             }
         }
 
+        describe("Preview") {
+            it("can access the preview API") {
+                var configuration = Contentful.Configuration()
+                configuration.previewMode = true
+                let client = Client(spaceIdentifier: "cfexampleapi", accessToken: "e5e8d4c5c122cf28fc1af3ff77d28bef78a3952957f15067bbc29f2f0dde0b50", configuration: configuration)
+
+                waitUntil { done in
+                    client.fetchSpace().1.next {
+                        expect($0.identifier).to(equal("cfexampleapi"))
+                        done()
+                    }.error {
+                        fail("\($0)")
+                        done()
+                    }
+                }
+            }
+        }
+
         describe("Scenarios from CDA documentation") {
             it("can fetch a space") {
                 waitUntil(timeout: 10) { done in

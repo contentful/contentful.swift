@@ -8,6 +8,8 @@
 
 import Foundation
 
+let DEFAULT_SERVER = "cdn.contentful.com"
+
 /// Configuration parameters for a client instance
 public struct Configuration {
     /// Whether or not to use the preview mode when accessing Contentful, requires a preview token
@@ -17,7 +19,7 @@ public struct Configuration {
     /// Whether or not to use HTTPS connections, defaults to `true`
     public var secure = true
     /// The server to use for performing requests, defaults to `cdn.contentful.com`
-    public var server = "cdn.contentful.com"
+    public var server = DEFAULT_SERVER
     /// The user agent to use for performing requests
     public var userAgentClient = "contentful.swift/0.1.0"
 

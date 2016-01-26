@@ -27,6 +27,9 @@ public enum Error : ErrorType {
      */
     case InvalidURL(string: String)
 
+    /// Thrown if the sync endpoint is called while being in preview mode
+    case PreviewAPIDoesNotSupportSync()
+
     /**
      *  Thrown when receiving unparseable JSON responses
      *

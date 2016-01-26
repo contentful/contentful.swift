@@ -17,6 +17,13 @@ public class Client {
     private let network = Network()
     private let spaceIdentifier: String
 
+    private var server: String {
+        if configuration.previewMode && configuration.server == DEFAULT_SERVER {
+            return "preview.contentful.com"
+        }
+        return configuration.server
+    }
+
     private(set) var space: Space?
 
     private var scheme: String { return configuration.secure ? "https" : "http" }
@@ -77,7 +84,7 @@ public class Client {
     }
 
     private func URLForFragment(fragment: String = "", parameters: [String: AnyObject]? = nil) -> NSURL? {
-        if let components = NSURLComponents(string: "\(scheme)://\(configuration.server)/spaces/\(spaceIdentifier)/\(fragment)") {
+        if let components = NSURLComponents(string: "\(scheme)://\(server)/spaces/\(spaceIdentifier)/\(fragment)") {
             if let parameters = parameters {
                 let queryItems: [NSURLQueryItem] = parameters.map() { (key, value) in
                     var value = value
@@ -305,6 +312,11 @@ extension Client {
     }
 
     func sync(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<SyncSpace> -> Void) -> NSURLSessionDataTask? {
+        if configuration.previewMode {
+            completion(.Error(Error.PreviewAPIDoesNotSupportSync()))
+            return nil
+        }
+
         return fetch(URLForFragment("sync", parameters: matching), { (result: Result<SyncSpace>) in
             if let value = result.value {
                 value.client = self
