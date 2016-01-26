@@ -6,7 +6,7 @@ ifeq ($(strip $(SIM_ID)),)
 $(error Could not find $(SIM_NAME) simulator)
 endif
 
-.PHONY: test setup lint
+.PHONY: test setup lint coverage
 
 test:
 	xcodebuild -workspace Contentful.xcworkspace \
@@ -18,3 +18,7 @@ setup:
 
 lint:
 	bundle exec pod lib lint Contentful.podspec
+
+coverage:
+	bundle exec slather coverage -s Contentful.xcodeproj
+
