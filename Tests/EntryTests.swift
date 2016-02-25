@@ -269,7 +269,7 @@ class EntryTests: ContentfulBaseTests {
 
         it("can fetch entries using locations in bounding object") {
             self.waitUntilMatchingEntries(["fields.center[within]": [36, -124, 40, -120], "content_type": "1t9IbcfdCk6m04uISSsaIK"]) {
-                expect($0.items.count).to(equal(0))
+                expect($0.items.count).to(equal(1))
             }
         }
 
