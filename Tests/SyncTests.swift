@@ -30,7 +30,7 @@ class SyncTests: ContentfulBaseTests {
         it("can perform an initial sync for a space") {
             self.waitUntilSyncMatching([String:AnyObject]()) {
                 expect($0.assets.count).to(equal(4))
-                expect($0.entries.count).to(equal(11))
+                expect($0.entries.count).to(equal(10))
             }
         }
 
@@ -40,7 +40,7 @@ class SyncTests: ContentfulBaseTests {
                     space.sync(completion: completion)
                 }.next {
                     expect($0.assets.count).to(equal(4))
-                    expect($0.entries.count).to(equal(11))
+                    expect($0.entries.count).to(equal(10))
 
                     done()
                 }.error {

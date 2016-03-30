@@ -57,13 +57,13 @@ class ContentTypeTests: ContentfulBaseTests {
                 self.client.fetchContentTypes { (result) in
                     switch result {
                     case let .Success(array):
-                        expect(array.total).to(equal(5))
+                        expect(array.total).to(equal(4))
                         expect(array.limit).to(equal(100))
                         expect(array.skip).to(equal(0))
-                        expect(array.items.count).to(equal(5))
+                        expect(array.items.count).to(equal(4))
 
                         let _ = array.items.first.flatMap { (type: ContentType) in
-                            expect(type.name).to(equal("City"))
+                            expect(type.name).to(equal("Cat"))
                         }
                     case let .Error(error):
                         fail("\(error)")

@@ -55,7 +55,7 @@ class EntryTests: ContentfulBaseTests {
             }
 
             it("can skip entries in a query") {
-                self.waitUntilMatchingEntries(["order": "sys.createdAt", "skip": 10]) {
+                self.waitUntilMatchingEntries(["order": "sys.createdAt", "skip": 9]) {
                     expect($0.items.count).to(equal(1))
                     expect($0.items.first?.identifier).to(equal("7qVBlCjpWE86Oseo40gAEY"))
                 }
@@ -76,10 +76,10 @@ class EntryTests: ContentfulBaseTests {
         }
 
         describe("Order related queries") {
-            let orderedEntries = ["CVebBDcQsSsu6yKKIayy", "nyancat", "happycat", "garfield",
+            let orderedEntries = ["nyancat", "happycat", "garfield",
                 "finn", "jake", "6KntaYXaHSyIw8M6eo26OK", "4MU1s3potiUEM2G4okYOqw",
                 "5ETMRzkl9KM4omyMwKAOki", "ge1xHyH3QOWucKWCCAgIG", "7qVBlCjpWE86Oseo40gAEY"]
-            let orderedEntriesByMultiple = ["4MU1s3potiUEM2G4okYOqw", "CVebBDcQsSsu6yKKIayy",
+            let orderedEntriesByMultiple = ["4MU1s3potiUEM2G4okYOqw",
                 "ge1xHyH3QOWucKWCCAgIG", "6KntaYXaHSyIw8M6eo26OK", "7qVBlCjpWE86Oseo40gAEY",
                 "garfield", "5ETMRzkl9KM4omyMwKAOki", "jake", "nyancat", "finn", "happycat"]
 
@@ -151,10 +151,10 @@ class EntryTests: ContentfulBaseTests {
                 self.client.fetchEntries() { (result) in
                     switch result {
                     case let .Success(array):
-                        expect(array.total).to(equal(11))
+                        expect(array.total).to(equal(10))
                         expect(array.limit).to(equal(100))
                         expect(array.skip).to(equal(0))
-                        expect(array.items.count).to(equal(11))
+                        expect(array.items.count).to(equal(10))
                     case let .Error(error):
                         fail("\(error)")
                     }
@@ -200,7 +200,7 @@ class EntryTests: ContentfulBaseTests {
 
         it("can fetch entries using an inequality search query") {
             self.waitUntilMatchingEntries(["sys.id[ne]": "nyancat"]) {
-                expect($0.items.count).to(equal(10))
+                expect($0.items.count).to(equal(9))
                 let nyancat = $0.items.filter { $0.identifier == "nyancat" }
                 expect(nyancat.count).to(equal(0))
             }
@@ -234,18 +234,18 @@ class EntryTests: ContentfulBaseTests {
 
         it("can fetch entries using an existence search query") {
             self.waitUntilMatchingEntries(["sys.archivedVersion[exists]": false]) {
-                expect($0.items.count).to(equal(11))
+                expect($0.items.count).to(equal(10))
             }
         }
 
         it("can fetch entries using a range search query") {
             let date = NSDate.fromComponents(year: 2015, month: 1, day: 1, hour: 0, minute: 0, second: 0)
             self.waitUntilMatchingEntries(["sys.updatedAt[lte]": date]) {
-                expect($0.items.count).to(equal(11))
+                expect($0.items.count).to(equal(10))
             }
 
             self.waitUntilMatchingEntries(["sys.updatedAt[lte]": "2015-01-01T00:00:00Z"]) {
-                expect($0.items.count).to(equal(11))
+                expect($0.items.count).to(equal(10))
             }
         }
 
