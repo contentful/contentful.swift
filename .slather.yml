@@ -1,1 +1,2 @@
-binary_basename: Contentful
+workspace: Contentful.xcworkspace
+scheme: Contentful

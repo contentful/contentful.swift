@@ -1,13 +1,3 @@
-GIT
-  remote: https://github.com/neonichu/slather.git
-  revision: 984ea191b2aa52c817c9e8ca6c6ee36c56fd2613
-  branch: add-binary_basename-option
-  specs:
-    slather (1.8.3)
-      clamp (~> 0.6)
-      nokogiri (~> 1.6.3)
-      xcodeproj (~> 0.28.2)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -59,6 +49,10 @@ GEM
     netrc (0.7.8)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
+    slather (2.1.0)
+      clamp (~> 0.6)
+      nokogiri (~> 1.6.3)
+      xcodeproj (>= 0.28.2, < 1.1.0)
     thread_safe (0.3.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
@@ -72,7 +66,7 @@ PLATFORMS
 
 DEPENDENCIES
   cocoapods (>= 0.39.0)
-  slather!
+  slather (~> 2.1)
 
 BUNDLED WITH
    1.11.2
