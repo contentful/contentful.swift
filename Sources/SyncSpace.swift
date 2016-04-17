@@ -9,6 +9,37 @@
 import Foundation
 import Interstellar
 
+/// Delegate protocol for receiving updates performed during synchronization
+public protocol SyncSpaceDelegate {
+    /**
+     This is called whenever a new Asset was created or an existing one was updated.
+
+     - parameter asset: The created/updated Asset
+     */
+    func createAsset(asset: Asset)
+
+    /**
+     This is called whenever an Asset was deleted.
+
+     - parameter assetId: Identifier of the Asset that was deleted.
+     */
+    func deleteAsset(assetId: String)
+
+    /**
+     This is called whenever a new Entry was created or an existing one was updated.
+
+     - parameter entry: The created/updated Entry
+     */
+    func createEntry(entry: Entry)
+
+    /**
+     This is called whenever an Entry was deleted.
+
+     - parameter entryId: Identifier of the Entry that was deleted.
+     */
+    func deleteEntry(entryId: String)
+}
+
 /// A container for the synchronized state of a Space
 public final class SyncSpace {
     private var assetsMap = [String:Asset]()
@@ -17,6 +48,7 @@ public final class SyncSpace {
     private var deletedAssets = [String]()
     private var deletedEntries = [String]()
 
+    var delegate: SyncSpaceDelegate?
     let nextPage: Bool
     /// A token which needs to be present to perform a subsequent synchronization operation
     private(set) public var syncToken = ""
@@ -62,6 +94,22 @@ public final class SyncSpace {
     }
 
     /**
+     Continue a synchronization with previous data.
+
+     - parameter client:    The client to use for synchronization
+     - parameter syncToken: The sync token from a previous synchronization
+     - parameter delegate:  A delegate for receiving updates to your data store
+
+     - returns: An initialized synchronized space instance
+     **/
+    public init(client: Client, syncToken: String, delegate: SyncSpaceDelegate) {
+        self.client = client
+        self.delegate = delegate
+        self.nextPage = false
+        self.syncToken = syncToken
+    }
+
+    /**
      Perform a subsequent synchronization operation, updating this object with the latest content from
      Contentful. 
      
@@ -84,11 +132,25 @@ public final class SyncSpace {
         let (task, signal) = client.sync(parameters)
 
         signal.next { space in
-            space.assets.forEach { self.assetsMap[$0.identifier] = $0 }
-            space.entries.forEach { self.entriesMap[$0.identifier] = $0 }
+            space.assets.forEach {
+                self.delegate?.createAsset($0)
+                self.assetsMap[$0.identifier] = $0
+            }
 
-            space.deletedAssets.forEach { self.assetsMap.removeValueForKey($0) }
-            space.deletedEntries.forEach { self.entriesMap.removeValueForKey($0) }
+            space.entries.forEach {
+                self.delegate?.createEntry($0)
+                self.entriesMap[$0.identifier] = $0
+            }
+
+            space.deletedAssets.forEach {
+                self.delegate?.deleteAsset($0)
+                self.assetsMap.removeValueForKey($0)
+            }
+
+            space.deletedEntries.forEach {
+                self.delegate?.deleteEntry($0)
+                self.entriesMap.removeValueForKey($0)
+            }
 
             self.syncToken = space.syncToken
 
