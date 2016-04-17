@@ -42,7 +42,7 @@ class ContentfulTests: ContentfulBaseTests {
                 configuration.previewMode = true
                 let client = Client(spaceIdentifier: "cfexampleapi", accessToken: "e5e8d4c5c122cf28fc1af3ff77d28bef78a3952957f15067bbc29f2f0dde0b50", configuration: configuration)
 
-                waitUntil { done in
+                waitUntil(timeout: 10) { done in
                     client.fetchSpace().1.next {
                         expect($0.identifier).to(equal("cfexampleapi"))
                         done()
