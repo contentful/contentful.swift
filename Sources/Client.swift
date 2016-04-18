@@ -83,7 +83,7 @@ public class Client {
 
             completion(.Success(try T.decode(json)))
         } catch let error as DecodingError {
-            completion(.Error(Error.UnparseableJSON(data: data, errorMessage: error.debugDescription)))
+            completion(.Error(Error.UnparseableJSON(data: data, errorMessage: "\(error)")))
         } catch _ {
             completion(.Error(Error.UnparseableJSON(data: data, errorMessage: "")))
         }
