@@ -1,8 +1,8 @@
 # contentful.swift
 
-<!-- [![Version](https://img.shields.io/cocoapods/v/Contentful.svg?style=flat)](http://cocoadocs.org/docsets/Contentful)
+[![Version](https://img.shields.io/cocoapods/v/Contentful.svg?style=flat)](http://cocoadocs.org/docsets/Contentful)
 [![Platform](https://img.shields.io/cocoapods/p/Contentful.svg?style=flat)](http://cocoadocs.org/docsets/Contentful)
-[![License](https://img.shields.io/cocoapods/l/Contentful.svg?style=flat)](http://cocoadocs.org/docsets/Contentful) -->
+[![License](https://img.shields.io/cocoapods/l/Contentful.svg?style=flat)](http://cocoadocs.org/docsets/Contentful)
 [![Build Status](https://img.shields.io/travis/contentful/contentful.swift/master.svg?style=flat)](https://travis-ci.org/contentful/contentful.swift)
 [![Coverage Status](https://img.shields.io/coveralls/contentful/contentful.swift.svg)](https://coveralls.io/github/contentful/contentful.swift)
 [![codebeat badge](https://codebeat.co/badges/6ebc67e8-29ca-459f-a4b7-b32a84fa9074)](https://codebeat.co/projects/github-com-contentful-contentful-swift)
@@ -34,7 +34,7 @@ For further information, check out the [Developer Documentation][3].
 
 ## Installation
 
-The Contentful Swift SDK requires Swift 2.0 and therefore Xcode 7.
+The Contentful Swift SDK requires Swift 2.2 and therefore Xcode 7.3.
 
 ### CocoaPods
 
@@ -48,7 +48,7 @@ pod 'Contentful'
 
 ## License
 
-Copyright (c) 2014, 2015 Contentful GmbH. See LICENSE for further details.
+Copyright (c) 2016 Contentful GmbH. See LICENSE for further details.
 
 
 [1]: https://www.contentful.com
