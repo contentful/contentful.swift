@@ -144,12 +144,12 @@ public final class SyncSpace {
 
             space.deletedAssets.forEach {
                 self.delegate?.deleteAsset($0)
-                self.assetsMap.removeValueForKey($0)
+                self.assetsMap.removeValue(forKey: $0)
             }
 
             space.deletedEntries.forEach {
                 self.delegate?.deleteEntry($0)
-                self.entriesMap.removeValueForKey($0)
+                self.entriesMap.removeValue(forKey: $0)
             }
 
             self.syncToken = space.syncToken
