@@ -84,9 +84,9 @@ public class Client {
     private func handleJSON<T: Decodable>(data: NSData, _ completion: Result<T> -> Void) {
         do {
 #if os(Linux)
-            let json = bridge(try NSJSONSerialization.JSONObjectWithData(data, options: []) as! [String : Any])
+            let json = bridge(try NSJSONSerialization.jsonObject(with: data, options: []) as! [String : Any])
 #else
-            let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
+            let json = try NSJSONSerialization.jsonObject(with: data, options: [])
             if let json = json as? NSDictionary { json.client = self }
 #endif
 
