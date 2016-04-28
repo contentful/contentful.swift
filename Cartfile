@@ -1,0 +1,3 @@
+github "neonichu/Clock" == 0.0.1
+github "anviking/Decodable" ~> 0.4.2
+github "jensravens/Interstellar" ~> 1.4.0
