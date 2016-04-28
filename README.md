@@ -46,6 +46,14 @@ use_frameworks!
 pod 'Contentful'
 ```
 
+### Carthage
+
+You can also use [Carthage][7] for integration by adding this to your `Cartfile`:
+
+```
+github "contentful/contentful.swift" ~> 0.2.1
+```
+
 ## License
 
 Copyright (c) 2016 Contentful GmbH. See LICENSE for further details.
@@ -57,3 +65,4 @@ Copyright (c) 2016 Contentful GmbH. See LICENSE for further details.
 [4]: https://github.com/contentful/contentful.objc
 [5]: https://www.contentful.com/blog/2014/05/09/ios-content-synchronization/
 [6]: https://github.com/contentful-labs/swiftful
+[7]: https://github.com/Carthage/Carthage
