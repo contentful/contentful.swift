@@ -1,12 +1,12 @@
 PODS:
   - CatchingFire (0.2.0)
   - CryptoSwift (0.1.1)
-  - Decodable (0.3.3)
-  - Interstellar (1.3.0):
-    - Interstellar/Core (= 1.3.0)
-    - Interstellar/Warpdrive (= 1.3.0)
-  - Interstellar/Core (1.3.0)
-  - Interstellar/Warpdrive (1.3.0):
+  - Decodable (0.4.2)
+  - Interstellar (1.4.0):
+    - Interstellar/Core (= 1.4.0)
+    - Interstellar/Warpdrive (= 1.4.0)
+  - Interstellar/Core (1.4.0)
+  - Interstellar/Warpdrive (1.4.0):
     - Interstellar/Core
   - Nimble (3.2.0)
   - Quick (0.9.1)
@@ -15,17 +15,17 @@ PODS:
 DEPENDENCIES:
   - CatchingFire
   - CryptoSwift
-  - Decodable (~> 0.3.2)
-  - Interstellar (~> 1.3.0)
+  - Decodable (~> 0.4.2)
+  - Interstellar (~> 1.4.0)
   - Nimble
   - Quick
-  - "\U0001F555"
+  - "\U0001F555 (= 0.0.1)"
 
 SPEC CHECKSUMS:
   CatchingFire: 935ecc35fc5864f12ef1c033a97e9a9affbf6056
   CryptoSwift: c11640d3d66107efc8333e4131a5173f072b1d61
-  Decodable: 5997b5e329e651f828dfcd458216b4c8286867cf
-  Interstellar: 3d47f37eff7e81fbaa9a74bd903f362eb165b159
+  Decodable: b1cd96ad9f722721bc98b0310952214a47f71d6a
+  Interstellar: 40fc666872436d6c1b3524c59437ebdb5dec1c6a
   Nimble: 703854335d181df169bbca9c97117b5cf8c47c1d
   Quick: a5221fc21788b6aeda934805e68b061839bc3165
   "\U0001F555": 2a41c1f9b76698cb697b8ec9a1db1087f5621187
