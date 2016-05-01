@@ -23,5 +23,5 @@ coverage:
 	bundle exec slather coverage -s Contentful.xcodeproj
 
 carthage:
-	carthage build --no-skip-current
+	carthage build --no-skip-current --platform iOS
 	carthage archive Contentful
