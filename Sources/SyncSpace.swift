@@ -45,8 +45,8 @@ public final class SyncSpace {
     private var assetsMap = [String:Asset]()
     private var entriesMap = [String:Entry]()
 
-    private var deletedAssets = [String]()
-    private var deletedEntries = [String]()
+    var deletedAssets = [String]()
+    var deletedEntries = [String]()
 
     var delegate: SyncSpaceDelegate?
     let nextPage: Bool
@@ -85,8 +85,8 @@ public final class SyncSpace {
 
             if let deleted = $0 as? DeletedResource {
                 switch deleted.type {
-                case "Asset": self.deletedAssets.append(deleted.identifier)
-                case "Entry": self.deletedEntries.append(deleted.identifier)
+                case "DeletedAsset": self.deletedAssets.append(deleted.identifier)
+                case "DeletedEntry": self.deletedEntries.append(deleted.identifier)
                 default: break
                 }
             }

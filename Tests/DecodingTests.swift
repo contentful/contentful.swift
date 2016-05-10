@@ -10,7 +10,7 @@ import CatchingFire
 import Nimble
 import Quick
 
-import Contentful
+@testable import Contentful
 
 class DecondingTests: QuickSpec {
     func jsonData(fileName: String) -> AnyObject {
@@ -63,7 +63,7 @@ class DecondingTests: QuickSpec {
 
                     expect(syncSpace.assets.count).to(equal(4))
                     expect(syncSpace.entries.count).to(equal(11))
-                    expect(syncSpace.syncToken).to(equal("w5ZGw6JFwqZmVcKsE8Kow4grw45QdybCnV_Cg8OASMKpwo1UY8K8bsKFwqJrw7DDhcKnM2RDOVbDt1E-wo7CnDjChMKKGsK1wrzCrBzCqMOpZAwOOcOvCcOAwqHDv0XCiMKaOcOxZA8BJUzDr8K-wo1lNx7DnHE"))
+                expect(syncSpace.syncToken).to(equal("w5ZGw6JFwqZmVcKsE8Kow4grw45QdybCnV_Cg8OASMKpwo1UY8K8bsKFwqJrw7DDhcKnM2RDOVbDt1E-wo7CnDjChMKKGsK1wrzCrBzCqMOpZAwOOcOvCcOAwqHDv0XCiMKaOcOxZA8BJUzDr8K-wo1lNx7DnHE"))
                 }
             }
 
@@ -73,6 +73,8 @@ class DecondingTests: QuickSpec {
 
                     expect(syncSpace.assets.count).to(equal(0))
                     expect(syncSpace.entries.count).to(equal(0))
+                    expect(syncSpace.deletedAssets.count).to(equal(1))
+                    expect(syncSpace.deletedEntries.count).to(equal(0))
                 }
             }
 
@@ -82,6 +84,8 @@ class DecondingTests: QuickSpec {
 
                     expect(syncSpace.assets.count).to(equal(0))
                     expect(syncSpace.entries.count).to(equal(0))
+                    expect(syncSpace.deletedAssets.count).to(equal(0))
+                    expect(syncSpace.deletedEntries.count).to(equal(1))
                 }
             }
         }
