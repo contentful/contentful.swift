@@ -39,7 +39,7 @@ public class Client {
      */
     public init(spaceIdentifier: String, accessToken: String, configuration: Configuration = Configuration()) {
         network.sessionConfigurator = { (sessionConfiguration) in
-            sessionConfiguration.HTTPAdditionalHeaders = [ "Authorization": "Bearer \(accessToken)" ]
+            sessionConfiguration.httpAdditionalHeaders = [ "Authorization": "Bearer \(accessToken)" ]
         }
 
         self.configuration = configuration
@@ -73,7 +73,7 @@ public class Client {
 
     private func handleJSON<T: Decodable>(data: NSData, _ completion: Result<T> -> Void) {
         do {
-            let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
+            let json = try NSJSONSerialization.jsonObject(with: data, options: [])
             if let json = json as? NSDictionary { json.client = self }
 
             if let error = try? ContentfulError.decode(json) {
@@ -100,7 +100,7 @@ public class Client {
                     }
 
                     if let array = value as? NSArray {
-                        value = array.componentsJoinedByString(",")
+                        value = array.componentsJoined(by: ",")
                     }
 
                     return NSURLQueryItem(name: key, value: value.description)
@@ -111,7 +111,7 @@ public class Client {
                 }
             }
 
-            if let url = components.URL {
+            if let url = components.url {
                 return url
             }
         }
@@ -329,7 +329,7 @@ extension Client {
 
                 if value.nextPage {
                     var parameters = matching
-                    parameters.removeValueForKey("initial")
+                    parameters.removeValue(forKey: "initial")
                     value.sync(parameters, completion: completion)
                 } else {
                     completion(.Success(value))

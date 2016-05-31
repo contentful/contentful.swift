@@ -257,7 +257,7 @@ extension Locale: Decodable {
 }
 
 private extension Resource {
-    static func decode(jsonIncludes: [String:AnyObject], inout _ includes: [String:Resource]) throws {
+    static func decode(jsonIncludes: [String:AnyObject], _ includes: inout [String:Resource]) throws {
         let typename = "\(Self.self)"
 
         if let resources = jsonIncludes[typename] as? [[String:AnyObject]] {

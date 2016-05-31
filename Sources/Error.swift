@@ -9,7 +9,7 @@
 import Foundation
 
 /// Possible errors being thrown by the SDK
-public enum Error : ErrorType {
+public enum Error : ErrorProtocol {
     /// Thrown when no valid client is available during sync
     case InvalidClient()
 
@@ -40,7 +40,7 @@ public enum Error : ErrorType {
 }
 
 /// Information regarding an error received from Contentful
-public struct ContentfulError: Resource, ErrorType {
+public struct ContentfulError: Resource, ErrorProtocol {
     /// System fields
     public let sys: [String:AnyObject]
 
