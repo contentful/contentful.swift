@@ -11,24 +11,24 @@ import Foundation
 /// Possible errors being thrown by the SDK
 public enum Error : ErrorProtocol {
     /// Thrown when no valid client is available during sync
-    case InvalidClient()
+    case invalidClient()
 
     /**
      *  Thrown when receiving an invalid HTTP response
      *
      *  @param NSURLResponse? Optional URL response that has triggered the error
      */
-    case InvalidHTTPResponse(response: NSURLResponse?)
+    case invalidHTTPResponse(response: URLResponse?)
 
     /**
      *  Thrown when constructing an invalid URL
      *
      *  @param String The invalid URL string
      */
-    case InvalidURL(string: String)
+    case invalidURL(string: String)
 
     /// Thrown if the sync endpoint is called while being in preview mode
-    case PreviewAPIDoesNotSupportSync()
+    case previewAPIDoesNotSupportSync()
 
     /**
      *  Thrown when receiving unparseable JSON responses
@@ -36,7 +36,7 @@ public enum Error : ErrorProtocol {
      *  @param NSData The data being parsed
      *  @param String The error which occured during parsing
      */
-    case UnparseableJSON(data: NSData, errorMessage: String)
+    case unparseableJSON(data: Data, errorMessage: String)
 }
 
 /// Information regarding an error received from Contentful

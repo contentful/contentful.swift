@@ -16,28 +16,28 @@ public protocol SyncSpaceDelegate {
 
      - parameter asset: The created/updated Asset
      */
-    func createAsset(asset: Asset)
+    func createAsset(_ asset: Asset)
 
     /**
      This is called whenever an Asset was deleted.
 
      - parameter assetId: Identifier of the Asset that was deleted.
      */
-    func deleteAsset(assetId: String)
+    func deleteAsset(_ assetId: String)
 
     /**
      This is called whenever a new Entry was created or an existing one was updated.
 
      - parameter entry: The created/updated Entry
      */
-    func createEntry(entry: Entry)
+    func createEntry(_ entry: Entry)
 
     /**
      This is called whenever an Entry was deleted.
 
      - parameter entryId: Identifier of the Entry that was deleted.
      */
-    func deleteEntry(entryId: String)
+    func deleteEntry(_ entryId: String)
 }
 
 /// A container for the synchronized state of a Space
@@ -68,7 +68,7 @@ public final class SyncSpace {
     internal init(nextPage: Bool, nextUrl: String, items: [Resource]) {
         self.nextPage = nextPage
 
-        NSURLComponents(string: nextUrl)?.queryItems?.forEach {
+        URLComponents(string: nextUrl)?.queryItems?.forEach {
             if let value = $0.value where $0.name == "sync_token" {
                 self.syncToken = value
             }
@@ -121,9 +121,9 @@ public final class SyncSpace {
 
      - returns: The data task being used, enables cancellation of requests
      **/
-    public func sync(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<SyncSpace> -> Void) -> NSURLSessionDataTask? {
+    public func sync(_ matching: [String:AnyObject] = [String:AnyObject](), completion: (Result<SyncSpace>) -> Void) -> URLSessionDataTask? {
         guard let client = self.client else {
-            completion(.Error(Error.InvalidClient()))
+            completion(.Error(Error.invalidClient()))
             return nil
         }
 
@@ -131,7 +131,7 @@ public final class SyncSpace {
         parameters["sync_token"] = syncToken
         let (task, signal) = client.sync(parameters)
 
-        signal.next { space in
+        _ = signal.next { space in
             space.assets.forEach {
                 self.delegate?.createAsset($0)
                 self.assetsMap[$0.identifier] = $0
@@ -173,7 +173,7 @@ public final class SyncSpace {
 
      - returns: A tuple of data task and a signal which fires on completion
      **/
-    public func sync(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<SyncSpace>) {
+    public func sync(_ matching: [String:AnyObject] = [String:AnyObject]()) -> (URLSessionDataTask?, Signal<SyncSpace>) {
         return signalify(matching, sync)
     }
 }

@@ -19,7 +19,7 @@ extension Entry {
 }
 
 extension NSDate {
-    static func fromComponents(year year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int) -> NSDate {
+    static func fromComponents(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int) -> NSDate {
         let components = NSDateComponents()
         (components.year, components.month, components.day) = (year, month, day)
         (components.hour, components.minute, components.second) = (hour, minute, second)
@@ -31,7 +31,7 @@ extension NSDate {
 }
 
 class EntryTests: ContentfulBaseTests {
-    func waitUntilMatchingEntries(matching: [String:AnyObject], action: (entries: Contentful.Array<Entry>) -> ()) {
+    func waitUntilMatchingEntries(_ matching: [String:AnyObject], action: (entries: Contentful.Array<Entry>) -> ()) {
         waitUntil(timeout: 10) { done in
             self.client.fetchEntries(matching).1.next {
                 action(entries: $0)

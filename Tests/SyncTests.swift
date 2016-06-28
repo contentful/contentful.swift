@@ -12,7 +12,7 @@ import Nimble
 import Quick
 
 class SyncTests: ContentfulBaseTests {
-    func waitUntilSyncMatching(matching: [String:AnyObject], action: (space: SyncSpace) -> ()) {
+    func waitUntilSyncMatching(_ matching: [String:AnyObject], action: (space: SyncSpace) -> ()) {
         waitUntil { done in
             self.client.initialSync(matching).1.next {
                 action(space: $0)
@@ -36,7 +36,7 @@ class SyncTests: ContentfulBaseTests {
 
         it("can perform a subsequent sync for a space") {
             waitUntil { done in
-                self.client.initialSync().1.flatMap { (space: SyncSpace, completion: Result<SyncSpace> -> Void) in
+                self.client.initialSync().1.flatMap { (space: SyncSpace, completion: (Result<SyncSpace>) -> Void) in
                     space.sync(completion: completion)
                 }.next {
                     expect($0.assets.count).to(equal(4))

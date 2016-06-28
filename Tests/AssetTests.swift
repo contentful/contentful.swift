@@ -11,19 +11,19 @@ import Contentful
 import Nimble
 import Quick
 
-func url(asset: Asset) -> NSURL {
+func url(_ asset: Asset) -> NSURL {
     var url = NSURL(string: "http://example.com")
     AssertNoThrow { url = try asset.URL() }
     return url!
 }
 
 class AssetTests: ContentfulBaseTests {
-    func md5(image: UIImage) -> String {
+    func md5(_ image: UIImage) -> String {
         return UIImagePNGRepresentation(image)!.md5().toHexString()
     }
 
     // Linker error with too many levels of closures 😭
-    func testFetchImageFromAsset(done: () -> ()) {
+    func testFetchImageFromAsset(_ done: () -> ()) {
         self.client.fetchAsset("nyancat").1.next { (asset) in
             asset.fetchImage().1.next { (image) in
                 expect(self.md5(image)).to(equal("94fd9a22b0b6ecab15d91486922b8d7e"))
@@ -35,7 +35,7 @@ class AssetTests: ContentfulBaseTests {
         }
     }
 
-    func testNyanCatAssetObject(asset: Asset) {
+    func testNyanCatAssetObject(_ asset: Asset) {
         expect(asset.identifier).to(equal("nyancat"))
         expect(asset.type).to(equal("Asset"))
         expect(url(asset).absoluteString).to(equal("https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png"))

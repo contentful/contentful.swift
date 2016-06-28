@@ -13,7 +13,7 @@ import Quick
 import Contentful
 
 class DecondingTests: QuickSpec {
-    func jsonData(fileName: String) -> AnyObject {
+    func jsonData(_ fileName: String) -> AnyObject {
         let path = NSString(string: "Data").stringByAppendingPathComponent(fileName)
         let data = NSData(contentsOfFile: NSBundle(forClass: DecondingTests.self).pathForResource(path, ofType: "json")!)
         return try! NSJSONSerialization.JSONObjectWithData(data!, options: [])

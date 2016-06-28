@@ -30,17 +30,17 @@ public struct Asset : Resource, LocalizedResource {
     /// Resource type ("Asset")
     public let type: String
     /// The URL for the underlying media file
-    public func URL() throws -> NSURL {
+    public func URL() throws -> Foundation.URL {
         if let urlString = (fields["file"] as? [String:AnyObject])?["url"] as? String {
             // FIXME: Scheme should not be hardcoded
-            if let URL = NSURL(string: "https:\(urlString)") {
+            if let URL = Foundation.URL(string: "https:\(urlString)") {
                 return URL
             }
 
-            throw Error.InvalidURL(string: urlString)
+            throw Error.invalidURL(string: urlString)
         }
 
-        throw Error.InvalidURL(string: "")
+        throw Error.invalidURL(string: "")
     }
 
     /// Currently selected locale
@@ -53,13 +53,13 @@ public struct Asset : Resource, LocalizedResource {
 
      - returns: Tuple of the data task and a signal for the `NSData` result
      */
-    public func fetch() -> (NSURLSessionDataTask, Signal<NSData>) {
+    public func fetch() -> (URLSessionDataTask, Signal<NSData>) {
         do {
             return network.fetch(try URL())
         } catch {
             let signal = Signal<NSData>()
             signal.update(error)
-            return (NSURLSessionDataTask(), signal)
+            return (URLSessionDataTask(), signal)
         }
     }
 
@@ -69,7 +69,7 @@ public struct Asset : Resource, LocalizedResource {
 
      - returns: Tuple of data task and a signal for the `UIImage` result
      */
-    public func fetchImage() -> (NSURLSessionDataTask, Signal<UIImage>) {
+    public func fetchImage() -> (URLSessionDataTask, Signal<UIImage>) {
         return convert_signal(fetch) { UIImage(data: $0) }
     }
 #endif

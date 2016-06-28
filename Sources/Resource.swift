@@ -33,7 +33,7 @@ func +<K: Hashable, V> (left: Dictionary<K, V>, right: Dictionary<K, V>) -> Dict
     return result
 }
 
-func fields(localizedFields: [String:[String:Any]], forLocale locale: String, defaultLocale: String) -> [String:Any] {
+func fields(_ localizedFields: [String:[String:Any]], forLocale locale: String, defaultLocale: String) -> [String:Any] {
     if let fields = localizedFields[locale] where locale != defaultLocale {
         let defaultLocaleFields = localizedFields[defaultLocale] ?? [String:Any]()
         return defaultLocaleFields + fields

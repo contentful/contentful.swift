@@ -12,13 +12,13 @@ import Foundation
 private let DEFAULT_LOCALE = "en-US"
 
 // Cannot cast directly from [String:AnyObject] => [String:Any]
-private func convert(fields: [String:AnyObject]) -> [String:Any] {
+private func convert(_ fields: [String:AnyObject]) -> [String:Any] {
     var result = [String:Any]()
     fields.forEach { result[$0.0] = $0.1 }
     return result
 }
 
-private func determineDefaultLocale(json: AnyObject) -> String {
+private func determineDefaultLocale(_ json: AnyObject) -> String {
     if let json = json as? NSDictionary, space = json.client?.space {
         if let locale = (space.locales.filter { $0.isDefault }).first {
             return locale.code
@@ -28,7 +28,7 @@ private func determineDefaultLocale(json: AnyObject) -> String {
     return DEFAULT_LOCALE
 }
 
-private func parseLocalizedFields(json: AnyObject) throws -> (String, [String:[String:Any]]) {
+private func parseLocalizedFields(_ json: AnyObject) throws -> (String, [String:[String:Any]]) {
     let fields = try json => "fields" as! [String:AnyObject]
     let locale: String? = try? json => "sys" => "locale"
 
@@ -55,7 +55,7 @@ extension UInt: Castable {}
 
 extension Asset: Decodable {
     /// Decode JSON for an Asset
-    public static func decode(json: AnyObject) throws -> Asset {
+    public static func decode(_ json: AnyObject) throws -> Asset {
         let (locale, localizedFields) = try parseLocalizedFields(json)
 
         return try Asset(
@@ -71,7 +71,7 @@ extension Asset: Decodable {
 }
 
 extension Array: Decodable {
-    private static func resolveLink(value: Any, _ includes: [String:Resource]) -> Any? {
+    private static func resolveLink(_ value: Any, _ includes: [String:Resource]) -> Any? {
         if let link = value as? [String:AnyObject],
             sys = link["sys"] as? [String:AnyObject],
             identifier = sys["id"] as? String,
@@ -83,7 +83,7 @@ extension Array: Decodable {
         return nil
     }
 
-    private static func resolveLinks(entry: Entry, _ includes: [String:Resource]) -> Entry {
+    private static func resolveLinks(_ entry: Entry, _ includes: [String:Resource]) -> Entry {
         var localizedFields = [String:[String:Any]]()
 
         entry.localizedFields.forEach { locale, entryFields in
@@ -109,7 +109,7 @@ extension Array: Decodable {
         return Entry(entry: entry, localizedFields: localizedFields)
     }
 
-    static func parseItems(json: AnyObject) throws -> [Resource] {
+    static func parseItems(_ json: AnyObject) throws -> [Resource] {
         var includes = [String:Resource]()
         let jsonIncludes = try? json => "includes" as! [String:AnyObject]
 
@@ -150,7 +150,7 @@ extension Array: Decodable {
     }
 
     /// Decode JSON for an Array
-    public static func decode(json: AnyObject) throws -> Array {
+    public static func decode(_ json: AnyObject) throws -> Array {
         return try Array(
             items: parseItems(json).flatMap { $0 as? T },
 
@@ -163,7 +163,7 @@ extension Array: Decodable {
 
 extension ContentfulError: Decodable {
     /// Decode JSON for a Contentful error
-    public static func decode(json: AnyObject) throws -> ContentfulError {
+    public static func decode(_ json: AnyObject) throws -> ContentfulError {
         return try ContentfulError(
             sys: (json => "sys") as! [String : AnyObject],
             identifier: json => "sys" => "id",
@@ -177,7 +177,7 @@ extension ContentfulError: Decodable {
 
 extension ContentType: Decodable {
     /// Decode JSON for a Content Type
-    public static func decode(json: AnyObject) throws -> ContentType {
+    public static func decode(_ json: AnyObject) throws -> ContentType {
         return try ContentType(
             sys: (json => "sys") as! [String : AnyObject],
             fields: json => "fields",
@@ -191,7 +191,7 @@ extension ContentType: Decodable {
 
 extension DeletedResource: Decodable {
     /// Decode JSON for a deleted resource
-    static func decode(json: AnyObject) throws -> DeletedResource {
+    static func decode(_ json: AnyObject) throws -> DeletedResource {
         return try DeletedResource(
             sys: (json => "sys") as! [String : AnyObject],
             identifier: json => "sys" => "id",
@@ -202,7 +202,7 @@ extension DeletedResource: Decodable {
 
 extension Entry: Decodable {
     /// Decode JSON for an Entry
-    public static func decode(json: AnyObject) throws -> Entry {
+    public static func decode(_ json: AnyObject) throws -> Entry {
         let (locale, localizedFields) = try parseLocalizedFields(json)
 
         return try Entry(
@@ -219,7 +219,7 @@ extension Entry: Decodable {
 
 extension Field: Decodable {
     /// Decode JSON for a Field
-    public static func decode(json: AnyObject) throws -> Field {
+    public static func decode(_ json: AnyObject) throws -> Field {
         var itemType: FieldType = .None
         if let itemTypeString = (try? json => "items" => "type") as? String {
             itemType = FieldType(rawValue: itemTypeString) ?? .None
@@ -247,7 +247,7 @@ extension Field: Decodable {
 
 extension Locale: Decodable {
     /// Decode JSON for a Locale
-    public static func decode(json: AnyObject) throws -> Locale {
+    public static func decode(_ json: AnyObject) throws -> Locale {
         return try Locale(
             code: json => "code",
             isDefault: json => "default",
@@ -257,7 +257,7 @@ extension Locale: Decodable {
 }
 
 private extension Resource {
-    static func decode(jsonIncludes: [String:AnyObject], _ includes: inout [String:Resource]) throws {
+    static func decode(_ jsonIncludes: [String:AnyObject], _ includes: inout [String:Resource]) throws {
         let typename = "\(Self.self)"
 
         if let resources = jsonIncludes[typename] as? [[String:AnyObject]] {
@@ -273,7 +273,7 @@ private extension Resource {
 
 extension Space: Decodable {
     /// Decode JSON for a Space
-    public static func decode(json: AnyObject) throws -> Space {
+    public static func decode(_ json: AnyObject) throws -> Space {
         return try Space(
             sys: (json => "sys") as! [String : AnyObject],
 
@@ -287,7 +287,7 @@ extension Space: Decodable {
 
 extension SyncSpace: Decodable {
     /// Decode JSON for a SyncSpace
-    public static func decode(json: AnyObject) throws -> SyncSpace {
+    public static func decode(_ json: AnyObject) throws -> SyncSpace {
         var nextPage = true
         var syncUrl: String? = try? json => "nextPageUrl"
 
