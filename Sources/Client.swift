@@ -39,7 +39,10 @@ public class Client {
      */
     public init(spaceIdentifier: String, accessToken: String, configuration: Configuration = Configuration()) {
         network.sessionConfigurator = { (sessionConfiguration) in
-            sessionConfiguration.HTTPAdditionalHeaders = [ "Authorization": "Bearer \(accessToken)" ]
+            sessionConfiguration.HTTPAdditionalHeaders = [
+                "Authorization": "Bearer \(accessToken)",
+                "User-Agent": configuration.userAgent
+            ]
         }
 
         self.configuration = configuration
