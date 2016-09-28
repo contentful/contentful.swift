@@ -51,7 +51,7 @@ pod 'Contentful'
 You can also use [Carthage][7] for integration by adding this to your `Cartfile`:
 
 ```
-github "contentful/contentful.swift" ~> 0.2.1
+github "contentful/contentful.swift" ~> 0.2.2
 ```
 
 ## License
