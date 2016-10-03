@@ -1,5 +1,5 @@
 __SIM_ID=`xcrun simctl list|egrep -m 1 '$(SIM_NAME) \([^(]*\) \([^(]*\)$$'|sed -e 's/.* (\(.*\)) (.*)/\1/'`
-SIM_NAME=iPhone 4s
+SIM_NAME=iPhone 5
 SIM_ID=$(shell echo $(__SIM_ID))
 
 ifeq ($(strip $(SIM_ID)),)
@@ -9,7 +9,7 @@ endif
 .PHONY: test setup lint coverage
 
 test:
-	xcodebuild -workspace Contentful.xcworkspace \
+	xcodebuild -quiet -workspace Contentful.xcworkspace \
 		-scheme Contentful -destination 'id=$(SIM_ID)' test
 
 setup:
