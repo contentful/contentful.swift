@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "Contentful"
-  s.version          = "0.2.0"
+  s.version          = "0.2.1"
   s.summary          = "Swift SDK for Contentful's Content Delivery API."
   s.homepage         = "https://github.com/contentful/contentful.swift/"
   s.social_media_url = 'https://twitter.com/contentful'
@@ -22,7 +22,8 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = '2.0'
   s.tvos.deployment_target    = '9.0'
 
-  s.dependency 'Decodable', '~> 0.4.2'
-  s.dependency 'Interstellar', '~> 1.4.0'
-  s.dependency '🕕'
+  s.dependency 'Decodable', '~> 0.5'
+  #s.dependency 'Interstellar', '~> 1.4.0'
+  # s.dependency 'SwiftDate', '~> 4.0'
+  # s.dependency '🕕'
 end
