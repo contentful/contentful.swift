@@ -63,7 +63,7 @@ class ContentTypeTests: ContentfulBaseTests {
                         expect(array.items.count).to(equal(4))
 
                         let _ = array.items.first.flatMap { (type: ContentType) in
-                            expect(type.name).to(equal("Cat"))
+                            expect(type.name).to(equal("City"))
                         }
                     case let .Error(error):
                         fail("\(error)")
