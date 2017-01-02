@@ -1,24 +1,27 @@
+#!/usr/bin/ruby
+
+source 'https://github.com/CocoaPods/Specs.git'
+source 'https://github.com/contentful/CocoaPodsSpecs.git'
+
+platform :ios, "8.0"
+
 use_frameworks!
 
 target 'Contentful' do
 
-podspec :path => 'Contentful.podspec'
+  podspec :path => 'Contentful.podspec'
 
-end
+  pod 'Interstellar', :git => 'https://github.com/loudmouth/Interstellar.git'
+  pod 'Decodable', '~> 0.5'
 
-target 'ContentfulTests' do
+  target 'ContentfulTests' do
+    inherit! :search_paths
 
-pod 'CatchingFire'
-pod 'CryptoSwift'
-pod 'Nimble'
-pod 'Quick'
+    pod 'CatchingFire', :git => 'https://github.com/loudmouth/CatchingFire.git'
+    pod 'CryptoSwift', :git => 'https://github.com/krzyzanowskim/CryptoSwift.git', :branch => 'develop'
+    pod 'Nimble'
+    pod 'Quick'
 
-end
-
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |config|
-      config.build_settings['SWIFT_VERSION'] = '2.3'
-    end
   end
 end
+

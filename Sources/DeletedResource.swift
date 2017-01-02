@@ -10,7 +10,7 @@ import Foundation
 
 struct DeletedResource: Resource {
     /// System fields
-    let sys: [String:AnyObject]
+    let sys: [String : Any]
 
     /// The unique identifier of the resource that has been deleted
     let identifier: String

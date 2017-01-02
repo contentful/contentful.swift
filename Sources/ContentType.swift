@@ -11,7 +11,7 @@ import Foundation
 /// A Content Type represents your data model for Entries in a Contentful Space
 public struct ContentType : Resource {
     /// System fields
-    public let sys: [String:AnyObject]
+    public let sys: [String : Any]
     /// The fields which are part of this Content Type
     public let fields: [Field]
 

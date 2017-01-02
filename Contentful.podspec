@@ -1,28 +1,31 @@
-Pod::Spec.new do |s|
-  s.name             = "Contentful"
-  s.version          = "0.2.2"
-  s.summary          = "Swift SDK for Contentful's Content Delivery API."
-  s.homepage         = "https://github.com/contentful/contentful.swift/"
-  s.social_media_url = 'https://twitter.com/contentful'
+#!/usr/bin/ruby
 
-  s.license = {
-    :type => 'MIT',
-    :file => 'LICENSE'
+Pod::Spec.new do |spec|
+  spec.name             = "Contentful"
+  spec.version          = "0.3.0"
+  spec.summary          = "Swift SDK for Contentful's Content Delivery API."
+  spec.homepage         = "https://github.com/contentful/contentful.swift/"
+  spec.social_media_url = 'https://twitter.com/contentful'
+
+  spec.license = {
+      :type => 'MIT',
+      :file => 'LICENSE'
   }
 
-  s.authors      = { "Boris Bügling" => "boris@buegling.com" }
-  s.source       = { :git => "https://github.com/contentful/contentful.swift.git",
-                     :tag => s.version.to_s }
-  s.requires_arc = true
+  spec.authors      = { "Boris Bügling" => "boris@buegling.com" }
+  spec.source       = { :git => "https://github.com/contentful/contentful.swift.git",
+                        :tag => spec.version.to_s }
+  spec.requires_arc = true
 
-  s.source_files         = 'Sources/*.swift'
+  spec.source_files         = 'Sources/*.swift'
 
-  s.ios.deployment_target     = '8.0'
-  s.osx.deployment_target     = '10.10'
-  s.watchos.deployment_target = '2.0'
-  s.tvos.deployment_target    = '9.0'
+  spec.ios.deployment_target     = '8.0'
+  spec.osx.deployment_target     = '10.10'
+  spec.watchos.deployment_target = '2.0'
+  spec.tvos.deployment_target    = '9.0'
 
-  s.dependency 'Decodable', '~> 0.4.2'
-  s.dependency 'Interstellar', '~> 1.4.0'
-  s.dependency '🕕', '0.0.1'
+  spec.dependency 'Decodable', '~> 0.5'
+#  spec.dependency 'Interstellar', '~> 1.4.0'
+#  spec.dependency '🕕', '0.1.0'
 end
+

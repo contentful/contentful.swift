@@ -6,17 +6,21 @@
 //  Copyright © 2015 Contentful GmbH. All rights reserved.
 //
 
+@testable import Contentful
+import Foundation
 import CatchingFire
 import Nimble
 import Quick
 
-@testable import Contentful
 
-class DecondingTests: QuickSpec {
-    func jsonData(fileName: String) -> AnyObject {
-        let path = NSString(string: "Data").stringByAppendingPathComponent(fileName)
-        let data = NSData(contentsOfFile: NSBundle(forClass: DecondingTests.self).pathForResource(path, ofType: "json")!)
-        return try! NSJSONSerialization.JSONObjectWithData(data!, options: [])
+
+class DecodingTests: QuickSpec {
+    func jsonData(_ fileName: String) -> Any {
+        let path = NSString(string: "Data").appendingPathComponent(fileName)
+        let bundle = Bundle(for: DecodingTests.self)
+        let urlPath = bundle.path(forResource: path, ofType: "json")!
+        let data = try! Data(contentsOf: URL(fileURLWithPath: urlPath))
+        return try! JSONSerialization.jsonObject(with: data, options: [])
     }
 
     override func spec() {
@@ -27,7 +31,7 @@ class DecondingTests: QuickSpec {
 
                     expect(asset.identifier).to(equal("nyancat"))
                     expect(asset.type).to(equal("Asset"))
-                    expect(try asset.URL()).to(equal(NSURL(string: "https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png")))
+                    expect(try asset.URL()).to(equal(URL(string: "https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png")))
                 }
             }
 
