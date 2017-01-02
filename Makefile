@@ -6,7 +6,10 @@ ifeq ($(strip $(SIM_ID)),)
 $(error Could not find $(SIM_NAME) simulator)
 endif
 
-.PHONY: test setup lint coverage
+.PHONY: open test setup lint coverage
+
+open
+	open Contentful.xcworkspace
 
 test:
 	xcodebuild -workspace Contentful.xcworkspace \
