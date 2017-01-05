@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Interstellar
+import Interstellar_Contentful
 
 // TODO: Name these generics better
 func convert_signal<U, V, W>(closure: () -> (V, Observable<Result<U>>), mapper: @escaping (U) -> W?) -> (V, Observable<Result<W>>) {

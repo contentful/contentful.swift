@@ -2,12 +2,12 @@ PODS:
   - CatchingFire (0.2.0)
   - CryptoSwift (0.6.7)
   - Decodable (0.5)
-  - Interstellar (2.0.0):
-    - Interstellar/Core (= 2.0.0)
-    - Interstellar/Warpdrive (= 2.0.0)
-  - Interstellar/Core (2.0.0)
-  - Interstellar/Warpdrive (2.0.0):
-    - Interstellar/Core
+  - Interstellar-Contentful (2.1.0):
+    - Interstellar-Contentful/Core (= 2.1.0)
+    - Interstellar-Contentful/Warpdrive (= 2.1.0)
+  - Interstellar-Contentful/Core (2.1.0)
+  - Interstellar-Contentful/Warpdrive (2.1.0):
+    - Interstellar-Contentful/Core
   - Nimble (5.1.1)
   - Quick (1.0.0)
 
@@ -15,7 +15,7 @@ DEPENDENCIES:
   - CatchingFire (from `https://github.com/loudmouth/CatchingFire.git`)
   - CryptoSwift (from `https://github.com/krzyzanowskim/CryptoSwift.git`, branch `develop`)
   - Decodable (~> 0.5)
-  - Interstellar (from `https://github.com/loudmouth/Interstellar.git`)
+  - Interstellar-Contentful (~> 2.1.0)
   - Nimble
   - Quick
 
@@ -25,8 +25,6 @@ EXTERNAL SOURCES:
   CryptoSwift:
     :branch: develop
     :git: https://github.com/krzyzanowskim/CryptoSwift.git
-  Interstellar:
-    :git: https://github.com/loudmouth/Interstellar.git
 
 CHECKOUT OPTIONS:
   CatchingFire:
@@ -35,18 +33,15 @@ CHECKOUT OPTIONS:
   CryptoSwift:
     :commit: 963e6c93707d57071ed3c53825b7729c02b3fd12
     :git: https://github.com/krzyzanowskim/CryptoSwift.git
-  Interstellar:
-    :commit: 8cb18723e2a5a86fc961a366a7a3cbc98426c1b3
-    :git: https://github.com/loudmouth/Interstellar.git
 
 SPEC CHECKSUMS:
   CatchingFire: 935ecc35fc5864f12ef1c033a97e9a9affbf6056
   CryptoSwift: 8f7b936cfd910257631f30d26e7188fa64e91e97
   Decodable: 7c90acc68d357b71d0d6efc120faf9c53c644b7e
-  Interstellar: ab67502af03105f92100a043e178d188a1a437c9
+  Interstellar-Contentful: 46b0d12cdd2f42f1804c21097fcaa4af8fe25788
   Nimble: 415e3aa3267e7bc2c96b05fa814ddea7bb686a29
   Quick: 8024e4a47e6cc03a9d5245ef0948264fc6d27cff
 
-PODFILE CHECKSUM: 9d37e5f8d84eb02f5f6507fa51ec8dd9e79b5dce
+PODFILE CHECKSUM: a05fcd46b07de341046518fe6322fccde7e7e14e
 
 COCOAPODS: 1.1.1

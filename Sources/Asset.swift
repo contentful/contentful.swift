@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Interstellar
+import Interstellar_Contentful
 
 #if os(iOS)
 import UIKit

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Interstellar
+import Interstellar_Contentful
 
 /// Delegate protocol for receiving updates performed during synchronization
 public protocol SyncSpaceDelegate {
