@@ -16,7 +16,7 @@ import UIKit
 /// An asset represents a media file in Contentful
 public struct Asset : Resource, LocalizedResource {
     /// System fields
-    public let sys: [String:AnyObject]
+    public let sys: [String : Any]
     /// Content fields
     public var fields: [String:Any] {
         return Contentful.fields(localizedFields, forLocale: locale, defaultLocale: defaultLocale)
@@ -30,36 +30,36 @@ public struct Asset : Resource, LocalizedResource {
     /// Resource type ("Asset")
     public let type: String
     /// The URL for the underlying media file
-    public func URL() throws -> NSURL {
-        if let urlString = (fields["file"] as? [String:AnyObject])?["url"] as? String {
+    public func URL() throws -> Foundation.URL {
+        if let urlString = (fields["file"] as? [String : Any])?["url"] as? String {
             // FIXME: Scheme should not be hardcoded
-            if let URL = NSURL(string: "https:\(urlString)") {
+            if let URL = Foundation.URL(string: "https:\(urlString)") {
                 return URL
             }
 
-            throw Error.InvalidURL(string: urlString)
+            throw SDKError.invalidURL(string: urlString)
         }
 
-        throw Error.InvalidURL(string: "")
+        throw SDKError.invalidURL(string: "")
     }
 
     /// Currently selected locale
     public var locale: String
 
-    private let network = Network()
+    fileprivate let network = Network()
 
     /**
-     Fetch the underlying media file as `NSData`
+     Fetch the underlying media file as `Data`
 
      - returns: Tuple of the data task and a signal for the `NSData` result
      */
-    public func fetch() -> (NSURLSessionDataTask, Signal<NSData>) {
+    public func fetch() -> (URLSessionDataTask?, Observable<Result<Data>>) {
         do {
-            return network.fetch(try URL())
-        } catch {
-            let signal = Signal<NSData>()
-            signal.update(error)
-            return (NSURLSessionDataTask(), signal)
+            return network.fetch(url: try URL())
+        } catch let error {
+            let signal = Observable<Result<Data>>()
+            signal.update(Result.error(error))
+            return (URLSessionDataTask(), signal)
         }
     }
 
@@ -69,8 +69,8 @@ public struct Asset : Resource, LocalizedResource {
 
      - returns: Tuple of data task and a signal for the `UIImage` result
      */
-    public func fetchImage() -> (NSURLSessionDataTask, Signal<UIImage>) {
-        return convert_signal(fetch) { UIImage(data: $0) }
+    public func fetchImage() -> (URLSessionDataTask?, Observable<Result<UIImage>>) {
+        return convert_signal(closure: fetch) { UIImage(data: $0) }
     }
 #endif
 }

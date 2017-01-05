@@ -1,7 +1,8 @@
 language: objective-c
-osx_image: xcode7.3.1
+osx_image: xcode8.1
 script:
-- set -x -o pipefail
-- xcodebuild -workspace Contentful.xcworkspace -scheme Contentful test -sdk iphonesimulator | xcpretty -c
-- bundle exec slather coverage --coveralls Contentful.xcodeproj
+  #- set -o pipefail
+- xcodebuild test -workspace Contentful.xcworkspace -scheme Contentful -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.3' | xcpretty -c
+after_success:
+- bundle exec slather coverage
 - pod lib lint Contentful.podspec

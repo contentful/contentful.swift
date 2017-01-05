@@ -6,27 +6,27 @@
 //  Copyright © 2015 Contentful GmbH. All rights reserved.
 //
 
-import Clock
+//import Clock
 import Decodable
 import Foundation
 import Interstellar
 
 /// Client object for performing requests against the Contentful API
-public class Client {
-    private let configuration: Configuration
-    private let network = Network()
-    private let spaceIdentifier: String
+open class Client {
+    fileprivate let configuration: Configuration
+    fileprivate let network = Network()
+    fileprivate let spaceIdentifier: String
 
-    private var server: String {
+    fileprivate var server: String {
         if configuration.previewMode && configuration.server == DEFAULT_SERVER {
             return "preview.contentful.com"
         }
         return configuration.server
     }
 
-    private(set) var space: Space?
+    fileprivate(set) var space: Space?
 
-    private var scheme: String { return configuration.secure ? "https" : "http" }
+    fileprivate var scheme: String { return configuration.secure ? "https" : "http" }
 
     /**
      Initializes a new Contentful client instance
@@ -39,7 +39,7 @@ public class Client {
      */
     public init(spaceIdentifier: String, accessToken: String, configuration: Configuration = Configuration()) {
         network.sessionConfigurator = { (sessionConfiguration) in
-            sessionConfiguration.HTTPAdditionalHeaders = [
+            sessionConfiguration.httpAdditionalHeaders = [
                 "Authorization": "Bearer \(accessToken)",
                 "User-Agent": configuration.userAgent
             ]
@@ -49,64 +49,65 @@ public class Client {
         self.spaceIdentifier = spaceIdentifier
     }
 
-    private func fetch<T: Decodable>(url: NSURL?, _ completion: Result<T> -> Void) -> NSURLSessionDataTask? {
+    fileprivate func fetch<T: Decodable>(url: URL?, completion: @escaping (Result<T>) -> Void) -> URLSessionDataTask? {
         if let url = url {
-            let (task, signal) = network.fetch(url)
+            let (task, signal) = network.fetch(url: url)
 
             if T.self == Space.self {
                 signal
-                    .next { self.handleJSON($0, completion) }
-                    .error { completion(.Error($0)) }
+                    .then { self.handleJSON($0, completion) }
+                    .error { completion(.error($0)) }
             } else {
                 fetchSpace().1
-                    .next { _ in
+                    .then { _ in
                         signal
-                            .next { self.handleJSON($0, completion) }
-                            .error { completion(.Error($0)) }
+                            .then { self.handleJSON($0, completion) }
+                            .error { completion(.error($0)) }
                     }
-                    .error { completion(.Error($0)) }
+                    .error { completion(.error($0)) }
             }
 
             return task
         }
 
-        completion(.Error(Error.InvalidURL(string: "")))
+        completion(.error(SDKError.invalidURL(string: "")))
         return nil
     }
 
-    private func handleJSON<T: Decodable>(data: NSData, _ completion: Result<T> -> Void) {
+    fileprivate func handleJSON<T: Decodable>(_ data: Data, _ completion: (Result<T>) -> Void) {
         do {
-            let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
+            let json = try JSONSerialization.jsonObject(with: data, options: [])
             if let json = json as? NSDictionary { json.client = self }
 
             if let error = try? ContentfulError.decode(json) {
-                completion(.Error(error))
+                completion(.error(error))
                 return
             }
 
-            completion(.Success(try T.decode(json)))
+            completion(.success(try T.decode(json)))
         } catch let error as DecodingError {
-            completion(.Error(Error.UnparseableJSON(data: data, errorMessage: "\(error)")))
+            completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "\(error)")))
         } catch _ {
-            completion(.Error(Error.UnparseableJSON(data: data, errorMessage: "")))
+            completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "")))
         }
     }
 
-    private func URLForFragment(fragment: String = "", parameters: [String: AnyObject]? = nil) -> NSURL? {
-        if let components = NSURLComponents(string: "\(scheme)://\(server)/spaces/\(spaceIdentifier)/\(fragment)") {
+    fileprivate func URLForFragment(fragment: String = "", parameters: [String: Any]? = nil) -> URL? {
+        if var components = URLComponents(string: "\(scheme)://\(server)/spaces/\(spaceIdentifier)/\(fragment)") {
             if let parameters = parameters {
-                let queryItems: [NSURLQueryItem] = parameters.map() { (key, value) in
+                let queryItems: [URLQueryItem] = parameters.map() { (key, value) in
                     var value = value
 
-                    if let date = value as? NSDate, dateString = date.toISO8601GMTString() {
+                    if let date = value as? Date, let dateString = date.toISO8601GMTString() {
                         value = dateString
                     }
 
+                    // FIXME: Should this be an NSArray?
                     if let array = value as? NSArray {
-                        value = array.componentsJoinedByString(",")
+                        value = array.componentsJoined(by: ",")
                     }
 
-                    return NSURLQueryItem(name: key, value: value.description)
+                    return URLQueryItem(name: key, value: (value as AnyObject).description)
                 }
 
                 if queryItems.count > 0 {
@@ -114,7 +115,7 @@ public class Client {
                 }
             }
 
-            if let url = components.URL {
+            if let url = components.url {
                 return url
             }
         }
@@ -132,8 +133,8 @@ extension Client {
 
      - returns: The data task being used, enables cancellation of requests
      */
-    public func fetchAsset(identifier: String, completion: Result<Asset> -> Void) -> NSURLSessionDataTask? {
-        return fetch(URLForFragment("assets/\(identifier)"), completion)
+    public func fetchAsset(identifier: String, completion: @escaping (Result<Asset>) -> Void) -> URLSessionDataTask? {
+        return fetch(url: URLForFragment(fragment: "assets/\(identifier)"), completion: completion)
     }
 
     /**
@@ -143,8 +144,9 @@ extension Client {
 
      - returns: A tuple of data task and a signal for the resulting Asset
      */
-    public func fetchAsset(identifier: String) -> (NSURLSessionDataTask?, Signal<Asset>) {
-        return signalify(identifier, fetchAsset)
+    public func fetchAsset(identifier: String) -> (URLSessionDataTask?, Observable<Result<Asset>>) {
+        let closure: SignalObservation<String, Asset> = fetchAsset(identifier:completion:)
+        return signalify(parameter: identifier, closure: closure)
     }
 
     /**
@@ -155,8 +157,8 @@ extension Client {
 
      - returns: The data task being used, enables cancellation of requests
      */
-    public func fetchAssets(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<Array<Asset>> -> Void) -> NSURLSessionDataTask? {
-        return fetch(URLForFragment("assets", parameters: matching), completion)
+    public func fetchAssets(matching: [String : Any] = [:], completion: @escaping (Result<Array<Asset>>) -> Void) -> URLSessionDataTask? {
+        return fetch(url: URLForFragment(fragment: "assets", parameters: matching), completion: completion)
     }
 
     /**
@@ -166,8 +168,9 @@ extension Client {
 
      - returns: A tuple of data task and a signal for the resulting array of Assets
      */
-    public func fetchAssets(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<Array<Asset>>) {
-        return signalify(matching, fetchAssets)
+    public func fetchAssets(matching: [String : Any] = [:]) -> (URLSessionDataTask?, Observable<Result<Array<Asset>>>) {
+        let closure: SignalObservation<[String : Any], Array<Asset>> = fetchAssets(matching:completion:)
+        return signalify(parameter: matching, closure: closure)
     }
 }
 
@@ -180,8 +183,8 @@ extension Client {
 
      - returns: The data task being used, enables cancellation of requests
      */
-    public func fetchContentType(identifier: String, completion: Result<ContentType> -> Void) -> NSURLSessionDataTask? {
-        return fetch(URLForFragment("content_types/\(identifier)"), completion)
+    public func fetchContentType(identifier: String, completion: @escaping (Result<ContentType>) -> Void) -> URLSessionDataTask? {
+        return fetch(url: URLForFragment(fragment: "content_types/\(identifier)"), completion: completion)
     }
 
     /**
@@ -191,8 +194,9 @@ extension Client {
 
      - returns: A tuple of data task and a signal for the resulting Content Type
      */
-    public func fetchContentType(identifier: String) -> (NSURLSessionDataTask?, Signal<ContentType>) {
-        return signalify(identifier, fetchContentType)
+    public func fetchContentType(identifier: String) -> (URLSessionDataTask?, Observable<Result<ContentType>>) {
+        let closure: SignalObservation<String, ContentType> = fetchContentType(identifier:completion:)
+        return signalify(parameter: identifier, closure: closure)
     }
 
     /**
@@ -203,8 +207,8 @@ extension Client {
 
      - returns: The data task being used, enables cancellation of requests
      */
-    public func fetchContentTypes(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<Array<ContentType>> -> Void) -> NSURLSessionDataTask? {
-        return fetch(URLForFragment("content_types", parameters: matching), completion)
+    public func fetchContentTypes(matching: [String:Any] = [:], completion: @escaping (Result<Array<ContentType>>) -> Void) -> URLSessionDataTask? {
+        return fetch(url: URLForFragment(fragment: "content_types", parameters: matching), completion: completion)
     }
 
     /**
@@ -214,8 +218,9 @@ extension Client {
 
      - returns: A tuple of data task and a signal for the resulting array of Content Types
      */
-    public func fetchContentTypes(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<Array<ContentType>>) {
-        return signalify(matching, fetchContentTypes)
+    public func fetchContentTypes(matching: [String : Any] = [:]) -> (URLSessionDataTask?, Observable<Result<Array<ContentType>>>) {
+        let closure: SignalObservation<[String : Any], Array<ContentType>> = fetchContentTypes(matching:completion:)
+        return signalify(parameter: matching, closure: closure)
     }
 }
 
@@ -228,8 +233,8 @@ extension Client {
 
      - returns: The data task being used, enables cancellation of requests
      */
-    public func fetchEntries(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<Array<Entry>> -> Void) -> NSURLSessionDataTask? {
-        return fetch(URLForFragment("entries", parameters: matching), completion)
+    public func fetchEntries(matching: [String : Any] = [:], completion: @escaping (Result<Array<Entry>>) -> Void) -> URLSessionDataTask? {
+        return fetch(url: URLForFragment(fragment: "entries", parameters: matching), completion: completion)
     }
 
     /**
@@ -239,8 +244,9 @@ extension Client {
 
      - returns: A tuple of data task and a signal for the resulting array of Entries
      */
-    public func fetchEntries(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<Array<Entry>>) {
-        return signalify(matching, fetchEntries)
+    public func fetchEntries(matching: [String : Any] = [:]) -> (URLSessionDataTask?, Observable<Result<Array<Entry>>>) {
+        let closure: SignalObservation<[String : Any], Array<Entry>> = fetchEntries(matching:completion:)
+        return signalify(parameter: matching, closure: closure)
     }
 
     /**
@@ -251,8 +257,8 @@ extension Client {
 
      - returns: The data task being used, enables cancellation of requests
      */
-    public func fetchEntry(identifier: String, completion: Result<Entry> -> Void) -> NSURLSessionDataTask? {
-        return fetch(URLForFragment("entries/\(identifier)"), completion)
+    public func fetchEntry(identifier: String, completion: @escaping (Result<Entry>) -> Void) -> URLSessionDataTask? {
+        return fetch(url: URLForFragment(fragment: "entries/\(identifier)"), completion: completion)
     }
 
     /**
@@ -262,8 +268,9 @@ extension Client {
 
      - returns: A tuple of data task and a signal for the resulting Entry
      */
-    public func fetchEntry(identifier: String) -> (NSURLSessionDataTask?, Signal<Entry>) {
-        return signalify(identifier, fetchEntry)
+    public func fetchEntry(identifier: String) -> (URLSessionDataTask?, Observable<Result<Entry>>) {
+        let closure: SignalObservation<String, Entry> = fetchEntry(identifier:completion:)
+        return signalify(parameter: identifier, closure: closure)
     }
 }
 
@@ -276,12 +283,12 @@ extension Client {
      - returns: The data task being used, which enables cancellation of requests, or `nil` if the
         Space was already cached locally
      */
-    public func fetchSpace(completion: Result<Space> -> Void) -> NSURLSessionDataTask? {
+    public func fetchSpace(completion: @escaping (Result<Space>) -> Void) -> URLSessionDataTask? {
         if let space = self.space {
-            completion(.Success(space))
+            completion(.success(space))
             return nil
         }
-        return fetch(URLForFragment(), completion)
+        return fetch(url: URLForFragment(), completion: completion)
     }
 
     /**
@@ -289,8 +296,9 @@ extension Client {
 
      - returns: A tuple of data task and a signal for the resulting Space
      */
-    public func fetchSpace() -> (NSURLSessionDataTask?, Signal<Space>) {
-        return signalify(fetchSpace)
+    public func fetchSpace() -> (URLSessionDataTask?, Observable<Result<Space>>) {
+        let closure: SignalBang<Space> = fetchSpace(completion:)
+        return signalify(closure: closure)
     }
 }
 
@@ -303,10 +311,10 @@ extension Client {
 
      - returns: The data task being used, enables cancellation of requests
      */
-    public func initialSync(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<SyncSpace> -> Void) -> NSURLSessionDataTask? {
+    public func initialSync(matching: [String : Any] = [:], completion: @escaping (Result<SyncSpace>) -> Void) -> URLSessionDataTask? {
         var parameters = matching
         parameters["initial"] = true
-        return sync(parameters, completion: completion)
+        return sync(matching: parameters, completion: completion)
     }
 
     /**
@@ -316,26 +324,27 @@ extension Client {
 
      - returns: A tuple of data task and a signal for the resulting SyncSpace
      */
-    public func initialSync(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<SyncSpace>) {
-        return signalify(matching, initialSync)
+    public func initialSync(matching: [String : Any] = [:]) -> (URLSessionDataTask?, Observable<Result<SyncSpace>>) {
+        let closure: SignalObservation<[String : Any], SyncSpace> = initialSync(matching:completion:)
+        return signalify(parameter: matching, closure: closure)
     }
 
-    func sync(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<SyncSpace> -> Void) -> NSURLSessionDataTask? {
+    func sync(matching: [String : Any] = [:], completion: @escaping (Result<SyncSpace>) -> Void) -> URLSessionDataTask? {
         if configuration.previewMode {
-            completion(.Error(Error.PreviewAPIDoesNotSupportSync()))
+            completion(.error(SDKError.previewAPIDoesNotSupportSync()))
             return nil
         }
 
-        return fetch(URLForFragment("sync", parameters: matching), { (result: Result<SyncSpace>) in
+        return fetch(url: URLForFragment(fragment: "sync", parameters: matching), completion: { (result: Result<SyncSpace>) in
             if let value = result.value {
                 value.client = self
 
                 if value.nextPage {
                     var parameters = matching
-                    parameters.removeValueForKey("initial")
-                    value.sync(parameters, completion: completion)
+                    parameters.removeValue(forKey: "initial")
+                    value.sync(matching: parameters, completion: completion)
                 } else {
-                    completion(.Success(value))
+                    completion(.success(value))
                 }
             } else {
                 completion(result)
@@ -343,7 +352,8 @@ extension Client {
         })
     }
 
-    func sync(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<SyncSpace>) {
-        return signalify(matching, sync)
+    func sync(matching: [String : Any] = [:]) -> (URLSessionDataTask?, Observable<Result<SyncSpace>>) {
+        let closure: SignalObservation<[String : Any], SyncSpace> = sync(matching:completion:)
+        return signalify(parameter: matching, closure: closure)
     }
 }

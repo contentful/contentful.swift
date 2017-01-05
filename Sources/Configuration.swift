@@ -26,7 +26,7 @@ public struct Configuration {
     /// Computed version of the user agent, including OS name and version
     public var userAgent : String {
         var osName = "iOS"
-        let osVersion: AnyObject = NSProcessInfo.processInfo().operatingSystemVersionString ?? "Unknown"
+        let osVersion: Any = ProcessInfo.processInfo.operatingSystemVersionString as AnyObject? ?? "Unknown" as AnyObject
 
         #if os(OSX)
             osName = "OS X"

@@ -6,35 +6,36 @@
 //  Copyright © 2016 Contentful GmbH. All rights reserved.
 //
 
-import Contentful
+@testable import Contentful
+import Foundation
 import Nimble
 import Quick
 
 extension Entry {
     var contentTypeId : String {
         // TODO: We should probably resolve content type on Entry creation to avoid this awfulness
-        let id = ((sys["contentType"] as? [String:AnyObject])?["sys"] as? [String:AnyObject])?["id"]
+        let id = ((sys["contentType"] as? [String : Any])?["sys"] as? [String : Any])?["id"]
         return (id as? String) ?? ""
     }
 }
 
-extension NSDate {
-    static func fromComponents(year year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int) -> NSDate {
-        let components = NSDateComponents()
+extension Date {
+    static func fromComponents(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int) -> Date {
+        var components = DateComponents()
         (components.year, components.month, components.day) = (year, month, day)
         (components.hour, components.minute, components.second) = (hour, minute, second)
-        components.timeZone = NSTimeZone(forSecondsFromGMT: 0)
-
-        let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
-        return calendar!.dateFromComponents(components)!
+        components.timeZone = TimeZone(secondsFromGMT: 0)
+        let calendar = Calendar(identifier: .gregorian)
+        return calendar.date(from: components)!
     }
 }
 
 class EntryTests: ContentfulBaseTests {
-    func waitUntilMatchingEntries(matching: [String:AnyObject], action: (entries: Contentful.Array<Entry>) -> ()) {
+    
+    func waitUntilMatchingEntries(_ matching: [String: Any], action: @escaping (_ entries: Contentful.Array<Entry>) -> ()) {
         waitUntil(timeout: 10) { done in
-            self.client.fetchEntries(matching).1.next {
-                action(entries: $0)
+            self.client.fetchEntries(matching: matching).1.then {
+                action($0)
                 done()
             }.error {
                 fail("\($0)")
@@ -93,7 +94,7 @@ class EntryTests: ContentfulBaseTests {
             it("can fetch entries in reverse order") {
                 self.waitUntilMatchingEntries(["order": "-sys.createdAt"]) {
                     let ids = $0.items.map { $0.identifier }
-                    expect(ids).to(equal(orderedEntries.reverse()))
+                    expect(ids).to(equal(orderedEntries.reversed()))
                 }
             }
 
@@ -107,13 +108,13 @@ class EntryTests: ContentfulBaseTests {
 
         it("can fetch a single entry") {
             waitUntil(timeout: 10) { done in
-                self.client.fetchEntry("nyancat") { (result) in
+                self.client.fetchEntry(identifier: "nyancat") { (result) in
                     switch result {
-                    case let .Success(entry):
+                    case let .success(entry):
                         expect(entry.identifier).to(equal("nyancat"))
                         expect(entry.type).to(equal("Entry"))
                         expect(entry.fields["name"] as? String).to(equal("Nyan Cat"))
-                    case let .Error(error):
+                    case let .error(error):
                         fail("\(error)")
                     }
 
@@ -150,12 +151,12 @@ class EntryTests: ContentfulBaseTests {
             waitUntil(timeout: 10) { done in
                 self.client.fetchEntries() { (result) in
                     switch result {
-                    case let .Success(array):
+                    case let .success(array):
                         expect(array.total).to(equal(10))
                         expect(array.limit).to(equal(100))
                         expect(array.skip).to(equal(0))
                         expect(array.items.count).to(equal(10))
-                    case let .Error(error):
+                    case let .error(error):
                         fail("\(error)")
                     }
 
@@ -166,7 +167,7 @@ class EntryTests: ContentfulBaseTests {
 
         it("can fetch entries of a specific content type") {
             waitUntil(timeout: 10) { done in
-                self.client.fetchEntries(["content_type": "cat"]).1.next {
+                self.client.fetchEntries(matching: ["content_type": "cat"]).1.then {
                     let cats = $0.items.filter { $0.contentTypeId == "cat" }
                     expect(cats.count).to(equal($0.items.count))
                     done()
@@ -179,9 +180,9 @@ class EntryTests: ContentfulBaseTests {
 
         it("can fetch entries using an equality search query") {
             waitUntil(timeout: 10) { done in
-                self.client.fetchEntries(["sys.id": "nyancat"]) { (result) in
+                self.client.fetchEntries(matching: ["sys.id": "nyancat"]) { (result) in
                     switch result {
-                    case let .Success(array):
+                    case let .success(array):
                         expect(array.total).to(equal(1))
 
                         let entry = array.items.first!
@@ -189,7 +190,7 @@ class EntryTests: ContentfulBaseTests {
 
                         let image = entry.fields["image"] as? Asset
                         expect(url(image!).absoluteString).to(equal("https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png"))
-                    case let .Error(error):
+                    case let .error(error):
                         fail("\(error)")
                     }
 
@@ -239,7 +240,7 @@ class EntryTests: ContentfulBaseTests {
         }
 
         it("can fetch entries using a range search query") {
-            let date = NSDate.fromComponents(year: 2015, month: 1, day: 1, hour: 0, minute: 0, second: 0)
+            let date = Date.fromComponents(year: 2015, month: 1, day: 1, hour: 0, minute: 0, second: 0)
             self.waitUntilMatchingEntries(["sys.updatedAt[lte]": date]) {
                 expect($0.items.count).to(equal(10))
             }

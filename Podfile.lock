@@ -1,35 +1,52 @@
 PODS:
   - CatchingFire (0.2.0)
-  - CryptoSwift (0.1.1)
-  - Decodable (0.4.2)
-  - Interstellar (1.4.0):
-    - Interstellar/Core (= 1.4.0)
-    - Interstellar/Warpdrive (= 1.4.0)
-  - Interstellar/Core (1.4.0)
-  - Interstellar/Warpdrive (1.4.0):
+  - CryptoSwift (0.6.7)
+  - Decodable (0.5)
+  - Interstellar (2.0.0):
+    - Interstellar/Core (= 2.0.0)
+    - Interstellar/Warpdrive (= 2.0.0)
+  - Interstellar/Core (2.0.0)
+  - Interstellar/Warpdrive (2.0.0):
     - Interstellar/Core
-  - Nimble (3.2.0)
-  - Quick (0.9.1)
-  - "\U0001F555 (0.0.1)"
+  - Nimble (5.1.1)
+  - Quick (1.0.0)
 
 DEPENDENCIES:
-  - CatchingFire
-  - CryptoSwift
-  - Decodable (~> 0.4.2)
-  - Interstellar (~> 1.4.0)
+  - CatchingFire (from `https://github.com/loudmouth/CatchingFire.git`)
+  - CryptoSwift (from `https://github.com/krzyzanowskim/CryptoSwift.git`, branch `develop`)
+  - Decodable (~> 0.5)
+  - Interstellar (from `https://github.com/loudmouth/Interstellar.git`)
   - Nimble
   - Quick
-  - "\U0001F555 (= 0.0.1)"
+
+EXTERNAL SOURCES:
+  CatchingFire:
+    :git: https://github.com/loudmouth/CatchingFire.git
+  CryptoSwift:
+    :branch: develop
+    :git: https://github.com/krzyzanowskim/CryptoSwift.git
+  Interstellar:
+    :git: https://github.com/loudmouth/Interstellar.git
+
+CHECKOUT OPTIONS:
+  CatchingFire:
+    :commit: 378cfc939bfa355aeb1b361ee39c7935f6de1eb2
+    :git: https://github.com/loudmouth/CatchingFire.git
+  CryptoSwift:
+    :commit: 963e6c93707d57071ed3c53825b7729c02b3fd12
+    :git: https://github.com/krzyzanowskim/CryptoSwift.git
+  Interstellar:
+    :commit: 8cb18723e2a5a86fc961a366a7a3cbc98426c1b3
+    :git: https://github.com/loudmouth/Interstellar.git
 
 SPEC CHECKSUMS:
   CatchingFire: 935ecc35fc5864f12ef1c033a97e9a9affbf6056
-  CryptoSwift: c11640d3d66107efc8333e4131a5173f072b1d61
-  Decodable: b1cd96ad9f722721bc98b0310952214a47f71d6a
-  Interstellar: 40fc666872436d6c1b3524c59437ebdb5dec1c6a
-  Nimble: 703854335d181df169bbca9c97117b5cf8c47c1d
-  Quick: a5221fc21788b6aeda934805e68b061839bc3165
-  "\U0001F555": 2a41c1f9b76698cb697b8ec9a1db1087f5621187
+  CryptoSwift: 8f7b936cfd910257631f30d26e7188fa64e91e97
+  Decodable: 7c90acc68d357b71d0d6efc120faf9c53c644b7e
+  Interstellar: ab67502af03105f92100a043e178d188a1a437c9
+  Nimble: 415e3aa3267e7bc2c96b05fa814ddea7bb686a29
+  Quick: 8024e4a47e6cc03a9d5245ef0948264fc6d27cff
 
-PODFILE CHECKSUM: 3af999e71eed5f4249bb47ac4051aa1ae807b9a5
+PODFILE CHECKSUM: 9d37e5f8d84eb02f5f6507fa51ec8dd9e79b5dce
 
 COCOAPODS: 1.1.1

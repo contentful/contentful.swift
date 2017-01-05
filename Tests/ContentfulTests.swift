@@ -6,12 +6,11 @@
 //  Copyright © 2015 Contentful GmbH. All rights reserved.
 //
 
-import CryptoSwift
 import Interstellar
 import Nimble
 import Quick
 
-import Contentful
+@testable import Contentful
 
 class ContentfulBaseTests: QuickSpec {
     var client: Client!
@@ -29,7 +28,7 @@ class ContentfulTests: ContentfulBaseTests {
 
         describe("Configuration") {
             it("can generate an user-agent string") {
-                let osVersion = NSProcessInfo.processInfo().operatingSystemVersionString
+                let osVersion = ProcessInfo.processInfo.operatingSystemVersionString
                 let userAgentString = Configuration().userAgent
 
                 expect(userAgentString).to(equal("contentful.swift/0.1.0 (iOS \(osVersion))"))
@@ -43,7 +42,7 @@ class ContentfulTests: ContentfulBaseTests {
                 let client = Client(spaceIdentifier: "cfexampleapi", accessToken: "e5e8d4c5c122cf28fc1af3ff77d28bef78a3952957f15067bbc29f2f0dde0b50", configuration: configuration)
 
                 waitUntil(timeout: 10) { done in
-                    client.fetchSpace().1.next {
+                    client.fetchSpace().1.then {
                         expect($0.identifier).to(equal("cfexampleapi"))
                         done()
                     }.error {
@@ -59,7 +58,7 @@ class ContentfulTests: ContentfulBaseTests {
                 let client = Client(spaceIdentifier: "cfexampleapi", accessToken: "b4c0n73n7fu1", configuration: configuration)
 
                 waitUntil { done in
-                    client.fetchSpace().1.next { _ in
+                    client.fetchSpace().1.then { _ in
                         fail("expected error not received")
                         done()
                     }.error {
@@ -78,7 +77,7 @@ class ContentfulTests: ContentfulBaseTests {
         describe("Scenarios from CDA documentation") {
             it("can fetch a space") {
                 waitUntil(timeout: 10) { done in
-                    self.client.fetchSpace().1.next { (space) in
+                    self.client.fetchSpace().1.then { (space) in
                         expect(space.identifier).to(equal("cfexampleapi"))
                         expect(space.type).to(equal("Space"))
                         expect(space.name).to(equal("Contentful Example API"))
