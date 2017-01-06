@@ -32,26 +32,44 @@ client.fetchEntry("nyancat") { (result) in
 
 For further information, check out the [Developer Documentation][3].
 
+## Swift Versioning
+
+The Contentful Swift SDK requires, at minimum, Swift 2.2 and therefore Xcode 7.3.
+
+ Swift version | Compatible Contentful tag |
+| --- | --- |
+| Swift 3.0 | `v0.3.0` |
+| Swift 2.3 | `v0.2.2`|
+| Swift 2.2 | `v0.2.1`|
+
 ## Installation
 
-The Contentful Swift SDK requires Swift 2.2 and therefore Xcode 7.3.
+Contentful can be installed with either CocoaPods or Carthage depending on your preference.
 
 ### CocoaPods
 
 [CocoaPods][2] is a dependency manager for Swift, which automates and simplifies the process of using 3rd-party libraries like the Contentful Delivery API in your projects.
 
 ```ruby
-platform :ios, '9.0'
+platform :ios, '8.0'
 use_frameworks!
 pod 'Contentful'
 ```
 
-### Carthage
-
-You can also use [Carthage][7] for integration by adding this to your `Cartfile`:
+You an also specify a specific version depending on your needs. 
 
 ```
-github "contentful/contentful.swift" ~> 0.2.2
+pod 'Contentful', '0.2.1' 
+```
+
+To learn more about operators for dependency versioning within a Podfile, see the [CocoaPods doc on the Podfile][7].
+
+### Carthage
+
+You can also use [Carthage][8] for integration by adding this to your `Cartfile`:
+
+```
+github "contentful/contentful.swift" ~> 0.3.0
 ```
 
 ## License
@@ -65,4 +83,5 @@ Copyright (c) 2016 Contentful GmbH. See LICENSE for further details.
 [4]: https://github.com/contentful/contentful.objc
 [5]: https://www.contentful.com/blog/2014/05/09/ios-content-synchronization/
 [6]: https://github.com/contentful-labs/swiftful
-[7]: https://github.com/Carthage/Carthage
+[7]: https://guides.cocoapods.org/using/the-podfile.html
+[8]: https://github.com/Carthage/Carthage
