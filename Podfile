@@ -11,7 +11,6 @@ target 'Contentful' do
 
   podspec :path => 'Contentful.podspec'
 
-  pod 'Interstellar', :git => 'https://github.com/loudmouth/Interstellar.git'
   pod 'Decodable', '~> 0.5'
 
   target 'ContentfulTests' do

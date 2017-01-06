@@ -6,10 +6,9 @@
 //  Copyright © 2015 Contentful GmbH. All rights reserved.
 //
 
-//import Clock
 import Decodable
 import Foundation
-import Interstellar
+import Interstellar_Contentful
 
 /// Client object for performing requests against the Contentful API
 open class Client {
