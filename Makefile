@@ -6,7 +6,7 @@ ifeq ($(strip $(SIM_ID)),)
 $(error Could not find $(SIM_NAME) simulator)
 endif
 
-.PHONY: open test setup lint coverage
+.PHONY: open test setup lint coverage carthage
 
 open:
 	open Contentful.xcworkspace
