@@ -1,8 +1,5 @@
 #!/usr/bin/ruby
 
-source 'https://github.com/CocoaPods/Specs.git'
-source 'https://github.com/contentful/CocoaPodsSpecs.git'
-
 platform :ios, "8.0"
 
 use_frameworks!
