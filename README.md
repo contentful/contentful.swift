@@ -50,12 +50,7 @@ Contentful can be installed with either CocoaPods or Carthage depending on your 
 
 [CocoaPods][2] is a dependency manager for Swift, which automates and simplifies the process of using 3rd-party libraries like the Contentful Delivery API in your projects.
 
-Note that since Contentful has it's own dependency stack, you will need to source the Contentful CocoaPodSpecs repository.
-
 ```ruby
-# source Contentful's CocoaPodsSpecs repo for access to contentful.swift dependencies.
-source 'https://github.com/contentful/CocoaPodsSpecs.git'
-
 platform :ios, '8.0'
 use_frameworks!
 pod 'Contentful'
