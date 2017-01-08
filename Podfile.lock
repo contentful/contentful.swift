@@ -31,17 +31,17 @@ CHECKOUT OPTIONS:
     :commit: 378cfc939bfa355aeb1b361ee39c7935f6de1eb2
     :git: https://github.com/loudmouth/CatchingFire.git
   CryptoSwift:
-    :commit: 963e6c93707d57071ed3c53825b7729c02b3fd12
+    :commit: bf3a902e09f759ec48b90c29b6b4d58d06686f74
     :git: https://github.com/krzyzanowskim/CryptoSwift.git
 
 SPEC CHECKSUMS:
   CatchingFire: 935ecc35fc5864f12ef1c033a97e9a9affbf6056
   CryptoSwift: 8f7b936cfd910257631f30d26e7188fa64e91e97
   Decodable: 7c90acc68d357b71d0d6efc120faf9c53c644b7e
-  Interstellar-Contentful: 46b0d12cdd2f42f1804c21097fcaa4af8fe25788
+  Interstellar-Contentful: f0377c4f91f7de3ac8b2a4a46ea13bd4ebde7e91
   Nimble: 415e3aa3267e7bc2c96b05fa814ddea7bb686a29
   Quick: 8024e4a47e6cc03a9d5245ef0948264fc6d27cff
 
-PODFILE CHECKSUM: a05fcd46b07de341046518fe6322fccde7e7e14e
+PODFILE CHECKSUM: 4006f33c33b757bc1cfbe9a7cb0380baed035c79
 
 COCOAPODS: 1.1.1
