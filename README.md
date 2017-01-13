@@ -43,11 +43,15 @@ The Contentful Swift SDK requires, at minimum, Swift 2.2 and therefore Xcode 7.3
 | Swift 2.3 | `v0.2.2`|
 | Swift 2.2 | `v0.2.1`|
 
-## Installation
+### Carthage installation
 
-Contentful can be installed with either CocoaPods or Carthage depending on your preference.
+You can also use [Carthage][8] for integration by adding this to your `Cartfile`:
 
-### CocoaPods
+```
+github "contentful/contentful.swift" ~> 0.3.0
+```
+
+### CocoaPods installation
 
 [CocoaPods][2] is a dependency manager for Swift, which automates and simplifies the process of using 3rd-party libraries like the Contentful Delivery API in your projects.
 
@@ -57,20 +61,24 @@ use_frameworks!
 pod 'Contentful'
 ```
 
-You an also specify a specific version depending on your needs. 
+You can specify a specific version of Contentful depending on your needs. 
 
 ```ruby
-pod 'Contentful', '0.2.1' 
+pod 'Contentful', '0.2.2' 
 ```
 
 To learn more about operators for dependency versioning within a Podfile, see the [CocoaPods doc on the Podfile][7].
 
-### Carthage
+Note that for Swift 2.3 support (contentful.swift `v0.2.2`) you will need to add a post-install, configuration change to Pods.xcodeproj. You can do this via the Podfile:
 
-You can also use [Carthage][8] for integration by adding this to your `Cartfile`:
-
-```
-github "contentful/contentful.swift" ~> 0.3.0
+```ruby
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['SWIFT_VERSION'] = '2.3'
+    end
+  end
+end
 ```
 
 ## License
