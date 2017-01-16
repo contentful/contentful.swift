@@ -1,3 +1,5 @@
+
+# macOS
 .DS_Store
 .gutter.json
 *.gcda
@@ -5,7 +7,9 @@
 *.xccheckout
 xcuserdata
 .idea
-Pods
+
+## Cocoapods
+Pods/
 build
 .build
 Packages
