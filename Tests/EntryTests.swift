@@ -33,12 +33,16 @@ extension NSDate {
 class EntryTests: ContentfulBaseTests {
     func waitUntilMatchingEntries(matching: [String:AnyObject], action: (entries: Contentful.Array<Entry>) -> ()) {
         waitUntil(timeout: 10) { done in
-            self.client.fetchEntries(matching).1.next {
-                action(entries: $0)
-                done()
-            }.error {
-                fail("\($0)")
-                done()
+            self.client.fetchEntries(matching) { result in
+                switch result {
+                case .Success(let entries):
+                    action(entries: entries)
+                    done()
+                case .Error(let error):
+                    fail("\(error)")
+                    done()
+                }
+
             }
         }
     }
@@ -134,7 +138,7 @@ class EntryTests: ContentfulBaseTests {
 
         it("can fetch entries with all locales") {
             self.waitUntilMatchingEntries([ "locale": "*", "sys.id": "nyancat" ]) {
-                var entry = $0.items.first
+                let entry = $0.items.first
 
                 expect(entry?.identifier).to(equal("nyancat"))
                 expect(entry?.fields["name"] as? String).to(equal("Nyan Cat"))
@@ -166,13 +170,16 @@ class EntryTests: ContentfulBaseTests {
 
         it("can fetch entries of a specific content type") {
             waitUntil(timeout: 10) { done in
-                self.client.fetchEntries(["content_type": "cat"]).1.next {
-                    let cats = $0.items.filter { $0.contentTypeId == "cat" }
-                    expect(cats.count).to(equal($0.items.count))
-                    done()
-                }.error {
-                    fail("\($0)")
-                    done()
+                self.client.fetchEntries(["content_type": "cat"]) { result in
+                    switch result {
+                    case .Success(let entriesArray):
+                        let cats = entriesArray.items.filter { $0.contentTypeId == "cat" }
+                        expect(cats.count).to(equal(entriesArray.items.count))
+                        done()
+                    case .Error(let error):
+                        fail("\(error)")
+                        done()
+                    }
                 }
             }
         }

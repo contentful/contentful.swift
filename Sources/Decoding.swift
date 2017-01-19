@@ -259,7 +259,6 @@ extension Locale: Decodable {
 
 private extension Resource {
 
-    // This method assigns 
     static func decode(jsonIncludes: [String:AnyObject], inout _ includes: [String:Resource]) throws {
         let typename = "\(Self.self)"
 

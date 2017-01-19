@@ -9,36 +9,6 @@
 import Foundation
 import Interstellar
 
-func convert_signal<U, V, W>(closure: () -> (V, Signal<U>), mapper: (U) -> W?) -> (V, Signal<W>) {
-    let signal = Signal<W>()
-    let (value, sourceSignal) = closure()
-
-    sourceSignal.next { transformedValue in
-        guard let value = mapper(transformedValue) else { return }
-        signal.update(value)
-    }.error { error in
-        signal.update(error)
-    }
-
-    return (value, signal)
-}
-
-func signalify<T, U, V>(parameter: T, _ closure: (T, (Result<U>) -> ()) -> V) -> (V, Signal<U>) {
-    let signal = Signal<U>()
-    let value = closure(parameter) { result in
-        signal.update(result)
-    }
-    return (value, signal)
-}
-
-func signalify<U, V>(closure: ((Result<U>) -> ()) -> V) -> (V, Signal<U>) {
-    let signal = Signal<U>()
-    let value = closure { result in
-        signal.update(result)
-    }
-    return (value, signal)
-}
-
 class Network {
     var sessionConfigurator: ((NSURLSessionConfiguration) -> ())?
 
@@ -50,7 +20,7 @@ class Network {
         return NSURLSession(configuration: sessionConfiguration)
     }
 
-    func fetch(url: NSURL, _ completion: Result<NSData> -> Void) -> NSURLSessionDataTask {
+    func fetch(url: NSURL, completion: Result<NSData> -> Void) -> NSURLSessionDataTask {
         let task = session.dataTaskWithURL(url) { (data, response, error) in
             if let data = data {
                 completion(.Success(data))
@@ -67,9 +37,5 @@ class Network {
 
         task.resume()
         return task
-    }
-
-    func fetch(url: NSURL) -> (NSURLSessionDataTask, Signal<NSData>) {
-        return signalify(url, fetch)
     }
 }

@@ -48,29 +48,15 @@ public struct Asset : Resource, LocalizedResource {
 
     private let network = Network()
 
-    /**
-     Fetch the underlying media file as `NSData`
-
-     - returns: Tuple of the data task and a signal for the `NSData` result
-     */
-    public func fetch() -> (NSURLSessionDataTask, Signal<NSData>) {
-        do {
-            return network.fetch(try URL())
-        } catch {
-            let signal = Signal<NSData>()
-            signal.update(error)
-            return (NSURLSessionDataTask(), signal)
-        }
-    }
-
-#if os(iOS) || os(tvOS)
-    /**
-     Fetch the underlying media file as `UIImage`
-
-     - returns: Tuple of data task and a signal for the `UIImage` result
-     */
-    public func fetchImage() -> (NSURLSessionDataTask, Signal<UIImage>) {
-        return convert_signal(fetch) { UIImage(data: $0) }
-    }
-#endif
+    // FIXME:
+//#if os(iOS) || os(tvOS)
+//    /**
+//     Fetch the underlying media file as `UIImage`
+//
+//     - returns: Tuple of data task and a signal for the `UIImage` result
+//     */
+//    public func fetchImage() -> (NSURLSessionDataTask, Signal<UIImage>) {
+//        return convert_signal(fetch) { UIImage(data: $0) }
+//    }
+//#endif
 }

@@ -127,53 +127,41 @@ public final class SyncSpace {
             return nil
         }
 
-        var parameters = matching
-        parameters["sync_token"] = syncToken
-        let (task, signal) = client.sync(parameters)
+        let syncCompletion: (Result<SyncSpace>) -> () = { result in
+            switch result {
+            case .Success(let syncSpace):
+                syncSpace.assets.forEach {
+                    self.delegate?.createAsset($0)
+                    self.assetsMap[$0.identifier] = $0
+                }
 
-        signal.next { space in
-            space.assets.forEach {
-                self.delegate?.createAsset($0)
-                self.assetsMap[$0.identifier] = $0
+                syncSpace.entries.forEach {
+                    self.delegate?.createEntry($0)
+                    self.entriesMap[$0.identifier] = $0
+                }
+
+                syncSpace.deletedAssets.forEach {
+                    self.delegate?.deleteAsset($0)
+                    self.assetsMap.removeValueForKey($0)
+                }
+
+                syncSpace.deletedEntries.forEach {
+                    self.delegate?.deleteEntry($0)
+                    self.entriesMap.removeValueForKey($0)
+                }
+                
+                self.syncToken = syncSpace.syncToken
+                
+                completion(.Success(self))
+            case .Error(let error):
+                completion(.Error(error))
             }
-
-            space.entries.forEach {
-                self.delegate?.createEntry($0)
-                self.entriesMap[$0.identifier] = $0
-            }
-
-            space.deletedAssets.forEach {
-                self.delegate?.deleteAsset($0)
-                self.assetsMap.removeValueForKey($0)
-            }
-
-            space.deletedEntries.forEach {
-                self.delegate?.deleteEntry($0)
-                self.entriesMap.removeValueForKey($0)
-            }
-
-            self.syncToken = space.syncToken
-
-            completion(.Success(self))
-        }.error {
-            completion(.Error($0))
         }
 
+        var parameters = matching
+        parameters["sync_token"] = syncToken
+
+        let task = client.sync(parameters, completion: syncCompletion)
         return task
-    }
-
-    /**
-     Perform a subsequent synchronization operation, updating this object with the latest content from
-     Contentful.
-
-     Calling this will mutate the instance and also return a reference to itself to the completion
-     handler in order to allow chaining of operations.
-
-     - parameter matching: Additional options for the synchronization
-
-     - returns: A tuple of data task and a signal which fires on completion
-     **/
-    public func sync(matching: [String:AnyObject] = [String:AnyObject]()) -> (sessionDataTask: NSURLSessionDataTask?, signal: Signal<SyncSpace>) {
-        return signalify(matching, sync)
     }
 }

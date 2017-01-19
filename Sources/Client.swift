@@ -50,32 +50,34 @@ public class Client {
     }
 
     private func fetch<T: Decodable>(url: NSURL?, _ completion: Result<T> -> Void) -> NSURLSessionDataTask? {
-        if let url = url {
-            let (task, signal) = network.fetch(url)
 
-            if T.self == Space.self {
-                signal
-                    .next { data in
-                        self.handleJSON(data, completion)
-                    }
-                    .error { error in
-                        completion(.Error(error))
-                    }
-            } else {
-                fetchSpace().1
-                    .next { _ in
-                        signal
-                            .next { data in
-                                self.handleJSON(data, completion)
-                            }
-                            .error { error in
-                                completion(.Error(error))
-                        }
-                    }
-                    .error { error in
-                        completion(.Error(error))
-                    }
+        let fetchSpaceCompletion: (Result<NSData>) -> () = { result in
+            self.fetchSpace() { resultForSpace in
+                switch resultForSpace {
+                case .Success:
+                    guard let data = result.value else { return }
+                    self.handleJSON(data, completion)
+                case .Error(let error):
+                    completion(.Error(error))
+                }
             }
+        }
+
+        let fetchCompletion: (Result<NSData>) -> () = { result in
+            switch result {
+            case .Success(let syncSpaceData):
+                if T.self == Space.self {
+                    self.handleJSON(syncSpaceData, completion)
+                } else {
+                    fetchSpaceCompletion(result)
+                }
+            case .Error(let error):
+                completion(.Error(error))
+            }
+        }
+
+        if let url = url {
+            let task = network.fetch(url, completion: fetchCompletion)
 
             return task
         }
@@ -147,17 +149,6 @@ extension Client {
     }
 
     /**
-     Fetch a single Asset from Contentful
-
-     - parameter identifier: The identifier of the Asset to be fetched
-
-     - returns: A tuple of data task and a signal for the resulting Asset
-     */
-    public func fetchAsset(identifier: String) -> (NSURLSessionDataTask?, Signal<Asset>) {
-        return signalify(identifier, fetchAsset)
-    }
-
-    /**
      Fetch a collection of Assets from Contentful
 
      - parameter matching:   Optional list of search parameters the Assets must match
@@ -167,17 +158,6 @@ extension Client {
      */
     public func fetchAssets(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<Array<Asset>> -> Void) -> NSURLSessionDataTask? {
         return fetch(URLForFragment("assets", parameters: matching), completion)
-    }
-
-    /**
-     Fetch a collection of Assets from Contentful
-
-     - parameter matching: Optional list of search parameters the Assets must match
-
-     - returns: A tuple of data task and a signal for the resulting array of Assets
-     */
-    public func fetchAssets(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<Array<Asset>>) {
-        return signalify(matching, fetchAssets)
     }
 }
 
@@ -195,17 +175,6 @@ extension Client {
     }
 
     /**
-     Fetch a single Content Type from Contentful
-
-     - parameter identifier: The identifier of the Content Type to be fetched
-
-     - returns: A tuple of data task and a signal for the resulting Content Type
-     */
-    public func fetchContentType(identifier: String) -> (NSURLSessionDataTask?, Signal<ContentType>) {
-        return signalify(identifier, fetchContentType)
-    }
-
-    /**
      Fetch a collection of Content Types from Contentful
 
      - parameter matching:   Optional list of search parameters the Content Types must match
@@ -215,17 +184,6 @@ extension Client {
      */
     public func fetchContentTypes(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<Array<ContentType>> -> Void) -> NSURLSessionDataTask? {
         return fetch(URLForFragment("content_types", parameters: matching), completion)
-    }
-
-    /**
-     Fetch a collection of Content Types from Contentful
-
-     - parameter matching: Optional list of search parameters the Content Types must match
-
-     - returns: A tuple of data task and a signal for the resulting array of Content Types
-     */
-    public func fetchContentTypes(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<Array<ContentType>>) {
-        return signalify(matching, fetchContentTypes)
     }
 }
 
@@ -243,17 +201,6 @@ extension Client {
     }
 
     /**
-     Fetch a collection of Entries from Contentful
-
-     - parameter matching: Optional list of search parameters the Entries must match
-
-     - returns: A tuple of data task and a signal for the resulting array of Entries
-     */
-    public func fetchEntries(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<Array<Entry>>) {
-        return signalify(matching, fetchEntries)
-    }
-
-    /**
      Fetch a single Entry from Contentful
 
      - parameter identifier: The identifier of the Entry to be fetched
@@ -263,17 +210,6 @@ extension Client {
      */
     public func fetchEntry(identifier: String, completion: Result<Entry> -> Void) -> NSURLSessionDataTask? {
         return fetch(URLForFragment("entries/\(identifier)"), completion)
-    }
-
-    /**
-     Fetch a single Entry from Contentful
-
-     - parameter identifier: The identifier of the Entry to be fetched
-
-     - returns: A tuple of data task and a signal for the resulting Entry
-     */
-    public func fetchEntry(identifier: String) -> (NSURLSessionDataTask?, Signal<Entry>) {
-        return signalify(identifier, fetchEntry)
     }
 }
 
@@ -293,15 +229,6 @@ extension Client {
         }
         return fetch(URLForFragment(), completion)
     }
-
-    /**
-     Fetch the space this client is constrained to
-
-     - returns: A tuple of data task and a signal for the resulting Space
-     */
-    public func fetchSpace() -> (NSURLSessionDataTask?, Signal<Space>) {
-        return signalify(fetchSpace)
-    }
 }
 
 extension Client {
@@ -317,17 +244,6 @@ extension Client {
         var parameters = matching
         parameters["initial"] = true
         return sync(parameters, completion: completion)
-    }
-
-    /**
-     Perform an initial synchronization of the Space this client is constrained to.
-
-     - parameter matching: Additional options for the synchronization
-
-     - returns: A tuple of data task and a signal for the resulting SyncSpace
-     */
-    public func initialSync(matching: [String:AnyObject] = [String:AnyObject]()) -> (sessionDataTask: NSURLSessionDataTask?, signal: Signal<SyncSpace>) {
-        return signalify(matching, initialSync)
     }
 
     func sync(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<SyncSpace> -> Void) -> NSURLSessionDataTask? {
@@ -351,9 +267,5 @@ extension Client {
                 completion(result)
             }
         })
-    }
-
-    func sync(matching: [String:AnyObject] = [String:AnyObject]()) -> (sessionDataTask: NSURLSessionDataTask?, signal: Signal<SyncSpace>) {
-        return signalify(matching, sync)
     }
 }
