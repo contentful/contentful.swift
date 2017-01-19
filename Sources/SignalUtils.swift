@@ -12,23 +12,30 @@ import Interstellar
 func convert_signal<U, V, W>(closure: () -> (V, Signal<U>), mapper: (U) -> W?) -> (V, Signal<W>) {
     let signal = Signal<W>()
     let (value, sourceSignal) = closure()
-    sourceSignal.next {
-        if let value = mapper($0) {
-            signal.update(value)
-        }
-    }.error { signal.update($0) }
+
+    sourceSignal.next { transformedValue in
+        guard let value = mapper(transformedValue) else { return }
+        signal.update(value)
+    }.error { error in
+        signal.update(error)
+    }
+
     return (value, signal)
 }
 
 func signalify<T, U, V>(parameter: T, _ closure: (T, (Result<U>) -> ()) -> V) -> (V, Signal<U>) {
     let signal = Signal<U>()
-    let value = closure(parameter) { signal.update($0) }
+    let value = closure(parameter) { result in
+        signal.update(result)
+    }
     return (value, signal)
 }
 
 func signalify<U, V>(closure: ((Result<U>) -> ()) -> V) -> (V, Signal<U>) {
     let signal = Signal<U>()
-    let value = closure { signal.update($0) }
+    let value = closure { result in
+        signal.update(result)
+    }
     return (value, signal)
 }
 

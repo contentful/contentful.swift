@@ -132,6 +132,7 @@ extension Array: Decodable {
         }
 
         for item in items {
+            // item.key is it's typename concatenated with it's identifier.
             includes[item.key] = item
         }
 
@@ -257,6 +258,8 @@ extension Locale: Decodable {
 }
 
 private extension Resource {
+
+    // This method assigns 
     static func decode(jsonIncludes: [String:AnyObject], inout _ includes: [String:Resource]) throws {
         let typename = "\(Self.self)"
 
@@ -288,16 +291,16 @@ extension Space: Decodable {
 extension SyncSpace: Decodable {
     /// Decode JSON for a SyncSpace
     public static func decode(json: AnyObject) throws -> SyncSpace {
-        var nextPage = true
+        var hasMorePages = true
         var syncUrl: String? = try? json => "nextPageUrl"
 
         if syncUrl == nil {
-            nextPage = false
+            hasMorePages = false
             syncUrl = try json => "nextSyncUrl"
         }
 
         return SyncSpace(
-            nextPage: nextPage,
+            hasMorePages: hasMorePages,
             nextUrl: syncUrl!,
             items: try Array<Entry>.parseItems(json)
         )

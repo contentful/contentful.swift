@@ -49,7 +49,7 @@ public final class SyncSpace {
     var deletedEntries = [String]()
 
     var delegate: SyncSpaceDelegate?
-    let nextPage: Bool
+    public let hasMorePages: Bool
     /// A token which needs to be present to perform a subsequent synchronization operation
     private(set) public var syncToken = ""
 
@@ -65,8 +65,8 @@ public final class SyncSpace {
 
     var client: Client? = nil
 
-    internal init(nextPage: Bool, nextUrl: String, items: [Resource]) {
-        self.nextPage = nextPage
+    internal init(hasMorePages: Bool, nextUrl: String, items: [Resource]) {
+        self.hasMorePages = hasMorePages
 
         NSURLComponents(string: nextUrl)?.queryItems?.forEach {
             if let value = $0.value where $0.name == "sync_token" {
@@ -105,7 +105,7 @@ public final class SyncSpace {
     public init(client: Client, syncToken: String, delegate: SyncSpaceDelegate) {
         self.client = client
         self.delegate = delegate
-        self.nextPage = false
+        self.hasMorePages = false
         self.syncToken = syncToken
     }
 
@@ -173,7 +173,7 @@ public final class SyncSpace {
 
      - returns: A tuple of data task and a signal which fires on completion
      **/
-    public func sync(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<SyncSpace>) {
+    public func sync(matching: [String:AnyObject] = [String:AnyObject]()) -> (sessionDataTask: NSURLSessionDataTask?, signal: Signal<SyncSpace>) {
         return signalify(matching, sync)
     }
 }

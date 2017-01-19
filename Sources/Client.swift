@@ -55,16 +55,26 @@ public class Client {
 
             if T.self == Space.self {
                 signal
-                    .next { self.handleJSON($0, completion) }
-                    .error { completion(.Error($0)) }
+                    .next { data in
+                        self.handleJSON(data, completion)
+                    }
+                    .error { error in
+                        completion(.Error(error))
+                    }
             } else {
                 fetchSpace().1
                     .next { _ in
                         signal
-                            .next { self.handleJSON($0, completion) }
-                            .error { completion(.Error($0)) }
+                            .next { data in
+                                self.handleJSON(data, completion)
+                            }
+                            .error { error in
+                                completion(.Error(error))
+                        }
                     }
-                    .error { completion(.Error($0)) }
+                    .error { error in
+                        completion(.Error(error))
+                    }
             }
 
             return task
@@ -316,7 +326,7 @@ extension Client {
 
      - returns: A tuple of data task and a signal for the resulting SyncSpace
      */
-    public func initialSync(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<SyncSpace>) {
+    public func initialSync(matching: [String:AnyObject] = [String:AnyObject]()) -> (sessionDataTask: NSURLSessionDataTask?, signal: Signal<SyncSpace>) {
         return signalify(matching, initialSync)
     }
 
@@ -327,15 +337,15 @@ extension Client {
         }
 
         return fetch(URLForFragment("sync", parameters: matching), { (result: Result<SyncSpace>) in
-            if let value = result.value {
-                value.client = self
+            if let syncSpace = result.value {
+                syncSpace.client = self
 
-                if value.nextPage {
+                if syncSpace.hasMorePages {
                     var parameters = matching
                     parameters.removeValueForKey("initial")
-                    value.sync(parameters, completion: completion)
+                    syncSpace.sync(parameters, completion: completion)
                 } else {
-                    completion(.Success(value))
+                    completion(.Success(syncSpace))
                 }
             } else {
                 completion(result)
@@ -343,7 +353,7 @@ extension Client {
         })
     }
 
-    func sync(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<SyncSpace>) {
+    func sync(matching: [String:AnyObject] = [String:AnyObject]()) -> (sessionDataTask: NSURLSessionDataTask?, signal: Signal<SyncSpace>) {
         return signalify(matching, sync)
     }
 }
