@@ -138,7 +138,7 @@ class EntryTests: ContentfulBaseTests {
 
         it("can fetch entries with all locales") {
             self.waitUntilMatchingEntries([ "locale": "*", "sys.id": "nyancat" ]) {
-                let entry = $0.items.first
+                var entry = $0.items.first
 
                 expect(entry?.identifier).to(equal("nyancat"))
                 expect(entry?.fields["name"] as? String).to(equal("Nyan Cat"))

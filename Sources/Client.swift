@@ -65,9 +65,9 @@ public class Client {
 
         let fetchCompletion: (Result<NSData>) -> () = { result in
             switch result {
-            case .Success(let syncSpaceData):
+            case .Success(let fetchedDecodableData):
                 if T.self == Space.self {
-                    self.handleJSON(syncSpaceData, completion)
+                    self.handleJSON(fetchedDecodableData, completion)
                 } else {
                     fetchSpaceCompletion(result)
                 }
@@ -248,11 +248,11 @@ extension Client {
 
     func sync(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<SyncSpace> -> Void) -> NSURLSessionDataTask? {
         if configuration.previewMode {
-            completion(.Error(Error.PreviewAPIDoesNotSupportSync()))
+            completion(Result.Error(Error.PreviewAPIDoesNotSupportSync()))
             return nil
         }
 
-        return fetch(URLForFragment("sync", parameters: matching), { (result: Result<SyncSpace>) in
+        return fetch(URLForFragment("sync", parameters: matching)) { (result: Result<SyncSpace>) in
             if let syncSpace = result.value {
                 syncSpace.client = self
 
@@ -261,11 +261,11 @@ extension Client {
                     parameters.removeValueForKey("initial")
                     syncSpace.sync(parameters, completion: completion)
                 } else {
-                    completion(.Success(syncSpace))
+                    completion(Result.Success(syncSpace))
                 }
             } else {
                 completion(result)
             }
-        })
+        }
     }
 }
