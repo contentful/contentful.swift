@@ -24,14 +24,12 @@ class AssetTests: ContentfulBaseTests {
 
     // Linker error with too many levels of closures 😭
     func testFetchImageFromAsset(done: () -> ()) {
-        self.client.fetchAsset("nyancat").1.next { (asset) in
+        self.client.fetchAsset("nyancat") { result in
+            let asset = result.value!
             asset.fetchImage().1.next { (image) in
                 expect(self.md5(image)).to(equal("94fd9a22b0b6ecab15d91486922b8d7e"))
                 done()
             }
-            }.error {
-                fail("\($0)")
-                done()
         }
     }
 
@@ -46,18 +44,16 @@ class AssetTests: ContentfulBaseTests {
 
         it("can fetch all assets of a space") {
             waitUntil(timeout: 10) { done in
-                self.client.fetchAssets().1.next {
-                    expect($0.items.count).to(equal(4))
+                self.client.fetchAssets() { result in
+                    let assets = result.value!
+                    expect(assets.items.count).to(equal(4))
 
-                    if let asset = ($0.items.filter { $0.identifier == "nyancat" }).first {
+                    if let asset = (assets.items.filter { $0.identifier == "nyancat" }).first {
                         self.testNyanCatAssetObject(asset)
                     } else {
                         fail("Could not find asset with id 'nyancat'")
                     }
 
-                    done()
-                }.error {
-                    fail("\($0)")
                     done()
                 }
             }
@@ -86,11 +82,8 @@ class AssetTests: ContentfulBaseTests {
 
         it("can filter assets by MIMEType group") {
             waitUntil { done in
-                self.client.fetchAssets(["mimetype_group": "image"]).1.next {
-                    expect($0.items.count).to(equal(4))
-                    done()
-                }.error {
-                    fail("\($0)")
+                self.client.fetchAssets(["mimetype_group": "image"]) { result in
+                    expect(result.value!.items.count).to(equal(4))
                     done()
                 }
             }

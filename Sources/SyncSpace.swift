@@ -45,11 +45,14 @@ public final class SyncSpace {
     private var assetsMap = [String:Asset]()
     private var entriesMap = [String:Entry]()
 
+    // Used for resolving links.
+    private var includes = [String:Resource]()
+
     var deletedAssets = [String]()
     var deletedEntries = [String]()
 
     var delegate: SyncSpaceDelegate?
-    let nextPage: Bool
+    internal let hasMorePages: Bool
     /// A token which needs to be present to perform a subsequent synchronization operation
     private(set) public var syncToken = ""
 
@@ -65,8 +68,9 @@ public final class SyncSpace {
 
     var client: Client? = nil
 
-    internal init(nextPage: Bool, nextUrl: String, items: [Resource]) {
-        self.nextPage = nextPage
+    internal init(hasMorePages: Bool, nextUrl: String, items: [Resource], includes: [String:Resource]) {
+        self.hasMorePages = hasMorePages
+        self.includes = includes
 
         NSURLComponents(string: nextUrl)?.queryItems?.forEach {
             if let value = $0.value where $0.name == "sync_token" {
@@ -74,21 +78,21 @@ public final class SyncSpace {
             }
         }
 
-        items.forEach {
-            if let asset = $0 as? Asset {
+        for item in items {
+            switch item {
+            case let asset as Asset:
                 self.assetsMap[asset.identifier] = asset
-            }
 
-            if let entry = $0 as? Entry {
+            case let entry as Entry:
                 self.entriesMap[entry.identifier] = entry
-            }
 
-            if let deleted = $0 as? DeletedResource {
-                switch deleted.type {
-                case "DeletedAsset": self.deletedAssets.append(deleted.identifier)
-                case "DeletedEntry": self.deletedEntries.append(deleted.identifier)
+            case let deletedResource as DeletedResource:
+                switch deletedResource.type {
+                case "DeletedAsset": self.deletedAssets.append(deletedResource.identifier)
+                case "DeletedEntry": self.deletedEntries.append(deletedResource.identifier)
                 default: break
                 }
+            default: break
             }
         }
     }
@@ -105,7 +109,7 @@ public final class SyncSpace {
     public init(client: Client, syncToken: String, delegate: SyncSpaceDelegate) {
         self.client = client
         self.delegate = delegate
-        self.nextPage = false
+        self.hasMorePages = false
         self.syncToken = syncToken
     }
 
@@ -127,38 +131,49 @@ public final class SyncSpace {
             return nil
         }
 
-        var parameters = matching
-        parameters["sync_token"] = syncToken
-        let (task, signal) = client.sync(parameters)
+        let syncCompletion: (Result<SyncSpace>) -> () = { result in
 
-        signal.next { space in
-            space.assets.forEach {
-                self.delegate?.createAsset($0)
-                self.assetsMap[$0.identifier] = $0
+            switch result {
+            case .Success(let syncSpace):
+
+                // Update includes.
+                self.includes = self.includes + syncSpace.includes
+
+                for asset in syncSpace.assets {
+                    self.delegate?.createAsset(asset)
+                    self.assetsMap[asset.identifier] = asset
+                }
+
+                for entry in syncSpace.entries {
+                    // For syncspaces, we do NOT resolve links during array decoding, but instead postpone
+                    // To enabling linking with currently synced items.
+                    let resolvedEntry = entry.resolveLinks(againstIncludes: self.includes)
+                    self.delegate?.createEntry(resolvedEntry)
+                    self.entriesMap[entry.identifier] = resolvedEntry
+                }
+
+                for deletedAsset in syncSpace.deletedAssets {
+                    self.delegate?.deleteAsset(deletedAsset)
+                    self.assetsMap.removeValueForKey(deletedAsset)
+                }
+
+                for deletedEntry in syncSpace.deletedEntries {
+                    self.delegate?.deleteEntry(deletedEntry)
+                    self.entriesMap.removeValueForKey(deletedEntry)
+                }
+                
+                self.syncToken = syncSpace.syncToken
+                
+                completion(.Success(self))
+            case .Error(let error):
+                completion(.Error(error))
             }
-
-            space.entries.forEach {
-                self.delegate?.createEntry($0)
-                self.entriesMap[$0.identifier] = $0
-            }
-
-            space.deletedAssets.forEach {
-                self.delegate?.deleteAsset($0)
-                self.assetsMap.removeValueForKey($0)
-            }
-
-            space.deletedEntries.forEach {
-                self.delegate?.deleteEntry($0)
-                self.entriesMap.removeValueForKey($0)
-            }
-
-            self.syncToken = space.syncToken
-
-            completion(.Success(self))
-        }.error {
-            completion(.Error($0))
         }
 
+        var parameters = matching
+        parameters["sync_token"] = syncToken
+
+        let task = client.sync(parameters, completion: syncCompletion)
         return task
     }
 

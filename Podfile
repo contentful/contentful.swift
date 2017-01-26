@@ -1,18 +1,20 @@
+#!/usr/bin/ruby
+
 use_frameworks!
 
 target 'Contentful' do
 
-podspec :path => 'Contentful.podspec'
+  podspec :path => 'Contentful.podspec'
 
-end
+  target 'ContentfulTests' do
+    inherit! :search_paths
 
-target 'ContentfulTests' do
+    pod 'CatchingFire'
+    pod 'CryptoSwift', '~> 0.5.2'
+    pod 'Nimble', '~> 4.1.0'
+    pod 'Quick', '~> 0.9.3'
 
-pod 'CatchingFire'
-pod 'CryptoSwift'
-pod 'Nimble'
-pod 'Quick'
-
+  end
 end
 
 post_install do |installer|
@@ -22,3 +24,4 @@ post_install do |installer|
     end
   end
 end
+

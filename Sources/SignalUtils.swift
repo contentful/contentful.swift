@@ -16,7 +16,7 @@ func convert_signal<U, V, W>(closure: () -> (V, Signal<U>), mapper: (U) -> W?) -
         if let value = mapper($0) {
             signal.update(value)
         }
-    }.error { signal.update($0) }
+        }.error { signal.update($0) }
     return (value, signal)
 }
 
@@ -43,7 +43,7 @@ class Network {
         return NSURLSession(configuration: sessionConfiguration)
     }
 
-    func fetch(url: NSURL, _ completion: Result<NSData> -> Void) -> NSURLSessionDataTask {
+    func fetch(url: NSURL, completion: Result<NSData> -> Void) -> NSURLSessionDataTask {
         let task = session.dataTaskWithURL(url) { (data, response, error) in
             if let data = data {
                 completion(.Success(data))
