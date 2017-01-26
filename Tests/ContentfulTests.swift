@@ -27,15 +27,6 @@ class ContentfulTests: ContentfulBaseTests {
     override func spec() {
         super.spec()
 
-        describe("Configuration") {
-            it("can generate an user-agent string") {
-                let osVersion = NSProcessInfo.processInfo().operatingSystemVersionString
-                let userAgentString = Configuration().userAgent
-
-                expect(userAgentString).to(equal("contentful.swift/0.1.0 (iOS \(osVersion))"))
-            }
-        }
-
         describe("Preview") {
             it("can access the preview API") {
                 var configuration = Contentful.Configuration()

@@ -10,6 +10,8 @@ import Foundation
 
 let DEFAULT_SERVER = "cdn.contentful.com"
 
+internal let CONTENTFUL_SDK_VERSION_NUMBER = "0.2.3"
+
 /// Configuration parameters for a client instance
 public struct Configuration {
     /// Whether or not to use the preview mode when accessing Contentful, requires a preview token
@@ -21,7 +23,9 @@ public struct Configuration {
     /// The server to use for performing requests, defaults to `cdn.contentful.com`
     public var server = DEFAULT_SERVER
     /// The user agent to use for performing requests
-    public var userAgentClient = "contentful.swift/0.1.0"
+    public var userAgentClient: String {
+        return "contentful.swift/\(CONTENTFUL_SDK_VERSION_NUMBER)"
+    }
 
     /// Computed version of the user agent, including OS name and version
     public var userAgent : String {
