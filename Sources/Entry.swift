@@ -66,8 +66,9 @@ public struct Entry : Resource, LocalizedResource {
                     fields[fieldName] = resolvedLink
                 }
 
-                // Resolve one-to-many links. Some links may have already been during
-                // decoding, so we
+                // Resolve one-to-many links. We need to account for links that might not hae been
+                // resolved because of a multiple page sync so we will store a dictionary rather
+                // than a Swift object in the link body. The link will be resolved at a later time.
                 if let linksToResolve = fieldValue as? [[String:AnyObject]] {
                     
                     // An array of both resolved and unresolved links.

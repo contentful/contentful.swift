@@ -16,7 +16,7 @@ func convert_signal<U, V, W>(closure: () -> (V, Signal<U>), mapper: (U) -> W?) -
         if let value = mapper($0) {
             signal.update(value)
         }
-        }.error { signal.update($0) }
+    }.error { signal.update($0) }
     return (value, signal)
 }
 
