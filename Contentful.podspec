@@ -25,6 +25,6 @@ Pod::Spec.new do |spec|
   spec.tvos.deployment_target    = '9.0'
 
   spec.dependency 'Decodable', '~> 0.5'
-  spec.dependency 'Interstellar-Contentful', '~> 2.1.0'
+  spec.dependency 'Interstellar', '~> 2.0.0'
 end
 
