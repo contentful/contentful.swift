@@ -6,7 +6,7 @@
 //  Copyright © 2015 Contentful GmbH. All rights reserved.
 //
 
-import Interstellar_Contentful
+import Interstellar
 import Nimble
 import Quick
 

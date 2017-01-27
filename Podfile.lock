@@ -2,12 +2,12 @@ PODS:
   - CatchingFire (0.2.0)
   - CryptoSwift (0.6.7)
   - Decodable (0.5)
-  - Interstellar-Contentful (2.1.0):
-    - Interstellar-Contentful/Core (= 2.1.0)
-    - Interstellar-Contentful/Warpdrive (= 2.1.0)
-  - Interstellar-Contentful/Core (2.1.0)
-  - Interstellar-Contentful/Warpdrive (2.1.0):
-    - Interstellar-Contentful/Core
+  - Interstellar (2.0.0):
+    - Interstellar/Core (= 2.0.0)
+    - Interstellar/Warpdrive (= 2.0.0)
+  - Interstellar/Core (2.0.0)
+  - Interstellar/Warpdrive (2.0.0):
+    - Interstellar/Core
   - Nimble (5.1.1)
   - Quick (1.0.0)
 
@@ -15,7 +15,7 @@ DEPENDENCIES:
   - CatchingFire (from `https://github.com/loudmouth/CatchingFire.git`)
   - CryptoSwift (from `https://github.com/krzyzanowskim/CryptoSwift.git`, branch `develop`)
   - Decodable (~> 0.5)
-  - Interstellar-Contentful (~> 2.1.0)
+  - Interstellar (~> 2.0.0)
   - Nimble
   - Quick
 
@@ -38,7 +38,7 @@ SPEC CHECKSUMS:
   CatchingFire: 935ecc35fc5864f12ef1c033a97e9a9affbf6056
   CryptoSwift: 8f7b936cfd910257631f30d26e7188fa64e91e97
   Decodable: 7c90acc68d357b71d0d6efc120faf9c53c644b7e
-  Interstellar-Contentful: f0377c4f91f7de3ac8b2a4a46ea13bd4ebde7e91
+  Interstellar: 63a760ff3a3657f791a4523de4b89727c51edec3
   Nimble: 415e3aa3267e7bc2c96b05fa814ddea7bb686a29
   Quick: 8024e4a47e6cc03a9d5245ef0948264fc6d27cff
 
