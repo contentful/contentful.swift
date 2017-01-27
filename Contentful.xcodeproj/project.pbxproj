@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		502EB10A730CD68F5904CAAB /* Pods_Contentful_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B57357EFCCA4940EE9815A2F /* Pods_Contentful_iOS.framework */; };
+		55CAD7D6F493788753D87B33 /* Pods_Contentful_watchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 591751C5C1F92D16E189968D /* Pods_Contentful_watchOS.framework */; };
+		683FC347FD26B1CCA3E02960 /* Pods_Contentful_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C4ED24CEF593A916AD69296 /* Pods_Contentful_macOS.framework */; };
+		7CC0353EE3C0390D5457F6E4 /* Pods_Contentful_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C79874D9F1BEFE61539C84C /* Pods_Contentful_tvOS.framework */; };
 		A10FF9D21BBB2E5F001AA4E9 /* DecodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2E3661BBAD06000814D63 /* DecodingTests.swift */; };
 		A10FF9D31BBB32FD001AA4E9 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15193AD1BB9236300FB83CD /* Asset.swift */; };
 		A10FF9D51BBB3676001AA4E9 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10FF9D41BBB3676001AA4E9 /* Error.swift */; };
@@ -32,8 +36,58 @@
 		A1B2E3651BBACF2C00814D63 /* Decoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2E3641BBACF2C00814D63 /* Decoding.swift */; };
 		A1BF6BBC1C0D0FBD00049712 /* SignalUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BF6BBB1C0D0FBD00049712 /* SignalUtils.swift */; };
 		ADF147A35CBB50055A8984EF /* Pods_ContentfulTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E29D469F63F4DD6C7DC8236 /* Pods_ContentfulTests.framework */; };
-		B1D1D8567FCED6148E277490 /* Pods_Contentful.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEF2BA42FCAA69D0CD2E1CE8 /* Pods_Contentful.framework */; };
 		ED0876DA1E1D07B3008E1A06 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0876D91E1D07B3008E1A06 /* Date.swift */; };
+		ED36B6F51E3BD052005581FD /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E31B83888200A0EFCD /* Array.swift */; };
+		ED36B6F61E3BD052005581FD /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0876D91E1D07B3008E1A06 /* Date.swift */; };
+		ED36B6F71E3BD052005581FD /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15193AD1BB9236300FB83CD /* Asset.swift */; };
+		ED36B6F81E3BD052005581FD /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3DF1B836F2500A0EFCD /* Client.swift */; };
+		ED36B6F91E3BD052005581FD /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E11B8386CC00A0EFCD /* Configuration.swift */; };
+		ED36B6FA1E3BD052005581FD /* ContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15193AB1BB91FED00FB83CD /* ContentType.swift */; };
+		ED36B6FB1E3BD052005581FD /* DecodableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A119937C1C5252BF00749579 /* DecodableData.swift */; };
+		ED36B6FC1E3BD052005581FD /* Decoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2E3641BBACF2C00814D63 /* Decoding.swift */; };
+		ED36B6FD1E3BD052005581FD /* DeletedResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A114BBC41C5107EC00DE6679 /* DeletedResource.swift */; };
+		ED36B6FE1E3BD052005581FD /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E51B8388ED00A0EFCD /* Entry.swift */; };
+		ED36B6FF1E3BD052005581FD /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10FF9D41BBB3676001AA4E9 /* Error.swift */; };
+		ED36B7001E3BD052005581FD /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10FF9DB1BBB4692001AA4E9 /* Field.swift */; };
+		ED36B7011E3BD052005581FD /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E71B83890D00A0EFCD /* Resource.swift */; };
+		ED36B7021E3BD052005581FD /* SignalUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BF6BBB1C0D0FBD00049712 /* SignalUtils.swift */; };
+		ED36B7031E3BD052005581FD /* Space.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15193A91BB91DE700FB83CD /* Space.swift */; };
+		ED36B7041E3BD052005581FD /* SyncSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A114BBBF1C4FD3C300DE6679 /* SyncSpace.swift */; };
+		ED36B7051E3BD052005581FD /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E31B83888200A0EFCD /* Array.swift */; };
+		ED36B7061E3BD052005581FD /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0876D91E1D07B3008E1A06 /* Date.swift */; };
+		ED36B7071E3BD052005581FD /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15193AD1BB9236300FB83CD /* Asset.swift */; };
+		ED36B7081E3BD052005581FD /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3DF1B836F2500A0EFCD /* Client.swift */; };
+		ED36B7091E3BD052005581FD /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E11B8386CC00A0EFCD /* Configuration.swift */; };
+		ED36B70A1E3BD052005581FD /* ContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15193AB1BB91FED00FB83CD /* ContentType.swift */; };
+		ED36B70B1E3BD052005581FD /* DecodableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A119937C1C5252BF00749579 /* DecodableData.swift */; };
+		ED36B70C1E3BD052005581FD /* Decoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2E3641BBACF2C00814D63 /* Decoding.swift */; };
+		ED36B70D1E3BD052005581FD /* DeletedResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A114BBC41C5107EC00DE6679 /* DeletedResource.swift */; };
+		ED36B70E1E3BD052005581FD /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E51B8388ED00A0EFCD /* Entry.swift */; };
+		ED36B70F1E3BD052005581FD /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10FF9D41BBB3676001AA4E9 /* Error.swift */; };
+		ED36B7101E3BD052005581FD /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10FF9DB1BBB4692001AA4E9 /* Field.swift */; };
+		ED36B7111E3BD052005581FD /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E71B83890D00A0EFCD /* Resource.swift */; };
+		ED36B7121E3BD052005581FD /* SignalUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BF6BBB1C0D0FBD00049712 /* SignalUtils.swift */; };
+		ED36B7131E3BD052005581FD /* Space.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15193A91BB91DE700FB83CD /* Space.swift */; };
+		ED36B7141E3BD052005581FD /* SyncSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A114BBBF1C4FD3C300DE6679 /* SyncSpace.swift */; };
+		ED36B7151E3BD053005581FD /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E31B83888200A0EFCD /* Array.swift */; };
+		ED36B7161E3BD053005581FD /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0876D91E1D07B3008E1A06 /* Date.swift */; };
+		ED36B7171E3BD053005581FD /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15193AD1BB9236300FB83CD /* Asset.swift */; };
+		ED36B7181E3BD053005581FD /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3DF1B836F2500A0EFCD /* Client.swift */; };
+		ED36B7191E3BD053005581FD /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E11B8386CC00A0EFCD /* Configuration.swift */; };
+		ED36B71A1E3BD053005581FD /* ContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15193AB1BB91FED00FB83CD /* ContentType.swift */; };
+		ED36B71B1E3BD053005581FD /* DecodableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A119937C1C5252BF00749579 /* DecodableData.swift */; };
+		ED36B71C1E3BD053005581FD /* Decoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2E3641BBACF2C00814D63 /* Decoding.swift */; };
+		ED36B71D1E3BD053005581FD /* DeletedResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A114BBC41C5107EC00DE6679 /* DeletedResource.swift */; };
+		ED36B71E1E3BD053005581FD /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E51B8388ED00A0EFCD /* Entry.swift */; };
+		ED36B71F1E3BD053005581FD /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10FF9D41BBB3676001AA4E9 /* Error.swift */; };
+		ED36B7201E3BD053005581FD /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10FF9DB1BBB4692001AA4E9 /* Field.swift */; };
+		ED36B7211E3BD053005581FD /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E71B83890D00A0EFCD /* Resource.swift */; };
+		ED36B7221E3BD053005581FD /* SignalUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BF6BBB1C0D0FBD00049712 /* SignalUtils.swift */; };
+		ED36B7231E3BD053005581FD /* Space.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15193A91BB91DE700FB83CD /* Space.swift */; };
+		ED36B7241E3BD053005581FD /* SyncSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A114BBBF1C4FD3C300DE6679 /* SyncSpace.swift */; };
+		EDDC07131E3BCE920022F2F9 /* Contentful_watchOS.h in Headers */ = {isa = PBXBuildFile; fileRef = EDDC07111E3BCE920022F2F9 /* Contentful_watchOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EDDC07201E3BCEA40022F2F9 /* Contentful_tvOS.h in Headers */ = {isa = PBXBuildFile; fileRef = EDDC071E1E3BCEA40022F2F9 /* Contentful_tvOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EDDC072D1E3BCEB10022F2F9 /* Contentful_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = EDDC072B1E3BCEB10022F2F9 /* Contentful_macOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,9 +101,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		059E4768B0AE064AB93265C6 /* Pods-Contentful_macOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Contentful_macOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Contentful_macOS/Pods-Contentful_macOS.debug.xcconfig"; sourceTree = "<group>"; };
+		13B23FCCB05A5385D34BFD0E /* Pods-Contentful_tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Contentful_tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Contentful_tvOS/Pods-Contentful_tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		2E29D469F63F4DD6C7DC8236 /* Pods_ContentfulTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ContentfulTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		44A4D4F0816F0D7139205D39 /* Pods-Contentful.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; lineEnding = 0; name = "Pods-Contentful.release.xcconfig"; path = "Pods/Target Support Files/Pods-Contentful/Pods-Contentful.release.xcconfig"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.xcconfig; };
+		591751C5C1F92D16E189968D /* Pods_Contentful_watchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Contentful_watchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E5A269F3D2FDEC35EF1BB84 /* Pods-Contentful_watchOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Contentful_watchOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Contentful_watchOS/Pods-Contentful_watchOS.release.xcconfig"; sourceTree = "<group>"; };
+		7067FBDBA4948DF396B458A7 /* Pods-Contentful_tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Contentful_tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Contentful_tvOS/Pods-Contentful_tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		7708E347DB83AC33DCB47C79 /* Pods-ContentfulTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; lineEnding = 0; name = "Pods-ContentfulTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ContentfulTests/Pods-ContentfulTests.debug.xcconfig"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.xcconfig; };
+		8C4ED24CEF593A916AD69296 /* Pods_Contentful_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Contentful_macOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C79874D9F1BEFE61539C84C /* Pods_Contentful_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Contentful_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A10FF9D41BBB3676001AA4E9 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Error.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A10FF9D61BBB3753001AA4E9 /* Data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Data; sourceTree = "<group>"; };
 		A10FF9DB1BBB4692001AA4E9 /* Field.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Field.swift; sourceTree = "<group>"; };
@@ -77,10 +137,22 @@
 		A1B2E3641BBACF2C00814D63 /* Decoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Decoding.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A1B2E3661BBAD06000814D63 /* DecodingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DecodingTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A1BF6BBB1C0D0FBD00049712 /* SignalUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignalUtils.swift; sourceTree = "<group>"; };
-		BC8B049406D18C9F3E0A6B3B /* Pods-Contentful.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; lineEnding = 0; name = "Pods-Contentful.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Contentful/Pods-Contentful.debug.xcconfig"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.xcconfig; };
+		B1CB5A64CDDACE2BEBC765EB /* Pods-Contentful_iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Contentful_iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Contentful_iOS/Pods-Contentful_iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		B57357EFCCA4940EE9815A2F /* Pods_Contentful_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Contentful_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCB0C6E7CD91CABD7210E223 /* Pods-ContentfulTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; lineEnding = 0; name = "Pods-ContentfulTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ContentfulTests/Pods-ContentfulTests.release.xcconfig"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.xcconfig; };
+		D5F179824319AAFF00BE31C8 /* Pods-Contentful_iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Contentful_iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Contentful_iOS/Pods-Contentful_iOS.release.xcconfig"; sourceTree = "<group>"; };
+		DCBF1423644833F5B9B3B1F0 /* Pods-Contentful_watchOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Contentful_watchOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Contentful_watchOS/Pods-Contentful_watchOS.debug.xcconfig"; sourceTree = "<group>"; };
 		ED0876D91E1D07B3008E1A06 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
-		EEF2BA42FCAA69D0CD2E1CE8 /* Pods_Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EDDC070F1E3BCE920022F2F9 /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EDDC07111E3BCE920022F2F9 /* Contentful_watchOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Contentful_watchOS.h; sourceTree = "<group>"; };
+		EDDC07121E3BCE920022F2F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EDDC071C1E3BCEA40022F2F9 /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EDDC071E1E3BCEA40022F2F9 /* Contentful_tvOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Contentful_tvOS.h; sourceTree = "<group>"; };
+		EDDC071F1E3BCEA40022F2F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EDDC07291E3BCEB10022F2F9 /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EDDC072B1E3BCEB10022F2F9 /* Contentful_macOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Contentful_macOS.h; sourceTree = "<group>"; };
+		EDDC072C1E3BCEB10022F2F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FC5AD96873AB1030535F25F7 /* Pods-Contentful_macOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Contentful_macOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Contentful_macOS/Pods-Contentful_macOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,7 +160,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B1D1D8567FCED6148E277490 /* Pods_Contentful.framework in Frameworks */,
+				502EB10A730CD68F5904CAAB /* Pods_Contentful_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,16 +173,46 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EDDC070B1E3BCE920022F2F9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55CAD7D6F493788753D87B33 /* Pods_Contentful_watchOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDDC07181E3BCEA40022F2F9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7CC0353EE3C0390D5457F6E4 /* Pods_Contentful_tvOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDDC07251E3BCEB10022F2F9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				683FC347FD26B1CCA3E02960 /* Pods_Contentful_macOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		3343179417BF6FB8FE568B78 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				BC8B049406D18C9F3E0A6B3B /* Pods-Contentful.debug.xcconfig */,
-				44A4D4F0816F0D7139205D39 /* Pods-Contentful.release.xcconfig */,
 				7708E347DB83AC33DCB47C79 /* Pods-ContentfulTests.debug.xcconfig */,
 				BCB0C6E7CD91CABD7210E223 /* Pods-ContentfulTests.release.xcconfig */,
+				B1CB5A64CDDACE2BEBC765EB /* Pods-Contentful_iOS.debug.xcconfig */,
+				D5F179824319AAFF00BE31C8 /* Pods-Contentful_iOS.release.xcconfig */,
+				059E4768B0AE064AB93265C6 /* Pods-Contentful_macOS.debug.xcconfig */,
+				FC5AD96873AB1030535F25F7 /* Pods-Contentful_macOS.release.xcconfig */,
+				7067FBDBA4948DF396B458A7 /* Pods-Contentful_tvOS.debug.xcconfig */,
+				13B23FCCB05A5385D34BFD0E /* Pods-Contentful_tvOS.release.xcconfig */,
+				DCBF1423644833F5B9B3B1F0 /* Pods-Contentful_watchOS.debug.xcconfig */,
+				5E5A269F3D2FDEC35EF1BB84 /* Pods-Contentful_watchOS.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -118,8 +220,11 @@
 		8286AF4EF1DF4886935522C3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				EEF2BA42FCAA69D0CD2E1CE8 /* Pods_Contentful.framework */,
 				2E29D469F63F4DD6C7DC8236 /* Pods_ContentfulTests.framework */,
+				B57357EFCCA4940EE9815A2F /* Pods_Contentful_iOS.framework */,
+				8C4ED24CEF593A916AD69296 /* Pods_Contentful_macOS.framework */,
+				9C79874D9F1BEFE61539C84C /* Pods_Contentful_tvOS.framework */,
+				591751C5C1F92D16E189968D /* Pods_Contentful_watchOS.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -128,6 +233,9 @@
 			isa = PBXGroup;
 			children = (
 				A19CA3C61B836EDD00A0EFCD /* Code */,
+				EDDC07101E3BCE920022F2F9 /* Contentful_watchOS */,
+				EDDC071D1E3BCEA40022F2F9 /* Contentful_tvOS */,
+				EDDC072A1E3BCEB10022F2F9 /* Contentful_macOS */,
 				A19CA3C51B836EDD00A0EFCD /* Products */,
 				A19CA3DE1B836EF800A0EFCD /* Supporting Files */,
 				A19CA3D21B836EDD00A0EFCD /* Tests */,
@@ -141,6 +249,9 @@
 			children = (
 				A19CA3C41B836EDD00A0EFCD /* Contentful.framework */,
 				A19CA3CE1B836EDD00A0EFCD /* ContentfulTests.xctest */,
+				EDDC070F1E3BCE920022F2F9 /* Contentful.framework */,
+				EDDC071C1E3BCEA40022F2F9 /* Contentful.framework */,
+				EDDC07291E3BCEB10022F2F9 /* Contentful.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -193,6 +304,33 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		EDDC07101E3BCE920022F2F9 /* Contentful_watchOS */ = {
+			isa = PBXGroup;
+			children = (
+				EDDC07111E3BCE920022F2F9 /* Contentful_watchOS.h */,
+				EDDC07121E3BCE920022F2F9 /* Info.plist */,
+			);
+			path = Contentful_watchOS;
+			sourceTree = "<group>";
+		};
+		EDDC071D1E3BCEA40022F2F9 /* Contentful_tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				EDDC071E1E3BCEA40022F2F9 /* Contentful_tvOS.h */,
+				EDDC071F1E3BCEA40022F2F9 /* Info.plist */,
+			);
+			path = Contentful_tvOS;
+			sourceTree = "<group>";
+		};
+		EDDC072A1E3BCEB10022F2F9 /* Contentful_macOS */ = {
+			isa = PBXGroup;
+			children = (
+				EDDC072B1E3BCEB10022F2F9 /* Contentful_macOS.h */,
+				EDDC072C1E3BCEB10022F2F9 /* Info.plist */,
+			);
+			path = Contentful_macOS;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -203,12 +341,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EDDC070C1E3BCE920022F2F9 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDDC07131E3BCE920022F2F9 /* Contentful_watchOS.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDDC07191E3BCEA40022F2F9 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDDC07201E3BCEA40022F2F9 /* Contentful_tvOS.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDDC07261E3BCEB10022F2F9 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDDC072D1E3BCEB10022F2F9 /* Contentful_macOS.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		A19CA3C31B836EDD00A0EFCD /* Contentful */ = {
+		A19CA3C31B836EDD00A0EFCD /* Contentful_iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A19CA3D81B836EDD00A0EFCD /* Build configuration list for PBXNativeTarget "Contentful" */;
+			buildConfigurationList = A19CA3D81B836EDD00A0EFCD /* Build configuration list for PBXNativeTarget "Contentful_iOS" */;
 			buildPhases = (
 				059057CB13C4839FED8DC5E1 /* [CP] Check Pods Manifest.lock */,
 				A19CA3BF1B836EDD00A0EFCD /* Sources */,
@@ -221,7 +383,7 @@
 			);
 			dependencies = (
 			);
-			name = Contentful;
+			name = Contentful_iOS;
 			productName = Contentful;
 			productReference = A19CA3C41B836EDD00A0EFCD /* Contentful.framework */;
 			productType = "com.apple.product-type.framework";
@@ -247,6 +409,66 @@
 			productReference = A19CA3CE1B836EDD00A0EFCD /* ContentfulTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		EDDC070E1E3BCE920022F2F9 /* Contentful_watchOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EDDC07161E3BCE920022F2F9 /* Build configuration list for PBXNativeTarget "Contentful_watchOS" */;
+			buildPhases = (
+				3E4A12F76C5190622FB7C602 /* [CP] Check Pods Manifest.lock */,
+				EDDC070A1E3BCE920022F2F9 /* Sources */,
+				EDDC070B1E3BCE920022F2F9 /* Frameworks */,
+				EDDC070C1E3BCE920022F2F9 /* Headers */,
+				EDDC070D1E3BCE920022F2F9 /* Resources */,
+				52A025CFAA2910BBD0653069 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Contentful_watchOS;
+			productName = Contentful_watchOS;
+			productReference = EDDC070F1E3BCE920022F2F9 /* Contentful.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		EDDC071B1E3BCEA40022F2F9 /* Contentful_tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EDDC07211E3BCEA40022F2F9 /* Build configuration list for PBXNativeTarget "Contentful_tvOS" */;
+			buildPhases = (
+				C1301081E5104BAE05DEFA90 /* [CP] Check Pods Manifest.lock */,
+				EDDC07171E3BCEA40022F2F9 /* Sources */,
+				EDDC07181E3BCEA40022F2F9 /* Frameworks */,
+				EDDC07191E3BCEA40022F2F9 /* Headers */,
+				EDDC071A1E3BCEA40022F2F9 /* Resources */,
+				7BF3A30C7D077A1FA3BAD9CF /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Contentful_tvOS;
+			productName = Contentful_tvOS;
+			productReference = EDDC071C1E3BCEA40022F2F9 /* Contentful.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		EDDC07281E3BCEB10022F2F9 /* Contentful_macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EDDC072E1E3BCEB10022F2F9 /* Build configuration list for PBXNativeTarget "Contentful_macOS" */;
+			buildPhases = (
+				FDCA10B053262D109D3EC08A /* [CP] Check Pods Manifest.lock */,
+				EDDC07241E3BCEB10022F2F9 /* Sources */,
+				EDDC07251E3BCEB10022F2F9 /* Frameworks */,
+				EDDC07261E3BCEB10022F2F9 /* Headers */,
+				EDDC07271E3BCEB10022F2F9 /* Resources */,
+				E93D3504E9008BD1DF233B26 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Contentful_macOS;
+			productName = Contentful_macOS;
+			productReference = EDDC07291E3BCEB10022F2F9 /* Contentful.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -265,6 +487,18 @@
 						CreatedOnToolsVersion = 7.0;
 						LastSwiftMigration = 0820;
 					};
+					EDDC070E1E3BCE920022F2F9 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
+					EDDC071B1E3BCEA40022F2F9 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
+					EDDC07281E3BCEB10022F2F9 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = A19CA3BE1B836EDD00A0EFCD /* Build configuration list for PBXProject "Contentful" */;
@@ -279,8 +513,11 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A19CA3C31B836EDD00A0EFCD /* Contentful */,
+				A19CA3C31B836EDD00A0EFCD /* Contentful_iOS */,
 				A19CA3CD1B836EDD00A0EFCD /* ContentfulTests */,
+				EDDC070E1E3BCE920022F2F9 /* Contentful_watchOS */,
+				EDDC071B1E3BCEA40022F2F9 /* Contentful_tvOS */,
+				EDDC07281E3BCEB10022F2F9 /* Contentful_macOS */,
 			);
 		};
 /* End PBXProject section */
@@ -298,6 +535,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				A10FF9D81BBB3860001AA4E9 /* Data in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDDC070D1E3BCE920022F2F9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDDC071A1E3BCEA40022F2F9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDDC07271E3BCEB10022F2F9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,7 +604,37 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Contentful/Pods-Contentful-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Contentful_iOS/Pods-Contentful_iOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3E4A12F76C5190622FB7C602 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		52A025CFAA2910BBD0653069 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Contentful_watchOS/Pods-Contentful_watchOS-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6A5BA573DD9E9BD0A901137D /* [CP] Embed Pods Frameworks */ = {
@@ -364,7 +652,67 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ContentfulTests/Pods-ContentfulTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		7BF3A30C7D077A1FA3BAD9CF /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Contentful_tvOS/Pods-Contentful_tvOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C1301081E5104BAE05DEFA90 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		E6748DA5E13DF3AAB70D0231 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E93D3504E9008BD1DF233B26 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Contentful_macOS/Pods-Contentful_macOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FDCA10B053262D109D3EC08A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -419,12 +767,81 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EDDC070A1E3BCE920022F2F9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED36B7011E3BD052005581FD /* Resource.swift in Sources */,
+				ED36B6FE1E3BD052005581FD /* Entry.swift in Sources */,
+				ED36B6FD1E3BD052005581FD /* DeletedResource.swift in Sources */,
+				ED36B7041E3BD052005581FD /* SyncSpace.swift in Sources */,
+				ED36B7021E3BD052005581FD /* SignalUtils.swift in Sources */,
+				ED36B7001E3BD052005581FD /* Field.swift in Sources */,
+				ED36B7031E3BD052005581FD /* Space.swift in Sources */,
+				ED36B6F71E3BD052005581FD /* Asset.swift in Sources */,
+				ED36B6FF1E3BD052005581FD /* Error.swift in Sources */,
+				ED36B6F91E3BD052005581FD /* Configuration.swift in Sources */,
+				ED36B6F51E3BD052005581FD /* Array.swift in Sources */,
+				ED36B6F81E3BD052005581FD /* Client.swift in Sources */,
+				ED36B6FB1E3BD052005581FD /* DecodableData.swift in Sources */,
+				ED36B6F61E3BD052005581FD /* Date.swift in Sources */,
+				ED36B6FC1E3BD052005581FD /* Decoding.swift in Sources */,
+				ED36B6FA1E3BD052005581FD /* ContentType.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDDC07171E3BCEA40022F2F9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED36B7111E3BD052005581FD /* Resource.swift in Sources */,
+				ED36B70E1E3BD052005581FD /* Entry.swift in Sources */,
+				ED36B70D1E3BD052005581FD /* DeletedResource.swift in Sources */,
+				ED36B7141E3BD052005581FD /* SyncSpace.swift in Sources */,
+				ED36B7121E3BD052005581FD /* SignalUtils.swift in Sources */,
+				ED36B7101E3BD052005581FD /* Field.swift in Sources */,
+				ED36B7131E3BD052005581FD /* Space.swift in Sources */,
+				ED36B7071E3BD052005581FD /* Asset.swift in Sources */,
+				ED36B70F1E3BD052005581FD /* Error.swift in Sources */,
+				ED36B7091E3BD052005581FD /* Configuration.swift in Sources */,
+				ED36B7051E3BD052005581FD /* Array.swift in Sources */,
+				ED36B7081E3BD052005581FD /* Client.swift in Sources */,
+				ED36B70B1E3BD052005581FD /* DecodableData.swift in Sources */,
+				ED36B7061E3BD052005581FD /* Date.swift in Sources */,
+				ED36B70C1E3BD052005581FD /* Decoding.swift in Sources */,
+				ED36B70A1E3BD052005581FD /* ContentType.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDDC07241E3BCEB10022F2F9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED36B7211E3BD053005581FD /* Resource.swift in Sources */,
+				ED36B71E1E3BD053005581FD /* Entry.swift in Sources */,
+				ED36B71D1E3BD053005581FD /* DeletedResource.swift in Sources */,
+				ED36B7241E3BD053005581FD /* SyncSpace.swift in Sources */,
+				ED36B7221E3BD053005581FD /* SignalUtils.swift in Sources */,
+				ED36B7201E3BD053005581FD /* Field.swift in Sources */,
+				ED36B7231E3BD053005581FD /* Space.swift in Sources */,
+				ED36B7171E3BD053005581FD /* Asset.swift in Sources */,
+				ED36B71F1E3BD053005581FD /* Error.swift in Sources */,
+				ED36B7191E3BD053005581FD /* Configuration.swift in Sources */,
+				ED36B7151E3BD053005581FD /* Array.swift in Sources */,
+				ED36B7181E3BD053005581FD /* Client.swift in Sources */,
+				ED36B71B1E3BD053005581FD /* DecodableData.swift in Sources */,
+				ED36B7161E3BD053005581FD /* Date.swift in Sources */,
+				ED36B71C1E3BD053005581FD /* Decoding.swift in Sources */,
+				ED36B71A1E3BD053005581FD /* ContentType.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
 		A19CA3D11B836EDD00A0EFCD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A19CA3C31B836EDD00A0EFCD /* Contentful */;
+			target = A19CA3C31B836EDD00A0EFCD /* Contentful_iOS */;
 			targetProxy = A19CA3D01B836EDD00A0EFCD /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -527,7 +944,7 @@
 		};
 		A19CA3D91B836EDD00A0EFCD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BC8B049406D18C9F3E0A6B3B /* Pods-Contentful.debug.xcconfig */;
+			baseConfigurationReference = B1CB5A64CDDACE2BEBC765EB /* Pods-Contentful_iOS.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CLANG_ENABLE_MODULES = YES;
@@ -541,7 +958,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.contentful.Contentful;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Contentful;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -550,7 +967,7 @@
 		};
 		A19CA3DA1B836EDD00A0EFCD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 44A4D4F0816F0D7139205D39 /* Pods-Contentful.release.xcconfig */;
+			baseConfigurationReference = D5F179824319AAFF00BE31C8 /* Pods-Contentful_iOS.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CLANG_ENABLE_MODULES = YES;
@@ -564,7 +981,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.contentful.Contentful;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Contentful;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
@@ -600,6 +1017,160 @@
 			};
 			name = Release;
 		};
+		EDDC07141E3BCE920022F2F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DCBF1423644833F5B9B3B1F0 /* Pods-Contentful_watchOS.debug.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Contentful_watchOS/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-watchOS";
+				PRODUCT_NAME = Contentful;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 3.1;
+			};
+			name = Debug;
+		};
+		EDDC07151E3BCE920022F2F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5E5A269F3D2FDEC35EF1BB84 /* Pods-Contentful_watchOS.release.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Contentful_watchOS/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-watchOS";
+				PRODUCT_NAME = Contentful;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 3.1;
+			};
+			name = Release;
+		};
+		EDDC07221E3BCEA40022F2F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7067FBDBA4948DF396B458A7 /* Pods-Contentful_tvOS.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Contentful_tvOS/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-tvOS";
+				PRODUCT_NAME = Contentful;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 10.1;
+			};
+			name = Debug;
+		};
+		EDDC07231E3BCEA40022F2F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 13B23FCCB05A5385D34BFD0E /* Pods-Contentful_tvOS.release.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Contentful_tvOS/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-tvOS";
+				PRODUCT_NAME = Contentful;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 10.1;
+			};
+			name = Release;
+		};
+		EDDC072F1E3BCEB10022F2F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 059E4768B0AE064AB93265C6 /* Pods-Contentful_macOS.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = Contentful_macOS/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-macOS";
+				PRODUCT_NAME = Contentful;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		EDDC07301E3BCEB10022F2F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FC5AD96873AB1030535F25F7 /* Pods-Contentful_macOS.release.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = Contentful_macOS/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-macOS";
+				PRODUCT_NAME = Contentful;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -612,7 +1183,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A19CA3D81B836EDD00A0EFCD /* Build configuration list for PBXNativeTarget "Contentful" */ = {
+		A19CA3D81B836EDD00A0EFCD /* Build configuration list for PBXNativeTarget "Contentful_iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A19CA3D91B836EDD00A0EFCD /* Debug */,
@@ -626,6 +1197,33 @@
 			buildConfigurations = (
 				A19CA3DC1B836EDD00A0EFCD /* Debug */,
 				A19CA3DD1B836EDD00A0EFCD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EDDC07161E3BCE920022F2F9 /* Build configuration list for PBXNativeTarget "Contentful_watchOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EDDC07141E3BCE920022F2F9 /* Debug */,
+				EDDC07151E3BCE920022F2F9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EDDC07211E3BCEA40022F2F9 /* Build configuration list for PBXNativeTarget "Contentful_tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EDDC07221E3BCEA40022F2F9 /* Debug */,
+				EDDC07231E3BCEA40022F2F9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EDDC072E1E3BCEB10022F2F9 /* Build configuration list for PBXNativeTarget "Contentful_macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EDDC072F1E3BCEB10022F2F9 /* Debug */,
+				EDDC07301E3BCEB10022F2F9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
