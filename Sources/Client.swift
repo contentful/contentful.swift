@@ -50,22 +50,34 @@ public class Client {
     }
 
     private func fetch<T: Decodable>(url: NSURL?, _ completion: Result<T> -> Void) -> NSURLSessionDataTask? {
-        if let url = url {
-            let (task, signal) = network.fetch(url)
 
-            if T.self == Space.self {
-                signal
-                    .next { self.handleJSON($0, completion) }
-                    .error { completion(.Error($0)) }
-            } else {
-                fetchSpace().1
-                    .next { _ in
-                        signal
-                            .next { self.handleJSON($0, completion) }
-                            .error { completion(.Error($0)) }
-                    }
-                    .error { completion(.Error($0)) }
+        let fetchSpaceCompletion: (Result<NSData>) -> () = { result in
+            self.fetchSpace() { resultForSpace in
+                switch resultForSpace {
+                case .Success:
+                    guard let data = result.value else { return }
+                    self.handleJSON(data, completion)
+                case .Error(let error):
+                    completion(.Error(error))
+                }
             }
+        }
+
+        let fetchCompletion: (Result<NSData>) -> () = { result in
+            switch result {
+            case .Success(let fetchedDecodableData):
+                if T.self == Space.self {
+                    self.handleJSON(fetchedDecodableData, completion)
+                } else {
+                    fetchSpaceCompletion(result)
+                }
+            case .Error(let error):
+                completion(.Error(error))
+            }
+        }
+
+        if let url = url {
+            let task = network.fetch(url, completion: fetchCompletion)
 
             return task
         }
@@ -322,25 +334,25 @@ extension Client {
 
     func sync(matching: [String:AnyObject] = [String:AnyObject](), completion: Result<SyncSpace> -> Void) -> NSURLSessionDataTask? {
         if configuration.previewMode {
-            completion(.Error(Error.PreviewAPIDoesNotSupportSync()))
+            completion(Result.Error(Error.PreviewAPIDoesNotSupportSync()))
             return nil
         }
 
-        return fetch(URLForFragment("sync", parameters: matching), { (result: Result<SyncSpace>) in
-            if let value = result.value {
-                value.client = self
+        return fetch(URLForFragment("sync", parameters: matching)) { (result: Result<SyncSpace>) in
+            if let syncSpace = result.value {
+                syncSpace.client = self
 
-                if value.nextPage {
+                if syncSpace.hasMorePages {
                     var parameters = matching
                     parameters.removeValueForKey("initial")
-                    value.sync(parameters, completion: completion)
+                    syncSpace.sync(parameters, completion: completion)
                 } else {
-                    completion(.Success(value))
+                    completion(Result.Success(syncSpace))
                 }
             } else {
                 completion(result)
             }
-        })
+        }
     }
 
     func sync(matching: [String:AnyObject] = [String:AnyObject]()) -> (NSURLSessionDataTask?, Signal<SyncSpace>) {

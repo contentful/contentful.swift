@@ -43,7 +43,7 @@ class Network {
         return NSURLSession(configuration: sessionConfiguration)
     }
 
-    func fetch(url: NSURL, _ completion: Result<NSData> -> Void) -> NSURLSessionDataTask {
+    func fetch(url: NSURL, completion: Result<NSData> -> Void) -> NSURLSessionDataTask {
         let task = session.dataTaskWithURL(url) { (data, response, error) in
             if let data = data {
                 completion(.Success(data))

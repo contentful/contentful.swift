@@ -14,11 +14,12 @@ import Quick
 class SyncTests: ContentfulBaseTests {
     func waitUntilSyncMatching(matching: [String:AnyObject], action: (space: SyncSpace) -> ()) {
         waitUntil { done in
-            self.client.initialSync(matching).1.next {
-                action(space: $0)
-                done()
-            }.error {
-                fail("\($0)")
+            self.client.initialSync(matching) { result in
+                if let error = result.error {
+                    fail("\(error)")
+                    done()
+                }
+                action(space: result.value!)
                 done()
             }
         }
@@ -36,17 +37,23 @@ class SyncTests: ContentfulBaseTests {
 
         it("can perform a subsequent sync for a space") {
             waitUntil { done in
-                self.client.initialSync().1.flatMap { (space: SyncSpace, completion: Result<SyncSpace> -> Void) in
-                    space.sync(completion: completion)
-                }.next {
-                    expect($0.assets.count).to(equal(4))
-                    expect($0.entries.count).to(equal(10))
+                self.client.initialSync() { result in
+                    guard let space = result.value else {
+                        fail("\(result.error!)")
+                        done()
+                        return
+                    }
+                    space.sync() { result in
+                        guard let spaceAfterSecondSync = result.value else {
+                            fail("\(result.error!)")
+                            done()
+                            return
+                        }
+                        expect(spaceAfterSecondSync.assets.count).to(equal(4))
+                        expect(spaceAfterSecondSync.entries.count).to(equal(10))
 
-                    done()
-                }.error {
-                    fail("\($0)")
-
-                    done()
+                        done()
+                    }
                 }
             }
         }

@@ -19,6 +19,11 @@ protocol Resource: Decodable {
     var type: String { get }
 }
 
+extension Resource {
+
+    internal var key: String { return "\(self.dynamicType)_\(self.identifier)" }
+}
+
 protocol LocalizedResource {
     var fields: [String:Any] { get }
 
@@ -27,7 +32,7 @@ protocol LocalizedResource {
     var defaultLocale: String { get }
 }
 
-func +<K: Hashable, V> (left: Dictionary<K, V>, right: Dictionary<K, V>) -> Dictionary<K, V> {
+func +<K, V> (left: Dictionary<K, V>, right: Dictionary<K, V>) -> Dictionary<K, V> {
     var result = left
     right.forEach { (k, v) in result[k] = v }
     return result
