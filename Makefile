@@ -9,10 +9,19 @@ endif
 .PHONY: open test setup lint coverage carthage
 
 open:
-	open Contentful.xcworkspace
+	open Contentful.xcodeproj
 
-test:
-	xcodebuild -workspace Contentful.xcworkspace \
+clean:
+	rm -rf $(HOME)/Library/Developer/Xcode/DerivedData/*
+
+clean_simulators: kill_simulator
+	xcrun simctl erase all
+
+kill_simulator:
+	killall "Simulator" || true
+
+test: clean clean_simulators
+	xcodebuild -project Contentful.xcodeproj \
 		-scheme Contentful_iOS -destination 'id=$(SIM_ID)' test | xcpretty -c
 
 setup:

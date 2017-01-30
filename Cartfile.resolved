@@ -1,2 +1,5 @@
+github "krzyzanowskim/CryptoSwift" "97f574390810ef7daef551f2bb708890f3655fd8"
 github "anviking/Decodable" "v0.5.1"
-github "loudmouth/Interstellar-Contentful" "2.1.0"
+github "JensRavens/Interstellar" "2.0.0"
+github "Quick/Nimble" "v5.1.1"
+github "Quick/Quick" "v1.0.0"
