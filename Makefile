@@ -13,7 +13,7 @@ open:
 
 test:
 	xcodebuild -workspace Contentful.xcworkspace \
-		-scheme Contentful -destination 'id=$(SIM_ID)' test | xcpretty -c
+		-scheme Contentful_iOS -destination 'id=$(SIM_ID)' test | xcpretty -c
 
 setup:
 	bundle install
