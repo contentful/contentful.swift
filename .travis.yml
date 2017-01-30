@@ -1,7 +1,5 @@
 language: objective-c
 osx_image: xcode8.1
-cache:
-  - cocoapods
 before_install:
   - brew update
   - brew outdated carthage || brew upgrade carthage
