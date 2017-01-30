@@ -8,7 +8,7 @@ PODS:
   - Interstellar/Core (2.0.0)
   - Interstellar/Warpdrive (2.0.0):
     - Interstellar/Core
-  - Nimble (5.1.1)
+  - Nimble (6.0.0)
   - Quick (1.0.0)
 
 DEPENDENCIES:
@@ -28,10 +28,10 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CatchingFire:
-    :commit: 378cfc939bfa355aeb1b361ee39c7935f6de1eb2
+    :commit: cdfc163b607464932d348bb766be4b9de7677e16
     :git: https://github.com/loudmouth/CatchingFire.git
   CryptoSwift:
-    :commit: bf3a902e09f759ec48b90c29b6b4d58d06686f74
+    :commit: 97f574390810ef7daef551f2bb708890f3655fd8
     :git: https://github.com/krzyzanowskim/CryptoSwift.git
 
 SPEC CHECKSUMS:
@@ -39,7 +39,7 @@ SPEC CHECKSUMS:
   CryptoSwift: 8f7b936cfd910257631f30d26e7188fa64e91e97
   Decodable: 7c90acc68d357b71d0d6efc120faf9c53c644b7e
   Interstellar: 63a760ff3a3657f791a4523de4b89727c51edec3
-  Nimble: 415e3aa3267e7bc2c96b05fa814ddea7bb686a29
+  Nimble: 8fb9b4b34c535b2f32f52c6b9852d6f02d48610b
   Quick: 8024e4a47e6cc03a9d5245ef0948264fc6d27cff
 
 PODFILE CHECKSUM: c8ec46049be72ed83fa255047e262a4629e7e09c
