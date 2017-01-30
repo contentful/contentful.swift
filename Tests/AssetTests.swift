@@ -8,13 +8,12 @@
 
 @testable import Contentful
 import CryptoSwift
-import CatchingFire
 import Nimble
 import Quick
 
 func url(_ asset: Asset) -> URL {
     var url = URL(string: "http://example.com")
-    AssertNoThrow { url = try asset.URL() }
+    url = try! asset.URL()
     return url!
 }
 
