@@ -7,7 +7,7 @@
 //
 
 @testable import Contentful
-import Interstellar_Contentful
+import Interstellar
 import Nimble
 import Quick
 

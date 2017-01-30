@@ -14,23 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A19CA3C31B836EDD00A0EFCD"
+               BlueprintIdentifier = "EDDC070E1E3BCE920022F2F9"
                BuildableName = "Contentful.framework"
-               BlueprintName = "Contentful"
-               ReferencedContainer = "container:Contentful.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "NO"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A19CA3CD1B836EDD00A0EFCD"
-               BuildableName = "ContentfulTests.xctest"
-               BlueprintName = "ContentfulTests"
+               BlueprintName = "Contentful_watchOS"
                ReferencedContainer = "container:Contentful.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -42,26 +28,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A19CA3CD1B836EDD00A0EFCD"
-               BuildableName = "ContentfulTests.xctest"
-               BlueprintName = "ContentfulTests"
-               ReferencedContainer = "container:Contentful.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A19CA3C31B836EDD00A0EFCD"
-            BuildableName = "Contentful.framework"
-            BlueprintName = "Contentful"
-            ReferencedContainer = "container:Contentful.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -78,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A19CA3C31B836EDD00A0EFCD"
+            BlueprintIdentifier = "EDDC070E1E3BCE920022F2F9"
             BuildableName = "Contentful.framework"
-            BlueprintName = "Contentful"
+            BlueprintName = "Contentful_watchOS"
             ReferencedContainer = "container:Contentful.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -96,9 +63,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A19CA3C31B836EDD00A0EFCD"
+            BlueprintIdentifier = "EDDC070E1E3BCE920022F2F9"
             BuildableName = "Contentful.framework"
-            BlueprintName = "Contentful"
+            BlueprintName = "Contentful_watchOS"
             ReferencedContainer = "container:Contentful.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

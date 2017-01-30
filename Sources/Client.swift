@@ -8,7 +8,7 @@
 
 import Decodable
 import Foundation
-import Interstellar_Contentful
+import Interstellar
 
 /// Client object for performing requests against the Contentful API
 open class Client {
