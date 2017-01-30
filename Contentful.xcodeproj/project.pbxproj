@@ -125,7 +125,7 @@
 		A19C74401C47A804005334AD /* EntryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = EntryTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A19C74421C47A812005334AD /* AssetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AssetTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A19CA3C41B836EDD00A0EFCD /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A19CA3C91B836EDD00A0EFCD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A19CA3C91B836EDD00A0EFCD /* Info_iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info_iOS.plist; sourceTree = "<group>"; };
 		A19CA3CE1B836EDD00A0EFCD /* ContentfulTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContentfulTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A19CA3D31B836EDD00A0EFCD /* ContentfulTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ContentfulTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A19CA3D51B836EDD00A0EFCD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -143,15 +143,15 @@
 		D5F179824319AAFF00BE31C8 /* Pods-Contentful_iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Contentful_iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Contentful_iOS/Pods-Contentful_iOS.release.xcconfig"; sourceTree = "<group>"; };
 		DCBF1423644833F5B9B3B1F0 /* Pods-Contentful_watchOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Contentful_watchOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Contentful_watchOS/Pods-Contentful_watchOS.debug.xcconfig"; sourceTree = "<group>"; };
 		ED0876D91E1D07B3008E1A06 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		EDBEC9371E3F4ADE0040FC56 /* Info_macOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info_macOS.plist; sourceTree = "<group>"; };
+		EDBEC9381E3F4ADE0040FC56 /* Info_tvOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info_tvOS.plist; sourceTree = "<group>"; };
+		EDBEC9391E3F4ADE0040FC56 /* Info_watchOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info_watchOS.plist; sourceTree = "<group>"; };
 		EDDC070F1E3BCE920022F2F9 /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDDC07111E3BCE920022F2F9 /* Contentful_watchOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Contentful_watchOS.h; sourceTree = "<group>"; };
-		EDDC07121E3BCE920022F2F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EDDC071C1E3BCEA40022F2F9 /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDDC071E1E3BCEA40022F2F9 /* Contentful_tvOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Contentful_tvOS.h; sourceTree = "<group>"; };
-		EDDC071F1E3BCEA40022F2F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EDDC07291E3BCEB10022F2F9 /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDDC072B1E3BCEB10022F2F9 /* Contentful_macOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Contentful_macOS.h; sourceTree = "<group>"; };
-		EDDC072C1E3BCEB10022F2F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FC5AD96873AB1030535F25F7 /* Pods-Contentful_macOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Contentful_macOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Contentful_macOS/Pods-Contentful_macOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -299,7 +299,10 @@
 		A19CA3DE1B836EF800A0EFCD /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				A19CA3C91B836EDD00A0EFCD /* Info.plist */,
+				EDBEC9371E3F4ADE0040FC56 /* Info_macOS.plist */,
+				EDBEC9381E3F4ADE0040FC56 /* Info_tvOS.plist */,
+				EDBEC9391E3F4ADE0040FC56 /* Info_watchOS.plist */,
+				A19CA3C91B836EDD00A0EFCD /* Info_iOS.plist */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -308,7 +311,6 @@
 			isa = PBXGroup;
 			children = (
 				EDDC07111E3BCE920022F2F9 /* Contentful_watchOS.h */,
-				EDDC07121E3BCE920022F2F9 /* Info.plist */,
 			);
 			path = Contentful_watchOS;
 			sourceTree = "<group>";
@@ -317,7 +319,6 @@
 			isa = PBXGroup;
 			children = (
 				EDDC071E1E3BCEA40022F2F9 /* Contentful_tvOS.h */,
-				EDDC071F1E3BCEA40022F2F9 /* Info.plist */,
 			);
 			path = Contentful_tvOS;
 			sourceTree = "<group>";
@@ -326,7 +327,6 @@
 			isa = PBXGroup;
 			children = (
 				EDDC072B1E3BCEB10022F2F9 /* Contentful_macOS.h */,
-				EDDC072C1E3BCEB10022F2F9 /* Info.plist */,
 			);
 			path = Contentful_macOS;
 			sourceTree = "<group>";
@@ -955,7 +955,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_iOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.contentful.Contentful;
@@ -979,7 +979,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_iOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.contentful.Contentful;
@@ -1031,7 +1031,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Contentful_watchOS/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-watchOS";
@@ -1057,7 +1057,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Contentful_watchOS/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-watchOS";
@@ -1083,7 +1083,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Contentful_tvOS/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-tvOS";
@@ -1109,7 +1109,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Contentful_tvOS/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-tvOS";
@@ -1137,7 +1137,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = Contentful_macOS/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_macOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
@@ -1164,7 +1164,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = Contentful_macOS/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_macOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
