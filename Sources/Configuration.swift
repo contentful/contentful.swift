@@ -21,7 +21,7 @@ public struct Configuration {
     /// The server to use for performing requests, defaults to `cdn.contentful.com`
     public var server = DEFAULT_SERVER
     /// The user agent to use for performing requests
-    public var userAgentClient = "contentful.swift/0.1.0"
+    public var userAgentClient = "contentful.swift/0.3.1"
 
     /// Computed version of the user agent, including OS name and version
     public var userAgent : String {

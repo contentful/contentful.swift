@@ -31,7 +31,7 @@ class ContentfulTests: ContentfulBaseTests {
                 let osVersion = ProcessInfo.processInfo.operatingSystemVersionString
                 let userAgentString = Configuration().userAgent
 
-                expect(userAgentString).to(equal("contentful.swift/0.1.0 (iOS \(osVersion))"))
+                expect(userAgentString).to(equal("contentful.swift/0.3.1 (iOS \(osVersion))"))
             }
         }
 
