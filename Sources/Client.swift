@@ -338,7 +338,7 @@ extension Client {
             if let value = result.value {
                 value.client = self
 
-                if value.nextPage {
+                if value.hasMorePages {
                     var parameters = matching
                     parameters.removeValue(forKey: "initial")
                     value.sync(matching: parameters, completion: completion)

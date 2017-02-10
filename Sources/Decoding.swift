@@ -73,52 +73,8 @@ extension Asset: Decodable {
 }
 
 extension Array: Decodable {
-    fileprivate static func resolveLink(_ value: Any, _ includes: [String:Resource]) -> Any? {
-        if let link = value as? [String : Any],
-            let sys = link["sys"] as? [String : Any],
-            let identifier = sys["id"] as? String,
-            let type = sys["linkType"] as? String,
-            let include = includes["\(type)_\(identifier)"] {
-                return include
-        }
 
-        return nil
-    }
-
-    fileprivate static func resolveLinks(_ entry: Entry, _ includes: [String:Resource]) -> Entry {
-        var localizedFields = [String:[String:Any]]()
-
-        entry.localizedFields.forEach { locale, entryFields in
-            var fields = entryFields
-
-            entryFields.forEach { field in
-                if let include = resolveLink(field.1, includes) {
-                    fields[field.0] = include
-                }
-
-                if let links = field.1 as? [[String : Any]] {
-                    // This drops any unresolvable links automatically
-                    let includes = links.map { resolveLink($0, includes) }.flatMap { $0 }
-                    if includes.count > 0 {
-                        fields[field.0] = includes
-                    }
-                }
-            }
-
-            localizedFields[locale] = fields
-        }
-
-        return Entry(entry: entry, localizedFields: localizedFields)
-    }
-
-    static func parseItems(_ json: Any) throws -> [Resource] {
-        var includes = [String:Resource]()
-        let jsonIncludes = try? json => "includes" as! [String : Any]
-
-        if let jsonIncludes = jsonIncludes {
-            try Asset.decode(jsonIncludes, &includes)
-            try Entry.decode(jsonIncludes, &includes)
-        }
+    internal static func parseItems(json: Any, shouldResolveIncludes: Bool = true) throws -> (resources: [Resource], includes: [String: Resource]) {
 
         let items: [Resource] = try (try json => "items" as! [AnyObject]).flatMap {
             let type: String = try $0 => "sys" => "type"
@@ -133,29 +89,47 @@ extension Array: Decodable {
             }
         }
 
+        // Resolve links.
+        var includes = [String:Resource]()
+        let jsonIncludes = try? json => "includes" as! [String:Any]
+
+        if let jsonIncludes = jsonIncludes {
+            try Asset.decode(jsonIncludes, &includes)
+            try Entry.decode(jsonIncludes, &includes)
+        }
+
         for item in items {
+            // item.key is it's typename concatenated with it's identifier.
             includes[item.key] = item
         }
 
+        guard shouldResolveIncludes == true else {
+            return (resources: items, includes: includes)
+        }
+
+        // Complete the relationship graph within the includes dictionary itself.
         for (key, resource) in includes {
             if let entry = resource as? Entry {
-                includes[key] = resolveLinks(entry, includes)
+                includes[key] = entry.resolveLinks(againstIncludes: includes)
             }
         }
 
-        return items.map { (item) in
+        // Then update the returned resources themselves by resolving the includes...
+        let resources: [Resource] =  items.map { item in
             if let entry = item as? Entry {
-                return resolveLinks(entry, includes)
+                return entry.resolveLinks(againstIncludes: includes)
             }
             return item
         }
+
+        return (resources: resources, includes: includes)
     }
 
     /// Decode JSON for an Array
     public static func decode(_ json: Any) throws -> Array {
 
         return try Array(
-            items: parseItems(json).flatMap { $0 as? T },
+            items: parseItems(json: json).resources.flatMap { $0 as? T },
             limit: json => "limit",
             skip: json => "skip",
             total: json => "total"
@@ -290,18 +264,20 @@ extension Space: Decodable {
 extension SyncSpace: Decodable {
     /// Decode JSON for a SyncSpace
     public static func decode(_ json: Any) throws -> SyncSpace {
-        var nextPage = true
+        var hasMorePages = true
         var syncUrl: String? = try? json => "nextPageUrl"
 
         if syncUrl == nil {
-            nextPage = false
+            hasMorePages = false
             syncUrl = try json => "nextSyncUrl"
         }
 
+        let (resources, includes) = try Array<Entry>.parseItems(json: json, shouldResolveIncludes: false)
         return SyncSpace(
-            nextPage: nextPage,
+            hasMorePages: hasMorePages,
             nextUrl: syncUrl!,
-            items: try Array<Entry>.parseItems(json)
+            items: resources,
+            includes: includes
         )
     }
 }
