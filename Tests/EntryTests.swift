@@ -123,6 +123,29 @@ class EntryTests: ContentfulBaseTests {
             }
         }
 
+        it ("can fetch an entry with an array of linked entries") {
+            // JPs_product space
+            self.client = Client(spaceIdentifier: "p35j0pp5t9t8", accessToken: "6a1664bde31fa797778838ded3e755ab5e4834af1abdf2007c816086caf172c4")
+            waitUntil(timeout: 10) { done in
+                self.client.fetchEntry(identifier: "5KsDBWseXY6QegucYAoacS") { result in
+                    switch result {
+                    case .success(let entry):
+                        if let entries = entry.fields["categories"] as? [Entry] {
+                            expect(entries.first).toNot(beNil())
+                            expect(entries.first!.identifier).to(equal("24DPGBDeGEaYy8ms4Y8QMQ"))
+                        } else {
+                            fail("Expected entry with linked array to resolve links")
+                        }
+                    case .error:
+                        fail("Expected fetching entry to succeed")
+                    }
+                }
+
+                done()
+            }
+
+        }
+
         it("can fetch entries with a specified locale") {
             self.waitUntilMatchingEntries([ "locale": "tlh", "sys.id": "nyancat" ]) {
                 let entry = $0.items.first

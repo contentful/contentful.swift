@@ -37,6 +37,9 @@ public enum SDKError : Error {
      *  @param String The error which occured during parsing
      */
     case unparseableJSON(data: Data, errorMessage: String)
+
+    /// Thrown when no entry is found matching a specific Entry identifier
+    case noEntryFoundFor(identifier: String)
 }
 
 /// Information regarding an error received from Contentful

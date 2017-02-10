@@ -257,7 +257,18 @@ extension Client {
      - returns: The data task being used, enables cancellation of requests
      */
     @discardableResult public func fetchEntry(identifier: String, completion: @escaping (Result<Entry>) -> Void) -> URLSessionDataTask? {
-        return fetch(url: URLForFragment(fragment: "entries/\(identifier)"), completion: completion)
+        let fetchEntriesCompletion: (Result<Array<Entry>>) -> Void = { result in
+            switch result {
+            case .success(let entries) where entries.items.first != nil:
+                completion(Result.success(entries.items.first!))
+            case .error(let error):
+                completion(Result.error(error))
+            default:
+                completion(Result.error(SDKError.noEntryFoundFor(identifier: identifier)))
+            }
+        }
+
+        return fetchEntries(matching: ["sys.id": identifier], completion: fetchEntriesCompletion)
     }
 
     /**
@@ -338,7 +349,7 @@ extension Client {
             if let value = result.value {
                 value.client = self
 
-                if value.nextPage {
+                if value.hasMorePages {
                     var parameters = matching
                     parameters.removeValue(forKey: "initial")
                     value.sync(matching: parameters, completion: completion)
