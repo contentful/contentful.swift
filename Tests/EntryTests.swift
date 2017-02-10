@@ -132,6 +132,7 @@ class EntryTests: ContentfulBaseTests {
                     case .success(let entry):
                         if let entries = entry.fields["categories"] as? [Entry] {
                             expect(entries.first).toNot(beNil())
+                            expect(entries.first!.identifier).to(equal("24DPGBDeGEaYy8ms4Y8QMQ"))
                         } else {
                             fail("Expected entry with linked array to resolve links")
                         }
