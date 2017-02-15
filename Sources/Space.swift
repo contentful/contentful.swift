@@ -22,7 +22,7 @@ public struct Locale {
 }
 
 /// A Space represents a collection of Content Types, Assets and Entries in Contentful
-public struct Space : Resource {
+public struct Space: Resource {
     /// System fields
     public let sys: [String : Any]
 

@@ -42,17 +42,19 @@ public protocol SyncSpaceDelegate {
 
 /// A container for the synchronized state of a Space
 public final class SyncSpace {
-    fileprivate var assetsMap = [String:Asset]()
-    fileprivate var entriesMap = [String:Entry]()
+    fileprivate var assetsMap = [String: Asset]()
+    fileprivate var entriesMap = [String: Entry]()
 
     // Used for resolving links.
-    fileprivate var includes = [String:Resource]()
+    fileprivate var includes = [String: Resource]()
 
     var deletedAssets = [String]()
     var deletedEntries = [String]()
 
     var delegate: SyncSpaceDelegate?
+
     let hasMorePages: Bool
+
     /// A token which needs to be present to perform a subsequent synchronization operation
     fileprivate(set) public var syncToken = ""
 
@@ -66,9 +68,9 @@ public final class SyncSpace {
         return Swift.Array(entriesMap.values)
     }
 
-    var client: Client? = nil
+    var client: Client?
 
-    internal init(hasMorePages: Bool, nextUrl: String, items: [Resource], includes: [String:Resource]) {
+    internal init(hasMorePages: Bool, nextUrl: String, items: [Resource], includes: [String: Resource]) {
         self.hasMorePages = hasMorePages
         self.includes = includes
 
@@ -114,8 +116,8 @@ public final class SyncSpace {
     }
 
     /**
-     Perform a subsequent synchronization operation, updating this object with the latest content from
-     Contentful. 
+     Perform a subsequent synchronization operation, updating this object with the 
+     latest content from Contentful.
      
      Calling this will mutate the instance and also return a reference to itself to the completion
      handler in order to allow chaining of operations.
@@ -125,19 +127,19 @@ public final class SyncSpace {
 
      - returns: The data task being used, enables cancellation of requests
      **/
-    @discardableResult public func sync(matching: [String : Any] = [:], completion: @escaping (Result<SyncSpace>) -> Void) -> URLSessionDataTask? {
+    @discardableResult public func sync(matching: [String: Any] = [:], completion: @escaping (Result<SyncSpace>) -> Void) -> URLSessionDataTask? {
         guard let client = self.client else {
             completion(.error(SDKError.invalidClient()))
             return nil
         }
 
-        let syncCompletion: (Result<SyncSpace>) -> () = { result in
+        let syncCompletion: (Result<SyncSpace>) -> Void = { result in
 
             switch result {
             case .success(let syncSpace):
 
                 // Update includes.
-                self.includes = self.includes + syncSpace.includes
+                self.includes += syncSpace.includes
 
                 for asset in syncSpace.assets {
                     self.delegate?.create(asset: asset)
@@ -172,14 +174,14 @@ public final class SyncSpace {
 
         var parameters = matching
         parameters["sync_token"] = syncToken
-        
+
         let task = client.sync(matching: parameters, completion: syncCompletion)
         return task
     }
 
     /**
-     Perform a subsequent synchronization operation, updating this object with the latest content from
-     Contentful.
+     Perform a subsequent synchronization operation, updating this object with 
+     the latest content from Contentful.
 
      Calling this will mutate the instance and also return a reference to itself to the completion
      handler in order to allow chaining of operations.
@@ -188,7 +190,7 @@ public final class SyncSpace {
 
      - returns: A tuple of data task and a signal which fires on completion
      **/
-    public func sync(matching: [String : Any] = [:]) -> (URLSessionDataTask?, Observable<Result<SyncSpace>>) {
+    public func sync(matching: [String: Any] = [:]) -> (URLSessionDataTask?, Observable<Result<SyncSpace>>) {
         let closure: SignalObservation<[String : Any], SyncSpace> = sync(matching:completion:)
         return signalify(parameter: matching, closure: closure)
     }

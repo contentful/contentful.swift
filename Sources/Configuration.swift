@@ -27,7 +27,7 @@ public struct Configuration {
     public var userAgentClient = "contentful.swift/0.3.1"
 
     /// Computed version of the user agent, including OS name and version
-    public var userAgent : String {
+    public var userAgent: String {
         var osName = "iOS"
         let osVersion: Any = ProcessInfo.processInfo.operatingSystemVersionString as AnyObject? ?? "Unknown" as AnyObject
 
@@ -41,7 +41,6 @@ public struct Configuration {
 
         return "\(userAgentClient) (\(osName) \(osVersion))"
     }
-
 
     /**
      Initialize a configuration with default values

@@ -45,7 +45,7 @@ public enum SDKError : Error {
 /// Information regarding an error received from Contentful
 public struct ContentfulError: Resource, Error {
     /// System fields
-    public let sys: [String : Any]
+    public let sys: [String: Any]
 
     /// The unique identifier of this error
     public let identifier: String

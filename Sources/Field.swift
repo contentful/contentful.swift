@@ -9,31 +9,31 @@
 /// The possible Field types in Contentful
 public enum FieldType: String {
     /// An array of links or symbols
-    case Array      = "Array"
+    case Array
     /// A link to an Asset
-    case Asset      = "Asset"
+    case Asset
     /// A boolean value, true or false
-    case Boolean    = "Boolean"
+    case Boolean
     /// A date value with optional time component
-    case Date       = "Date"
+    case Date
     /// A link to an Entry
-    case Entry      = "Entry"
+    case Entry
     /// A numeric integer value
-    case Integer    = "Integer"
+    case Integer
     /// A link to an Asset or Entry
-    case Link       = "Link"
+    case Link
     /// A location value, consists of latitude and longitude
-    case Location   = "Location"
+    case Location
     /// An unknown kind of value
     case None
     /// A floating point number value
-    case Number     = "Number"
+    case Number
     /// A JSON object value
-    case Object     = "Object"
+    case Object
     /// A short text string, can be part of an array
-    case Symbol     = "Symbol"
+    case Symbol
     /// A longer text string
-    case Text       = "Text"
+    case Text
 }
 
 /// A Field describes a single value inside an Entry

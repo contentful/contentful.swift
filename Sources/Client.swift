@@ -17,7 +17,7 @@ open class Client {
     fileprivate let spaceIdentifier: String
 
     fileprivate var server: String {
-        if configuration.previewMode && configuration.server == DEFAULT_SERVER {
+        if configuration.previewMode && configuration.server == Defaults.server {
             return "preview.contentful.com"
         }
         return configuration.server
@@ -94,7 +94,7 @@ open class Client {
     fileprivate func URLForFragment(fragment: String = "", parameters: [String: Any]? = nil) -> URL? {
         if var components = URLComponents(string: "\(scheme)://\(server)/spaces/\(spaceIdentifier)/\(fragment)") {
             if let parameters = parameters {
-                let queryItems: [URLQueryItem] = parameters.map() { (key, value) in
+                let queryItems: [URLQueryItem] = parameters.map { key, value in
                     var value = value
 
                     if let date = value as? Date, let dateString = date.toISO8601GMTString() {
@@ -118,7 +118,7 @@ open class Client {
                 return url
             }
         }
-        
+
         return nil
     }
 }
@@ -156,7 +156,8 @@ extension Client {
 
      - returns: The data task being used, enables cancellation of requests
      */
-    @discardableResult public func fetchAssets(matching: [String : Any] = [:], completion: @escaping (Result<Array<Asset>>) -> Void) -> URLSessionDataTask? {
+    @discardableResult public func fetchAssets(matching: [String: Any] = [:],
+                                               completion: @escaping (Result<Array<Asset>>) -> Void) -> URLSessionDataTask? {
         return fetch(url: URLForFragment(fragment: "assets", parameters: matching), completion: completion)
     }
 
@@ -167,8 +168,8 @@ extension Client {
 
      - returns: A tuple of data task and a signal for the resulting array of Assets
      */
-    @discardableResult public func fetchAssets(matching: [String : Any] = [:]) -> (URLSessionDataTask?, Observable<Result<Array<Asset>>>) {
-        let closure: SignalObservation<[String : Any], Array<Asset>> = fetchAssets(matching:completion:)
+    @discardableResult public func fetchAssets(matching: [String: Any] = [:]) -> (URLSessionDataTask?, Observable<Result<Array<Asset>>>) {
+        let closure: SignalObservation<[String: Any], Array<Asset>> = fetchAssets(matching:completion:)
         return signalify(parameter: matching, closure: closure)
     }
 }
@@ -206,7 +207,8 @@ extension Client {
 
      - returns: The data task being used, enables cancellation of requests
      */
-    @discardableResult public func fetchContentTypes(matching: [String:Any] = [:], completion: @escaping (Result<Array<ContentType>>) -> Void) -> URLSessionDataTask? {
+    @discardableResult public func fetchContentTypes(matching: [String: Any] = [:],
+                                                     completion: @escaping (Result<Array<ContentType>>) -> Void) -> URLSessionDataTask? {
         return fetch(url: URLForFragment(fragment: "content_types", parameters: matching), completion: completion)
     }
 
@@ -217,7 +219,7 @@ extension Client {
 
      - returns: A tuple of data task and a signal for the resulting array of Content Types
      */
-    @discardableResult public func fetchContentTypes(matching: [String : Any] = [:]) -> (URLSessionDataTask?, Observable<Result<Array<ContentType>>>) {
+    @discardableResult public func fetchContentTypes(matching: [String: Any] = [:]) -> (URLSessionDataTask?, Observable<Result<Array<ContentType>>>) {
         let closure: SignalObservation<[String : Any], Array<ContentType>> = fetchContentTypes(matching:completion:)
         return signalify(parameter: matching, closure: closure)
     }
@@ -232,7 +234,8 @@ extension Client {
 
      - returns: The data task being used, enables cancellation of requests
      */
-    @discardableResult public func fetchEntries(matching: [String : Any] = [:], completion: @escaping (Result<Array<Entry>>) -> Void) -> URLSessionDataTask? {
+    @discardableResult public func fetchEntries(matching: [String : Any] = [:],
+                                                completion: @escaping (Result<Array<Entry>>) -> Void) -> URLSessionDataTask? {
         return fetch(url: URLForFragment(fragment: "entries", parameters: matching), completion: completion)
     }
 
@@ -321,7 +324,7 @@ extension Client {
 
      - returns: The data task being used, enables cancellation of requests
      */
-    @discardableResult public func initialSync(matching: [String : Any] = [:], completion: @escaping (Result<SyncSpace>) -> Void) -> URLSessionDataTask? {
+    @discardableResult public func initialSync(matching: [String: Any] = [:], completion: @escaping (Result<SyncSpace>) -> Void) -> URLSessionDataTask? {
         var parameters = matching
         parameters["initial"] = true
         return sync(matching: parameters, completion: completion)
@@ -334,12 +337,12 @@ extension Client {
 
      - returns: A tuple of data task and a signal for the resulting SyncSpace
      */
-    @discardableResult public func initialSync(matching: [String : Any] = [:]) -> (URLSessionDataTask?, Observable<Result<SyncSpace>>) {
+    @discardableResult public func initialSync(matching: [String: Any] = [:]) -> (URLSessionDataTask?, Observable<Result<SyncSpace>>) {
         let closure: SignalObservation<[String : Any], SyncSpace> = initialSync(matching:completion:)
         return signalify(parameter: matching, closure: closure)
     }
 
-    func sync(matching: [String : Any] = [:], completion: @escaping (Result<SyncSpace>) -> Void) -> URLSessionDataTask? {
+    func sync(matching: [String: Any] = [:], completion: @escaping (Result<SyncSpace>) -> Void) -> URLSessionDataTask? {
         if configuration.previewMode {
             completion(.error(SDKError.previewAPIDoesNotSupportSync()))
             return nil
@@ -362,7 +365,7 @@ extension Client {
         })
     }
 
-    func sync(matching: [String : Any] = [:]) -> (URLSessionDataTask?, Observable<Result<SyncSpace>>) {
+    func sync(matching: [String: Any] = [:]) -> (URLSessionDataTask?, Observable<Result<SyncSpace>>) {
         let closure: SignalObservation<[String : Any], SyncSpace> = sync(matching:completion:)
         return signalify(parameter: matching, closure: closure)
     }

@@ -12,9 +12,9 @@ import Nimble
 import Quick
 
 extension Entry {
-    var contentTypeId : String {
+    var contentTypeId: String {
         // TODO: We should probably resolve content type on Entry creation to avoid this awfulness
-        let id = ((sys["contentType"] as? [String : Any])?["sys"] as? [String : Any])?["id"]
+        let id = ((sys["contentType"] as? [String: Any])?["sys"] as? [String: Any])?["id"]
         return (id as? String) ?? ""
     }
 }
@@ -31,8 +31,8 @@ extension Date {
 }
 
 class EntryTests: ContentfulBaseTests {
-    
-    func waitUntilMatchingEntries(_ matching: [String: Any], action: @escaping (_ entries: Contentful.Array<Entry>) -> ()) {
+
+    func waitUntilMatchingEntries(_ matching: [String: Any], action: @escaping (_ entries: Contentful.Array<Entry>) -> Void) {
         waitUntil(timeout: 10) { done in
             self.client.fetchEntries(matching: matching).1.then {
                 action($0)

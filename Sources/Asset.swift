@@ -14,7 +14,7 @@ import UIKit
 #endif
 
 /// An asset represents a media file in Contentful
-public struct Asset : Resource, LocalizedResource {
+public struct Asset: Resource, LocalizedResource {
     /// System fields
     public let sys: [String : Any]
     /// Content fields

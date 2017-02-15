@@ -42,7 +42,7 @@ func signalify<U>(closure: SignalBang<U>) -> (URLSessionDataTask?, Observable<Re
 }
 
 class Network {
-    var sessionConfigurator: ((URLSessionConfiguration) -> ())?
+    var sessionConfigurator: ((URLSessionConfiguration) -> Void)?
 
     fileprivate var session: URLSession {
         let sessionConfiguration = URLSessionConfiguration.default
@@ -65,7 +65,7 @@ class Network {
             }
 
             completion(.error(SDKError.invalidHTTPResponse(response: response)))
-        }) 
+        })
 
         task.resume()
         return task

@@ -1,21 +1,23 @@
-disabled_rules: # rule identifiers to exclude from running
-  - force_cast
-  - force_try
-  - todo
-  - type_body_length
-  - type_name
-  - cyclomatic_complexity
-  - function_parameter_count
-  - legacy_constant
 
 excluded: # paths to ignore during linting.
   - Carthage
   - Packages
+  - Tests
+disabled_rules: # rule identifiers to exclude from running
+- type_body_length
+- type_name
+- cyclomatic_complexity
+- function_parameter_count
+- legacy_constant
+- force_cast
+- force_try
 # parameterized rules can be customized from this configuration file
-line_length: 100
+line_length: 150
+vertical_whitespace:
+  max_empty_lines: 2
 file_length: 650
 function_body_length: 110
 variable_name:
   min_length: 2
-  max_length: 60
+  max_length: 30
 

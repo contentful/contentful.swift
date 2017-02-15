@@ -12,7 +12,6 @@ import Nimble
 import Quick
 
 
-
 class DecodingTests: QuickSpec {
     func jsonData(_ fileName: String) -> Any {
         let path = NSString(string: "Data").appendingPathComponent(fileName)

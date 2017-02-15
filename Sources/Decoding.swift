@@ -9,11 +9,9 @@
 import Decodable
 import Foundation
 
-private let DEFAULT_LOCALE = "en-US"
-
 // Cannot cast directly from [String : Any] => [String:Any]
 private func convert(_ fields: [String : Any]) -> [String:Any] {
-    var result = [String:Any]()
+    var result = [String: Any]()
     fields.forEach { result[$0.0] = $0.1 }
     return result
 }
@@ -25,14 +23,14 @@ private func determineDefaultLocale(_ json: Any) -> String {
         }
     }
 
-    return DEFAULT_LOCALE
+    return Defaults.locale
 }
 
 private func parseLocalizedFields(_ json: Any) throws -> (String, [String:[String:Any]]) {
     let fields = try json => "fields" as! [String : Any]
     let locale: String? = try? json => "sys" => "locale"
 
-    var localizedFields = [String:[String:Any]]()
+    var localizedFields = [String: [String: Any]]()
 
     if let locale = locale {
         localizedFields[locale] = convert(fields)
@@ -40,7 +38,7 @@ private func parseLocalizedFields(_ json: Any) throws -> (String, [String:[Strin
         fields.forEach { field, fields in
             (fields as? [String : Any])?.forEach { locale, value in
                 if localizedFields[locale] == nil {
-                    localizedFields[locale] = [String:Any]()
+                    localizedFields[locale] = [String: Any]()
                 }
 
                 localizedFields[locale]?[field] = value
@@ -48,7 +46,7 @@ private func parseLocalizedFields(_ json: Any) throws -> (String, [String:[Strin
         }
     }
 
-    return (locale ?? DEFAULT_LOCALE, localizedFields)
+    return (locale ?? Defaults.locale, localizedFields)
 }
 
 extension UInt: Decodable, DynamicDecodable {
@@ -90,7 +88,7 @@ extension Array: Decodable {
         }
 
         // Resolve links.
-        var includes = [String:Resource]()
+        var includes = [String: Resource]()
         let jsonIncludes = try? json => "includes" as! [String:Any]
 
         if let jsonIncludes = jsonIncludes {
