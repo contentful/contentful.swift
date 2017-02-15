@@ -8,7 +8,10 @@
 
 import Foundation
 
-let DEFAULT_SERVER = "cdn.contentful.com"
+enum Defaults {
+    static let server = "cdn.contentful.com"
+    static let locale = "en-US"
+}
 
 /// Configuration parameters for a client instance
 public struct Configuration {
@@ -19,7 +22,7 @@ public struct Configuration {
     /// Whether or not to use HTTPS connections, defaults to `true`
     public var secure = true
     /// The server to use for performing requests, defaults to `cdn.contentful.com`
-    public var server = DEFAULT_SERVER
+    public var server = Defaults.server
     /// The user agent to use for performing requests
     public var userAgentClient = "contentful.swift/0.3.1"
 
