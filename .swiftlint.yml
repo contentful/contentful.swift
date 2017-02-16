@@ -1,0 +1,30 @@
+
+excluded:
+  - Carthage
+  - Packages
+  - Tests
+disabled_rules:
+- syntactic_sugar
+- type_body_length
+- type_name
+- cyclomatic_complexity
+- function_parameter_count
+- legacy_constant
+- force_cast
+- force_try
+# Rule that says says type that conforms to protocol must be a class.
+# If we are in pure swift, this is not necessary.
+- class_delegate_protocol
+- weak_delegate
+- vertical_parameter_alignment
+
+# Parameterized
+line_length: 150
+vertical_whitespace:
+  max_empty_lines: 2
+file_length: 650
+function_body_length: 110
+variable_name:
+  min_length: 2
+  max_length: 30
+

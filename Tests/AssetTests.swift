@@ -24,7 +24,7 @@ class AssetTests: ContentfulBaseTests {
     }
 
     // Linker error with too many levels of closures 😭
-    func testFetchImageFromAsset(_ done: @escaping () -> ()) {
+    func testFetchImageFromAsset(_ done: @escaping (Void) -> Void) {
 
         self.client.fetchAsset(identifier: "nyancat").1.then { asset in
 

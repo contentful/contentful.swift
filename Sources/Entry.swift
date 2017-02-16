@@ -9,9 +9,9 @@
 import Foundation
 
 /// An Entry represents a typed collection of data in Contentful
-public struct Entry : Resource, LocalizedResource {
+public struct Entry: Resource, LocalizedResource {
     /// System fields
-    public let sys: [String : Any]
+    public let sys: [String: Any]
     /// Content fields
     public var fields: [String:Any] {
         return Contentful.fields(localizedFields, forLocale: locale, defaultLocale: defaultLocale)
@@ -30,8 +30,8 @@ public struct Entry : Resource, LocalizedResource {
     /// Currently selected locale
     public var locale: String
 
-    init(sys: [String : Any], localizedFields: [String:[String:Any]], defaultLocale: String,
-            identifier: String, type: String, locale: String) {
+    init(sys: [String: Any], localizedFields: [String: [String: Any]], defaultLocale: String,
+         identifier: String, type: String, locale: String) {
         self.sys = sys
         self.localizedFields = localizedFields
         self.identifier = identifier
@@ -52,7 +52,7 @@ public struct Entry : Resource, LocalizedResource {
     // MARK: Internal
 
     internal func resolveLinks(againstIncludes includes: [String:Resource]) -> Entry {
-        var localizedFields = [String:[String:Any]]()
+        var localizedFields = [String: [String: Any]]()
 
         for (locale, entryFields) in self.localizedFields {
             var fields = entryFields
@@ -69,7 +69,7 @@ public struct Entry : Resource, LocalizedResource {
                 // resolved because of a multiple page sync so we will store a dictionary rather
                 // than a Swift object in the link body. The link will be resolved at a later time.
                 if let linksToResolve = fieldValue as? [[String:AnyObject]] {
-                    
+
                     // An array of both resolved and unresolved links.
                     var links = [Any]()
 

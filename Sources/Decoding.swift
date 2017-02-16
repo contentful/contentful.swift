@@ -9,11 +9,9 @@
 import Decodable
 import Foundation
 
-private let DEFAULT_LOCALE = "en-US"
-
-// Cannot cast directly from [String : Any] => [String:Any]
-private func convert(_ fields: [String : Any]) -> [String:Any] {
-    var result = [String:Any]()
+// Cannot cast directly from [String: Any] => [String:Any]
+private func convert(_ fields: [String: Any]) -> [String:Any] {
+    var result = [String: Any]()
     fields.forEach { result[$0.0] = $0.1 }
     return result
 }
@@ -25,22 +23,22 @@ private func determineDefaultLocale(_ json: Any) -> String {
         }
     }
 
-    return DEFAULT_LOCALE
+    return Defaults.locale
 }
 
 private func parseLocalizedFields(_ json: Any) throws -> (String, [String:[String:Any]]) {
-    let fields = try json => "fields" as! [String : Any]
+    let fields = try json => "fields" as! [String: Any]
     let locale: String? = try? json => "sys" => "locale"
 
-    var localizedFields = [String:[String:Any]]()
+    var localizedFields = [String: [String: Any]]()
 
     if let locale = locale {
         localizedFields[locale] = convert(fields)
     } else {
         fields.forEach { field, fields in
-            (fields as? [String : Any])?.forEach { locale, value in
+            (fields as? [String: Any])?.forEach { locale, value in
                 if localizedFields[locale] == nil {
-                    localizedFields[locale] = [String:Any]()
+                    localizedFields[locale] = [String: Any]()
                 }
 
                 localizedFields[locale]?[field] = value
@@ -48,7 +46,7 @@ private func parseLocalizedFields(_ json: Any) throws -> (String, [String:[Strin
         }
     }
 
-    return (locale ?? DEFAULT_LOCALE, localizedFields)
+    return (locale ?? Defaults.locale, localizedFields)
 }
 
 extension UInt: Decodable, DynamicDecodable {
@@ -61,7 +59,7 @@ extension Asset: Decodable {
         let (locale, localizedFields) = try parseLocalizedFields(json)
 
         return try Asset(
-            sys: (json => "sys") as! [String : Any],
+            sys: (json => "sys") as! [String: Any],
             localizedFields: localizedFields,
             defaultLocale: determineDefaultLocale(json),
 
@@ -90,7 +88,7 @@ extension Array: Decodable {
         }
 
         // Resolve links.
-        var includes = [String:Resource]()
+        var includes = [String: Resource]()
         let jsonIncludes = try? json => "includes" as! [String:Any]
 
         if let jsonIncludes = jsonIncludes {
@@ -141,7 +139,7 @@ extension ContentfulError: Decodable {
     /// Decode JSON for a Contentful error
     public static func decode(_ json: Any) throws -> ContentfulError {
         return try ContentfulError(
-            sys: (json => "sys") as! [String : Any],
+            sys: (json => "sys") as! [String: Any],
             identifier: json => "sys" => "id",
             type: json => "sys" => "type",
 
@@ -155,7 +153,7 @@ extension ContentType: Decodable {
     /// Decode JSON for a Content Type
     public static func decode(_ json: Any) throws -> ContentType {
         return try ContentType(
-            sys: (json => "sys") as! [String : Any],
+            sys: (json => "sys") as! [String: Any],
             fields: json => "fields",
 
             identifier: json => "sys" => "id",
@@ -169,7 +167,7 @@ extension DeletedResource: Decodable {
     /// Decode JSON for a deleted resource
     static func decode(_ json: Any) throws -> DeletedResource {
         return try DeletedResource(
-            sys: (json => "sys") as! [String : Any],
+            sys: (json => "sys") as! [String: Any],
             identifier: json => "sys" => "id",
             type: json => "sys" => "type"
         )
@@ -182,7 +180,7 @@ extension Entry: Decodable {
         let (locale, localizedFields) = try parseLocalizedFields(json)
 
         return try Entry(
-            sys: (json => "sys") as! [String : Any],
+            sys: (json => "sys") as! [String: Any],
             localizedFields: localizedFields,
             defaultLocale: determineDefaultLocale(json),
 
@@ -233,10 +231,10 @@ extension Locale: Decodable {
 }
 
 private extension Resource {
-    static func decode(_ jsonIncludes: [String : Any], _ includes: inout [String:Resource]) throws {
+    static func decode(_ jsonIncludes: [String: Any], _ includes: inout [String:Resource]) throws {
         let typename = "\(Self.self)"
 
-        if let resources = jsonIncludes[typename] as? [[String : Any]] {
+        if let resources = jsonIncludes[typename] as? [[String: Any]] {
             for resource in resources {
                 let value = try self.decode(resource) as Resource
                 includes[value.key] = value
@@ -251,7 +249,7 @@ extension Space: Decodable {
     /// Decode JSON for a Space
     public static func decode(_ json: Any) throws -> Space {
         return try Space(
-            sys: (json => "sys") as! [String : Any],
+            sys: (json => "sys") as! [String: Any],
 
             identifier: json => "sys" => "id",
             locales: json => "locales",

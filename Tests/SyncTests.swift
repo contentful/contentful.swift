@@ -12,7 +12,7 @@ import Nimble
 import Quick
 
 class SyncTests: ContentfulBaseTests {
-    func waitUntilSync(matching: [String : Any], action: @escaping (_ space: SyncSpace) -> ()) {
+    func waitUntilSync(matching: [String: Any], action: @escaping (_ space: SyncSpace) -> ()) {
         waitUntil { done in
             self.client.initialSync(matching: matching).1.then {
                 action($0)

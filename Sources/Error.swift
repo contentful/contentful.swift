@@ -9,7 +9,7 @@
 import Foundation
 
 /// Possible errors being thrown by the SDK
-public enum SDKError : Error {
+public enum SDKError: Error {
     /// Thrown when no valid client is available during sync
     case invalidClient()
 
@@ -45,7 +45,7 @@ public enum SDKError : Error {
 /// Information regarding an error received from Contentful
 public struct ContentfulError: Resource, Error {
     /// System fields
-    public let sys: [String : Any]
+    public let sys: [String: Any]
 
     /// The unique identifier of this error
     public let identifier: String

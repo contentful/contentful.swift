@@ -17,7 +17,7 @@ class ContentfulBaseTests: QuickSpec {
 
     override func spec() {
         beforeEach {
-            self.client = Client(spaceIdentifier: "cfexampleapi", accessToken: "b4c0n73n7fu1")
+            self.client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1")
         }
     }
 }
@@ -39,7 +39,7 @@ class ContentfulTests: ContentfulBaseTests {
             it("can access the preview API") {
                 var configuration = Contentful.Configuration()
                 configuration.previewMode = true
-                let client = Client(spaceIdentifier: "cfexampleapi", accessToken: "e5e8d4c5c122cf28fc1af3ff77d28bef78a3952957f15067bbc29f2f0dde0b50", configuration: configuration)
+                let client = Client(spaceId: "cfexampleapi", accessToken: "e5e8d4c5c122cf28fc1af3ff77d28bef78a3952957f15067bbc29f2f0dde0b50", configuration: configuration)
 
                 waitUntil(timeout: 10) { done in
                     client.fetchSpace().1.then {
@@ -55,7 +55,7 @@ class ContentfulTests: ContentfulBaseTests {
             it("fails when accessing the preview API with a production token") {
                 var configuration = Contentful.Configuration()
                 configuration.previewMode = true
-                let client = Client(spaceIdentifier: "cfexampleapi", accessToken: "b4c0n73n7fu1", configuration: configuration)
+                let client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1", configuration: configuration)
 
                 waitUntil { done in
                     client.fetchSpace().1.then { _ in
