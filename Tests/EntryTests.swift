@@ -8,13 +8,13 @@
 
 @testable import Contentful
 import Foundation
+import XCTest
 import Nimble
-import Quick
 
 extension Entry {
-    var contentTypeId: String {
+    var contentTypeId : String {
         // TODO: We should probably resolve content type on Entry creation to avoid this awfulness
-        let id = ((sys["contentType"] as? [String: Any])?["sys"] as? [String: Any])?["id"]
+        let id = ((sys["contentType"] as? [String : Any])?["sys"] as? [String : Any])?["id"]
         return (id as? String) ?? ""
     }
 }
@@ -30,278 +30,288 @@ extension Date {
     }
 }
 
-class EntryTests: ContentfulBaseTests {
+class EntryTests: XCTestCase {
 
-    func waitUntilMatchingEntries(_ matching: [String: Any], action: @escaping (_ entries: Contentful.Array<Entry>) -> Void) {
-        waitUntil(timeout: 10) { done in
-            self.client.fetchEntries(matching: matching).1.then {
-                action($0)
-                done()
-            }.error {
-                fail("\($0)")
-                done()
-            }
+    let client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1")
+
+    func waitUntilMatchingEntries(_ matching: [String: Any], action: @escaping (_ entries: Contentful.Array<Entry>) -> ()) {
+        let expecatation = self.expectation(description: "Entries matching query network expectation")
+
+        self.client.fetchEntries(matching: matching).1.then {
+            action($0)
+            expecatation.fulfill()
+        }.error {
+            fail("\($0)")
+            expecatation.fulfill()
+        }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    // MARK: Array related queries
+
+    func testLimitNumberOfEntriesBeingFetched() {
+        self.waitUntilMatchingEntries(["limit": 5]) {
+            expect($0.limit).to(equal(5))
+            expect($0.items.count).to(equal(5))
         }
     }
 
-    override func spec() {
-        super.spec()
+    func testSkipEntriesInAQuery() {
+        self.waitUntilMatchingEntries(["order": "sys.createdAt", "skip": 9]) {
+            expect($0.items.count).to(equal(1))
+            expect($0.items.first?.identifier).to(equal("7qVBlCjpWE86Oseo40gAEY"))
+        }
+    }
 
-        describe("Array related queries") {
-            it("can limit the number of entries being retrieved") {
-                self.waitUntilMatchingEntries(["limit": 5]) {
-                    expect($0.limit).to(equal(5))
-                    expect($0.items.count).to(equal(5))
+    func testMultiLevelIncludesAreResolved() {
+        self.waitUntilMatchingEntries(["sys.id": "nyancat", "include": 2]) {
+            if let entry = $0.items.first?.fields["bestFriend"] as? Entry {
+                if let asset = entry.fields["image"] as? Asset {
+                    expect(url(asset).absoluteString).to(equal("https://images.contentful.com/cfexampleapi/3MZPnjZTIskAIIkuuosCss/382a48dfa2cb16c47aa2c72f7b23bf09/happycatw.jpg"))
+                    return
                 }
             }
 
-            it("can skip entries in a query") {
-                self.waitUntilMatchingEntries(["order": "sys.createdAt", "skip": 9]) {
-                    expect($0.items.count).to(equal(1))
-                    expect($0.items.first?.identifier).to(equal("7qVBlCjpWE86Oseo40gAEY"))
+            fail("Includes were not resolved successfully.")
+        }
+    }
+
+    // MARK: Order related queries
+
+    let orderedEntries = ["nyancat", "happycat", "garfield",
+        "finn", "jake", "6KntaYXaHSyIw8M6eo26OK", "4MU1s3potiUEM2G4okYOqw",
+        "5ETMRzkl9KM4omyMwKAOki", "ge1xHyH3QOWucKWCCAgIG", "7qVBlCjpWE86Oseo40gAEY"]
+    let orderedEntriesByMultiple = ["4MU1s3potiUEM2G4okYOqw",
+        "ge1xHyH3QOWucKWCCAgIG", "6KntaYXaHSyIw8M6eo26OK", "7qVBlCjpWE86Oseo40gAEY",
+        "garfield", "5ETMRzkl9KM4omyMwKAOki", "jake", "nyancat", "finn", "happycat"]
+
+    func testFetchEntriesInSpecifiedOrder() {
+        self.waitUntilMatchingEntries(["order": "sys.createdAt"]) {
+            let ids = $0.items.map { $0.identifier }
+            expect(ids).to(equal(self.orderedEntries))
+        }
+    }
+
+    func testFetchEntriesInReverseOrder() {
+        self.waitUntilMatchingEntries(["order": "-sys.createdAt"]) {
+            let ids = $0.items.map { $0.identifier }
+            expect(ids).to(equal(self.orderedEntries.reversed()))
+        }
+    }
+
+    func testFetchEntriesOrderedByMultipleAttributes() {
+        self.waitUntilMatchingEntries(["order": ["sys.revision", "sys.id"]]) {
+            let ids = $0.items.map { $0.identifier }
+            expect(ids).to(equal(self.orderedEntriesByMultiple))
+        }
+    }
+
+    // MARK: Basic Entry tests
+
+    func testFetchSingleEntry() {
+        let expectation = self.expectation(description: "Fetch single entry expectation")
+        self.client.fetchEntry(identifier: "nyancat") { (result) in
+            switch result {
+            case let .success(entry):
+                expect(entry.identifier).to(equal("nyancat"))
+                expect(entry.type).to(equal("Entry"))
+                expect(entry.fields["name"] as? String).to(equal("Nyan Cat"))
+            case let .error(error):
+                fail("\(error)")
+            }
+
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testFetchEntryWithArrayOfLinkedEntries() {
+        // JPs_product space
+        let client = Client(spaceId: "p35j0pp5t9t8", accessToken: "6a1664bde31fa797778838ded3e755ab5e4834af1abdf2007c816086caf172c4")
+        let expectation = self.expectation(description: "Fetch single entry expectation")
+
+        client.fetchEntry(identifier: "5KsDBWseXY6QegucYAoacS") { result in
+            switch result {
+            case .success(let entry):
+                if let entries = entry.fields["categories"] as? [Entry] {
+                    expect(entries.first).toNot(beNil())
+                    expect(entries.first!.identifier).to(equal("24DPGBDeGEaYy8ms4Y8QMQ"))
+                } else {
+                    fail("Expected entry with linked array to resolve links")
                 }
+            case .error:
+                fail("Expected fetching entry to succeed")
             }
-
-            it("can change the number of include levels being part of the response") {
-                self.waitUntilMatchingEntries(["sys.id": "nyancat", "include": 2]) {
-                    if let entry = $0.items.first?.fields["bestFriend"] as? Entry {
-                        if let asset = entry.fields["image"] as? Asset {
-                            expect(url(asset).absoluteString).to(equal("https://images.contentful.com/cfexampleapi/3MZPnjZTIskAIIkuuosCss/382a48dfa2cb16c47aa2c72f7b23bf09/happycatw.jpg"))
-                            return
-                        }
-                    }
-
-                    fail("Includes were not resolved successfully.")
-                }
-            }
+            expectation.fulfill()
         }
 
-        describe("Order related queries") {
-            let orderedEntries = ["nyancat", "happycat", "garfield",
-                "finn", "jake", "6KntaYXaHSyIw8M6eo26OK", "4MU1s3potiUEM2G4okYOqw",
-                "5ETMRzkl9KM4omyMwKAOki", "ge1xHyH3QOWucKWCCAgIG", "7qVBlCjpWE86Oseo40gAEY"]
-            let orderedEntriesByMultiple = ["4MU1s3potiUEM2G4okYOqw",
-                "ge1xHyH3QOWucKWCCAgIG", "6KntaYXaHSyIw8M6eo26OK", "7qVBlCjpWE86Oseo40gAEY",
-                "garfield", "5ETMRzkl9KM4omyMwKAOki", "jake", "nyancat", "finn", "happycat"]
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
 
-            it("can fetch entries in a specified order") {
-                self.waitUntilMatchingEntries(["order": "sys.createdAt"]) {
-                    let ids = $0.items.map { $0.identifier }
-                    expect(ids).to(equal(orderedEntries))
-                }
+    func testFetchEntriesForSpecificLocale() {
+        self.waitUntilMatchingEntries([ "locale": "tlh", "sys.id": "nyancat" ]) {
+            let entry = $0.items.first
+
+            expect(entry?.identifier).to(equal("nyancat"))
+            expect(entry?.fields["name"] as? String).to(equal("Nyan vIghro'"))
+            expect(entry?.locale).to(equal("tlh"))
+        }
+    }
+
+    func testFetchEntriesForAllLocales() {
+        self.waitUntilMatchingEntries([ "locale": "*", "sys.id": "nyancat" ]) {
+            var entry = $0.items.first
+
+            expect(entry?.identifier).to(equal("nyancat"))
+            expect(entry?.fields["name"] as? String).to(equal("Nyan Cat"))
+            expect(entry?.fields["likes"] as? [String]).to(equal(["rainbows", "fish"]))
+
+            entry?.locale = "tlh"
+            expect(entry?.fields["name"] as? String).to(equal("Nyan vIghro'"))
+            expect(entry?.fields["likes"] as? [String]).to(equal(["rainbows", "fish"]))
+        }
+    }
+
+    func testFetchAllEntriesInSpace() {
+        let expectation = self.expectation(description: "Fetch all entries in space expectation")
+
+        self.client.fetchEntries() { (result) in
+            switch result {
+            case let .success(array):
+                expect(array.total).to(equal(10))
+                expect(array.limit).to(equal(100))
+                expect(array.skip).to(equal(0))
+                expect(array.items.count).to(equal(10))
+            case let .error(error):
+                fail("\(error)")
             }
 
-            it("can fetch entries in reverse order") {
-                self.waitUntilMatchingEntries(["order": "-sys.createdAt"]) {
-                    let ids = $0.items.map { $0.identifier }
-                    expect(ids).to(equal(orderedEntries.reversed()))
-                }
-            }
-
-            it("can fetch entries ordered by multiple attributes") {
-                self.waitUntilMatchingEntries(["order": ["sys.revision", "sys.id"]]) {
-                    let ids = $0.items.map { $0.identifier }
-                    expect(ids).to(equal(orderedEntriesByMultiple))
-                }
-            }
+            expectation.fulfill()
         }
 
-        it("can fetch a single entry") {
-            waitUntil(timeout: 10) { done in
-                self.client.fetchEntry(identifier: "nyancat") { (result) in
-                    switch result {
-                    case let .success(entry):
-                        expect(entry.identifier).to(equal("nyancat"))
-                        expect(entry.type).to(equal("Entry"))
-                        expect(entry.fields["name"] as? String).to(equal("Nyan Cat"))
-                    case let .error(error):
-                        fail("\(error)")
-                    }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
 
-                    done()
-                }
+    func testFetchEntriesOfContentType() {
+        let expectation = self.expectation(description: "Fetch entires of content type expectation")
+        self.client.fetchEntries(matching: ["content_type": "cat"]).1.then {
+            let cats = $0.items.filter { $0.contentTypeId == "cat" }
+            expect(cats.count).to(equal($0.items.count))
+            expectation.fulfill()
+        }.error {
+            fail("\($0)")
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testFetchSpecificEntryMatchingSysId() {
+
+        let expectation = self.expectation(description: "Fetch specific entry with id expectation")
+        self.client.fetchEntries(matching: ["sys.id": "nyancat"]) { result in
+
+            switch result {
+            case let .success(array):
+                expect(array.total).to(equal(1))
+
+                let entry = array.items.first!
+                expect(entry.fields["name"] as? String).to(equal("Nyan Cat"))
+
+                let image = entry.fields["image"] as? Asset
+                expect(url(image!).absoluteString).to(equal("https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png"))
+            case let .error(error):
+                fail("\(error)")
             }
+
+            expectation.fulfill()
         }
 
-        it ("can fetch an entry with an array of linked entries") {
-            // JPs_product space
-            self.client = Client(spaceId: "p35j0pp5t9t8", accessToken: "6a1664bde31fa797778838ded3e755ab5e4834af1abdf2007c816086caf172c4")
-            waitUntil(timeout: 10) { done in
-                self.client.fetchEntry(identifier: "5KsDBWseXY6QegucYAoacS") { result in
-                    switch result {
-                    case .success(let entry):
-                        if let entries = entry.fields["categories"] as? [Entry] {
-                            expect(entries.first).toNot(beNil())
-                            expect(entries.first!.identifier).to(equal("24DPGBDeGEaYy8ms4Y8QMQ"))
-                        } else {
-                            fail("Expected entry with linked array to resolve links")
-                        }
-                    case .error:
-                        fail("Expected fetching entry to succeed")
-                    }
-                }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
 
-                done()
-            }
+    // MARK: Search query tests
 
+    func testFetchEntriesWithInequalitySearch() {
+        self.waitUntilMatchingEntries(["sys.id[ne]": "nyancat"]) {
+            expect($0.items.count).to(equal(9))
+            let nyancat = $0.items.filter { $0.identifier == "nyancat" }
+            expect(nyancat.count).to(equal(0))
+        }
+    }
+
+    func testFetchEntriesWithEqualitySearchForArrays() {
+        self.waitUntilMatchingEntries(["content_type": "cat", "fields.likes": "lasagna"]) {
+            expect($0.items.count).to(equal(1))
+            expect($0.items.first?.identifier).to(equal("garfield"))
+        }
+    }
+
+    func testFetchEntriesWithInclusionSearch() {
+        let action: (Contentful.Array<Entry>) -> () = {
+            expect($0.items.count).to(equal(2))
+            let ids = $0.items.map { $0.identifier }
+            expect(ids).to(equal(["finn", "jake"]))
         }
 
-        it("can fetch entries with a specified locale") {
-            self.waitUntilMatchingEntries([ "locale": "tlh", "sys.id": "nyancat" ]) {
-                let entry = $0.items.first
+        self.waitUntilMatchingEntries(["sys.id[in]": ["finn", "jake"]], action: action)
+        self.waitUntilMatchingEntries(["sys.id[in]": "finn,jake"], action: action)
+    }
 
-                expect(entry?.identifier).to(equal("nyancat"))
-                expect(entry?.fields["name"] as? String).to(equal("Nyan vIghro'"))
-                expect(entry?.locale).to(equal("tlh"))
-            }
+    func testFetchEntriesWithExclusionSearch() {
+        self.waitUntilMatchingEntries(["content_type": "cat", "fields.likes[nin]": ["rainbows", "lasagna"]]) {
+            expect($0.items.count).to(equal(1))
+            let ids = $0.items.map { $0.identifier }
+            expect(ids).to(equal(["happycat"]))
+        }
+    }
+
+    func testFetchEntriesWithExistenceSearch() {
+        self.waitUntilMatchingEntries(["sys.archivedVersion[exists]": false]) {
+            expect($0.items.count).to(equal(10))
+        }
+    }
+
+    func testFetchEntiresWithRangeSearch() {
+        let date = Date.fromComponents(year: 2015, month: 1, day: 1, hour: 0, minute: 0, second: 0)
+        self.waitUntilMatchingEntries(["sys.updatedAt[lte]": date]) {
+            expect($0.items.count).to(equal(10))
         }
 
-        it("can fetch entries with all locales") {
-            self.waitUntilMatchingEntries([ "locale": "*", "sys.id": "nyancat" ]) {
-                var entry = $0.items.first
+        self.waitUntilMatchingEntries(["sys.updatedAt[lte]": "2015-01-01T00:00:00Z"]) {
+            expect($0.items.count).to(equal(10))
+        }
+    }
 
-                expect(entry?.identifier).to(equal("nyancat"))
-                expect(entry?.fields["name"] as? String).to(equal("Nyan Cat"))
-                expect(entry?.fields["likes"] as? [String]).to(equal(["rainbows", "fish"]))
-
-                entry?.locale = "tlh"
-                expect(entry?.fields["name"] as? String).to(equal("Nyan vIghro'"))
-                expect(entry?.fields["likes"] as? [String]).to(equal(["rainbows", "fish"]))
-            }
+    func testFetchEntriesWithFullTextSearch() {
+        self.waitUntilMatchingEntries(["query": "bacon"]) {
+            expect($0.items.count).to(equal(1))
         }
 
-        it("can fetch all entries of a space") {
-            waitUntil(timeout: 10) { done in
-                self.client.fetchEntries() { (result) in
-                    switch result {
-                    case let .success(array):
-                        expect(array.total).to(equal(10))
-                        expect(array.limit).to(equal(100))
-                        expect(array.skip).to(equal(0))
-                        expect(array.items.count).to(equal(10))
-                    case let .error(error):
-                        fail("\(error)")
-                    }
+    }
 
-                    done()
-                }
-            }
+    func testFetchEntriesWithFullTextSearchOnSpecificField() {
+        self.waitUntilMatchingEntries(["content_type": "dog", "fields.description[match]": "bacon pancakes"]) {
+            expect($0.items.count).to(equal(1))
         }
+    }
 
-        it("can fetch entries of a specific content type") {
-            waitUntil(timeout: 10) { done in
-                self.client.fetchEntries(matching: ["content_type": "cat"]).1.then {
-                    let cats = $0.items.filter { $0.contentTypeId == "cat" }
-                    expect(cats.count).to(equal($0.items.count))
-                    done()
-                }.error {
-                    fail("\($0)")
-                    done()
-                }
-            }
+    func testFetchEntriesWithLocationProximitySearch() {
+        self.waitUntilMatchingEntries(["fields.center[near]": [38, -122], "content_type": "1t9IbcfdCk6m04uISSsaIK"]) {
+            expect($0.items.count).to(equal(4))
         }
+    }
 
-        it("can fetch entries using an equality search query") {
-            waitUntil(timeout: 10) { done in
-                self.client.fetchEntries(matching: ["sys.id": "nyancat"]) { (result) in
-                    switch result {
-                    case let .success(array):
-                        expect(array.total).to(equal(1))
-
-                        let entry = array.items.first!
-                        expect(entry.fields["name"] as? String).to(equal("Nyan Cat"))
-
-                        let image = entry.fields["image"] as? Asset
-                        expect(url(image!).absoluteString).to(equal("https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png"))
-                    case let .error(error):
-                        fail("\(error)")
-                    }
-
-                    done()
-                }
-            }
+    func testFetchEntriesWithBoundingBoxLocationsSearch() {
+        self.waitUntilMatchingEntries(["fields.center[within]": [36, -124, 40, -120], "content_type": "1t9IbcfdCk6m04uISSsaIK"]) {
+            expect($0.items.count).to(equal(1))
         }
+    }
 
-        it("can fetch entries using an inequality search query") {
-            self.waitUntilMatchingEntries(["sys.id[ne]": "nyancat"]) {
-                expect($0.items.count).to(equal(9))
-                let nyancat = $0.items.filter { $0.identifier == "nyancat" }
-                expect(nyancat.count).to(equal(0))
-            }
-        }
-
-        it("can fetch entries using an equality search query for arrays") {
-            self.waitUntilMatchingEntries(["content_type": "cat", "fields.likes": "lasagna"]) {
-                expect($0.items.count).to(equal(1))
-                expect($0.items.first?.identifier).to(equal("garfield"))
-            }
-        }
-
-        it("can fetch entries using an inclusion search query") {
-            let action: (Contentful.Array<Entry>) -> () = {
-                expect($0.items.count).to(equal(2))
-                let ids = $0.items.map { $0.identifier }
-                expect(ids).to(equal(["finn", "jake"]))
-            }
-
-            self.waitUntilMatchingEntries(["sys.id[in]": ["finn", "jake"]], action: action)
-            self.waitUntilMatchingEntries(["sys.id[in]": "finn,jake"], action: action)
-        }
-
-        it("can fetch entries using an exclusion search query") {
-            self.waitUntilMatchingEntries(["content_type": "cat", "fields.likes[nin]": ["rainbows", "lasagna"]]) {
-                expect($0.items.count).to(equal(1))
-                let ids = $0.items.map { $0.identifier }
-                expect(ids).to(equal(["happycat"]))
-            }
-        }
-
-        it("can fetch entries using an existence search query") {
-            self.waitUntilMatchingEntries(["sys.archivedVersion[exists]": false]) {
-                expect($0.items.count).to(equal(10))
-            }
-        }
-
-        it("can fetch entries using a range search query") {
-            let date = Date.fromComponents(year: 2015, month: 1, day: 1, hour: 0, minute: 0, second: 0)
-            self.waitUntilMatchingEntries(["sys.updatedAt[lte]": date]) {
-                expect($0.items.count).to(equal(10))
-            }
-
-            self.waitUntilMatchingEntries(["sys.updatedAt[lte]": "2015-01-01T00:00:00Z"]) {
-                expect($0.items.count).to(equal(10))
-            }
-        }
-
-        it("can fetch entries using full-text search") {
-            self.waitUntilMatchingEntries(["query": "bacon"]) {
-                expect($0.items.count).to(equal(1))
-            }
-        }
-
-        it("can fetch entries using full-text search on a specific field") {
-            self.waitUntilMatchingEntries(["content_type": "dog", "fields.description[match]": "bacon pancakes"]) {
-                expect($0.items.count).to(equal(1))
-            }
-        }
-
-        it("can fetch entries using location proximity search") {
-            self.waitUntilMatchingEntries(["fields.center[near]": [38, -122], "content_type": "1t9IbcfdCk6m04uISSsaIK"]) {
-                expect($0.items.count).to(equal(4))
-            }
-        }
-
-        it("can fetch entries using locations in bounding object") {
-            self.waitUntilMatchingEntries(["fields.center[within]": [36, -124, 40, -120], "content_type": "1t9IbcfdCk6m04uISSsaIK"]) {
-                expect($0.items.count).to(equal(1))
-            }
-        }
-
-        it("can filter entries by their linked entries") {
-            self.waitUntilMatchingEntries(["content_type": "cat", "fields.bestFriend.sys.id": "nyancat"]) {
-                expect($0.items.count).to(equal(1))
-                expect($0.items.first?.identifier).to(equal("happycat"))
-            }
+    func testFilterEntriesByLinkedEntriesSearch() {
+        self.waitUntilMatchingEntries(["content_type": "cat", "fields.bestFriend.sys.id": "nyancat"]) {
+            expect($0.items.count).to(equal(1))
+            expect($0.items.first?.identifier).to(equal("happycat"))
         }
     }
 }
