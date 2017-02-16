@@ -4,6 +4,7 @@ excluded: # paths to ignore during linting.
   - Packages
   - Tests
 disabled_rules: # rule identifiers to exclude from running
+- syntactic_sugar
 - type_body_length
 - type_name
 - cyclomatic_complexity
@@ -11,6 +12,11 @@ disabled_rules: # rule identifiers to exclude from running
 - legacy_constant
 - force_cast
 - force_try
+# Rule that says says type that conforms to protocol must be a class.
+# If we are in pure swift, this is not necessary.
+- class_delegate_protocol
+- weak_delegate
+
 # parameterized rules can be customized from this configuration file
 line_length: 150
 vertical_whitespace:

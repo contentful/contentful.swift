@@ -9,7 +9,7 @@
 import Foundation
 
 /// Possible errors being thrown by the SDK
-public enum SDKError : Error {
+public enum SDKError: Error {
     /// Thrown when no valid client is available during sync
     case invalidClient()
 

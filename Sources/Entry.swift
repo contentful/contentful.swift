@@ -31,7 +31,7 @@ public struct Entry: Resource, LocalizedResource {
     public var locale: String
 
     init(sys: [String : Any], localizedFields: [String: [String: Any]], defaultLocale: String,
-        identifier: String, type: String, locale: String) {
+         identifier: String, type: String, locale: String) {
         self.sys = sys
         self.localizedFields = localizedFields
         self.identifier = identifier
@@ -69,7 +69,7 @@ public struct Entry: Resource, LocalizedResource {
                 // resolved because of a multiple page sync so we will store a dictionary rather
                 // than a Swift object in the link body. The link will be resolved at a later time.
                 if let linksToResolve = fieldValue as? [[String:AnyObject]] {
-                    
+
                     // An array of both resolved and unresolved links.
                     var links = [Any]()
 

@@ -125,7 +125,7 @@ class EntryTests: ContentfulBaseTests {
 
         it ("can fetch an entry with an array of linked entries") {
             // JPs_product space
-            self.client = Client(spaceIdentifier: "p35j0pp5t9t8", accessToken: "6a1664bde31fa797778838ded3e755ab5e4834af1abdf2007c816086caf172c4")
+            self.client = Client(spaceId: "p35j0pp5t9t8", accessToken: "6a1664bde31fa797778838ded3e755ab5e4834af1abdf2007c816086caf172c4")
             waitUntil(timeout: 10) { done in
                 self.client.fetchEntry(identifier: "5KsDBWseXY6QegucYAoacS") { result in
                     switch result {
