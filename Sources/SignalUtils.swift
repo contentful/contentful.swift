@@ -24,11 +24,9 @@ func convert_signal<U, V, W>(closure: () -> (V, Observable<Result<U>>), mapper: 
     return (value, signal)
 }
 
-// FIXME: Rename typealias'
 typealias SignalBang<U> = (@escaping (Result<U>) -> Void) -> URLSessionDataTask?
 typealias SignalObservation<T, U> = (T, @escaping  (Result<U>) -> Void) -> URLSessionDataTask?
 
-// TODO: Better method names
 func signalify<ParameterType, ResultType>(parameter: ParameterType, closure: SignalObservation<ParameterType, ResultType>) -> (URLSessionDataTask?, Observable<Result<ResultType>>) {
     let signal = Observable<Result<ResultType>>()
     let value: URLSessionDataTask? = closure(parameter) { signal.update($0) }

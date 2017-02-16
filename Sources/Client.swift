@@ -102,7 +102,6 @@ open class Client {
                         value = dateString
                     }
 
-                    // FIXME: Should this be an NSArray?
                     if let array = value as? NSArray {
                         value = array.componentsJoined(by: ",")
                     }
