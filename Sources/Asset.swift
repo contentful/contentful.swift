@@ -32,7 +32,6 @@ public struct Asset: Resource, LocalizedResource {
     /// The URL for the underlying media file
     public func URL() throws -> Foundation.URL {
         if let urlString = (fields["file"] as? [String: Any])?["url"] as? String {
-            // FIXME: Scheme should not be hardcoded
             if let URL = Foundation.URL(string: "https:\(urlString)") {
                 return URL
             }

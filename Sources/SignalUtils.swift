@@ -9,7 +9,7 @@
 import Foundation
 import Interstellar
 
-// TODO: Name these generics better
+
 func convert_signal<U, V, W>(closure: () -> (V, Observable<Result<U>>), mapper: @escaping (U) -> W?) -> (V, Observable<Result<W>>) {
     let signal = Observable<Result<W>>()
     let (value, sourceSignal) = closure()
@@ -27,7 +27,8 @@ func convert_signal<U, V, W>(closure: () -> (V, Observable<Result<U>>), mapper: 
 typealias SignalBang<U> = (@escaping (Result<U>) -> Void) -> URLSessionDataTask?
 typealias SignalObservation<T, U> = (T, @escaping  (Result<U>) -> Void) -> URLSessionDataTask?
 
-func signalify<ParameterType, ResultType>(parameter: ParameterType, closure: SignalObservation<ParameterType, ResultType>) -> (URLSessionDataTask?, Observable<Result<ResultType>>) {
+func signalify<ParameterType, ResultType>(parameter: ParameterType,
+               closure: SignalObservation<ParameterType, ResultType>) -> (URLSessionDataTask?, Observable<Result<ResultType>>) {
     let signal = Observable<Result<ResultType>>()
     let value: URLSessionDataTask? = closure(parameter) { signal.update($0) }
     return (value, signal)

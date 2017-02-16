@@ -1,9 +1,9 @@
 
-excluded: # paths to ignore during linting.
+excluded:
   - Carthage
   - Packages
   - Tests
-disabled_rules: # rule identifiers to exclude from running
+disabled_rules:
 - syntactic_sugar
 - type_body_length
 - type_name
@@ -16,8 +16,9 @@ disabled_rules: # rule identifiers to exclude from running
 # If we are in pure swift, this is not necessary.
 - class_delegate_protocol
 - weak_delegate
+- vertical_parameter_alignment
 
-# parameterized rules can be customized from this configuration file
+# Parameterized
 line_length: 150
 vertical_whitespace:
   max_empty_lines: 2

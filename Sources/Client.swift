@@ -48,7 +48,6 @@ open class Client {
         self.spaceId = spaceId
     }
 
-    // TODO: rename
     fileprivate func fetch<DecodableType: Decodable>(url: URL?, then completion: @escaping (Result<DecodableType>) -> Void) -> URLSessionDataTask? {
         if let url = url {
             let (task, signal) = network.fetch(url: url)
