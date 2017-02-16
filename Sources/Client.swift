@@ -25,7 +25,7 @@ open class Client {
 
     fileprivate(set) var space: Space?
 
-    fileprivate var scheme: String { return configuration.secure ? "https" : "http" }
+    fileprivate var scheme: String { return configuration.secure ? "https": "http" }
 
     /**
      Initializes a new Contentful client instance
@@ -221,7 +221,7 @@ extension Client {
      - returns: A tuple of data task and a signal for the resulting array of Content Types
      */
     @discardableResult public func fetchContentTypes(matching: [String: Any] = [:]) -> (URLSessionDataTask?, Observable<Result<Array<ContentType>>>) {
-        let closure: SignalObservation<[String : Any], Array<ContentType>> = fetchContentTypes(matching:completion:)
+        let closure: SignalObservation<[String: Any], Array<ContentType>> = fetchContentTypes(matching:completion:)
         return signalify(parameter: matching, closure: closure)
     }
 }
@@ -235,7 +235,7 @@ extension Client {
 
      - returns: The data task being used, enables cancellation of requests
      */
-    @discardableResult public func fetchEntries(matching: [String : Any] = [:],
+    @discardableResult public func fetchEntries(matching: [String: Any] = [:],
                                                 completion: @escaping (Result<Array<Entry>>) -> Void) -> URLSessionDataTask? {
         return fetch(url: URL(forComponent: "entries", parameters: matching), then: completion)
     }
@@ -247,8 +247,8 @@ extension Client {
 
      - returns: A tuple of data task and a signal for the resulting array of Entries
      */
-    @discardableResult public func fetchEntries(matching: [String : Any] = [:]) -> (URLSessionDataTask?, Observable<Result<Array<Entry>>>) {
-        let closure: SignalObservation<[String : Any], Array<Entry>> = fetchEntries(matching:completion:)
+    @discardableResult public func fetchEntries(matching: [String: Any] = [:]) -> (URLSessionDataTask?, Observable<Result<Array<Entry>>>) {
+        let closure: SignalObservation<[String: Any], Array<Entry>> = fetchEntries(matching:completion:)
         return signalify(parameter: matching, closure: closure)
     }
 
@@ -341,7 +341,7 @@ extension Client {
      - returns: A tuple of data task and a signal for the resulting SyncSpace
      */
     @discardableResult public func initialSync(matching: [String: Any] = [:]) -> (URLSessionDataTask?, Observable<Result<SyncSpace>>) {
-        let closure: SignalObservation<[String : Any], SyncSpace> = initialSync(matching:completion:)
+        let closure: SignalObservation<[String: Any], SyncSpace> = initialSync(matching:completion:)
         return signalify(parameter: matching, closure: closure)
     }
 
@@ -369,7 +369,7 @@ extension Client {
     }
 
     func sync(matching: [String: Any] = [:]) -> (URLSessionDataTask?, Observable<Result<SyncSpace>>) {
-        let closure: SignalObservation<[String : Any], SyncSpace> = sync(matching:completion:)
+        let closure: SignalObservation<[String: Any], SyncSpace> = sync(matching:completion:)
         return signalify(parameter: matching, closure: closure)
     }
 }

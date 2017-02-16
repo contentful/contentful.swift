@@ -191,7 +191,7 @@ public final class SyncSpace {
      - returns: A tuple of data task and a signal which fires on completion
      **/
     public func sync(matching: [String: Any] = [:]) -> (URLSessionDataTask?, Observable<Result<SyncSpace>>) {
-        let closure: SignalObservation<[String : Any], SyncSpace> = sync(matching:completion:)
+        let closure: SignalObservation<[String: Any], SyncSpace> = sync(matching:completion:)
         return signalify(parameter: matching, closure: closure)
     }
 }

@@ -27,13 +27,13 @@ protocol LocalizedResource {
     var defaultLocale: String { get }
 }
 
-@discardableResult func +=<K: Hashable, V> (left: [K : V], right: [K : V]) -> [K : V] {
+@discardableResult func +=<K: Hashable, V> (left: [K: V], right: [K: V]) -> [K: V] {
     var result = left
     right.forEach { (k, v) in result[k] = v }
     return result
 }
 
-func +<K: Hashable, V> (left: [K : V], right: [K : V]) -> [K : V] {
+func +<K: Hashable, V> (left: [K: V], right: [K: V]) -> [K: V] {
     return left += right
 }
 

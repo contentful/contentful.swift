@@ -16,7 +16,7 @@ import UIKit
 /// An asset represents a media file in Contentful
 public struct Asset: Resource, LocalizedResource {
     /// System fields
-    public let sys: [String : Any]
+    public let sys: [String: Any]
     /// Content fields
     public var fields: [String:Any] {
         return Contentful.fields(localizedFields, forLocale: locale, defaultLocale: defaultLocale)
@@ -31,7 +31,7 @@ public struct Asset: Resource, LocalizedResource {
     public let type: String
     /// The URL for the underlying media file
     public func URL() throws -> Foundation.URL {
-        if let urlString = (fields["file"] as? [String : Any])?["url"] as? String {
+        if let urlString = (fields["file"] as? [String: Any])?["url"] as? String {
             // FIXME: Scheme should not be hardcoded
             if let URL = Foundation.URL(string: "https:\(urlString)") {
                 return URL
