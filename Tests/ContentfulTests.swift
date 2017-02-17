@@ -6,84 +6,82 @@
 //  Copyright © 2015 Contentful GmbH. All rights reserved.
 //
 
+@testable import Contentful
+import XCTest
 import Interstellar
 import Nimble
-import Quick
 
-@testable import Contentful
 
-class ContentfulBaseTests: QuickSpec {
-    var client: Client!
+class ClientConfigurationTests: XCTestCase {
 
-    override func spec() {
-        beforeEach {
-            self.client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1")
-        }
+    func testUserAgentString() {
+
+        let osVersion = ProcessInfo.processInfo.operatingSystemVersionString
+        let userAgentString = Configuration().userAgent
+
+        expect(userAgentString).to(equal("contentful.swift/0.3.1 (iOS \(osVersion))"))
     }
 }
 
-class ContentfulTests: ContentfulBaseTests {
-    override func spec() {
-        super.spec()
+class SpaceTests: XCTestCase {
 
-        describe("Configuration") {
-            it("can generate an user-agent string") {
-                let osVersion = ProcessInfo.processInfo.operatingSystemVersionString
-                let userAgentString = Configuration().userAgent
+    func testFetchSpace() {
+        let networkExpectation = expectation(description: "Client can fetch space")
 
-                expect(userAgentString).to(equal("contentful.swift/0.3.1 (iOS \(osVersion))"))
-            }
-        }
+        let client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1")
 
-        describe("Preview") {
-            it("can access the preview API") {
-                var configuration = Contentful.Configuration()
-                configuration.previewMode = true
-                let client = Client(spaceId: "cfexampleapi", accessToken: "e5e8d4c5c122cf28fc1af3ff77d28bef78a3952957f15067bbc29f2f0dde0b50", configuration: configuration)
+        client.fetchSpace().1.then { (space) in
+            expect(space.identifier).to(equal("cfexampleapi"))
+            expect(space.type).to(equal("Space"))
+            expect(space.name).to(equal("Contentful Example API"))
+            }.error { fail("\($0)") }.subscribe { _ in networkExpectation.fulfill() }
 
-                waitUntil(timeout: 10) { done in
-                    client.fetchSpace().1.then {
-                        expect($0.identifier).to(equal("cfexampleapi"))
-                        done()
-                    }.error {
-                        fail("\($0)")
-                        done()
-                    }
-                }
-            }
-
-            it("fails when accessing the preview API with a production token") {
-                var configuration = Contentful.Configuration()
-                configuration.previewMode = true
-                let client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1", configuration: configuration)
-
-                waitUntil { done in
-                    client.fetchSpace().1.then { _ in
-                        fail("expected error not received")
-                        done()
-                    }.error {
-                        if let error = $0 as? ContentfulError {
-                            expect(error.identifier).to(equal("AccessTokenInvalid"))
-                        } else {
-                            fail("expected error not received")
-                        }
-
-                        done()
-                    }
-                }
-            }
-        }
-
-        describe("Scenarios from CDA documentation") {
-            it("can fetch a space") {
-                waitUntil(timeout: 10) { done in
-                    self.client.fetchSpace().1.then { (space) in
-                        expect(space.identifier).to(equal("cfexampleapi"))
-                        expect(space.type).to(equal("Space"))
-                        expect(space.name).to(equal("Contentful Example API"))
-                    }.error { fail("\($0)") }.subscribe { _ in done() }
-                }
-            }
-        }
+        waitForExpectations(timeout: 10, handler: nil)
     }
+}
+
+class PreviewAPITests: XCTestCase {
+
+    func testClientCanAccessPreviewAPI() {
+        var configuration = Contentful.Configuration()
+        configuration.previewMode = true
+        let client = Client(spaceId: "cfexampleapi",
+                            accessToken: "e5e8d4c5c122cf28fc1af3ff77d28bef78a3952957f15067bbc29f2f0dde0b50",
+                            configuration: configuration)
+
+        let networkExpectation = expectation(description: "Client can fetch space with preview API")
+
+        client.fetchSpace().1.then {
+            expect($0.identifier).to(equal("cfexampleapi"))
+            networkExpectation.fulfill()
+            }.error {
+                fail("\($0)")
+                networkExpectation.fulfill()
+        }
+        waitForExpectations(timeout: 10, handler: nil)
+    }
+
+    func testClientCantAccessPreviewAPIWithProductionToken() {
+        var configuration = Contentful.Configuration()
+        configuration.previewMode = true
+        let client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1", configuration: configuration)
+
+        let networkExpectation = expectation(description: "Client can fetch space")
+
+        client.fetchSpace().1.then { _ in
+            fail("expected error not received")
+            networkExpectation.fulfill()
+        }.error {
+            if let error = $0 as? ContentfulError {
+                expect(error.identifier).to(equal("AccessTokenInvalid"))
+            } else {
+                fail("expected error not received")
+            }
+
+            networkExpectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 19, handler: nil)
+    }
+
 }

@@ -1,6 +1,4 @@
-github "krzyzanowskim/CryptoSwift" "97f574390810ef7daef551f2bb708890f3655fd8"
-github "anviking/Decodable" "v0.5.1"
 github "JensRavens/Interstellar" "2.0.0"
 github "Quick/Nimble" "v5.1.1"
-github "Quick/Quick" "v1.0.0"
-
+github "anviking/Decodable" "v0.5.1"
+github "krzyzanowskim/CryptoSwift" "83072f7e31498e879f77c62feb08715dfa45acfb"
