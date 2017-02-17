@@ -21,8 +21,8 @@ kill_simulator:
 	killall "Simulator" || true
 
 test: clean clean_simulators
-	xcodebuild -project Contentful.xcodeproj \
-		-scheme Contentful_iOS -destination 'id=$(SIM_ID)' test | xcpretty -c
+	xcodebuild test -project Contentful.xcodeproj \
+		-scheme Contentful_iOS -destination 'id=$(SIM_ID)' OTHER_SWIFT_FLAGS="-warnings-as-errors" | xcpretty -c
 
 setup:
 	bundle install
