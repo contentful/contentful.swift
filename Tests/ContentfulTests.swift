@@ -14,16 +14,16 @@ import Nimble
 struct TestClientFactory {
 
     static func cfExampleAPIClient() -> Client {
-        #if DEBUG || RELEASE
-        let client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1")
-        return client
-        #elseif API_COVERAGE
-        var configuration = Contentful.Configuration()
-        configuration.server = "127.0.0.1:5000"
-        configuration.secure = false
-        let client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1", configuration: configuration)
-        return client
+        let client: Client
+        #if API_COVERAGE
+            var configuration = Contentful.Configuration()
+            configuration.server = "127.0.0.1:5000"
+            configuration.secure = false
+            client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1", configuration: configuration)
+        #else
+            client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1")
         #endif
+        return client
     }
 }
 
