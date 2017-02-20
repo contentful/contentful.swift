@@ -19,7 +19,7 @@ func url(_ asset: Asset) -> URL {
 
 class AssetTests: XCTestCase {
 
-    let client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1")
+    let client = TestClientFactory.cfExampleAPIClient()
 
     func md5(_ image: UIImage) -> String {
         return UIImagePNGRepresentation(image)!.md5().toHexString()

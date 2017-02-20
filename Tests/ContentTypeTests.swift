@@ -16,7 +16,7 @@ class ContentTypeTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        self.client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1")
+        self.client = TestClientFactory.cfExampleAPIClient()
     }
 
     func testFetchContentType() {

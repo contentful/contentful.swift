@@ -11,6 +11,23 @@ import XCTest
 import Interstellar
 import Nimble
 
+struct TestClientFactory {
+
+    static func cfExampleAPIClient() -> Client {
+        #if DEBUG || RELEASE
+        let client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1")
+        return client
+        #elseif API_COVERAGE
+        var configuration = Contentful.Configuration()
+        configuration.server = "127.0.0.1:5000"
+        configuration.secure = false
+        let client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1", configuration: configuration)
+        return client
+        #endif
+    }
+}
+
+
 
 class ClientConfigurationTests: XCTestCase {
 
@@ -28,9 +45,9 @@ class SpaceTests: XCTestCase {
     func testFetchSpace() {
         let networkExpectation = expectation(description: "Client can fetch space")
 
-        let client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1")
+        let client = TestClientFactory.cfExampleAPIClient()
 
-        client.fetchSpace().1.then { (space) in
+        client.fetchSpace().1.then { space in
             expect(space.identifier).to(equal("cfexampleapi"))
             expect(space.type).to(equal("Space"))
             expect(space.name).to(equal("Contentful Example API"))
@@ -66,7 +83,7 @@ class PreviewAPITests: XCTestCase {
         configuration.previewMode = true
         let client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1", configuration: configuration)
 
-        let networkExpectation = expectation(description: "Client can fetch space")
+        let networkExpectation = expectation(description: "Client can't fetch space with wrong token")
 
         client.fetchSpace().1.then { _ in
             fail("expected error not received")

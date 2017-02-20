@@ -32,7 +32,7 @@ extension Date {
 
 class EntryTests: XCTestCase {
 
-    let client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1")
+    let client = TestClientFactory.cfExampleAPIClient()
 
     func waitUntilMatchingEntries(_ matching: [String: Any], action: @escaping (_ entries: Contentful.Array<Entry>) -> ()) {
         let expecatation = self.expectation(description: "Entries matching query network expectation")
