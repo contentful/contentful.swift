@@ -13,7 +13,7 @@ import Nimble
 
 class SyncTests: XCTestCase {
 
-    let client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1")
+    let client = TestClientFactory.cfExampleAPIClient()
 
     func waitUntilSync(matching: [String : Any], action: @escaping (_ space: SyncSpace) -> ()) {
         let expectation = self.expectation(description: "Sync test expecation")
