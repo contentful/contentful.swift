@@ -5,7 +5,7 @@ before_install:
   - brew outdated carthage || brew upgrade carthage
   - brew install swiftlint
 before_script:
-  - carthage bootstrap
+  - carthage bootstrap --platform iOS
 script:
   - ./Scripts/travis-build-test.sh
 after_success:
