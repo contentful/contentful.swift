@@ -1,6 +1,11 @@
 #!/bin/bash
 # Run Swift specific api-coverage tests
 
+if [[ "$TRAVIS_PULL_REQUEST" == "false" ]]; then
+    echo "Not a pull request, skipping integration testing phase."    
+    exit 0
+fi
+
 ENV='"REPO_SDK=swift REPO_SLUG='$TRAVIS_REPO_SLUG' REPO_COMMIT='$TRAVIS_COMMIT'"'
 
 BODY="{
