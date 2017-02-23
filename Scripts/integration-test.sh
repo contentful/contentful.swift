@@ -22,6 +22,6 @@ curl -s -X POST \
     -H "Content-Type: application/json" \
     -H "Accept: application/json"   \
     -H "Travis-API-Version: 3"   \
-    -H "Authorization: token $TRAVIS_TOKEN" \
+    -H "Authorization: token $TRIGGER_API_COVERAGE_REPORTER" \
     'https://api.travis-ci.com/repo/1336919/requests'
 
