@@ -9,11 +9,13 @@
 import Decodable
 import Foundation
 import Interstellar
+#if os(iOS) || os(tvOS)
+    import UIKit
+#endif
 
 /// Client object for performing requests against the Contentful API
 open class Client {
 
-    fileprivate let networkingSession: NetworkingSession
     fileprivate let clientConfiguration: ClientConfiguration
     fileprivate let spaceId: String
 
@@ -35,28 +37,30 @@ open class Client {
      Initializes a new Contentful client instance
 
      - parameter spaceId: The space you want to perform requests against
-     - parameter accessToken:     The access token used for authorization
-     - parameter clientConfiguration:   Custom clientConfiguration of the client
+     - parameter accessToken: The access token used for authorization
+     - parameter clientConfiguration: Custom Configuration of the Client
+     - parameter sessionConfiguration:
 
      - returns: An initialized client instance
      */
-    public init(spaceId: String, accessToken: String, clientConfiguration: ClientConfiguration = ClientConfiguration()) {
-        networkingSession = NetworkingSession()
-
-        networkingSession.sessionConfigurator = { sessionConfiguration in
-            sessionConfiguration.httpAdditionalHeaders = [
-                "Authorization": "Bearer \(accessToken)",
-                "User-Agent": clientConfiguration.userAgent
-            ]
-        }
-
-        self.clientConfiguration = clientConfiguration
+    public init(spaceId: String,
+                accessToken: String,
+                clientConfiguration: ClientConfiguration = .default,
+                sessionConfiguration: URLSessionConfiguration = .default) {
         self.spaceId = spaceId
+        self.clientConfiguration = clientConfiguration
+
+        let contentfulHTTPHeaders = [
+            "Authorization": "Bearer \(accessToken)",
+            "User-Agent": clientConfiguration.userAgent
+        ]
+        sessionConfiguration.httpAdditionalHeaders = contentfulHTTPHeaders
+        self.urlSession = URLSession(configuration: sessionConfiguration)
     }
 
     fileprivate func fetch<DecodableType: Decodable>(url: URL?, then completion: @escaping (Result<DecodableType>) -> Void) -> URLSessionDataTask? {
         if let url = url {
-            let (task, signal) = networkingSession.fetch(url: url)
+            let (task, signal) = fetch(url: url)
 
             if DecodableType.self == Space.self {
                 signal
@@ -126,6 +130,33 @@ open class Client {
 
         return nil
     }
+
+    // MARK: -
+
+    fileprivate func fetch(url: URL, completion: @escaping (Result<Data>) -> Void) -> URLSessionDataTask {
+        let task = urlSession.dataTask(with: url) { data, response, error in
+            if let data = data {
+                completion(Result.success(data))
+                return
+            }
+
+            if let error = error {
+                completion(Result.error(error))
+                return
+            }
+
+            let sdkError = SDKError.invalidHTTPResponse(response: response)
+            completion(Result.error(sdkError))
+        }
+
+        task.resume()
+        return task
+    }
+
+    fileprivate func fetch(url: URL) -> (URLSessionDataTask?, Observable<Result<Data>>) {
+        let closure: SignalObservation<URL, Data> = fetch
+        return signalify(parameter: url, closure: closure)
+    }
 }
 
 extension Client {
@@ -177,6 +208,35 @@ extension Client {
         let closure: SignalObservation<[String: Any], Array<Asset>> = fetchAssets(matching:completion:)
         return signalify(parameter: matching, closure: closure)
     }
+
+    /**
+     Fetch the underlying media file as `Data`
+
+     - returns: Tuple of the data task and a signal for the `NSData` result
+     */
+    public func fetchData(for asset: Asset) -> (URLSessionDataTask?, Observable<Result<Data>>) {
+        do {
+            return fetch(url: try asset.URL())
+        } catch let error {
+            let signal = Observable<Result<Data>>()
+            signal.update(Result.error(error))
+            return (URLSessionDataTask(), signal)
+        }
+    }
+
+#if os(iOS) || os(tvOS)
+    /**
+     Fetch the underlying media file as `UIImage`
+
+     - returns: Tuple of data task and a signal for the `UIImage` result
+     */
+    public func fetchImage(for asset: Asset) -> (URLSessionDataTask?, Observable<Result<UIImage>>) {
+        let closure = {
+            return self.fetchData(for: asset)
+        }
+        return convert_signal(closure: closure) { UIImage(data: $0) }
+    }
+#endif
 }
 
 extension Client {
