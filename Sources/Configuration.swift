@@ -1,5 +1,5 @@
 //
-//  Configuration.swift
+//  ClientConfiguration.swift
 //  Contentful
 //
 //  Created by Boris Bügling on 18/08/15.
@@ -14,8 +14,11 @@ enum Defaults {
     static let previewHost = "preview.contentful.com"
 }
 
-/// Configuration parameters for a client instance
-public struct Configuration {
+/// ClientConfiguration parameters for a client instance
+public struct ClientConfiguration {
+
+    public static let `default` = ClientConfiguration()
+
     /// Whether or not to use the preview mode when accessing Contentful, requires a preview token
     public var previewMode = false
     /// Whether or not to automatically rate limit requests, defaults to `false`
@@ -44,9 +47,9 @@ public struct Configuration {
     }
 
     /**
-     Initialize a configuration with default values
+     Initialize a clientConfiguration with default values
 
-     - returns: An initialized configuration instance
+     - returns: An initialized clientConfiguration instance
      */
     public init() {}
 }

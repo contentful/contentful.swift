@@ -40,10 +40,10 @@ func signalify<U>(closure: SignalBang<U>) -> (URLSessionDataTask?, Observable<Re
     return (value, signal)
 }
 
-class Network {
+class NetworkingSession {
     var sessionConfigurator: ((URLSessionConfiguration) -> Void)?
 
-    fileprivate var session: URLSession {
+    fileprivate var urlSession: URLSession {
         let sessionConfiguration = URLSessionConfiguration.default
         if let sessionConfigurator = sessionConfigurator {
             sessionConfigurator(sessionConfiguration)
@@ -52,19 +52,20 @@ class Network {
     }
 
     func fetch(url: URL, completion: @escaping (Result<Data>) -> Void) -> URLSessionDataTask {
-        let task = session.dataTask(with: url, completionHandler: { (data, response, error) in
+        let task = urlSession.dataTask(with: url) { data, response, error in
             if let data = data {
-                completion(.success(data))
+                completion(Result.success(data))
                 return
             }
 
             if let error = error {
-                completion(.error(error))
+                completion(Result.error(error))
                 return
             }
 
-            completion(.error(SDKError.invalidHTTPResponse(response: response)))
-        })
+            let sdkError = SDKError.invalidHTTPResponse(response: response)
+            completion(Result.error(sdkError))
+        }
 
         task.resume()
         return task

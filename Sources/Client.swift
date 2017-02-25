@@ -12,48 +12,51 @@ import Interstellar
 
 /// Client object for performing requests against the Contentful API
 open class Client {
-    fileprivate let configuration: Configuration
-    fileprivate let network = Network()
+
+    fileprivate let networkingSession: NetworkingSession
+    fileprivate let clientConfiguration: ClientConfiguration
     fileprivate let spaceId: String
 
     fileprivate var server: String {
-        
+
         if clientConfiguration.previewMode && clientConfiguration.server == Defaults.cdaHost {
             return Defaults.previewHost
         }
-        return configuration.server
+        return clientConfiguration.server
     }
 
     internal var urlSession: URLSession
 
     fileprivate(set) var space: Space?
 
-    fileprivate var scheme: String { return configuration.secure ? "https": "http" }
+    fileprivate var scheme: String { return clientConfiguration.secure ? "https": "http" }
 
     /**
      Initializes a new Contentful client instance
 
      - parameter spaceId: The space you want to perform requests against
      - parameter accessToken:     The access token used for authorization
-     - parameter configuration:   Custom configuration of the client
+     - parameter clientConfiguration:   Custom clientConfiguration of the client
 
      - returns: An initialized client instance
      */
-    public init(spaceId: String, accessToken: String, configuration: Configuration = Configuration()) {
-        network.sessionConfigurator = { (sessionConfiguration) in
+    public init(spaceId: String, accessToken: String, clientConfiguration: ClientConfiguration = ClientConfiguration()) {
+        networkingSession = NetworkingSession()
+
+        networkingSession.sessionConfigurator = { sessionConfiguration in
             sessionConfiguration.httpAdditionalHeaders = [
                 "Authorization": "Bearer \(accessToken)",
-                "User-Agent": configuration.userAgent
+                "User-Agent": clientConfiguration.userAgent
             ]
         }
 
-        self.configuration = configuration
+        self.clientConfiguration = clientConfiguration
         self.spaceId = spaceId
     }
 
     fileprivate func fetch<DecodableType: Decodable>(url: URL?, then completion: @escaping (Result<DecodableType>) -> Void) -> URLSessionDataTask? {
         if let url = url {
-            let (task, signal) = network.fetch(url: url)
+            let (task, signal) = networkingSession.fetch(url: url)
 
             if DecodableType.self == Space.self {
                 signal
@@ -347,7 +350,7 @@ extension Client {
     }
 
     func sync(matching: [String: Any] = [:], completion: @escaping (Result<SyncSpace>) -> Void) -> URLSessionDataTask? {
-        if configuration.previewMode {
+        if clientConfiguration.previewMode {
             completion(.error(SDKError.previewAPIDoesNotSupportSync()))
             return nil
         }

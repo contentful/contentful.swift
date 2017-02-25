@@ -45,7 +45,7 @@ public struct Asset: Resource, LocalizedResource {
     /// Currently selected locale
     public var locale: String
 
-    fileprivate let network = Network()
+    fileprivate let networkingSession = NetworkingSession()
 
     /**
      Fetch the underlying media file as `Data`
@@ -54,7 +54,7 @@ public struct Asset: Resource, LocalizedResource {
      */
     public func fetch() -> (URLSessionDataTask?, Observable<Result<Data>>) {
         do {
-            return network.fetch(url: try URL())
+            return networkingSession.fetch(url: try URL())
         } catch let error {
             let signal = Observable<Result<Data>>()
             signal.update(Result.error(error))

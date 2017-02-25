@@ -17,10 +17,10 @@ struct TestClientFactory {
     static func cfExampleAPIClient(withCassetteNamed cassetteName: String) -> Client {
         let client: Client
         #if API_COVERAGE
-            var configuration = Contentful.Configuration()
-            configuration.server = "127.0.0.1:5000"
-            configuration.secure = false
-            client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1", configuration: configuration)
+            var clientConfiguration = Contentful.ClientConfiguration()
+            clientConfiguration.server = "127.0.0.1:5000"
+            clientConfiguration.secure = false
+            client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1", clientConfiguration: clientConfiguration)
         #else
             client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1")
             let dvrSession = DVR.Session(cassetteName: cassetteName, backingSession: client.urlSession)
@@ -35,7 +35,7 @@ class ClientConfigurationTests: XCTestCase {
     func testUserAgentString() {
 
         let osVersion = ProcessInfo.processInfo.operatingSystemVersionString
-        let userAgentString = Configuration().userAgent
+        let userAgentString = ClientConfiguration().userAgent
 
         expect(userAgentString).to(equal("contentful.swift/0.3.1 (iOS \(osVersion))"))
     }
@@ -75,7 +75,6 @@ class PreviewAPITests: XCTestCase {
                             clientConfiguration: clientConfiguration)
 
         client.urlSession = DVR.Session(cassetteName: "testClientCanAccessPreviewAPI", backingSession: client.urlSession)
-
 
         let networkExpectation = expectation(description: "Client can fetch space with preview API")
 
