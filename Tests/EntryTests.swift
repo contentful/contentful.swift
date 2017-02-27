@@ -10,6 +10,7 @@
 import Foundation
 import XCTest
 import Nimble
+import DVR
 
 extension Entry {
     var contentTypeId : String {
@@ -32,12 +33,22 @@ extension Date {
 
 class EntryTests: XCTestCase {
 
-    let client = TestClientFactory.cfExampleAPIClient()
+    static let client = TestClientFactory.cfExampleAPIClient(withCassetteNamed:  "EntryTests")
+
+    override class func setUp() {
+        super.setUp()
+        (client.urlSession as? DVR.Session)?.beginRecording()
+    }
+
+    override class func tearDown() {
+        super.tearDown()
+        (client.urlSession as? DVR.Session)?.endRecording()
+    }
 
     func waitUntilMatchingEntries(_ matching: [String: Any], action: @escaping (_ entries: Contentful.Array<Entry>) -> ()) {
         let expecatation = self.expectation(description: "Entries matching query network expectation")
 
-        self.client.fetchEntries(matching: matching).1.then {
+        EntryTests.client.fetchEntries(matching: matching).1.then {
             action($0)
             expecatation.fulfill()
         }.error {
@@ -51,21 +62,22 @@ class EntryTests: XCTestCase {
     // MARK: Array related queries
 
     func testLimitNumberOfEntriesBeingFetched() {
-        self.waitUntilMatchingEntries(["limit": 5]) {
+        waitUntilMatchingEntries(["limit": 5]) {
             expect($0.limit).to(equal(5))
             expect($0.items.count).to(equal(5))
         }
     }
 
     func testSkipEntriesInAQuery() {
-        self.waitUntilMatchingEntries(["order": "sys.createdAt", "skip": 9]) {
+
+        waitUntilMatchingEntries(["order": "sys.createdAt", "skip": 9]) {
             expect($0.items.count).to(equal(1))
             expect($0.items.first?.identifier).to(equal("7qVBlCjpWE86Oseo40gAEY"))
         }
     }
 
     func testMultiLevelIncludesAreResolved() {
-        self.waitUntilMatchingEntries(["sys.id": "nyancat", "include": 2]) {
+        waitUntilMatchingEntries(["sys.id": "nyancat", "include": 2]) {
             if let entry = $0.items.first?.fields["bestFriend"] as? Entry {
                 if let asset = entry.fields["image"] as? Asset {
                     expect(url(asset).absoluteString).to(equal("https://images.contentful.com/cfexampleapi/3MZPnjZTIskAIIkuuosCss/382a48dfa2cb16c47aa2c72f7b23bf09/happycatw.jpg"))
@@ -87,14 +99,14 @@ class EntryTests: XCTestCase {
         "garfield", "5ETMRzkl9KM4omyMwKAOki", "jake", "nyancat", "finn", "happycat"]
 
     func testFetchEntriesInSpecifiedOrder() {
-        self.waitUntilMatchingEntries(["order": "sys.createdAt"]) {
+        waitUntilMatchingEntries(["order": "sys.createdAt"]) {
             let ids = $0.items.map { $0.identifier }
             expect(ids).to(equal(self.orderedEntries))
         }
     }
 
     func testFetchEntriesInReverseOrder() {
-        self.waitUntilMatchingEntries(["order": "-sys.createdAt"]) {
+        waitUntilMatchingEntries(["order": "-sys.createdAt"]) {
             let ids = $0.items.map { $0.identifier }
             expect(ids).to(equal(self.orderedEntries.reversed()))
         }
@@ -111,7 +123,7 @@ class EntryTests: XCTestCase {
 
     func testFetchSingleEntry() {
         let expectation = self.expectation(description: "Fetch single entry expectation")
-        self.client.fetchEntry(identifier: "nyancat") { (result) in
+        EntryTests.client.fetchEntry(identifier: "nyancat") { (result) in
             switch result {
             case let .success(entry):
                 expect(entry.identifier).to(equal("nyancat"))
@@ -150,7 +162,7 @@ class EntryTests: XCTestCase {
     }
 
     func testFetchEntriesForSpecificLocale() {
-        self.waitUntilMatchingEntries([ "locale": "tlh", "sys.id": "nyancat" ]) {
+        waitUntilMatchingEntries([ "locale": "tlh", "sys.id": "nyancat" ]) {
             let entry = $0.items.first
 
             expect(entry?.identifier).to(equal("nyancat"))
@@ -160,7 +172,7 @@ class EntryTests: XCTestCase {
     }
 
     func testFetchEntriesForAllLocales() {
-        self.waitUntilMatchingEntries([ "locale": "*", "sys.id": "nyancat" ]) {
+        waitUntilMatchingEntries([ "locale": "*", "sys.id": "nyancat" ]) {
             var entry = $0.items.first
 
             expect(entry?.identifier).to(equal("nyancat"))
@@ -176,7 +188,7 @@ class EntryTests: XCTestCase {
     func testFetchAllEntriesInSpace() {
         let expectation = self.expectation(description: "Fetch all entries in space expectation")
 
-        self.client.fetchEntries() { (result) in
+        EntryTests.client.fetchEntries() { (result) in
             switch result {
             case let .success(array):
                 expect(array.total).to(equal(10))
@@ -195,7 +207,7 @@ class EntryTests: XCTestCase {
 
     func testFetchEntriesOfContentType() {
         let expectation = self.expectation(description: "Fetch entires of content type expectation")
-        self.client.fetchEntries(matching: ["content_type": "cat"]).1.then {
+        EntryTests.client.fetchEntries(matching: ["content_type": "cat"]).1.then {
             let cats = $0.items.filter { $0.contentTypeId == "cat" }
             expect(cats.count).to(equal($0.items.count))
             expectation.fulfill()
@@ -209,7 +221,7 @@ class EntryTests: XCTestCase {
     func testFetchSpecificEntryMatchingSysId() {
 
         let expectation = self.expectation(description: "Fetch specific entry with id expectation")
-        self.client.fetchEntries(matching: ["sys.id": "nyancat"]) { result in
+        EntryTests.client.fetchEntries(matching: ["sys.id": "nyancat"]) { result in
 
             switch result {
             case let .success(array):
@@ -233,7 +245,7 @@ class EntryTests: XCTestCase {
     // MARK: Search query tests
 
     func testFetchEntriesWithInequalitySearch() {
-        self.waitUntilMatchingEntries(["sys.id[ne]": "nyancat"]) {
+        waitUntilMatchingEntries(["sys.id[ne]": "nyancat"]) {
             expect($0.items.count).to(equal(9))
             let nyancat = $0.items.filter { $0.identifier == "nyancat" }
             expect(nyancat.count).to(equal(0))
@@ -241,7 +253,7 @@ class EntryTests: XCTestCase {
     }
 
     func testFetchEntriesWithEqualitySearchForArrays() {
-        self.waitUntilMatchingEntries(["content_type": "cat", "fields.likes": "lasagna"]) {
+        waitUntilMatchingEntries(["content_type": "cat", "fields.likes": "lasagna"]) {
             expect($0.items.count).to(equal(1))
             expect($0.items.first?.identifier).to(equal("garfield"))
         }
@@ -254,12 +266,12 @@ class EntryTests: XCTestCase {
             expect(ids).to(equal(["finn", "jake"]))
         }
 
-        self.waitUntilMatchingEntries(["sys.id[in]": ["finn", "jake"]], action: action)
-        self.waitUntilMatchingEntries(["sys.id[in]": "finn,jake"], action: action)
+        waitUntilMatchingEntries(["sys.id[in]": ["finn", "jake"]], action: action)
+        waitUntilMatchingEntries(["sys.id[in]": "finn,jake"], action: action)
     }
 
     func testFetchEntriesWithExclusionSearch() {
-        self.waitUntilMatchingEntries(["content_type": "cat", "fields.likes[nin]": ["rainbows", "lasagna"]]) {
+        waitUntilMatchingEntries(["content_type": "cat", "fields.likes[nin]": ["rainbows", "lasagna"]]) {
             expect($0.items.count).to(equal(1))
             let ids = $0.items.map { $0.identifier }
             expect(ids).to(equal(["happycat"]))
@@ -267,49 +279,49 @@ class EntryTests: XCTestCase {
     }
 
     func testFetchEntriesWithExistenceSearch() {
-        self.waitUntilMatchingEntries(["sys.archivedVersion[exists]": false]) {
+        waitUntilMatchingEntries(["sys.archivedVersion[exists]": false]) {
             expect($0.items.count).to(equal(10))
         }
     }
 
     func testFetchEntiresWithRangeSearch() {
         let date = Date.fromComponents(year: 2015, month: 1, day: 1, hour: 0, minute: 0, second: 0)
-        self.waitUntilMatchingEntries(["sys.updatedAt[lte]": date]) {
+        waitUntilMatchingEntries(["sys.updatedAt[lte]": date]) {
             expect($0.items.count).to(equal(10))
         }
 
-        self.waitUntilMatchingEntries(["sys.updatedAt[lte]": "2015-01-01T00:00:00Z"]) {
+        waitUntilMatchingEntries(["sys.updatedAt[lte]": "2015-01-01T00:00:00Z"]) {
             expect($0.items.count).to(equal(10))
         }
     }
 
     func testFetchEntriesWithFullTextSearch() {
-        self.waitUntilMatchingEntries(["query": "bacon"]) {
+        waitUntilMatchingEntries(["query": "bacon"]) {
             expect($0.items.count).to(equal(1))
         }
 
     }
 
     func testFetchEntriesWithFullTextSearchOnSpecificField() {
-        self.waitUntilMatchingEntries(["content_type": "dog", "fields.description[match]": "bacon pancakes"]) {
+        waitUntilMatchingEntries(["content_type": "dog", "fields.description[match]": "bacon pancakes"]) {
             expect($0.items.count).to(equal(1))
         }
     }
 
     func testFetchEntriesWithLocationProximitySearch() {
-        self.waitUntilMatchingEntries(["fields.center[near]": [38, -122], "content_type": "1t9IbcfdCk6m04uISSsaIK"]) {
+        waitUntilMatchingEntries(["fields.center[near]": [38, -122], "content_type": "1t9IbcfdCk6m04uISSsaIK"]) {
             expect($0.items.count).to(equal(4))
         }
     }
 
     func testFetchEntriesWithBoundingBoxLocationsSearch() {
-        self.waitUntilMatchingEntries(["fields.center[within]": [36, -124, 40, -120], "content_type": "1t9IbcfdCk6m04uISSsaIK"]) {
+        waitUntilMatchingEntries(["fields.center[within]": [36, -124, 40, -120], "content_type": "1t9IbcfdCk6m04uISSsaIK"]) {
             expect($0.items.count).to(equal(1))
         }
     }
 
     func testFilterEntriesByLinkedEntriesSearch() {
-        self.waitUntilMatchingEntries(["content_type": "cat", "fields.bestFriend.sys.id": "nyancat"]) {
+        waitUntilMatchingEntries(["content_type": "cat", "fields.bestFriend.sys.id": "nyancat"]) {
             expect($0.items.count).to(equal(1))
             expect($0.items.first?.identifier).to(equal("happycat"))
         }

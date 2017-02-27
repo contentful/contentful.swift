@@ -8,17 +8,28 @@
 
 @testable import Contentful
 import XCTest
+import DVR
 import Interstellar
 import Nimble
 
 class SyncTests: XCTestCase {
 
-    let client = TestClientFactory.cfExampleAPIClient()
+    static let client = TestClientFactory.cfExampleAPIClient(withCassetteNamed:  "SyncTests")
 
+    override class func setUp() {
+        super.setUp()
+        (client.urlSession as? DVR.Session)?.beginRecording()
+    }
+
+    override class func tearDown() {
+        super.tearDown()
+        (client.urlSession as? DVR.Session)?.endRecording()
+    }
+    
     func waitUntilSync(matching: [String : Any], action: @escaping (_ space: SyncSpace) -> ()) {
         let expectation = self.expectation(description: "Sync test expecation")
 
-        self.client.initialSync(matching: matching).1.then {
+        SyncTests.client.initialSync(matching: matching).1.then {
             action($0)
             expectation.fulfill()
         }.error {
@@ -38,7 +49,7 @@ class SyncTests: XCTestCase {
 
     func testPerformSubsequentSync() {
         let expectation = self.expectation(description: "Subsequent Sync test expecation")
-        self.client.initialSync().1.flatMap { (result: Result<SyncSpace>) -> Observable<Result<SyncSpace>> in
+        SyncTests.client.initialSync().1.flatMap { (result: Result<SyncSpace>) -> Observable<Result<SyncSpace>> in
             switch result {
             case .success(let space):
                 return space.sync().1
@@ -62,14 +73,14 @@ class SyncTests: XCTestCase {
     }
 
     func testSyncDataOfSpecificType() {
-        self.waitUntilSync(matching: ["type": "Asset"]) {
+        waitUntilSync(matching: ["type": "Asset"]) {
             expect($0.assets.count).to(equal(4))
             expect($0.entries.count).to(equal(0))
         }
     }
 
     func testSyncEntriesOfContentType() {
-        self.waitUntilSync(matching: ["type": "Entry", "content_type": "cat"]) {
+        waitUntilSync(matching: ["type": "Entry", "content_type": "cat"]) {
             expect($0.assets.count).to(equal(0))
             expect($0.entries.count).to(equal(3))
         }

@@ -9,8 +9,9 @@
 import Foundation
 
 enum Defaults {
-    static let server = "cdn.contentful.com"
+    static let cdaHost = "cdn.contentful.com"
     static let locale = "en-US"
+    static let previewHost = "preview.contentful.com"
 }
 
 /// Configuration parameters for a client instance
@@ -22,7 +23,7 @@ public struct Configuration {
     /// Whether or not to use HTTPS connections, defaults to `true`
     public var secure = true
     /// The server to use for performing requests, defaults to `cdn.contentful.com`
-    public var server = Defaults.server
+    public var server = Defaults.cdaHost
     /// The user agent to use for performing requests
     public var userAgentClient = "contentful.swift/0.3.1"
 

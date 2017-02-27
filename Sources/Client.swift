@@ -17,11 +17,14 @@ open class Client {
     fileprivate let spaceId: String
 
     fileprivate var server: String {
-        if configuration.previewMode && configuration.server == Defaults.server {
-            return "preview.contentful.com"
+        
+        if clientConfiguration.previewMode && clientConfiguration.server == Defaults.cdaHost {
+            return Defaults.previewHost
         }
         return configuration.server
     }
+
+    internal var urlSession: URLSession
 
     fileprivate(set) var space: Space?
 

@@ -9,20 +9,26 @@
 @testable import Contentful
 import XCTest
 import Nimble
+import DVR
 
 class ContentTypeTests: XCTestCase {
 
-    var client: Client!
+    static let client = TestClientFactory.cfExampleAPIClient(withCassetteNamed:  "ContentTypeTests")
 
-    override func setUp() {
+    override class func setUp() {
         super.setUp()
-        self.client = TestClientFactory.cfExampleAPIClient()
+        (client.urlSession as? DVR.Session)?.beginRecording()
+    }
+
+    override class func tearDown() {
+        super.tearDown()
+        (client.urlSession as? DVR.Session)?.endRecording()
     }
 
     func testFetchContentType() {
         let expectation = self.expectation(description: "Client can fetch a content type")
 
-        self.client.fetchContentType(identifier: "cat") { (result) in
+        ContentTypeTests.client.fetchContentType(identifier: "cat") { (result) in
 
             switch result {
             case let .success(type):
@@ -63,7 +69,7 @@ class ContentTypeTests: XCTestCase {
 
         let expectation = self.expectation(description: "can fetch all content types of a space")
 
-        self.client.fetchContentTypes { result in
+        ContentTypeTests.client.fetchContentTypes { result in
             switch result {
             case let .success(array):
                 expect(array.total).to(equal(4))

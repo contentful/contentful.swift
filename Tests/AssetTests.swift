@@ -8,6 +8,7 @@
 
 @testable import Contentful
 import XCTest
+import DVR
 import CryptoSwift
 import Nimble
 
@@ -19,18 +20,29 @@ func url(_ asset: Asset) -> URL {
 
 class AssetTests: XCTestCase {
 
-    let client = TestClientFactory.cfExampleAPIClient()
+    static let client = TestClientFactory.cfExampleAPIClient(withCassetteNamed:  "AssetTests")
+
+    override class func setUp() {
+        super.setUp()
+        (client.urlSession as? DVR.Session)?.beginRecording()
+    }
+
+    override class func tearDown() {
+        super.tearDown()
+        (client.urlSession as? DVR.Session)?.endRecording()
+    }
 
     func md5(_ image: UIImage) -> String {
         return UIImagePNGRepresentation(image)!.md5().toHexString()
     }
 
     // MARK: Tests
-
+    // https://cdn.contentful.com/spaces/cfexampleapi/assets/nyancat?access_token=b4c0n73n7fu1" > testFetchSingleAsset.response
     func testFetchSingleAsset() {
+
         let expectation = self.expectation(description: "Fetch single asset network expectation")
 
-        self.client.fetchAsset(identifier: "nyancat") { (result) in
+        AssetTests.client.fetchAsset(identifier: "nyancat") { (result) in
             switch result {
             case let .success(asset):
                 expect(asset.identifier).to(equal("nyancat"))
@@ -47,7 +59,8 @@ class AssetTests: XCTestCase {
 
     func testFetchAllAssetsInSpace() {
         let expectation = self.expectation(description: "Fetch all assets network expectation")
-        self.client.fetchAssets().1.then { assets in
+
+        AssetTests.client.fetchAssets().1.then { assets in
             expect(assets.items.count).to(equal(4))
 
             if let asset = (assets.items.filter { $0.identifier == "nyancat" }).first {
@@ -68,9 +81,8 @@ class AssetTests: XCTestCase {
     func testFetchImageForAsset() {
         let expectation = self.expectation(description: "Fetch image from asset network expectation")
 
-        self.client.fetchAsset(identifier: "nyancat").1.then { asset in
-
-            asset.fetchImage().1.then { image in
+        AssetTests.client.fetchAsset(identifier: "nyancat").1.then { asset in
+            AssetTests.client.fetchImage(for: asset).1.then { image in
                 expect(self.md5(image)).to(equal("94fd9a22b0b6ecab15d91486922b8d7e"))
                 expectation.fulfill()
             }
@@ -84,13 +96,14 @@ class AssetTests: XCTestCase {
         let expectation = self.expectation(description: "Fetch image from asset network expectation")
 
         // FIXME: We should have a different test expectation as this mimics the one above
-        self.client.fetchAssets(matching: ["mimetype_group": "image"]).1.then { assets in
+        AssetTests.client.fetchAssets(matching: ["mimetype_group": "image"]).1.then { assets in
 
             expect(assets.items.count).to(equal(4))
             expectation.fulfill()
         }.error {
             fail("\($0)")
         }
+
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 }
