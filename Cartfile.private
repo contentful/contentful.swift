@@ -1,3 +1,4 @@
 github "krzyzanowskim/CryptoSwift.git" ~> 0.6.7
 github "Quick/Nimble" ~> 5.1.1
+github "venmo/DVR" ~> 1.0.0
 

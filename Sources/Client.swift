@@ -9,48 +9,58 @@
 import Decodable
 import Foundation
 import Interstellar
+#if os(iOS) || os(tvOS)
+    import UIKit
+#endif
 
 /// Client object for performing requests against the Contentful API
 open class Client {
-    fileprivate let configuration: Configuration
-    fileprivate let network = Network()
+
+    fileprivate let clientConfiguration: ClientConfiguration
     fileprivate let spaceId: String
 
     fileprivate var server: String {
-        if configuration.previewMode && configuration.server == Defaults.server {
-            return "preview.contentful.com"
+
+        if clientConfiguration.previewMode && clientConfiguration.server == Defaults.cdaHost {
+            return Defaults.previewHost
         }
-        return configuration.server
+        return clientConfiguration.server
     }
+
+    internal var urlSession: URLSession
 
     fileprivate(set) var space: Space?
 
-    fileprivate var scheme: String { return configuration.secure ? "https": "http" }
+    fileprivate var scheme: String { return clientConfiguration.secure ? "https": "http" }
 
     /**
      Initializes a new Contentful client instance
 
      - parameter spaceId: The space you want to perform requests against
-     - parameter accessToken:     The access token used for authorization
-     - parameter configuration:   Custom configuration of the client
+     - parameter accessToken: The access token used for authorization
+     - parameter clientConfiguration: Custom Configuration of the Client
+     - parameter sessionConfiguration:
 
      - returns: An initialized client instance
      */
-    public init(spaceId: String, accessToken: String, configuration: Configuration = Configuration()) {
-        network.sessionConfigurator = { (sessionConfiguration) in
-            sessionConfiguration.httpAdditionalHeaders = [
-                "Authorization": "Bearer \(accessToken)",
-                "User-Agent": configuration.userAgent
-            ]
-        }
-
-        self.configuration = configuration
+    public init(spaceId: String,
+                accessToken: String,
+                clientConfiguration: ClientConfiguration = .default,
+                sessionConfiguration: URLSessionConfiguration = .default) {
         self.spaceId = spaceId
+        self.clientConfiguration = clientConfiguration
+
+        let contentfulHTTPHeaders = [
+            "Authorization": "Bearer \(accessToken)",
+            "User-Agent": clientConfiguration.userAgent
+        ]
+        sessionConfiguration.httpAdditionalHeaders = contentfulHTTPHeaders
+        self.urlSession = URLSession(configuration: sessionConfiguration)
     }
 
     fileprivate func fetch<DecodableType: Decodable>(url: URL?, then completion: @escaping (Result<DecodableType>) -> Void) -> URLSessionDataTask? {
         if let url = url {
-            let (task, signal) = network.fetch(url: url)
+            let (task, signal) = fetch(url: url)
 
             if DecodableType.self == Space.self {
                 signal
@@ -120,6 +130,33 @@ open class Client {
 
         return nil
     }
+
+    // MARK: -
+
+    fileprivate func fetch(url: URL, completion: @escaping (Result<Data>) -> Void) -> URLSessionDataTask {
+        let task = urlSession.dataTask(with: url) { data, response, error in
+            if let data = data {
+                completion(Result.success(data))
+                return
+            }
+
+            if let error = error {
+                completion(Result.error(error))
+                return
+            }
+
+            let sdkError = SDKError.invalidHTTPResponse(response: response)
+            completion(Result.error(sdkError))
+        }
+
+        task.resume()
+        return task
+    }
+
+    fileprivate func fetch(url: URL) -> (URLSessionDataTask?, Observable<Result<Data>>) {
+        let closure: SignalObservation<URL, Data> = fetch
+        return signalify(parameter: url, closure: closure)
+    }
 }
 
 extension Client {
@@ -171,6 +208,35 @@ extension Client {
         let closure: SignalObservation<[String: Any], Array<Asset>> = fetchAssets(matching:completion:)
         return signalify(parameter: matching, closure: closure)
     }
+
+    /**
+     Fetch the underlying media file as `Data`
+
+     - returns: Tuple of the data task and a signal for the `NSData` result
+     */
+    public func fetchData(for asset: Asset) -> (URLSessionDataTask?, Observable<Result<Data>>) {
+        do {
+            return fetch(url: try asset.URL())
+        } catch let error {
+            let signal = Observable<Result<Data>>()
+            signal.update(Result.error(error))
+            return (URLSessionDataTask(), signal)
+        }
+    }
+
+#if os(iOS) || os(tvOS)
+    /**
+     Fetch the underlying media file as `UIImage`
+
+     - returns: Tuple of data task and a signal for the `UIImage` result
+     */
+    public func fetchImage(for asset: Asset) -> (URLSessionDataTask?, Observable<Result<UIImage>>) {
+        let closure = {
+            return self.fetchData(for: asset)
+        }
+        return convert_signal(closure: closure) { UIImage(data: $0) }
+    }
+#endif
 }
 
 extension Client {
@@ -344,7 +410,7 @@ extension Client {
     }
 
     func sync(matching: [String: Any] = [:], completion: @escaping (Result<SyncSpace>) -> Void) -> URLSessionDataTask? {
-        if configuration.previewMode {
+        if clientConfiguration.previewMode {
             completion(.error(SDKError.previewAPIDoesNotSupportSync()))
             return nil
         }

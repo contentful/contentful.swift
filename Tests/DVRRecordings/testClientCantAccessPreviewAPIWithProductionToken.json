@@ -1,0 +1,35 @@
+{
+  "interactions" : [
+    {
+      "response" : {
+        "status" : 401,
+        "headers" : {
+          "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
+          "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
+          "Content-Length" : "198",
+          "X-Contentful-Request-Id" : "a35f9c97213428ef91d9b5041a7620cb",
+          "Connection" : "keep-alive",
+          "X-Content-Type-Options" : "nosniff",
+          "Access-Control-Expose-Headers" : "Etag",
+          "Access-Control-Max-Age" : "1728000",
+          "Access-Control-Allow-Headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent",
+          "Access-Control-Allow-Origin" : "*",
+          "Server" : "Contentful",
+          "Date" : "Tue, 28 Feb 2017 13:10:36 GMT"
+        },
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJFcnJvciIsCiAgICAiaWQiOiAiQWNjZXNzVG9rZW5JbnZhbGlkIgogIH0sCiAgIm1lc3NhZ2UiOiAiVGhlIGFjY2VzcyB0b2tlbiB5b3Ugc2VudCBjb3VsZCBub3QgYmUgZm91bmQgb3IgaXMgaW52YWxpZC4iLAogICJyZXF1ZXN0SWQiOiAiYTM1ZjljOTcyMTM0MjhlZjkxZDliNTA0MWE3NjIwY2IiCn0K",
+        "url" : "https:\/\/preview.contentful.com\/spaces\/cfexampleapi\/"
+      },
+      "recorded_at" : 1488287434.955636,
+      "request" : {
+        "headers" : {
+          "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
+          "Authorization" : "Bearer b4c0n73n7fu1"
+        },
+        "method" : "GET",
+        "url" : "https:\/\/preview.contentful.com\/spaces\/cfexampleapi\/"
+      }
+    }
+  ],
+  "name" : "testClientCantAccessPreviewAPIWithProductionToken"
+}
