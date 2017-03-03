@@ -37,6 +37,8 @@ public enum FieldType: String {
 }
 
 /// A Field describes a single value inside an Entry
+// Hitting the /content_types endpoint will return a JSON field "fields" that
+// maps to an array where each element has the following structure.
 public struct Field {
     /// The unique identifier of this Field
     public let identifier: String
@@ -53,5 +55,7 @@ public struct Field {
     /// The type of this Field
     public let type: FieldType
     /// The item type of this Field (a subtype if `type` is `Array` or `Link`)
+    // For `Array`s, itemType is inferred via items.type. 
+    // For `Link`s, itemType is inferred via "linkType"
     public let itemType: FieldType
 }

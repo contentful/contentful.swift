@@ -58,7 +58,8 @@ open class Client {
         self.urlSession = URLSession(configuration: sessionConfiguration)
     }
 
-    fileprivate func fetch<DecodableType: Decodable>(url: URL?, then completion: @escaping (Result<DecodableType>) -> Void) -> URLSessionDataTask? {
+    fileprivate func fetch<DecodableType>(url: URL?, then completion: @escaping (Result<DecodableType>) -> Void) -> URLSessionDataTask?
+        where DecodableType: Decodable {
         if let url = url {
             let (task, signal) = fetch(url: url)
 
@@ -93,7 +94,8 @@ open class Client {
                 return
             }
 
-            completion(.success(try T.decode(json)))
+            let decodedObject = try T.decode(json)
+            completion(Result.success(decodedObject))
         } catch let error as DecodingError {
             completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "\(error)")))
         } catch _ {
@@ -101,7 +103,7 @@ open class Client {
         }
     }
 
-    fileprivate func URL(forComponent component: String = "", parameters: [String: Any]? = nil) -> URL? {
+    internal func URL(forComponent component: String = "", parameters: [String: Any]? = nil) -> URL? {
         if var components = URLComponents(string: "\(scheme)://\(server)/spaces/\(spaceId)/\(component)") {
             if let parameters = parameters {
                 let queryItems: [URLQueryItem] = parameters.map { key, value in
@@ -158,6 +160,18 @@ open class Client {
         return signalify(parameter: url, closure: closure)
     }
 }
+
+
+extension Client {
+
+    @discardableResult func execute<ResourceType>(query: Query, then completion: @escaping (Result<ResourceType>) -> Void) -> URLSessionDataTask?
+        where ResourceType: Decodable {
+
+            let url = URL(forComponent: "entries", parameters: query.queryParameters())
+            return fetch(url: url, then: completion)
+    }
+}
+
 
 extension Client {
     /**
@@ -238,6 +252,7 @@ extension Client {
     }
 #endif
 }
+
 
 extension Client {
     /**

@@ -20,6 +20,8 @@ protocol Resource: Decodable {
 }
 
 protocol LocalizedResource {
+
+    // Should this be moved to Resource?
     var fields: [String: Any] { get }
 
     var locale: String { get set }

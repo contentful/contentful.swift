@@ -35,9 +35,15 @@ class ClientConfigurationTests: XCTestCase {
     func testUserAgentString() {
 
         let osVersion = ProcessInfo.processInfo.operatingSystemVersionString
-        let userAgentString = ClientConfiguration().userAgent
-
+        let userAgentString = ClientConfiguration.default.userAgent
+        
         expect(userAgentString).to(equal("contentful.swift/0.3.1 (iOS \(osVersion))"))
+    }
+
+    func testDefaultConfiguration() {
+        let clientConfiguration = ClientConfiguration.default
+        expect(clientConfiguration.server).to(equal(Defaults.cdaHost))
+        expect(clientConfiguration.previewMode).to(be(false))
     }
 }
 

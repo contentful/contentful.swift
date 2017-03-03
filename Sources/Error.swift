@@ -42,6 +42,18 @@ public enum SDKError: Error {
     case noEntryFoundFor(identifier: String)
 }
 
+/// Errors thrown for queries which have invalid construction.
+public enum QueryError: Error {
+
+    // FIXME: document
+    case invalidSelection(fieldKeyPath: String)
+
+    /// Thrown when over 99 properties have been selected. The CDA only supports 100 selections
+    /// and the SDK always includes "sys" as one of them.
+    case hitSelectionLimit()
+}
+
+
 /// Information regarding an error received from Contentful
 public struct ContentfulError: Resource, Error {
     /// System fields
