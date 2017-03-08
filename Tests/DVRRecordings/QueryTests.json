@@ -6,63 +6,63 @@
         "headers" : {
           "Via" : "1.1 varnish",
           "Content-Length" : "445",
-          "Date" : "Mon, 06 Mar 2017 14:17:37 GMT",
-          "Age" : "3513",
+          "Date" : "Wed, 08 Mar 2017 14:09:56 GMT",
+          "Age" : "0",
           "Access-Control-Expose-Headers" : "Etag",
           "Access-Control-Max-Age" : "86400",
           "Etag" : "W\/\"84f895a36be38c89c3d47a7c73c524d1\"",
           "Access-Control-Allow-Headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent",
           "Accept-Ranges" : "bytes",
           "Vary" : "Accept-Encoding",
-          "X-Cache-Hits" : "1",
-          "X-Cache" : "HIT",
+          "X-Cache-Hits" : "0",
+          "X-Cache" : "MISS",
           "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
           "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
           "Connection" : "keep-alive",
-          "X-Contentful-Request-Id" : "80d9a6b4813a8786e5a74cc08b79d526",
+          "X-Contentful-Request-Id" : "c64c270c4d65c9fa35e6564eed44e057",
           "X-Content-Type-Options" : "nosniff",
-          "X-Timer" : "S1488809857.202792,VS0,VE0",
-          "X-Served-By" : "cache-hhn1521-HHN",
+          "X-Timer" : "S1488982196.636677,VS0,VE349",
+          "X-Served-By" : "cache-hhn1542-HHN",
           "Access-Control-Allow-Origin" : "*",
           "Server" : "Contentful",
           "Content-Encoding" : "gzip",
           "Cache-Control" : "max-age=0"
         },
         "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJBcnJheSIKICB9LAogICJ0b3RhbCI6IDMsCiAgInNraXAiOiAwLAogICJsaW1pdCI6IDEwMCwKICAiaXRlbXMiOiBbCiAgICB7CiAgICAgICJmaWVsZHMiOiB7CiAgICAgICAgImJlc3RGcmllbmQiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIkVudHJ5IiwKICAgICAgICAgICAgImlkIjogImhhcHB5Y2F0IgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgImNvbG9yIjogInJhaW5ib3ciCiAgICAgIH0sCiAgICAgICJzeXMiOiB7CiAgICAgICAgInNwYWNlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJTcGFjZSIsCiAgICAgICAgICAgICJpZCI6ICJjZmV4YW1wbGVhcGkiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAiaWQiOiAibnlhbmNhdCIsCiAgICAgICAgInR5cGUiOiAiRW50cnkiLAogICAgICAgICJjcmVhdGVkQXQiOiAiMjAxMy0wNi0yN1QyMjo0NjoxOS41MTNaIiwKICAgICAgICAidXBkYXRlZEF0IjogIjIwMTMtMDktMDRUMDk6MTk6MzkuMDI3WiIsCiAgICAgICAgInJldmlzaW9uIjogNSwKICAgICAgICAiY29udGVudFR5cGUiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIkNvbnRlbnRUeXBlIiwKICAgICAgICAgICAgImlkIjogImNhdCIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJsb2NhbGUiOiAiZW4tVVMiCiAgICAgIH0KICAgIH0sCiAgICB7CiAgICAgICJmaWVsZHMiOiB7CiAgICAgICAgImNvbG9yIjogIm9yYW5nZSIKICAgICAgfSwKICAgICAgInN5cyI6IHsKICAgICAgICAic3BhY2UiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIlNwYWNlIiwKICAgICAgICAgICAgImlkIjogImNmZXhhbXBsZWFwaSIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJpZCI6ICJnYXJmaWVsZCIsCiAgICAgICAgInR5cGUiOiAiRW50cnkiLAogICAgICAgICJjcmVhdGVkQXQiOiAiMjAxMy0wNi0yN1QyMjo0NjoyMC44MjFaIiwKICAgICAgICAidXBkYXRlZEF0IjogIjIwMTMtMDgtMjdUMTA6MDk6MDcuOTI5WiIsCiAgICAgICAgInJldmlzaW9uIjogMiwKICAgICAgICAiY29udGVudFR5cGUiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIkNvbnRlbnRUeXBlIiwKICAgICAgICAgICAgImlkIjogImNhdCIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJsb2NhbGUiOiAiZW4tVVMiCiAgICAgIH0KICAgIH0sCiAgICB7CiAgICAgICJmaWVsZHMiOiB7CiAgICAgICAgImJlc3RGcmllbmQiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIkVudHJ5IiwKICAgICAgICAgICAgImlkIjogIm55YW5jYXQiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAiY29sb3IiOiAiZ3JheSIKICAgICAgfSwKICAgICAgInN5cyI6IHsKICAgICAgICAic3BhY2UiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIlNwYWNlIiwKICAgICAgICAgICAgImlkIjogImNmZXhhbXBsZWFwaSIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJpZCI6ICJoYXBweWNhdCIsCiAgICAgICAgInR5cGUiOiAiRW50cnkiLAogICAgICAgICJjcmVhdGVkQXQiOiAiMjAxMy0wNi0yN1QyMjo0NjoyMC4xNzFaIiwKICAgICAgICAidXBkYXRlZEF0IjogIjIwMTMtMTEtMThUMTU6NTg6MDIuMDE4WiIsCiAgICAgICAgInJldmlzaW9uIjogOCwKICAgICAgICAiY29udGVudFR5cGUiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIkNvbnRlbnRUeXBlIiwKICAgICAgICAgICAgImlkIjogImNhdCIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJsb2NhbGUiOiAiZW4tVVMiCiAgICAgIH0KICAgIH0KICBdCn0K",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?content_type=cat&select=fields.bestFriend,fields.color,sys"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?locale=en-US&content_type=cat&select=fields.bestFriend,fields.color,sys"
       },
-      "recorded_at" : 1488809856.275411,
+      "recorded_at" : 1488982197.204543,
       "request" : {
         "headers" : {
           "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
           "Authorization" : "Bearer b4c0n73n7fu1"
         },
         "method" : "GET",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?content_type=cat&select=fields.bestFriend,fields.color,sys"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?locale=en-US&content_type=cat&select=fields.bestFriend,fields.color,sys"
       }
     },
     {
       "response" : {
         "status" : 200,
         "headers" : {
-          "Date" : "Mon, 06 Mar 2017 14:17:37 GMT",
+          "Date" : "Wed, 08 Mar 2017 14:09:56 GMT",
           "Content-Length" : "344",
-          "Age" : "3974",
+          "Age" : "0",
           "Access-Control-Expose-Headers" : "Etag",
           "Access-Control-Max-Age" : "86400",
           "Etag" : "\"17f6b9f68596176aed46fa020bf235af\"",
           "Access-Control-Allow-Headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent",
           "Accept-Ranges" : "bytes",
           "Vary" : "Accept-Encoding",
-          "X-Cache-Hits" : "1",
-          "X-Cache" : "HIT",
+          "X-Cache-Hits" : "0",
+          "X-Cache" : "MISS",
           "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
           "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
           "Connection" : "keep-alive",
           "X-Contentful-Request-Id" : "7d937eb68ecd57d2e6e981ba2151c005",
           "X-Content-Type-Options" : "nosniff",
-          "X-Timer" : "S1488809857.310592,VS0,VE0",
-          "X-Served-By" : "cache-hhn1544-HHN",
+          "X-Timer" : "S1488982196.788432,VS0,VE200",
+          "X-Served-By" : "cache-hhn1546-HHN",
           "Access-Control-Allow-Origin" : "*",
           "Server" : "Contentful",
           "Cache-Control" : "max-age=0",
@@ -71,7 +71,7 @@
         "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJTcGFjZSIsCiAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogIH0sCiAgIm5hbWUiOiAiQ29udGVudGZ1bCBFeGFtcGxlIEFQSSIsCiAgImxvY2FsZXMiOiBbCiAgICB7CiAgICAgICJjb2RlIjogImVuLVVTIiwKICAgICAgImRlZmF1bHQiOiB0cnVlLAogICAgICAibmFtZSI6ICJFbmdsaXNoIiwKICAgICAgImZhbGxiYWNrQ29kZSI6IG51bGwKICAgIH0sCiAgICB7CiAgICAgICJjb2RlIjogInRsaCIsCiAgICAgICJkZWZhdWx0IjogZmFsc2UsCiAgICAgICJuYW1lIjogIktsaW5nb24iLAogICAgICAiZmFsbGJhY2tDb2RlIjogImVuLVVTIgogICAgfQogIF0KfQo=",
         "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/"
       },
-      "recorded_at" : 1488809856.37458,
+      "recorded_at" : 1488982197.204955,
       "request" : {
         "headers" : {
           "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",

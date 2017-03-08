@@ -10,6 +10,7 @@
 import Foundation
 import XCTest
 import Nimble
+import Decodable
 
 class DecodingTests: XCTestCase {
 

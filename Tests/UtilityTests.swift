@@ -41,3 +41,19 @@ class StringExtensionTests: XCTestCase {
         expect(invalidSelection.isValidSelection()).to(be(false))
     }
 }
+
+class IS8601DateTest: XCTestCase {
+    func testDecodeDate() {
+        let dateString = "2014-04-10T09:37:06.719Z"
+        let date = dateString.toIS8601Date()
+        expect(date).toNot(beNil())
+
+    }
+
+    func testThis() {
+        let isoDate = "1979-06-18T23:00:00+00:00"
+
+        let date = isoDate.toIS8601Date()
+        expect(date).toNot(beNil())
+    }
+}

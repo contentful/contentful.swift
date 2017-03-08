@@ -404,7 +404,7 @@ extension Client {
 
      - returns: The data task being used, enables cancellation of requests
      */
-    @discardableResult public func initialSync(matching: [String: Any],
+    @discardableResult public func initialSync(matching: [String: Any] = [:],
                                                completion: @escaping (Result<SyncSpace>) -> Void) -> URLSessionDataTask? {
 
         var parameters = matching

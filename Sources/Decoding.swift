@@ -9,11 +9,25 @@
 import Decodable
 import Foundation
 
-// Cannot cast directly from [String: Any] => [String:Any]
-private func convert(_ fields: [String: Any]) -> [String:Any] {
-    var result = [String: Any]()
-    fields.forEach { result[$0.0] = $0.1 }
-    return result
+
+internal extension String {
+
+    // TODO: Better solution for dates.
+    func toIS8601Date() ->  Date? {
+        let formatter = DateFormatter()
+        formatter.locale = Foundation.Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        formatter.timeZone = TimeZone(abbreviation: "UTC")
+        if let date = formatter.date(from: self) {
+            return date
+        } else {
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+            if let date = formatter.date(from: self) {
+                return date
+            }
+        }
+        return nil
+    }
 }
 
 private func determineDefaultLocale(_ json: Any) -> String {
@@ -26,22 +40,43 @@ private func determineDefaultLocale(_ json: Any) -> String {
     return Defaults.locale
 }
 
+private func convertStringsToDates(fields: [String: Any]) -> [String: Any] {
+    var fieldsWithDates = [String: Any]()
+
+    for (key, value) in fields {
+        if let date = (value as? String)?.toIS8601Date() {
+            fieldsWithDates[key] = date
+        } else {
+            fieldsWithDates[key] = value
+        }
+    }
+    return fieldsWithDates
+}
+
+// TODO: Rename this method
 private func parseLocalizedFields(_ json: Any) throws -> (String, [String:[String:Any]]) {
     let fields = try json => "fields" as! [String: Any]
+
     let locale: String? = try? json => "sys" => "locale"
 
     var localizedFields = [String: [String: Any]]()
 
+    // If there is a locale field, we still want to represent the field internally with a
+    // localization mapping.
     if let locale = locale {
-        localizedFields[locale] = convert(fields)
+        localizedFields[locale] = convertStringsToDates(fields: fields)
     } else {
-        fields.forEach { field, fields in
-            (fields as? [String: Any])?.forEach { locale, value in
-                if localizedFields[locale] == nil {
-                    localizedFields[locale] = [String: Any]()
-                }
 
-                localizedFields[locale]?[field] = value
+        // In the case that the fields have been returned with the wildcard format `locale=*`
+        // Therefore the structure of fieldsWithDates is [String: [String: Any]]
+        fields.forEach { fieldName, localizableFields in
+            if let fields = localizableFields as? [String: Any] {
+                convertStringsToDates(fields: fields).forEach { locale, value in
+                    if localizedFields[locale] == nil {
+                        localizedFields[locale] = [String: Any]()
+                    }
+                    localizedFields[locale]?[fieldName] = value
+                }
             }
         }
     }
