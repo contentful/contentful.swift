@@ -172,18 +172,23 @@ extension Client {
             return fetch(url: url, then: completion)
     }
 
-    @discardableResult public func fetchContent<MappableType: ContentModel>
-        (query: Query, completion: @escaping (Result<[MappableType]>) -> Void) -> URLSessionDataTask? {
+    @discardableResult public func fetchContent<QueryType: Queryable>
+        (with query: QueryType, completion: @escaping (Result<[QueryType.ContentType]>) -> Void) -> URLSessionDataTask?
+            where QueryType: Query, QueryType.ContentType: ContentModel {
 
         let url = URL(forComponent: "entries", parameters: query.queryParameters())
 
         return fetch(url: url, then: { (result: Result<Array<Entry>>) in
             switch result {
             case .success(let entries):
-                let mappedItems = entries.items.map { entry in
-                    return MappableType(fields: entry.fields)
+                let mappedItems: [QueryType.ContentType] = entries.items.flatMap { entry in
+                    let item = QueryType.ContentType(identifier: entry.sys["id"] as? String)
+                    item?.update(with: entry.fields)
+//                    item?.updateLinks(with: entries.includes)
+                    return item
                 }
 
+                // When we arrive here, the linked objects are seperate duplicates...they should be merged somehow.
                 completion(Result.success(mappedItems))
 
             case .error(let error):
@@ -192,11 +197,12 @@ extension Client {
         })
     }
 
-    @discardableResult public func fetchContent<MappableType: ContentModel>
-        (query: Query) -> (URLSessionDataTask?, Observable<Result<[MappableType]>>) {
-        let closure: SignalObservation<Query, [MappableType]> = fetchContent(query:completion:)
-        return signalify(parameter: query, closure: closure)
-    }
+//    @discardableResult public func fetchContent<MappableType, QueryableType>
+//        (query: QueryableType) -> (URLSessionDataTask?, Observable<Result<[MappableType]>>)
+//        where MappableType: ContentModel, QueryableType: Query, QueryableType: Queryable, QueryableType.ContentType: ContentModel {
+//        let closure: SignalObservation<Query, [MappableType]> = fetchContent(query:completion:)
+//        return signalify(parameter: query, closure: closure)
+//    }
 }
 
 

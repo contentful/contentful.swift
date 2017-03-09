@@ -24,6 +24,8 @@ public struct Array<T: Decodable> {
     /// The resources which are part of the given array
     public let items: [T]
 
+    internal let includes: [String: Resource]
+
     /// The maximum number of resources originally requested
     public let limit: UInt
     /// The number of elements skipped when performing the request

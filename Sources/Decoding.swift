@@ -162,8 +162,11 @@ extension Array: Decodable {
     /// Decode JSON for an Array
     public static func decode(_ json: Any) throws -> Array {
 
+        let (resources, includes) = try parseItems(json: json)
+
         return try Array(
-            items: parseItems(json: json).resources.flatMap { $0 as? T },
+            items: resources.flatMap { $0 as? T },
+            includes: includes,
             limit: json => "limit",
             skip: json => "skip",
             total: json => "total"
