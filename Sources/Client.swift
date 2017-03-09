@@ -68,7 +68,8 @@ open class Client {
                     .then { self.handleJSON($0, completion) }
                     .error { completion(.error($0)) }
             } else {
-                fetchSpace().1
+                //
+                fetchSpace().result
                     .then { _ in
                         signal
                             .then { self.handleJSON($0, completion) }
@@ -84,7 +85,7 @@ open class Client {
         return nil
     }
 
-    fileprivate func handleJSON<T: Decodable>(_ data: Data, _ completion: (Result<T>) -> Void) {
+    fileprivate func handleJSON<DecodableType: Decodable>(_ data: Data, _ completion: (Result<DecodableType>) -> Void) {
         do {
             let json = try JSONSerialization.jsonObject(with: data, options: [])
             if let json = json as? NSDictionary { json.client = self }
@@ -94,7 +95,7 @@ open class Client {
                 return
             }
 
-            let decodedObject = try T.decode(json)
+            let decodedObject = try DecodableType.decode(json)
             completion(Result.success(decodedObject))
         } catch let error as DecodingError {
             completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "\(error)")))
@@ -169,6 +170,32 @@ extension Client {
 
             let url = URL(forComponent: "entries", parameters: query.queryParameters())
             return fetch(url: url, then: completion)
+    }
+
+    @discardableResult public func fetchContent<MappableType: ContentModel>
+        (query: Query, completion: @escaping (Result<[MappableType]>) -> Void) -> URLSessionDataTask? {
+
+        let url = URL(forComponent: "entries", parameters: query.queryParameters())
+
+        return fetch(url: url, then: { (result: Result<Array<Entry>>) in
+            switch result {
+            case .success(let entries):
+                let mappedItems = entries.items.map { entry in
+                    return MappableType(fields: entry.fields)
+                }
+
+                completion(Result.success(mappedItems))
+
+            case .error(let error):
+                completion(Result.error(error))
+            }
+        })
+    }
+
+    @discardableResult public func fetchContent<MappableType: ContentModel>
+        (query: Query) -> (URLSessionDataTask?, Observable<Result<[MappableType]>>) {
+        let closure: SignalObservation<Query, [MappableType]> = fetchContent(query:completion:)
+        return signalify(parameter: query, closure: closure)
     }
 }
 
@@ -389,7 +416,7 @@ extension Client {
 
      - returns: A tuple of data task and a signal for the resulting Space
      */
-    @discardableResult public func fetchSpace() -> (URLSessionDataTask?, Observable<Result<Space>>) {
+    @discardableResult public func fetchSpace() -> (task: URLSessionDataTask?, result: Observable<Result<Space>>) {
         let closure: SignalBang<Space> = fetchSpace(then:)
         return signalify(closure: closure)
     }

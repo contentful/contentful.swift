@@ -109,19 +109,20 @@ extension Array: Decodable {
 
     internal static func parseItems(json: Any, shouldResolveIncludes: Bool = true) throws -> (resources: [Resource], includes: [String: Resource]) {
 
-        let items: [Resource] = try (try json => "items" as! [AnyObject]).flatMap {
-            let type: String = try $0 => "sys" => "type"
+        let items: [Resource] = try (try json => "items" as! [AnyObject]).flatMap { rootObject in
+            let type: String = try rootObject => "sys" => "type"
 
             switch type {
-            case "Asset": return try Asset.decode($0)
-            case "ContentType": return try ContentType.decode($0)
-            case "DeletedAsset": return try DeletedResource.decode($0)
-            case "DeletedEntry": return try DeletedResource.decode($0)
-            case "Entry": return try Entry.decode($0)
+            case "Asset": return try Asset.decode(rootObject)
+            case "ContentType": return try ContentType.decode(rootObject)
+            case "DeletedAsset": return try DeletedResource.decode(rootObject)
+            case "DeletedEntry": return try DeletedResource.decode(rootObject)
+            case "Entry": return try Entry.decode(rootObject)
             default: fatalError("Unsupported resource type '\(type)'")
             }
         }
 
+        // FIXME: break into separate function
         // Resolve links.
         var includes = [String: Resource]()
         let jsonIncludes = try? json => "includes" as! [String:Any]

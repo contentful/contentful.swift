@@ -12,6 +12,16 @@ import Nimble
 import DVR
 import Interstellar
 
+
+struct Cat: ContentModel {
+
+    let color: String
+
+    init(fields: [String: Any]) {
+        self.color = fields["color"] as! String
+    }
+}
+
 class QueryTests: XCTestCase {
 
     static let client = TestClientFactory.cfExampleAPIClient(withCassetteNamed: "QueryTests")
@@ -45,6 +55,27 @@ class QueryTests: XCTestCase {
                 }
             case .error:
                 fail("Expected selecting properties on cat to success")
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+
+    }
+
+    func testQueryReturningClientDefinedModel() {
+        let selections = ["bestFriend", "color"]
+
+        let expectation = self.expectation(description: "Select operator expectation")
+
+        let query = try! SelectQuery.select(fieldNames: selections, contentTypeId: "cat", locale: "en-US")
+
+
+        QueryTests.client.fetchContent(query: query) { (result: Result<[Cat]>) in
+            switch result {
+            case .success(let cats):
+                expect(cats.first!.color).toNot(beNil())
+            case .error:
+                fail("Should not throw an error")
             }
             expectation.fulfill()
         }
