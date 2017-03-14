@@ -58,52 +58,6 @@ open class Client {
         self.urlSession = URLSession(configuration: sessionConfiguration)
     }
 
-    fileprivate func fetch<DecodableType>(url: URL?, then completion: @escaping (Result<DecodableType>) -> Void) -> URLSessionDataTask?
-        where DecodableType: Decodable {
-        if let url = url {
-            let (task, signal) = fetch(url: url)
-
-            if DecodableType.self == Space.self {
-                signal
-                    .then { self.handleJSON($0, completion) }
-                    .error { completion(.error($0)) }
-            } else {
-                //
-                fetchSpace().result
-                    .then { _ in
-                        signal
-                            .then { self.handleJSON($0, completion) }
-                            .error { completion(.error($0)) }
-                    }
-                    .error { completion(.error($0)) }
-            }
-
-            return task
-        }
-
-        completion(.error(SDKError.invalidURL(string: "")))
-        return nil
-    }
-
-    fileprivate func handleJSON<DecodableType: Decodable>(_ data: Data, _ completion: (Result<DecodableType>) -> Void) {
-        do {
-            let json = try JSONSerialization.jsonObject(with: data, options: [])
-            if let json = json as? NSDictionary { json.client = self }
-
-            if let error = try? ContentfulError.decode(json) {
-                completion(.error(error))
-                return
-            }
-
-            let decodedObject = try DecodableType.decode(json)
-            completion(Result.success(decodedObject))
-        } catch let error as DecodingError {
-            completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "\(error)")))
-        } catch _ {
-            completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "")))
-        }
-    }
-
     internal func URL(forComponent component: String = "", parameters: [String: Any]? = nil) -> URL? {
         if var components = URLComponents(string: "\(scheme)://\(server)/spaces/\(spaceId)/\(component)") {
             if let parameters = parameters {
@@ -136,6 +90,40 @@ open class Client {
 
     // MARK: -
 
+    fileprivate func fetch<DecodableType>(url: URL?, then completion: @escaping (Result<DecodableType>) -> Void) -> URLSessionDataTask?
+        where DecodableType: Decodable {
+
+            guard let url = url else {
+                completion(Result.error(SDKError.invalidURL(string: "")))
+                return nil
+            }
+
+            let (task, signal) = fetch(url: url)
+
+            if DecodableType.self == Space.self {
+                // TODO: Dry
+                signal.then { decodable in
+                    self.handleJSON(decodable, completion)
+                }.error { error in
+                    completion(Result.error(error))
+                }
+            } else {
+
+                fetchSpace().result.then { _ in
+                    // TODO: Dry
+                    signal.then { decodable in
+                        self.handleJSON(decodable, completion)
+                    }.error { error in
+                        completion(Result.error(error))
+                    }
+                }.error { error in
+                    completion(Result.error(error))
+                }
+            }
+
+            return task
+    }
+
     fileprivate func fetch(url: URL, completion: @escaping (Result<Data>) -> Void) -> URLSessionDataTask {
         let task = urlSession.dataTask(with: url) { data, response, error in
             if let data = data {
@@ -159,6 +147,25 @@ open class Client {
     fileprivate func fetch(url: URL) -> (URLSessionDataTask?, Observable<Result<Data>>) {
         let closure: SignalObservation<URL, Data> = fetch
         return signalify(parameter: url, closure: closure)
+    }
+
+    fileprivate func handleJSON<DecodableType: Decodable>(_ data: Data, _ completion: (Result<DecodableType>) -> Void) {
+        do {
+            let json = try JSONSerialization.jsonObject(with: data, options: [])
+            if let json = json as? NSDictionary { json.client = self }
+
+            if let error = try? ContentfulError.decode(json) {
+                completion(.error(error))
+                return
+            }
+
+            let decodedObject = try DecodableType.decode(json)
+            completion(Result.success(decodedObject))
+        } catch let error as DecodingError {
+            completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "\(error)")))
+        } catch _ {
+            completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "")))
+        }
     }
 }
 
@@ -184,6 +191,8 @@ extension Client {
                 let mappedItems: [QueryType.ContentType] = entries.items.flatMap { entry in
                     let item = QueryType.ContentType(identifier: entry.sys["id"] as? String)
                     item?.update(with: entry.fields)
+                    
+                    // FIXME: understand why this is not necessary.
 //                    item?.updateLinks(with: entries.includes)
                     return item
                 }
@@ -196,7 +205,7 @@ extension Client {
             }
         })
     }
-
+// TODO:
 //    @discardableResult public func fetchContent<MappableType, QueryableType>
 //        (query: QueryableType) -> (URLSessionDataTask?, Observable<Result<[MappableType]>>)
 //        where MappableType: ContentModel, QueryableType: Query, QueryableType: Queryable, QueryableType.ContentType: ContentModel {

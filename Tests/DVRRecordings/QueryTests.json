@@ -5,64 +5,64 @@
         "status" : 200,
         "headers" : {
           "Via" : "1.1 varnish",
-          "Content-Length" : "445",
-          "Date" : "Wed, 08 Mar 2017 14:09:56 GMT",
-          "Age" : "0",
+          "Content-Length" : "873",
+          "Date" : "Tue, 14 Mar 2017 14:21:47 GMT",
+          "Age" : "18959",
           "Access-Control-Expose-Headers" : "Etag",
           "Access-Control-Max-Age" : "86400",
-          "Etag" : "W\/\"84f895a36be38c89c3d47a7c73c524d1\"",
+          "Etag" : "W\/\"db5cc71013f0ba6b6bb2aa4223b0ca2e\"",
           "Access-Control-Allow-Headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent",
           "Accept-Ranges" : "bytes",
           "Vary" : "Accept-Encoding",
-          "X-Cache-Hits" : "0",
-          "X-Cache" : "MISS",
+          "X-Cache-Hits" : "1",
+          "X-Cache" : "HIT",
           "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
           "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
           "Connection" : "keep-alive",
-          "X-Contentful-Request-Id" : "c64c270c4d65c9fa35e6564eed44e057",
+          "X-Contentful-Request-Id" : "f9a6cb02518a7dfcec9292230c2cfb82",
           "X-Content-Type-Options" : "nosniff",
-          "X-Timer" : "S1488982196.636677,VS0,VE349",
-          "X-Served-By" : "cache-hhn1542-HHN",
+          "X-Timer" : "S1489501307.047299,VS0,VE0",
+          "X-Served-By" : "cache-hhn1544-HHN",
           "Access-Control-Allow-Origin" : "*",
           "Server" : "Contentful",
           "Content-Encoding" : "gzip",
           "Cache-Control" : "max-age=0"
         },
-        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJBcnJheSIKICB9LAogICJ0b3RhbCI6IDMsCiAgInNraXAiOiAwLAogICJsaW1pdCI6IDEwMCwKICAiaXRlbXMiOiBbCiAgICB7CiAgICAgICJmaWVsZHMiOiB7CiAgICAgICAgImJlc3RGcmllbmQiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIkVudHJ5IiwKICAgICAgICAgICAgImlkIjogImhhcHB5Y2F0IgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgImNvbG9yIjogInJhaW5ib3ciCiAgICAgIH0sCiAgICAgICJzeXMiOiB7CiAgICAgICAgInNwYWNlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJTcGFjZSIsCiAgICAgICAgICAgICJpZCI6ICJjZmV4YW1wbGVhcGkiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAiaWQiOiAibnlhbmNhdCIsCiAgICAgICAgInR5cGUiOiAiRW50cnkiLAogICAgICAgICJjcmVhdGVkQXQiOiAiMjAxMy0wNi0yN1QyMjo0NjoxOS41MTNaIiwKICAgICAgICAidXBkYXRlZEF0IjogIjIwMTMtMDktMDRUMDk6MTk6MzkuMDI3WiIsCiAgICAgICAgInJldmlzaW9uIjogNSwKICAgICAgICAiY29udGVudFR5cGUiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIkNvbnRlbnRUeXBlIiwKICAgICAgICAgICAgImlkIjogImNhdCIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJsb2NhbGUiOiAiZW4tVVMiCiAgICAgIH0KICAgIH0sCiAgICB7CiAgICAgICJmaWVsZHMiOiB7CiAgICAgICAgImNvbG9yIjogIm9yYW5nZSIKICAgICAgfSwKICAgICAgInN5cyI6IHsKICAgICAgICAic3BhY2UiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIlNwYWNlIiwKICAgICAgICAgICAgImlkIjogImNmZXhhbXBsZWFwaSIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJpZCI6ICJnYXJmaWVsZCIsCiAgICAgICAgInR5cGUiOiAiRW50cnkiLAogICAgICAgICJjcmVhdGVkQXQiOiAiMjAxMy0wNi0yN1QyMjo0NjoyMC44MjFaIiwKICAgICAgICAidXBkYXRlZEF0IjogIjIwMTMtMDgtMjdUMTA6MDk6MDcuOTI5WiIsCiAgICAgICAgInJldmlzaW9uIjogMiwKICAgICAgICAiY29udGVudFR5cGUiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIkNvbnRlbnRUeXBlIiwKICAgICAgICAgICAgImlkIjogImNhdCIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJsb2NhbGUiOiAiZW4tVVMiCiAgICAgIH0KICAgIH0sCiAgICB7CiAgICAgICJmaWVsZHMiOiB7CiAgICAgICAgImJlc3RGcmllbmQiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIkVudHJ5IiwKICAgICAgICAgICAgImlkIjogIm55YW5jYXQiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAiY29sb3IiOiAiZ3JheSIKICAgICAgfSwKICAgICAgInN5cyI6IHsKICAgICAgICAic3BhY2UiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIlNwYWNlIiwKICAgICAgICAgICAgImlkIjogImNmZXhhbXBsZWFwaSIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJpZCI6ICJoYXBweWNhdCIsCiAgICAgICAgInR5cGUiOiAiRW50cnkiLAogICAgICAgICJjcmVhdGVkQXQiOiAiMjAxMy0wNi0yN1QyMjo0NjoyMC4xNzFaIiwKICAgICAgICAidXBkYXRlZEF0IjogIjIwMTMtMTEtMThUMTU6NTg6MDIuMDE4WiIsCiAgICAgICAgInJldmlzaW9uIjogOCwKICAgICAgICAiY29udGVudFR5cGUiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIkNvbnRlbnRUeXBlIiwKICAgICAgICAgICAgImlkIjogImNhdCIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJsb2NhbGUiOiAiZW4tVVMiCiAgICAgIH0KICAgIH0KICBdCn0K",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?locale=en-US&content_type=cat&select=fields.bestFriend,fields.color,sys"
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJBcnJheSIKICB9LAogICJ0b3RhbCI6IDIsCiAgInNraXAiOiAwLAogICJsaW1pdCI6IDEwMCwKICAiaXRlbXMiOiBbCiAgICB7CiAgICAgICJmaWVsZHMiOiB7CiAgICAgICAgImltYWdlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJBc3NldCIsCiAgICAgICAgICAgICJpZCI6ICIxeDB4cFh1NHBTR1M0T3VrU3lXR1VLIgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgIm5hbWUiOiAiRG9nZSIKICAgICAgfSwKICAgICAgInN5cyI6IHsKICAgICAgICAic3BhY2UiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIlNwYWNlIiwKICAgICAgICAgICAgImlkIjogImNmZXhhbXBsZWFwaSIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJpZCI6ICI2S250YVlYYUhTeUl3OE02ZW8yNk9LIiwKICAgICAgICAidHlwZSI6ICJFbnRyeSIsCiAgICAgICAgImNyZWF0ZWRBdCI6ICIyMDEzLTExLTA2VDA5OjQ1OjI3LjQ3NVoiLAogICAgICAgICJ1cGRhdGVkQXQiOiAiMjAxMy0xMS0xOFQwOToxMzozNy44MDhaIiwKICAgICAgICAicmV2aXNpb24iOiAyLAogICAgICAgICJjb250ZW50VHlwZSI6IHsKICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAibGlua1R5cGUiOiAiQ29udGVudFR5cGUiLAogICAgICAgICAgICAiaWQiOiAiZG9nIgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgImxvY2FsZSI6ICJlbi1VUyIKICAgICAgfQogICAgfSwKICAgIHsKICAgICAgImZpZWxkcyI6IHsKICAgICAgICAiaW1hZ2UiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIkFzc2V0IiwKICAgICAgICAgICAgImlkIjogImpha2UiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAibmFtZSI6ICJKYWtlIgogICAgICB9LAogICAgICAic3lzIjogewogICAgICAgICJzcGFjZSI6IHsKICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAibGlua1R5cGUiOiAiU3BhY2UiLAogICAgICAgICAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgImlkIjogImpha2UiLAogICAgICAgICJ0eXBlIjogIkVudHJ5IiwKICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTMtMDYtMjdUMjI6NDY6MjIuMDk2WiIsCiAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDEzLTEyLTE4VDEzOjEwOjI2LjIxMloiLAogICAgICAgICJyZXZpc2lvbiI6IDUsCiAgICAgICAgImNvbnRlbnRUeXBlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJDb250ZW50VHlwZSIsCiAgICAgICAgICAgICJpZCI6ICJkb2ciCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAibG9jYWxlIjogImVuLVVTIgogICAgICB9CiAgICB9CiAgXSwKICAiaW5jbHVkZXMiOiB7CiAgICAiQXNzZXQiOiBbCiAgICAgIHsKICAgICAgICAic3lzIjogewogICAgICAgICAgInNwYWNlIjogewogICAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAgICJsaW5rVHlwZSI6ICJTcGFjZSIsCiAgICAgICAgICAgICAgImlkIjogImNmZXhhbXBsZWFwaSIKICAgICAgICAgICAgfQogICAgICAgICAgfSwKICAgICAgICAgICJpZCI6ICIxeDB4cFh1NHBTR1M0T3VrU3lXR1VLIiwKICAgICAgICAgICJ0eXBlIjogIkFzc2V0IiwKICAgICAgICAgICJjcmVhdGVkQXQiOiAiMjAxMy0xMS0wNlQwOTo0NToxMC4wMDBaIiwKICAgICAgICAgICJ1cGRhdGVkQXQiOiAiMjAxMy0xMi0xOFQxMzoyNzoxNC45MTdaIiwKICAgICAgICAgICJyZXZpc2lvbiI6IDYsCiAgICAgICAgICAibG9jYWxlIjogImVuLVVTIgogICAgICAgIH0sCiAgICAgICAgImZpZWxkcyI6IHsKICAgICAgICAgICJ0aXRsZSI6ICJEb2dlIiwKICAgICAgICAgICJkZXNjcmlwdGlvbiI6ICJuaWNlIHBpY3R1cmUiLAogICAgICAgICAgImZpbGUiOiB7CiAgICAgICAgICAgICJ1cmwiOiAiLy9pbWFnZXMuY29udGVudGZ1bC5jb20vY2ZleGFtcGxlYXBpLzF4MHhwWHU0cFNHUzRPdWtTeVdHVUsvY2MxMjM5YzYzODU0MjhlZjI2ZjQxODAxOTA1MzI4MTgvZG9nZS5qcGciLAogICAgICAgICAgICAiZGV0YWlscyI6IHsKICAgICAgICAgICAgICAic2l6ZSI6IDUyMjk0MywKICAgICAgICAgICAgICAiaW1hZ2UiOiB7CiAgICAgICAgICAgICAgICAid2lkdGgiOiA1ODAwLAogICAgICAgICAgICAgICAgImhlaWdodCI6IDQzNTAKICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0sCiAgICAgICAgICAgICJmaWxlTmFtZSI6ICJkb2dlLmpwZyIsCiAgICAgICAgICAgICJjb250ZW50VHlwZSI6ICJpbWFnZS9qcGVnIgogICAgICAgICAgfQogICAgICAgIH0KICAgICAgfSwKICAgICAgewogICAgICAgICJzeXMiOiB7CiAgICAgICAgICAic3BhY2UiOiB7CiAgICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICAgImxpbmtUeXBlIjogIlNwYWNlIiwKICAgICAgICAgICAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogICAgICAgICAgICB9CiAgICAgICAgICB9LAogICAgICAgICAgImlkIjogImpha2UiLAogICAgICAgICAgInR5cGUiOiAiQXNzZXQiLAogICAgICAgICAgImNyZWF0ZWRBdCI6ICIyMDEzLTA5LTAyVDE0OjU2OjM0LjI2MFoiLAogICAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDEzLTA5LTAyVDE1OjIyOjM5LjQ2NloiLAogICAgICAgICAgInJldmlzaW9uIjogMiwKICAgICAgICAgICJsb2NhbGUiOiAiZW4tVVMiCiAgICAgICAgfSwKICAgICAgICAiZmllbGRzIjogewogICAgICAgICAgInRpdGxlIjogIkpha2UiLAogICAgICAgICAgImZpbGUiOiB7CiAgICAgICAgICAgICJ1cmwiOiAiLy9pbWFnZXMuY29udGVudGZ1bC5jb20vY2ZleGFtcGxlYXBpLzRobHRlUUFYUzhpUzBZQ01VNlFNV2cvMmE0ZDgyNjE0NGYwMTQxMDkzNjRjY2Y1Yzg5MWQyZGQvamFrZS5wbmciLAogICAgICAgICAgICAiZGV0YWlscyI6IHsKICAgICAgICAgICAgICAic2l6ZSI6IDIwNDgwLAogICAgICAgICAgICAgICJpbWFnZSI6IHsKICAgICAgICAgICAgICAgICJ3aWR0aCI6IDEwMCwKICAgICAgICAgICAgICAgICJoZWlnaHQiOiAxNjEKICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0sCiAgICAgICAgICAgICJmaWxlTmFtZSI6ICJqYWtlLnBuZyIsCiAgICAgICAgICAgICJjb250ZW50VHlwZSI6ICJpbWFnZS9wbmciCiAgICAgICAgICB9CiAgICAgICAgfQogICAgICB9CiAgICBdCiAgfQp9Cg==",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?locale=en-US&content_type=dog&select=fields.image,fields.name,sys"
       },
-      "recorded_at" : 1488982197.204543,
+      "recorded_at" : 1489501306.066007,
       "request" : {
         "headers" : {
           "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
           "Authorization" : "Bearer b4c0n73n7fu1"
         },
         "method" : "GET",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?locale=en-US&content_type=cat&select=fields.bestFriend,fields.color,sys"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?locale=en-US&content_type=dog&select=fields.image,fields.name,sys"
       }
     },
     {
       "response" : {
         "status" : 200,
         "headers" : {
-          "Date" : "Wed, 08 Mar 2017 14:09:56 GMT",
+          "Date" : "Tue, 14 Mar 2017 14:21:47 GMT",
           "Content-Length" : "344",
-          "Age" : "0",
+          "Age" : "18972",
           "Access-Control-Expose-Headers" : "Etag",
           "Access-Control-Max-Age" : "86400",
           "Etag" : "\"17f6b9f68596176aed46fa020bf235af\"",
           "Access-Control-Allow-Headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent",
           "Accept-Ranges" : "bytes",
           "Vary" : "Accept-Encoding",
-          "X-Cache-Hits" : "0",
-          "X-Cache" : "MISS",
+          "X-Cache-Hits" : "1",
+          "X-Cache" : "HIT",
           "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
           "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
           "Connection" : "keep-alive",
-          "X-Contentful-Request-Id" : "7d937eb68ecd57d2e6e981ba2151c005",
+          "X-Contentful-Request-Id" : "3fb53a8e9cf17631344950d80e88c741",
           "X-Content-Type-Options" : "nosniff",
-          "X-Timer" : "S1488982196.788432,VS0,VE200",
-          "X-Served-By" : "cache-hhn1546-HHN",
+          "X-Timer" : "S1489501307.172198,VS0,VE0",
+          "X-Served-By" : "cache-hhn1542-HHN",
           "Access-Control-Allow-Origin" : "*",
           "Server" : "Contentful",
           "Cache-Control" : "max-age=0",
@@ -71,7 +71,88 @@
         "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJTcGFjZSIsCiAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogIH0sCiAgIm5hbWUiOiAiQ29udGVudGZ1bCBFeGFtcGxlIEFQSSIsCiAgImxvY2FsZXMiOiBbCiAgICB7CiAgICAgICJjb2RlIjogImVuLVVTIiwKICAgICAgImRlZmF1bHQiOiB0cnVlLAogICAgICAibmFtZSI6ICJFbmdsaXNoIiwKICAgICAgImZhbGxiYWNrQ29kZSI6IG51bGwKICAgIH0sCiAgICB7CiAgICAgICJjb2RlIjogInRsaCIsCiAgICAgICJkZWZhdWx0IjogZmFsc2UsCiAgICAgICJuYW1lIjogIktsaW5nb24iLAogICAgICAiZmFsbGJhY2tDb2RlIjogImVuLVVTIgogICAgfQogIF0KfQo=",
         "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/"
       },
-      "recorded_at" : 1488982197.204955,
+      "recorded_at" : 1489501306.184854,
+      "request" : {
+        "headers" : {
+          "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
+          "Authorization" : "Bearer b4c0n73n7fu1"
+        },
+        "method" : "GET",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/"
+      }
+    },
+    {
+      "response" : {
+        "status" : 200,
+        "headers" : {
+          "Via" : "1.1 varnish",
+          "Content-Length" : "472",
+          "Date" : "Tue, 14 Mar 2017 14:21:47 GMT",
+          "Age" : "18959",
+          "Access-Control-Expose-Headers" : "Etag",
+          "Access-Control-Max-Age" : "86400",
+          "Etag" : "W\/\"723f6594280691fa448b1d0fc5dfd2a3\"",
+          "Access-Control-Allow-Headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent",
+          "Accept-Ranges" : "bytes",
+          "Vary" : "Accept-Encoding",
+          "X-Cache-Hits" : "1",
+          "X-Cache" : "HIT",
+          "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
+          "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
+          "Connection" : "keep-alive",
+          "X-Contentful-Request-Id" : "a8b1812134a32fb2453f655329285aed",
+          "X-Content-Type-Options" : "nosniff",
+          "X-Timer" : "S1489501307.207861,VS0,VE0",
+          "X-Served-By" : "cache-hhn1544-HHN",
+          "Access-Control-Allow-Origin" : "*",
+          "Server" : "Contentful",
+          "Content-Encoding" : "gzip",
+          "Cache-Control" : "max-age=0"
+        },
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJBcnJheSIKICB9LAogICJ0b3RhbCI6IDMsCiAgInNraXAiOiAwLAogICJsaW1pdCI6IDEwMCwKICAiaXRlbXMiOiBbCiAgICB7CiAgICAgICJmaWVsZHMiOiB7CiAgICAgICAgImJlc3RGcmllbmQiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIkVudHJ5IiwKICAgICAgICAgICAgImlkIjogImhhcHB5Y2F0IgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgImNvbG9yIjogInJhaW5ib3ciLAogICAgICAgICJuYW1lIjogIk55YW4gQ2F0IgogICAgICB9LAogICAgICAic3lzIjogewogICAgICAgICJzcGFjZSI6IHsKICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAibGlua1R5cGUiOiAiU3BhY2UiLAogICAgICAgICAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgImlkIjogIm55YW5jYXQiLAogICAgICAgICJ0eXBlIjogIkVudHJ5IiwKICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTMtMDYtMjdUMjI6NDY6MTkuNTEzWiIsCiAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDEzLTA5LTA0VDA5OjE5OjM5LjAyN1oiLAogICAgICAgICJyZXZpc2lvbiI6IDUsCiAgICAgICAgImNvbnRlbnRUeXBlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJDb250ZW50VHlwZSIsCiAgICAgICAgICAgICJpZCI6ICJjYXQiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAibG9jYWxlIjogImVuLVVTIgogICAgICB9CiAgICB9LAogICAgewogICAgICAiZmllbGRzIjogewogICAgICAgICJjb2xvciI6ICJvcmFuZ2UiLAogICAgICAgICJuYW1lIjogIkdhcmZpZWxkIgogICAgICB9LAogICAgICAic3lzIjogewogICAgICAgICJzcGFjZSI6IHsKICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAibGlua1R5cGUiOiAiU3BhY2UiLAogICAgICAgICAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgImlkIjogImdhcmZpZWxkIiwKICAgICAgICAidHlwZSI6ICJFbnRyeSIsCiAgICAgICAgImNyZWF0ZWRBdCI6ICIyMDEzLTA2LTI3VDIyOjQ2OjIwLjgyMVoiLAogICAgICAgICJ1cGRhdGVkQXQiOiAiMjAxMy0wOC0yN1QxMDowOTowNy45MjlaIiwKICAgICAgICAicmV2aXNpb24iOiAyLAogICAgICAgICJjb250ZW50VHlwZSI6IHsKICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAibGlua1R5cGUiOiAiQ29udGVudFR5cGUiLAogICAgICAgICAgICAiaWQiOiAiY2F0IgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgImxvY2FsZSI6ICJlbi1VUyIKICAgICAgfQogICAgfSwKICAgIHsKICAgICAgImZpZWxkcyI6IHsKICAgICAgICAiYmVzdEZyaWVuZCI6IHsKICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAibGlua1R5cGUiOiAiRW50cnkiLAogICAgICAgICAgICAiaWQiOiAibnlhbmNhdCIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJjb2xvciI6ICJncmF5IiwKICAgICAgICAibmFtZSI6ICJIYXBweSBDYXQiCiAgICAgIH0sCiAgICAgICJzeXMiOiB7CiAgICAgICAgInNwYWNlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJTcGFjZSIsCiAgICAgICAgICAgICJpZCI6ICJjZmV4YW1wbGVhcGkiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAiaWQiOiAiaGFwcHljYXQiLAogICAgICAgICJ0eXBlIjogIkVudHJ5IiwKICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTMtMDYtMjdUMjI6NDY6MjAuMTcxWiIsCiAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDEzLTExLTE4VDE1OjU4OjAyLjAxOFoiLAogICAgICAgICJyZXZpc2lvbiI6IDgsCiAgICAgICAgImNvbnRlbnRUeXBlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJDb250ZW50VHlwZSIsCiAgICAgICAgICAgICJpZCI6ICJjYXQiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAibG9jYWxlIjogImVuLVVTIgogICAgICB9CiAgICB9CiAgXQp9Cg==",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?locale=en-US&content_type=cat&select=fields.bestFriend,fields.color,fields.name,sys"
+      },
+      "recorded_at" : 1489501306.219023,
+      "request" : {
+        "headers" : {
+          "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
+          "Authorization" : "Bearer b4c0n73n7fu1"
+        },
+        "method" : "GET",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?locale=en-US&content_type=cat&select=fields.bestFriend,fields.color,fields.name,sys"
+      }
+    },
+    {
+      "response" : {
+        "status" : 200,
+        "headers" : {
+          "Date" : "Tue, 14 Mar 2017 14:21:47 GMT",
+          "Content-Length" : "344",
+          "Age" : "18972",
+          "Access-Control-Expose-Headers" : "Etag",
+          "Access-Control-Max-Age" : "86400",
+          "Etag" : "\"17f6b9f68596176aed46fa020bf235af\"",
+          "Access-Control-Allow-Headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent",
+          "Accept-Ranges" : "bytes",
+          "Vary" : "Accept-Encoding",
+          "X-Cache-Hits" : "2",
+          "X-Cache" : "HIT",
+          "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
+          "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
+          "Connection" : "keep-alive",
+          "X-Contentful-Request-Id" : "3fb53a8e9cf17631344950d80e88c741",
+          "X-Content-Type-Options" : "nosniff",
+          "X-Timer" : "S1489501307.208158,VS0,VE0",
+          "X-Served-By" : "cache-hhn1542-HHN",
+          "Access-Control-Allow-Origin" : "*",
+          "Server" : "Contentful",
+          "Cache-Control" : "max-age=0",
+          "Via" : "1.1 varnish"
+        },
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJTcGFjZSIsCiAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogIH0sCiAgIm5hbWUiOiAiQ29udGVudGZ1bCBFeGFtcGxlIEFQSSIsCiAgImxvY2FsZXMiOiBbCiAgICB7CiAgICAgICJjb2RlIjogImVuLVVTIiwKICAgICAgImRlZmF1bHQiOiB0cnVlLAogICAgICAibmFtZSI6ICJFbmdsaXNoIiwKICAgICAgImZhbGxiYWNrQ29kZSI6IG51bGwKICAgIH0sCiAgICB7CiAgICAgICJjb2RlIjogInRsaCIsCiAgICAgICJkZWZhdWx0IjogZmFsc2UsCiAgICAgICJuYW1lIjogIktsaW5nb24iLAogICAgICAiZmFsbGJhY2tDb2RlIjogImVuLVVTIgogICAgfQogIF0KfQo=",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/"
+      },
+      "recorded_at" : 1489501306.21966,
       "request" : {
         "headers" : {
           "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",

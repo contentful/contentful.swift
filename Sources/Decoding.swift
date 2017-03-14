@@ -233,15 +233,15 @@ extension Entry: Decodable {
 extension Field: Decodable {
     /// Decode JSON for a Field
     public static func decode(_ json: Any) throws -> Field {
-        var itemType: FieldType = .None
+        var itemType: FieldType = .none
         if let itemTypeString = (try? json => "items" => "type") as? String {
-            itemType = FieldType(rawValue: itemTypeString) ?? .None
+            itemType = FieldType(rawValue: itemTypeString) ?? .none
         }
         if let itemTypeString = (try? json => "items" => "linkType") as? String {
-            itemType = FieldType(rawValue: itemTypeString) ?? .None
+            itemType = FieldType(rawValue: itemTypeString) ?? .none
         }
         if let linkTypeString = (try? json => "linkType") as? String {
-            itemType = FieldType(rawValue: linkTypeString) ?? .None
+            itemType = FieldType(rawValue: linkTypeString) ?? .none
         }
 
         return try Field(
@@ -252,7 +252,7 @@ extension Field: Decodable {
             localized: (try? json => "localized") ?? false,
             required: (try? json => "required") ?? false,
 
-            type: FieldType(rawValue: try json => "type") ?? .None,
+            type: FieldType(rawValue: try json => "type") ?? .none,
             itemType: itemType
         )
     }

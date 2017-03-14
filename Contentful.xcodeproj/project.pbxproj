@@ -32,7 +32,6 @@
 		A1B2E3651BBACF2C00814D63 /* Decoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2E3641BBACF2C00814D63 /* Decoding.swift */; };
 		A1BF6BBC1C0D0FBD00049712 /* SignalUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BF6BBB1C0D0FBD00049712 /* SignalUtils.swift */; };
 		ED02BC611E7047B900BAB2CA /* QueryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02BC5F1E7047AE00BAB2CA /* QueryTests.swift */; };
-		ED02BC641E70486100BAB2CA /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED02BC621E70485D00BAB2CA /* QueryTests.json */; };
 		ED0876DA1E1D07B3008E1A06 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0876D91E1D07B3008E1A06 /* Date.swift */; };
 		ED36B6F51E3BD052005581FD /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E31B83888200A0EFCD /* Array.swift */; };
 		ED36B6F61E3BD052005581FD /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0876D91E1D07B3008E1A06 /* Date.swift */; };
@@ -82,6 +81,7 @@
 		ED36B7221E3BD053005581FD /* SignalUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BF6BBB1C0D0FBD00049712 /* SignalUtils.swift */; };
 		ED36B7231E3BD053005581FD /* Space.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15193A91BB91DE700FB83CD /* Space.swift */; };
 		ED36B7241E3BD053005581FD /* SyncSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A114BBBF1C4FD3C300DE6679 /* SyncSpace.swift */; };
+		ED3CBF091E78343D00E5B02E /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED3CBF071E78342300E5B02E /* QueryTests.json */; };
 		ED65CF911E3F6BD7000EBC62 /* Decodable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65CF8F1E3F6BD7000EBC62 /* Decodable.framework */; };
 		ED65CF921E3F6BD7000EBC62 /* Interstellar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65CF901E3F6BD7000EBC62 /* Interstellar.framework */; };
 		ED65CF971E3F6BF8000EBC62 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65CF941E3F6BF8000EBC62 /* CryptoSwift.framework */; };
@@ -150,8 +150,8 @@
 		A1B2E3661BBAD06000814D63 /* DecodingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DecodingTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A1BF6BBB1C0D0FBD00049712 /* SignalUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SignalUtils.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		ED02BC5F1E7047AE00BAB2CA /* QueryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryTests.swift; sourceTree = "<group>"; };
-		ED02BC621E70485D00BAB2CA /* QueryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QueryTests.json; sourceTree = "<group>"; };
 		ED0876D91E1D07B3008E1A06 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		ED3CBF071E78342300E5B02E /* QueryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QueryTests.json; sourceTree = "<group>"; };
 		ED65CF8F1E3F6BD7000EBC62 /* Decodable.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Decodable.framework; path = Carthage/Build/iOS/Decodable.framework; sourceTree = "<group>"; };
 		ED65CF901E3F6BD7000EBC62 /* Interstellar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Interstellar.framework; path = Carthage/Build/iOS/Interstellar.framework; sourceTree = "<group>"; };
 		ED65CF941E3F6BF8000EBC62 /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
@@ -373,13 +373,13 @@
 		ED9102671E65AE880076FDBD /* DVRRecordings */ = {
 			isa = PBXGroup;
 			children = (
-				ED02BC621E70485D00BAB2CA /* QueryTests.json */,
 				ED9102721E65B4130076FDBD /* AssetTests.json */,
 				ED91027C1E65BAFB0076FDBD /* ContentTypeTests.json */,
 				ED9102741E65B6C20076FDBD /* testClientCanAccessPreviewAPI.json */,
 				ED9102751E65B6C20076FDBD /* testClientCantAccessPreviewAPIWithProductionToken.json */,
 				ED9102761E65B6C20076FDBD /* testFetchSpace.json */,
 				ED9102821E65BCA30076FDBD /* EntryTests.json */,
+				ED3CBF071E78342300E5B02E /* QueryTests.json */,
 				ED9102851E65BD230076FDBD /* SyncTests.json */,
 			);
 			path = DVRRecordings;
@@ -586,7 +586,7 @@
 				ED9102801E65BB0C0076FDBD /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */,
 				ED9102731E65B4130076FDBD /* AssetTests.json in Resources */,
 				ED9102871E65BD250076FDBD /* SyncTests.json in Resources */,
-				ED02BC641E70486100BAB2CA /* QueryTests.json in Resources */,
+				ED3CBF091E78343D00E5B02E /* QueryTests.json in Resources */,
 				A10FF9D81BBB3860001AA4E9 /* Data in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

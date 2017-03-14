@@ -79,9 +79,9 @@ final class ImageAsset: AssetModel {
         self.identifier = identifier
     }
 
-//    func update(with fields: [String: Any]) {
-//        self.title = fields["title"] as? String
-//    }
+    func update(with fields: [String: Any]) {
+        self.title = fields["title"] as? String
+    }
 }
 
 final class Dog: ContentModel {
