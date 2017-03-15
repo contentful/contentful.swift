@@ -16,9 +16,10 @@ public protocol ContentModel: class {
     init?(identifier: String?)
 
     func update(with fields: [String: Any])
+}
 
+public protocol EntryModel: ContentModel {
     static var contentTypeId: String? { get }
-
 }
 
 public extension ContentModel {

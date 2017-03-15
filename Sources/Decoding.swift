@@ -13,7 +13,7 @@ import Foundation
 internal extension String {
 
     // TODO: Better solution for dates.
-    func toIS8601Date() ->  Date? {
+    func toIS8601Date() -> Date? {
         let formatter = DateFormatter()
         formatter.locale = Foundation.Locale(identifier: "en_US_POSIX")
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"

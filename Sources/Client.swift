@@ -190,7 +190,7 @@ extension Client {
                 let mappedItems: [ContentType] = entries.items.flatMap { entry in
                     let item = ContentType(identifier: entry.sys["id"] as? String)
                     item?.update(with: entry.fields)
-                    
+
                     // FIXME: understand why this is not necessary.
 //                    item?.updateLinks(with: entries.includes)
                     return item

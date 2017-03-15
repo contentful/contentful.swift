@@ -43,7 +43,7 @@ import CoreData
 //}
 
 
-final class Cat: ContentModel {
+final class Cat: EntryModel {
 
     static let contentTypeId: String? = "cat"
 
@@ -86,7 +86,7 @@ final class ImageAsset: ContentModel {
     }
 }
 
-final class Dog: ContentModel {
+final class Dog: EntryModel {
 
     static let contentTypeId: String? = "dog"
 

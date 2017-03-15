@@ -10,17 +10,6 @@ import Foundation
 import Interstellar
 import Decodable
 
-
-public protocol AbstractQuery {
-
-    /// All queries supported by the Contentful Delivery API require the content_type parameter to be specified.
-    var contentTypeId: String? { get }
-
-    var locale: String { get }
-
-//    var operation: QueryOperation { get }
-}
-
 public enum QueryOperation {
     case equal(to: String)
     case notEqual(to: String)
@@ -52,7 +41,7 @@ public enum QueryOperation {
     }
 
     internal func validate() throws {
-
+        // TODO:
     }
 
     internal var values: String {
@@ -78,7 +67,7 @@ public enum QueryOperation {
     }
 }
 
-public struct Query<ContentType: ContentModel>: AbstractQuery {
+public struct Query<ContentType: ContentModel> {
 
     /// Query operation
     public static func query(where name: String, _ operation: QueryOperation) -> Query<ContentType> {
@@ -89,13 +78,13 @@ public struct Query<ContentType: ContentModel>: AbstractQuery {
         let parameter = name + operation.operation
         let argument = operation.values
 
-        let query = Query(contentTypeId: ContentType.contentTypeId, locale: "en-US", parameter: parameter, argument: argument)
+        let query = Query(contentTypeId: contentTypeIdentifier(), locale: "en-US", parameter: parameter, argument: argument)
         return query
     }
 
     /// Select operation
     public static func select(fieldNames: [String], locale: String = Defaults.locale) throws -> Query<ContentType> {
-        return try select(fieldNames: fieldNames, contentTypeId: ContentType.contentTypeId, locale: locale)
+        return try select(fieldNames: fieldNames, contentTypeId: contentTypeIdentifier(), locale: locale)
     }
 
     public let contentTypeId: String?
@@ -112,7 +101,16 @@ public struct Query<ContentType: ContentModel>: AbstractQuery {
         try validate(selectedKeyPaths: fieldNames)
         let validSelections = addSysIfNeeded(to: fieldNames).joined(separator: ",")
 
-        return Query(contentTypeId: ContentType.contentTypeId, locale: locale, parameter: "select", argument: validSelections)
+        return Query(contentTypeId: contentTypeId, locale: locale, parameter: "select", argument: validSelections)
+    }
+
+    private static func contentTypeIdentifier() -> String? {
+        var contentTypeId: String? = nil
+
+        if let type = ContentType.self as? EntryModel.Type {
+            contentTypeId = type.contentTypeId
+        }
+        return contentTypeId
     }
 
     static private func validate(selectedKeyPaths: [String]) throws {
