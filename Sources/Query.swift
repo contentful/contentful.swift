@@ -40,8 +40,21 @@ public enum QueryOperation {
         }
     }
 
-    internal func validate() throws {
+    internal static func validatecombinationsRecursively(operations: QueryOperation...) throws {
         // TODO:
+    }
+
+    internal static func validateCombination(operation a: QueryOperation, operation b: QueryOperation) throws -> Bool {
+        switch (a, b) {
+        case (.equals, .equals):
+                return true
+        case (.doesNotEqual, .doesNotEqual):
+            return true
+        default:
+            fatalError("Unhandled combination")
+        }
+
+        return false
     }
 
     internal var values: String {

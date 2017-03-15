@@ -8,7 +8,7 @@
 
 import Decodable
 import Foundation
-
+import ObjectMapper
 
 internal extension String {
 
@@ -88,20 +88,31 @@ extension UInt: Decodable, DynamicDecodable {
     public static var decoder: (Any) throws -> UInt = { try cast($0) }
 }
 
-extension Asset: Decodable {
-    /// Decode JSON for an Asset
-    public static func decode(_ json: Any) throws -> Asset {
-        let (locale, localizedFields) = try parseLocalizedFields(json)
+extension Asset: Mappable {
 
-        return try Asset(
-            sys: (json => "sys") as! [String: Any],
-            localizedFields: localizedFields,
-            defaultLocale: determineDefaultLocale(json),
+    public init?(map: Map) {
 
-            identifier: json => "sys" => "id",
-            type: json => "sys" => "type",
-            locale: locale
-        )
+    }
+    mutating public func mapping(map: ObjectMapper.Map) {
+        var (locale, localizedFields) = try parseLocalizedFields(map.JSON)
+
+        sys                     <- map["sys"]
+        self.localizedFields     = localizedFields
+        self.defaultLocale       = determineDefaultLocale(map.JSON)
+    }
+}
+
+extension Sys: Mappable {
+    public init?(map: Map) {
+        self.init()
+    }
+
+    mutating public func mapping(map: ObjectMapper.Map) {
+        id          <- map["id"]
+        createdAt   <- map["createdAt"]
+        updatedAt   <- map["updatedAt"]
+        locale      <- map["locale"]
+        type        <- map["type"]
     }
 }
 
@@ -188,7 +199,9 @@ extension ContentfulError: Decodable {
     }
 }
 
-extension ContentType: Decodable {
+extension ContentType: Mappable {
+
+
     /// Decode JSON for a Content Type
     public static func decode(_ json: Any) throws -> ContentType {
         return try ContentType(
@@ -219,16 +232,13 @@ extension Entry: Decodable {
         let (locale, localizedFields) = try parseLocalizedFields(json)
 
         return try Entry(
-            sys: (json => "sys") as! [String: Any],
+            sys: (json => "sys") as! Sys,
             localizedFields: localizedFields,
-            defaultLocale: determineDefaultLocale(json),
-
-            identifier: json => "sys" => "id",
-            type: json => "sys" => "type",
-            locale: locale
+            defaultLocale: determineDefaultLocale(json)
         )
     }
 }
+
 
 extension Field: Decodable {
     /// Decode JSON for a Field
@@ -288,7 +298,7 @@ extension Space: Decodable {
     /// Decode JSON for a Space
     public static func decode(_ json: Any) throws -> Space {
         return try Space(
-            sys: (json => "sys") as! [String: Any],
+            sys: (json => "sys") as! Sys,
 
             identifier: json => "sys" => "id",
             locales: json => "locales",

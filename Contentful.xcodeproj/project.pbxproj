@@ -85,6 +85,11 @@
 		ED3CBF0B1E793F8200E5B02E /* ContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3CBF0A1E793F8200E5B02E /* ContentModel.swift */; };
 		ED3CBF0C1E793F8200E5B02E /* ContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3CBF0A1E793F8200E5B02E /* ContentModel.swift */; };
 		ED3CBF0D1E793F8200E5B02E /* ContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3CBF0A1E793F8200E5B02E /* ContentModel.swift */; };
+		ED3CBF0F1E7A98CF00E5B02E /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED3CBF0E1E7A98CF00E5B02E /* ObjectMapper.framework */; };
+		ED3CBF111E7A98DD00E5B02E /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED3CBF101E7A98DD00E5B02E /* ObjectMapper.framework */; };
+		ED3CBF131E7A98EB00E5B02E /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED3CBF121E7A98EB00E5B02E /* ObjectMapper.framework */; };
+		ED3CBF171E7A990700E5B02E /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED3CBF161E7A990700E5B02E /* ObjectMapper.framework */; };
+		ED3CBF181E7A991500E5B02E /* ContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3CBF0A1E793F8200E5B02E /* ContentModel.swift */; };
 		ED65CF911E3F6BD7000EBC62 /* Decodable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65CF8F1E3F6BD7000EBC62 /* Decodable.framework */; };
 		ED65CF921E3F6BD7000EBC62 /* Interstellar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65CF901E3F6BD7000EBC62 /* Interstellar.framework */; };
 		ED65CF971E3F6BF8000EBC62 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65CF941E3F6BF8000EBC62 /* CryptoSwift.framework */; };
@@ -156,6 +161,10 @@
 		ED0876D91E1D07B3008E1A06 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		ED3CBF071E78342300E5B02E /* QueryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QueryTests.json; sourceTree = "<group>"; };
 		ED3CBF0A1E793F8200E5B02E /* ContentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentModel.swift; sourceTree = "<group>"; };
+		ED3CBF0E1E7A98CF00E5B02E /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/tvOS/ObjectMapper.framework; sourceTree = "<group>"; };
+		ED3CBF101E7A98DD00E5B02E /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/iOS/ObjectMapper.framework; sourceTree = "<group>"; };
+		ED3CBF121E7A98EB00E5B02E /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/Mac/ObjectMapper.framework; sourceTree = "<group>"; };
+		ED3CBF161E7A990700E5B02E /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/watchOS/ObjectMapper.framework; sourceTree = "<group>"; };
 		ED65CF8F1E3F6BD7000EBC62 /* Decodable.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Decodable.framework; path = Carthage/Build/iOS/Decodable.framework; sourceTree = "<group>"; };
 		ED65CF901E3F6BD7000EBC62 /* Interstellar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Interstellar.framework; path = Carthage/Build/iOS/Interstellar.framework; sourceTree = "<group>"; };
 		ED65CF941E3F6BF8000EBC62 /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
@@ -190,6 +199,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED3CBF111E7A98DD00E5B02E /* ObjectMapper.framework in Frameworks */,
 				ED65CF911E3F6BD7000EBC62 /* Decodable.framework in Frameworks */,
 				ED65CF921E3F6BD7000EBC62 /* Interstellar.framework in Frameworks */,
 			);
@@ -211,6 +221,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED3CBF171E7A990700E5B02E /* ObjectMapper.framework in Frameworks */,
 				ED65CFA61E3F6C55000EBC62 /* Decodable.framework in Frameworks */,
 				ED65CFA71E3F6C55000EBC62 /* Interstellar.framework in Frameworks */,
 			);
@@ -220,6 +231,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED3CBF0F1E7A98CF00E5B02E /* ObjectMapper.framework in Frameworks */,
 				ED65CFA21E3F6C3B000EBC62 /* Decodable.framework in Frameworks */,
 				ED65CFA31E3F6C3B000EBC62 /* Interstellar.framework in Frameworks */,
 			);
@@ -229,6 +241,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED3CBF131E7A98EB00E5B02E /* ObjectMapper.framework in Frameworks */,
 				ED65CF9E1E3F6C2A000EBC62 /* Decodable.framework in Frameworks */,
 				ED65CF9F1E3F6C2A000EBC62 /* Interstellar.framework in Frameworks */,
 			);
@@ -331,6 +344,7 @@
 		ED65CF8B1E3F6B9E000EBC62 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				ED3CBF101E7A98DD00E5B02E /* ObjectMapper.framework */,
 				ED65CF8F1E3F6BD7000EBC62 /* Decodable.framework */,
 				ED65CF901E3F6BD7000EBC62 /* Interstellar.framework */,
 			);
@@ -340,6 +354,7 @@
 		ED65CF8C1E3F6BA2000EBC62 /* macOS */ = {
 			isa = PBXGroup;
 			children = (
+				ED3CBF121E7A98EB00E5B02E /* ObjectMapper.framework */,
 				ED65CF9C1E3F6C2A000EBC62 /* Decodable.framework */,
 				ED65CF9D1E3F6C2A000EBC62 /* Interstellar.framework */,
 			);
@@ -349,6 +364,7 @@
 		ED65CF8D1E3F6BA8000EBC62 /* tvOS */ = {
 			isa = PBXGroup;
 			children = (
+				ED3CBF0E1E7A98CF00E5B02E /* ObjectMapper.framework */,
 				ED65CFA01E3F6C3B000EBC62 /* Decodable.framework */,
 				ED65CFA11E3F6C3B000EBC62 /* Interstellar.framework */,
 			);
@@ -358,6 +374,7 @@
 		ED65CF8E1E3F6BAD000EBC62 /* watchOS */ = {
 			isa = PBXGroup;
 			children = (
+				ED3CBF161E7A990700E5B02E /* ObjectMapper.framework */,
 				ED65CFA41E3F6C55000EBC62 /* Decodable.framework */,
 				ED65CFA51E3F6C55000EBC62 /* Interstellar.framework */,
 			);
@@ -748,6 +765,7 @@
 				ED36B71C1E3BD053005581FD /* Decoding.swift in Sources */,
 				ED68BD751E6DC48000939F6D /* Query.swift in Sources */,
 				ED36B71A1E3BD053005581FD /* ContentType.swift in Sources */,
+				ED3CBF181E7A991500E5B02E /* ContentModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

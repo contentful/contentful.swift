@@ -6,27 +6,23 @@
 //  Copyright © 2015 Contentful GmbH. All rights reserved.
 //
 
-import Decodable
 import Foundation
+import ObjectMapper
 
 /// Protocol for resources inside Contentful
-protocol Resource: Decodable {
+protocol Resource: Mappable {
     /// System fields
-    var sys: [String: Any] { get }
-    /// Unique identifier
-    var identifier: String { get }
-    /// Resource type
-    var type: String { get }
+    var sys: Sys! { get }
 }
 
 protocol LocalizedResource {
 
     // Should this be moved to Resource?
-    var fields: [String: Any] { get }
+    var fields: [String: Any]! { get }
 
-    var locale: String { get set }
-    var localizedFields: [String: [String: Any]] { get }
-    var defaultLocale: String { get }
+//    var locale: String { get set }
+    var localizedFields: [String: [String: Any]]! { get }
+    var defaultLocale: String! { get }
 }
 
 @discardableResult func +=<K: Hashable, V> (left: [K: V], right: [K: V]) -> [K: V] {

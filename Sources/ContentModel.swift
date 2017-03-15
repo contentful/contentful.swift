@@ -16,6 +16,15 @@ public protocol ContentModel: class {
     init?(identifier: String?)
 
     func update(with fields: [String: Any])
+
+    // TODO: Use object-mapper.
+
+//    // TODO: Add constraint that Sys is mappable
+//    var sys: Sys { get set } // or maybe it's resource.sys
+//
+//    var fields: ClientFields { get set }
+//
+//    var link: Link { get set }
 }
 
 public protocol EntryModel: ContentModel {
@@ -24,19 +33,19 @@ public protocol EntryModel: ContentModel {
 
 public extension ContentModel {
 
-    init?(link: Any?) {
-        if let entry = link as? Entry {
-            self.init(identifier: entry.identifier)
-            self.update(with: entry.fields)
-            return
-        }
-        if let asset = link as? Asset {
-            self.init(identifier: asset.identifier)
+    init?(link: Link) {
+        self.init(identifier: link.id)
+        switch link {
+
+        case .asset(let asset):
             self.update(with: asset.fields)
-            return
+
+        case .entry(let entry):
+            self.update(with: entry.fields)
+
+        default:
+            break
         }
-        let identifier = Contentful.identifier(for: link)
-        self.init(identifier: identifier)
     }
 }
 

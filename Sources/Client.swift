@@ -181,7 +181,7 @@ extension Client {
             switch result {
             case .success(let entries):
                 let mappedItems: [ContentType] = entries.items.flatMap { entry in
-                    let item = ContentType(identifier: entry.sys["id"] as? String)
+                    let item = ContentType(identifier: entry.sys.id as? String)
                     item?.update(with: entry.fields)
 
                     // FIXME: understand why this is not necessary.

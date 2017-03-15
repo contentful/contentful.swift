@@ -11,23 +11,17 @@ import Foundation
 /// An asset represents a media file in Contentful
 public struct Asset: Resource, LocalizedResource {
     /// System fields
-    public let sys: [String: Any]
+    public var sys: Sys!
     /// Content fields
-    public var fields: [String:Any] {
-        return Contentful.fields(localizedFields, forLocale: locale, defaultLocale: defaultLocale)
+    public var fields: [String:Any]! {
+        return Contentful.fields(localizedFields, forLocale: sys.locale, defaultLocale: defaultLocale)
     }
 
-    let localizedFields: [String:[String:Any]]
-    let defaultLocale: String
+    var localizedFields: [String:[String:Any]]!
+    var defaultLocale: String!
 
-    /// The unique identifier of this Asset
-    public let identifier: String
-
-    /// Resource type ("Asset")
-    public let type: String
-
-    /// Currently selected locale
-    public var locale: String
+//    /// Currently selected locale
+//    public var locale: String
 
     /// The URL for the underlying media file
     public func URL() throws -> Foundation.URL {

@@ -83,10 +83,10 @@ public final class SyncSpace {
         for item in items {
             switch item {
             case let asset as Asset:
-                self.assetsMap[asset.identifier] = asset
+                self.assetsMap[asset.sys.id] = asset
 
             case let entry as Entry:
-                self.entriesMap[entry.identifier] = entry
+                self.entriesMap[entry.sys.id] = entry
 
             case let deletedResource as DeletedResource:
                 switch deletedResource.type {
@@ -142,16 +142,21 @@ public final class SyncSpace {
                 self.includes += syncSpace.includes
 
                 for asset in syncSpace.assets {
+                    // FIXME:
+
                     self.delegate?.create(asset: asset)
-                    self.assetsMap[asset.identifier] = asset
+                    self.assetsMap[asset.sys.id] = asset
                 }
 
                 for entry in syncSpace.entries {
+
+                    // FIXME:
+
                     // For syncspaces, we do NOT resolve links during array decoding, but instead postpone
                     // To enabling linking with currently synced items.
                     let resolvedEntry = entry.resolveLinks(againstIncludes: self.includes)
                     self.delegate?.create(entry: resolvedEntry)
-                    self.entriesMap[entry.identifier] = resolvedEntry
+                    self.entriesMap[entry.sys.id] = resolvedEntry
                 }
 
                 for deletedAssetId in syncSpace.deletedAssets {

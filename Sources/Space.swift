@@ -24,14 +24,14 @@ public struct Locale {
 /// A Space represents a collection of Content Types, Assets and Entries in Contentful
 public struct Space: Resource {
     /// System fields
-    public let sys: [String: Any]
+    public let sys: Sys
 
-    /// The unique identifier of this Space
-    public let identifier: String
+//    /// The unique identifier of this Space
+//    public let identifier: String
     /// Available Locales for this Space
     public let locales: [Locale]
     /// The name of this Space
     public let name: String
-    /// Resource type ("Space")
-    public let type: String
+//    /// Resource type ("Space")
+//    public let type: String
 }

@@ -59,7 +59,7 @@ public enum QueryError: Error {
 /// Information regarding an error received from Contentful
 public struct ContentfulError: Resource, Error {
     /// System fields
-    public let sys: [String: Any]
+    public let sys: Sys
 
     /// The unique identifier of this error
     public let identifier: String
