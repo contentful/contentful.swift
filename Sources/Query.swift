@@ -11,8 +11,8 @@ import Interstellar
 import Decodable
 
 public enum QueryOperation {
-    case equal(to: String)
-    case notEqual(to: String)
+    case equals(String)
+    case doesNotEqual(String)
     case multipleValues([String])
     case inclusion([String])
     case exclusion([String])
@@ -20,10 +20,10 @@ public enum QueryOperation {
 
     internal var operation: String {
         switch self {
-        case .equal:
+        case .equals:
             return ""
 
-        case .notEqual:
+        case .doesNotEqual:
             return "[ne]"
 
         case .multipleValues:
@@ -46,10 +46,10 @@ public enum QueryOperation {
 
     internal var values: String {
         switch self {
-        case .equal(let value):
+        case .equals(let value):
             return value
 
-        case .notEqual(let value):
+        case .doesNotEqual(let value):
             return value
 
         case .multipleValues(let values):
@@ -71,37 +71,56 @@ public struct Query<ContentType: ContentModel> {
 
     /// Query operation
     public static func query(where name: String, _ operation: QueryOperation) -> Query<ContentType> {
+        let query = Query<ContentType>()
+        return query.query(where: name, operation)
+    }
+
+    public func query(where name: String, _ operation: QueryOperation) -> Query<ContentType> {
         // check that names start with "sys." or "fields."
+
+//        try checkCompoundQueryKeeps(same: contentTypeId)
 
         // validate
         // create parameter
         let parameter = name + operation.operation
         let argument = operation.values
 
-        let query = Query(contentTypeId: contentTypeIdentifier(), locale: "en-US", parameter: parameter, argument: argument)
+        let parameters = self.parameters + [parameter: argument]
+
+        let query = Query(contentTypeId: Query.contentTypeIdentifier(), locale: "en-US", parameters: parameters)
+
         return query
+
     }
 
     /// Select operation
     public static func select(fieldNames: [String], locale: String = Defaults.locale) throws -> Query<ContentType> {
-        return try select(fieldNames: fieldNames, contentTypeId: contentTypeIdentifier(), locale: locale)
+        let query = Query<ContentType>()
+        return try query.select(fieldNames: fieldNames, locale: locale)
     }
 
-    public let contentTypeId: String?
+    public func select(fieldNames: [String], locale: String = Defaults.locale) throws -> Query<ContentType> {
+        return try select(fieldNames: fieldNames, contentTypeId: Query.contentTypeIdentifier(), locale: locale)
+    }
 
-    public let locale: String
+    private var contentTypeId: String?
 
-    private let parameter: String
+    private var locale: String = Defaults.locale
 
-    private let argument: String
+    internal var parameters: [String: String] = [String: String]()
 
-    private static func select(fieldNames: [String], contentTypeId: String?, locale: String = Defaults.locale) throws -> Query<ContentType> {
+    private func select(fieldNames: [String], contentTypeId: String?, locale: String = Defaults.locale) throws -> Query<ContentType> {
+
         guard fieldNames.count < 100 else { throw QueryError.hitSelectionLimit() }
 
-        try validate(selectedKeyPaths: fieldNames)
-        let validSelections = addSysIfNeeded(to: fieldNames).joined(separator: ",")
+        try Query.validate(selectedKeyPaths: fieldNames)
 
-        return Query(contentTypeId: contentTypeId, locale: locale, parameter: "select", argument: validSelections)
+        let validSelections = Query.addSysIfNeeded(to: fieldNames).joined(separator: ",")
+
+        let parameters = self.parameters + ["select": validSelections]
+        let query = Query(contentTypeId: Query.contentTypeIdentifier(), locale: "en-US", parameters: parameters)
+
+        return query
     }
 
     private static func contentTypeIdentifier() -> String? {
@@ -122,14 +141,13 @@ public struct Query<ContentType: ContentModel> {
     }
 
     public func queryParameters() -> [String: String] {
-        var parameters = [String: String]()
+        var parameters = self.parameters
 
         if let contentTypeId = contentTypeId {
             parameters["content_type"] = contentTypeId
         }
 
         parameters["locale"] = locale
-        parameters[parameter] = argument
         return parameters
     }
 

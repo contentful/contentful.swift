@@ -51,6 +51,8 @@ public enum QueryError: Error {
     /// Thrown when over 99 properties have been selected. The CDA only supports 100 selections
     /// and the SDK always includes "sys" as one of them.
     case hitSelectionLimit()
+
+    case multipleContentTypesSpecified()
 }
 
 

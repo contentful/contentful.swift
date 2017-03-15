@@ -134,7 +134,6 @@ class QueryTests: XCTestCase {
         let selections = ["fields.bestFriend", "fields.color", "fields.name"]
 
         let expectation = self.expectation(description: "Select operator expectation")
-
         let query = try! Query<Cat>.select(fieldNames: selections, locale: "en-US")
 
         QueryTests.client.fetchContent(with: query) { result in
@@ -171,8 +170,8 @@ class QueryTests: XCTestCase {
                 // Test links
                 expect(doge.image).toNot(beNil())
                 expect(doge.image?.identifier).to(equal("1x0xpXu4pSGS4OukSyWGUK"))
-            case .error:
-                fail("Should not throw an error")
+            case .error(let error):
+                fail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -185,7 +184,7 @@ class QueryTests: XCTestCase {
 
         let expectation = self.expectation(description: "Inequalitys operator expectation")
 
-        let query: Query<Cat> = Query.query(where: "fields.color", .equal(to: "gray"))
+        let query = Query<Cat>.query(where: "fields.color", .equals("gray"))
 
         QueryTests.client.fetchContent(with: query) { result in
             switch result {
@@ -203,9 +202,9 @@ class QueryTests: XCTestCase {
 
     func testInequalityQuery() {
 
-        let expectation = self.expectation(description: "Inequalitys operator expectation")
+        let expectation = self.expectation(description: "Inequality operator expectation")
 
-        let query: Query<Cat> = Query.query(where: "fields.color", .notEqual(to: "gray"))
+        let query = Query<Cat>.query(where: "fields.color", .doesNotEqual("gray"))
 
         QueryTests.client.fetchContent(with: query) { result in
             switch result {
@@ -224,7 +223,7 @@ class QueryTests: XCTestCase {
     func testExistenceQuery() {
         let expectation = self.expectation(description: "Inequalitys operator expectation")
 
-        let query: Query<Cat> = Query.query(where: "fields.color", .exists(is: true))
+        let query = Query<Cat>.query(where: "fields.color", .exists(is: true))
 
         QueryTests.client.fetchContent(with: query) { result in
             switch result {
@@ -233,6 +232,27 @@ class QueryTests: XCTestCase {
                 expect(cats.first!.color).toNot(equal("gray"))
             case .error:
                 fail("Should not throw an error")
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testChainingQueries() {
+
+        let expectation = self.expectation(description: "Inequalitys operator expectation")
+
+        let query = Query<Cat>.query(where: "fields.color", .doesNotEqual("gray"))
+            .query(where: "fields.lives", .equals("9"))
+
+        QueryTests.client.fetchContent(with: query) { result in
+            switch result {
+            case .success(let cats):
+                expect(cats.count).to(equal(1))
+
+            case .error(let error):
+                fail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }

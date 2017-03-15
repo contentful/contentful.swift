@@ -172,19 +172,12 @@ open class Client {
 
 extension Client {
 
-//    @discardableResult func execute<ResourceType>(query: Query, then completion: @escaping (Result<ResourceType>) -> Void) -> URLSessionDataTask?
-//        where ResourceType: Decodable {
-//
-//            let url = URL(forComponent: "entries", parameters: query.queryParameters())
-//            return fetch(url: url, then: completion)
-//    }
-
     @discardableResult public func fetchContent<ContentType: ContentModel>
         (with query: Query<ContentType>, completion: @escaping (Result<[ContentType]>) -> Void) -> URLSessionDataTask? {
 
         let url = URL(forComponent: "entries", parameters: query.queryParameters())
 
-        return fetch(url: url, then: { (result: Result<Array<Entry>>) in
+        return fetch(url: url) { (result: Result<Array<Entry>>) in
             switch result {
             case .success(let entries):
                 let mappedItems: [ContentType] = entries.items.flatMap { entry in
@@ -202,15 +195,14 @@ extension Client {
             case .error(let error):
                 completion(Result.error(error))
             }
-        })
+        }
     }
-// TODO:
-//    @discardableResult public func fetchContent<MappableType, QueryableType>
-//        (query: QueryableType) -> (URLSessionDataTask?, Observable<Result<[MappableType]>>)
-//        where MappableType: ContentModel, QueryableType: Query, QueryableType: Queryable, QueryableType.ContentType: ContentModel {
-//        let closure: SignalObservation<Query, [MappableType]> = fetchContent(query:completion:)
-//        return signalify(parameter: query, closure: closure)
-//    }
+
+    @discardableResult public func fetchContent<ContentType: ContentModel>
+        (query: Query<ContentType>) -> (URLSessionDataTask?, Observable<Result<[ContentType]>>) {
+        let closure: SignalObservation<Query<ContentType>, [ContentType]> = fetchContent(with:completion:)
+        return signalify(parameter: query, closure: closure)
+    }
 }
 
 
