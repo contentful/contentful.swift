@@ -11,86 +11,108 @@ import Interstellar
 import Decodable
 
 
-public protocol Queryable {
-    associatedtype ContentType
-}
-
-public protocol AssetModel: class {
-
-    var identifier: String { get }
-
-    init?(identifier: String?)
-
-    func update(with fields: [String: Any])
-}
-
-public protocol ContentModel: AssetModel {
-
-    static var contentTypeId: String { get }
-
-//    func updateLinks(with includes: [String: Any])
-}
-
-public extension AssetModel {
-
-    init?(link: Any?) {
-        if let entry = link as? Entry {
-            self.init(identifier: entry.identifier)
-            self.update(with: entry.fields)
-            return
-        }
-        if let asset = link as? Asset {
-            self.init(identifier: asset.identifier)
-            self.update(with: asset.fields)
-            return
-        }
-        let identifier = Contentful.identifier(for: link)
-        self.init(identifier: identifier)
-    }
-}
-
-internal func identifier(for link: Any?) -> String? {
-    guard let link = link as? [String: Any] else { return nil }
-    let sys = link["sys"] as? [String: Any]
-    let identifier = sys?["id"] as? String
-    return identifier
-}
-
-
-public protocol Query {
-
+public protocol AbstractQuery {
 
     /// All queries supported by the Contentful Delivery API require the content_type parameter to be specified.
-    var contentTypeId: String { get }
+    var contentTypeId: String? { get }
 
     var locale: String { get }
 
-    func queryParameters() -> [String: String]
+//    var operation: QueryOperation { get }
 }
 
+public enum QueryOperation {
+    case equal(to: String)
+    case notEqual(to: String)
+    case multipleValues([String])
+    case inclusion([String])
+    case exclusion([String])
+    case exists(is: Bool)
 
-public struct SelectQuery<QueryableType>: Query, Queryable where QueryableType: ContentModel {
+    internal var operation: String {
+        switch self {
+        case .equal:
+            return ""
 
-    public typealias ContentType = QueryableType
+        case .notEqual:
+            return "[ne]"
 
-    public let contentTypeId: String
+        case .multipleValues:
+            return "[all]"
 
-    public var locale: String
+        case .inclusion:
+            return "[in]"
 
-    var selectedFieldNames: [String]
+        case .exclusion:
+            return "[nin]"
 
-    static func select(fieldNames: [String], locale: String = Defaults.locale) throws -> SelectQuery<QueryableType> {
-        return try select(fieldNames: fieldNames, contentTypeId: QueryableType.contentTypeId, locale: locale)
+        case .exists:
+            return "[exists]"
+        }
     }
 
-    static func select(fieldNames: [String], contentTypeId: String, locale: String = Defaults.locale) throws -> SelectQuery<QueryableType> {
+    internal func validate() throws {
+
+    }
+
+    internal var values: String {
+        switch self {
+        case .equal(let value):
+            return value
+
+        case .notEqual(let value):
+            return value
+
+        case .multipleValues(let values):
+            return values.joined(separator: ",")
+
+        case .inclusion(let values):
+            return values.joined(separator: ",")
+
+        case .exclusion(let values):
+            return values.joined(separator: ",")
+
+        case .exists(let value):
+            return value ? "true" : "false"
+        }
+    }
+}
+
+public struct Query<ContentType: ContentModel>: AbstractQuery {
+
+    /// Query operation
+    public static func query(where name: String, _ operation: QueryOperation) -> Query<ContentType> {
+        // check that names start with "sys." or "fields."
+
+        // validate
+        // create parameter
+        let parameter = name + operation.operation
+        let argument = operation.values
+
+        let query = Query(contentTypeId: ContentType.contentTypeId, locale: "en-US", parameter: parameter, argument: argument)
+        return query
+    }
+
+    /// Select operation
+    public static func select(fieldNames: [String], locale: String = Defaults.locale) throws -> Query<ContentType> {
+        return try select(fieldNames: fieldNames, contentTypeId: ContentType.contentTypeId, locale: locale)
+    }
+
+    public let contentTypeId: String?
+
+    public let locale: String
+
+    private let parameter: String
+
+    private let argument: String
+
+    private static func select(fieldNames: [String], contentTypeId: String?, locale: String = Defaults.locale) throws -> Query<ContentType> {
         guard fieldNames.count < 100 else { throw QueryError.hitSelectionLimit() }
 
-        let fieldNamePaths = fieldNames.map { return "fields.\($0)" }
+        try validate(selectedKeyPaths: fieldNames)
+        let validSelections = addSysIfNeeded(to: fieldNames).joined(separator: ",")
 
-        try validate(selectedKeyPaths: fieldNamePaths)
-
-        return SelectQuery(contentTypeId: QueryableType.contentTypeId, locale: locale, selectedFieldNames: fieldNamePaths)
+        return Query(contentTypeId: ContentType.contentTypeId, locale: locale, parameter: "select", argument: validSelections)
     }
 
     static private func validate(selectedKeyPaths: [String]) throws {
@@ -103,14 +125,26 @@ public struct SelectQuery<QueryableType>: Query, Queryable where QueryableType: 
 
     public func queryParameters() -> [String: String] {
         var parameters = [String: String]()
-        let validSelections = addSysIfNeeded(to: selectedFieldNames)
-        parameters["content_type"] = contentTypeId
+
+        if let contentTypeId = contentTypeId {
+            parameters["content_type"] = contentTypeId
+        }
+
         parameters["locale"] = locale
-        parameters["select"] = validSelections.joined(separator: ",")
+        parameters[parameter] = argument
         return parameters
     }
 
-    private func addSysIfNeeded(to selectedFieldNames: [String]) -> [String] {
+//    private static func validate(queryArguments: [String], contentTypeId: String?, operation: QueryOperation) throws {
+//        for argument in queryArguments {
+//            if argument.hasPrefix("fields.") && contentTypeId == nil {
+//                throw QueryError.invalidSelection(fieldKeyPath: argument)
+//            }
+//        }
+//        try operation.validate()
+//    }
+
+    private static func addSysIfNeeded(to selectedFieldNames: [String]) -> [String] {
         var completeSelections = selectedFieldNames
         if !completeSelections.contains("sys") {
             completeSelections.append("sys")

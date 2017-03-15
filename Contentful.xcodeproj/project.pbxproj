@@ -82,6 +82,9 @@
 		ED36B7231E3BD053005581FD /* Space.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15193A91BB91DE700FB83CD /* Space.swift */; };
 		ED36B7241E3BD053005581FD /* SyncSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A114BBBF1C4FD3C300DE6679 /* SyncSpace.swift */; };
 		ED3CBF091E78343D00E5B02E /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED3CBF071E78342300E5B02E /* QueryTests.json */; };
+		ED3CBF0B1E793F8200E5B02E /* ContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3CBF0A1E793F8200E5B02E /* ContentModel.swift */; };
+		ED3CBF0C1E793F8200E5B02E /* ContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3CBF0A1E793F8200E5B02E /* ContentModel.swift */; };
+		ED3CBF0D1E793F8200E5B02E /* ContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3CBF0A1E793F8200E5B02E /* ContentModel.swift */; };
 		ED65CF911E3F6BD7000EBC62 /* Decodable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65CF8F1E3F6BD7000EBC62 /* Decodable.framework */; };
 		ED65CF921E3F6BD7000EBC62 /* Interstellar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65CF901E3F6BD7000EBC62 /* Interstellar.framework */; };
 		ED65CF971E3F6BF8000EBC62 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65CF941E3F6BF8000EBC62 /* CryptoSwift.framework */; };
@@ -152,6 +155,7 @@
 		ED02BC5F1E7047AE00BAB2CA /* QueryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryTests.swift; sourceTree = "<group>"; };
 		ED0876D91E1D07B3008E1A06 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		ED3CBF071E78342300E5B02E /* QueryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QueryTests.json; sourceTree = "<group>"; };
+		ED3CBF0A1E793F8200E5B02E /* ContentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentModel.swift; sourceTree = "<group>"; };
 		ED65CF8F1E3F6BD7000EBC62 /* Decodable.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Decodable.framework; path = Carthage/Build/iOS/Decodable.framework; sourceTree = "<group>"; };
 		ED65CF901E3F6BD7000EBC62 /* Interstellar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Interstellar.framework; path = Carthage/Build/iOS/Interstellar.framework; sourceTree = "<group>"; };
 		ED65CF941E3F6BF8000EBC62 /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
@@ -264,6 +268,7 @@
 				A15193AD1BB9236300FB83CD /* Asset.swift */,
 				A19CA3DF1B836F2500A0EFCD /* Client.swift */,
 				ED68BD711E6DC47A00939F6D /* Query.swift */,
+				ED3CBF0A1E793F8200E5B02E /* ContentModel.swift */,
 				A19CA3E11B8386CC00A0EFCD /* ClientConfiguration.swift */,
 				A15193AB1BB91FED00FB83CD /* ContentType.swift */,
 				A119937C1C5252BF00749579 /* DecodableData.swift */,
@@ -653,6 +658,7 @@
 				A1B2E3651BBACF2C00814D63 /* Decoding.swift in Sources */,
 				ED68BD721E6DC47A00939F6D /* Query.swift in Sources */,
 				A10FF9D51BBB3676001AA4E9 /* Error.swift in Sources */,
+				ED3CBF0B1E793F8200E5B02E /* ContentModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -692,6 +698,7 @@
 				ED36B6FC1E3BD052005581FD /* Decoding.swift in Sources */,
 				ED68BD731E6DC47F00939F6D /* Query.swift in Sources */,
 				ED36B6FA1E3BD052005581FD /* ContentType.swift in Sources */,
+				ED3CBF0C1E793F8200E5B02E /* ContentModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -716,6 +723,7 @@
 				ED36B70C1E3BD052005581FD /* Decoding.swift in Sources */,
 				ED68BD741E6DC48000939F6D /* Query.swift in Sources */,
 				ED36B70A1E3BD052005581FD /* ContentType.swift in Sources */,
+				ED3CBF0D1E793F8200E5B02E /* ContentModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -45,7 +45,7 @@ import CoreData
 
 final class Cat: ContentModel {
 
-    static let contentTypeId = "cat"
+    static let contentTypeId: String? = "cat"
 
     var identifier: String
     var color: String?
@@ -68,7 +68,9 @@ final class Cat: ContentModel {
     }
 }
 
-final class ImageAsset: AssetModel {
+final class ImageAsset: ContentModel {
+
+    static let contentTypeId: String? = nil
 
     var identifier: String
 
@@ -86,7 +88,7 @@ final class ImageAsset: AssetModel {
 
 final class Dog: ContentModel {
 
-    static let contentTypeId = "dog"
+    static let contentTypeId: String? = "dog"
 
     var identifier: String
     var image: ImageAsset?
@@ -129,11 +131,11 @@ class QueryTests: XCTestCase {
     }
 
     func testQueryReturningClientDefinedModel() {
-        let selections = ["bestFriend", "color", "name"]
+        let selections = ["fields.bestFriend", "fields.color", "fields.name"]
 
         let expectation = self.expectation(description: "Select operator expectation")
 
-        let query = try! SelectQuery<Cat>.select(fieldNames: selections, locale: "en-US")
+        let query = try! Query<Cat>.select(fieldNames: selections, locale: "en-US")
 
         QueryTests.client.fetchContent(with: query) { result in
 
@@ -153,11 +155,11 @@ class QueryTests: XCTestCase {
     }
 
     func testQueryClientDefinedModelResolvesIncludes() {
-        let selections = ["image", "name"]
+        let selections = ["fields.image", "fields.name"]
 
         let expectation = self.expectation(description: "Select operator expectation")
 
-        let query = try! SelectQuery<Dog>.select(fieldNames: selections, locale: "en-US")
+        let query = try! Query<Dog>.select(fieldNames: selections, locale: "en-US")
 
         QueryTests.client.fetchContent(with: query) { result in
 
@@ -174,6 +176,67 @@ class QueryTests: XCTestCase {
             }
             expectation.fulfill()
         }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    // MARK: - Test QueryOperations
+    
+    func testEqualityQuery() {
+
+        let expectation = self.expectation(description: "Inequalitys operator expectation")
+
+        let query: Query<Cat> = Query.query(where: "fields.color", .equal(to: "gray"))
+
+        QueryTests.client.fetchContent(with: query) { result in
+            switch result {
+            case .success(let cats):
+                expect(cats.count).to(equal(1))
+                expect(cats.first!.color).to(equal("gray"))
+            case .error:
+                fail("Should not throw an error")
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testInequalityQuery() {
+
+        let expectation = self.expectation(description: "Inequalitys operator expectation")
+
+        let query: Query<Cat> = Query.query(where: "fields.color", .notEqual(to: "gray"))
+
+        QueryTests.client.fetchContent(with: query) { result in
+            switch result {
+            case .success(let cats):
+                expect(cats.count).to(beGreaterThan(0))
+                expect(cats.first!.color).toNot(equal("gray"))
+            case .error:
+                fail("Should not throw an error")
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testExistenceQuery() {
+        let expectation = self.expectation(description: "Inequalitys operator expectation")
+
+        let query: Query<Cat> = Query.query(where: "fields.color", .exists(is: true))
+
+        QueryTests.client.fetchContent(with: query) { result in
+            switch result {
+            case .success(let cats):
+                expect(cats.count).to(beGreaterThan(0))
+                expect(cats.first!.color).toNot(equal("gray"))
+            case .error:
+                fail("Should not throw an error")
+            }
+            expectation.fulfill()
+        }
+
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 }

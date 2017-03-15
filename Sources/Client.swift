@@ -172,24 +172,23 @@ open class Client {
 
 extension Client {
 
-    @discardableResult func execute<ResourceType>(query: Query, then completion: @escaping (Result<ResourceType>) -> Void) -> URLSessionDataTask?
-        where ResourceType: Decodable {
+//    @discardableResult func execute<ResourceType>(query: Query, then completion: @escaping (Result<ResourceType>) -> Void) -> URLSessionDataTask?
+//        where ResourceType: Decodable {
+//
+//            let url = URL(forComponent: "entries", parameters: query.queryParameters())
+//            return fetch(url: url, then: completion)
+//    }
 
-            let url = URL(forComponent: "entries", parameters: query.queryParameters())
-            return fetch(url: url, then: completion)
-    }
-
-    @discardableResult public func fetchContent<QueryType: Queryable>
-        (with query: QueryType, completion: @escaping (Result<[QueryType.ContentType]>) -> Void) -> URLSessionDataTask?
-            where QueryType: Query, QueryType.ContentType: ContentModel {
+    @discardableResult public func fetchContent<ContentType: ContentModel>
+        (with query: Query<ContentType>, completion: @escaping (Result<[ContentType]>) -> Void) -> URLSessionDataTask? {
 
         let url = URL(forComponent: "entries", parameters: query.queryParameters())
 
         return fetch(url: url, then: { (result: Result<Array<Entry>>) in
             switch result {
             case .success(let entries):
-                let mappedItems: [QueryType.ContentType] = entries.items.flatMap { entry in
-                    let item = QueryType.ContentType(identifier: entry.sys["id"] as? String)
+                let mappedItems: [ContentType] = entries.items.flatMap { entry in
+                    let item = ContentType(identifier: entry.sys["id"] as? String)
                     item?.update(with: entry.fields)
                     
                     // FIXME: understand why this is not necessary.
