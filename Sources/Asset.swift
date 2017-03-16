@@ -7,11 +7,10 @@
 //
 
 import Foundation
-
+import ObjectMapper
 /// An asset represents a media file in Contentful
-public struct Asset: Resource, LocalizedResource {
-    /// System fields
-    public var sys: Sys!
+public class Asset: Resource, LocalizedResource {
+    
     /// Content fields
     public var fields: [String:Any]! {
         return Contentful.fields(localizedFields, forLocale: sys.locale, defaultLocale: defaultLocale)
@@ -34,5 +33,22 @@ public struct Asset: Resource, LocalizedResource {
         }
 
         throw SDKError.invalidURL(string: "")
+    }
+
+    // MARK: - <StaticMappable>
+
+    public override class func objectForMapping(map: Map) -> BaseMappable? {
+        let asset = Asset()
+        asset.mapping(map: map)
+        return asset
+    }
+
+    public override func mapping(map: Map) {
+        super.mapping(map: map)
+
+        // TODO: handle errors
+        let (_, localizedFields) = try! parseLocalizedFields(map.JSON)
+        self.localizedFields     = localizedFields
+        self.defaultLocale       = determineDefaultLocale(map.JSON)
     }
 }

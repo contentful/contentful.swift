@@ -8,7 +8,6 @@
 
 import Foundation
 import Interstellar
-import Decodable
 
 public enum QueryOperation {
     case equals(String)

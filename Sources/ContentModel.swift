@@ -16,15 +16,6 @@ public protocol ContentModel: class {
     init?(identifier: String?)
 
     func update(with fields: [String: Any])
-
-    // TODO: Use object-mapper.
-
-//    // TODO: Add constraint that Sys is mappable
-//    var sys: Sys { get set } // or maybe it's resource.sys
-//
-//    var fields: ClientFields { get set }
-//
-//    var link: Link { get set }
 }
 
 public protocol EntryModel: ContentModel {
@@ -44,7 +35,7 @@ public extension ContentModel {
             self.update(with: entry.fields)
 
         default:
-            break
+            fatalError()
         }
     }
 }

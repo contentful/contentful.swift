@@ -6,7 +6,7 @@
 //  Copyright © 2015 Contentful GmbH. All rights reserved.
 //
 
-import Decodable
+import ObjectMapper
 import Foundation
 import Interstellar
 #if os(iOS) || os(tvOS)
@@ -90,8 +90,7 @@ open class Client {
 
     // MARK: -
 
-    fileprivate func fetch<DecodableType>(url: URL?, then completion: @escaping (Result<DecodableType>) -> Void) -> URLSessionDataTask?
-        where DecodableType: Decodable {
+    fileprivate func fetch<MappableType: StaticMappable>(url: URL?, then completion: @escaping (Result<MappableType>) -> Void) -> URLSessionDataTask? {
 
             guard let url = url else {
                 completion(Result.error(SDKError.invalidURL(string: "")))
@@ -100,19 +99,17 @@ open class Client {
 
             let (task, signal) = fetch(url: url)
 
-            if DecodableType.self == Space.self {
-                // TODO: Dry
-                signal.then { decodable in
-                    self.handleJSON(decodable, completion)
+            if MappableType.self == Space.self {
+                signal.then { mappable in
+                    self.handleJSON(mappable, completion)
                 }.error { error in
                     completion(Result.error(error))
                 }
             } else {
 
                 fetchSpace().result.then { _ in
-                    // TODO: Dry
-                    signal.then { decodable in
-                        self.handleJSON(decodable, completion)
+                    signal.then { mappable in
+                        self.handleJSON(mappable, completion)
                     }.error { error in
                         completion(Result.error(error))
                     }
@@ -149,20 +146,24 @@ open class Client {
         return signalify(parameter: url, closure: closure)
     }
 
-    fileprivate func handleJSON<DecodableType: Decodable>(_ data: Data, _ completion: (Result<DecodableType>) -> Void) {
+    fileprivate func handleJSON<MappableType: StaticMappable>(_ data: Data, _ completion: (Result<MappableType>) -> Void) {
         do {
             let json = try JSONSerialization.jsonObject(with: data, options: [])
             if let json = json as? NSDictionary { json.client = self }
 
-            if let error = try? ContentfulError.decode(json) {
-                completion(.error(error))
+            let map = Map(mappingType: .fromJSON, JSON: json as! [String : Any])
+
+            guard let decodedObject = MappableType.objectForMapping(map: map) as? MappableType else {
+                completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "")))
                 return
             }
-
-            let decodedObject = try DecodableType.decode(json)
+            if let error = decodedObject as? ContentfulError {
+                completion(Result.error(error))
+                return
+            }
             completion(Result.success(decodedObject))
-        } catch let error as DecodingError {
-            completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "\(error)")))
+//        } catch let error as DecodingError {
+//            completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "\(error)")))
         } catch _ {
             completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "")))
         }
@@ -180,16 +181,13 @@ extension Client {
         return fetch(url: url) { (result: Result<Array<Entry>>) in
             switch result {
             case .success(let entries):
-                let mappedItems: [ContentType] = entries.items.flatMap { entry in
-                    let item = ContentType(identifier: entry.sys.id as? String)
-                    item?.update(with: entry.fields)
 
-                    // FIXME: understand why this is not necessary.
-//                    item?.updateLinks(with: entries.includes)
+                let mappedItems: [ContentType] = entries.items.flatMap { entry in
+                    // TODO:
+                    let item = ContentType(identifier: entry.sys.id)
+                    item?.update(with: entry.fields)
                     return item
                 }
-
-                // When we arrive here, the linked objects are seperate duplicates...they should be merged somehow.
                 completion(Result.success(mappedItems))
 
             case .error(let error):
@@ -427,61 +425,61 @@ extension Client {
         return signalify(closure: closure)
     }
 }
-
-extension Client {
-    /**
-     Perform an initial synchronization of the Space this client is constrained to.
-
-     - parameter matching:   Additional options for the synchronization
-     - parameter completion: A handler being called on completion of the request
-
-     - returns: The data task being used, enables cancellation of requests
-     */
-    @discardableResult public func initialSync(matching: [String: Any] = [:],
-                                               completion: @escaping (Result<SyncSpace>) -> Void) -> URLSessionDataTask? {
-
-        var parameters = matching
-        parameters["initial"] = true
-        return sync(matching: parameters, completion: completion)
-    }
-
-    /**
-     Perform an initial synchronization of the Space this client is constrained to.
-
-     - parameter matching: Additional options for the synchronization
-
-     - returns: A tuple of data task and a signal for the resulting SyncSpace
-     */
-    @discardableResult public func initialSync(matching: [String: Any] = [:]) -> (URLSessionDataTask?, Observable<Result<SyncSpace>>) {
-        let closure: SignalObservation<[String: Any], SyncSpace> = initialSync(matching:completion:)
-        return signalify(parameter: matching, closure: closure)
-    }
-
-    func sync(matching: [String: Any] = [:], completion: @escaping (Result<SyncSpace>) -> Void) -> URLSessionDataTask? {
-        if clientConfiguration.previewMode {
-            completion(.error(SDKError.previewAPIDoesNotSupportSync()))
-            return nil
-        }
-
-        return fetch(url: URL(forComponent: "sync", parameters: matching), then: { (result: Result<SyncSpace>) in
-            if let value = result.value {
-                value.client = self
-
-                if value.hasMorePages {
-                    var parameters = matching
-                    parameters.removeValue(forKey: "initial")
-                    value.sync(matching: parameters, completion: completion)
-                } else {
-                    completion(.success(value))
-                }
-            } else {
-                completion(result)
-            }
-        })
-    }
-
-    func sync(matching: [String: Any] = [:]) -> (URLSessionDataTask?, Observable<Result<SyncSpace>>) {
-        let closure: SignalObservation<[String: Any], SyncSpace> = sync(matching:completion:)
-        return signalify(parameter: matching, closure: closure)
-    }
-}
+//
+//extension Client {
+//    /**
+//     Perform an initial synchronization of the Space this client is constrained to.
+//
+//     - parameter matching:   Additional options for the synchronization
+//     - parameter completion: A handler being called on completion of the request
+//
+//     - returns: The data task being used, enables cancellation of requests
+//     */
+//    @discardableResult public func initialSync(matching: [String: Any] = [:],
+//                                               completion: @escaping (Result<SyncSpace>) -> Void) -> URLSessionDataTask? {
+//
+//        var parameters = matching
+//        parameters["initial"] = true
+//        return sync(matching: parameters, completion: completion)
+//    }
+//
+//    /**
+//     Perform an initial synchronization of the Space this client is constrained to.
+//
+//     - parameter matching: Additional options for the synchronization
+//
+//     - returns: A tuple of data task and a signal for the resulting SyncSpace
+//     */
+//    @discardableResult public func initialSync(matching: [String: Any] = [:]) -> (URLSessionDataTask?, Observable<Result<SyncSpace>>) {
+//        let closure: SignalObservation<[String: Any], SyncSpace> = initialSync(matching:completion:)
+//        return signalify(parameter: matching, closure: closure)
+//    }
+//
+//    func sync(matching: [String: Any] = [:], completion: @escaping (Result<SyncSpace>) -> Void) -> URLSessionDataTask? {
+//        if clientConfiguration.previewMode {
+//            completion(.error(SDKError.previewAPIDoesNotSupportSync()))
+//            return nil
+//        }
+//
+//        return fetch(url: URL(forComponent: "sync", parameters: matching), then: { (result: Result<SyncSpace>) in
+//            if let value = result.value {
+//                value.client = self
+//
+//                if value.hasMorePages == true {
+//                    var parameters = matching
+//                    parameters.removeValue(forKey: "initial")
+//                    value.sync(matching: parameters, completion: completion)
+//                } else {
+//                    completion(.success(value))
+//                }
+//            } else {
+//                completion(result)
+//            }
+//        })
+//    }
+//
+//    func sync(matching: [String: Any] = [:]) -> (URLSessionDataTask?, Observable<Result<SyncSpace>>) {
+//        let closure: SignalObservation<[String: Any], SyncSpace> = sync(matching:completion:)
+//        return signalify(parameter: matching, closure: closure)
+//    }
+//}

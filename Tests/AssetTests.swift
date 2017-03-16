@@ -45,8 +45,8 @@ class AssetTests: XCTestCase {
         AssetTests.client.fetchAsset(identifier: "nyancat") { (result) in
             switch result {
             case let .success(asset):
-                expect(asset.identifier).to(equal("nyancat"))
-                expect(asset.type).to(equal("Asset"))
+                expect(asset.sys.id).to(equal("nyancat"))
+                expect(asset.sys.type).to(equal("Asset"))
                 expect(url(asset).absoluteString).to(equal("https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png"))
             case let .error(error):
                 fail("\(error)")
@@ -63,9 +63,9 @@ class AssetTests: XCTestCase {
         AssetTests.client.fetchAssets().1.then { assets in
             expect(assets.items.count).to(equal(4))
 
-            if let asset = (assets.items.filter { $0.identifier == "nyancat" }).first {
-                expect(asset.identifier).to(equal("nyancat"))
-                expect(asset.type).to(equal("Asset"))
+            if let asset = (assets.items.filter { $0.sys.id == "nyancat" }).first {
+                expect(asset.sys.id).to(equal("nyancat"))
+                expect(asset.sys.type).to(equal("Asset"))
                 expect(url(asset).absoluteString).to(equal("https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png"))
             } else {
                 fail("Could not find asset with id 'nyancat'")

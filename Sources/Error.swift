@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ObjectMapper
 
 /// Possible errors being thrown by the SDK
 public enum SDKError: Error {
@@ -57,17 +58,24 @@ public enum QueryError: Error {
 
 
 /// Information regarding an error received from Contentful
-public struct ContentfulError: Resource, Error {
-    /// System fields
-    public let sys: Sys
-
-    /// The unique identifier of this error
-    public let identifier: String
-    /// Resource type ("Error")
-    public let type: String
+public class ContentfulError: Resource, Error {
 
     /// Human readable error message
-    public let message: String
+    public var message: String!
     /// Identifier of the request, can be useful when making support requests
-    public let requestId: String
+    public var requestId: String!
+
+    // MARK: StaticMappable
+
+    public override class func objectForMapping(map: Map) -> BaseMappable? {
+        let error = ContentfulError()
+        error.mapping(map: map)
+        return error
+    }
+
+    public override func mapping(map: Map) {
+        super.mapping(map: map)
+        message     <- map["message"]
+        requestId   <- map["requestId"]
+    }
 }

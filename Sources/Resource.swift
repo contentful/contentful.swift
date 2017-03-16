@@ -9,11 +9,28 @@
 import Foundation
 import ObjectMapper
 
+
 /// Protocol for resources inside Contentful
-protocol Resource: Mappable {
+public class Resource: StaticMappable {
+
     /// System fields
-    var sys: Sys! { get }
+    var sys: Sys!
+
+
+    // MARK: - StaticMappable
+
+    public class func objectForMapping(map: Map) -> BaseMappable? {
+        let resource = DeletedResource()
+        resource.mapping(map: map)
+        return resource
+    }
+
+    public func mapping(map: Map) {
+        sys <- map["sys"]
+    }
 }
+
+class DeletedResource: Resource {}
 
 protocol LocalizedResource {
 

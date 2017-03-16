@@ -8,164 +8,74 @@
 //
 
 import Foundation
+import ObjectMapper
+
+///**
+//    Or encourage each of the users to make their own protocol and extend it.
+// 
+//    For example FieldConfiguration {
+// 
+//    }
+//    extension FieldConfiguration {
+//        var name: String { get set }
+//    }
+// */
+//public protocol ClientFields { ?? empty protocol?
+//    
+//}
+//
+//public extension ClientFields {
+//}
+
+
+
+
+// TODO: all sys fields and methods here, repeat for assets, also add a Link structure
 
 /**
-    Or encourage each of the users to make their own protocol and extend it.
- 
-    For example FieldConfiguration {
- 
-    }
-    extension FieldConfiguration {
-        var name: String { get set }
-    }
+ WOOOO! ok so then to resolve a link you just
+
+ if let entry.link? {
+ resolveLink or resolveLinkCallback()
+ }
+
+ then the api to do the mapping is to just retruns the Entry's instead of the fields, and then
+
+ the mapping looks like let name = entry.fields.
+
+ make protocol Fields that is just thin wrapper to allows clients to access stuff themselves
+
+ make ClientFields implement Decodable or mappable as a constraint
+
+ enforce in the ContentModel protocol to have a sys and a fields which are both protocol types
  */
-public protocol ClientFields {
-    
-}
-
-public extension ClientFields {
-    // TODO: decode from entry
-}
-
-
-public enum Link {
-
-    case asset(Asset)
-    case entry(Entry)
-    case unresolved(Link.Sys)
-
-    public struct Sys {
-        public let id: String
-        public let type: String             // TODO: Assert that this is "Link"
-        public let linkType: String // "Entry" or "Asset" (-> Easier to resolve with this information.
-    }
-
-    var sys: Link.Sys {
-        switch self {
-        case .unresolved(let sys):
-            return sys
-        default:
-            fatalError() // TODO:
-        }
-    }
-
-    var id: String {
-        switch self {
-        case .asset(let asset):
-            return asset.sys.id
-        case .entry(let entry):
-            return entry.sys.id
-        case .unresolved(let jsonLink):
-            return Contentful.identifier(for: jsonLink)!
-        }
-    }
-
-    var isResolved: Bool {
-        switch self {
-        case .unresolved: return false
-        case .asset, .entry: return true
-        }
-    }
-
-    func resolve(against includes: [String: Any]) -> Link {
-        switch self {
-        case .unresolved(let sys):
-            // TODO:
-            break
-        default:
-            fatalError() // TODO: write test to never get here (or throw internal error)
-        }
-    }
-
-    // TODO:
-    func decode<ContentType: ContentModel>() -> ContentType {
-        switch self {
-        case .asset(let asset):
-            let item = ContentType(identifier: asset.sys.id)
-            item?.update(with: asset.fields)
-        case .entry(let entry):
-            let item = ContentType(identifier: entry.sys.id)
-            item?.update(with: entry.fields)
-        case .unresolved:
-            fatalError("Should not try to decode an unresolved link")
-        }
-    }
-}
-
-/**
-    add an internal struct Sys to everything, make them be decodable
-
- */
-
-
-public struct Sys {
-
-    /// The unique identifier.
-    public var id: String!
-
-    // TODO: Document
-    public var createdAt: String!
-    // TODO: Document
-    public var updatedAt: String!
-
-    /// Currently selected locale
-    public var locale: String!
-
-    /// Resource type
-    public var type: String!
-
-}
-
-    // TODO: all sys fields and methods here, repeat for assets, also add a Link structure
-
-    /**
-     WOOOO! ok so then to resolve a link you just
-
-     if let entry.link? {
-     resolveLink or resolveLinkCallback()
-     }
-
-     then the api to do the mapping is to just retruns the Entry's instead of the fields, and then
-
-     the mapping looks like let name = entry.fields.
-
-     make protocol Fields that is just thin wrapper to allows clients to access stuff themselves
-
-     make ClientFields implement Decodable or mappable as a constraint
-
-     enforce in the ContentModel protocol to have a sys and a fields which are both protocol types
-     */
 
 
 /// An Entry represents a typed collection of data in Contentful
-public struct Entry: LocalizedResource {
-
-
-    /// System fields
-    public let sys: Sys
+public class Entry: Resource, LocalizedResource {
 
     /// Content fields
-    public var fields: [String: Any] {
-        return Contentful.fields(localizedFields, forLocale: sys.locale, defaultLocale: defaultLocale)
+    public var fields: [String: Any]! {
+        // FIXME: Defaults.locale???
+        return Contentful.fields(localizedFields, forLocale: sys.locale ?? Defaults.locale, defaultLocale: defaultLocale)
     }
 
-    public func hasUnresolvedLinks() -> Bool {
-        // TODO:
-        return true
-//        fields.reduce??
-    }
     // Locale to Field mapping.
-    let localizedFields: [String:[String:Any]]
+    var localizedFields: [String: [String: Any]]!
 
-    let defaultLocale: String
+    var defaultLocale: String!
+
+    // Empty intializer
+    override init() {}
 
     init(sys: Sys, localizedFields: [String: [String: Any]], defaultLocale: String) {
+        super.init()
         self.sys = sys
         self.localizedFields = localizedFields
         self.defaultLocale = defaultLocale
     }
 
-    init(entry: Entry, localizedFields: [String:[String:Any]]) {
+    convenience init(entry: Entry, localizedFields: [String: [String: Any]]) {
         self.init(sys: entry.sys,
             localizedFields: localizedFields,
             defaultLocale: entry.defaultLocale)
@@ -173,7 +83,7 @@ public struct Entry: LocalizedResource {
 
     // MARK: Internal
 
-    internal func resolveLinks(againstIncludes includes: [String: Resource]) -> Entry {
+    internal func resolveLinks(against includedEntries: [Entry]?, and includedAssets: [Asset]?) {
         var localizedFields = [String: [String: Any]]()
 
         for (locale, entryFields) in self.localizedFields {
@@ -182,38 +92,70 @@ public struct Entry: LocalizedResource {
             // If the passed in dictionary contains the Resource we are linking to, link it.
             for (fieldName, fieldValue) in entryFields {
 
-                if let unresolvedLink = fieldValue as? Link, unresolvedLink.isResolved == false {
-                    let resolvedLink = unresolvedLink.resolve(against: includes)
+                if let unresolvedLink = Link.link(from: fieldValue), unresolvedLink.isResolved == false {
+                    let resolvedLink = unresolvedLink.resolve(against: includedEntries, and: includedAssets)
                     fields[fieldName] = resolvedLink
+                    assert(resolvedLink.isResolved)
                 }
 
                 // Resolve one-to-many links. We need to account for links that might not hae been
                 // resolved because of a multiple page sync so we will store a dictionary rather
                 // than a Swift object in the link body. The link will be resolved at a later time.
-                if let mixedLinks = fieldValue as? [Link] {
 
+                if let dictionaryRepresentationArray = fieldValue as? [[String: Any]] {
+
+                    //
+                    let mixedLinks = dictionaryRepresentationArray.flatMap({ Link.link(from: $0) })
+
+                    let alreadyResolvedLinks = mixedLinks.filter { $0.isResolved == true }
+                    assert(alreadyResolvedLinks.count == 0)
                     let unresolvedLinks = mixedLinks.filter { $0.isResolved == false }
-                    let resolvedLinks = unresolvedLinks.map { $0.resolve(against: includes) } + mixedLinks.filter { $0.isResolved == true }
+                    let newlyResolvedLinks = unresolvedLinks.map { $0.resolve(against: includedEntries, and: includedAssets) }
+
+                    let resolvedLinks = alreadyResolvedLinks + newlyResolvedLinks
                     fields[fieldName] = resolvedLinks
                 }
+
+//                // TODO: they must be converted to unresolved links first...
+//                if let mixedLinks = fieldValue as? [Link] {
+//
+//
+//                }
             }
 
             localizedFields[locale] = fields
         }
 
-        return Entry(entry: self, localizedFields: localizedFields)
+        self.localizedFields = localizedFields
+    }
+//
+//    // Returns the included object/structure to be linked by looking up via typename_identifier.
+//    // Client usage should attempt to unrwap before storing.
+//    private func resolve(jsonFieldValue fieldValue: Any, againstIncludes includes: [String:Resource]) -> Resource? {
+//
+//        // Linked objects are stored as a dictionary with "type": "Link",
+//        // value for "linkType" can be "Asset", "Entry", "Space", "ContentType".
+//        if let link = fieldValue as? Link {
+//            let include = includes["\(link.sys.linkType)_\(link.sys.id)"]
+//            return include
+//        }
+//        return nil
+//    }
+
+    // MARK: StaticMappable
+
+    override public class func objectForMapping(map: Map) -> BaseMappable? {
+        let entry = Entry()
+        entry.mapping(map: map)
+        return entry
     }
 
-    // Returns the included object/structure to be linked by looking up via typename_identifier.
-    // Client usage should attempt to unrwap before storing.
-    private func resolve(jsonFieldValue fieldValue: Any, againstIncludes includes: [String:Resource]) -> Resource? {
+    override public func mapping(map: Map) {
+        super.mapping(map: map)
+        // FIXME:
+        let (_, localizedFields) = try! parseLocalizedFields(map.JSON)
 
-        // Linked objects are stored as a dictionary with "type": "Link",
-        // value for "linkType" can be "Asset", "Entry", "Space", "ContentType".
-        if let link = fieldValue as? Link {
-            let include = includes["\(link.sys.linkType)_\(link.sys.id)"]
-            return include
-        }
-        return nil
+        self.localizedFields     = localizedFields
+        self.defaultLocale       = determineDefaultLocale(map.JSON)
     }
 }
