@@ -13,16 +13,7 @@ import Nimble
 import DVR
 
 
-//
-//extension Entry {
-//    var contentTypeId : String {
-//
-//        // TODO: We should probably resolve content type on Entry creation to avoid this awfulness
-//        let id = ((sys["contentType"] as? [String : Any])?["sys"] as? [String : Any])?["id"]
-//        return (id as? String) ?? ""
-//    }
-//}
-
+// TODO: Use this in the main target...or seperate dependency.
 extension Date {
     static func fromComponents(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int) -> Date {
         var components = DateComponents()
@@ -81,8 +72,8 @@ class EntryTests: XCTestCase {
 
     func testMultiLevelIncludesAreResolved() {
         waitUntilMatchingEntries(["sys.id": "nyancat", "include": 2]) {
-            if let entry = $0.items.first?.fields["bestFriend"] as? Entry {
-                if let asset = entry.fields["image"] as? Asset {
+            if let entryLink = $0.items.first?.fields["bestFriend"] as? Link, let entry = entryLink.entry {
+                if let assetLink = entry.fields["image"] as? Link, let asset = assetLink.asset {
                     expect(url(asset).absoluteString).to(equal("https://images.contentful.com/cfexampleapi/3MZPnjZTIskAIIkuuosCss/382a48dfa2cb16c47aa2c72f7b23bf09/happycatw.jpg"))
                     return
                 }
@@ -210,19 +201,18 @@ class EntryTests: XCTestCase {
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
-    // TODO:
-//    func testFetchEntriesOfContentType() {
-//        let expectation = self.expectation(description: "Fetch entires of content type expectation")
-//        EntryTests.client.fetchEntries(matching: ["content_type": "cat"]).1.then {
-//            let cats = $0.items.filter { $0.contentTypeId == "cat" }
-//            expect(cats.count).to(equal($0.items.count))
-//            expectation.fulfill()
-//        }.error {
-//            fail("\($0)")
-//            expectation.fulfill()
-//        }
-//        waitForExpectations(timeout: 10.0, handler: nil)
-//    }
+    func testFetchEntriesOfContentType() {
+        let expectation = self.expectation(description: "Fetch entires of content type expectation")
+        EntryTests.client.fetchEntries(matching: ["content_type": "cat"]).1.then {
+            let cats = $0.items.filter { $0.sys.contentTypeId == "cat" }
+            expect(cats.count).to(equal($0.items.count))
+            expectation.fulfill()
+        }.error {
+            fail("\($0)")
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
 
     func testFetchSpecificEntryMatchingSysId() {
 

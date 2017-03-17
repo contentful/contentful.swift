@@ -184,7 +184,7 @@ extension Client {
 
                 let mappedItems: [ContentType] = entries.items.flatMap { entry in
                     // TODO:
-                    let item = ContentType(identifier: entry.sys.id)
+                    let item = ContentType(id: entry.sys.id)
                     item?.update(with: entry.fields)
                     return item
                 }

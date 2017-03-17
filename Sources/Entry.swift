@@ -10,28 +10,6 @@
 import Foundation
 import ObjectMapper
 
-///**
-//    Or encourage each of the users to make their own protocol and extend it.
-// 
-//    For example FieldConfiguration {
-// 
-//    }
-//    extension FieldConfiguration {
-//        var name: String { get set }
-//    }
-// */
-//public protocol ClientFields { ?? empty protocol?
-//    
-//}
-//
-//public extension ClientFields {
-//}
-
-
-
-
-// TODO: all sys fields and methods here, repeat for assets, also add a Link structure
-
 /**
  WOOOO! ok so then to resolve a link you just
 
@@ -98,29 +76,24 @@ public class Entry: Resource, LocalizedResource {
                     assert(resolvedLink.isResolved)
                 }
 
-                // Resolve one-to-many links. We need to account for links that might not hae been
+                // Resolve one-to-many links. We need to account for links that might not have been
                 // resolved because of a multiple page sync so we will store a dictionary rather
                 // than a Swift object in the link body. The link will be resolved at a later time.
 
                 if let dictionaryRepresentationArray = fieldValue as? [[String: Any]] {
 
-                    //
                     let mixedLinks = dictionaryRepresentationArray.flatMap({ Link.link(from: $0) })
 
+                    // The conversion from dictionary representation should only ever happen once
                     let alreadyResolvedLinks = mixedLinks.filter { $0.isResolved == true }
                     assert(alreadyResolvedLinks.count == 0)
+
                     let unresolvedLinks = mixedLinks.filter { $0.isResolved == false }
                     let newlyResolvedLinks = unresolvedLinks.map { $0.resolve(against: includedEntries, and: includedAssets) }
 
                     let resolvedLinks = alreadyResolvedLinks + newlyResolvedLinks
                     fields[fieldName] = resolvedLinks
                 }
-
-//                // TODO: they must be converted to unresolved links first...
-//                if let mixedLinks = fieldValue as? [Link] {
-//
-//
-//                }
             }
 
             localizedFields[locale] = fields
@@ -128,19 +101,6 @@ public class Entry: Resource, LocalizedResource {
 
         self.localizedFields = localizedFields
     }
-//
-//    // Returns the included object/structure to be linked by looking up via typename_identifier.
-//    // Client usage should attempt to unrwap before storing.
-//    private func resolve(jsonFieldValue fieldValue: Any, againstIncludes includes: [String:Resource]) -> Resource? {
-//
-//        // Linked objects are stored as a dictionary with "type": "Link",
-//        // value for "linkType" can be "Asset", "Entry", "Space", "ContentType".
-//        if let link = fieldValue as? Link {
-//            let include = includes["\(link.sys.linkType)_\(link.sys.id)"]
-//            return include
-//        }
-//        return nil
-//    }
 
     // MARK: StaticMappable
 

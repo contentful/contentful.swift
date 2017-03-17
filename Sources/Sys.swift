@@ -26,6 +26,7 @@ public struct Sys: StaticMappable {
     /// Resource type
     public var type: String!
 
+    public var contentTypeId: String?
 
     // MARK: - StaticMappable
 
@@ -36,10 +37,11 @@ public struct Sys: StaticMappable {
     }
 
     mutating public func mapping(map: ObjectMapper.Map) {
-        id          <- map["id"]
-        createdAt   <- map["createdAt"]
-        updatedAt   <- map["updatedAt"]
-        locale      <- map["locale"]
-        type        <- map["type"]
+        id              <- map["id"]
+        createdAt       <- map["createdAt"]
+        updatedAt       <- map["updatedAt"]
+        locale          <- map["locale"]
+        type            <- map["type"]
+        contentTypeId   <- map["contentType.sys.id"]
     }
 }

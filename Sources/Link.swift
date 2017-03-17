@@ -9,6 +9,14 @@
 import Foundation
 import ObjectMapper
 
+public struct LinkSys {
+
+        public let id: String
+        //        public let type: String             // TODO: Assert that this is "Link"
+        public let linkType: String // "Entry" or "Asset" (-> Easier to resolve with this information.
+
+}
+
 public enum Link {
 
     internal static func link(from fieldValue: Any) -> Link? {
@@ -18,33 +26,18 @@ public enum Link {
 
         // Linked objects are stored as a dictionary with "type": "Link",
         // value for "linkType" can be "Asset", "Entry", "Space", "ContentType".
-        if let linkJSON = fieldValue as? [String:AnyObject],
-            let sys = linkJSON["sys"] as? [String:AnyObject],
+        if let linkJSON = fieldValue as? [String: AnyObject],
+            let sys = linkJSON["sys"] as? [String: AnyObject],
             let id = sys["id"] as? String,
             let linkType = sys["linkType"] as? String {
-            return Link.unresolved(Link.Sys(id: id, linkType: linkType))
+            return Link.unresolved(LinkSys(id: id, linkType: linkType))
         }
         return nil
     }
 
     case asset(Asset)
     case entry(Entry)
-    case unresolved(Link.Sys)
-
-    public struct Sys {
-        public let id: String
-//        public let type: String             // TODO: Assert that this is "Link"
-        public let linkType: String // "Entry" or "Asset" (-> Easier to resolve with this information.
-    }
-
-    var sys: Link.Sys {
-        switch self {
-        case .unresolved(let sys):
-            return sys
-        default:
-            fatalError() // TODO:
-        }
-    }
+    case unresolved(LinkSys)
 
     var id: String {
         switch self {
@@ -53,14 +46,7 @@ public enum Link {
         case .entry(let entry):
             return entry.sys.id
         case .unresolved(let jsonLink):
-            return Contentful.identifier(for: jsonLink)!
-        }
-    }
-
-    var isResolved: Bool {
-        switch self {
-        case .asset, .entry: return true
-        case .unresolved: return false
+            return id(for: jsonLink)!
         }
     }
 
@@ -77,8 +63,43 @@ public enum Link {
         default:                    return nil
         }
     }
-    
-    func resolve(against includedEntries: [Entry]?, and includedAssets: [Asset]?) -> Link {
+
+    func toDestinationType<DestinationType: ContentModel>() -> DestinationType? {
+
+        switch self {
+        case .asset(let asset):
+            let item = DestinationType(id: asset.sys.id)
+            item?.update(with: asset.fields)
+            return item
+        case .entry(let entry):
+            let item = DestinationType(id: entry.sys.id)
+            item?.update(with: entry.fields)
+            return item
+        case .unresolved:
+            fatalError("Should not try to decode an unresolved link")
+//            return nil
+        }
+    }
+
+    // MARK: Private
+
+    private var sys: LinkSys {
+        switch self {
+        case .unresolved(let sys):
+            return sys
+        default:
+            fatalError() // TODO:
+        }
+    }
+
+    internal var isResolved: Bool {
+        switch self {
+        case .asset, .entry: return true
+        case .unresolved: return false
+        }
+    }
+
+    internal func resolve(against includedEntries: [Entry]?, and includedAssets: [Asset]?) -> Link {
         switch self {
         case .unresolved(let sys):
             switch sys.linkType {
@@ -96,24 +117,14 @@ public enum Link {
 
         default:
             fatalError()
-            // TODO: write test to never get here (or throw internal error)
         }
         return self
     }
 
-    // TODO:
-    func decode<ContentType: ContentModel>() -> ContentType {
-        switch self {
-        case .asset(let asset):
-            let item = ContentType(identifier: asset.sys.id)
-            item?.update(with: asset.fields)
-            return item!
-        case .entry(let entry):
-            let item = ContentType(identifier: entry.sys.id)
-            item?.update(with: entry.fields)
-            return item!
-        case .unresolved:
-            fatalError("Should not try to decode an unresolved link")
-        }
+    private func id(for link: Any?) -> String? {
+        guard let link = link as? [String: Any] else { return nil }
+        let sys = link["sys"] as? [String: Any]
+        let identifier = sys?["id"] as? String
+        return identifier
     }
 }

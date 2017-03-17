@@ -47,24 +47,24 @@ final class Cat: EntryModel {
 
     static let contentTypeId: String? = "cat"
 
-    var identifier: String
+    var id: String
     var color: String?
     var bestFriend: Cat?
     var name: String?
 
-    init?(identifier: String?) {
-        guard let identifier = identifier else { return nil }
-        self.identifier = identifier
+    init?(id: String?) {
+        guard let id = id else { return nil }
+        self.id = id
     }
 
     func update(with fields: [String: Any]) {
+
         self.name = fields["name"] as? String
         self.color = fields["color"] as? String
-//        self.bestFriend = Cat(link: fields["bestFriend"])
-    }
-
-    func updateLinks(with includes: [String: Any]) {
-        // TODO:
+        let bestFriendLink = fields["bestFriend"] as? Link
+//        self.bestFriend = Cat(link: bestFriendLink)
+//        // TODO:
+//        self.bestFriend = bestFriendLink?.toDestinationType(source: self)
     }
 }
 
@@ -104,16 +104,6 @@ final class Cat: EntryModel {
 //        self.image = ImageAsset(link: fields["image"])
 //    }
 //
-////    func updateLinks(with includes: [String: Any]) {
-////        let linksOfInterest: [Asset] = includes.flatMap { _, value in
-////            guard let asset = value as? Asset else { return nil }
-////
-////            guard asset.identifier == image?.identifier else { return nil }
-////            return asset
-////        }
-////
-////        self.image?.update(with: linksOfInterest.first!.fields)
-////    }
 //}
 
 class QueryTests: XCTestCase {
