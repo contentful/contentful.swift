@@ -11,10 +11,9 @@ import ObjectMapper
 
 public struct LinkSys {
 
-        public let id: String
-        //        public let type: String             // TODO: Assert that this is "Link"
-        public let linkType: String // "Entry" or "Asset" (-> Easier to resolve with this information.
+    public let id: String
 
+    public let linkType: String // "Entry" or "Asset" (-> Easier to resolve with this information.
 }
 
 public enum Link {
@@ -64,20 +63,19 @@ public enum Link {
         }
     }
 
-    func toDestinationType<DestinationType: ContentModel>() -> DestinationType? {
+    func toDestinationType<DestinationType: ContentModel>(linkDepth: Int) -> DestinationType? {
+
+        guard linkDepth > 0 else { return nil }
 
         switch self {
         case .asset(let asset):
-            let item = DestinationType(id: asset.sys.id)
-            item?.update(with: asset.fields)
+            let item = DestinationType(sys: asset.sys, fields: asset.fields, linkDepth: linkDepth - 1 )
             return item
         case .entry(let entry):
-            let item = DestinationType(id: entry.sys.id)
-            item?.update(with: entry.fields)
+            let item = DestinationType(sys: entry.sys, fields: entry.fields, linkDepth: linkDepth - 1 )
             return item
         case .unresolved:
-            fatalError("Should not try to decode an unresolved link")
-//            return nil
+            fatalError("Should not try to decode an unresolved link.")
         }
     }
 
@@ -88,7 +86,7 @@ public enum Link {
         case .unresolved(let sys):
             return sys
         default:
-            fatalError() // TODO:
+            fatalError("Should not try to access sys properties on links that are resolved.")
         }
     }
 

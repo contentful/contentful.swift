@@ -45,66 +45,52 @@ import CoreData
 
 final class Cat: EntryModel {
 
-    static let contentTypeId: String? = "cat"
+    static let contentTypeId: String = "cat"
 
-    var id: String
-    var color: String?
-    var bestFriend: Cat?
-    var name: String?
+    let id: String
+    let color: String?
+    let bestFriend: Cat?
+    let name: String?
+    let lives: Int?
 
-    init?(id: String?) {
-        guard let id = id else { return nil }
-        self.id = id
-    }
-
-    func update(with fields: [String: Any]) {
-
+    init?(sys: Sys, fields: [String: Any], linkDepth: Int) {
+        self.id = sys.id
         self.name = fields["name"] as? String
         self.color = fields["color"] as? String
+        self.lives = fields["lives"] as? Int
+
         let bestFriendLink = fields["bestFriend"] as? Link
-//        self.bestFriend = Cat(link: bestFriendLink)
-//        // TODO:
-//        self.bestFriend = bestFriendLink?.toDestinationType(source: self)
+        self.bestFriend = bestFriendLink?.toDestinationType(linkDepth: linkDepth)
     }
 }
 
-//final class ImageAsset: ContentModel {
-//
-//    static let contentTypeId: String? = nil
-//
-//    var identifier: String
-//
-//    var title: String?
-//
-//    init?(identifier: String?) {
-//        guard let identifier = identifier else { return nil }
-//        self.identifier = identifier
-//    }
-//
-//    func update(with fields: [String: Any]) {
-//        self.title = fields["title"] as? String
-//    }
-//}
-//
-//final class Dog: EntryModel {
-//
-//    static let contentTypeId: String? = "dog"
-//
-//    var identifier: String
-//    var image: ImageAsset?
-//    var name: String?
-//
-//    init?(identifier: String?) {
-//        guard let identifier = identifier else { return nil }
-//        self.identifier = identifier
-//    }
-//
-//    func update(with fields: [String: Any]) {
-//        self.name = fields["name"] as? String
-//        self.image = ImageAsset(link: fields["image"])
-//    }
-//
-//}
+final class ImageAsset: ContentModel {
+
+    var id: String
+
+    var title: String?
+
+    init?(sys: Sys, fields: [String: Any], linkDepth: Int) {
+        self.id = sys.id
+       self.title = fields["title"] as? String
+    }
+}
+
+final class Dog: EntryModel {
+
+    static let contentTypeId: String = "dog"
+
+    var id: String
+    var image: ImageAsset?
+    var name: String?
+
+    init?(sys: Sys, fields: [String: Any], linkDepth: Int) {
+        self.id = sys.id
+        self.name = fields["name"] as? String
+        let imageLink = fields["image"] as? Link
+        self.image = imageLink?.toDestinationType(linkDepth: linkDepth)
+    }
+}
 
 class QueryTests: XCTestCase {
 
@@ -143,36 +129,36 @@ class QueryTests: XCTestCase {
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
-//    func testQueryClientDefinedModelResolvesIncludes() {
-//        let selections = ["fields.image", "fields.name"]
-//
-//        let expectation = self.expectation(description: "Select operator expectation")
-//
-//        let query = try! Query<Dog>.select(fieldNames: selections, locale: "en-US")
-//
-//        QueryTests.client.fetchContent(with: query) { result in
-//
-//            switch result {
-//            case .success(let dogs):
-//                let doge = dogs.first!
-//                expect(doge.name).to(equal("Doge"))
-//
-//                // Test links
-//                expect(doge.image).toNot(beNil())
-//                expect(doge.image?.identifier).to(equal("1x0xpXu4pSGS4OukSyWGUK"))
-//            case .error(let error):
-//                fail("Should not throw an error \(error)")
-//            }
-//            expectation.fulfill()
-//        }
-//        waitForExpectations(timeout: 10.0, handler: nil)
-//    }
+    func testQueryClientDefinedModelResolvesIncludes() {
+        let selections = ["fields.image", "fields.name"]
+
+        let expectation = self.expectation(description: "Select operator expectation")
+
+        let query = try! Query<Dog>.select(fieldNames: selections, locale: "en-US")
+
+        QueryTests.client.fetchContent(with: query) { result in
+
+            switch result {
+            case .success(let dogs):
+                let doge = dogs.first!
+                expect(doge.name).to(equal("Doge"))
+
+                // Test links
+                expect(doge.image).toNot(beNil())
+                expect(doge.image?.id).to(equal("1x0xpXu4pSGS4OukSyWGUK"))
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
 
     // MARK: - Test QueryOperations
     
     func testEqualityQuery() {
 
-        let expectation = self.expectation(description: "Inequalitys operator expectation")
+        let expectation = self.expectation(description: "Equality operator expectation")
 
         let query = Query<Cat>.query(where: "fields.color", .equals("gray"))
 
@@ -211,9 +197,9 @@ class QueryTests: XCTestCase {
     }
 
     func testExistenceQuery() {
-        let expectation = self.expectation(description: "Inequalitys operator expectation")
+        let expectation = self.expectation(description: "Existence operator expectation")
 
-        let query = Query<Cat>.query(where: "fields.color", .exists(is: true))
+        let query = Query<Cat>.query(where: "fields.color", .exists(true))
 
         QueryTests.client.fetchContent(with: query) { result in
             switch result {
@@ -231,7 +217,7 @@ class QueryTests: XCTestCase {
 
     func testChainingQueries() {
 
-        let expectation = self.expectation(description: "Inequalitys operator expectation")
+        let expectation = self.expectation(description: "Chained operator expectation")
 
         let query = Query<Cat>.query(where: "fields.color", .doesNotEqual("gray"))
             .query(where: "fields.lives", .equals("9"))
@@ -240,6 +226,7 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let cats):
                 expect(cats.count).to(equal(1))
+                expect(cats.first!.lives).to(equal(9))
 
             case .error(let error):
                 fail("Should not throw an error \(error)")
@@ -249,4 +236,12 @@ class QueryTests: XCTestCase {
 
         waitForExpectations(timeout: 10.0, handler: nil)
     }
+
+//    func testInvalidQueryCombinations() {
+//        let expectation = self.expectation(description: "Inequalitys operator expectation")
+//
+//        let query = Query<Cat>.query(where: "fields.color", .doesNotEqual("gray"))
+//            .query(where: "fields.lives", .equals("9"))
+//            .query(where: "fields.lives", .
+//    }
 }

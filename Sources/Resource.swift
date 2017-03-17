@@ -11,22 +11,19 @@ import ObjectMapper
 
 
 /// Protocol for resources inside Contentful
-public class Resource: StaticMappable {
+public class Resource: ImmutableMappable {
 
     /// System fields
-    var sys: Sys!
+    let sys: Sys
 
-
-    // MARK: - StaticMappable
-
-    public class func objectForMapping(map: Map) -> BaseMappable? {
-        let resource = DeletedResource()
-        resource.mapping(map: map)
-        return resource
+    internal init(sys: Sys) {
+        self.sys = sys
     }
 
-    public func mapping(map: Map) {
-        sys <- map["sys"]
+    // MARK: - <ImmutableMappable>
+
+    public required init(map: Map) throws {
+        sys = try map.value("sys")
     }
 }
 
@@ -37,9 +34,9 @@ protocol LocalizedResource {
     // Should this be moved to Resource?
     var fields: [String: Any]! { get }
 
-//    var locale: String { get set }
+    var locale: String { get set }
     var localizedFields: [String: [String: Any]]! { get }
-    var defaultLocale: String! { get }
+    var defaultLocale: String { get }
 }
 
 @discardableResult func +=<K: Hashable, V> (left: [K: V], right: [K: V]) -> [K: V] {

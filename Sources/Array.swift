@@ -13,7 +13,7 @@ import ObjectMapper
 
  This is the result type for any request of a collection of resources.
 **/
-public struct Array<T: Resource>: StaticMappable {
+public struct Array<T: Resource>: ImmutableMappable {
     /**
      Optional list of errors which happened while fetching this result.
 
@@ -22,42 +22,38 @@ public struct Array<T: Resource>: StaticMappable {
     public let errors: [Error]? = nil
 
     /// The resources which are part of the given array
-    public var items: [T]!
-
-    internal var includedAssets: [Asset]?
-    internal var includedEntries: [Entry]?
+    public let items: [T]
 
     /// The maximum number of resources originally requested
-    public var limit: UInt!
+    public let limit: UInt
     /// The number of elements skipped when performing the request
-    public var skip: UInt!
+    public let skip: UInt
     /// The total number of resources which matched the original request
-    public var total: UInt!
+    public let total: UInt
 
+    internal let includedAssets: [Asset]?
+    internal let includedEntries: [Entry]?
 
-    // MARK: StaticMappable
+    // MARK: <ImmutableMappable>
 
-    public static func objectForMapping(map: Map) -> BaseMappable? {
-        var array = Contentful.Array()
-        array.mapping(map: map)
-        return array
-    }
+    public init(map: Map) throws {
 
-    public mutating func mapping(map: Map) {
-        items               <- map["items"]
-        includedAssets      <- map["includes.Asset"]
-        includedEntries     <- map["includes.Entry"]
-        limit               <- map["limit"]
-        skip                <- map["skip"]
-        total               <- map["total"]
+        items           = try map.value("items")
+        limit           = try map.value("limit")
+        skip            = try map.value("skip")
+        total           = try map.value("total")
 
-        // Annoying workaround for type system not allowing cast to [Entry]
-        // If the entry was in the original
+        includedAssets  = try? map.value("includes.Asset")
+        includedEntries = try? map.value("includes.Entry")
+
+        // Annoying workaround for type system not allowing cast of items to [Entry]
         let entries: [Entry] = items.flatMap { $0 as? Entry }
-        let allIncludedEntries = entries + (includedEntries ?? [])
-        for entry in entries {
-            entry.resolveLinks(against: allIncludedEntries, and: includedAssets)
-        }
 
+        let allIncludedEntries = entries + (includedEntries ?? [])
+
+        // Rememember `Entry`s are classes (passed by reference) so we can change them in place
+        for entry in allIncludedEntries {
+            entry.resolveLinks(against: allIncludedEntries, and: (includedAssets ?? []))
+        }
     }
 }

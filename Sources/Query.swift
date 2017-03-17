@@ -12,10 +12,10 @@ import Interstellar
 public enum QueryOperation {
     case equals(String)
     case doesNotEqual(String)
-    case multipleValues([String])
-    case inclusion([String])
-    case exclusion([String])
-    case exists(is: Bool)
+    case hasAll([String])
+    case includes([String])
+    case excludes([String])
+    case exists(Bool)
 
     internal var operation: String {
         switch self {
@@ -25,13 +25,13 @@ public enum QueryOperation {
         case .doesNotEqual:
             return "[ne]"
 
-        case .multipleValues:
+        case .hasAll:
             return "[all]"
 
-        case .inclusion:
+        case .includes:
             return "[in]"
 
-        case .exclusion:
+        case .excludes:
             return "[nin]"
 
         case .exists:
@@ -43,8 +43,8 @@ public enum QueryOperation {
         // TODO:
     }
 
-    internal static func validateCombination(operation a: QueryOperation, operation b: QueryOperation) throws -> Bool {
-        switch (a, b) {
+    internal static func validateCombination(operation operationA: QueryOperation, operation operationB: QueryOperation) throws -> Bool {
+        switch (operationA, operationB) {
         case (.equals, .equals):
                 return true
         case (.doesNotEqual, .doesNotEqual):
@@ -64,13 +64,13 @@ public enum QueryOperation {
         case .doesNotEqual(let value):
             return value
 
-        case .multipleValues(let values):
+        case .hasAll(let values):
             return values.joined(separator: ",")
 
-        case .inclusion(let values):
+        case .includes(let values):
             return values.joined(separator: ",")
 
-        case .exclusion(let values):
+        case .excludes(let values):
             return values.joined(separator: ",")
 
         case .exists(let value):
@@ -88,11 +88,9 @@ public struct Query<ContentType: ContentModel> {
     }
 
     public func query(where name: String, _ operation: QueryOperation) -> Query<ContentType> {
-        // check that names start with "sys." or "fields."
 
-//        try checkCompoundQueryKeeps(same: contentTypeId)
+        // TODO: validate
 
-        // validate
         // create parameter
         let parameter = name + operation.operation
         let argument = operation.values
@@ -114,6 +112,9 @@ public struct Query<ContentType: ContentModel> {
     public func select(fieldNames: [String], locale: String = Defaults.locale) throws -> Query<ContentType> {
         return try select(fieldNames: fieldNames, contentTypeId: Query.contentTypeIdentifier(), locale: locale)
     }
+
+
+    // MARK: Private
 
     private var contentTypeId: String?
 

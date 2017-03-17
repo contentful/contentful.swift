@@ -8,19 +8,21 @@
 
 import Foundation
 import ObjectMapper
+
 /// An asset represents a media file in Contentful
 public class Asset: Resource, LocalizedResource {
-    
+
     /// Content fields
     public var fields: [String:Any]! {
-        return Contentful.fields(localizedFields, forLocale: sys.locale, defaultLocale: defaultLocale)
+        return Contentful.fields(localizedFields, forLocale: locale, defaultLocale: defaultLocale)
     }
 
-    var localizedFields: [String:[String:Any]]!
-    var defaultLocale: String!
+    var localizedFields: [String: [String: Any]]!
 
-//    /// Currently selected locale
-//    public var locale: String
+    let defaultLocale: String
+
+    /// Currently selected locale
+    public var locale: String
 
     /// The URL for the underlying media file
     public func URL() throws -> Foundation.URL {
@@ -35,20 +37,14 @@ public class Asset: Resource, LocalizedResource {
         throw SDKError.invalidURL(string: "")
     }
 
-    // MARK: - <StaticMappable>
+    // MARK: - <ImmutableMappable>
 
-    public override class func objectForMapping(map: Map) -> BaseMappable? {
-        let asset = Asset()
-        asset.mapping(map: map)
-        return asset
-    }
+    public required init(map: Map) throws {
+        let (locale, localizedFields) = try parseLocalizedFields(map.JSON)
+        self.locale = locale
+        self.defaultLocale = determineDefaultLocale(map.JSON)
+        try super.init(map: map)
 
-    public override func mapping(map: Map) {
-        super.mapping(map: map)
-
-        // TODO: handle errors
-        let (_, localizedFields) = try! parseLocalizedFields(map.JSON)
         self.localizedFields     = localizedFields
-        self.defaultLocale       = determineDefaultLocale(map.JSON)
     }
 }

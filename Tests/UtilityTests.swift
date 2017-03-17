@@ -41,27 +41,25 @@ class StringExtensionTests: XCTestCase {
         expect(invalidSelection.isValidSelection()).to(be(false))
     }
 }
-
-class IS8601DateTest: XCTestCase {
-    func testDecodeDatetimeFormate() {
-        let dateString = "2014-04-10T09:37:06.719Z"
-        let date = dateString.toIS8601Date()
-        expect(date).toNot(beNil())
-
-    }
-
-    func testDateWithTimeZoneOffset() {
-        let dateString = "1979-06-18T23:00:00+00:00"
-
-        let date = dateString.toIS8601Date()
-        expect(date).toNot(beNil())
-    }
-
-    func testShortDate() {
-        let dateString = "1865-11-26"
-        let date = dateString.toIS8601Date()
-        expect(date).toNot(beNil())
-    }
-}
-
-
+//
+//class IS8601DateTest: XCTestCase {
+//    func testDecodeDatetimeFormate() {
+//        let dateString = "2014-04-10T09:37:06.719Z"
+//        let date = dateString.toIS8601Date()
+//        expect(date).toNot(beNil())
+//
+//    }
+//
+//    func testDateWithTimeZoneOffset() {
+//        let dateString = "1979-06-18T23:00:00+00:00"
+//
+//        let date = dateString.toIS8601Date()
+//        expect(date).toNot(beNil())
+//    }
+//
+//    func testShortDate() {
+//        let dateString = "1865-11-26"
+//        let date = dateString.toIS8601Date()
+//        expect(date).toNot(beNil())
+//    }
+//}

@@ -9,39 +9,35 @@
 import Foundation
 import ObjectMapper
 
-public struct Sys: StaticMappable {
+public struct Sys: ImmutableMappable {
 
     /// The unique identifier.
-    public var id: String!
+    public let id: String
 
-    // TODO: Document
-    public var createdAt: String!
+    /// Read-only property describing the date the `Resource` was created.
+    public let createdAt: String?
 
-    // TODO: Document
-    public var updatedAt: String!
+    /// Read-only property describing the date the `Resource` was last updated.
+    public let updatedAt: String?
 
     /// Currently selected locale
-    public var locale: String!
+    public var locale: String?
 
     /// Resource type
-    public var type: String!
+    public let type: String
 
-    public var contentTypeId: String?
+    /// The identifier for the ContentType. 
+    public let contentTypeId: String?
 
-    // MARK: - StaticMappable
+    // MARK: <ImmutableMappable>
 
-    public static func objectForMapping(map: Map) -> BaseMappable? {
-        var sys = Sys()
-        sys.mapping(map: map)
-        return sys
-    }
+    public init(map: Map) throws {
+        id              = try map.value("id")
+        type            = try map.value("type")
 
-    mutating public func mapping(map: ObjectMapper.Map) {
-        id              <- map["id"]
-        createdAt       <- map["createdAt"]
-        updatedAt       <- map["updatedAt"]
-        locale          <- map["locale"]
-        type            <- map["type"]
-        contentTypeId   <- map["contentType.sys.id"]
+        locale          = try? map.value("locale")
+        contentTypeId   = try? map.value("contentType.sys.id")
+        createdAt       = try? map.value("createdAt")
+        updatedAt       = try? map.value("updatedAt")
     }
 }

@@ -46,14 +46,12 @@ public enum SDKError: Error {
 /// Errors thrown for queries which have invalid construction.
 public enum QueryError: Error {
 
-    // FIXME: document
+    /// Thrown when a selection for the `select` operator is constructed in a way that is invalid.
     case invalidSelection(fieldKeyPath: String)
 
     /// Thrown when over 99 properties have been selected. The CDA only supports 100 selections
     /// and the SDK always includes "sys" as one of them.
     case hitSelectionLimit()
-
-    case multipleContentTypesSpecified()
 }
 
 
@@ -61,21 +59,16 @@ public enum QueryError: Error {
 public class ContentfulError: Resource, Error {
 
     /// Human readable error message
-    public var message: String!
+    public var message: String
     /// Identifier of the request, can be useful when making support requests
-    public var requestId: String!
+    public var requestId: String
 
-    // MARK: StaticMappable
+    // MARK: <ImmutableMappable>
 
-    public override class func objectForMapping(map: Map) -> BaseMappable? {
-        let error = ContentfulError()
-        error.mapping(map: map)
-        return error
-    }
+    public required init(map: ObjectMapper.Map) throws {
+        message     = try map.value("message")
+        requestId   = try map.value("requestId")
 
-    public override func mapping(map: Map) {
-        super.mapping(map: map)
-        message     <- map["message"]
-        requestId   <- map["requestId"]
+        try super.init(map: map)
     }
 }

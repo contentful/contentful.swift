@@ -175,7 +175,9 @@ class EntryTests: XCTestCase {
             expect(entry?.fields["name"] as? String).to(equal("Nyan Cat"))
             expect(entry?.fields["likes"] as? [String]).to(equal(["rainbows", "fish"]))
 
-            entry?.sys.locale = "tlh"
+
+            // TODO:
+            entry?.locale = "tlh"
             expect(entry?.fields["name"] as? String).to(equal("Nyan vIghro'"))
             expect(entry?.fields["likes"] as? [String]).to(equal(["rainbows", "fish"]))
         }

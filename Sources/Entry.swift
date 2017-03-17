@@ -1,4 +1,3 @@
-
 //
 //  Entry.swift
 //  Contentful
@@ -10,54 +9,22 @@
 import Foundation
 import ObjectMapper
 
-/**
- WOOOO! ok so then to resolve a link you just
-
- if let entry.link? {
- resolveLink or resolveLinkCallback()
- }
-
- then the api to do the mapping is to just retruns the Entry's instead of the fields, and then
-
- the mapping looks like let name = entry.fields.
-
- make protocol Fields that is just thin wrapper to allows clients to access stuff themselves
-
- make ClientFields implement Decodable or mappable as a constraint
-
- enforce in the ContentModel protocol to have a sys and a fields which are both protocol types
- */
-
 
 /// An Entry represents a typed collection of data in Contentful
 public class Entry: Resource, LocalizedResource {
 
     /// Content fields
     public var fields: [String: Any]! {
-        // FIXME: Defaults.locale???
-        return Contentful.fields(localizedFields, forLocale: sys.locale ?? Defaults.locale, defaultLocale: defaultLocale)
+        return Contentful.fields(localizedFields, forLocale: locale, defaultLocale: defaultLocale)
     }
 
     // Locale to Field mapping.
     var localizedFields: [String: [String: Any]]!
 
-    var defaultLocale: String!
+    let defaultLocale: String
 
-    // Empty intializer
-    override init() {}
-
-    init(sys: Sys, localizedFields: [String: [String: Any]], defaultLocale: String) {
-        super.init()
-        self.sys = sys
-        self.localizedFields = localizedFields
-        self.defaultLocale = defaultLocale
-    }
-
-    convenience init(entry: Entry, localizedFields: [String: [String: Any]]) {
-        self.init(sys: entry.sys,
-            localizedFields: localizedFields,
-            defaultLocale: entry.defaultLocale)
-    }
+    /// Currently selected locale
+    public var locale: String
 
     // MARK: Internal
 
@@ -102,20 +69,16 @@ public class Entry: Resource, LocalizedResource {
         self.localizedFields = localizedFields
     }
 
-    // MARK: StaticMappable
+    // MARK: <ImmutableMappable>
 
-    override public class func objectForMapping(map: Map) -> BaseMappable? {
-        let entry = Entry()
-        entry.mapping(map: map)
-        return entry
-    }
+    public required init(map: Map) throws {
+        let (locale, localizedFields) = try parseLocalizedFields(map.JSON)
+        self.locale = locale
+        self.defaultLocale = determineDefaultLocale(map.JSON)
 
-    override public func mapping(map: Map) {
-        super.mapping(map: map)
-        // FIXME:
-        let (_, localizedFields) = try! parseLocalizedFields(map.JSON)
+        try super.init(map: map)
 
-        self.localizedFields     = localizedFields
-        self.defaultLocale       = determineDefaultLocale(map.JSON)
+        self.localizedFields = localizedFields
+
     }
 }

@@ -13,25 +13,28 @@ import ObjectMapper
 public class ContentType: Resource {
 
     /// The fields which are part of this Content Type
-    public var fields: [Field]!
+    public let fields: [Field]
 
-//    /// The unique identifier of this Content Type
-//    public let identifier: String
-    /// The name of this Content Type
-    public var name: String!
-//    /// Resource type ("ContentType")
-//    public let type: String
-
-
-    public override class func objectForMapping(map: ObjectMapper.Map) -> BaseMappable? {
-        let contentType = ContentType()
-        contentType.mapping(map: map)
-        return contentType
+    /// The unique identifier of this Content Type
+    public var id: String {
+        return sys.id
     }
 
-    public override func mapping(map: Map) {
-        super.mapping(map: map)
-        fields  <- map["fields"]
-        name    <- map["name"]
+    /// The name of this Content Type
+    public let name: String
+
+    /// Resource type ("ContentType")
+    public var type: String {
+        return sys.type
+    }
+
+
+    // MARK: <ImmutableMappable>
+
+    public required init(map: Map) throws {
+        fields  = try map.value("fields")
+        name    = try map.value("name")
+
+        try super.init(map: map)
     }
 }

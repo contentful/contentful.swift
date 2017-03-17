@@ -8,16 +8,12 @@
 
 import Foundation
 
-
+// TODO: Make this easier to use.
 public protocol ContentModel: class {
 
-    var id: String { get }
-
-    init?(id: String?)
-
-    func update(with fields: [String: Any])
+    init?(sys: Sys, fields: [String: Any], linkDepth: Int)
 }
 
 public protocol EntryModel: ContentModel {
-    static var contentTypeId: String? { get }
+    static var contentTypeId: String { get }
 }

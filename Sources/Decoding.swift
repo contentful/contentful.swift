@@ -8,26 +8,21 @@
 
 import Foundation
 import ObjectMapper
+import ObjectiveC.runtime
 
-internal extension String {
+private var key = "ContentfulClientKey"
 
-    // TODO: Better solution for dates.
-    func toIS8601Date() -> Date? {
-        let formatter = DateFormatter()
-        formatter.locale = Foundation.Locale(identifier: "en_US_POSIX")
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        formatter.timeZone = TimeZone(abbreviation: "UTC")
-        if let date = formatter.date(from: self) {
-            return date
-        } else {
-            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-            if let date = formatter.date(from: self) {
-                return date
-            }
+extension NSDictionary {
+    var client: Client? {
+        get {
+            return objc_getAssociatedObject(self, &key) as? Client
         }
-        return nil
+        set {
+            objc_setAssociatedObject(self, &key, newValue, .OBJC_ASSOCIATION_RETAIN)
+        }
     }
 }
+
 
 internal func determineDefaultLocale(_ json: Any) -> String {
     if let json = json as? NSDictionary, let space = json.client?.space {
@@ -39,21 +34,40 @@ internal func determineDefaultLocale(_ json: Any) -> String {
     return Defaults.locale
 }
 
-internal func convertStringsToDates(fields: [String: Any]) -> [String: Any] {
-    var fieldsWithDates = [String: Any]()
+//internal extension String {
+//
+//    // TODO: Better solution for dates.
+//    func toIS8601Date() -> Date? {
+//        let formatter = DateFormatter()
+//        formatter.locale = Foundation.Locale(identifier: "en_US_POSIX")
+//        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+//        formatter.timeZone = TimeZone(abbreviation: "UTC")
+//        if let date = formatter.date(from: self) {
+//            return date
+//        } else {
+//            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+//            if let date = formatter.date(from: self) {
+//                return date
+//            }
+//        }
+//        return nil
+//    }
+//}
+//
+//internal func convertStringsToDates(fields: [String: Any]) -> [String: Any] {
+//    var fieldsWithDates = [String: Any]()
+//
+//    for (key, value) in fields {
+//        if let date = (value as? String)?.toIS8601Date() {
+//            fieldsWithDates[key] = date
+//        } else {
+//            fieldsWithDates[key] = value
+//        }
+//    }
+//    return fieldsWithDates
+//}
 
-    for (key, value) in fields {
-        if let date = (value as? String)?.toIS8601Date() {
-            fieldsWithDates[key] = date
-        } else {
-            fieldsWithDates[key] = value
-        }
-    }
-    return fieldsWithDates
-}
-
-// TODO: Rename this method
-internal func parseLocalizedFields(_ json: [String: Any]) throws -> (String, [String:[String:Any]]) {
+internal func parseLocalizedFields(_ json: [String: Any]) throws -> (String, [String: [String: Any]]) {
     let map = Map(mappingType: .fromJSON, JSON: json)
     var fields: [String: Any]!
     fields <- map["fields"]
@@ -66,14 +80,14 @@ internal func parseLocalizedFields(_ json: [String: Any]) throws -> (String, [St
     // If there is a locale field, we still want to represent the field internally with a
     // localization mapping.
     if let locale = locale {
-        localizedFields[locale] = convertStringsToDates(fields: fields)
+        localizedFields[locale] = fields
     } else {
 
         // In the case that the fields have been returned with the wildcard format `locale=*`
         // Therefore the structure of fieldsWithDates is [String: [String: Any]]
         fields.forEach { fieldName, localizableFields in
             if let fields = localizableFields as? [String: Any] {
-                convertStringsToDates(fields: fields).forEach { locale, value in
+                fields.forEach { locale, value in
                     if localizedFields[locale] == nil {
                         localizedFields[locale] = [String: Any]()
                     }
@@ -85,40 +99,3 @@ internal func parseLocalizedFields(_ json: [String: Any]) throws -> (String, [St
 
     return (locale ?? Defaults.locale, localizedFields)
 }
-
-// TODO:
-//
-//extension SyncSpace: StaticMappable {
-//
-//    public static func objectForMapping(map: Map) -> BaseMappable? {
-//        var syncSpace = SyncSpace()
-//        syncSpace.mapping(map: map)
-//        return syncSpace
-//    }
-//
-//    /// This function is where all variable mappings should occur. It is executed by Mapper during the mapping (serialization and deserialization) process.
-//    public func mapping(map: Map) {
-//
-//
-//
-//    }
-//
-//    /// Decode JSON for a SyncSpace
-//    public static func decode(_ json: Any) throws -> SyncSpace {
-//        var hasMorePages = true
-//        var syncUrl: String? = try? json => "nextPageUrl"
-//
-//        if syncUrl == nil {
-//            hasMorePages = false
-//            syncUrl = try json => "nextSyncUrl"
-//        }
-//
-//        let (resources, includes) = try Array<Entry>.parseItems(json: json, shouldResolveIncludes: false)
-//        return SyncSpace(
-//            hasMorePages: hasMorePages,
-//            nextUrl: syncUrl!,
-//            items: resources,
-//            includes: includes
-//        )
-//    }
-//}
