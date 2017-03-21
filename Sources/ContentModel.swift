@@ -8,8 +8,7 @@
 
 import Foundation
 
-// TODO: Make this easier to use.
-public protocol ContentModel: class {
+public protocol ContentModel {
 
     init?(sys: Sys, fields: [String: Any], linkDepth: Int)
 }

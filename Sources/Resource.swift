@@ -35,7 +35,7 @@ protocol LocalizedResource {
     var fields: [String: Any]! { get }
 
     var locale: String { get set }
-    var localizedFields: [String: [String: Any]]! { get }
+    var localizedFields: [String: [String: Any]] { get }
     var defaultLocale: String { get }
 }
 

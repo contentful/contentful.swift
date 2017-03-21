@@ -4,9 +4,9 @@
       "response" : {
         "status" : 200,
         "headers" : {
-          "Date" : "Mon, 20 Mar 2017 17:37:45 GMT",
+          "Date" : "Tue, 21 Mar 2017 15:37:00 GMT",
           "Content-Length" : "869",
-          "Age" : "5410",
+          "Age" : "1150",
           "Access-Control-Expose-Headers" : "Etag",
           "Access-Control-Max-Age" : "86400",
           "Etag" : "\"2a6587bde15212bce014b475202befb5\"",
@@ -18,35 +18,35 @@
           "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
           "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
           "Connection" : "keep-alive",
-          "X-Contentful-Request-Id" : "a42a45190a87c7da1e6136e1d2af0272",
+          "X-Contentful-Request-Id" : "6803f214393482c9ef7b057de7563fc4",
           "X-Content-Type-Options" : "nosniff",
-          "X-Timer" : "S1490031465.791681,VS0,VE0",
-          "X-Served-By" : "cache-hhn1523-HHN",
+          "X-Timer" : "S1490110620.940125,VS0,VE0",
+          "X-Served-By" : "cache-hhn1524-HHN",
           "Access-Control-Allow-Origin" : "*",
           "Server" : "Contentful",
           "Cache-Control" : "max-age=0",
           "Via" : "1.1 varnish"
         },
         "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJBcnJheSIKICB9LAogICJ0b3RhbCI6IDEsCiAgInNraXAiOiAwLAogICJsaW1pdCI6IDEwMCwKICAiaXRlbXMiOiBbCiAgICB7CiAgICAgICJzeXMiOiB7CiAgICAgICAgInNwYWNlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJTcGFjZSIsCiAgICAgICAgICAgICJpZCI6ICJjZmV4YW1wbGVhcGkiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAiaWQiOiAiZ2FyZmllbGQiLAogICAgICAgICJ0eXBlIjogIkVudHJ5IiwKICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTMtMDYtMjdUMjI6NDY6MjAuODIxWiIsCiAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDEzLTA4LTI3VDEwOjA5OjA3LjkyOVoiLAogICAgICAgICJyZXZpc2lvbiI6IDIsCiAgICAgICAgImNvbnRlbnRUeXBlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJDb250ZW50VHlwZSIsCiAgICAgICAgICAgICJpZCI6ICJjYXQiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAibG9jYWxlIjogImVuLVVTIgogICAgICB9LAogICAgICAiZmllbGRzIjogewogICAgICAgICJuYW1lIjogIkdhcmZpZWxkIiwKICAgICAgICAibGlrZXMiOiBbCiAgICAgICAgICAibGFzYWduYSIKICAgICAgICBdLAogICAgICAgICJjb2xvciI6ICJvcmFuZ2UiLAogICAgICAgICJiaXJ0aGRheSI6ICIxOTc5LTA2LTE4VDIzOjAwOjAwKzAwOjAwIiwKICAgICAgICAibGlmZXMiOiBudWxsLAogICAgICAgICJsaXZlcyI6IDkKICAgICAgfQogICAgfQogIF0KfQo=",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?fields.color%5Bne%5D=gray&fields.lives=9&content_type=cat&locale=en-US"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?fields.color%5Bne%5D=gray&content_type=cat&fields.lives=9"
       },
-      "recorded_at" : 1490031464.29145,
+      "recorded_at" : 1490110620.215057,
       "request" : {
         "headers" : {
           "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
           "Authorization" : "Bearer b4c0n73n7fu1"
         },
         "method" : "GET",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?fields.color%5Bne%5D=gray&fields.lives=9&content_type=cat&locale=en-US"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?fields.color%5Bne%5D=gray&content_type=cat&fields.lives=9"
       }
     },
     {
       "response" : {
         "status" : 200,
         "headers" : {
-          "Date" : "Mon, 20 Mar 2017 17:37:45 GMT",
+          "Date" : "Tue, 21 Mar 2017 15:37:01 GMT",
           "Content-Length" : "344",
-          "Age" : "5417",
+          "Age" : "16347",
           "Access-Control-Expose-Headers" : "Etag",
           "Access-Control-Max-Age" : "86400",
           "Etag" : "\"17f6b9f68596176aed46fa020bf235af\"",
@@ -60,8 +60,8 @@
           "Connection" : "keep-alive",
           "X-Contentful-Request-Id" : "1c21e3ad5f25bea0ebd87f557a197403",
           "X-Content-Type-Options" : "nosniff",
-          "X-Timer" : "S1490031465.920393,VS0,VE0",
-          "X-Served-By" : "cache-hhn1525-HHN",
+          "X-Timer" : "S1490110621.028998,VS0,VE0",
+          "X-Served-By" : "cache-hhn1520-HHN",
           "Access-Control-Allow-Origin" : "*",
           "Server" : "Contentful",
           "Cache-Control" : "max-age=0",
@@ -70,47 +70,7 @@
         "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJTcGFjZSIsCiAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogIH0sCiAgIm5hbWUiOiAiQ29udGVudGZ1bCBFeGFtcGxlIEFQSSIsCiAgImxvY2FsZXMiOiBbCiAgICB7CiAgICAgICJjb2RlIjogImVuLVVTIiwKICAgICAgImRlZmF1bHQiOiB0cnVlLAogICAgICAibmFtZSI6ICJFbmdsaXNoIiwKICAgICAgImZhbGxiYWNrQ29kZSI6IG51bGwKICAgIH0sCiAgICB7CiAgICAgICJjb2RlIjogInRsaCIsCiAgICAgICJkZWZhdWx0IjogZmFsc2UsCiAgICAgICJuYW1lIjogIktsaW5nb24iLAogICAgICAiZmFsbGJhY2tDb2RlIjogImVuLVVTIgogICAgfQogIF0KfQo=",
         "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/"
       },
-      "recorded_at" : 1490031464.421321,
-      "request" : {
-        "headers" : {
-          "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
-          "Authorization" : "Bearer b4c0n73n7fu1"
-        },
-        "method" : "GET",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/"
-      }
-    },
-    {
-      "response" : {
-        "status" : 200,
-        "headers" : {
-          "Date" : "Mon, 20 Mar 2017 17:37:45 GMT",
-          "Content-Length" : "344",
-          "Age" : "5417",
-          "Access-Control-Expose-Headers" : "Etag",
-          "Access-Control-Max-Age" : "86400",
-          "Etag" : "\"17f6b9f68596176aed46fa020bf235af\"",
-          "Access-Control-Allow-Headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent",
-          "Accept-Ranges" : "bytes",
-          "Vary" : "Accept-Encoding",
-          "X-Cache-Hits" : "2",
-          "X-Cache" : "HIT",
-          "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
-          "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
-          "Connection" : "keep-alive",
-          "X-Contentful-Request-Id" : "1c21e3ad5f25bea0ebd87f557a197403",
-          "X-Content-Type-Options" : "nosniff",
-          "X-Timer" : "S1490031465.965370,VS0,VE0",
-          "X-Served-By" : "cache-hhn1525-HHN",
-          "Access-Control-Allow-Origin" : "*",
-          "Server" : "Contentful",
-          "Cache-Control" : "max-age=0",
-          "Via" : "1.1 varnish"
-        },
-        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJTcGFjZSIsCiAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogIH0sCiAgIm5hbWUiOiAiQ29udGVudGZ1bCBFeGFtcGxlIEFQSSIsCiAgImxvY2FsZXMiOiBbCiAgICB7CiAgICAgICJjb2RlIjogImVuLVVTIiwKICAgICAgImRlZmF1bHQiOiB0cnVlLAogICAgICAibmFtZSI6ICJFbmdsaXNoIiwKICAgICAgImZhbGxiYWNrQ29kZSI6IG51bGwKICAgIH0sCiAgICB7CiAgICAgICJjb2RlIjogInRsaCIsCiAgICAgICJkZWZhdWx0IjogZmFsc2UsCiAgICAgICJuYW1lIjogIktsaW5nb24iLAogICAgICAiZmFsbGJhY2tDb2RlIjogImVuLVVTIgogICAgfQogIF0KfQo=",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/"
-      },
-      "recorded_at" : 1490031464.463934,
+      "recorded_at" : 1490110620.304778,
       "request" : {
         "headers" : {
           "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
@@ -126,8 +86,8 @@
         "headers" : {
           "Via" : "1.1 varnish",
           "Content-Length" : "1035",
-          "Date" : "Mon, 20 Mar 2017 17:37:45 GMT",
-          "Age" : "5410",
+          "Date" : "Tue, 21 Mar 2017 15:37:01 GMT",
+          "Age" : "1149",
           "Access-Control-Expose-Headers" : "Etag",
           "Access-Control-Max-Age" : "86400",
           "Etag" : "W\/\"c76b6c572141b78d9e4204b679b5c299\"",
@@ -139,35 +99,116 @@
           "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
           "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
           "Connection" : "keep-alive",
-          "X-Contentful-Request-Id" : "95bd5839b3209bc947b20af651fc121a",
+          "X-Contentful-Request-Id" : "811bf0e91cf39d0baee0d60fdd0d88a7",
           "X-Content-Type-Options" : "nosniff",
-          "X-Timer" : "S1490031465.964025,VS0,VE0",
-          "X-Served-By" : "cache-hhn1523-HHN",
+          "X-Timer" : "S1490110621.058633,VS0,VE0",
+          "X-Served-By" : "cache-hhn1524-HHN",
           "Access-Control-Allow-Origin" : "*",
           "Server" : "Contentful",
           "Content-Encoding" : "gzip",
           "Cache-Control" : "max-age=0"
         },
         "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJBcnJheSIKICB9LAogICJ0b3RhbCI6IDEsCiAgInNraXAiOiAwLAogICJsaW1pdCI6IDEwMCwKICAiaXRlbXMiOiBbCiAgICB7CiAgICAgICJzeXMiOiB7CiAgICAgICAgInNwYWNlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJTcGFjZSIsCiAgICAgICAgICAgICJpZCI6ICJjZmV4YW1wbGVhcGkiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAiaWQiOiAiaGFwcHljYXQiLAogICAgICAgICJ0eXBlIjogIkVudHJ5IiwKICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTMtMDYtMjdUMjI6NDY6MjAuMTcxWiIsCiAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDEzLTExLTE4VDE1OjU4OjAyLjAxOFoiLAogICAgICAgICJyZXZpc2lvbiI6IDgsCiAgICAgICAgImNvbnRlbnRUeXBlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJDb250ZW50VHlwZSIsCiAgICAgICAgICAgICJpZCI6ICJjYXQiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAibG9jYWxlIjogImVuLVVTIgogICAgICB9LAogICAgICAiZmllbGRzIjogewogICAgICAgICJuYW1lIjogIkhhcHB5IENhdCIsCiAgICAgICAgImxpa2VzIjogWwogICAgICAgICAgImNoZWV6YnVyZ2VyIgogICAgICAgIF0sCiAgICAgICAgImNvbG9yIjogImdyYXkiLAogICAgICAgICJiZXN0RnJpZW5kIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJFbnRyeSIsCiAgICAgICAgICAgICJpZCI6ICJueWFuY2F0IgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgImJpcnRoZGF5IjogIjIwMDMtMTAtMjhUMjM6MDA6MDArMDA6MDAiLAogICAgICAgICJsaXZlcyI6IDEsCiAgICAgICAgImltYWdlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJBc3NldCIsCiAgICAgICAgICAgICJpZCI6ICJoYXBweWNhdCIKICAgICAgICAgIH0KICAgICAgICB9CiAgICAgIH0KICAgIH0KICBdLAogICJpbmNsdWRlcyI6IHsKICAgICJFbnRyeSI6IFsKICAgICAgewogICAgICAgICJzeXMiOiB7CiAgICAgICAgICAic3BhY2UiOiB7CiAgICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICAgImxpbmtUeXBlIjogIlNwYWNlIiwKICAgICAgICAgICAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogICAgICAgICAgICB9CiAgICAgICAgICB9LAogICAgICAgICAgImlkIjogIm55YW5jYXQiLAogICAgICAgICAgInR5cGUiOiAiRW50cnkiLAogICAgICAgICAgImNyZWF0ZWRBdCI6ICIyMDEzLTA2LTI3VDIyOjQ2OjE5LjUxM1oiLAogICAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDEzLTA5LTA0VDA5OjE5OjM5LjAyN1oiLAogICAgICAgICAgInJldmlzaW9uIjogNSwKICAgICAgICAgICJjb250ZW50VHlwZSI6IHsKICAgICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgICAibGlua1R5cGUiOiAiQ29udGVudFR5cGUiLAogICAgICAgICAgICAgICJpZCI6ICJjYXQiCiAgICAgICAgICAgIH0KICAgICAgICAgIH0sCiAgICAgICAgICAibG9jYWxlIjogImVuLVVTIgogICAgICAgIH0sCiAgICAgICAgImZpZWxkcyI6IHsKICAgICAgICAgICJuYW1lIjogIk55YW4gQ2F0IiwKICAgICAgICAgICJsaWtlcyI6IFsKICAgICAgICAgICAgInJhaW5ib3dzIiwKICAgICAgICAgICAgImZpc2giCiAgICAgICAgICBdLAogICAgICAgICAgImNvbG9yIjogInJhaW5ib3ciLAogICAgICAgICAgImJlc3RGcmllbmQiOiB7CiAgICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICAgImxpbmtUeXBlIjogIkVudHJ5IiwKICAgICAgICAgICAgICAiaWQiOiAiaGFwcHljYXQiCiAgICAgICAgICAgIH0KICAgICAgICAgIH0sCiAgICAgICAgICAiYmlydGhkYXkiOiAiMjAxMS0wNC0wNFQyMjowMDowMCswMDowMCIsCiAgICAgICAgICAibGl2ZXMiOiAxMzM3LAogICAgICAgICAgImltYWdlIjogewogICAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAgICJsaW5rVHlwZSI6ICJBc3NldCIsCiAgICAgICAgICAgICAgImlkIjogIm55YW5jYXQiCiAgICAgICAgICAgIH0KICAgICAgICAgIH0KICAgICAgICB9CiAgICAgIH0KICAgIF0sCiAgICAiQXNzZXQiOiBbCiAgICAgIHsKICAgICAgICAic3lzIjogewogICAgICAgICAgInNwYWNlIjogewogICAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAgICJsaW5rVHlwZSI6ICJTcGFjZSIsCiAgICAgICAgICAgICAgImlkIjogImNmZXhhbXBsZWFwaSIKICAgICAgICAgICAgfQogICAgICAgICAgfSwKICAgICAgICAgICJpZCI6ICJoYXBweWNhdCIsCiAgICAgICAgICAidHlwZSI6ICJBc3NldCIsCiAgICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTMtMDktMDJUMTQ6NTY6MzQuMjY3WiIsCiAgICAgICAgICAidXBkYXRlZEF0IjogIjIwMTMtMDktMDJUMTU6MTE6MjQuMzYxWiIsCiAgICAgICAgICAicmV2aXNpb24iOiAyLAogICAgICAgICAgImxvY2FsZSI6ICJlbi1VUyIKICAgICAgICB9LAogICAgICAgICJmaWVsZHMiOiB7CiAgICAgICAgICAidGl0bGUiOiAiSGFwcHkgQ2F0IiwKICAgICAgICAgICJmaWxlIjogewogICAgICAgICAgICAidXJsIjogIi8vaW1hZ2VzLmNvbnRlbnRmdWwuY29tL2NmZXhhbXBsZWFwaS8zTVpQbmpaVElza0FJSWt1dW9zQ3NzLzM4MmE0OGRmYTJjYjE2YzQ3YWEyYzcyZjdiMjNiZjA5L2hhcHB5Y2F0dy5qcGciLAogICAgICAgICAgICAiZGV0YWlscyI6IHsKICAgICAgICAgICAgICAic2l6ZSI6IDU5OTM5LAogICAgICAgICAgICAgICJpbWFnZSI6IHsKICAgICAgICAgICAgICAgICJ3aWR0aCI6IDI3MywKICAgICAgICAgICAgICAgICJoZWlnaHQiOiAzOTcKICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0sCiAgICAgICAgICAgICJmaWxlTmFtZSI6ICJoYXBweWNhdHcuanBnIiwKICAgICAgICAgICAgImNvbnRlbnRUeXBlIjogImltYWdlL2pwZWciCiAgICAgICAgICB9CiAgICAgICAgfQogICAgICB9LAogICAgICB7CiAgICAgICAgInN5cyI6IHsKICAgICAgICAgICJzcGFjZSI6IHsKICAgICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgICAibGlua1R5cGUiOiAiU3BhY2UiLAogICAgICAgICAgICAgICJpZCI6ICJjZmV4YW1wbGVhcGkiCiAgICAgICAgICAgIH0KICAgICAgICAgIH0sCiAgICAgICAgICAiaWQiOiAibnlhbmNhdCIsCiAgICAgICAgICAidHlwZSI6ICJBc3NldCIsCiAgICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTMtMDktMDJUMTQ6NTY6MzQuMjQwWiIsCiAgICAgICAgICAidXBkYXRlZEF0IjogIjIwMTMtMDktMDJUMTQ6NTY6MzQuMjQwWiIsCiAgICAgICAgICAicmV2aXNpb24iOiAxLAogICAgICAgICAgImxvY2FsZSI6ICJlbi1VUyIKICAgICAgICB9LAogICAgICAgICJmaWVsZHMiOiB7CiAgICAgICAgICAidGl0bGUiOiAiTnlhbiBDYXQiLAogICAgICAgICAgImZpbGUiOiB7CiAgICAgICAgICAgICJ1cmwiOiAiLy9pbWFnZXMuY29udGVudGZ1bC5jb20vY2ZleGFtcGxlYXBpLzRncDZ0YUF3VzRDbVNndW1xMmVrVW0vOWRhMGNkMTkzNjg3MWI4ZDcyMzQzZTg5NWEwMGQ2MTEvTnlhbl9jYXRfMjUwcHhfZnJhbWUucG5nIiwKICAgICAgICAgICAgImRldGFpbHMiOiB7CiAgICAgICAgICAgICAgInNpemUiOiAxMjI3MywKICAgICAgICAgICAgICAiaW1hZ2UiOiB7CiAgICAgICAgICAgICAgICAid2lkdGgiOiAyNTAsCiAgICAgICAgICAgICAgICAiaGVpZ2h0IjogMjUwCiAgICAgICAgICAgICAgfQogICAgICAgICAgICB9LAogICAgICAgICAgICAiZmlsZU5hbWUiOiAiTnlhbl9jYXRfMjUwcHhfZnJhbWUucG5nIiwKICAgICAgICAgICAgImNvbnRlbnRUeXBlIjogImltYWdlL3BuZyIKICAgICAgICAgIH0KICAgICAgICB9CiAgICAgIH0KICAgIF0KICB9Cn0K",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?content_type=cat&locale=en-US&fields.color=gray"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?fields.color=gray&content_type=cat"
       },
-      "recorded_at" : 1490031464.464123,
+      "recorded_at" : 1490110620.333679,
       "request" : {
         "headers" : {
           "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
           "Authorization" : "Bearer b4c0n73n7fu1"
         },
         "method" : "GET",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?content_type=cat&locale=en-US&fields.color=gray"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?fields.color=gray&content_type=cat"
       }
     },
     {
       "response" : {
         "status" : 200,
         "headers" : {
-          "Date" : "Mon, 20 Mar 2017 17:37:46 GMT",
+          "Date" : "Tue, 21 Mar 2017 15:37:01 GMT",
           "Content-Length" : "344",
-          "Age" : "5417",
+          "Age" : "16347",
+          "Access-Control-Expose-Headers" : "Etag",
+          "Access-Control-Max-Age" : "86400",
+          "Etag" : "\"17f6b9f68596176aed46fa020bf235af\"",
+          "Access-Control-Allow-Headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent",
+          "Accept-Ranges" : "bytes",
+          "Vary" : "Accept-Encoding",
+          "X-Cache-Hits" : "2",
+          "X-Cache" : "HIT",
+          "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
+          "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
+          "Connection" : "keep-alive",
+          "X-Contentful-Request-Id" : "1c21e3ad5f25bea0ebd87f557a197403",
+          "X-Content-Type-Options" : "nosniff",
+          "X-Timer" : "S1490110621.058615,VS0,VE0",
+          "X-Served-By" : "cache-hhn1520-HHN",
+          "Access-Control-Allow-Origin" : "*",
+          "Server" : "Contentful",
+          "Cache-Control" : "max-age=0",
+          "Via" : "1.1 varnish"
+        },
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJTcGFjZSIsCiAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogIH0sCiAgIm5hbWUiOiAiQ29udGVudGZ1bCBFeGFtcGxlIEFQSSIsCiAgImxvY2FsZXMiOiBbCiAgICB7CiAgICAgICJjb2RlIjogImVuLVVTIiwKICAgICAgImRlZmF1bHQiOiB0cnVlLAogICAgICAibmFtZSI6ICJFbmdsaXNoIiwKICAgICAgImZhbGxiYWNrQ29kZSI6IG51bGwKICAgIH0sCiAgICB7CiAgICAgICJjb2RlIjogInRsaCIsCiAgICAgICJkZWZhdWx0IjogZmFsc2UsCiAgICAgICJuYW1lIjogIktsaW5nb24iLAogICAgICAiZmFsbGJhY2tDb2RlIjogImVuLVVTIgogICAgfQogIF0KfQo=",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/"
+      },
+      "recorded_at" : 1490110620.333881,
+      "request" : {
+        "headers" : {
+          "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
+          "Authorization" : "Bearer b4c0n73n7fu1"
+        },
+        "method" : "GET",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/"
+      }
+    },
+    {
+      "response" : {
+        "status" : 200,
+        "headers" : {
+          "Via" : "1.1 varnish",
+          "Content-Length" : "1126",
+          "Date" : "Tue, 21 Mar 2017 15:37:01 GMT",
+          "Age" : "52",
+          "Access-Control-Expose-Headers" : "Etag",
+          "Access-Control-Max-Age" : "86400",
+          "Etag" : "W\/\"e7d45ea40e055407d04c0d5a264c603b\"",
+          "Access-Control-Allow-Headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent",
+          "Accept-Ranges" : "bytes",
+          "Vary" : "Accept-Encoding",
+          "X-Cache-Hits" : "1",
+          "X-Cache" : "HIT",
+          "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
+          "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
+          "Connection" : "keep-alive",
+          "X-Contentful-Request-Id" : "fdbd397922f6dea38bd3eff41c82209d",
+          "X-Content-Type-Options" : "nosniff",
+          "X-Timer" : "S1490110621.086033,VS0,VE0",
+          "X-Served-By" : "cache-hhn1524-HHN",
+          "Access-Control-Allow-Origin" : "*",
+          "Server" : "Contentful",
+          "Content-Encoding" : "gzip",
+          "Cache-Control" : "max-age=0"
+        },
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJBcnJheSIKICB9LAogICJ0b3RhbCI6IDIsCiAgInNraXAiOiAwLAogICJsaW1pdCI6IDEwMCwKICAiaXRlbXMiOiBbCiAgICB7CiAgICAgICJzeXMiOiB7CiAgICAgICAgInNwYWNlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJTcGFjZSIsCiAgICAgICAgICAgICJpZCI6ICJjZmV4YW1wbGVhcGkiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAiaWQiOiAiaGFwcHljYXQiLAogICAgICAgICJ0eXBlIjogIkVudHJ5IiwKICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTMtMDYtMjdUMjI6NDY6MjAuMTcxWiIsCiAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDEzLTExLTE4VDE1OjU4OjAyLjAxOFoiLAogICAgICAgICJyZXZpc2lvbiI6IDgsCiAgICAgICAgImNvbnRlbnRUeXBlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJDb250ZW50VHlwZSIsCiAgICAgICAgICAgICJpZCI6ICJjYXQiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAibG9jYWxlIjogImVuLVVTIgogICAgICB9LAogICAgICAiZmllbGRzIjogewogICAgICAgICJuYW1lIjogIkhhcHB5IENhdCIsCiAgICAgICAgImxpa2VzIjogWwogICAgICAgICAgImNoZWV6YnVyZ2VyIgogICAgICAgIF0sCiAgICAgICAgImNvbG9yIjogImdyYXkiLAogICAgICAgICJiZXN0RnJpZW5kIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJFbnRyeSIsCiAgICAgICAgICAgICJpZCI6ICJueWFuY2F0IgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgImJpcnRoZGF5IjogIjIwMDMtMTAtMjhUMjM6MDA6MDArMDA6MDAiLAogICAgICAgICJsaXZlcyI6IDEsCiAgICAgICAgImltYWdlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJBc3NldCIsCiAgICAgICAgICAgICJpZCI6ICJoYXBweWNhdCIKICAgICAgICAgIH0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAgICB7CiAgICAgICJzeXMiOiB7CiAgICAgICAgInNwYWNlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJTcGFjZSIsCiAgICAgICAgICAgICJpZCI6ICJjZmV4YW1wbGVhcGkiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAiaWQiOiAiZ2FyZmllbGQiLAogICAgICAgICJ0eXBlIjogIkVudHJ5IiwKICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTMtMDYtMjdUMjI6NDY6MjAuODIxWiIsCiAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDEzLTA4LTI3VDEwOjA5OjA3LjkyOVoiLAogICAgICAgICJyZXZpc2lvbiI6IDIsCiAgICAgICAgImNvbnRlbnRUeXBlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJDb250ZW50VHlwZSIsCiAgICAgICAgICAgICJpZCI6ICJjYXQiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAibG9jYWxlIjogImVuLVVTIgogICAgICB9LAogICAgICAiZmllbGRzIjogewogICAgICAgICJuYW1lIjogIkdhcmZpZWxkIiwKICAgICAgICAibGlrZXMiOiBbCiAgICAgICAgICAibGFzYWduYSIKICAgICAgICBdLAogICAgICAgICJjb2xvciI6ICJvcmFuZ2UiLAogICAgICAgICJiaXJ0aGRheSI6ICIxOTc5LTA2LTE4VDIzOjAwOjAwKzAwOjAwIiwKICAgICAgICAibGlmZXMiOiBudWxsLAogICAgICAgICJsaXZlcyI6IDkKICAgICAgfQogICAgfQogIF0sCiAgImluY2x1ZGVzIjogewogICAgIkVudHJ5IjogWwogICAgICB7CiAgICAgICAgInN5cyI6IHsKICAgICAgICAgICJzcGFjZSI6IHsKICAgICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgICAibGlua1R5cGUiOiAiU3BhY2UiLAogICAgICAgICAgICAgICJpZCI6ICJjZmV4YW1wbGVhcGkiCiAgICAgICAgICAgIH0KICAgICAgICAgIH0sCiAgICAgICAgICAiaWQiOiAibnlhbmNhdCIsCiAgICAgICAgICAidHlwZSI6ICJFbnRyeSIsCiAgICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTMtMDYtMjdUMjI6NDY6MTkuNTEzWiIsCiAgICAgICAgICAidXBkYXRlZEF0IjogIjIwMTMtMDktMDRUMDk6MTk6MzkuMDI3WiIsCiAgICAgICAgICAicmV2aXNpb24iOiA1LAogICAgICAgICAgImNvbnRlbnRUeXBlIjogewogICAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAgICJsaW5rVHlwZSI6ICJDb250ZW50VHlwZSIsCiAgICAgICAgICAgICAgImlkIjogImNhdCIKICAgICAgICAgICAgfQogICAgICAgICAgfSwKICAgICAgICAgICJsb2NhbGUiOiAiZW4tVVMiCiAgICAgICAgfSwKICAgICAgICAiZmllbGRzIjogewogICAgICAgICAgIm5hbWUiOiAiTnlhbiBDYXQiLAogICAgICAgICAgImxpa2VzIjogWwogICAgICAgICAgICAicmFpbmJvd3MiLAogICAgICAgICAgICAiZmlzaCIKICAgICAgICAgIF0sCiAgICAgICAgICAiY29sb3IiOiAicmFpbmJvdyIsCiAgICAgICAgICAiYmVzdEZyaWVuZCI6IHsKICAgICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgICAibGlua1R5cGUiOiAiRW50cnkiLAogICAgICAgICAgICAgICJpZCI6ICJoYXBweWNhdCIKICAgICAgICAgICAgfQogICAgICAgICAgfSwKICAgICAgICAgICJiaXJ0aGRheSI6ICIyMDExLTA0LTA0VDIyOjAwOjAwKzAwOjAwIiwKICAgICAgICAgICJsaXZlcyI6IDEzMzcsCiAgICAgICAgICAiaW1hZ2UiOiB7CiAgICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICAgImxpbmtUeXBlIjogIkFzc2V0IiwKICAgICAgICAgICAgICAiaWQiOiAibnlhbmNhdCIKICAgICAgICAgICAgfQogICAgICAgICAgfQogICAgICAgIH0KICAgICAgfQogICAgXSwKICAgICJBc3NldCI6IFsKICAgICAgewogICAgICAgICJzeXMiOiB7CiAgICAgICAgICAic3BhY2UiOiB7CiAgICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICAgImxpbmtUeXBlIjogIlNwYWNlIiwKICAgICAgICAgICAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogICAgICAgICAgICB9CiAgICAgICAgICB9LAogICAgICAgICAgImlkIjogImhhcHB5Y2F0IiwKICAgICAgICAgICJ0eXBlIjogIkFzc2V0IiwKICAgICAgICAgICJjcmVhdGVkQXQiOiAiMjAxMy0wOS0wMlQxNDo1NjozNC4yNjdaIiwKICAgICAgICAgICJ1cGRhdGVkQXQiOiAiMjAxMy0wOS0wMlQxNToxMToyNC4zNjFaIiwKICAgICAgICAgICJyZXZpc2lvbiI6IDIsCiAgICAgICAgICAibG9jYWxlIjogImVuLVVTIgogICAgICAgIH0sCiAgICAgICAgImZpZWxkcyI6IHsKICAgICAgICAgICJ0aXRsZSI6ICJIYXBweSBDYXQiLAogICAgICAgICAgImZpbGUiOiB7CiAgICAgICAgICAgICJ1cmwiOiAiLy9pbWFnZXMuY29udGVudGZ1bC5jb20vY2ZleGFtcGxlYXBpLzNNWlBualpUSXNrQUlJa3V1b3NDc3MvMzgyYTQ4ZGZhMmNiMTZjNDdhYTJjNzJmN2IyM2JmMDkvaGFwcHljYXR3LmpwZyIsCiAgICAgICAgICAgICJkZXRhaWxzIjogewogICAgICAgICAgICAgICJzaXplIjogNTk5MzksCiAgICAgICAgICAgICAgImltYWdlIjogewogICAgICAgICAgICAgICAgIndpZHRoIjogMjczLAogICAgICAgICAgICAgICAgImhlaWdodCI6IDM5NwogICAgICAgICAgICAgIH0KICAgICAgICAgICAgfSwKICAgICAgICAgICAgImZpbGVOYW1lIjogImhhcHB5Y2F0dy5qcGciLAogICAgICAgICAgICAiY29udGVudFR5cGUiOiAiaW1hZ2UvanBlZyIKICAgICAgICAgIH0KICAgICAgICB9CiAgICAgIH0sCiAgICAgIHsKICAgICAgICAic3lzIjogewogICAgICAgICAgInNwYWNlIjogewogICAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAgICJsaW5rVHlwZSI6ICJTcGFjZSIsCiAgICAgICAgICAgICAgImlkIjogImNmZXhhbXBsZWFwaSIKICAgICAgICAgICAgfQogICAgICAgICAgfSwKICAgICAgICAgICJpZCI6ICJueWFuY2F0IiwKICAgICAgICAgICJ0eXBlIjogIkFzc2V0IiwKICAgICAgICAgICJjcmVhdGVkQXQiOiAiMjAxMy0wOS0wMlQxNDo1NjozNC4yNDBaIiwKICAgICAgICAgICJ1cGRhdGVkQXQiOiAiMjAxMy0wOS0wMlQxNDo1NjozNC4yNDBaIiwKICAgICAgICAgICJyZXZpc2lvbiI6IDEsCiAgICAgICAgICAibG9jYWxlIjogImVuLVVTIgogICAgICAgIH0sCiAgICAgICAgImZpZWxkcyI6IHsKICAgICAgICAgICJ0aXRsZSI6ICJOeWFuIENhdCIsCiAgICAgICAgICAiZmlsZSI6IHsKICAgICAgICAgICAgInVybCI6ICIvL2ltYWdlcy5jb250ZW50ZnVsLmNvbS9jZmV4YW1wbGVhcGkvNGdwNnRhQXdXNENtU2d1bXEyZWtVbS85ZGEwY2QxOTM2ODcxYjhkNzIzNDNlODk1YTAwZDYxMS9OeWFuX2NhdF8yNTBweF9mcmFtZS5wbmciLAogICAgICAgICAgICAiZGV0YWlscyI6IHsKICAgICAgICAgICAgICAic2l6ZSI6IDEyMjczLAogICAgICAgICAgICAgICJpbWFnZSI6IHsKICAgICAgICAgICAgICAgICJ3aWR0aCI6IDI1MCwKICAgICAgICAgICAgICAgICJoZWlnaHQiOiAyNTAKICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0sCiAgICAgICAgICAgICJmaWxlTmFtZSI6ICJOeWFuX2NhdF8yNTBweF9mcmFtZS5wbmciLAogICAgICAgICAgICAiY29udGVudFR5cGUiOiAiaW1hZ2UvcG5nIgogICAgICAgICAgfQogICAgICAgIH0KICAgICAgfQogICAgXQogIH0KfQo=",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?fields.likes%5Bnin%5D=rainbows&content_type=cat"
+      },
+      "recorded_at" : 1490110620.362333,
+      "request" : {
+        "headers" : {
+          "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
+          "Authorization" : "Bearer b4c0n73n7fu1"
+        },
+        "method" : "GET",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?fields.likes%5Bnin%5D=rainbows&content_type=cat"
+      }
+    },
+    {
+      "response" : {
+        "status" : 200,
+        "headers" : {
+          "Date" : "Tue, 21 Mar 2017 15:37:01 GMT",
+          "Content-Length" : "344",
+          "Age" : "16347",
           "Access-Control-Expose-Headers" : "Etag",
           "Access-Control-Max-Age" : "86400",
           "Etag" : "\"17f6b9f68596176aed46fa020bf235af\"",
@@ -181,8 +222,8 @@
           "Connection" : "keep-alive",
           "X-Contentful-Request-Id" : "1c21e3ad5f25bea0ebd87f557a197403",
           "X-Content-Type-Options" : "nosniff",
-          "X-Timer" : "S1490031466.016354,VS0,VE0",
-          "X-Served-By" : "cache-hhn1525-HHN",
+          "X-Timer" : "S1490110621.086472,VS0,VE0",
+          "X-Served-By" : "cache-hhn1520-HHN",
           "Access-Control-Allow-Origin" : "*",
           "Server" : "Contentful",
           "Cache-Control" : "max-age=0",
@@ -191,7 +232,7 @@
         "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJTcGFjZSIsCiAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogIH0sCiAgIm5hbWUiOiAiQ29udGVudGZ1bCBFeGFtcGxlIEFQSSIsCiAgImxvY2FsZXMiOiBbCiAgICB7CiAgICAgICJjb2RlIjogImVuLVVTIiwKICAgICAgImRlZmF1bHQiOiB0cnVlLAogICAgICAibmFtZSI6ICJFbmdsaXNoIiwKICAgICAgImZhbGxiYWNrQ29kZSI6IG51bGwKICAgIH0sCiAgICB7CiAgICAgICJjb2RlIjogInRsaCIsCiAgICAgICJkZWZhdWx0IjogZmFsc2UsCiAgICAgICJuYW1lIjogIktsaW5nb24iLAogICAgICAiZmFsbGJhY2tDb2RlIjogImVuLVVTIgogICAgfQogIF0KfQo=",
         "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/"
       },
-      "recorded_at" : 1490031464.515708,
+      "recorded_at" : 1490110620.362412,
       "request" : {
         "headers" : {
           "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
@@ -207,8 +248,8 @@
         "headers" : {
           "Via" : "1.1 varnish",
           "Content-Length" : "1066",
-          "Date" : "Mon, 20 Mar 2017 17:37:46 GMT",
-          "Age" : "5410",
+          "Date" : "Tue, 21 Mar 2017 15:37:01 GMT",
+          "Age" : "1149",
           "Access-Control-Expose-Headers" : "Etag",
           "Access-Control-Max-Age" : "86400",
           "Etag" : "W\/\"88c5378f0e37675db35d48a0b4c30c82\"",
@@ -220,76 +261,35 @@
           "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
           "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
           "Connection" : "keep-alive",
-          "X-Contentful-Request-Id" : "79b20b335012a2bcd198bfb67f9f6e5a",
+          "X-Contentful-Request-Id" : "797d37459bea4a1da5e74cd085ade52b",
           "X-Content-Type-Options" : "nosniff",
-          "X-Timer" : "S1490031466.016508,VS0,VE0",
-          "X-Served-By" : "cache-hhn1523-HHN",
+          "X-Timer" : "S1490110621.116018,VS0,VE0",
+          "X-Served-By" : "cache-hhn1524-HHN",
           "Access-Control-Allow-Origin" : "*",
           "Server" : "Contentful",
           "Content-Encoding" : "gzip",
           "Cache-Control" : "max-age=0"
         },
         "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJBcnJheSIKICB9LAogICJ0b3RhbCI6IDMsCiAgInNraXAiOiAwLAogICJsaW1pdCI6IDEwMCwKICAiaXRlbXMiOiBbCiAgICB7CiAgICAgICJzeXMiOiB7CiAgICAgICAgInNwYWNlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJTcGFjZSIsCiAgICAgICAgICAgICJpZCI6ICJjZmV4YW1wbGVhcGkiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAiaWQiOiAibnlhbmNhdCIsCiAgICAgICAgInR5cGUiOiAiRW50cnkiLAogICAgICAgICJjcmVhdGVkQXQiOiAiMjAxMy0wNi0yN1QyMjo0NjoxOS41MTNaIiwKICAgICAgICAidXBkYXRlZEF0IjogIjIwMTMtMDktMDRUMDk6MTk6MzkuMDI3WiIsCiAgICAgICAgInJldmlzaW9uIjogNSwKICAgICAgICAiY29udGVudFR5cGUiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIkNvbnRlbnRUeXBlIiwKICAgICAgICAgICAgImlkIjogImNhdCIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJsb2NhbGUiOiAiZW4tVVMiCiAgICAgIH0sCiAgICAgICJmaWVsZHMiOiB7CiAgICAgICAgIm5hbWUiOiAiTnlhbiBDYXQiLAogICAgICAgICJsaWtlcyI6IFsKICAgICAgICAgICJyYWluYm93cyIsCiAgICAgICAgICAiZmlzaCIKICAgICAgICBdLAogICAgICAgICJjb2xvciI6ICJyYWluYm93IiwKICAgICAgICAiYmVzdEZyaWVuZCI6IHsKICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAibGlua1R5cGUiOiAiRW50cnkiLAogICAgICAgICAgICAiaWQiOiAiaGFwcHljYXQiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAiYmlydGhkYXkiOiAiMjAxMS0wNC0wNFQyMjowMDowMCswMDowMCIsCiAgICAgICAgImxpdmVzIjogMTMzNywKICAgICAgICAiaW1hZ2UiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIkFzc2V0IiwKICAgICAgICAgICAgImlkIjogIm55YW5jYXQiCiAgICAgICAgICB9CiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgewogICAgICAic3lzIjogewogICAgICAgICJzcGFjZSI6IHsKICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAibGlua1R5cGUiOiAiU3BhY2UiLAogICAgICAgICAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgImlkIjogImdhcmZpZWxkIiwKICAgICAgICAidHlwZSI6ICJFbnRyeSIsCiAgICAgICAgImNyZWF0ZWRBdCI6ICIyMDEzLTA2LTI3VDIyOjQ2OjIwLjgyMVoiLAogICAgICAgICJ1cGRhdGVkQXQiOiAiMjAxMy0wOC0yN1QxMDowOTowNy45MjlaIiwKICAgICAgICAicmV2aXNpb24iOiAyLAogICAgICAgICJjb250ZW50VHlwZSI6IHsKICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAibGlua1R5cGUiOiAiQ29udGVudFR5cGUiLAogICAgICAgICAgICAiaWQiOiAiY2F0IgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgImxvY2FsZSI6ICJlbi1VUyIKICAgICAgfSwKICAgICAgImZpZWxkcyI6IHsKICAgICAgICAibmFtZSI6ICJHYXJmaWVsZCIsCiAgICAgICAgImxpa2VzIjogWwogICAgICAgICAgImxhc2FnbmEiCiAgICAgICAgXSwKICAgICAgICAiY29sb3IiOiAib3JhbmdlIiwKICAgICAgICAiYmlydGhkYXkiOiAiMTk3OS0wNi0xOFQyMzowMDowMCswMDowMCIsCiAgICAgICAgImxpZmVzIjogbnVsbCwKICAgICAgICAibGl2ZXMiOiA5CiAgICAgIH0KICAgIH0sCiAgICB7CiAgICAgICJzeXMiOiB7CiAgICAgICAgInNwYWNlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJTcGFjZSIsCiAgICAgICAgICAgICJpZCI6ICJjZmV4YW1wbGVhcGkiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAiaWQiOiAiaGFwcHljYXQiLAogICAgICAgICJ0eXBlIjogIkVudHJ5IiwKICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTMtMDYtMjdUMjI6NDY6MjAuMTcxWiIsCiAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDEzLTExLTE4VDE1OjU4OjAyLjAxOFoiLAogICAgICAgICJyZXZpc2lvbiI6IDgsCiAgICAgICAgImNvbnRlbnRUeXBlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJDb250ZW50VHlwZSIsCiAgICAgICAgICAgICJpZCI6ICJjYXQiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAibG9jYWxlIjogImVuLVVTIgogICAgICB9LAogICAgICAiZmllbGRzIjogewogICAgICAgICJuYW1lIjogIkhhcHB5IENhdCIsCiAgICAgICAgImxpa2VzIjogWwogICAgICAgICAgImNoZWV6YnVyZ2VyIgogICAgICAgIF0sCiAgICAgICAgImNvbG9yIjogImdyYXkiLAogICAgICAgICJiZXN0RnJpZW5kIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJFbnRyeSIsCiAgICAgICAgICAgICJpZCI6ICJueWFuY2F0IgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgImJpcnRoZGF5IjogIjIwMDMtMTAtMjhUMjM6MDA6MDArMDA6MDAiLAogICAgICAgICJsaXZlcyI6IDEsCiAgICAgICAgImltYWdlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJBc3NldCIsCiAgICAgICAgICAgICJpZCI6ICJoYXBweWNhdCIKICAgICAgICAgIH0KICAgICAgICB9CiAgICAgIH0KICAgIH0KICBdLAogICJpbmNsdWRlcyI6IHsKICAgICJBc3NldCI6IFsKICAgICAgewogICAgICAgICJzeXMiOiB7CiAgICAgICAgICAic3BhY2UiOiB7CiAgICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICAgImxpbmtUeXBlIjogIlNwYWNlIiwKICAgICAgICAgICAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogICAgICAgICAgICB9CiAgICAgICAgICB9LAogICAgICAgICAgImlkIjogImhhcHB5Y2F0IiwKICAgICAgICAgICJ0eXBlIjogIkFzc2V0IiwKICAgICAgICAgICJjcmVhdGVkQXQiOiAiMjAxMy0wOS0wMlQxNDo1NjozNC4yNjdaIiwKICAgICAgICAgICJ1cGRhdGVkQXQiOiAiMjAxMy0wOS0wMlQxNToxMToyNC4zNjFaIiwKICAgICAgICAgICJyZXZpc2lvbiI6IDIsCiAgICAgICAgICAibG9jYWxlIjogImVuLVVTIgogICAgICAgIH0sCiAgICAgICAgImZpZWxkcyI6IHsKICAgICAgICAgICJ0aXRsZSI6ICJIYXBweSBDYXQiLAogICAgICAgICAgImZpbGUiOiB7CiAgICAgICAgICAgICJ1cmwiOiAiLy9pbWFnZXMuY29udGVudGZ1bC5jb20vY2ZleGFtcGxlYXBpLzNNWlBualpUSXNrQUlJa3V1b3NDc3MvMzgyYTQ4ZGZhMmNiMTZjNDdhYTJjNzJmN2IyM2JmMDkvaGFwcHljYXR3LmpwZyIsCiAgICAgICAgICAgICJkZXRhaWxzIjogewogICAgICAgICAgICAgICJzaXplIjogNTk5MzksCiAgICAgICAgICAgICAgImltYWdlIjogewogICAgICAgICAgICAgICAgIndpZHRoIjogMjczLAogICAgICAgICAgICAgICAgImhlaWdodCI6IDM5NwogICAgICAgICAgICAgIH0KICAgICAgICAgICAgfSwKICAgICAgICAgICAgImZpbGVOYW1lIjogImhhcHB5Y2F0dy5qcGciLAogICAgICAgICAgICAiY29udGVudFR5cGUiOiAiaW1hZ2UvanBlZyIKICAgICAgICAgIH0KICAgICAgICB9CiAgICAgIH0sCiAgICAgIHsKICAgICAgICAic3lzIjogewogICAgICAgICAgInNwYWNlIjogewogICAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAgICJsaW5rVHlwZSI6ICJTcGFjZSIsCiAgICAgICAgICAgICAgImlkIjogImNmZXhhbXBsZWFwaSIKICAgICAgICAgICAgfQogICAgICAgICAgfSwKICAgICAgICAgICJpZCI6ICJueWFuY2F0IiwKICAgICAgICAgICJ0eXBlIjogIkFzc2V0IiwKICAgICAgICAgICJjcmVhdGVkQXQiOiAiMjAxMy0wOS0wMlQxNDo1NjozNC4yNDBaIiwKICAgICAgICAgICJ1cGRhdGVkQXQiOiAiMjAxMy0wOS0wMlQxNDo1NjozNC4yNDBaIiwKICAgICAgICAgICJyZXZpc2lvbiI6IDEsCiAgICAgICAgICAibG9jYWxlIjogImVuLVVTIgogICAgICAgIH0sCiAgICAgICAgImZpZWxkcyI6IHsKICAgICAgICAgICJ0aXRsZSI6ICJOeWFuIENhdCIsCiAgICAgICAgICAiZmlsZSI6IHsKICAgICAgICAgICAgInVybCI6ICIvL2ltYWdlcy5jb250ZW50ZnVsLmNvbS9jZmV4YW1wbGVhcGkvNGdwNnRhQXdXNENtU2d1bXEyZWtVbS85ZGEwY2QxOTM2ODcxYjhkNzIzNDNlODk1YTAwZDYxMS9OeWFuX2NhdF8yNTBweF9mcmFtZS5wbmciLAogICAgICAgICAgICAiZGV0YWlscyI6IHsKICAgICAgICAgICAgICAic2l6ZSI6IDEyMjczLAogICAgICAgICAgICAgICJpbWFnZSI6IHsKICAgICAgICAgICAgICAgICJ3aWR0aCI6IDI1MCwKICAgICAgICAgICAgICAgICJoZWlnaHQiOiAyNTAKICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0sCiAgICAgICAgICAgICJmaWxlTmFtZSI6ICJOeWFuX2NhdF8yNTBweF9mcmFtZS5wbmciLAogICAgICAgICAgICAiY29udGVudFR5cGUiOiAiaW1hZ2UvcG5nIgogICAgICAgICAgfQogICAgICAgIH0KICAgICAgfQogICAgXQogIH0KfQo=",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?fields.color%5Bexists%5D=true&content_type=cat&locale=en-US"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?fields.color%5Bexists%5D=true&content_type=cat"
       },
-      "recorded_at" : 1490031464.516035,
+      "recorded_at" : 1490110620.391021,
       "request" : {
         "headers" : {
           "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
           "Authorization" : "Bearer b4c0n73n7fu1"
         },
         "method" : "GET",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?fields.color%5Bexists%5D=true&content_type=cat&locale=en-US"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?fields.color%5Bexists%5D=true&content_type=cat"
       }
     },
     {
       "response" : {
         "status" : 200,
         "headers" : {
-          "Via" : "1.1 varnish",
-          "Content-Length" : "1130",
-          "Date" : "Mon, 20 Mar 2017 17:37:46 GMT",
-          "Age" : "5410",
-          "Access-Control-Expose-Headers" : "Etag",
-          "Access-Control-Max-Age" : "86400",
-          "Etag" : "W\/\"3bfc12799fa29f7a21d9547e45323fac\"",
-          "Access-Control-Allow-Headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent",
-          "Accept-Ranges" : "bytes",
-          "Vary" : "Accept-Encoding",
-          "X-Cache-Hits" : "1",
-          "X-Cache" : "HIT",
-          "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
-          "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
-          "Connection" : "keep-alive",
-          "X-Contentful-Request-Id" : "8e28ef4a3f121aadc1ecffcc48a11e00",
-          "X-Content-Type-Options" : "nosniff",
-          "X-Timer" : "S1490031466.057930,VS0,VE0",
-          "X-Served-By" : "cache-hhn1523-HHN",
-          "Access-Control-Allow-Origin" : "*",
-          "Server" : "Contentful",
-          "Content-Encoding" : "gzip",
-          "Cache-Control" : "max-age=0"
-        },
-        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJBcnJheSIKICB9LAogICJ0b3RhbCI6IDIsCiAgInNraXAiOiAwLAogICJsaW1pdCI6IDEwMCwKICAiaXRlbXMiOiBbCiAgICB7CiAgICAgICJzeXMiOiB7CiAgICAgICAgInNwYWNlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJTcGFjZSIsCiAgICAgICAgICAgICJpZCI6ICJjZmV4YW1wbGVhcGkiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAiaWQiOiAiZ2FyZmllbGQiLAogICAgICAgICJ0eXBlIjogIkVudHJ5IiwKICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTMtMDYtMjdUMjI6NDY6MjAuODIxWiIsCiAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDEzLTA4LTI3VDEwOjA5OjA3LjkyOVoiLAogICAgICAgICJyZXZpc2lvbiI6IDIsCiAgICAgICAgImNvbnRlbnRUeXBlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJDb250ZW50VHlwZSIsCiAgICAgICAgICAgICJpZCI6ICJjYXQiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAibG9jYWxlIjogImVuLVVTIgogICAgICB9LAogICAgICAiZmllbGRzIjogewogICAgICAgICJuYW1lIjogIkdhcmZpZWxkIiwKICAgICAgICAibGlrZXMiOiBbCiAgICAgICAgICAibGFzYWduYSIKICAgICAgICBdLAogICAgICAgICJjb2xvciI6ICJvcmFuZ2UiLAogICAgICAgICJiaXJ0aGRheSI6ICIxOTc5LTA2LTE4VDIzOjAwOjAwKzAwOjAwIiwKICAgICAgICAibGlmZXMiOiBudWxsLAogICAgICAgICJsaXZlcyI6IDkKICAgICAgfQogICAgfSwKICAgIHsKICAgICAgInN5cyI6IHsKICAgICAgICAic3BhY2UiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIlNwYWNlIiwKICAgICAgICAgICAgImlkIjogImNmZXhhbXBsZWFwaSIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJpZCI6ICJueWFuY2F0IiwKICAgICAgICAidHlwZSI6ICJFbnRyeSIsCiAgICAgICAgImNyZWF0ZWRBdCI6ICIyMDEzLTA2LTI3VDIyOjQ2OjE5LjUxM1oiLAogICAgICAgICJ1cGRhdGVkQXQiOiAiMjAxMy0wOS0wNFQwOToxOTozOS4wMjdaIiwKICAgICAgICAicmV2aXNpb24iOiA1LAogICAgICAgICJjb250ZW50VHlwZSI6IHsKICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAibGlua1R5cGUiOiAiQ29udGVudFR5cGUiLAogICAgICAgICAgICAiaWQiOiAiY2F0IgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgImxvY2FsZSI6ICJlbi1VUyIKICAgICAgfSwKICAgICAgImZpZWxkcyI6IHsKICAgICAgICAibmFtZSI6ICJOeWFuIENhdCIsCiAgICAgICAgImxpa2VzIjogWwogICAgICAgICAgInJhaW5ib3dzIiwKICAgICAgICAgICJmaXNoIgogICAgICAgIF0sCiAgICAgICAgImNvbG9yIjogInJhaW5ib3ciLAogICAgICAgICJiZXN0RnJpZW5kIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJFbnRyeSIsCiAgICAgICAgICAgICJpZCI6ICJoYXBweWNhdCIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJiaXJ0aGRheSI6ICIyMDExLTA0LTA0VDIyOjAwOjAwKzAwOjAwIiwKICAgICAgICAibGl2ZXMiOiAxMzM3LAogICAgICAgICJpbWFnZSI6IHsKICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAibGlua1R5cGUiOiAiQXNzZXQiLAogICAgICAgICAgICAiaWQiOiAibnlhbmNhdCIKICAgICAgICAgIH0KICAgICAgICB9CiAgICAgIH0KICAgIH0KICBdLAogICJpbmNsdWRlcyI6IHsKICAgICJFbnRyeSI6IFsKICAgICAgewogICAgICAgICJzeXMiOiB7CiAgICAgICAgICAic3BhY2UiOiB7CiAgICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICAgImxpbmtUeXBlIjogIlNwYWNlIiwKICAgICAgICAgICAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogICAgICAgICAgICB9CiAgICAgICAgICB9LAogICAgICAgICAgImlkIjogImhhcHB5Y2F0IiwKICAgICAgICAgICJ0eXBlIjogIkVudHJ5IiwKICAgICAgICAgICJjcmVhdGVkQXQiOiAiMjAxMy0wNi0yN1QyMjo0NjoyMC4xNzFaIiwKICAgICAgICAgICJ1cGRhdGVkQXQiOiAiMjAxMy0xMS0xOFQxNTo1ODowMi4wMThaIiwKICAgICAgICAgICJyZXZpc2lvbiI6IDgsCiAgICAgICAgICAiY29udGVudFR5cGUiOiB7CiAgICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICAgImxpbmtUeXBlIjogIkNvbnRlbnRUeXBlIiwKICAgICAgICAgICAgICAiaWQiOiAiY2F0IgogICAgICAgICAgICB9CiAgICAgICAgICB9LAogICAgICAgICAgImxvY2FsZSI6ICJlbi1VUyIKICAgICAgICB9LAogICAgICAgICJmaWVsZHMiOiB7CiAgICAgICAgICAibmFtZSI6ICJIYXBweSBDYXQiLAogICAgICAgICAgImxpa2VzIjogWwogICAgICAgICAgICAiY2hlZXpidXJnZXIiCiAgICAgICAgICBdLAogICAgICAgICAgImNvbG9yIjogImdyYXkiLAogICAgICAgICAgImJlc3RGcmllbmQiOiB7CiAgICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICAgImxpbmtUeXBlIjogIkVudHJ5IiwKICAgICAgICAgICAgICAiaWQiOiAibnlhbmNhdCIKICAgICAgICAgICAgfQogICAgICAgICAgfSwKICAgICAgICAgICJiaXJ0aGRheSI6ICIyMDAzLTEwLTI4VDIzOjAwOjAwKzAwOjAwIiwKICAgICAgICAgICJsaXZlcyI6IDEsCiAgICAgICAgICAiaW1hZ2UiOiB7CiAgICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICAgImxpbmtUeXBlIjogIkFzc2V0IiwKICAgICAgICAgICAgICAiaWQiOiAiaGFwcHljYXQiCiAgICAgICAgICAgIH0KICAgICAgICAgIH0KICAgICAgICB9CiAgICAgIH0KICAgIF0sCiAgICAiQXNzZXQiOiBbCiAgICAgIHsKICAgICAgICAic3lzIjogewogICAgICAgICAgInNwYWNlIjogewogICAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAgICJsaW5rVHlwZSI6ICJTcGFjZSIsCiAgICAgICAgICAgICAgImlkIjogImNmZXhhbXBsZWFwaSIKICAgICAgICAgICAgfQogICAgICAgICAgfSwKICAgICAgICAgICJpZCI6ICJoYXBweWNhdCIsCiAgICAgICAgICAidHlwZSI6ICJBc3NldCIsCiAgICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTMtMDktMDJUMTQ6NTY6MzQuMjY3WiIsCiAgICAgICAgICAidXBkYXRlZEF0IjogIjIwMTMtMDktMDJUMTU6MTE6MjQuMzYxWiIsCiAgICAgICAgICAicmV2aXNpb24iOiAyLAogICAgICAgICAgImxvY2FsZSI6ICJlbi1VUyIKICAgICAgICB9LAogICAgICAgICJmaWVsZHMiOiB7CiAgICAgICAgICAidGl0bGUiOiAiSGFwcHkgQ2F0IiwKICAgICAgICAgICJmaWxlIjogewogICAgICAgICAgICAidXJsIjogIi8vaW1hZ2VzLmNvbnRlbnRmdWwuY29tL2NmZXhhbXBsZWFwaS8zTVpQbmpaVElza0FJSWt1dW9zQ3NzLzM4MmE0OGRmYTJjYjE2YzQ3YWEyYzcyZjdiMjNiZjA5L2hhcHB5Y2F0dy5qcGciLAogICAgICAgICAgICAiZGV0YWlscyI6IHsKICAgICAgICAgICAgICAic2l6ZSI6IDU5OTM5LAogICAgICAgICAgICAgICJpbWFnZSI6IHsKICAgICAgICAgICAgICAgICJ3aWR0aCI6IDI3MywKICAgICAgICAgICAgICAgICJoZWlnaHQiOiAzOTcKICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0sCiAgICAgICAgICAgICJmaWxlTmFtZSI6ICJoYXBweWNhdHcuanBnIiwKICAgICAgICAgICAgImNvbnRlbnRUeXBlIjogImltYWdlL2pwZWciCiAgICAgICAgICB9CiAgICAgICAgfQogICAgICB9LAogICAgICB7CiAgICAgICAgInN5cyI6IHsKICAgICAgICAgICJzcGFjZSI6IHsKICAgICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgICAibGlua1R5cGUiOiAiU3BhY2UiLAogICAgICAgICAgICAgICJpZCI6ICJjZmV4YW1wbGVhcGkiCiAgICAgICAgICAgIH0KICAgICAgICAgIH0sCiAgICAgICAgICAiaWQiOiAibnlhbmNhdCIsCiAgICAgICAgICAidHlwZSI6ICJBc3NldCIsCiAgICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTMtMDktMDJUMTQ6NTY6MzQuMjQwWiIsCiAgICAgICAgICAidXBkYXRlZEF0IjogIjIwMTMtMDktMDJUMTQ6NTY6MzQuMjQwWiIsCiAgICAgICAgICAicmV2aXNpb24iOiAxLAogICAgICAgICAgImxvY2FsZSI6ICJlbi1VUyIKICAgICAgICB9LAogICAgICAgICJmaWVsZHMiOiB7CiAgICAgICAgICAidGl0bGUiOiAiTnlhbiBDYXQiLAogICAgICAgICAgImZpbGUiOiB7CiAgICAgICAgICAgICJ1cmwiOiAiLy9pbWFnZXMuY29udGVudGZ1bC5jb20vY2ZleGFtcGxlYXBpLzRncDZ0YUF3VzRDbVNndW1xMmVrVW0vOWRhMGNkMTkzNjg3MWI4ZDcyMzQzZTg5NWEwMGQ2MTEvTnlhbl9jYXRfMjUwcHhfZnJhbWUucG5nIiwKICAgICAgICAgICAgImRldGFpbHMiOiB7CiAgICAgICAgICAgICAgInNpemUiOiAxMjI3MywKICAgICAgICAgICAgICAiaW1hZ2UiOiB7CiAgICAgICAgICAgICAgICAid2lkdGgiOiAyNTAsCiAgICAgICAgICAgICAgICAiaGVpZ2h0IjogMjUwCiAgICAgICAgICAgICAgfQogICAgICAgICAgICB9LAogICAgICAgICAgICAiZmlsZU5hbWUiOiAiTnlhbl9jYXRfMjUwcHhfZnJhbWUucG5nIiwKICAgICAgICAgICAgImNvbnRlbnRUeXBlIjogImltYWdlL3BuZyIKICAgICAgICAgIH0KICAgICAgICB9CiAgICAgIH0KICAgIF0KICB9Cn0K",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?fields.color%5Bne%5D=gray&content_type=cat&locale=en-US"
-      },
-      "recorded_at" : 1490031464.559665,
-      "request" : {
-        "headers" : {
-          "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
-          "Authorization" : "Bearer b4c0n73n7fu1"
-        },
-        "method" : "GET",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?fields.color%5Bne%5D=gray&content_type=cat&locale=en-US"
-      }
-    },
-    {
-      "response" : {
-        "status" : 200,
-        "headers" : {
-          "Date" : "Mon, 20 Mar 2017 17:37:46 GMT",
+          "Date" : "Tue, 21 Mar 2017 15:37:01 GMT",
           "Content-Length" : "344",
-          "Age" : "5417",
+          "Age" : "16347",
           "Access-Control-Expose-Headers" : "Etag",
           "Access-Control-Max-Age" : "86400",
           "Etag" : "\"17f6b9f68596176aed46fa020bf235af\"",
@@ -303,8 +303,8 @@
           "Connection" : "keep-alive",
           "X-Contentful-Request-Id" : "1c21e3ad5f25bea0ebd87f557a197403",
           "X-Content-Type-Options" : "nosniff",
-          "X-Timer" : "S1490031466.059424,VS0,VE0",
-          "X-Served-By" : "cache-hhn1525-HHN",
+          "X-Timer" : "S1490110621.116110,VS0,VE0",
+          "X-Served-By" : "cache-hhn1520-HHN",
           "Access-Control-Allow-Origin" : "*",
           "Server" : "Contentful",
           "Cache-Control" : "max-age=0",
@@ -313,7 +313,7 @@
         "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJTcGFjZSIsCiAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogIH0sCiAgIm5hbWUiOiAiQ29udGVudGZ1bCBFeGFtcGxlIEFQSSIsCiAgImxvY2FsZXMiOiBbCiAgICB7CiAgICAgICJjb2RlIjogImVuLVVTIiwKICAgICAgImRlZmF1bHQiOiB0cnVlLAogICAgICAibmFtZSI6ICJFbmdsaXNoIiwKICAgICAgImZhbGxiYWNrQ29kZSI6IG51bGwKICAgIH0sCiAgICB7CiAgICAgICJjb2RlIjogInRsaCIsCiAgICAgICJkZWZhdWx0IjogZmFsc2UsCiAgICAgICJuYW1lIjogIktsaW5nb24iLAogICAgICAiZmFsbGJhY2tDb2RlIjogImVuLVVTIgogICAgfQogIF0KfQo=",
         "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/"
       },
-      "recorded_at" : 1490031464.559837,
+      "recorded_at" : 1490110620.391213,
       "request" : {
         "headers" : {
           "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
@@ -327,9 +327,9 @@
       "response" : {
         "status" : 200,
         "headers" : {
-          "Date" : "Mon, 20 Mar 2017 17:37:46 GMT",
+          "Date" : "Tue, 21 Mar 2017 15:37:01 GMT",
           "Content-Length" : "344",
-          "Age" : "5417",
+          "Age" : "16347",
           "Access-Control-Expose-Headers" : "Etag",
           "Access-Control-Max-Age" : "86400",
           "Etag" : "\"17f6b9f68596176aed46fa020bf235af\"",
@@ -343,8 +343,8 @@
           "Connection" : "keep-alive",
           "X-Contentful-Request-Id" : "1c21e3ad5f25bea0ebd87f557a197403",
           "X-Content-Type-Options" : "nosniff",
-          "X-Timer" : "S1490031466.114854,VS0,VE0",
-          "X-Served-By" : "cache-hhn1525-HHN",
+          "X-Timer" : "S1490110621.143759,VS0,VE0",
+          "X-Served-By" : "cache-hhn1520-HHN",
           "Access-Control-Allow-Origin" : "*",
           "Server" : "Contentful",
           "Cache-Control" : "max-age=0",
@@ -353,7 +353,7 @@
         "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJTcGFjZSIsCiAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogIH0sCiAgIm5hbWUiOiAiQ29udGVudGZ1bCBFeGFtcGxlIEFQSSIsCiAgImxvY2FsZXMiOiBbCiAgICB7CiAgICAgICJjb2RlIjogImVuLVVTIiwKICAgICAgImRlZmF1bHQiOiB0cnVlLAogICAgICAibmFtZSI6ICJFbmdsaXNoIiwKICAgICAgImZhbGxiYWNrQ29kZSI6IG51bGwKICAgIH0sCiAgICB7CiAgICAgICJjb2RlIjogInRsaCIsCiAgICAgICJkZWZhdWx0IjogZmFsc2UsCiAgICAgICJuYW1lIjogIktsaW5nb24iLAogICAgICAiZmFsbGJhY2tDb2RlIjogImVuLVVTIgogICAgfQogIF0KfQo=",
         "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/"
       },
-      "recorded_at" : 1490031464.613812,
+      "recorded_at" : 1490110620.418886,
       "request" : {
         "headers" : {
           "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
@@ -368,12 +368,12 @@
         "status" : 200,
         "headers" : {
           "Via" : "1.1 varnish",
-          "Content-Length" : "873",
-          "Date" : "Mon, 20 Mar 2017 17:37:46 GMT",
-          "Age" : "5410",
+          "Content-Length" : "1034",
+          "Date" : "Tue, 21 Mar 2017 15:37:01 GMT",
+          "Age" : "163",
           "Access-Control-Expose-Headers" : "Etag",
           "Access-Control-Max-Age" : "86400",
-          "Etag" : "W\/\"db5cc71013f0ba6b6bb2aa4223b0ca2e\"",
+          "Etag" : "W\/\"9707115047cc402819250f844939b2aa\"",
           "Access-Control-Allow-Headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent",
           "Accept-Ranges" : "bytes",
           "Vary" : "Accept-Encoding",
@@ -382,35 +382,76 @@
           "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
           "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
           "Connection" : "keep-alive",
-          "X-Contentful-Request-Id" : "598d911b5d642e5b0e0749299a97397f",
+          "X-Contentful-Request-Id" : "9f0c89911e752da66fec411379ca7adf",
           "X-Content-Type-Options" : "nosniff",
-          "X-Timer" : "S1490031466.115176,VS0,VE0",
-          "X-Served-By" : "cache-hhn1523-HHN",
+          "X-Timer" : "S1490110621.143719,VS0,VE0",
+          "X-Served-By" : "cache-hhn1524-HHN",
           "Access-Control-Allow-Origin" : "*",
           "Server" : "Contentful",
           "Content-Encoding" : "gzip",
           "Cache-Control" : "max-age=0"
         },
-        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJBcnJheSIKICB9LAogICJ0b3RhbCI6IDIsCiAgInNraXAiOiAwLAogICJsaW1pdCI6IDEwMCwKICAiaXRlbXMiOiBbCiAgICB7CiAgICAgICJmaWVsZHMiOiB7CiAgICAgICAgImltYWdlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJBc3NldCIsCiAgICAgICAgICAgICJpZCI6ICIxeDB4cFh1NHBTR1M0T3VrU3lXR1VLIgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgIm5hbWUiOiAiRG9nZSIKICAgICAgfSwKICAgICAgInN5cyI6IHsKICAgICAgICAic3BhY2UiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIlNwYWNlIiwKICAgICAgICAgICAgImlkIjogImNmZXhhbXBsZWFwaSIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJpZCI6ICI2S250YVlYYUhTeUl3OE02ZW8yNk9LIiwKICAgICAgICAidHlwZSI6ICJFbnRyeSIsCiAgICAgICAgImNyZWF0ZWRBdCI6ICIyMDEzLTExLTA2VDA5OjQ1OjI3LjQ3NVoiLAogICAgICAgICJ1cGRhdGVkQXQiOiAiMjAxMy0xMS0xOFQwOToxMzozNy44MDhaIiwKICAgICAgICAicmV2aXNpb24iOiAyLAogICAgICAgICJjb250ZW50VHlwZSI6IHsKICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAibGlua1R5cGUiOiAiQ29udGVudFR5cGUiLAogICAgICAgICAgICAiaWQiOiAiZG9nIgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgImxvY2FsZSI6ICJlbi1VUyIKICAgICAgfQogICAgfSwKICAgIHsKICAgICAgImZpZWxkcyI6IHsKICAgICAgICAiaW1hZ2UiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIkFzc2V0IiwKICAgICAgICAgICAgImlkIjogImpha2UiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAibmFtZSI6ICJKYWtlIgogICAgICB9LAogICAgICAic3lzIjogewogICAgICAgICJzcGFjZSI6IHsKICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAibGlua1R5cGUiOiAiU3BhY2UiLAogICAgICAgICAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgImlkIjogImpha2UiLAogICAgICAgICJ0eXBlIjogIkVudHJ5IiwKICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTMtMDYtMjdUMjI6NDY6MjIuMDk2WiIsCiAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDEzLTEyLTE4VDEzOjEwOjI2LjIxMloiLAogICAgICAgICJyZXZpc2lvbiI6IDUsCiAgICAgICAgImNvbnRlbnRUeXBlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJDb250ZW50VHlwZSIsCiAgICAgICAgICAgICJpZCI6ICJkb2ciCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAibG9jYWxlIjogImVuLVVTIgogICAgICB9CiAgICB9CiAgXSwKICAiaW5jbHVkZXMiOiB7CiAgICAiQXNzZXQiOiBbCiAgICAgIHsKICAgICAgICAic3lzIjogewogICAgICAgICAgInNwYWNlIjogewogICAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAgICJsaW5rVHlwZSI6ICJTcGFjZSIsCiAgICAgICAgICAgICAgImlkIjogImNmZXhhbXBsZWFwaSIKICAgICAgICAgICAgfQogICAgICAgICAgfSwKICAgICAgICAgICJpZCI6ICIxeDB4cFh1NHBTR1M0T3VrU3lXR1VLIiwKICAgICAgICAgICJ0eXBlIjogIkFzc2V0IiwKICAgICAgICAgICJjcmVhdGVkQXQiOiAiMjAxMy0xMS0wNlQwOTo0NToxMC4wMDBaIiwKICAgICAgICAgICJ1cGRhdGVkQXQiOiAiMjAxMy0xMi0xOFQxMzoyNzoxNC45MTdaIiwKICAgICAgICAgICJyZXZpc2lvbiI6IDYsCiAgICAgICAgICAibG9jYWxlIjogImVuLVVTIgogICAgICAgIH0sCiAgICAgICAgImZpZWxkcyI6IHsKICAgICAgICAgICJ0aXRsZSI6ICJEb2dlIiwKICAgICAgICAgICJkZXNjcmlwdGlvbiI6ICJuaWNlIHBpY3R1cmUiLAogICAgICAgICAgImZpbGUiOiB7CiAgICAgICAgICAgICJ1cmwiOiAiLy9pbWFnZXMuY29udGVudGZ1bC5jb20vY2ZleGFtcGxlYXBpLzF4MHhwWHU0cFNHUzRPdWtTeVdHVUsvY2MxMjM5YzYzODU0MjhlZjI2ZjQxODAxOTA1MzI4MTgvZG9nZS5qcGciLAogICAgICAgICAgICAiZGV0YWlscyI6IHsKICAgICAgICAgICAgICAic2l6ZSI6IDUyMjk0MywKICAgICAgICAgICAgICAiaW1hZ2UiOiB7CiAgICAgICAgICAgICAgICAid2lkdGgiOiA1ODAwLAogICAgICAgICAgICAgICAgImhlaWdodCI6IDQzNTAKICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0sCiAgICAgICAgICAgICJmaWxlTmFtZSI6ICJkb2dlLmpwZyIsCiAgICAgICAgICAgICJjb250ZW50VHlwZSI6ICJpbWFnZS9qcGVnIgogICAgICAgICAgfQogICAgICAgIH0KICAgICAgfSwKICAgICAgewogICAgICAgICJzeXMiOiB7CiAgICAgICAgICAic3BhY2UiOiB7CiAgICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICAgImxpbmtUeXBlIjogIlNwYWNlIiwKICAgICAgICAgICAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogICAgICAgICAgICB9CiAgICAgICAgICB9LAogICAgICAgICAgImlkIjogImpha2UiLAogICAgICAgICAgInR5cGUiOiAiQXNzZXQiLAogICAgICAgICAgImNyZWF0ZWRBdCI6ICIyMDEzLTA5LTAyVDE0OjU2OjM0LjI2MFoiLAogICAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDEzLTA5LTAyVDE1OjIyOjM5LjQ2NloiLAogICAgICAgICAgInJldmlzaW9uIjogMiwKICAgICAgICAgICJsb2NhbGUiOiAiZW4tVVMiCiAgICAgICAgfSwKICAgICAgICAiZmllbGRzIjogewogICAgICAgICAgInRpdGxlIjogIkpha2UiLAogICAgICAgICAgImZpbGUiOiB7CiAgICAgICAgICAgICJ1cmwiOiAiLy9pbWFnZXMuY29udGVudGZ1bC5jb20vY2ZleGFtcGxlYXBpLzRobHRlUUFYUzhpUzBZQ01VNlFNV2cvMmE0ZDgyNjE0NGYwMTQxMDkzNjRjY2Y1Yzg5MWQyZGQvamFrZS5wbmciLAogICAgICAgICAgICAiZGV0YWlscyI6IHsKICAgICAgICAgICAgICAic2l6ZSI6IDIwNDgwLAogICAgICAgICAgICAgICJpbWFnZSI6IHsKICAgICAgICAgICAgICAgICJ3aWR0aCI6IDEwMCwKICAgICAgICAgICAgICAgICJoZWlnaHQiOiAxNjEKICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0sCiAgICAgICAgICAgICJmaWxlTmFtZSI6ICJqYWtlLnBuZyIsCiAgICAgICAgICAgICJjb250ZW50VHlwZSI6ICJpbWFnZS9wbmciCiAgICAgICAgICB9CiAgICAgICAgfQogICAgICB9CiAgICBdCiAgfQp9Cg==",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?select=fields.image,fields.name,sys&locale=en-US&content_type=dog"
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJBcnJheSIKICB9LAogICJ0b3RhbCI6IDEsCiAgInNraXAiOiAwLAogICJsaW1pdCI6IDEwMCwKICAiaXRlbXMiOiBbCiAgICB7CiAgICAgICJzeXMiOiB7CiAgICAgICAgInNwYWNlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJTcGFjZSIsCiAgICAgICAgICAgICJpZCI6ICJjZmV4YW1wbGVhcGkiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAiaWQiOiAibnlhbmNhdCIsCiAgICAgICAgInR5cGUiOiAiRW50cnkiLAogICAgICAgICJjcmVhdGVkQXQiOiAiMjAxMy0wNi0yN1QyMjo0NjoxOS41MTNaIiwKICAgICAgICAidXBkYXRlZEF0IjogIjIwMTMtMDktMDRUMDk6MTk6MzkuMDI3WiIsCiAgICAgICAgInJldmlzaW9uIjogNSwKICAgICAgICAiY29udGVudFR5cGUiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIkNvbnRlbnRUeXBlIiwKICAgICAgICAgICAgImlkIjogImNhdCIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJsb2NhbGUiOiAiZW4tVVMiCiAgICAgIH0sCiAgICAgICJmaWVsZHMiOiB7CiAgICAgICAgIm5hbWUiOiAiTnlhbiBDYXQiLAogICAgICAgICJsaWtlcyI6IFsKICAgICAgICAgICJyYWluYm93cyIsCiAgICAgICAgICAiZmlzaCIKICAgICAgICBdLAogICAgICAgICJjb2xvciI6ICJyYWluYm93IiwKICAgICAgICAiYmVzdEZyaWVuZCI6IHsKICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAibGlua1R5cGUiOiAiRW50cnkiLAogICAgICAgICAgICAiaWQiOiAiaGFwcHljYXQiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAiYmlydGhkYXkiOiAiMjAxMS0wNC0wNFQyMjowMDowMCswMDowMCIsCiAgICAgICAgImxpdmVzIjogMTMzNywKICAgICAgICAiaW1hZ2UiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIkFzc2V0IiwKICAgICAgICAgICAgImlkIjogIm55YW5jYXQiCiAgICAgICAgICB9CiAgICAgICAgfQogICAgICB9CiAgICB9CiAgXSwKICAiaW5jbHVkZXMiOiB7CiAgICAiRW50cnkiOiBbCiAgICAgIHsKICAgICAgICAic3lzIjogewogICAgICAgICAgInNwYWNlIjogewogICAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAgICJsaW5rVHlwZSI6ICJTcGFjZSIsCiAgICAgICAgICAgICAgImlkIjogImNmZXhhbXBsZWFwaSIKICAgICAgICAgICAgfQogICAgICAgICAgfSwKICAgICAgICAgICJpZCI6ICJoYXBweWNhdCIsCiAgICAgICAgICAidHlwZSI6ICJFbnRyeSIsCiAgICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTMtMDYtMjdUMjI6NDY6MjAuMTcxWiIsCiAgICAgICAgICAidXBkYXRlZEF0IjogIjIwMTMtMTEtMThUMTU6NTg6MDIuMDE4WiIsCiAgICAgICAgICAicmV2aXNpb24iOiA4LAogICAgICAgICAgImNvbnRlbnRUeXBlIjogewogICAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAgICJsaW5rVHlwZSI6ICJDb250ZW50VHlwZSIsCiAgICAgICAgICAgICAgImlkIjogImNhdCIKICAgICAgICAgICAgfQogICAgICAgICAgfSwKICAgICAgICAgICJsb2NhbGUiOiAiZW4tVVMiCiAgICAgICAgfSwKICAgICAgICAiZmllbGRzIjogewogICAgICAgICAgIm5hbWUiOiAiSGFwcHkgQ2F0IiwKICAgICAgICAgICJsaWtlcyI6IFsKICAgICAgICAgICAgImNoZWV6YnVyZ2VyIgogICAgICAgICAgXSwKICAgICAgICAgICJjb2xvciI6ICJncmF5IiwKICAgICAgICAgICJiZXN0RnJpZW5kIjogewogICAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAgICJsaW5rVHlwZSI6ICJFbnRyeSIsCiAgICAgICAgICAgICAgImlkIjogIm55YW5jYXQiCiAgICAgICAgICAgIH0KICAgICAgICAgIH0sCiAgICAgICAgICAiYmlydGhkYXkiOiAiMjAwMy0xMC0yOFQyMzowMDowMCswMDowMCIsCiAgICAgICAgICAibGl2ZXMiOiAxLAogICAgICAgICAgImltYWdlIjogewogICAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAgICJsaW5rVHlwZSI6ICJBc3NldCIsCiAgICAgICAgICAgICAgImlkIjogImhhcHB5Y2F0IgogICAgICAgICAgICB9CiAgICAgICAgICB9CiAgICAgICAgfQogICAgICB9CiAgICBdLAogICAgIkFzc2V0IjogWwogICAgICB7CiAgICAgICAgInN5cyI6IHsKICAgICAgICAgICJzcGFjZSI6IHsKICAgICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgICAibGlua1R5cGUiOiAiU3BhY2UiLAogICAgICAgICAgICAgICJpZCI6ICJjZmV4YW1wbGVhcGkiCiAgICAgICAgICAgIH0KICAgICAgICAgIH0sCiAgICAgICAgICAiaWQiOiAiaGFwcHljYXQiLAogICAgICAgICAgInR5cGUiOiAiQXNzZXQiLAogICAgICAgICAgImNyZWF0ZWRBdCI6ICIyMDEzLTA5LTAyVDE0OjU2OjM0LjI2N1oiLAogICAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDEzLTA5LTAyVDE1OjExOjI0LjM2MVoiLAogICAgICAgICAgInJldmlzaW9uIjogMiwKICAgICAgICAgICJsb2NhbGUiOiAiZW4tVVMiCiAgICAgICAgfSwKICAgICAgICAiZmllbGRzIjogewogICAgICAgICAgInRpdGxlIjogIkhhcHB5IENhdCIsCiAgICAgICAgICAiZmlsZSI6IHsKICAgICAgICAgICAgInVybCI6ICIvL2ltYWdlcy5jb250ZW50ZnVsLmNvbS9jZmV4YW1wbGVhcGkvM01aUG5qWlRJc2tBSUlrdXVvc0Nzcy8zODJhNDhkZmEyY2IxNmM0N2FhMmM3MmY3YjIzYmYwOS9oYXBweWNhdHcuanBnIiwKICAgICAgICAgICAgImRldGFpbHMiOiB7CiAgICAgICAgICAgICAgInNpemUiOiA1OTkzOSwKICAgICAgICAgICAgICAiaW1hZ2UiOiB7CiAgICAgICAgICAgICAgICAid2lkdGgiOiAyNzMsCiAgICAgICAgICAgICAgICAiaGVpZ2h0IjogMzk3CiAgICAgICAgICAgICAgfQogICAgICAgICAgICB9LAogICAgICAgICAgICAiZmlsZU5hbWUiOiAiaGFwcHljYXR3LmpwZyIsCiAgICAgICAgICAgICJjb250ZW50VHlwZSI6ICJpbWFnZS9qcGVnIgogICAgICAgICAgfQogICAgICAgIH0KICAgICAgfSwKICAgICAgewogICAgICAgICJzeXMiOiB7CiAgICAgICAgICAic3BhY2UiOiB7CiAgICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICAgImxpbmtUeXBlIjogIlNwYWNlIiwKICAgICAgICAgICAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogICAgICAgICAgICB9CiAgICAgICAgICB9LAogICAgICAgICAgImlkIjogIm55YW5jYXQiLAogICAgICAgICAgInR5cGUiOiAiQXNzZXQiLAogICAgICAgICAgImNyZWF0ZWRBdCI6ICIyMDEzLTA5LTAyVDE0OjU2OjM0LjI0MFoiLAogICAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDEzLTA5LTAyVDE0OjU2OjM0LjI0MFoiLAogICAgICAgICAgInJldmlzaW9uIjogMSwKICAgICAgICAgICJsb2NhbGUiOiAiZW4tVVMiCiAgICAgICAgfSwKICAgICAgICAiZmllbGRzIjogewogICAgICAgICAgInRpdGxlIjogIk55YW4gQ2F0IiwKICAgICAgICAgICJmaWxlIjogewogICAgICAgICAgICAidXJsIjogIi8vaW1hZ2VzLmNvbnRlbnRmdWwuY29tL2NmZXhhbXBsZWFwaS80Z3A2dGFBd1c0Q21TZ3VtcTJla1VtLzlkYTBjZDE5MzY4NzFiOGQ3MjM0M2U4OTVhMDBkNjExL055YW5fY2F0XzI1MHB4X2ZyYW1lLnBuZyIsCiAgICAgICAgICAgICJkZXRhaWxzIjogewogICAgICAgICAgICAgICJzaXplIjogMTIyNzMsCiAgICAgICAgICAgICAgImltYWdlIjogewogICAgICAgICAgICAgICAgIndpZHRoIjogMjUwLAogICAgICAgICAgICAgICAgImhlaWdodCI6IDI1MAogICAgICAgICAgICAgIH0KICAgICAgICAgICAgfSwKICAgICAgICAgICAgImZpbGVOYW1lIjogIk55YW5fY2F0XzI1MHB4X2ZyYW1lLnBuZyIsCiAgICAgICAgICAgICJjb250ZW50VHlwZSI6ICJpbWFnZS9wbmciCiAgICAgICAgICB9CiAgICAgICAgfQogICAgICB9CiAgICBdCiAgfQp9Cg==",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?fields.likes%5Bin%5D=rainbows&content_type=cat"
       },
-      "recorded_at" : 1490031464.615685,
+      "recorded_at" : 1490110620.418965,
       "request" : {
         "headers" : {
           "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
           "Authorization" : "Bearer b4c0n73n7fu1"
         },
         "method" : "GET",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?select=fields.image,fields.name,sys&locale=en-US&content_type=dog"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?fields.likes%5Bin%5D=rainbows&content_type=cat"
       }
     },
     {
       "response" : {
         "status" : 200,
         "headers" : {
-          "Date" : "Mon, 20 Mar 2017 17:37:46 GMT",
+          "Via" : "1.1 varnish",
+          "Content-Length" : "1130",
+          "Date" : "Tue, 21 Mar 2017 15:37:01 GMT",
+          "Age" : "1149",
+          "Access-Control-Expose-Headers" : "Etag",
+          "Access-Control-Max-Age" : "86400",
+          "Etag" : "W\/\"3bfc12799fa29f7a21d9547e45323fac\"",
+          "Access-Control-Allow-Headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent",
+          "Accept-Ranges" : "bytes",
+          "Vary" : "Accept-Encoding",
+          "X-Cache-Hits" : "1",
+          "X-Cache" : "HIT",
+          "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
+          "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
+          "Connection" : "keep-alive",
+          "X-Contentful-Request-Id" : "0c850266b9faac806b8f34f55bba84c1",
+          "X-Content-Type-Options" : "nosniff",
+          "X-Timer" : "S1490110621.171050,VS0,VE0",
+          "X-Served-By" : "cache-hhn1524-HHN",
+          "Access-Control-Allow-Origin" : "*",
+          "Server" : "Contentful",
+          "Content-Encoding" : "gzip",
+          "Cache-Control" : "max-age=0"
+        },
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJBcnJheSIKICB9LAogICJ0b3RhbCI6IDIsCiAgInNraXAiOiAwLAogICJsaW1pdCI6IDEwMCwKICAiaXRlbXMiOiBbCiAgICB7CiAgICAgICJzeXMiOiB7CiAgICAgICAgInNwYWNlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJTcGFjZSIsCiAgICAgICAgICAgICJpZCI6ICJjZmV4YW1wbGVhcGkiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAiaWQiOiAiZ2FyZmllbGQiLAogICAgICAgICJ0eXBlIjogIkVudHJ5IiwKICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTMtMDYtMjdUMjI6NDY6MjAuODIxWiIsCiAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDEzLTA4LTI3VDEwOjA5OjA3LjkyOVoiLAogICAgICAgICJyZXZpc2lvbiI6IDIsCiAgICAgICAgImNvbnRlbnRUeXBlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJDb250ZW50VHlwZSIsCiAgICAgICAgICAgICJpZCI6ICJjYXQiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAibG9jYWxlIjogImVuLVVTIgogICAgICB9LAogICAgICAiZmllbGRzIjogewogICAgICAgICJuYW1lIjogIkdhcmZpZWxkIiwKICAgICAgICAibGlrZXMiOiBbCiAgICAgICAgICAibGFzYWduYSIKICAgICAgICBdLAogICAgICAgICJjb2xvciI6ICJvcmFuZ2UiLAogICAgICAgICJiaXJ0aGRheSI6ICIxOTc5LTA2LTE4VDIzOjAwOjAwKzAwOjAwIiwKICAgICAgICAibGlmZXMiOiBudWxsLAogICAgICAgICJsaXZlcyI6IDkKICAgICAgfQogICAgfSwKICAgIHsKICAgICAgInN5cyI6IHsKICAgICAgICAic3BhY2UiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIlNwYWNlIiwKICAgICAgICAgICAgImlkIjogImNmZXhhbXBsZWFwaSIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJpZCI6ICJueWFuY2F0IiwKICAgICAgICAidHlwZSI6ICJFbnRyeSIsCiAgICAgICAgImNyZWF0ZWRBdCI6ICIyMDEzLTA2LTI3VDIyOjQ2OjE5LjUxM1oiLAogICAgICAgICJ1cGRhdGVkQXQiOiAiMjAxMy0wOS0wNFQwOToxOTozOS4wMjdaIiwKICAgICAgICAicmV2aXNpb24iOiA1LAogICAgICAgICJjb250ZW50VHlwZSI6IHsKICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAibGlua1R5cGUiOiAiQ29udGVudFR5cGUiLAogICAgICAgICAgICAiaWQiOiAiY2F0IgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgImxvY2FsZSI6ICJlbi1VUyIKICAgICAgfSwKICAgICAgImZpZWxkcyI6IHsKICAgICAgICAibmFtZSI6ICJOeWFuIENhdCIsCiAgICAgICAgImxpa2VzIjogWwogICAgICAgICAgInJhaW5ib3dzIiwKICAgICAgICAgICJmaXNoIgogICAgICAgIF0sCiAgICAgICAgImNvbG9yIjogInJhaW5ib3ciLAogICAgICAgICJiZXN0RnJpZW5kIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJFbnRyeSIsCiAgICAgICAgICAgICJpZCI6ICJoYXBweWNhdCIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJiaXJ0aGRheSI6ICIyMDExLTA0LTA0VDIyOjAwOjAwKzAwOjAwIiwKICAgICAgICAibGl2ZXMiOiAxMzM3LAogICAgICAgICJpbWFnZSI6IHsKICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAibGlua1R5cGUiOiAiQXNzZXQiLAogICAgICAgICAgICAiaWQiOiAibnlhbmNhdCIKICAgICAgICAgIH0KICAgICAgICB9CiAgICAgIH0KICAgIH0KICBdLAogICJpbmNsdWRlcyI6IHsKICAgICJFbnRyeSI6IFsKICAgICAgewogICAgICAgICJzeXMiOiB7CiAgICAgICAgICAic3BhY2UiOiB7CiAgICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICAgImxpbmtUeXBlIjogIlNwYWNlIiwKICAgICAgICAgICAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogICAgICAgICAgICB9CiAgICAgICAgICB9LAogICAgICAgICAgImlkIjogImhhcHB5Y2F0IiwKICAgICAgICAgICJ0eXBlIjogIkVudHJ5IiwKICAgICAgICAgICJjcmVhdGVkQXQiOiAiMjAxMy0wNi0yN1QyMjo0NjoyMC4xNzFaIiwKICAgICAgICAgICJ1cGRhdGVkQXQiOiAiMjAxMy0xMS0xOFQxNTo1ODowMi4wMThaIiwKICAgICAgICAgICJyZXZpc2lvbiI6IDgsCiAgICAgICAgICAiY29udGVudFR5cGUiOiB7CiAgICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICAgImxpbmtUeXBlIjogIkNvbnRlbnRUeXBlIiwKICAgICAgICAgICAgICAiaWQiOiAiY2F0IgogICAgICAgICAgICB9CiAgICAgICAgICB9LAogICAgICAgICAgImxvY2FsZSI6ICJlbi1VUyIKICAgICAgICB9LAogICAgICAgICJmaWVsZHMiOiB7CiAgICAgICAgICAibmFtZSI6ICJIYXBweSBDYXQiLAogICAgICAgICAgImxpa2VzIjogWwogICAgICAgICAgICAiY2hlZXpidXJnZXIiCiAgICAgICAgICBdLAogICAgICAgICAgImNvbG9yIjogImdyYXkiLAogICAgICAgICAgImJlc3RGcmllbmQiOiB7CiAgICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICAgImxpbmtUeXBlIjogIkVudHJ5IiwKICAgICAgICAgICAgICAiaWQiOiAibnlhbmNhdCIKICAgICAgICAgICAgfQogICAgICAgICAgfSwKICAgICAgICAgICJiaXJ0aGRheSI6ICIyMDAzLTEwLTI4VDIzOjAwOjAwKzAwOjAwIiwKICAgICAgICAgICJsaXZlcyI6IDEsCiAgICAgICAgICAiaW1hZ2UiOiB7CiAgICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICAgImxpbmtUeXBlIjogIkFzc2V0IiwKICAgICAgICAgICAgICAiaWQiOiAiaGFwcHljYXQiCiAgICAgICAgICAgIH0KICAgICAgICAgIH0KICAgICAgICB9CiAgICAgIH0KICAgIF0sCiAgICAiQXNzZXQiOiBbCiAgICAgIHsKICAgICAgICAic3lzIjogewogICAgICAgICAgInNwYWNlIjogewogICAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAgICJsaW5rVHlwZSI6ICJTcGFjZSIsCiAgICAgICAgICAgICAgImlkIjogImNmZXhhbXBsZWFwaSIKICAgICAgICAgICAgfQogICAgICAgICAgfSwKICAgICAgICAgICJpZCI6ICJoYXBweWNhdCIsCiAgICAgICAgICAidHlwZSI6ICJBc3NldCIsCiAgICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTMtMDktMDJUMTQ6NTY6MzQuMjY3WiIsCiAgICAgICAgICAidXBkYXRlZEF0IjogIjIwMTMtMDktMDJUMTU6MTE6MjQuMzYxWiIsCiAgICAgICAgICAicmV2aXNpb24iOiAyLAogICAgICAgICAgImxvY2FsZSI6ICJlbi1VUyIKICAgICAgICB9LAogICAgICAgICJmaWVsZHMiOiB7CiAgICAgICAgICAidGl0bGUiOiAiSGFwcHkgQ2F0IiwKICAgICAgICAgICJmaWxlIjogewogICAgICAgICAgICAidXJsIjogIi8vaW1hZ2VzLmNvbnRlbnRmdWwuY29tL2NmZXhhbXBsZWFwaS8zTVpQbmpaVElza0FJSWt1dW9zQ3NzLzM4MmE0OGRmYTJjYjE2YzQ3YWEyYzcyZjdiMjNiZjA5L2hhcHB5Y2F0dy5qcGciLAogICAgICAgICAgICAiZGV0YWlscyI6IHsKICAgICAgICAgICAgICAic2l6ZSI6IDU5OTM5LAogICAgICAgICAgICAgICJpbWFnZSI6IHsKICAgICAgICAgICAgICAgICJ3aWR0aCI6IDI3MywKICAgICAgICAgICAgICAgICJoZWlnaHQiOiAzOTcKICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0sCiAgICAgICAgICAgICJmaWxlTmFtZSI6ICJoYXBweWNhdHcuanBnIiwKICAgICAgICAgICAgImNvbnRlbnRUeXBlIjogImltYWdlL2pwZWciCiAgICAgICAgICB9CiAgICAgICAgfQogICAgICB9LAogICAgICB7CiAgICAgICAgInN5cyI6IHsKICAgICAgICAgICJzcGFjZSI6IHsKICAgICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgICAibGlua1R5cGUiOiAiU3BhY2UiLAogICAgICAgICAgICAgICJpZCI6ICJjZmV4YW1wbGVhcGkiCiAgICAgICAgICAgIH0KICAgICAgICAgIH0sCiAgICAgICAgICAiaWQiOiAibnlhbmNhdCIsCiAgICAgICAgICAidHlwZSI6ICJBc3NldCIsCiAgICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTMtMDktMDJUMTQ6NTY6MzQuMjQwWiIsCiAgICAgICAgICAidXBkYXRlZEF0IjogIjIwMTMtMDktMDJUMTQ6NTY6MzQuMjQwWiIsCiAgICAgICAgICAicmV2aXNpb24iOiAxLAogICAgICAgICAgImxvY2FsZSI6ICJlbi1VUyIKICAgICAgICB9LAogICAgICAgICJmaWVsZHMiOiB7CiAgICAgICAgICAidGl0bGUiOiAiTnlhbiBDYXQiLAogICAgICAgICAgImZpbGUiOiB7CiAgICAgICAgICAgICJ1cmwiOiAiLy9pbWFnZXMuY29udGVudGZ1bC5jb20vY2ZleGFtcGxlYXBpLzRncDZ0YUF3VzRDbVNndW1xMmVrVW0vOWRhMGNkMTkzNjg3MWI4ZDcyMzQzZTg5NWEwMGQ2MTEvTnlhbl9jYXRfMjUwcHhfZnJhbWUucG5nIiwKICAgICAgICAgICAgImRldGFpbHMiOiB7CiAgICAgICAgICAgICAgInNpemUiOiAxMjI3MywKICAgICAgICAgICAgICAiaW1hZ2UiOiB7CiAgICAgICAgICAgICAgICAid2lkdGgiOiAyNTAsCiAgICAgICAgICAgICAgICAiaGVpZ2h0IjogMjUwCiAgICAgICAgICAgICAgfQogICAgICAgICAgICB9LAogICAgICAgICAgICAiZmlsZU5hbWUiOiAiTnlhbl9jYXRfMjUwcHhfZnJhbWUucG5nIiwKICAgICAgICAgICAgImNvbnRlbnRUeXBlIjogImltYWdlL3BuZyIKICAgICAgICAgIH0KICAgICAgICB9CiAgICAgIH0KICAgIF0KICB9Cn0K",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?fields.color%5Bne%5D=gray&content_type=cat"
+      },
+      "recorded_at" : 1490110620.447703,
+      "request" : {
+        "headers" : {
+          "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
+          "Authorization" : "Bearer b4c0n73n7fu1"
+        },
+        "method" : "GET",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?fields.color%5Bne%5D=gray&content_type=cat"
+      }
+    },
+    {
+      "response" : {
+        "status" : 200,
+        "headers" : {
+          "Date" : "Tue, 21 Mar 2017 15:37:01 GMT",
           "Content-Length" : "344",
-          "Age" : "5417",
+          "Age" : "16347",
           "Access-Control-Expose-Headers" : "Etag",
           "Access-Control-Max-Age" : "86400",
           "Etag" : "\"17f6b9f68596176aed46fa020bf235af\"",
@@ -424,8 +465,8 @@
           "Connection" : "keep-alive",
           "X-Contentful-Request-Id" : "1c21e3ad5f25bea0ebd87f557a197403",
           "X-Content-Type-Options" : "nosniff",
-          "X-Timer" : "S1490031466.160405,VS0,VE0",
-          "X-Served-By" : "cache-hhn1525-HHN",
+          "X-Timer" : "S1490110621.171150,VS0,VE0",
+          "X-Served-By" : "cache-hhn1520-HHN",
           "Access-Control-Allow-Origin" : "*",
           "Server" : "Contentful",
           "Cache-Control" : "max-age=0",
@@ -434,7 +475,289 @@
         "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJTcGFjZSIsCiAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogIH0sCiAgIm5hbWUiOiAiQ29udGVudGZ1bCBFeGFtcGxlIEFQSSIsCiAgImxvY2FsZXMiOiBbCiAgICB7CiAgICAgICJjb2RlIjogImVuLVVTIiwKICAgICAgImRlZmF1bHQiOiB0cnVlLAogICAgICAibmFtZSI6ICJFbmdsaXNoIiwKICAgICAgImZhbGxiYWNrQ29kZSI6IG51bGwKICAgIH0sCiAgICB7CiAgICAgICJjb2RlIjogInRsaCIsCiAgICAgICJkZWZhdWx0IjogZmFsc2UsCiAgICAgICJuYW1lIjogIktsaW5nb24iLAogICAgICAiZmFsbGJhY2tDb2RlIjogImVuLVVTIgogICAgfQogIF0KfQo=",
         "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/"
       },
-      "recorded_at" : 1490031464.66189,
+      "recorded_at" : 1490110620.448134,
+      "request" : {
+        "headers" : {
+          "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
+          "Authorization" : "Bearer b4c0n73n7fu1"
+        },
+        "method" : "GET",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/"
+      }
+    },
+    {
+      "response" : {
+        "status" : 200,
+        "headers" : {
+          "Via" : "1.1 varnish",
+          "Content-Length" : "1034",
+          "Date" : "Tue, 21 Mar 2017 15:37:01 GMT",
+          "Age" : "459",
+          "Access-Control-Expose-Headers" : "Etag",
+          "Access-Control-Max-Age" : "86400",
+          "Etag" : "W\/\"9707115047cc402819250f844939b2aa\"",
+          "Access-Control-Allow-Headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent",
+          "Accept-Ranges" : "bytes",
+          "Vary" : "Accept-Encoding",
+          "X-Cache-Hits" : "4",
+          "X-Cache" : "HIT",
+          "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
+          "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
+          "Connection" : "keep-alive",
+          "X-Contentful-Request-Id" : "30236ddd39f6f171192ab81f3458e644",
+          "X-Content-Type-Options" : "nosniff",
+          "X-Timer" : "S1490110621.199176,VS0,VE0",
+          "X-Served-By" : "cache-hhn1524-HHN",
+          "Access-Control-Allow-Origin" : "*",
+          "Server" : "Contentful",
+          "Content-Encoding" : "gzip",
+          "Cache-Control" : "max-age=0"
+        },
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJBcnJheSIKICB9LAogICJ0b3RhbCI6IDEsCiAgInNraXAiOiAwLAogICJsaW1pdCI6IDEwMCwKICAiaXRlbXMiOiBbCiAgICB7CiAgICAgICJzeXMiOiB7CiAgICAgICAgInNwYWNlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJTcGFjZSIsCiAgICAgICAgICAgICJpZCI6ICJjZmV4YW1wbGVhcGkiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAiaWQiOiAibnlhbmNhdCIsCiAgICAgICAgInR5cGUiOiAiRW50cnkiLAogICAgICAgICJjcmVhdGVkQXQiOiAiMjAxMy0wNi0yN1QyMjo0NjoxOS41MTNaIiwKICAgICAgICAidXBkYXRlZEF0IjogIjIwMTMtMDktMDRUMDk6MTk6MzkuMDI3WiIsCiAgICAgICAgInJldmlzaW9uIjogNSwKICAgICAgICAiY29udGVudFR5cGUiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIkNvbnRlbnRUeXBlIiwKICAgICAgICAgICAgImlkIjogImNhdCIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJsb2NhbGUiOiAiZW4tVVMiCiAgICAgIH0sCiAgICAgICJmaWVsZHMiOiB7CiAgICAgICAgIm5hbWUiOiAiTnlhbiBDYXQiLAogICAgICAgICJsaWtlcyI6IFsKICAgICAgICAgICJyYWluYm93cyIsCiAgICAgICAgICAiZmlzaCIKICAgICAgICBdLAogICAgICAgICJjb2xvciI6ICJyYWluYm93IiwKICAgICAgICAiYmVzdEZyaWVuZCI6IHsKICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAibGlua1R5cGUiOiAiRW50cnkiLAogICAgICAgICAgICAiaWQiOiAiaGFwcHljYXQiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAiYmlydGhkYXkiOiAiMjAxMS0wNC0wNFQyMjowMDowMCswMDowMCIsCiAgICAgICAgImxpdmVzIjogMTMzNywKICAgICAgICAiaW1hZ2UiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIkFzc2V0IiwKICAgICAgICAgICAgImlkIjogIm55YW5jYXQiCiAgICAgICAgICB9CiAgICAgICAgfQogICAgICB9CiAgICB9CiAgXSwKICAiaW5jbHVkZXMiOiB7CiAgICAiRW50cnkiOiBbCiAgICAgIHsKICAgICAgICAic3lzIjogewogICAgICAgICAgInNwYWNlIjogewogICAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAgICJsaW5rVHlwZSI6ICJTcGFjZSIsCiAgICAgICAgICAgICAgImlkIjogImNmZXhhbXBsZWFwaSIKICAgICAgICAgICAgfQogICAgICAgICAgfSwKICAgICAgICAgICJpZCI6ICJoYXBweWNhdCIsCiAgICAgICAgICAidHlwZSI6ICJFbnRyeSIsCiAgICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTMtMDYtMjdUMjI6NDY6MjAuMTcxWiIsCiAgICAgICAgICAidXBkYXRlZEF0IjogIjIwMTMtMTEtMThUMTU6NTg6MDIuMDE4WiIsCiAgICAgICAgICAicmV2aXNpb24iOiA4LAogICAgICAgICAgImNvbnRlbnRUeXBlIjogewogICAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAgICJsaW5rVHlwZSI6ICJDb250ZW50VHlwZSIsCiAgICAgICAgICAgICAgImlkIjogImNhdCIKICAgICAgICAgICAgfQogICAgICAgICAgfSwKICAgICAgICAgICJsb2NhbGUiOiAiZW4tVVMiCiAgICAgICAgfSwKICAgICAgICAiZmllbGRzIjogewogICAgICAgICAgIm5hbWUiOiAiSGFwcHkgQ2F0IiwKICAgICAgICAgICJsaWtlcyI6IFsKICAgICAgICAgICAgImNoZWV6YnVyZ2VyIgogICAgICAgICAgXSwKICAgICAgICAgICJjb2xvciI6ICJncmF5IiwKICAgICAgICAgICJiZXN0RnJpZW5kIjogewogICAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAgICJsaW5rVHlwZSI6ICJFbnRyeSIsCiAgICAgICAgICAgICAgImlkIjogIm55YW5jYXQiCiAgICAgICAgICAgIH0KICAgICAgICAgIH0sCiAgICAgICAgICAiYmlydGhkYXkiOiAiMjAwMy0xMC0yOFQyMzowMDowMCswMDowMCIsCiAgICAgICAgICAibGl2ZXMiOiAxLAogICAgICAgICAgImltYWdlIjogewogICAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAgICJsaW5rVHlwZSI6ICJBc3NldCIsCiAgICAgICAgICAgICAgImlkIjogImhhcHB5Y2F0IgogICAgICAgICAgICB9CiAgICAgICAgICB9CiAgICAgICAgfQogICAgICB9CiAgICBdLAogICAgIkFzc2V0IjogWwogICAgICB7CiAgICAgICAgInN5cyI6IHsKICAgICAgICAgICJzcGFjZSI6IHsKICAgICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgICAibGlua1R5cGUiOiAiU3BhY2UiLAogICAgICAgICAgICAgICJpZCI6ICJjZmV4YW1wbGVhcGkiCiAgICAgICAgICAgIH0KICAgICAgICAgIH0sCiAgICAgICAgICAiaWQiOiAiaGFwcHljYXQiLAogICAgICAgICAgInR5cGUiOiAiQXNzZXQiLAogICAgICAgICAgImNyZWF0ZWRBdCI6ICIyMDEzLTA5LTAyVDE0OjU2OjM0LjI2N1oiLAogICAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDEzLTA5LTAyVDE1OjExOjI0LjM2MVoiLAogICAgICAgICAgInJldmlzaW9uIjogMiwKICAgICAgICAgICJsb2NhbGUiOiAiZW4tVVMiCiAgICAgICAgfSwKICAgICAgICAiZmllbGRzIjogewogICAgICAgICAgInRpdGxlIjogIkhhcHB5IENhdCIsCiAgICAgICAgICAiZmlsZSI6IHsKICAgICAgICAgICAgInVybCI6ICIvL2ltYWdlcy5jb250ZW50ZnVsLmNvbS9jZmV4YW1wbGVhcGkvM01aUG5qWlRJc2tBSUlrdXVvc0Nzcy8zODJhNDhkZmEyY2IxNmM0N2FhMmM3MmY3YjIzYmYwOS9oYXBweWNhdHcuanBnIiwKICAgICAgICAgICAgImRldGFpbHMiOiB7CiAgICAgICAgICAgICAgInNpemUiOiA1OTkzOSwKICAgICAgICAgICAgICAiaW1hZ2UiOiB7CiAgICAgICAgICAgICAgICAid2lkdGgiOiAyNzMsCiAgICAgICAgICAgICAgICAiaGVpZ2h0IjogMzk3CiAgICAgICAgICAgICAgfQogICAgICAgICAgICB9LAogICAgICAgICAgICAiZmlsZU5hbWUiOiAiaGFwcHljYXR3LmpwZyIsCiAgICAgICAgICAgICJjb250ZW50VHlwZSI6ICJpbWFnZS9qcGVnIgogICAgICAgICAgfQogICAgICAgIH0KICAgICAgfSwKICAgICAgewogICAgICAgICJzeXMiOiB7CiAgICAgICAgICAic3BhY2UiOiB7CiAgICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICAgImxpbmtUeXBlIjogIlNwYWNlIiwKICAgICAgICAgICAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogICAgICAgICAgICB9CiAgICAgICAgICB9LAogICAgICAgICAgImlkIjogIm55YW5jYXQiLAogICAgICAgICAgInR5cGUiOiAiQXNzZXQiLAogICAgICAgICAgImNyZWF0ZWRBdCI6ICIyMDEzLTA5LTAyVDE0OjU2OjM0LjI0MFoiLAogICAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDEzLTA5LTAyVDE0OjU2OjM0LjI0MFoiLAogICAgICAgICAgInJldmlzaW9uIjogMSwKICAgICAgICAgICJsb2NhbGUiOiAiZW4tVVMiCiAgICAgICAgfSwKICAgICAgICAiZmllbGRzIjogewogICAgICAgICAgInRpdGxlIjogIk55YW4gQ2F0IiwKICAgICAgICAgICJmaWxlIjogewogICAgICAgICAgICAidXJsIjogIi8vaW1hZ2VzLmNvbnRlbnRmdWwuY29tL2NmZXhhbXBsZWFwaS80Z3A2dGFBd1c0Q21TZ3VtcTJla1VtLzlkYTBjZDE5MzY4NzFiOGQ3MjM0M2U4OTVhMDBkNjExL055YW5fY2F0XzI1MHB4X2ZyYW1lLnBuZyIsCiAgICAgICAgICAgICJkZXRhaWxzIjogewogICAgICAgICAgICAgICJzaXplIjogMTIyNzMsCiAgICAgICAgICAgICAgImltYWdlIjogewogICAgICAgICAgICAgICAgIndpZHRoIjogMjUwLAogICAgICAgICAgICAgICAgImhlaWdodCI6IDI1MAogICAgICAgICAgICAgIH0KICAgICAgICAgICAgfSwKICAgICAgICAgICAgImZpbGVOYW1lIjogIk55YW5fY2F0XzI1MHB4X2ZyYW1lLnBuZyIsCiAgICAgICAgICAgICJjb250ZW50VHlwZSI6ICJpbWFnZS9wbmciCiAgICAgICAgICB9CiAgICAgICAgfQogICAgICB9CiAgICBdCiAgfQp9Cg==",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?fields.likes%5Ball%5D=rainbows,fish&content_type=cat"
+      },
+      "recorded_at" : 1490110620.474078,
+      "request" : {
+        "headers" : {
+          "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
+          "Authorization" : "Bearer b4c0n73n7fu1"
+        },
+        "method" : "GET",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?fields.likes%5Ball%5D=rainbows,fish&content_type=cat"
+      }
+    },
+    {
+      "response" : {
+        "status" : 200,
+        "headers" : {
+          "Date" : "Tue, 21 Mar 2017 15:37:01 GMT",
+          "Content-Length" : "344",
+          "Age" : "16347",
+          "Access-Control-Expose-Headers" : "Etag",
+          "Access-Control-Max-Age" : "86400",
+          "Etag" : "\"17f6b9f68596176aed46fa020bf235af\"",
+          "Access-Control-Allow-Headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent",
+          "Accept-Ranges" : "bytes",
+          "Vary" : "Accept-Encoding",
+          "X-Cache-Hits" : "7",
+          "X-Cache" : "HIT",
+          "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
+          "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
+          "Connection" : "keep-alive",
+          "X-Contentful-Request-Id" : "1c21e3ad5f25bea0ebd87f557a197403",
+          "X-Content-Type-Options" : "nosniff",
+          "X-Timer" : "S1490110621.199194,VS0,VE0",
+          "X-Served-By" : "cache-hhn1520-HHN",
+          "Access-Control-Allow-Origin" : "*",
+          "Server" : "Contentful",
+          "Cache-Control" : "max-age=0",
+          "Via" : "1.1 varnish"
+        },
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJTcGFjZSIsCiAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogIH0sCiAgIm5hbWUiOiAiQ29udGVudGZ1bCBFeGFtcGxlIEFQSSIsCiAgImxvY2FsZXMiOiBbCiAgICB7CiAgICAgICJjb2RlIjogImVuLVVTIiwKICAgICAgImRlZmF1bHQiOiB0cnVlLAogICAgICAibmFtZSI6ICJFbmdsaXNoIiwKICAgICAgImZhbGxiYWNrQ29kZSI6IG51bGwKICAgIH0sCiAgICB7CiAgICAgICJjb2RlIjogInRsaCIsCiAgICAgICJkZWZhdWx0IjogZmFsc2UsCiAgICAgICJuYW1lIjogIktsaW5nb24iLAogICAgICAiZmFsbGJhY2tDb2RlIjogImVuLVVTIgogICAgfQogIF0KfQo=",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/"
+      },
+      "recorded_at" : 1490110620.474212,
+      "request" : {
+        "headers" : {
+          "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
+          "Authorization" : "Bearer b4c0n73n7fu1"
+        },
+        "method" : "GET",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/"
+      }
+    },
+    {
+      "response" : {
+        "status" : 200,
+        "headers" : {
+          "Date" : "Tue, 21 Mar 2017 15:37:01 GMT",
+          "Content-Length" : "344",
+          "Age" : "16347",
+          "Access-Control-Expose-Headers" : "Etag",
+          "Access-Control-Max-Age" : "86400",
+          "Etag" : "\"17f6b9f68596176aed46fa020bf235af\"",
+          "Access-Control-Allow-Headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent",
+          "Accept-Ranges" : "bytes",
+          "Vary" : "Accept-Encoding",
+          "X-Cache-Hits" : "8",
+          "X-Cache" : "HIT",
+          "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
+          "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
+          "Connection" : "keep-alive",
+          "X-Contentful-Request-Id" : "1c21e3ad5f25bea0ebd87f557a197403",
+          "X-Content-Type-Options" : "nosniff",
+          "X-Timer" : "S1490110621.228704,VS0,VE0",
+          "X-Served-By" : "cache-hhn1520-HHN",
+          "Access-Control-Allow-Origin" : "*",
+          "Server" : "Contentful",
+          "Cache-Control" : "max-age=0",
+          "Via" : "1.1 varnish"
+        },
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJTcGFjZSIsCiAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogIH0sCiAgIm5hbWUiOiAiQ29udGVudGZ1bCBFeGFtcGxlIEFQSSIsCiAgImxvY2FsZXMiOiBbCiAgICB7CiAgICAgICJjb2RlIjogImVuLVVTIiwKICAgICAgImRlZmF1bHQiOiB0cnVlLAogICAgICAibmFtZSI6ICJFbmdsaXNoIiwKICAgICAgImZhbGxiYWNrQ29kZSI6IG51bGwKICAgIH0sCiAgICB7CiAgICAgICJjb2RlIjogInRsaCIsCiAgICAgICJkZWZhdWx0IjogZmFsc2UsCiAgICAgICJuYW1lIjogIktsaW5nb24iLAogICAgICAiZmFsbGJhY2tDb2RlIjogImVuLVVTIgogICAgfQogIF0KfQo=",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/"
+      },
+      "recorded_at" : 1490110620.503308,
+      "request" : {
+        "headers" : {
+          "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
+          "Authorization" : "Bearer b4c0n73n7fu1"
+        },
+        "method" : "GET",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/"
+      }
+    },
+    {
+      "response" : {
+        "status" : 200,
+        "headers" : {
+          "Date" : "Tue, 21 Mar 2017 15:37:01 GMT",
+          "Content-Length" : "553",
+          "Age" : "1149",
+          "Access-Control-Expose-Headers" : "Etag",
+          "Access-Control-Max-Age" : "86400",
+          "Etag" : "\"9c281df849250b22945cdefe5e4fc6d9\"",
+          "Access-Control-Allow-Headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent",
+          "Accept-Ranges" : "bytes",
+          "Vary" : "Accept-Encoding",
+          "X-Cache-Hits" : "1",
+          "X-Cache" : "HIT",
+          "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
+          "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
+          "Connection" : "keep-alive",
+          "X-Contentful-Request-Id" : "92b6934ad02abebcfee000005d3fa9e7",
+          "X-Content-Type-Options" : "nosniff",
+          "X-Timer" : "S1490110621.228584,VS0,VE0",
+          "X-Served-By" : "cache-hhn1524-HHN",
+          "Access-Control-Allow-Origin" : "*",
+          "Server" : "Contentful",
+          "Cache-Control" : "max-age=0",
+          "Via" : "1.1 varnish"
+        },
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJBcnJheSIKICB9LAogICJ0b3RhbCI6IDEsCiAgInNraXAiOiAwLAogICJsaW1pdCI6IDEwMCwKICAiaXRlbXMiOiBbCiAgICB7CiAgICAgICJmaWVsZHMiOiB7CiAgICAgICAgInRpdGxlIjogIkRvZ2UiCiAgICAgIH0sCiAgICAgICJzeXMiOiB7CiAgICAgICAgInNwYWNlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJTcGFjZSIsCiAgICAgICAgICAgICJpZCI6ICJjZmV4YW1wbGVhcGkiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAiaWQiOiAiMXgweHBYdTRwU0dTNE91a1N5V0dVSyIsCiAgICAgICAgInR5cGUiOiAiQXNzZXQiLAogICAgICAgICJjcmVhdGVkQXQiOiAiMjAxMy0xMS0wNlQwOTo0NToxMC4wMDBaIiwKICAgICAgICAidXBkYXRlZEF0IjogIjIwMTMtMTItMThUMTM6Mjc6MTQuOTE3WiIsCiAgICAgICAgInJldmlzaW9uIjogNiwKICAgICAgICAibG9jYWxlIjogImVuLVVTIgogICAgICB9CiAgICB9CiAgXQp9Cg==",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/assets?sys.id=1x0xpXu4pSGS4OukSyWGUK&select=fields.title,sys"
+      },
+      "recorded_at" : 1490110620.503485,
+      "request" : {
+        "headers" : {
+          "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
+          "Authorization" : "Bearer b4c0n73n7fu1"
+        },
+        "method" : "GET",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/assets?sys.id=1x0xpXu4pSGS4OukSyWGUK&select=fields.title,sys"
+      }
+    },
+    {
+      "response" : {
+        "status" : 200,
+        "headers" : {
+          "Via" : "1.1 varnish",
+          "Content-Length" : "873",
+          "Date" : "Tue, 21 Mar 2017 15:37:01 GMT",
+          "Age" : "1149",
+          "Access-Control-Expose-Headers" : "Etag",
+          "Access-Control-Max-Age" : "86400",
+          "Etag" : "W\/\"db5cc71013f0ba6b6bb2aa4223b0ca2e\"",
+          "Access-Control-Allow-Headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent",
+          "Accept-Ranges" : "bytes",
+          "Vary" : "Accept-Encoding",
+          "X-Cache-Hits" : "1",
+          "X-Cache" : "HIT",
+          "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
+          "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
+          "Connection" : "keep-alive",
+          "X-Contentful-Request-Id" : "e387a0bb255bf4a5883490228a39e4e3",
+          "X-Content-Type-Options" : "nosniff",
+          "X-Timer" : "S1490110621.253710,VS0,VE0",
+          "X-Served-By" : "cache-hhn1524-HHN",
+          "Access-Control-Allow-Origin" : "*",
+          "Server" : "Contentful",
+          "Content-Encoding" : "gzip",
+          "Cache-Control" : "max-age=0"
+        },
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJBcnJheSIKICB9LAogICJ0b3RhbCI6IDIsCiAgInNraXAiOiAwLAogICJsaW1pdCI6IDEwMCwKICAiaXRlbXMiOiBbCiAgICB7CiAgICAgICJmaWVsZHMiOiB7CiAgICAgICAgImltYWdlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJBc3NldCIsCiAgICAgICAgICAgICJpZCI6ICIxeDB4cFh1NHBTR1M0T3VrU3lXR1VLIgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgIm5hbWUiOiAiRG9nZSIKICAgICAgfSwKICAgICAgInN5cyI6IHsKICAgICAgICAic3BhY2UiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIlNwYWNlIiwKICAgICAgICAgICAgImlkIjogImNmZXhhbXBsZWFwaSIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJpZCI6ICI2S250YVlYYUhTeUl3OE02ZW8yNk9LIiwKICAgICAgICAidHlwZSI6ICJFbnRyeSIsCiAgICAgICAgImNyZWF0ZWRBdCI6ICIyMDEzLTExLTA2VDA5OjQ1OjI3LjQ3NVoiLAogICAgICAgICJ1cGRhdGVkQXQiOiAiMjAxMy0xMS0xOFQwOToxMzozNy44MDhaIiwKICAgICAgICAicmV2aXNpb24iOiAyLAogICAgICAgICJjb250ZW50VHlwZSI6IHsKICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAibGlua1R5cGUiOiAiQ29udGVudFR5cGUiLAogICAgICAgICAgICAiaWQiOiAiZG9nIgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgImxvY2FsZSI6ICJlbi1VUyIKICAgICAgfQogICAgfSwKICAgIHsKICAgICAgImZpZWxkcyI6IHsKICAgICAgICAiaW1hZ2UiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIkFzc2V0IiwKICAgICAgICAgICAgImlkIjogImpha2UiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAibmFtZSI6ICJKYWtlIgogICAgICB9LAogICAgICAic3lzIjogewogICAgICAgICJzcGFjZSI6IHsKICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAibGlua1R5cGUiOiAiU3BhY2UiLAogICAgICAgICAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgImlkIjogImpha2UiLAogICAgICAgICJ0eXBlIjogIkVudHJ5IiwKICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTMtMDYtMjdUMjI6NDY6MjIuMDk2WiIsCiAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDEzLTEyLTE4VDEzOjEwOjI2LjIxMloiLAogICAgICAgICJyZXZpc2lvbiI6IDUsCiAgICAgICAgImNvbnRlbnRUeXBlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJDb250ZW50VHlwZSIsCiAgICAgICAgICAgICJpZCI6ICJkb2ciCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAibG9jYWxlIjogImVuLVVTIgogICAgICB9CiAgICB9CiAgXSwKICAiaW5jbHVkZXMiOiB7CiAgICAiQXNzZXQiOiBbCiAgICAgIHsKICAgICAgICAic3lzIjogewogICAgICAgICAgInNwYWNlIjogewogICAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAgICJsaW5rVHlwZSI6ICJTcGFjZSIsCiAgICAgICAgICAgICAgImlkIjogImNmZXhhbXBsZWFwaSIKICAgICAgICAgICAgfQogICAgICAgICAgfSwKICAgICAgICAgICJpZCI6ICIxeDB4cFh1NHBTR1M0T3VrU3lXR1VLIiwKICAgICAgICAgICJ0eXBlIjogIkFzc2V0IiwKICAgICAgICAgICJjcmVhdGVkQXQiOiAiMjAxMy0xMS0wNlQwOTo0NToxMC4wMDBaIiwKICAgICAgICAgICJ1cGRhdGVkQXQiOiAiMjAxMy0xMi0xOFQxMzoyNzoxNC45MTdaIiwKICAgICAgICAgICJyZXZpc2lvbiI6IDYsCiAgICAgICAgICAibG9jYWxlIjogImVuLVVTIgogICAgICAgIH0sCiAgICAgICAgImZpZWxkcyI6IHsKICAgICAgICAgICJ0aXRsZSI6ICJEb2dlIiwKICAgICAgICAgICJkZXNjcmlwdGlvbiI6ICJuaWNlIHBpY3R1cmUiLAogICAgICAgICAgImZpbGUiOiB7CiAgICAgICAgICAgICJ1cmwiOiAiLy9pbWFnZXMuY29udGVudGZ1bC5jb20vY2ZleGFtcGxlYXBpLzF4MHhwWHU0cFNHUzRPdWtTeVdHVUsvY2MxMjM5YzYzODU0MjhlZjI2ZjQxODAxOTA1MzI4MTgvZG9nZS5qcGciLAogICAgICAgICAgICAiZGV0YWlscyI6IHsKICAgICAgICAgICAgICAic2l6ZSI6IDUyMjk0MywKICAgICAgICAgICAgICAiaW1hZ2UiOiB7CiAgICAgICAgICAgICAgICAid2lkdGgiOiA1ODAwLAogICAgICAgICAgICAgICAgImhlaWdodCI6IDQzNTAKICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0sCiAgICAgICAgICAgICJmaWxlTmFtZSI6ICJkb2dlLmpwZyIsCiAgICAgICAgICAgICJjb250ZW50VHlwZSI6ICJpbWFnZS9qcGVnIgogICAgICAgICAgfQogICAgICAgIH0KICAgICAgfSwKICAgICAgewogICAgICAgICJzeXMiOiB7CiAgICAgICAgICAic3BhY2UiOiB7CiAgICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICAgImxpbmtUeXBlIjogIlNwYWNlIiwKICAgICAgICAgICAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogICAgICAgICAgICB9CiAgICAgICAgICB9LAogICAgICAgICAgImlkIjogImpha2UiLAogICAgICAgICAgInR5cGUiOiAiQXNzZXQiLAogICAgICAgICAgImNyZWF0ZWRBdCI6ICIyMDEzLTA5LTAyVDE0OjU2OjM0LjI2MFoiLAogICAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDEzLTA5LTAyVDE1OjIyOjM5LjQ2NloiLAogICAgICAgICAgInJldmlzaW9uIjogMiwKICAgICAgICAgICJsb2NhbGUiOiAiZW4tVVMiCiAgICAgICAgfSwKICAgICAgICAiZmllbGRzIjogewogICAgICAgICAgInRpdGxlIjogIkpha2UiLAogICAgICAgICAgImZpbGUiOiB7CiAgICAgICAgICAgICJ1cmwiOiAiLy9pbWFnZXMuY29udGVudGZ1bC5jb20vY2ZleGFtcGxlYXBpLzRobHRlUUFYUzhpUzBZQ01VNlFNV2cvMmE0ZDgyNjE0NGYwMTQxMDkzNjRjY2Y1Yzg5MWQyZGQvamFrZS5wbmciLAogICAgICAgICAgICAiZGV0YWlscyI6IHsKICAgICAgICAgICAgICAic2l6ZSI6IDIwNDgwLAogICAgICAgICAgICAgICJpbWFnZSI6IHsKICAgICAgICAgICAgICAgICJ3aWR0aCI6IDEwMCwKICAgICAgICAgICAgICAgICJoZWlnaHQiOiAxNjEKICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0sCiAgICAgICAgICAgICJmaWxlTmFtZSI6ICJqYWtlLnBuZyIsCiAgICAgICAgICAgICJjb250ZW50VHlwZSI6ICJpbWFnZS9wbmciCiAgICAgICAgICB9CiAgICAgICAgfQogICAgICB9CiAgICBdCiAgfQp9Cg==",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?content_type=dog&select=fields.image,fields.name,sys"
+      },
+      "recorded_at" : 1490110620.534317,
+      "request" : {
+        "headers" : {
+          "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
+          "Authorization" : "Bearer b4c0n73n7fu1"
+        },
+        "method" : "GET",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?content_type=dog&select=fields.image,fields.name,sys"
+      }
+    },
+    {
+      "response" : {
+        "status" : 200,
+        "headers" : {
+          "Date" : "Tue, 21 Mar 2017 15:37:01 GMT",
+          "Content-Length" : "344",
+          "Age" : "16347",
+          "Access-Control-Expose-Headers" : "Etag",
+          "Access-Control-Max-Age" : "86400",
+          "Etag" : "\"17f6b9f68596176aed46fa020bf235af\"",
+          "Access-Control-Allow-Headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent",
+          "Accept-Ranges" : "bytes",
+          "Vary" : "Accept-Encoding",
+          "X-Cache-Hits" : "9",
+          "X-Cache" : "HIT",
+          "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
+          "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
+          "Connection" : "keep-alive",
+          "X-Contentful-Request-Id" : "1c21e3ad5f25bea0ebd87f557a197403",
+          "X-Content-Type-Options" : "nosniff",
+          "X-Timer" : "S1490110621.253679,VS0,VE0",
+          "X-Served-By" : "cache-hhn1520-HHN",
+          "Access-Control-Allow-Origin" : "*",
+          "Server" : "Contentful",
+          "Cache-Control" : "max-age=0",
+          "Via" : "1.1 varnish"
+        },
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJTcGFjZSIsCiAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogIH0sCiAgIm5hbWUiOiAiQ29udGVudGZ1bCBFeGFtcGxlIEFQSSIsCiAgImxvY2FsZXMiOiBbCiAgICB7CiAgICAgICJjb2RlIjogImVuLVVTIiwKICAgICAgImRlZmF1bHQiOiB0cnVlLAogICAgICAibmFtZSI6ICJFbmdsaXNoIiwKICAgICAgImZhbGxiYWNrQ29kZSI6IG51bGwKICAgIH0sCiAgICB7CiAgICAgICJjb2RlIjogInRsaCIsCiAgICAgICJkZWZhdWx0IjogZmFsc2UsCiAgICAgICJuYW1lIjogIktsaW5nb24iLAogICAgICAiZmFsbGJhY2tDb2RlIjogImVuLVVTIgogICAgfQogIF0KfQo=",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/"
+      },
+      "recorded_at" : 1490110620.534358,
+      "request" : {
+        "headers" : {
+          "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
+          "Authorization" : "Bearer b4c0n73n7fu1"
+        },
+        "method" : "GET",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/"
+      }
+    },
+    {
+      "response" : {
+        "status" : 200,
+        "headers" : {
+          "Date" : "Tue, 21 Mar 2017 15:37:01 GMT",
+          "Content-Length" : "344",
+          "Age" : "16347",
+          "Access-Control-Expose-Headers" : "Etag",
+          "Access-Control-Max-Age" : "86400",
+          "Etag" : "\"17f6b9f68596176aed46fa020bf235af\"",
+          "Access-Control-Allow-Headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent",
+          "Accept-Ranges" : "bytes",
+          "Vary" : "Accept-Encoding",
+          "X-Cache-Hits" : "10",
+          "X-Cache" : "HIT",
+          "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
+          "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
+          "Connection" : "keep-alive",
+          "X-Contentful-Request-Id" : "1c21e3ad5f25bea0ebd87f557a197403",
+          "X-Content-Type-Options" : "nosniff",
+          "X-Timer" : "S1490110621.286606,VS0,VE0",
+          "X-Served-By" : "cache-hhn1520-HHN",
+          "Access-Control-Allow-Origin" : "*",
+          "Server" : "Contentful",
+          "Cache-Control" : "max-age=0",
+          "Via" : "1.1 varnish"
+        },
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJTcGFjZSIsCiAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogIH0sCiAgIm5hbWUiOiAiQ29udGVudGZ1bCBFeGFtcGxlIEFQSSIsCiAgImxvY2FsZXMiOiBbCiAgICB7CiAgICAgICJjb2RlIjogImVuLVVTIiwKICAgICAgImRlZmF1bHQiOiB0cnVlLAogICAgICAibmFtZSI6ICJFbmdsaXNoIiwKICAgICAgImZhbGxiYWNrQ29kZSI6IG51bGwKICAgIH0sCiAgICB7CiAgICAgICJjb2RlIjogInRsaCIsCiAgICAgICJkZWZhdWx0IjogZmFsc2UsCiAgICAgICJuYW1lIjogIktsaW5nb24iLAogICAgICAiZmFsbGJhY2tDb2RlIjogImVuLVVTIgogICAgfQogIF0KfQo=",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/"
+      },
+      "recorded_at" : 1490110620.561695,
       "request" : {
         "headers" : {
           "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
@@ -450,8 +773,8 @@
         "headers" : {
           "Via" : "1.1 varnish",
           "Content-Length" : "472",
-          "Date" : "Mon, 20 Mar 2017 17:37:46 GMT",
-          "Age" : "5410",
+          "Date" : "Tue, 21 Mar 2017 15:37:01 GMT",
+          "Age" : "1149",
           "Access-Control-Expose-Headers" : "Etag",
           "Access-Control-Max-Age" : "86400",
           "Etag" : "W\/\"723f6594280691fa448b1d0fc5dfd2a3\"",
@@ -463,26 +786,26 @@
           "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
           "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
           "Connection" : "keep-alive",
-          "X-Contentful-Request-Id" : "3e8d78e78fae475a8e4de6bb848ff6ad",
+          "X-Contentful-Request-Id" : "426ca537e9d8777006512b174fa78340",
           "X-Content-Type-Options" : "nosniff",
-          "X-Timer" : "S1490031466.160195,VS0,VE0",
-          "X-Served-By" : "cache-hhn1523-HHN",
+          "X-Timer" : "S1490110621.287340,VS0,VE0",
+          "X-Served-By" : "cache-hhn1524-HHN",
           "Access-Control-Allow-Origin" : "*",
           "Server" : "Contentful",
           "Content-Encoding" : "gzip",
           "Cache-Control" : "max-age=0"
         },
         "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJBcnJheSIKICB9LAogICJ0b3RhbCI6IDMsCiAgInNraXAiOiAwLAogICJsaW1pdCI6IDEwMCwKICAiaXRlbXMiOiBbCiAgICB7CiAgICAgICJmaWVsZHMiOiB7CiAgICAgICAgImJlc3RGcmllbmQiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIkVudHJ5IiwKICAgICAgICAgICAgImlkIjogImhhcHB5Y2F0IgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgImNvbG9yIjogInJhaW5ib3ciLAogICAgICAgICJuYW1lIjogIk55YW4gQ2F0IgogICAgICB9LAogICAgICAic3lzIjogewogICAgICAgICJzcGFjZSI6IHsKICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAibGlua1R5cGUiOiAiU3BhY2UiLAogICAgICAgICAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgImlkIjogIm55YW5jYXQiLAogICAgICAgICJ0eXBlIjogIkVudHJ5IiwKICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTMtMDYtMjdUMjI6NDY6MTkuNTEzWiIsCiAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDEzLTA5LTA0VDA5OjE5OjM5LjAyN1oiLAogICAgICAgICJyZXZpc2lvbiI6IDUsCiAgICAgICAgImNvbnRlbnRUeXBlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJDb250ZW50VHlwZSIsCiAgICAgICAgICAgICJpZCI6ICJjYXQiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAibG9jYWxlIjogImVuLVVTIgogICAgICB9CiAgICB9LAogICAgewogICAgICAiZmllbGRzIjogewogICAgICAgICJjb2xvciI6ICJvcmFuZ2UiLAogICAgICAgICJuYW1lIjogIkdhcmZpZWxkIgogICAgICB9LAogICAgICAic3lzIjogewogICAgICAgICJzcGFjZSI6IHsKICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAibGlua1R5cGUiOiAiU3BhY2UiLAogICAgICAgICAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgImlkIjogImdhcmZpZWxkIiwKICAgICAgICAidHlwZSI6ICJFbnRyeSIsCiAgICAgICAgImNyZWF0ZWRBdCI6ICIyMDEzLTA2LTI3VDIyOjQ2OjIwLjgyMVoiLAogICAgICAgICJ1cGRhdGVkQXQiOiAiMjAxMy0wOC0yN1QxMDowOTowNy45MjlaIiwKICAgICAgICAicmV2aXNpb24iOiAyLAogICAgICAgICJjb250ZW50VHlwZSI6IHsKICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAibGlua1R5cGUiOiAiQ29udGVudFR5cGUiLAogICAgICAgICAgICAiaWQiOiAiY2F0IgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgImxvY2FsZSI6ICJlbi1VUyIKICAgICAgfQogICAgfSwKICAgIHsKICAgICAgImZpZWxkcyI6IHsKICAgICAgICAiYmVzdEZyaWVuZCI6IHsKICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAibGlua1R5cGUiOiAiRW50cnkiLAogICAgICAgICAgICAiaWQiOiAibnlhbmNhdCIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJjb2xvciI6ICJncmF5IiwKICAgICAgICAibmFtZSI6ICJIYXBweSBDYXQiCiAgICAgIH0sCiAgICAgICJzeXMiOiB7CiAgICAgICAgInNwYWNlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJTcGFjZSIsCiAgICAgICAgICAgICJpZCI6ICJjZmV4YW1wbGVhcGkiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAiaWQiOiAiaGFwcHljYXQiLAogICAgICAgICJ0eXBlIjogIkVudHJ5IiwKICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTMtMDYtMjdUMjI6NDY6MjAuMTcxWiIsCiAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDEzLTExLTE4VDE1OjU4OjAyLjAxOFoiLAogICAgICAgICJyZXZpc2lvbiI6IDgsCiAgICAgICAgImNvbnRlbnRUeXBlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJDb250ZW50VHlwZSIsCiAgICAgICAgICAgICJpZCI6ICJjYXQiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAibG9jYWxlIjogImVuLVVTIgogICAgICB9CiAgICB9CiAgXQp9Cg==",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?select=fields.bestFriend,fields.color,fields.name,sys&locale=en-US&content_type=cat"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?content_type=cat&select=fields.bestFriend,fields.color,fields.name,sys"
       },
-      "recorded_at" : 1490031464.661991,
+      "recorded_at" : 1490110620.563097,
       "request" : {
         "headers" : {
           "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
           "Authorization" : "Bearer b4c0n73n7fu1"
         },
         "method" : "GET",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?select=fields.bestFriend,fields.color,fields.name,sys&locale=en-US&content_type=cat"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?content_type=cat&select=fields.bestFriend,fields.color,fields.name,sys"
       }
     }
   ],

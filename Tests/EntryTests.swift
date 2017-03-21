@@ -331,18 +331,18 @@ class EntryTests: XCTestCase {
         }
     }
 
-//    func testSearchOnReferences() {
-//
-//        let queryParameters = [
-//            "content_type": "cat",
-//            "fields.bestFriend.sys.contentType.sys.id": "cat",
-//            "fields.bestFriend.fields.name[match]": "Happy Cat"
-//        ]
-//
-//        waitUntilMatchingEntries(queryParameters) {
-//            expect($0.items.count).to(equal(1))
-//            expect($0.items.first?.fields["name"] as? String).to(equal("Nyan Cat"))
-//            expect(($0.items.first?.fields["bestFriend"] as! Entry).fields["name"] as? String).to(equal("Happy Cat"))
-//        }
-//    }
+    func testSearchOnReferences() {
+
+        let queryParameters = [
+            "content_type": "cat",
+            "fields.bestFriend.sys.contentType.sys.id": "cat",
+            "fields.bestFriend.fields.name[match]": "Happy Cat"
+        ]
+
+        waitUntilMatchingEntries(queryParameters) {
+            expect($0.items.count).to(equal(1))
+            expect($0.items.first?.fields["name"] as? String).to(equal("Nyan Cat"))
+            expect(($0.items.first?.fields["bestFriend"] as? Link)?.entry?.fields["name"] as? String).to(equal("Happy Cat"))
+        }
+    }
 }

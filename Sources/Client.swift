@@ -174,7 +174,7 @@ open class Client {
 
 extension Client {
 
-    @discardableResult public func fetchContent<ContentType: ContentModel>
+    @discardableResult public func fetchEntries<ContentType: EntryModel>
         (with query: Query<ContentType>, completion: @escaping (Result<[ContentType]>) -> Void) -> URLSessionDataTask? {
 
         let url = URL(forComponent: "entries", parameters: query.queryParameters())
@@ -195,9 +195,36 @@ extension Client {
         }
     }
 
-    @discardableResult public func fetchContent<ContentType: ContentModel>
+    @discardableResult public func fetchEntries<ContentType: EntryModel>
         (query: Query<ContentType>) -> (URLSessionDataTask?, Observable<Result<[ContentType]>>) {
-        let closure: SignalObservation<Query<ContentType>, [ContentType]> = fetchContent(with:completion:)
+        let closure: SignalObservation<Query<ContentType>, [ContentType]> = fetchEntries(with:completion:)
+        return signalify(parameter: query, closure: closure)
+    }
+
+    @discardableResult public func fetchAssets<ContentType: ContentModel>
+        (with query: Query<ContentType>, completion: @escaping (Result<[ContentType]>) -> Void) -> URLSessionDataTask? {
+
+        let url = URL(forComponent: "assets", parameters: query.queryParameters())
+
+        return fetch(url: url) { (result: Result<Array<Asset>>) in
+            switch result {
+            case .success(let assets):
+
+                let mappedItems: [ContentType] = assets.items.flatMap { asset in
+                    let item = ContentType(sys: asset.sys, fields: asset.fields, linkDepth: 20)
+                    return item
+                }
+                completion(Result.success(mappedItems))
+
+            case .error(let error):
+                completion(Result.error(error))
+            }
+        }
+    }
+
+    @discardableResult public func fetchAssets<ContentType: ContentModel>
+        (query: Query<ContentType>) -> (URLSessionDataTask?, Observable<Result<[ContentType]>>) {
+        let closure: SignalObservation<Query<ContentType>, [ContentType]> = fetchAssets(with:completion:)
         return signalify(parameter: query, closure: closure)
     }
 }

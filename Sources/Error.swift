@@ -46,12 +46,21 @@ public enum SDKError: Error {
 /// Errors thrown for queries which have invalid construction.
 public enum QueryError: Error {
 
+    var message: String {
+        switch self {
+        case .invalidSelection(let fieldKeyPath):
+            return "Selection for \(fieldKeyPath) is invalid. Make sure it has at most 1 '.' character in it"
+        case .hitSelectionLimit:
+            return "Can select at most 99 key paths when using the select operator on a content type"
+        }
+    }
+
     /// Thrown when a selection for the `select` operator is constructed in a way that is invalid.
     case invalidSelection(fieldKeyPath: String)
 
     /// Thrown when over 99 properties have been selected. The CDA only supports 100 selections
     /// and the SDK always includes "sys" as one of them.
-    case hitSelectionLimit()
+    case hitSelectionLimit
 }
 
 

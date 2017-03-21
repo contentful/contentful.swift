@@ -17,7 +17,7 @@ public class Asset: Resource, LocalizedResource {
         return Contentful.fields(localizedFields, forLocale: locale, defaultLocale: defaultLocale)
     }
 
-    var localizedFields: [String: [String: Any]]!
+    var localizedFields: [String: [String: Any]]
 
     let defaultLocale: String
 
@@ -43,8 +43,8 @@ public class Asset: Resource, LocalizedResource {
         let (locale, localizedFields) = try parseLocalizedFields(map.JSON)
         self.locale = locale
         self.defaultLocale = determineDefaultLocale(map.JSON)
-        try super.init(map: map)
+        self.localizedFields = localizedFields
 
-        self.localizedFields     = localizedFields
+        try super.init(map: map)
     }
 }

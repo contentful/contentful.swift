@@ -9,6 +9,18 @@
 import Foundation
 import Interstellar
 
+public struct QueryParameter {
+
+    static let contentType  = "content_type"
+    static let select       = "select"
+    static let order        = "order"
+    static let limit        = "limit"
+    static let skip         = "skip"
+    static let include      = "include"
+    static let locale       = "locale"
+}
+
+
 public enum QueryOperation {
     case equals(String)
     case doesNotEqual(String)
@@ -39,22 +51,22 @@ public enum QueryOperation {
         }
     }
 
-    internal static func validatecombinationsRecursively(operations: QueryOperation...) throws {
-        // TODO:
-    }
-
-    internal static func validateCombination(operation operationA: QueryOperation, operation operationB: QueryOperation) throws -> Bool {
-        switch (operationA, operationB) {
-        case (.equals, .equals):
-                return true
-        case (.doesNotEqual, .doesNotEqual):
-            return true
-        default:
-            fatalError("Unhandled combination")
-        }
-
-        return false
-    }
+//    internal static func validatecombinationsRecursively(operations: QueryOperation...) throws {
+//        // TODO:
+//    }
+//
+//    internal static func validateCombination(operation operationA: QueryOperation, operation operationB: QueryOperation) throws -> Bool {
+//        switch (operationA, operationB) {
+//        case (.equals, .equals):
+//                return true
+//        case (.doesNotEqual, .doesNotEqual):
+//            return true
+//        default:
+//            fatalError("Unhandled combination")
+//        }
+//
+//        return false
+//    }
 
     internal var values: String {
         switch self {
@@ -82,14 +94,12 @@ public enum QueryOperation {
 public struct Query<ContentType: ContentModel> {
 
     /// Query operation
-    public static func query(where name: String, _ operation: QueryOperation) -> Query<ContentType> {
+    public static func query(where name: String, _ operation: QueryOperation, for locale: String? = nil) -> Query<ContentType> {
         let query = Query<ContentType>()
-        return query.query(where: name, operation)
+        return query.query(where: name, operation, for: locale)
     }
 
-    public func query(where name: String, _ operation: QueryOperation) -> Query<ContentType> {
-
-        // TODO: validate
+    public func query(where name: String, _ operation: QueryOperation, for locale: String? = nil) -> Query<ContentType> {
 
         // create parameter
         let parameter = name + operation.operation
@@ -97,41 +107,55 @@ public struct Query<ContentType: ContentModel> {
 
         let parameters = self.parameters + [parameter: argument]
 
-        let query = Query(contentTypeId: Query.contentTypeIdentifier(), locale: "en-US", parameters: parameters)
+        let query = Query(contentTypeId: Query.contentTypeIdentifier(), parameters: parameters, locale: locale)
 
         return query
-
     }
 
     /// Select operation
-    public static func select(fieldNames: [String], locale: String = Defaults.locale) throws -> Query<ContentType> {
+    public static func select(fieldNames: [String], for locale: String? = nil) throws -> Query<ContentType> {
         let query = Query<ContentType>()
-        return try query.select(fieldNames: fieldNames, locale: locale)
+        return try query.select(fieldNames: fieldNames, for: locale)
     }
 
-    public func select(fieldNames: [String], locale: String = Defaults.locale) throws -> Query<ContentType> {
+    public func select(fieldNames: [String], for locale: String? = nil) throws -> Query<ContentType> {
         return try select(fieldNames: fieldNames, contentTypeId: Query.contentTypeIdentifier(), locale: locale)
     }
 
 
     // MARK: Private
 
-    private var contentTypeId: String?
 
-    private var locale: String = Defaults.locale
+    private var contentTypeId: String?
 
     internal var parameters: [String: String] = [String: String]()
 
-    private func select(fieldNames: [String], contentTypeId: String?, locale: String = Defaults.locale) throws -> Query<ContentType> {
+    private var locale: String? = Defaults.locale
 
-        guard fieldNames.count < 100 else { throw QueryError.hitSelectionLimit() }
+    internal func queryParameters() -> [String: String] {
+        var parameters = self.parameters
+
+        if let contentTypeId = contentTypeId {
+            parameters[QueryParameter.contentType] = contentTypeId
+        }
+
+        if let locale = locale {
+            parameters[QueryParameter.locale] = locale
+        }
+
+        return parameters
+    }
+
+    private func select(fieldNames: [String], contentTypeId: String?, locale: String? = nil) throws -> Query<ContentType> {
+
+        guard fieldNames.count < 100 else { throw QueryError.hitSelectionLimit }
 
         try Query.validate(selectedKeyPaths: fieldNames)
 
         let validSelections = Query.addSysIfNeeded(to: fieldNames).joined(separator: ",")
 
-        let parameters = self.parameters + ["select": validSelections]
-        let query = Query(contentTypeId: Query.contentTypeIdentifier(), locale: "en-US", parameters: parameters)
+        let parameters = self.parameters + [QueryParameter.select: validSelections]
+        let query = Query(contentTypeId: Query.contentTypeIdentifier(), parameters: parameters, locale: locale)
 
         return query
     }
@@ -152,26 +176,6 @@ public struct Query<ContentType: ContentModel> {
             }
         }
     }
-
-    public func queryParameters() -> [String: String] {
-        var parameters = self.parameters
-
-        if let contentTypeId = contentTypeId {
-            parameters["content_type"] = contentTypeId
-        }
-
-        parameters["locale"] = locale
-        return parameters
-    }
-
-//    private static func validate(queryArguments: [String], contentTypeId: String?, operation: QueryOperation) throws {
-//        for argument in queryArguments {
-//            if argument.hasPrefix("fields.") && contentTypeId == nil {
-//                throw QueryError.invalidSelection(fieldKeyPath: argument)
-//            }
-//        }
-//        try operation.validate()
-//    }
 
     private static func addSysIfNeeded(to selectedFieldNames: [String]) -> [String] {
         var completeSelections = selectedFieldNames

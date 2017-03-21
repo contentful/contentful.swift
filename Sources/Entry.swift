@@ -19,7 +19,7 @@ public class Entry: Resource, LocalizedResource {
     }
 
     // Locale to Field mapping.
-    var localizedFields: [String: [String: Any]]!
+    var localizedFields: [String: [String: Any]]
 
     let defaultLocale: String
 
@@ -75,10 +75,8 @@ public class Entry: Resource, LocalizedResource {
         let (locale, localizedFields) = try parseLocalizedFields(map.JSON)
         self.locale = locale
         self.defaultLocale = determineDefaultLocale(map.JSON)
-
-        try super.init(map: map)
-
         self.localizedFields = localizedFields
 
+        try super.init(map: map)
     }
 }
