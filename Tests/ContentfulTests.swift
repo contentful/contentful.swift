@@ -57,8 +57,8 @@ class SpaceTests: XCTestCase {
         let client = TestClientFactory.cfExampleAPIClient(withCassetteNamed: "testFetchSpace")
 
         client.fetchSpace().1.then { space in
-            expect(space.sys.id).to(equal("cfexampleapi"))
-            expect(space.sys.type).to(equal("Space"))
+            expect(space.id).to(equal("cfexampleapi"))
+            expect(space.type).to(equal("Space"))
             expect(space.name).to(equal("Contentful Example API"))
         }
         .error { fail("\($0)") }
@@ -85,7 +85,7 @@ class PreviewAPITests: XCTestCase {
         let networkExpectation = expectation(description: "Client can fetch space with preview API")
 
         client.fetchSpace().1.then {
-            expect($0.sys.id).to(equal("cfexampleapi"))
+            expect($0.id).to(equal("cfexampleapi"))
             networkExpectation.fulfill()
             }.error {
                 fail("\($0)")

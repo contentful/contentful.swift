@@ -32,8 +32,8 @@ class ContentTypeTests: XCTestCase {
 
             switch result {
             case let .success(type):
-                expect(type.sys.id).to(equal("cat"))
-                expect(type.sys.type).to(equal("ContentType"))
+                expect(type.id).to(equal("cat"))
+                expect(type.type).to(equal("ContentType"))
 
                 if let field = type.fields.first {
                     expect(field.disabled).to(equal(false))

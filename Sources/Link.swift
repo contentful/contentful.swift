@@ -38,17 +38,6 @@ public enum Link {
     case entry(Entry)
     case unresolved(LinkSys)
 
-    var id: String {
-        switch self {
-        case .asset(let asset):
-            return asset.sys.id
-        case .entry(let entry):
-            return entry.sys.id
-        case .unresolved(let jsonLink):
-            return id(for: jsonLink)!
-        }
-    }
-
     var entry: Entry? {
         switch self {
         case .entry(let entry):     return entry
