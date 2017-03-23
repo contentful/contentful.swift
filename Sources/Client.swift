@@ -6,7 +6,7 @@
 //  Copyright © 2015 Contentful GmbH. All rights reserved.
 //
 
-import Decodable
+import ObjectMapper
 import Foundation
 import Interstellar
 #if os(iOS) || os(tvOS)
@@ -58,50 +58,7 @@ open class Client {
         self.urlSession = URLSession(configuration: sessionConfiguration)
     }
 
-    fileprivate func fetch<DecodableType: Decodable>(url: URL?, then completion: @escaping (Result<DecodableType>) -> Void) -> URLSessionDataTask? {
-        if let url = url {
-            let (task, signal) = fetch(url: url)
-
-            if DecodableType.self == Space.self {
-                signal
-                    .then { self.handleJSON($0, completion) }
-                    .error { completion(.error($0)) }
-            } else {
-                fetchSpace().1
-                    .then { _ in
-                        signal
-                            .then { self.handleJSON($0, completion) }
-                            .error { completion(.error($0)) }
-                    }
-                    .error { completion(.error($0)) }
-            }
-
-            return task
-        }
-
-        completion(.error(SDKError.invalidURL(string: "")))
-        return nil
-    }
-
-    fileprivate func handleJSON<T: Decodable>(_ data: Data, _ completion: (Result<T>) -> Void) {
-        do {
-            let json = try JSONSerialization.jsonObject(with: data, options: [])
-            if let json = json as? NSDictionary { json.client = self }
-
-            if let error = try? ContentfulError.decode(json) {
-                completion(.error(error))
-                return
-            }
-
-            completion(.success(try T.decode(json)))
-        } catch let error as DecodingError {
-            completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "\(error)")))
-        } catch _ {
-            completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "")))
-        }
-    }
-
-    fileprivate func URL(forComponent component: String = "", parameters: [String: Any]? = nil) -> URL? {
+    internal func URL(forComponent component: String = "", parameters: [String: Any]? = nil) -> URL? {
         if var components = URLComponents(string: "\(scheme)://\(server)/spaces/\(spaceId)/\(component)") {
             if let parameters = parameters {
                 let queryItems: [URLQueryItem] = parameters.map { key, value in
@@ -133,6 +90,38 @@ open class Client {
 
     // MARK: -
 
+    fileprivate func fetch<MappableType: ImmutableMappable>(url: URL?, then completion: @escaping (Result<MappableType>) -> Void)
+        -> URLSessionDataTask? {
+
+            guard let url = url else {
+                completion(Result.error(SDKError.invalidURL(string: "")))
+                return nil
+            }
+
+            let (task, signal) = fetch(url: url)
+
+            if MappableType.self == Space.self {
+                signal.then { mappable in
+                    self.handleJSON(mappable, completion)
+                }.error { error in
+                    completion(Result.error(error))
+                }
+            } else {
+
+                fetchSpace().result.then { _ in
+                    signal.then { mappable in
+                        self.handleJSON(mappable, completion)
+                    }.error { error in
+                        completion(Result.error(error))
+                    }
+                }.error { error in
+                    completion(Result.error(error))
+                }
+            }
+
+            return task
+    }
+
     fileprivate func fetch(url: URL, completion: @escaping (Result<Data>) -> Void) -> URLSessionDataTask {
         let task = urlSession.dataTask(with: url) { data, response, error in
             if let data = data {
@@ -157,7 +146,89 @@ open class Client {
         let closure: SignalObservation<URL, Data> = fetch
         return signalify(parameter: url, closure: closure)
     }
+
+    fileprivate func handleJSON<MappableType: ImmutableMappable>(_ data: Data, _ completion: (Result<MappableType>) -> Void) {
+        do {
+            let json = try JSONSerialization.jsonObject(with: data, options: [])
+            if let json = json as? NSDictionary { json.client = self }
+
+            let map = Map(mappingType: .fromJSON, JSON: json as! [String : Any])
+
+            // Handle error thrown by CDA.
+            if let error = try? ContentfulError(map: map) {
+                completion(Result.error(error))
+                return
+            }
+
+            let decodedObject = try MappableType(map: map)
+            completion(Result.success(decodedObject))
+
+        } catch let error as MapError {
+            completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "\(error)")))
+        } catch _ {
+            completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "")))
+        }
+    }
 }
+
+
+extension Client {
+
+    @discardableResult public func fetchEntries<ContentType: EntryModel>
+        (with query: Query<ContentType>, completion: @escaping (Result<[ContentType]>) -> Void) -> URLSessionDataTask? {
+
+        let url = URL(forComponent: "entries", parameters: query.queryParameters())
+
+        return fetch(url: url) { (result: Result<Array<Entry>>) in
+            switch result {
+            case .success(let entries):
+
+                let mappedItems: [ContentType] = entries.items.flatMap { entry in
+                    let item = ContentType(sys: entry.sys, fields: entry.fields, linkDepth: 20)
+                    return item
+                }
+                completion(Result.success(mappedItems))
+
+            case .error(let error):
+                completion(Result.error(error))
+            }
+        }
+    }
+
+    @discardableResult public func fetchEntries<ContentType: EntryModel>
+        (query: Query<ContentType>) -> (URLSessionDataTask?, Observable<Result<[ContentType]>>) {
+        let closure: SignalObservation<Query<ContentType>, [ContentType]> = fetchEntries(with:completion:)
+        return signalify(parameter: query, closure: closure)
+    }
+
+    @discardableResult public func fetchAssets<ContentType: ContentModel>
+        (with query: Query<ContentType>, completion: @escaping (Result<[ContentType]>) -> Void) -> URLSessionDataTask? {
+
+        let url = URL(forComponent: "assets", parameters: query.queryParameters())
+
+        return fetch(url: url) { (result: Result<Array<Asset>>) in
+            switch result {
+            case .success(let assets):
+
+                let mappedItems: [ContentType] = assets.items.flatMap { asset in
+                    let item = ContentType(sys: asset.sys, fields: asset.fields, linkDepth: 20)
+                    return item
+                }
+                completion(Result.success(mappedItems))
+
+            case .error(let error):
+                completion(Result.error(error))
+            }
+        }
+    }
+
+    @discardableResult public func fetchAssets<ContentType: ContentModel>
+        (query: Query<ContentType>) -> (URLSessionDataTask?, Observable<Result<[ContentType]>>) {
+        let closure: SignalObservation<Query<ContentType>, [ContentType]> = fetchAssets(with:completion:)
+        return signalify(parameter: query, closure: closure)
+    }
+}
+
 
 extension Client {
     /**
@@ -238,6 +309,7 @@ extension Client {
     }
 #endif
 }
+
 
 extension Client {
     /**
@@ -374,7 +446,7 @@ extension Client {
 
      - returns: A tuple of data task and a signal for the resulting Space
      */
-    @discardableResult public func fetchSpace() -> (URLSessionDataTask?, Observable<Result<Space>>) {
+    @discardableResult public func fetchSpace() -> (task: URLSessionDataTask?, result: Observable<Result<Space>>) {
         let closure: SignalBang<Space> = fetchSpace(then:)
         return signalify(closure: closure)
     }
@@ -389,7 +461,7 @@ extension Client {
 
      - returns: The data task being used, enables cancellation of requests
      */
-    @discardableResult public func initialSync(matching: [String: Any],
+    @discardableResult public func initialSync(matching: [String: Any] = [:],
                                                completion: @escaping (Result<SyncSpace>) -> Void) -> URLSessionDataTask? {
 
         var parameters = matching
@@ -419,7 +491,7 @@ extension Client {
             if let value = result.value {
                 value.client = self
 
-                if value.hasMorePages {
+                if value.hasMorePages == true {
                     var parameters = matching
                     parameters.removeValue(forKey: "initial")
                     value.sync(matching: parameters, completion: completion)

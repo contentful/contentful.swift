@@ -7,18 +7,34 @@
 //
 
 import Foundation
+import ObjectMapper
 
 /// A Content Type represents your data model for Entries in a Contentful Space
-public struct ContentType: Resource {
-    /// System fields
-    public let sys: [String: Any]
+public class ContentType: Resource {
+
     /// The fields which are part of this Content Type
     public let fields: [Field]
 
     /// The unique identifier of this Content Type
-    public let identifier: String
+    public var id: String {
+        return sys.id
+    }
+
     /// The name of this Content Type
     public let name: String
+
     /// Resource type ("ContentType")
-    public let type: String
+    public var type: String {
+        return sys.type
+    }
+
+
+    // MARK: <ImmutableMappable>
+
+    public required init(map: Map) throws {
+        fields  = try map.value("fields")
+        name    = try map.value("name")
+
+        try super.init(map: map)
+    }
 }

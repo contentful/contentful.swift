@@ -30,3 +30,17 @@ class UtilityTests: XCTestCase {
         expect(union["moo"]).to(equal(42))
     }
 }
+
+class StringExtensionTests: XCTestCase {
+
+    func testValidKeyPathSelection() {
+        let validSelection = "key.path"
+        expect(validSelection.isValidSelection()).to(equal(true))
+
+        let invalidSelection = "invalid.key.path"
+        expect(invalidSelection.isValidSelection()).to(equal(false))
+
+        let invalidDotPathSelection = "foo..bar"
+        expect(invalidDotPathSelection.isValidSelection()).to(equal(false))
+    }
+}

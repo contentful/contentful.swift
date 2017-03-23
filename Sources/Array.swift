@@ -6,14 +6,14 @@
 //  Copyright © 2015 Contentful GmbH. All rights reserved.
 //
 
-import Decodable
+import ObjectMapper
 
 /**
  A list of resources in Contentful
 
  This is the result type for any request of a collection of resources.
 **/
-public struct Array<T: Decodable> {
+public struct Array<T: Resource>: ImmutableMappable {
     /**
      Optional list of errors which happened while fetching this result.
 
@@ -30,4 +30,30 @@ public struct Array<T: Decodable> {
     public let skip: UInt
     /// The total number of resources which matched the original request
     public let total: UInt
+
+    internal let includedAssets: [Asset]?
+    internal let includedEntries: [Entry]?
+
+    // MARK: <ImmutableMappable>
+
+    public init(map: Map) throws {
+
+        items           = try map.value("items")
+        limit           = try map.value("limit")
+        skip            = try map.value("skip")
+        total           = try map.value("total")
+
+        includedAssets  = try? map.value("includes.Asset")
+        includedEntries = try? map.value("includes.Entry")
+
+        // Annoying workaround for type system not allowing cast of items to [Entry]
+        let entries: [Entry] = items.flatMap { $0 as? Entry }
+
+        let allIncludedEntries = entries + (includedEntries ?? [])
+
+        // Rememember `Entry`s are classes (passed by reference) so we can change them in place
+        for entry in allIncludedEntries {
+            entry.resolveLinks(against: allIncludedEntries, and: (includedAssets ?? []))
+        }
+    }
 }

@@ -32,7 +32,7 @@ class ContentTypeTests: XCTestCase {
 
             switch result {
             case let .success(type):
-                expect(type.identifier).to(equal("cat"))
+                expect(type.id).to(equal("cat"))
                 expect(type.type).to(equal("ContentType"))
 
                 if let field = type.fields.first {
@@ -40,22 +40,22 @@ class ContentTypeTests: XCTestCase {
                     expect(field.localized).to(equal(true))
                     expect(field.required).to(equal(true))
 
-                    expect(field.type).to(equal(FieldType.Text))
-                    expect(field.itemType).to(equal(FieldType.None))
+                    expect(field.type).to(equal(FieldType.text))
+                    expect(field.itemType).to(equal(FieldType.none))
                 } else {
                     fail()
                 }
 
-                if let field = type.fields.filter({ $0.identifier == "likes" }).first {
-                    expect(field.itemType).to(equal(FieldType.Symbol))
+                if let field = type.fields.filter({ $0.id == "likes" }).first {
+                    expect(field.itemType).to(equal(FieldType.symbol))
                 }
 
-                if let field = type.fields.filter({ $0.identifier == "image" }).first {
-                    expect(field.itemType).to(equal(FieldType.Asset))
+                if let field = type.fields.filter({ $0.id == "image" }).first {
+                    expect(field.itemType).to(equal(FieldType.asset))
                 }
 
                 let field = type.fields[0]
-                expect(field.identifier).to(equal("name"))
+                expect(field.id).to(equal("name"))
             case let .error(error):
                 fail("\(error)")
             }

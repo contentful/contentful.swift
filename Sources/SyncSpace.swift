@@ -8,6 +8,7 @@
 
 import Foundation
 import Interstellar
+import ObjectMapper
 
 /// Delegate protocol for receiving updates performed during synchronization
 public protocol SyncSpaceDelegate {
@@ -41,19 +42,16 @@ public protocol SyncSpaceDelegate {
 }
 
 /// A container for the synchronized state of a Space
-public final class SyncSpace {
+public final class SyncSpace: ImmutableMappable {
     fileprivate var assetsMap = [String: Asset]()
     fileprivate var entriesMap = [String: Entry]()
-
-    // Used for resolving links.
-    fileprivate var includes = [String: Resource]()
 
     var deletedAssets = [String]()
     var deletedEntries = [String]()
 
     var delegate: SyncSpaceDelegate?
 
-    let hasMorePages: Bool
+    var hasMorePages: Bool!
 
     /// A token which needs to be present to perform a subsequent synchronization operation
     fileprivate(set) public var syncToken = ""
@@ -69,35 +67,6 @@ public final class SyncSpace {
     }
 
     var client: Client?
-
-    internal init(hasMorePages: Bool, nextUrl: String, items: [Resource], includes: [String: Resource]) {
-        self.hasMorePages = hasMorePages
-        self.includes = includes
-
-        URLComponents(string: nextUrl)?.queryItems?.forEach {
-            if let value = $0.value, $0.name == "sync_token" {
-                self.syncToken = value
-            }
-        }
-
-        for item in items {
-            switch item {
-            case let asset as Asset:
-                self.assetsMap[asset.identifier] = asset
-
-            case let entry as Entry:
-                self.entriesMap[entry.identifier] = entry
-
-            case let deletedResource as DeletedResource:
-                switch deletedResource.type {
-                case "DeletedAsset": self.deletedAssets.append(deletedResource.identifier)
-                case "DeletedEntry": self.deletedEntries.append(deletedResource.identifier)
-                default: break
-                }
-            default: break
-            }
-        }
-    }
 
     /**
      Continue a synchronization with previous data.
@@ -138,20 +107,15 @@ public final class SyncSpace {
             switch result {
             case .success(let syncSpace):
 
-                // Update includes.
-                self.includes += syncSpace.includes
-
                 for asset in syncSpace.assets {
                     self.delegate?.create(asset: asset)
-                    self.assetsMap[asset.identifier] = asset
+                    self.assetsMap[asset.sys.id] = asset
                 }
 
                 for entry in syncSpace.entries {
-                    // For syncspaces, we do NOT resolve links during array decoding, but instead postpone
-                    // To enabling linking with currently synced items.
-                    let resolvedEntry = entry.resolveLinks(againstIncludes: self.includes)
-                    self.delegate?.create(entry: resolvedEntry)
-                    self.entriesMap[entry.identifier] = resolvedEntry
+                    entry.resolveLinks(against: self.entries + syncSpace.entries, and: self.assets)
+                    self.delegate?.create(entry: entry)
+                    self.entriesMap[entry.sys.id] = entry
                 }
 
                 for deletedAssetId in syncSpace.deletedAssets {
@@ -193,5 +157,74 @@ public final class SyncSpace {
     public func sync(matching: [String: Any] = [:]) -> (URLSessionDataTask?, Observable<Result<SyncSpace>>) {
         let closure: SignalObservation<[String: Any], SyncSpace> = sync(matching:completion:)
         return signalify(parameter: matching, closure: closure)
+    }
+
+    func syncToken(from urlString: String) -> String {
+        guard let components = URLComponents(string: urlString)?.queryItems else { return "" }
+        for component in components {
+            if let value = component.value, component.name == "sync_token" {
+                return value
+            }
+        }
+        return ""
+    }
+
+
+    // MARK: <ImmutableMappable>
+
+    public required init(map: Map) throws {
+        var hasMorePages = true
+        var syncUrl: String?
+        syncUrl <- map["nextPageUrl"]
+
+        if syncUrl == nil {
+            hasMorePages = false
+            syncUrl <- map["nextSyncUrl"]
+        }
+
+        self.hasMorePages = hasMorePages
+        self.syncToken = self.syncToken(from: syncUrl!)
+
+        var items: [[String: Any]]!
+        items <- map["items"]
+
+        let resources: [Resource] = items.flatMap { itemJSON in
+            let map = Map(mappingType: .fromJSON, JSON: itemJSON)
+
+            var type: String!
+            type <- map["sys.type"]
+            switch type {
+            case "Asset":           return try? Asset(map: map)
+            case "Entry":           return try? Entry(map: map)
+            case "ContentType":     return try? ContentType(map: map)
+            case "DeletedAsset":    return try? DeletedResource(map: map)
+            case "DeletedEntry":    return try? DeletedResource(map: map)
+            default: fatalError("Unsupported resource type '\(type)'")
+            }
+
+            return nil
+        }
+
+        cache(resources: resources)
+    }
+
+    internal func cache(resources: [Resource]) {
+        for resource in resources {
+            switch resource {
+            case let asset as Asset:
+                self.assetsMap[asset.sys.id] = asset
+
+            case let entry as Entry:
+                self.entriesMap[entry.sys.id] = entry
+
+            case let deletedResource as DeletedResource:
+                switch deletedResource.sys.type {
+                case "DeletedAsset": self.deletedAssets.append(deletedResource.sys.id)
+                case "DeletedEntry": self.deletedEntries.append(deletedResource.sys.id)
+                default: break
+                }
+            default: break
+            }
+        }
     }
 }

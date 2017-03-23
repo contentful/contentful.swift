@@ -35,9 +35,15 @@ class ClientConfigurationTests: XCTestCase {
     func testUserAgentString() {
 
         let osVersion = ProcessInfo.processInfo.operatingSystemVersionString
-        let userAgentString = ClientConfiguration().userAgent
-
+        let userAgentString = ClientConfiguration.default.userAgent
+        
         expect(userAgentString).to(equal("contentful.swift/0.3.1 (iOS \(osVersion))"))
+    }
+
+    func testDefaultConfiguration() {
+        let clientConfiguration = ClientConfiguration.default
+        expect(clientConfiguration.server).to(equal(Defaults.cdaHost))
+        expect(clientConfiguration.previewMode).to(be(false))
     }
 }
 
@@ -51,7 +57,7 @@ class SpaceTests: XCTestCase {
         let client = TestClientFactory.cfExampleAPIClient(withCassetteNamed: "testFetchSpace")
 
         client.fetchSpace().1.then { space in
-            expect(space.identifier).to(equal("cfexampleapi"))
+            expect(space.id).to(equal("cfexampleapi"))
             expect(space.type).to(equal("Space"))
             expect(space.name).to(equal("Contentful Example API"))
         }
@@ -79,7 +85,7 @@ class PreviewAPITests: XCTestCase {
         let networkExpectation = expectation(description: "Client can fetch space with preview API")
 
         client.fetchSpace().1.then {
-            expect($0.identifier).to(equal("cfexampleapi"))
+            expect($0.id).to(equal("cfexampleapi"))
             networkExpectation.fulfill()
             }.error {
                 fail("\($0)")
@@ -103,7 +109,7 @@ class PreviewAPITests: XCTestCase {
             networkExpectation.fulfill()
         }.error {
             if let error = $0 as? ContentfulError {
-                expect(error.identifier).to(equal("AccessTokenInvalid"))
+                expect(error.sys.id).to(equal("AccessTokenInvalid"))
             } else {
                 fail("expected error not received")
             }

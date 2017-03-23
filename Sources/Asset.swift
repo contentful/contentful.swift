@@ -7,24 +7,19 @@
 //
 
 import Foundation
+import ObjectMapper
 
 /// An asset represents a media file in Contentful
-public struct Asset: Resource, LocalizedResource {
-    /// System fields
-    public let sys: [String: Any]
+public class Asset: Resource, LocalizedResource {
+
     /// Content fields
-    public var fields: [String:Any] {
+    public var fields: [String:Any]! {
         return Contentful.fields(localizedFields, forLocale: locale, defaultLocale: defaultLocale)
     }
 
-    let localizedFields: [String:[String:Any]]
+    var localizedFields: [String: [String: Any]]
+
     let defaultLocale: String
-
-    /// The unique identifier of this Asset
-    public let identifier: String
-
-    /// Resource type ("Asset")
-    public let type: String
 
     /// Currently selected locale
     public var locale: String
@@ -40,5 +35,16 @@ public struct Asset: Resource, LocalizedResource {
         }
 
         throw SDKError.invalidURL(string: "")
+    }
+
+    // MARK: - <ImmutableMappable>
+
+    public required init(map: Map) throws {
+        let (locale, localizedFields) = try parseLocalizedFields(map.JSON)
+        self.locale = locale
+        self.defaultLocale = determineDefaultLocale(map.JSON)
+        self.localizedFields = localizedFields
+
+        try super.init(map: map)
     }
 }

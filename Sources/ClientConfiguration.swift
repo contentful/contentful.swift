@@ -45,11 +45,4 @@ public struct ClientConfiguration {
 
         return "\(userAgentClient) (\(osName) \(osVersion))"
     }
-
-    /**
-     Initialize a clientConfiguration with default values
-
-     - returns: An initialized clientConfiguration instance
-     */
-    public init() {}
 }

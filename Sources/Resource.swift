@@ -6,21 +6,33 @@
 //  Copyright © 2015 Contentful GmbH. All rights reserved.
 //
 
-import Decodable
 import Foundation
+import ObjectMapper
+
 
 /// Protocol for resources inside Contentful
-protocol Resource: Decodable {
+public class Resource: ImmutableMappable {
+
     /// System fields
-    var sys: [String: Any] { get }
-    /// Unique identifier
-    var identifier: String { get }
-    /// Resource type
-    var type: String { get }
+    let sys: Sys
+
+    internal init(sys: Sys) {
+        self.sys = sys
+    }
+
+    // MARK: - <ImmutableMappable>
+
+    public required init(map: Map) throws {
+        sys = try map.value("sys")
+    }
 }
 
+class DeletedResource: Resource {}
+
 protocol LocalizedResource {
-    var fields: [String: Any] { get }
+
+    // Should this be moved to Resource?
+    var fields: [String: Any]! { get }
 
     var locale: String { get set }
     var localizedFields: [String: [String: Any]] { get }
