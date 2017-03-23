@@ -13,36 +13,6 @@ import DVR
 import Interstellar
 import CoreData
 
-
-// PERSISTENCE
-//final class Cat: NSManagedObject, ContentModel {
-//
-//    static let contentTypeId = "cat"
-//
-//    @NSManaged var identifier: String
-//    @NSManaged var color: String?
-//    @NSManaged var bestFriend: Cat?
-//    @NSManaged var name: String?
-//
-//    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
-//        super.init(entity: entity, insertInto: context)
-//    }
-//
-//    required convenience init(identifier: String) {
-//        let ctx = NSManagedObjectContext(concurrencyType: .confinementConcurrencyType)
-//        let entity = NSEntityDescription.entity(forEntityName: String(describing: Cat.self), in: ctx)
-//        self.init(entity: entity!, insertInto: ctx)
-//        self.identifier = identifier
-//    }
-//
-//    func update(with fields: [String: Any]) {
-//        self.name = fields["name"] as? String
-//        self.color = fields["color"] as? String
-//        self.bestFriend = fields["bestFriend"] as? Cat
-//    }
-//}
-
-
 final class Cat: EntryModel {
 
     static let contentTypeId: String = "cat"

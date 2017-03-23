@@ -11,9 +11,11 @@ import ObjectMapper
 
 public struct LinkSys {
 
+    /// The identifier of the linked resource
     public let id: String
 
-    public let linkType: String // "Entry" or "Asset" (-> Easier to resolve with this information.
+    /// The type of the linked resource: either "Entry" or "Asset".
+    public let linkType: String
 }
 
 public enum Link {

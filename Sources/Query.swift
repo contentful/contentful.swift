@@ -51,23 +51,6 @@ public enum QueryOperation {
         }
     }
 
-//    internal static func validatecombinationsRecursively(operations: QueryOperation...) throws {
-//        // TODO:
-//    }
-//
-//    internal static func validateCombination(operation operationA: QueryOperation, operation operationB: QueryOperation) throws -> Bool {
-//        switch (operationA, operationB) {
-//        case (.equals, .equals):
-//                return true
-//        case (.doesNotEqual, .doesNotEqual):
-//            return true
-//        default:
-//            fatalError("Unhandled combination")
-//        }
-//
-//        return false
-//    }
-
     internal var values: String {
         switch self {
         case .equals(let value):
@@ -189,7 +172,7 @@ public struct Query<ContentType: ContentModel> {
 extension String {
 
     func isValidSelection() -> Bool {
-        if characters.split(separator: ".").count > 2 {
+        if characters.split(separator: ".", maxSplits: 3, omittingEmptySubsequences: false).count > 2 {
             return false
         }
         return true

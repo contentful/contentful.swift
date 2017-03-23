@@ -233,7 +233,7 @@ class EntryTests: XCTestCase {
                     case .asset(let image):
                         expect(url(image).absoluteString).to(equal("https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png"))
                     default:
-                        fail("Should not have a link of the wrong type her")
+                        fail("Should not have a link of the wrong type here.")
                     }
                 }
             case let .error(error):

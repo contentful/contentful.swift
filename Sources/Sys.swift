@@ -29,6 +29,8 @@ public struct Sys: ImmutableMappable {
     /// The identifier for the ContentType. 
     public let contentTypeId: String?
 
+    public let revision: Int?
+
     // MARK: <ImmutableMappable>
 
     public init(map: Map) throws {
@@ -39,5 +41,6 @@ public struct Sys: ImmutableMappable {
         contentTypeId   = try? map.value("contentType.sys.id")
         createdAt       = try? map.value("createdAt")
         updatedAt       = try? map.value("updatedAt")
+        revision        = try? map.value("revision")
     }
 }
