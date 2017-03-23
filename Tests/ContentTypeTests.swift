@@ -28,7 +28,7 @@ class ContentTypeTests: XCTestCase {
     func testFetchContentType() {
         let expectation = self.expectation(description: "Client can fetch a content type")
 
-        ContentTypeTests.client.fetchContentType(identifier: "cat") { (result) in
+        ContentTypeTests.client.fetchContentType(id: "cat") { (result) in
 
             switch result {
             case let .success(type):

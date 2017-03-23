@@ -39,8 +39,8 @@ public enum SDKError: Error {
      */
     case unparseableJSON(data: Data, errorMessage: String)
 
-    /// Thrown when no entry is found matching a specific Entry identifier
-    case noEntryFoundFor(identifier: String)
+    /// Thrown when no entry is found matching a specific Entry id
+    case noEntryFoundFor(id: String)
 }
 
 /// Errors thrown for queries which have invalid construction.
@@ -67,9 +67,9 @@ public enum QueryError: Error {
 /// Information regarding an error received from Contentful
 public class ContentfulError: Resource, Error {
 
-    /// Human readable error message
+    /// Human readable error message.
     public var message: String
-    /// Identifier of the request, can be useful when making support requests
+    /// The identifier of the request, can be useful when making support requests.
     public var requestId: String
 
     // MARK: <ImmutableMappable>

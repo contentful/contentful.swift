@@ -113,7 +113,7 @@ public enum Link {
     private func id(for link: Any?) -> String? {
         guard let link = link as? [String: Any] else { return nil }
         let sys = link["sys"] as? [String: Any]
-        let identifier = sys?["id"] as? String
-        return identifier
+        let id = sys?["id"] as? String
+        return id
     }
 }
