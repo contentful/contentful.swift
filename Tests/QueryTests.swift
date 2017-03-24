@@ -25,15 +25,12 @@ final class Cat: EntryModel {
     let likes: [String]?
 
     init?(sys: Sys, fields: [String: Any], linkDepth: Int) {
-        self.id = sys.id
-        self.name = fields["name"] as? String
-        self.color = fields["color"] as? String
-        self.lives = fields["lives"] as? Int
-
-        self.likes = fields["likes"] as? [String]
-
-        let bestFriendLink = fields["bestFriend"] as? Link
-        self.bestFriend = bestFriendLink?.toDestinationType(linkDepth: linkDepth)
+        id          = sys.id
+        name        = fields.string(at: "name")
+        color       = fields.string(at: "color")
+        lives       = fields.int(at:"lives")
+        likes       = fields.strings(at: "likes")
+        bestFriend  = Link.at("bestFriend", in: fields, linkDepth: linkDepth)
     }
 }
 
@@ -45,11 +42,11 @@ final class ImageAsset: ContentModel {
 
     init?(sys: Sys, fields: [String: Any], linkDepth: Int) {
         self.id = sys.id
-        self.title = fields["title"] as? String
+        self.title = fields.string(at: "title")
     }
 }
 
-struct Dog: EntryModel {
+final class Dog: EntryModel {
 
     static let contentTypeId: String = "dog"
 
@@ -58,10 +55,9 @@ struct Dog: EntryModel {
     var name: String?
 
     init?(sys: Sys, fields: [String: Any], linkDepth: Int) {
-        self.id = sys.id
-        self.name = fields["name"] as? String
-        let imageLink = fields["image"] as? Link
-        self.image = imageLink?.toDestinationType(linkDepth: linkDepth)
+        self.id     = sys.id
+        self.name   = fields.string(at: "name")
+        self.image  = Link.at("image", in: fields, linkDepth: linkDepth)
     }
 }
 

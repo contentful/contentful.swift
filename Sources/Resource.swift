@@ -39,6 +39,21 @@ protocol LocalizedResource {
     var defaultLocale: String { get }
 }
 
+extension LocalizedResource {
+
+    func string(at key: String) -> String? {
+        return fields[key] as? String
+    }
+
+    func strings(at key: String) -> [String]? {
+        return fields[key] as? [String]
+    }
+
+    func int(at key: String) -> Int? {
+        return fields[key] as? Int
+    }
+}
+
 @discardableResult func +=<K: Hashable, V> (left: [K: V], right: [K: V]) -> [K: V] {
     var result = left
     right.forEach { (k, v) in result[k] = v }
@@ -57,4 +72,19 @@ func fields(_ localizedFields: [String: [String: Any]], forLocale locale: String
     }
 
     return localizedFields[locale] ?? [String: Any]()
+}
+
+public extension Dictionary where Key: ExpressibleByStringLiteral {
+
+    func string(at key: Key) -> String? {
+        return self[key] as? String
+    }
+
+    func strings(at key: Key) -> [String]? {
+        return self[key] as? [String]
+    }
+
+    func int(at key: Key) -> Int? {
+        return self[key] as? Int
+    }
 }
