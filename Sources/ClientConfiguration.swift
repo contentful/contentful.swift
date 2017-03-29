@@ -33,7 +33,7 @@ public struct ClientConfiguration {
     /// Computed version of the user agent, including OS name and version
     public var userAgent: String {
         var osName = "iOS"
-        let osVersion: Any = ProcessInfo.processInfo.operatingSystemVersionString as AnyObject? ?? "Unknown" as AnyObject
+        let osVersion: String = ProcessInfo.processInfo.operatingSystemVersionString
 
         #if os(OSX)
             osName = "OS X"
