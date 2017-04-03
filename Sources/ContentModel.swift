@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol ContentModel {
+public protocol ContentModel: class {
 
     init?(sys: Sys, fields: [String: Any], linkDepth: Int)
 }

@@ -91,16 +91,12 @@
 		ED3CBF201E7AD58100E5B02E /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3CBF1E1E7AD58100E5B02E /* Link.swift */; };
 		ED3CBF211E7AD58100E5B02E /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3CBF1E1E7AD58100E5B02E /* Link.swift */; };
 		ED3CBF221E7AD58100E5B02E /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3CBF1E1E7AD58100E5B02E /* Link.swift */; };
-		ED65CF911E3F6BD7000EBC62 /* Decodable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65CF8F1E3F6BD7000EBC62 /* Decodable.framework */; };
 		ED65CF921E3F6BD7000EBC62 /* Interstellar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65CF901E3F6BD7000EBC62 /* Interstellar.framework */; };
 		ED65CF971E3F6BF8000EBC62 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65CF941E3F6BF8000EBC62 /* CryptoSwift.framework */; };
 		ED65CF981E3F6BF8000EBC62 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65CF951E3F6BF8000EBC62 /* Nimble.framework */; };
 		ED65CF9B1E3F6C0C000EBC62 /* Interstellar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65CF9A1E3F6C0C000EBC62 /* Interstellar.framework */; };
-		ED65CF9E1E3F6C2A000EBC62 /* Decodable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65CF9C1E3F6C2A000EBC62 /* Decodable.framework */; };
 		ED65CF9F1E3F6C2A000EBC62 /* Interstellar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65CF9D1E3F6C2A000EBC62 /* Interstellar.framework */; };
-		ED65CFA21E3F6C3B000EBC62 /* Decodable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65CFA01E3F6C3B000EBC62 /* Decodable.framework */; };
 		ED65CFA31E3F6C3B000EBC62 /* Interstellar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65CFA11E3F6C3B000EBC62 /* Interstellar.framework */; };
-		ED65CFA61E3F6C55000EBC62 /* Decodable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65CFA41E3F6C55000EBC62 /* Decodable.framework */; };
 		ED65CFA71E3F6C55000EBC62 /* Interstellar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65CFA51E3F6C55000EBC62 /* Interstellar.framework */; };
 		ED68BD721E6DC47A00939F6D /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED68BD711E6DC47A00939F6D /* Query.swift */; };
 		ED68BD731E6DC47F00939F6D /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED68BD711E6DC47A00939F6D /* Query.swift */; };
@@ -200,7 +196,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED3CBF111E7A98DD00E5B02E /* ObjectMapper.framework in Frameworks */,
-				ED65CF911E3F6BD7000EBC62 /* Decodable.framework in Frameworks */,
 				ED65CF921E3F6BD7000EBC62 /* Interstellar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -222,7 +217,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED3CBF171E7A990700E5B02E /* ObjectMapper.framework in Frameworks */,
-				ED65CFA61E3F6C55000EBC62 /* Decodable.framework in Frameworks */,
 				ED65CFA71E3F6C55000EBC62 /* Interstellar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -232,7 +226,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED3CBF0F1E7A98CF00E5B02E /* ObjectMapper.framework in Frameworks */,
-				ED65CFA21E3F6C3B000EBC62 /* Decodable.framework in Frameworks */,
 				ED65CFA31E3F6C3B000EBC62 /* Interstellar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -242,7 +235,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED3CBF131E7A98EB00E5B02E /* ObjectMapper.framework in Frameworks */,
-				ED65CF9E1E3F6C2A000EBC62 /* Decodable.framework in Frameworks */,
 				ED65CF9F1E3F6C2A000EBC62 /* Interstellar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

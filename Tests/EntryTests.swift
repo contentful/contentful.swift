@@ -117,7 +117,7 @@ class EntryTests: XCTestCase {
 
     func testFetchSingleEntry() {
         let expectation = self.expectation(description: "Fetch single entry expectation")
-        EntryTests.client.fetchEntry(identifier: "nyancat") { (result) in
+        EntryTests.client.fetchEntry(id: "nyancat") { (result) in
             switch result {
             case let .success(entry):
                 expect(entry.sys.id).to(equal("nyancat"))
@@ -137,7 +137,7 @@ class EntryTests: XCTestCase {
         let client = Client(spaceId: "p35j0pp5t9t8", accessToken: "6a1664bde31fa797778838ded3e755ab5e4834af1abdf2007c816086caf172c4")
         let expectation = self.expectation(description: "Fetch single entry expectation")
 
-        client.fetchEntry(identifier: "5KsDBWseXY6QegucYAoacS") { result in
+        client.fetchEntry(id: "5KsDBWseXY6QegucYAoacS") { result in
             switch result {
             case .success(let entry):
                 if let categoryLinks = entry.fields["categories"] as? [Link] {

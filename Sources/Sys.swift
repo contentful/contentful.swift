@@ -11,7 +11,7 @@ import ObjectMapper
 
 public struct Sys: ImmutableMappable {
 
-    /// The unique identifier.
+    /// The unique id.
     public let id: String
 
     /// Read-only property describing the date the `Resource` was created.

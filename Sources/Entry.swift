@@ -13,6 +13,14 @@ import ObjectMapper
 /// An Entry represents a typed collection of data in Contentful
 public class Entry: Resource, LocalizedResource {
 
+    public subscript(key: String) -> String? {
+        return fields[key] as? String
+    }
+
+    public subscript(key: String) -> Int? {
+        return fields[key] as? Int
+    }
+
     /// Content fields
     public var fields: [String: Any]! {
         return Contentful.fields(localizedFields, forLocale: locale, defaultLocale: defaultLocale)

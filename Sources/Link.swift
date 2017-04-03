@@ -18,6 +18,7 @@ public struct LinkSys {
     public let linkType: String
 }
 
+
 public enum Link {
 
     internal static func link(from fieldValue: Any) -> Link? {
@@ -54,7 +55,16 @@ public enum Link {
         }
     }
 
-    func toDestinationType<DestinationType: ContentModel>(linkDepth: Int) -> DestinationType? {
+    // TODO: Document
+    public static func at<ValueType: ContentModel>(_ fieldName: String, in fields: [String: Any], linkDepth: Int) -> ValueType? {
+
+        guard let link = fields[fieldName] as? Link else { return nil }
+
+        let value: ValueType? = link.toDestinationType(linkDepth: linkDepth)
+        return value
+    }
+
+    private func toDestinationType<DestinationType: ContentModel>(linkDepth: Int) -> DestinationType? {
 
         guard linkDepth > 0 else { return nil }
 
@@ -113,7 +123,7 @@ public enum Link {
     private func id(for link: Any?) -> String? {
         guard let link = link as? [String: Any] else { return nil }
         let sys = link["sys"] as? [String: Any]
-        let identifier = sys?["id"] as? String
-        return identifier
+        let id = sys?["id"] as? String
+        return id
     }
 }

@@ -42,7 +42,7 @@ class AssetTests: XCTestCase {
 
         let expectation = self.expectation(description: "Fetch single asset network expectation")
 
-        AssetTests.client.fetchAsset(identifier: "nyancat") { (result) in
+        AssetTests.client.fetchAsset(id: "nyancat") { (result) in
             switch result {
             case let .success(asset):
                 expect(asset.sys.id).to(equal("nyancat"))
@@ -81,7 +81,7 @@ class AssetTests: XCTestCase {
     func testFetchImageForAsset() {
         let expectation = self.expectation(description: "Fetch image from asset network expectation")
 
-        AssetTests.client.fetchAsset(identifier: "nyancat").1.then { asset in
+        AssetTests.client.fetchAsset(id: "nyancat").1.then { asset in
             AssetTests.client.fetchImage(for: asset).1.then { image in
 
                 expect(self.md5(image)).to(equal("94fd9a22b0b6ecab15d91486922b8d7e"))

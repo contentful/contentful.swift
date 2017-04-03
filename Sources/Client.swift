@@ -234,25 +234,25 @@ extension Client {
     /**
      Fetch a single Asset from Contentful
 
-     - parameter identifier: The identifier of the Asset to be fetched
+     - parameter id: The identifier of the Asset to be fetched
      - parameter completion: A handler being called on completion of the request
 
      - returns: The data task being used, enables cancellation of requests
      */
-    @discardableResult public func fetchAsset(identifier: String, completion: @escaping (Result<Asset>) -> Void) -> URLSessionDataTask? {
-        return fetch(url: URL(forComponent: "assets/\(identifier)"), then: completion)
+    @discardableResult public func fetchAsset(id: String, completion: @escaping (Result<Asset>) -> Void) -> URLSessionDataTask? {
+        return fetch(url: URL(forComponent: "assets/\(id)"), then: completion)
     }
 
     /**
      Fetch a single Asset from Contentful
 
-     - parameter identifier: The identifier of the Asset to be fetched
+     - parameter id: The identifier of the Asset to be fetched
 
      - returns: A tuple of data task and a signal for the resulting Asset
      */
-    @discardableResult public func fetchAsset(identifier: String) -> (URLSessionDataTask?, Observable<Result<Asset>>) {
-        let closure: SignalObservation<String, Asset> = fetchAsset(identifier:completion:)
-        return signalify(parameter: identifier, closure: closure)
+    @discardableResult public func fetchAsset(id: String) -> (URLSessionDataTask?, Observable<Result<Asset>>) {
+        let closure: SignalObservation<String, Asset> = fetchAsset(id:completion:)
+        return signalify(parameter: id, closure: closure)
     }
 
     /**
@@ -315,25 +315,25 @@ extension Client {
     /**
      Fetch a single Content Type from Contentful
 
-     - parameter identifier: The identifier of the Content Type to be fetched
+     - parameter id: The identifier of the Content Type to be fetched
      - parameter completion: A handler being called on completion of the request
 
      - returns: The data task being used, enables cancellation of requests
      */
-    @discardableResult public func fetchContentType(identifier: String, completion: @escaping (Result<ContentType>) -> Void) -> URLSessionDataTask? {
-        return fetch(url: URL(forComponent: "content_types/\(identifier)"), then: completion)
+    @discardableResult public func fetchContentType(id: String, completion: @escaping (Result<ContentType>) -> Void) -> URLSessionDataTask? {
+        return fetch(url: URL(forComponent: "content_types/\(id)"), then: completion)
     }
 
     /**
      Fetch a single Content Type from Contentful
 
-     - parameter identifier: The identifier of the Content Type to be fetched
+     - parameter id: The identifier of the Content Type to be fetched
 
      - returns: A tuple of data task and a signal for the resulting Content Type
      */
-    @discardableResult public func fetchContentType(identifier: String) -> (URLSessionDataTask?, Observable<Result<ContentType>>) {
-        let closure: SignalObservation<String, ContentType> = fetchContentType(identifier:completion:)
-        return signalify(parameter: identifier, closure: closure)
+    @discardableResult public func fetchContentType(id: String) -> (URLSessionDataTask?, Observable<Result<ContentType>>) {
+        let closure: SignalObservation<String, ContentType> = fetchContentType(id:completion:)
+        return signalify(parameter: id, closure: closure)
     }
 
     /**
@@ -391,12 +391,12 @@ extension Client {
     /**
      Fetch a single Entry from Contentful
 
-     - parameter identifier: The identifier of the Entry to be fetched
+     - parameter id: The identifier of the Entry to be fetched
      - parameter completion: A handler being called on completion of the request
 
      - returns: The data task being used, enables cancellation of requests
      */
-    @discardableResult public func fetchEntry(identifier: String, completion: @escaping (Result<Entry>) -> Void) -> URLSessionDataTask? {
+    @discardableResult public func fetchEntry(id: String, completion: @escaping (Result<Entry>) -> Void) -> URLSessionDataTask? {
         let fetchEntriesCompletion: (Result<Array<Entry>>) -> Void = { result in
             switch result {
             case .success(let entries) where entries.items.first != nil:
@@ -404,23 +404,23 @@ extension Client {
             case .error(let error):
                 completion(Result.error(error))
             default:
-                completion(Result.error(SDKError.noEntryFoundFor(identifier: identifier)))
+                completion(Result.error(SDKError.noEntryFoundFor(id: id)))
             }
         }
 
-        return fetchEntries(matching: ["sys.id": identifier], completion: fetchEntriesCompletion)
+        return fetchEntries(matching: ["sys.id": id], completion: fetchEntriesCompletion)
     }
 
     /**
      Fetch a single Entry from Contentful
 
-     - parameter identifier: The identifier of the Entry to be fetched
+     - parameter id: The identifier of the Entry to be fetched
 
      - returns: A tuple of data task and a signal for the resulting Entry
      */
-    @discardableResult public func fetchEntry(identifier: String) -> (URLSessionDataTask?, Observable<Result<Entry>>) {
-        let closure: SignalObservation<String, Entry> = fetchEntry(identifier:completion:)
-        return signalify(parameter: identifier, closure: closure)
+    @discardableResult public func fetchEntry(id: String) -> (URLSessionDataTask?, Observable<Result<Entry>>) {
+        let closure: SignalObservation<String, Entry> = fetchEntry(id:completion:)
+        return signalify(parameter: id, closure: closure)
     }
 }
 
