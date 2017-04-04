@@ -1,5 +1,5 @@
 github "Hearst-DD/ObjectMapper" "2.2.5"
 github "JensRavens/Interstellar" "2.0.0"
-github "Quick/Nimble" "v5.1.1"
+github "Quick/Nimble" "v6.1.0"
 github "krzyzanowskim/CryptoSwift" "0.6.8"
 github "venmo/DVR" "v1.0.0"
