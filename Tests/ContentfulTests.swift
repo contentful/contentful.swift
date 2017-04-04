@@ -1,3 +1,4 @@
+
 //
 //  ContentfulTests.swift
 //  ContentfulTests
@@ -56,7 +57,7 @@ class SpaceTests: XCTestCase {
 
         let client = TestClientFactory.cfExampleAPIClient(withCassetteNamed: "testFetchSpace")
 
-        client.fetchSpace().1.then { space in
+        client.fetchSpace().then { space in
             expect(space.id).to(equal("cfexampleapi"))
             expect(space.type).to(equal("Space"))
             expect(space.name).to(equal("Contentful Example API"))
@@ -84,7 +85,7 @@ class PreviewAPITests: XCTestCase {
 
         let networkExpectation = expectation(description: "Client can fetch space with preview API")
 
-        client.fetchSpace().1.then {
+        client.fetchSpace().then {
             expect($0.id).to(equal("cfexampleapi"))
             networkExpectation.fulfill()
             }.error {
@@ -104,7 +105,7 @@ class PreviewAPITests: XCTestCase {
 
         let networkExpectation = expectation(description: "Client can't fetch space with wrong token")
 
-        client.fetchSpace().1.then { _ in
+        client.fetchSpace().then { _ in
             fail("expected error not received")
             networkExpectation.fulfill()
         }.error {

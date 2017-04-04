@@ -13,8 +13,12 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 
 #### Changed
 - **BREAKING:** `Contentful.Array` is now called `ArrayResponse` to avoid clashing with native Swift arrays.
+
 #### Planned
 - Better support and Swift'ier API for [Images API](https://www.contentful.com/developers/docs/references/images-api/).
+
+#### Changed
+- `fetch` methods no longer return tuples of `(URLSessionTask?, Observable)` and now simply return the observable.
 
 ---
 

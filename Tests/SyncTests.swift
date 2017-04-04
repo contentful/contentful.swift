@@ -29,7 +29,7 @@ class SyncTests: XCTestCase {
     func waitUntilSync(matching: [String : Any], action: @escaping (_ space: SyncSpace) -> ()) {
         let expectation = self.expectation(description: "Sync test expecation")
 
-        SyncTests.client.initialSync(matching: matching).1.then {
+        SyncTests.client.initialSync(matching: matching).then {
             action($0)
             expectation.fulfill()
         }.error {
@@ -49,10 +49,10 @@ class SyncTests: XCTestCase {
 
     func testPerformSubsequentSync() {
         let expectation = self.expectation(description: "Subsequent Sync test expecation")
-        SyncTests.client.initialSync().1.flatMap { (result: Result<SyncSpace>) -> Observable<Result<SyncSpace>> in
+        SyncTests.client.initialSync().flatMap { (result: Result<SyncSpace>) -> Observable<Result<SyncSpace>> in
             switch result {
             case .success(let space):
-                return space.sync().1
+                return space.sync()
             case .error(let error):
                 fail("\(error)")
                 return Observable<Result<SyncSpace>>()

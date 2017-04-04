@@ -154,9 +154,9 @@ public final class SyncSpace: ImmutableMappable {
 
      - returns: A tuple of data task and a signal which fires on completion
      **/
-    public func sync(matching: [String: Any] = [:]) -> (URLSessionDataTask?, Observable<Result<SyncSpace>>) {
-        let closure: SignalObservation<[String: Any], SyncSpace> = sync(matching:completion:)
-        return signalify(parameter: matching, closure: closure)
+    public func sync(matching: [String: Any] = [:]) -> Observable<Result<SyncSpace>> {
+        let asyncDataTask: AsyncDataTask<[String: Any], SyncSpace> = sync(matching:completion:)
+        return toObservable(parameter: matching, asyncDataTask: asyncDataTask).observable
     }
 
     func syncToken(from urlString: String) -> String {

@@ -59,8 +59,8 @@ class AssetTests: XCTestCase {
 
     func testFetchAllAssetsInSpace() {
         let expectation = self.expectation(description: "Fetch all assets network expectation")
-
-        AssetTests.client.fetchAssets().1.then { assets in
+        
+        AssetTests.client.fetchAssets().then { assets in
             expect(assets.items.count).to(equal(4))
 
             if let asset = (assets.items.filter { $0.sys.id == "nyancat" }).first {
@@ -81,8 +81,8 @@ class AssetTests: XCTestCase {
     func testFetchImageForAsset() {
         let expectation = self.expectation(description: "Fetch image from asset network expectation")
 
-        AssetTests.client.fetchAsset(id: "nyancat").1.then { asset in
-            AssetTests.client.fetchImage(for: asset).1.then { image in
+        AssetTests.client.fetchAsset(id: "nyancat").then { asset in
+            AssetTests.client.fetchImage(for: asset).then { image in
 
                 expect(self.md5(image)).to(equal("94fd9a22b0b6ecab15d91486922b8d7e"))
                 expectation.fulfill()
@@ -97,7 +97,7 @@ class AssetTests: XCTestCase {
         let expectation = self.expectation(description: "Fetch image from asset network expectation")
 
         // FIXME: We should have a different test expectation as this mimics the one above
-        AssetTests.client.fetchAssets(matching: ["mimetype_group": "image"]).1.then { assets in
+        AssetTests.client.fetchAssets(matching: ["mimetype_group": "image"]).then { assets in
 
             expect(assets.items.count).to(equal(4))
             expectation.fulfill()
