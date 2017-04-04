@@ -50,17 +50,38 @@ public enum QueryError: Error {
         switch self {
         case .invalidSelection(let fieldKeyPath):
             return "Selection for \(fieldKeyPath) is invalid. Make sure it has at most 1 '.' character in it"
-        case .hitSelectionLimit:
+        case .maxSelectionLimitExceeded:
             return "Can select at most 99 key paths when using the select operator on a content type"
+        case .maximumLimitExceeded:
+            return "When limiting the results of a query, results must be limited to a value less than or equal to 1000."
+        case .mimetypeSpecifiedOnEntry:
+            return "Mimetype group can only be specified when querying Assets." +
+                   "The content_type_id parameter of the query should be nil for mimetype_group to work."
+        case .invalidOrderProperty:
+            return "Either 'sys' or 'fields' properties must be specified. Prefix your propety name with 'fields.' or 'sys'"
+        case .specifyContentType:
+            return "A content_type must be specified for this query."
+        case .textSearchTooShort:
+            return "Full text search must have a string with more than 1 character."
         }
     }
 
+    case textSearchTooShort
+
+    case specifyContentType
+
+    case invalidOrderProperty
+    /// Thrown when a value greater than 1000 is used for limiting the results of a query.
+    case maximumLimitExceeded
+
+    /// Thrown when attempting to specify a mimetype_group on model of `Entry` type
+    case mimetypeSpecifiedOnEntry
     /// Thrown when a selection for the `select` operator is constructed in a way that is invalid.
     case invalidSelection(fieldKeyPath: String)
 
     /// Thrown when over 99 properties have been selected. The CDA only supports 100 selections
     /// and the SDK always includes "sys" as one of them.
-    case hitSelectionLimit
+    case maxSelectionLimitExceeded
 }
 
 

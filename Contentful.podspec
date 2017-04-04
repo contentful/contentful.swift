@@ -18,6 +18,8 @@ Pod::Spec.new do |spec|
   spec.requires_arc = true
 
   spec.source_files         = 'Sources/*.swift'
+  
+  spec.frameworks                = 'CoreLocation'
 
   spec.ios.deployment_target     = '8.0'
   spec.osx.deployment_target     = '10.10'

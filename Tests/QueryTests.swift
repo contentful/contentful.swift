@@ -12,6 +12,7 @@ import Nimble
 import DVR
 import Interstellar
 import CoreData
+import CoreLocation
 
 final class Cat: EntryModel {
 
@@ -34,6 +35,7 @@ final class Cat: EntryModel {
     }
 }
 
+// TODO: Get rid of this and just use `Asset`
 final class ImageAsset: ContentModel {
 
     var id: String
@@ -43,6 +45,20 @@ final class ImageAsset: ContentModel {
     init?(sys: Sys, fields: [String: Any], linkDepth: Int) {
         self.id = sys.id
         self.title = fields.string(at: "title")
+    }
+}
+
+final class City: EntryModel {
+
+    static let contentTypeId: String = "1t9IbcfdCk6m04uISSsaIK"
+    
+    var id: String
+    var location: CLLocationCoordinate2D
+
+    init?(sys: Sys, fields: [String: Any], linkDepth: Int) {
+        self.id = sys.id
+        // FIXME:
+        self.location = CLLocationCoordinate2D(latitude: 1, longitude: 1)
     }
 }
 
@@ -79,7 +95,7 @@ class QueryTests: XCTestCase {
         let selections = ["fields.bestFriend", "fields.color", "fields.name"]
 
         let expectation = self.expectation(description: "Select operator expectation")
-        let query = try! Query<Cat>.select(fieldNames: selections)
+        let query = try! QueryOn<Cat>(selectingFieldsNamed: selections)
 
         QueryTests.client.fetchEntries(with: query) { result in
 
@@ -103,7 +119,7 @@ class QueryTests: XCTestCase {
 
         let expectation = self.expectation(description: "Select operator expectation")
 
-        let query = try! Query<Dog>.select(fieldNames: selections)
+        let query = try! QueryOn<Dog>(selectingFieldsNamed: selections)
 
         QueryTests.client.fetchEntries(with: query) { result in
 
@@ -129,7 +145,7 @@ class QueryTests: XCTestCase {
 
         let expectation = self.expectation(description: "Equality operator expectation")
 
-        let query = Query<Cat>.query(where: "fields.color", .equals("gray"))
+        let query = QueryOn<Cat>(where: "fields.color", .equals("gray"))
 
         QueryTests.client.fetchEntries(with: query) { result in
             switch result {
@@ -149,7 +165,7 @@ class QueryTests: XCTestCase {
 
         let expectation = self.expectation(description: "Inequality operator expectation")
 
-        let query = Query<Cat>.query(where: "fields.color", .doesNotEqual("gray"))
+        let query = QueryOn<Cat>(where: "fields.color", .doesNotEqual("gray"))
 
         QueryTests.client.fetchEntries(with: query) { result in
             switch result {
@@ -168,7 +184,7 @@ class QueryTests: XCTestCase {
     func testInclusionQuery() {
         let expectation = self.expectation(description: "Inclusion query operator expectation")
 
-        let query = Query<Cat>.query(where: "fields.likes", .includes(["rainbows"]))
+        let query = QueryOn<Cat>(where: "fields.likes", .includes(["rainbows"]))
 
         QueryTests.client.fetchEntries(with: query) { result in
             switch result {
@@ -191,7 +207,7 @@ class QueryTests: XCTestCase {
     func testExclusionQuery() {
         let expectation = self.expectation(description: "Exclusion query operator expectation")
 
-        let query = Query<Cat>.query(where: "fields.likes", .excludes(["rainbows"]))
+        let query = QueryOn<Cat>(where: "fields.likes", .excludes(["rainbows"]))
 
         QueryTests.client.fetchEntries(with: query) { result in
             switch result {
@@ -213,7 +229,7 @@ class QueryTests: XCTestCase {
     func testMultipleValuesQuery() {
         let expectation = self.expectation(description: "Multiple values operator expectation")
 
-        let query = Query<Cat>.query(where: "fields.likes", .hasAll(["rainbows","fish"]))
+        let query = QueryOn<Cat>(where: "fields.likes", .hasAll(["rainbows","fish"]))
 
         QueryTests.client.fetchEntries(with: query) { result in
             switch result {
@@ -236,7 +252,7 @@ class QueryTests: XCTestCase {
     func testExistenceQuery() {
         let expectation = self.expectation(description: "Existence operator expectation")
 
-        let query = Query<Cat>.query(where: "fields.color", .exists(true))
+        let query = QueryOn<Cat>(where: "fields.color", .exists(true))
 
         QueryTests.client.fetchEntries(with: query) { result in
             switch result {
@@ -256,8 +272,8 @@ class QueryTests: XCTestCase {
 
         let expectation = self.expectation(description: "Chained operator expectation")
 
-        let query = Query<Cat>.query(where: "fields.color", .doesNotEqual("gray"))
-            .query(where: "fields.lives", .equals("9"))
+        let query = QueryOn<Cat>(where: "fields.color", .doesNotEqual("gray"))
+        query.where("fields.lives", .equals("9"))
 
         QueryTests.client.fetchEntries(with: query) { result in
             switch result {
@@ -274,17 +290,18 @@ class QueryTests: XCTestCase {
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
-    func testQueryAssets() {
-        let expectation = self.expectation(description: "Inequalitys operator expectation")
+    func testQueryAssetsWithSelect() {
+        let expectation = self.expectation(description: "Equality operator expectation")
 
-        let query = try! Query<ImageAsset>.query(where: "sys.id", .equals("1x0xpXu4pSGS4OukSyWGUK"))
-            .select(fieldNames: ["fields.title"])
+        let query = AssetQuery(where: "sys.id", .equals("1x0xpXu4pSGS4OukSyWGUK"))
+        try! query.select(fieldsNamed: ["fields.title"])
+
         QueryTests.client.fetchAssets(with: query) { result in
             switch result {
-            case .success(let imageAssets):
-                expect(imageAssets.count).to(equal(1))
-                expect(imageAssets.first!.id).to(equal("1x0xpXu4pSGS4OukSyWGUK"))
-                expect(imageAssets.first!.title).to(equal("Doge"))
+            case .success(let assets):
+                expect(assets.count).to(equal(1))
+                expect(assets.first?.sys.id).to(equal("1x0xpXu4pSGS4OukSyWGUK"))
+                expect(assets.first?.fields["title"] as? String).to(equal("Doge"))
             case .error(let error):
                 fail("Should not throw an error \(error)")
             }
@@ -297,7 +314,7 @@ class QueryTests: XCTestCase {
         let fieldNames = ["sys.contentType.sys.id"]
 
         do {
-            let _ = try Query<Dog>.select(fieldNames: fieldNames)
+            let _ = try QueryOn<Dog>(selectingFieldsNamed: fieldNames)
 
             fail("Query selection with depth > 2 should throw an error and not reahc here")
         } catch let error as QueryError {
@@ -305,5 +322,213 @@ class QueryTests: XCTestCase {
         } catch _ {
             fail("Should throw a QueryError")
         }
+    }
+
+    func testFetchEntriesOfAnyTypeWithRangeSearch() {
+
+        let expectation = self.expectation(description: "Range query")
+        let date = Date.fromComponents(year: 2015, month: 1, day: 1, hour: 0, minute: 0, second: 0)
+
+        let query = Query(where: "sys.updatedAt", .isLessThanOrEqualTo(date))
+
+        QueryTests.client.fetchEntries(with: query).observable.then { entries in
+            expect(entries.count).to(equal(10))
+            expectation.fulfill()
+        }.error { fail("\($0)") }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    // MARK: - Ranges
+
+    func testFetchCatsWithRangeSearch() {
+
+        let expectation = self.expectation(description: "Range query")
+
+        let query = QueryOn<Cat>(where: "sys.updatedAt", .isLessThanOrEqualTo("2015-01-01T00:00:00Z"))
+
+        QueryTests.client.fetchEntries(with: query).observable.then { cats in
+            expect(cats.count).to(equal(3))
+            expectation.fulfill()
+            }.error { fail("\($0)") }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    // MARK: - Order
+
+    func testFetchEntriesInSpecifiedOrder() {
+        let expectation = self.expectation(description: "Order search")
+
+        let query = try! Query(orderedBy: "sys.createdAt")
+
+        QueryTests.client.fetchEntries(with: query).observable.then { entries in
+            let ids = entries.map { $0.sys.id }
+            expect(ids).to(equal(EntryTests.orderedEntries))
+            expectation.fulfill()
+        }.error { fail("\($0)") }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testFetchEntriesInReverseOrder() {
+        let expectation = self.expectation(description: "Reverese order search")
+
+        let query = try! Query(orderedBy: "sys.createdAt", reverse: true)
+
+        QueryTests.client.fetchEntries(with: query).observable.then { entries in
+            let ids = entries.map { $0.sys.id }
+            expect(ids).to(equal(EntryTests.orderedEntries.reversed()))
+            expectation.fulfill()
+            }.error { fail("\($0)") }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    static let orderedCatNames = ["nyancat", "happycat", "garfield"]
+
+    func testFetchEntriesWithTypeInOrder() {
+        let expectation = self.expectation(description: "Ordered search with content type specified.")
+
+        let query = try! QueryOn<Cat>(orderedBy: "sys.createdAt")
+
+        QueryTests.client.fetchEntries(with: query).observable.then { cats in
+            let ids = cats.map { $0.id }
+            expect(cats.count).to(equal(3))
+            expect(ids).to(equal(QueryTests.orderedCatNames))
+            expectation.fulfill()
+            }.error { fail("\($0)") }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testFetchEntriesOrderedByMultipleAttributes() {
+        let expectation = self.expectation(description: "Reverese order search")
+
+        let query = try! Query(orderedBy: "sys.revision", "sys.id")
+
+        QueryTests.client.fetchEntries(with: query).observable.then { entries in
+            let ids = entries.map { $0.sys.id }
+            expect(ids).to(equal(EntryTests.orderedEntriesByMultiple))
+            expectation.fulfill()
+            }.error { fail("\($0)") }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    // MARK: - Text search
+
+    func testFetchEntriesWithFullTextSearch() {
+        let expectation = self.expectation(description: "Full text search")
+
+        let query = try! QueryOn<Dog>(searchingFor: "bacon")
+
+        QueryTests.client.fetchEntries(with: query).observable.then { dogs in
+            expect(dogs.count).to(equal(1))
+            expectation.fulfill()
+        }.error { fail("\($0)") }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testFetchEntriesWithFullTextSearchOnSpecificField() {
+        let expectation = self.expectation(description: "Full text search on specific field")
+
+        let query = QueryOn<Dog>(where: "fields.description", .matches("bacon pancakes"))
+
+        QueryTests.client.fetchEntries(with: query).observable.then { dogs in
+            expect(dogs.count).to(equal(1))
+            expect(dogs.first?.name).to(equal("Jake"))
+            expectation.fulfill()
+        }.error { fail("\($0)") }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    // MARK: - Location
+
+    // FIXME: Add another expectation
+
+    func testFetchEntriesWithLocationProximitySearch() {
+        let expectation = self.expectation(description: "Location proximity search")
+
+        let query = QueryOn<City>(where: "fields.center", .isNear(CLLocationCoordinate2D(latitude: 38, longitude: -122)))
+        QueryTests.client.fetchEntries(with: query).observable.then { cities in
+            expect(cities.count).to(equal(4))
+            expectation.fulfill()
+        }.error { fail("\($0)") }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testFetchEntriesWithBoundingBoxLocationsSearch() {
+        let expectation = self.expectation(description: "Location bounding box")
+
+        let bounds = Bounds.box(bottomLeft: CLLocationCoordinate2D(latitude: 36, longitude: -124), topRight: CLLocationCoordinate2D(latitude: 40, longitude: -120))
+
+        let query = QueryOn<City>(where: "fields.center", .isWithin(bounds))
+
+        QueryTests.client.fetchEntries(with: query).observable.then { cities in
+            expect(cities.count).to(equal(1))
+            expectation.fulfill()
+        }.error { fail("\($0)") }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    // MARK: - Limits and Skip
+    func testLimitNumberOfEntriesBeingFetched() {
+        let expectation = self.expectation(description: "Limit results")
+
+        let query = try! Query(limitingResultsTo: 5)
+        QueryTests.client.fetchEntries(with: query).observable.then { entries in
+            expect(entries.count).to(equal(5))
+            expectation.fulfill()
+        }.error { fail("\($0)") }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testSkipEntriesInAQuery() {
+        let expectation = self.expectation(description: "Skip results")
+
+        let query = try! Query(skippingTheFirst: 9)
+        try! query.order(by: "sys.createdAt")
+
+        QueryTests.client.fetchEntries(with: query).observable.then { entries in
+            expect(entries.count).to(equal(1))
+            expect(entries.first?.sys.id).to(equal("7qVBlCjpWE86Oseo40gAEY"))
+            expectation.fulfill()
+        }.error { fail("\($0)") }
+        waitForExpectations(timeout: 10.0, handler: nil)
+
+    }
+
+    // MARK: - Search on References
+
+    func testSearchOnReferences() {
+        let expectation = self.expectation(description: "Search on references")
+
+        let filterQuery = FilterQuery<Cat>(where: "fields.name", .matches("Happy Cat"))
+        let query = QueryOn<Cat>(whereLinkAt: "bestFriend", matches: filterQuery)
+
+        QueryTests.client.fetchEntries(with: query).observable.then { catsWithHappyCatAsBestFriend in
+            expect(catsWithHappyCatAsBestFriend.count).to(equal(1))
+            expect(catsWithHappyCatAsBestFriend.first?.name).to(equal("Nyan Cat"))
+            expect(catsWithHappyCatAsBestFriend.first?.bestFriend?.name).to(equal("Happy Cat"))
+            expectation.fulfill()
+        }.error { error in
+            fail("Should not throw an error \(error)")
+        }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    // MARK: - Asset mimetype
+
+    func testFilterAssetsByMIMETypeGroup() {
+        let expectation = self.expectation(description: "Fetch image from asset network expectation")
+
+        let query = AssetQuery(whereMimetypeGroupIs: .image)
+
+        QueryTests.client.fetchAssets(query: query).result.next { assets in
+            expect(assets.count).to(equal(4))
+            expectation.fulfill()
+        }.error { fail("\($0)") }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
     }
 }

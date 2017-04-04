@@ -19,6 +19,11 @@ public struct LinkSys {
 }
 
 
+/** A representation of Linked Resources that a field may point to in your content model.
+    This stateful type safely highlights links that have been resolved to Entries, Assets, or if they are
+    Still unresolved. If your data model conforms to `ContentModel` or `EntryModel` you can also use the `at` method
+    to extract an instance of your linked type.
+*/
 public enum Link {
 
     internal static func link(from fieldValue: Any) -> Link? {
@@ -41,6 +46,7 @@ public enum Link {
     case entry(Entry)
     case unresolved(LinkSys)
 
+    /// The linked Entry, if it exists.
     var entry: Entry? {
         switch self {
         case .entry(let entry):     return entry
@@ -48,6 +54,7 @@ public enum Link {
         }
     }
 
+    /// The linked Asset, if it exists.
     var asset: Asset? {
         switch self {
         case .asset(let asset):     return asset
@@ -55,7 +62,13 @@ public enum Link {
         }
     }
 
-    // TODO: Document
+    /**
+     Extract the concrete type conforming to ContentModel which the specified field points to.
+
+     - Parameter fieldName: The name of the field where there is a linked Resource.
+     - Parameter linkDepth: Interally used by the SDK to prevent infinite loops when resolving links.
+     - Returns: Intance of concrete type conforming to `ContentModel` that is Linked.
+    */
     public static func at<ValueType: ContentModel>(_ fieldName: String, in fields: [String: Any], linkDepth: Int) -> ValueType? {
 
         guard let link = fields[fieldName] as? Link else { return nil }

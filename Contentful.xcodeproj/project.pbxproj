@@ -29,7 +29,6 @@
 		A19CA3E81B83890D00A0EFCD /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E71B83890D00A0EFCD /* Resource.swift */; };
 		A1B2E3651BBACF2C00814D63 /* Decoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2E3641BBACF2C00814D63 /* Decoding.swift */; };
 		A1BF6BBC1C0D0FBD00049712 /* SignalUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BF6BBB1C0D0FBD00049712 /* SignalUtils.swift */; };
-		ED00EABA1E81802A001F4FA3 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED00EAB91E81802A001F4FA3 /* QueryTests.json */; };
 		ED00EABC1E8185BC001F4FA3 /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED00EABB1E8185BC001F4FA3 /* EntryTests.json */; };
 		ED02BC611E7047B900BAB2CA /* QueryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02BC5F1E7047AE00BAB2CA /* QueryTests.swift */; };
 		ED0876DA1E1D07B3008E1A06 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0876D91E1D07B3008E1A06 /* Date.swift */; };
@@ -102,6 +101,7 @@
 		ED68BD731E6DC47F00939F6D /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED68BD711E6DC47A00939F6D /* Query.swift */; };
 		ED68BD741E6DC48000939F6D /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED68BD711E6DC47A00939F6D /* Query.swift */; };
 		ED68BD751E6DC48000939F6D /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED68BD711E6DC47A00939F6D /* Query.swift */; };
+		ED8E0F1A1E96B38E007015F8 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED8E0F181E96B34E007015F8 /* QueryTests.json */; };
 		ED9102661E65AADA0076FDBD /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED9102651E65AADA0076FDBD /* DVR.framework */; };
 		ED9102731E65B4130076FDBD /* AssetTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED9102721E65B4130076FDBD /* AssetTests.json */; };
 		ED91027E1E65BB020076FDBD /* ContentTypeTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED91027C1E65BAFB0076FDBD /* ContentTypeTests.json */; };
@@ -151,7 +151,6 @@
 		A1B2E3641BBACF2C00814D63 /* Decoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Decoding.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A1B2E3661BBAD06000814D63 /* ObjectMappingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ObjectMappingTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A1BF6BBB1C0D0FBD00049712 /* SignalUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SignalUtils.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		ED00EAB91E81802A001F4FA3 /* QueryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QueryTests.json; sourceTree = "<group>"; };
 		ED00EABB1E8185BC001F4FA3 /* EntryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EntryTests.json; sourceTree = "<group>"; };
 		ED02BC5F1E7047AE00BAB2CA /* QueryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryTests.swift; sourceTree = "<group>"; };
 		ED0876D91E1D07B3008E1A06 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
@@ -174,6 +173,7 @@
 		ED65CFA41E3F6C55000EBC62 /* Decodable.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Decodable.framework; path = Carthage/Build/watchOS/Decodable.framework; sourceTree = "<group>"; };
 		ED65CFA51E3F6C55000EBC62 /* Interstellar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Interstellar.framework; path = Carthage/Build/watchOS/Interstellar.framework; sourceTree = "<group>"; };
 		ED68BD711E6DC47A00939F6D /* Query.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Query.swift; sourceTree = "<group>"; };
+		ED8E0F181E96B34E007015F8 /* QueryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QueryTests.json; sourceTree = "<group>"; };
 		ED9102651E65AADA0076FDBD /* DVR.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVR.framework; path = Carthage/Build/iOS/DVR.framework; sourceTree = "<group>"; };
 		ED9102721E65B4130076FDBD /* AssetTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AssetTests.json; sourceTree = "<group>"; };
 		ED9102741E65B6C20076FDBD /* testClientCanAccessPreviewAPI.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testClientCanAccessPreviewAPI.json; sourceTree = "<group>"; };
@@ -389,7 +389,7 @@
 			children = (
 				ED9102721E65B4130076FDBD /* AssetTests.json */,
 				ED00EABB1E8185BC001F4FA3 /* EntryTests.json */,
-				ED00EAB91E81802A001F4FA3 /* QueryTests.json */,
+				ED8E0F181E96B34E007015F8 /* QueryTests.json */,
 				ED91027C1E65BAFB0076FDBD /* ContentTypeTests.json */,
 				ED9102741E65B6C20076FDBD /* testClientCanAccessPreviewAPI.json */,
 				ED9102751E65B6C20076FDBD /* testClientCantAccessPreviewAPIWithProductionToken.json */,
@@ -600,7 +600,7 @@
 				ED9102801E65BB0C0076FDBD /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */,
 				ED9102731E65B4130076FDBD /* AssetTests.json in Resources */,
 				ED9102871E65BD250076FDBD /* SyncTests.json in Resources */,
-				ED00EABA1E81802A001F4FA3 /* QueryTests.json in Resources */,
+				ED8E0F1A1E96B38E007015F8 /* QueryTests.json in Resources */,
 				A10FF9D81BBB3860001AA4E9 /* Data in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
