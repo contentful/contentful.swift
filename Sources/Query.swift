@@ -234,7 +234,8 @@ public protocol ChainableQuery: AbstractQuery {}
 public extension ChainableQuery {
 
     /**
-     Convenience initializer for a select operation query in which only the fields specified in the fieldNames property will be returned in the JSON response.
+     Convenience initializer for a select operation query in which only the fields specified 
+     in the fieldNames property will be returned in the JSON response.
      The `"sys"` dictionary is always requested by the SDK. 
      Note that if you are using the select operator with an instance `QueryOn<EntryType>`
      that you must make properties that you are ommitting in the response (by not including them in your selections array) optional properties.
@@ -445,7 +446,7 @@ public extension ChainableQuery {
         let parameters = [QueryParameter.fullTextSearch: text]
         self.init(parameters: parameters, locale: locale)
     }
-    
+
     /**
      Instance method for appending a full-text search query to an existing query. Returned results will contain
      either entries or assets in which all text and symbol fields contain the specified, case-insensitive text parameter.

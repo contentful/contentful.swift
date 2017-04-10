@@ -485,7 +485,7 @@ class QueryTests: XCTestCase {
     func testSkipEntriesInAQuery() {
         let expectation = self.expectation(description: "Skip results")
 
-        let query = try! Query(skippingTheFirst: 9)
+        let query = Query(skippingTheFirst: 9)
         try! query.order(by: "sys.createdAt")
 
         QueryTests.client.fetchEntries(with: query).observable.then { entries in
