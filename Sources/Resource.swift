@@ -8,7 +8,7 @@
 
 import Foundation
 import ObjectMapper
-
+import CoreLocation
 
 /// Protocol for resources inside Contentful
 public class Resource: ImmutableMappable {
@@ -54,9 +54,9 @@ extension LocalizedResource {
     }
 }
 
-@discardableResult func +=<K: Hashable, V> (left: [K: V], right: [K: V]) -> [K: V] {
+func +=<K: Hashable, V> (left: [K: V], right: [K: V]) -> [K: V] {
     var result = left
-    right.forEach { (k, v) in result[k] = v }
+    right.forEach { (key, value) in result[key] = value }
     return result
 }
 

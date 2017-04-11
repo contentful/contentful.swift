@@ -6,8 +6,15 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 ## Unreleased
 
 #### Added
-- Support for [Contentful Delivery API Search Parameters](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters)
+- Swift'ier API for [Contentful Delivery API Search Parameters](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters)
+- Mechanism for mapping responses to user-defined Swift types when using `QueryOn` queries.
+- Improved link resolving via the new `Link` type
 - Swift 3.1, Xcode 8.3 support.
+
+#### Changed
+- **BREAKING:** `Contentful.Array` is now called `ArrayResponse` to avoid clashing with native Swift arrays.
+#### Planned
+- Better support and Swift'ier API for [Images API](https://www.contentful.com/developers/docs/references/images-api/).
 
 ---
 

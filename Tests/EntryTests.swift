@@ -39,7 +39,7 @@ class EntryTests: XCTestCase {
         (client.urlSession as? DVR.Session)?.endRecording()
     }
 
-    func waitUntilMatchingEntries(_ matching: [String: Any], action: @escaping (_ entries: Contentful.Array<Entry>) -> ()) {
+    func waitUntilMatchingEntries(_ matching: [String: Any], action: @escaping (_ entries: ArrayResponse<Entry>) -> ()) {
         let expecatation = self.expectation(description: "Entries matching query network expectation")
 
         EntryTests.client.fetchEntries(matching: matching).1.then {
@@ -85,31 +85,31 @@ class EntryTests: XCTestCase {
 
     // MARK: Order related queries
 
-    let orderedEntries = ["nyancat", "happycat", "garfield",
+    static let orderedEntries = ["nyancat", "happycat", "garfield",
         "finn", "jake", "6KntaYXaHSyIw8M6eo26OK", "4MU1s3potiUEM2G4okYOqw",
         "5ETMRzkl9KM4omyMwKAOki", "ge1xHyH3QOWucKWCCAgIG", "7qVBlCjpWE86Oseo40gAEY"]
-    let orderedEntriesByMultiple = ["4MU1s3potiUEM2G4okYOqw",
+    static let orderedEntriesByMultiple = ["4MU1s3potiUEM2G4okYOqw",
         "ge1xHyH3QOWucKWCCAgIG", "6KntaYXaHSyIw8M6eo26OK", "7qVBlCjpWE86Oseo40gAEY",
         "garfield", "5ETMRzkl9KM4omyMwKAOki", "jake", "nyancat", "finn", "happycat"]
 
     func testFetchEntriesInSpecifiedOrder() {
         waitUntilMatchingEntries(["order": "sys.createdAt"]) {
             let ids = $0.items.map { $0.sys.id }
-            expect(ids).to(equal(self.orderedEntries))
+            expect(ids).to(equal(EntryTests.orderedEntries))
         }
     }
 
     func testFetchEntriesInReverseOrder() {
         waitUntilMatchingEntries(["order": "-sys.createdAt"]) {
             let ids = $0.items.map { $0.sys.id }
-            expect(ids).to(equal(self.orderedEntries.reversed()))
+            expect(ids).to(equal(EntryTests.orderedEntries.reversed()))
         }
     }
 
     func testFetchEntriesOrderedByMultipleAttributes() {
         self.waitUntilMatchingEntries(["order": ["sys.revision", "sys.id"]]) {
             let ids = $0.items.map { $0.sys.id }
-            expect(ids).to(equal(self.orderedEntriesByMultiple))
+            expect(ids).to(equal(EntryTests.orderedEntriesByMultiple))
         }
     }
 
@@ -264,7 +264,7 @@ class EntryTests: XCTestCase {
     }
 
     func testFetchEntriesWithInclusionSearch() {
-        let action: (Contentful.Array<Entry>) -> () = {
+        let action: (ArrayResponse<Entry>) -> () = {
             expect($0.items.count).to(equal(2))
             let ids = $0.items.map { $0.sys.id }
             expect(ids).to(equal(["finn", "jake"]))
@@ -288,7 +288,7 @@ class EntryTests: XCTestCase {
         }
     }
 
-    func testFetchEntiresWithRangeSearch() {
+    func testFetchEntriesWithRangeSearch() {
         let date = Date.fromComponents(year: 2015, month: 1, day: 1, hour: 0, minute: 0, second: 0)
         waitUntilMatchingEntries(["sys.updatedAt[lte]": date]) {
             expect($0.items.count).to(equal(10))

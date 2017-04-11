@@ -19,6 +19,12 @@ public struct LinkSys {
 }
 
 
+/** 
+ A representation of Linked Resources that a field may point to in your content model.
+ This stateful type safely highlights links that have been resolved to Entries, Assets, or if they are
+ still unresolved. If your data model conforms to `ContentModellable` or `EntryModellable` you can also use the `at` method
+ to extract an instance of your linked type.
+*/
 public enum Link {
 
     internal static func link(from fieldValue: Any) -> Link? {
@@ -37,10 +43,16 @@ public enum Link {
         return nil
     }
 
+    /// The Link points to an `Asset`
     case asset(Asset)
+
+    /// The Link points to an `Entry`
     case entry(Entry)
+
+    /// The Link is unresolved, and therefore contains a dictionary of metadata describing the linked resource.
     case unresolved(LinkSys)
 
+    /// The linked Entry, if it exists.
     var entry: Entry? {
         switch self {
         case .entry(let entry):     return entry
@@ -48,6 +60,7 @@ public enum Link {
         }
     }
 
+    /// The linked Asset, if it exists.
     var asset: Asset? {
         switch self {
         case .asset(let asset):     return asset
@@ -55,8 +68,14 @@ public enum Link {
         }
     }
 
-    // TODO: Document
-    public static func at<ValueType: ContentModel>(_ fieldName: String, in fields: [String: Any], linkDepth: Int) -> ValueType? {
+    /**
+     Extract the concrete type conforming to ContentModellable which the specified field points to.
+
+     - Parameter fieldName: The name of the field where there is a linked Resource.
+     - Parameter linkDepth: Interally used by the SDK to prevent infinite loops when resolving links.
+     - Returns: Intance of concrete type conforming to `ContentModellable` that is Linked.
+    */
+    public static func at<ValueType: ContentModellable>(_ fieldName: String, in fields: [String: Any], linkDepth: Int) -> ValueType? {
 
         guard let link = fields[fieldName] as? Link else { return nil }
 
@@ -64,7 +83,7 @@ public enum Link {
         return value
     }
 
-    private func toDestinationType<DestinationType: ContentModel>(linkDepth: Int) -> DestinationType? {
+    private func toDestinationType<DestinationType: ContentModellable>(linkDepth: Int) -> DestinationType? {
 
         guard linkDepth > 0 else { return nil }
 
