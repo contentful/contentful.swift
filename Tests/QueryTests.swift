@@ -494,7 +494,6 @@ class QueryTests: XCTestCase {
             expectation.fulfill()
         }.error { fail("\($0)") }
         waitForExpectations(timeout: 10.0, handler: nil)
-
     }
 
     // MARK: - Search on References

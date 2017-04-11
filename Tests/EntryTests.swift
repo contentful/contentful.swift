@@ -39,7 +39,7 @@ class EntryTests: XCTestCase {
         (client.urlSession as? DVR.Session)?.endRecording()
     }
 
-    func waitUntilMatchingEntries(_ matching: [String: Any], action: @escaping (_ entries: Contentful.Array<Entry>) -> ()) {
+    func waitUntilMatchingEntries(_ matching: [String: Any], action: @escaping (_ entries: ArrayResponse<Entry>) -> ()) {
         let expecatation = self.expectation(description: "Entries matching query network expectation")
 
         EntryTests.client.fetchEntries(matching: matching).1.then {
@@ -264,7 +264,7 @@ class EntryTests: XCTestCase {
     }
 
     func testFetchEntriesWithInclusionSearch() {
-        let action: (Contentful.Array<Entry>) -> () = {
+        let action: (ArrayResponse<Entry>) -> () = {
             expect($0.items.count).to(equal(2))
             let ids = $0.items.map { $0.sys.id }
             expect(ids).to(equal(["finn", "jake"]))

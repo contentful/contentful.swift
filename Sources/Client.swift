@@ -22,7 +22,7 @@ public typealias TaskObservable<T> = (task: URLSessionDataTask?, observable: Obs
 /// type `T` on success, or an error if the request was unsuccessful.
 public typealias ResultsHandler<T> = (_ result: Result<T>) -> Void
 
-/// Client object for performing requests against the Contentful API
+/// Client object for performing requests against the Contentful API.
 open class Client {
 
     fileprivate let clientConfiguration: ClientConfiguration
@@ -45,13 +45,13 @@ open class Client {
     /**
      Initializes a new Contentful client instance
 
-     - Parameter spaceId: The space you want to perform requests against
-     - Parameter accessToken: The access token used for authorization
-     - Parameter clientConfiguration: Custom Configuration of the Client
+     - Parameter spaceId: The space you want to perform requests against.
+     - Parameter accessToken: The access token used for authorization.
+     - Parameter clientConfiguration: Custom Configuration of the Client.
      - Parameter sessionConfiguration: The configuration for the URLSession. Note that HTTP headers will be overwritten
                                        interally by the SDK so that requests can be authorized correctly.
 
-     - Returns: An initialized client instance
+     - Returns: An initialized client instance.
      */
     public init(spaceId: String,
                 accessToken: String,
@@ -196,7 +196,7 @@ extension Client {
     @discardableResult public func fetchEntries(with query: Query, completion: @escaping ResultsHandler<[Entry]>) -> URLSessionDataTask? {
 
         let url = URL(forComponent: "entries", parameters: query.parameters)
-        return fetch(url: url) { (result: Result<Array<Entry>>) in
+        return fetch(url: url) { (result: Result<ArrayResponse<Entry>>) in
             switch result {
             case .success(let array):
 
@@ -237,7 +237,7 @@ extension Client {
 
         let url = URL(forComponent: "entries", parameters: query.parameters)
 
-        return fetch(url: url) { (result: Result<Array<Entry>>) in
+        return fetch(url: url) { (result: Result<ArrayResponse<Entry>>) in
             switch result {
             case .success(let entries):
 
@@ -252,6 +252,7 @@ extension Client {
             }
         }
     }
+
     /**
      Fetch a collection of Entries of a specified content type matching the query. The content_type
      parameter is specified by passing in a generic parameter: a model class conforming to `EntryModel`.
@@ -279,7 +280,7 @@ extension Client {
 
         let url = URL(forComponent: "assets", parameters: query.parameters)
 
-        return fetch(url: url) { (result: Result<Array<Asset>>) in
+        return fetch(url: url) { (result: Result<ArrayResponse<Asset>>) in
             switch result {
             case .success(let array):
 
@@ -309,23 +310,23 @@ extension Client {
 
 extension Client {
     /**
-     Fetch a single Asset from Contentful
+     Fetch a single Asset from Contentful.
 
-     - Parameter id: The identifier of the Asset to be fetched
-     - Parameter completion: A handler being called on completion of the request
+     - Parameter id: The identifier of the Asset to be fetched.
+     - Parameter completion: A handler being called on completion of the request.
 
-     - returns: The data task being used, enables cancellation of requests
+     - Returns: The data task being used, enables cancellation of requests.
      */
     @discardableResult public func fetchAsset(id: String, completion: @escaping ResultsHandler<Asset>) -> URLSessionDataTask? {
         return fetch(url: URL(forComponent: "assets/\(id)"), then: completion)
     }
 
     /**
-     Fetch a single Asset from Contentful
+     Fetch a single Asset from Contentful.
 
-     - Parameter id: The identifier of the Asset to be fetched
+     - Parameter id: The identifier of the Asset to be fetched.
 
-     - Returns: A tuple of data task and a signal for the resulting Asset
+     - Returns: A tuple of data task and a signal for the resulting Asset.
      */
     @discardableResult public func fetchAsset(id: String) -> TaskObservable<Asset> {
         let closure: SignalObservation<String, Asset> = fetchAsset(id:completion:)
@@ -333,34 +334,34 @@ extension Client {
     }
 
     /**
-     Fetch a collection of Assets from Contentful
+     Fetch a collection of Assets from Contentful.
 
-     - Parameter matching:   Optional list of search parameters the Assets must match
-     - Parameter completion: A handler being called on completion of the request
+     - Parameter matching: An optional list of search parameters the Assets must match.
+     - Parameter completion: A handler being called on completion of the request.
 
-     - Returns: The data task being used, enables cancellation of requests
+     - Returns: The data task being used, enables cancellation of requests.
      */
     @discardableResult public func fetchAssets(matching: [String: Any] = [:],
-                                               completion: @escaping ResultsHandler<Contentful.Array<Asset>>) -> URLSessionDataTask? {
+                                               completion: @escaping ResultsHandler<ArrayResponse<Asset>>) -> URLSessionDataTask? {
         return fetch(url: URL(forComponent: "assets", parameters: matching), then: completion)
     }
 
     /**
-     Fetch a collection of Assets from Contentful
+     Fetch a collection of Assets from Contentful.
 
-     - Parameter matching: Optional list of search parameters the Assets must match
+     - Parameter matching: Optional list of search parameters the Assets must match.
 
-     - Returns: A tuple of data task and a signal for the resulting array of Assets
+     - Returns: A tuple of data task and a signal for the resulting array of Assets.
      */
-    @discardableResult public func fetchAssets(matching: [String: Any] = [:]) -> TaskObservable<Array<Asset>> {
-        let closure: SignalObservation<[String: Any], Array<Asset>> = fetchAssets(matching:completion:)
+    @discardableResult public func fetchAssets(matching: [String: Any] = [:]) -> TaskObservable<ArrayResponse<Asset>> {
+        let closure: SignalObservation<[String: Any], ArrayResponse<Asset>> = fetchAssets(matching:completion:)
         return signalify(parameter: matching, closure: closure)
     }
 
     /**
-     Fetch the underlying media file as `Data`
+     Fetch the underlying media file as `Data`.
 
-     - Returns: Tuple of the data task and a signal for the `NSData` result
+     - Returns: Tuple of the data task and a signal for the `Data` result.
      */
     public func fetchData(for asset: Asset) -> TaskObservable<Data> {
         do {
@@ -374,9 +375,9 @@ extension Client {
 
 #if os(iOS) || os(tvOS)
     /**
-     Fetch the underlying media file as `UIImage`
+     Fetch the underlying media file as `UIImage`.
 
-     - Returns: Tuple of data task and a signal for the `UIImage` result
+     - Returns: Tuple of data task and a signal for the `UIImage` result.
      */
     public func fetchImage(for asset: Asset) -> TaskObservable<UIImage> {
         let closure = {
@@ -390,23 +391,23 @@ extension Client {
 
 extension Client {
     /**
-     Fetch a single Content Type from Contentful
+     Fetch a single Content Type from Contentful.
 
-     - Parameter id: The identifier of the Content Type to be fetched
-     - Parameter completion: A handler being called on completion of the request
+     - Parameter id: The identifier of the Content Type to be fetched.
+     - Parameter completion: A handler being called on completion of the request.
 
-     - Returns: The data task being used, enables cancellation of requests
+     - Returns: The data task being used, enables cancellation of requests.
      */
     @discardableResult public func fetchContentType(id: String, completion: @escaping ResultsHandler<ContentType>) -> URLSessionDataTask? {
         return fetch(url: URL(forComponent: "content_types/\(id)"), then: completion)
     }
 
     /**
-     Fetch a single Content Type from Contentful
+     Fetch a single Content Type from Contentful.
 
-     - Parameter id: The identifier of the Content Type to be fetched
+     - Parameter id: The identifier of the Content Type to be fetched.
 
-     - Returns: A tuple of data task and a signal for the resulting Content Type
+     - Returns: A tuple of data task and a signal for the resulting Content Type.
      */
     @discardableResult public func fetchContentType(id: String) -> TaskObservable<ContentType> {
         let closure: SignalObservation<String, ContentType> = fetchContentType(id:completion:)
@@ -414,67 +415,67 @@ extension Client {
     }
 
     /**
-     Fetch a collection of Content Types from Contentful
+     Fetch a collection of Content Types from Contentful.
 
-     - Parameter matching:   Optional list of search parameters the Content Types must match
-     - Parameter completion: A handler being called on completion of the request
+     - Parameter matching:   Optional list of search parameters the Content Types must match.
+     - Parameter completion: A handler being called on completion of the request.
 
-     - Returns: The data task being used, enables cancellation of requests
+     - Returns: The data task being used, enables cancellation of requests.
      */
     @discardableResult public func fetchContentTypes(matching: [String: Any] = [:],
-                                                     completion: @escaping ResultsHandler<Contentful.Array<ContentType>>) -> URLSessionDataTask? {
+                                                     completion: @escaping ResultsHandler<ArrayResponse<ContentType>>) -> URLSessionDataTask? {
         return fetch(url: URL(forComponent: "content_types", parameters: matching), then: completion)
     }
 
     /**
-     Fetch a collection of Content Types from Contentful
+     Fetch a collection of Content Types from Contentful.
 
-     - Parameter matching: Optional list of search parameters the Content Types must match
+     - Parameter matching: Optional list of search parameters the Content Types must match.
 
-     - Returns: A tuple of data task and a signal for the resulting array of Content Types
+     - Returns: A tuple of data task and a signal for the resulting array of Content Types.
      */
-    @discardableResult public func fetchContentTypes(matching: [String: Any] = [:]) -> TaskObservable<Contentful.Array<ContentType>> {
-        let closure: SignalObservation<[String: Any], Array<ContentType>> = fetchContentTypes(matching:completion:)
+    @discardableResult public func fetchContentTypes(matching: [String: Any] = [:]) -> TaskObservable<ArrayResponse<ContentType>> {
+        let closure: SignalObservation<[String: Any], ArrayResponse<ContentType>> = fetchContentTypes(matching:completion:)
         return signalify(parameter: matching, closure: closure)
     }
 }
 
 extension Client {
     /**
-     Fetch a collection of Entries from Contentful
+     Fetch a collection of Entries from Contentful.
 
-     - Parameter matching:   Optional list of search parameters the Entries must match
-     - Parameter completion: A handler being called on completion of the request
+     - Parameter matching:   Optional list of search parameters the Entries must match.
+     - Parameter completion: A handler being called on completion of the request.
 
      - Returns: The data task being used, enables cancellation of requests
      */
     @discardableResult public func fetchEntries(matching: [String: Any] = [:],
-                                                completion: @escaping ResultsHandler<Contentful.Array<Entry>>) -> URLSessionDataTask? {
+                                                completion: @escaping ResultsHandler<ArrayResponse<Entry>>) -> URLSessionDataTask? {
         return fetch(url: URL(forComponent: "entries", parameters: matching), then: completion)
     }
 
     /**
-     Fetch a collection of Entries from Contentful
+     Fetch a collection of Entries from Contentful.
 
-     - Parameter matching: Optional list of search parameters the Entries must match
+     - Parameter matching: Optional list of search parameters the Entries must match.
 
-     - Returns: A tuple of data task and a signal for the resulting array of Entries
+     - Returns: A tuple of data task and a signal for the resulting array of Entries.
      */
-    @discardableResult public func fetchEntries(matching: [String: Any] = [:]) -> TaskObservable<Contentful.Array<Entry>> {
-        let closure: SignalObservation<[String: Any], Array<Entry>> = fetchEntries(matching:completion:)
+    @discardableResult public func fetchEntries(matching: [String: Any] = [:]) -> TaskObservable<ArrayResponse<Entry>> {
+        let closure: SignalObservation<[String: Any], ArrayResponse<Entry>> = fetchEntries(matching:completion:)
         return signalify(parameter: matching, closure: closure)
     }
 
     /**
-     Fetch a single Entry from Contentful
+     Fetch a single Entry from Contentful.
 
-     - Parameter id: The identifier of the Entry to be fetched
-     - Parameter completion: A handler being called on completion of the request
+     - Parameter id: The identifier of the Entry to be fetched.
+     - Parameter completion: A handler being called on completion of the request.
 
-     - Returns: The data task being used, enables cancellation of requests
+     - Returns: The data task being used, enables cancellation of requests.
      */
     @discardableResult public func fetchEntry(id: String, completion: @escaping ResultsHandler<Entry>) -> URLSessionDataTask? {
-        let fetchEntriesCompletion: (Result<Array<Entry>>) -> Void = { result in
+        let fetchEntriesCompletion: (Result<ArrayResponse<Entry>>) -> Void = { result in
             switch result {
             case .success(let entries) where entries.items.first != nil:
                 completion(Result.success(entries.items.first!))
@@ -489,11 +490,11 @@ extension Client {
     }
 
     /**
-     Fetch a single Entry from Contentful
+     Fetch a single Entry from Contentful.
 
-     - Parameter id: The identifier of the Entry to be fetched
+     - Parameter id: The identifier of the Entry to be fetched.
 
-     - Returns: A tuple of data task and a signal for the resulting Entry
+     - Returns: A tuple of data task and a signal for the resulting Entry.
      */
     @discardableResult public func fetchEntry(id: String) -> TaskObservable<Entry> {
         let closure: SignalObservation<String, Entry> = fetchEntry(id:completion:)
@@ -504,11 +505,11 @@ extension Client {
 
 extension Client {
     /**
-     Fetch the space this client is constrained to
+     Fetch the space this client is constrained to.
 
-     - Parameter completion: A handler being called on completion of the request
+     - Parameter completion: A handler being called on completion of the request.
 
-     - Returns: The data task being used, which enables cancellation of requests, or `nil` if the
+     - Returns: The data task being used, which enables cancellation of requests, or `nil` if the.
         Space was already cached locally
      */
     @discardableResult public func fetchSpace(then completion: @escaping ResultsHandler<Space>) -> URLSessionDataTask? {
@@ -520,9 +521,9 @@ extension Client {
     }
 
     /**
-     Fetch the space this client is constrained to
+     Fetch the space this client is constrained to.
 
-     - Returns: A tuple of data task and a signal for the resulting Space
+     - Returns: A tuple of data task and a signal for the resulting Space.
      */
     @discardableResult public func fetchSpace() -> TaskObservable<Space> {
         let closure: SignalBang<Space> = fetchSpace(then:)
@@ -534,10 +535,10 @@ extension Client {
     /**
      Perform an initial synchronization of the Space this client is constrained to.
 
-     - Parameter matching:   Additional options for the synchronization
-     - Parameter completion: A handler being called on completion of the request
+     - Parameter matching:   Additional options for the synchronization.
+     - Parameter completion: A handler being called on completion of the request.
 
-     - Returns: The data task being used, enables cancellation of requests
+     - Returns: The data task being used, enables cancellation of requests.
      */
     @discardableResult public func initialSync(matching: [String: Any] = [:],
                                                completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
@@ -550,9 +551,9 @@ extension Client {
     /**
      Perform an initial synchronization of the Space this client is constrained to.
 
-     - Parameter matching: Additional options for the synchronization
+     - Parameter matching: Additional options for the synchronization.
 
-     - Returns: A tuple of data task and a signal for the resulting SyncSpace
+     - Returns: A tuple of data task and a signal for the resulting SyncSpace.
      */
     @discardableResult public func initialSync(matching: [String: Any] = [:]) -> TaskObservable<SyncSpace> {
         let closure: SignalObservation<[String: Any], SyncSpace> = initialSync(matching:completion:)

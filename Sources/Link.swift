@@ -19,10 +19,11 @@ public struct LinkSys {
 }
 
 
-/** A representation of Linked Resources that a field may point to in your content model.
-    This stateful type safely highlights links that have been resolved to Entries, Assets, or if they are
-    Still unresolved. If your data model conforms to `ContentModel` or `EntryModel` you can also use the `at` method
-    to extract an instance of your linked type.
+/** 
+ A representation of Linked Resources that a field may point to in your content model.
+ This stateful type safely highlights links that have been resolved to Entries, Assets, or if they are
+ still unresolved. If your data model conforms to `ContentModel` or `EntryModel` you can also use the `at` method
+ to extract an instance of your linked type.
 */
 public enum Link {
 
@@ -42,8 +43,13 @@ public enum Link {
         return nil
     }
 
+    /// The Link points to an `Asset`
     case asset(Asset)
+
+    /// The Link points to an `Entry`
     case entry(Entry)
+
+    /// The Link is unresolved, and therefore contains a dictionary of metadata describing the linked resource.
     case unresolved(LinkSys)
 
     /// The linked Entry, if it exists.

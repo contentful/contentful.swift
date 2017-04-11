@@ -11,8 +11,8 @@ import Interstellar
 import CoreLocation
 
 /// The available URL parameter names for queries; used internally by the various `Contentful.Query` types.
-/// If you are constructing Dictionary's to pass into `Client` "fetch" methods, instead of taking advantage of "fetch" methods
-/// that take `Query` types, use these static variables to avoid typos in query construction.
+/// Use these static variables to avoid making typos when constructing queries. It is recommended to take
+/// advantage of `Client` "fetch" methods that take `Query` types instead of constructing query dictionaries on your own.
 public struct QueryParameter {
 
     static let contentType      = "content_type"
