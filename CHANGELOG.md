@@ -5,6 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 
 ## Unreleased
 
+#### Planned
+- Further iteration on `ContentModellable` protocol.
+
 #### Added
 - Swift'ier API for [Contentful Delivery API Search Parameters](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters)
 - Mechanism for mapping responses to user-defined Swift types when using `QueryOn` queries.

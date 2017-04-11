@@ -14,8 +14,13 @@ import CoreLocation
 public class Resource: ImmutableMappable {
 
     /// System fields
-    let sys: Sys
+    public let sys: Sys
 
+    /// The unique identifier of this Resource
+    public var id: String {
+        return sys.id
+    }
+    
     internal init(sys: Sys) {
         self.sys = sys
     }
