@@ -26,6 +26,22 @@ public struct QueryParameter {
     static let fullTextSearch   = "query"
 }
 
+/**
+ A small structure to create parametes used for ordering the responses when querying and endpoint
+ that returns a colleciton of resources. 
+ See: `ChainableQuery(orderedUsing orderParameters: OrderParameter...)`
+ */
+public struct OrderParameter {
+
+    public init(_ propertyName: String, inReverse: Bool = false) {
+        self.reverse = inReverse
+        self.propertyName = propertyName
+    }
+
+    let propertyName: String
+    let reverse: Bool
+}
+
 fileprivate struct QueryConstants {
     static let maxLimit: UInt               = 1000
     static let maxSelectedProperties: UInt  = 99
@@ -243,7 +259,8 @@ public extension ChainableQuery {
      
      ```
      let query = try! QueryOn<Cat>(selectingFieldsNamed: ["fields.bestFriend", "fields.color", "fields.name"])
-     client.fetchEntries(with: query).observable.then { cats in
+     client.fetchMappedEntries(with: query).observable.then { catsResponse in
+        let cats = catsResponse.items
         // Do stuff with cats.
      }
      ```
@@ -267,9 +284,10 @@ public extension ChainableQuery {
      Example usage:
 
      ```
-     let query = try! Query(orderedBy: "sys.createdAt")
+     let query = try! Query(orderedUsing: OrderParameter("sys.createdAt"))
 
-     client.fetchEntries(with: query).observable.then { entries in
+     client.fetchEntries(with: query).observable.then { entriesResponse in
+        let entries = entriesResponse.items
         // Do stuff with entries.
      }
      ```
@@ -280,9 +298,9 @@ public extension ChainableQuery {
      - Parameter reverse: An Bool specifying if the returned order should be reversed or not. Defaults to `false`.
      - Throws: Will throw an error if property names are not prefixed with either `"sys."` or `"fields."`.
      */
-    public init(orderedBy propertyName: String..., reverse: Bool = false) throws {
+    public init(orderedUsing orderParameters: OrderParameter...) throws {
         self.init()
-        try self.order(by: propertyName, reverse: reverse)
+        try self.order(using: orderParameters)
     }
 
     /**
@@ -294,8 +312,9 @@ public extension ChainableQuery {
      ```
      let query = try! Query(orderedBy: "sys.createdAt")
 
-     client.fetchEntries(with: query).observable.then { entries in
-     // Do stuff with entries.
+     client.fetchEntries(with: query).observable.then { entriesResponse in
+        let entries = entriesResponse.items
+        // Do stuff with entries.
      }
      ```
 
@@ -317,7 +336,8 @@ public extension ChainableQuery {
      ```
      let query = try! Query(skippingTheFirst: 9)
 
-     client.fetchEntries(with: query).observable.then { entries in
+     client.fetchEntries(with: query).observable.then { entriesResponse in
+        let entries = entriesResponse.items
         // Do stuff with entries.
      }
      ```
@@ -339,7 +359,8 @@ public extension ChainableQuery {
      ```
      let query = try! QueryOn<Cat>()
      query.select(fieldsNamed: ["fields.bestFriend", "fields.color", "fields.name"])
-     client.fetchEntries(with: query).observable.then { cats in
+     client.fetchEntries(with: query).observable.then { catsResponse in
+        let cats = catsResponse.items
         // Do stuff with cats.
      }
      ```
@@ -370,10 +391,11 @@ public extension ChainableQuery {
      Example usage:
 
      ```
-     let query = try! Query(orderedBy: "sys.createdAt")
+     let query = try! Query(orderedUsing: OrderParameter("sys.createdAt"))
 
-     client.fetchEntries(with: query).observable.then { entries in
-     // Do stuff with entries.
+     client.fetchEntries(with: query).observable.then { entriesResponse in
+        let entries = entriesResponse.items
+        // Do stuff with entries.
      }
      ```
 
@@ -383,8 +405,8 @@ public extension ChainableQuery {
      - Parameter reverse: An Bool specifying if the returned order should be reversed or not. Defaults to `false`.
      - Throws: Will throw an error if property names are not prefixed with either `"sys."` or `"fields."`.
      */
-    public func order(by propertyName: String..., reverse: Bool = false) throws {
-        try order(by: propertyName, reverse: reverse)
+    public func order(using orderParameters: OrderParameter...) throws {
+        try order(using: orderParameters)
     }
 
     /**
@@ -396,8 +418,9 @@ public extension ChainableQuery {
      ```
      let query = try! Query(orderedBy: "sys.createdAt")
 
-     client.fetchEntries(with: query).observable.then { entries in
-     // Do stuff with entries.
+     client.fetchEntries(with: query).observable.then { entriesResponse in
+        let entries = entriesResponse.items
+        // Do stuff with entries.
      }
      ```
 
@@ -418,8 +441,9 @@ public extension ChainableQuery {
      ```
      let query = try! Query(skippingTheFirst: 9)
 
-     client.fetchEntries(with: query).observable.then { entries in
-     // Do stuff with entries.
+     client.fetchEntries(with: query).observable.then { entriesResponse in
+        let entries = entriesResponse.items
+        // Do stuff with entries.
      }
      ```
 
@@ -465,16 +489,20 @@ public extension ChainableQuery {
     // Helper to workaround Swift bug/issue: Despite the fact that Variadic's can be passed into
     // to functions expecting an `Array`, instances of `Array`
     // cannot be passed into a function expecting a variadic parameter.
-    private func order(by propertyName: [String], reverse: Bool = false) throws {
-        for name in propertyName {
+    private func order(using orderParameters: [OrderParameter]) throws {
+        let propertyNames = orderParameters.map { return $0.propertyName }
+
+        // Validate
+        for name in propertyNames {
             if name.hasPrefix("fields.") == false && name.hasPrefix("sys.") == false {
                 throw QueryError.invalidOrderProperty
             }
         }
-        let joinedPropertyNames = propertyName.joined(separator: ",")
 
-        let orderArgument = reverse ? "-\(joinedPropertyNames)" : joinedPropertyNames
-        self.parameters[QueryParameter.order] = orderArgument
+        let namesWithReverseParameter = orderParameters.map { $0.reverse ? "-\($0.propertyName)" : $0.propertyName }
+        let joinedPropertyNames = namesWithReverseParameter.joined(separator: ",")
+
+        self.parameters[QueryParameter.order] = joinedPropertyNames
     }
 }
 
@@ -525,7 +553,8 @@ public final class AssetQuery: Query {
 
      ```
      let query = AssetQuery(whereMimetypeGroupIs: .image)
-     client.fetchAssets(with: query).observable.then { assets in
+     client.fetchAssets(with: query).observable.then { assetsResponse in
+        let assets = assetsResponse.items
         // Do stuff with assets.
      }
      ```
@@ -550,10 +579,10 @@ public final class AssetQuery: Query {
 /** 
  An additional query to filter by the properties of linked objects when searching on references.
  See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references>
- and see the init<LinkType: EntryModel>(whereLinkAt fieldNameForLink: String, matches filterQuery: FilterQuery<LinkType>? = nil) methods
+ and see the init<LinkType: EntryModellable>(whereLinkAt fieldNameForLink: String, matches filterQuery: FilterQuery<LinkType>? = nil) methods
  on QueryOn for example usage.
 */
-public final class FilterQuery<EntryType>: AbstractQuery where EntryType: EntryModel {
+public final class FilterQuery<EntryType>: AbstractQuery where EntryType: EntryModellable {
 
     /// The parameters dictionary that are converted to `URLComponents` (HTTP parameters/arguments) on the HTTP URL. Useful for debugging.
     public var parameters: [String: String] = [String: String]()
@@ -600,7 +629,7 @@ public final class FilterQuery<EntryType>: AbstractQuery where EntryType: EntryM
  Operations that are only available when querying `Entry`s on specific content types (i.e. content_type must be set) 
  are available through this class.
  */
-public final class QueryOn<EntryType>: ChainableQuery where EntryType: EntryModel {
+public final class QueryOn<EntryType>: ChainableQuery where EntryType: EntryModellable {
 
     /// The parameters dictionary that are converted to `URLComponents` (HTTP parameters/arguments) on the HTTP URL. Useful for debugging.
     public var parameters: [String: String] = [String: String]()
@@ -660,7 +689,8 @@ public final class QueryOn<EntryType>: ChainableQuery where EntryType: EntryMode
      ```
      let filterQuery = FilterQuery<Cat>(where: "fields.name", .matches("Happy Cat"))
      let query = QueryOn<Cat>(whereLinkAt: "bestFriend", matches: filterQuery)
-     client.fetchEntries(with: query).observable.then { catsWithHappyCatAsBestFriend in
+     client.fetchMappedEntries(with: query).observable.then { catsWithHappyCatAsBestFriendResponse in
+        let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
         // Do stuff with catsWithHappyCatAsBestFriend
      }
      ```
@@ -672,7 +702,7 @@ public final class QueryOn<EntryType>: ChainableQuery where EntryType: EntryMode
                          set on the `Client` instance is used.
      */
     public convenience init<LinkType>(whereLinkAt fieldNameForLink: String, matches filterQuery: FilterQuery<LinkType>? = nil,
-                            for locale: String? = nil) where LinkType: EntryModel {
+                            for locale: String? = nil) where LinkType: EntryModellable {
         self.init()
 
         self.parameters["fields.\(fieldNameForLink).sys.contentType.sys.id"] = LinkType.contentTypeId

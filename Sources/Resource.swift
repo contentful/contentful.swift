@@ -80,12 +80,6 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
         return self[key] as? String
     }
 
-    // FIMXE:
-//
-//    func location(at key: Key) -> CLLocationCoordinate2D {
-//        return self[key{
-//    }
-
     func strings(at key: Key) -> [String]? {
         return self[key] as? [String]
     }

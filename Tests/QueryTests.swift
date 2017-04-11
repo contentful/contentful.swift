@@ -14,7 +14,7 @@ import Interstellar
 import CoreData
 import CoreLocation
 
-final class Cat: EntryModel {
+final class Cat: EntryModellable {
 
     static let contentTypeId: String = "cat"
 
@@ -36,7 +36,7 @@ final class Cat: EntryModel {
 }
 
 // TODO: Get rid of this and just use `Asset`
-final class ImageAsset: ContentModel {
+final class ImageAsset: ContentModellable {
 
     var id: String
 
@@ -48,7 +48,7 @@ final class ImageAsset: ContentModel {
     }
 }
 
-final class City: EntryModel {
+final class City: EntryModellable {
 
     static let contentTypeId: String = "1t9IbcfdCk6m04uISSsaIK"
     
@@ -62,7 +62,7 @@ final class City: EntryModel {
     }
 }
 
-final class Dog: EntryModel {
+final class Dog: EntryModellable {
 
     static let contentTypeId: String = "dog"
 
@@ -97,10 +97,10 @@ class QueryTests: XCTestCase {
         let expectation = self.expectation(description: "Select operator expectation")
         let query = try! QueryOn<Cat>(selectingFieldsNamed: selections)
 
-        QueryTests.client.fetchEntries(with: query) { result in
-
+        QueryTests.client.fetchMappedEntries(with: query) { result in
             switch result {
-            case .success(let cats):
+            case .success(let catsResponse):
+                let cats = catsResponse.items
                 let nyanCat = cats.first!
                 expect(nyanCat.color).toNot(beNil())
                 expect(nyanCat.name).to(equal("Nyan Cat"))
@@ -111,6 +111,7 @@ class QueryTests: XCTestCase {
             }
             expectation.fulfill()
         }
+
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
@@ -121,10 +122,11 @@ class QueryTests: XCTestCase {
 
         let query = try! QueryOn<Dog>(selectingFieldsNamed: selections)
 
-        QueryTests.client.fetchEntries(with: query) { result in
+        QueryTests.client.fetchMappedEntries(with: query) { result in
 
             switch result {
-            case .success(let dogs):
+            case .success(let dogsResponse):
+                let dogs = dogsResponse.items
                 let doge = dogs.first!
                 expect(doge.name).to(equal("Doge"))
 
@@ -147,9 +149,10 @@ class QueryTests: XCTestCase {
 
         let query = QueryOn<Cat>(where: "fields.color", .equals("gray"))
 
-        QueryTests.client.fetchEntries(with: query) { result in
+        QueryTests.client.fetchMappedEntries(with: query) { result in
             switch result {
-            case .success(let cats):
+            case .success(let catsResponse):
+                let cats = catsResponse.items
                 expect(cats.count).to(equal(1))
                 expect(cats.first!.color).to(equal("gray"))
             case .error:
@@ -167,9 +170,10 @@ class QueryTests: XCTestCase {
 
         let query = QueryOn<Cat>(where: "fields.color", .doesNotEqual("gray"))
 
-        QueryTests.client.fetchEntries(with: query) { result in
+        QueryTests.client.fetchMappedEntries(with: query) { result in
             switch result {
-            case .success(let cats):
+            case .success(let catsResponse):
+                let cats = catsResponse.items
                 expect(cats.count).to(beGreaterThan(0))
                 expect(cats.first!.color).toNot(equal("gray"))
             case .error:
@@ -186,9 +190,10 @@ class QueryTests: XCTestCase {
 
         let query = QueryOn<Cat>(where: "fields.likes", .includes(["rainbows"]))
 
-        QueryTests.client.fetchEntries(with: query) { result in
+        QueryTests.client.fetchMappedEntries(with: query) { result in
             switch result {
-            case .success(let cats):
+            case .success(let catsResponse):
+                let cats = catsResponse.items
                 expect(cats.count).to(equal(1))
                 expect(cats.first!.name).to(equal("Nyan Cat"))
                 expect(cats.first!.likes!.count).to(equal(2))
@@ -209,9 +214,10 @@ class QueryTests: XCTestCase {
 
         let query = QueryOn<Cat>(where: "fields.likes", .excludes(["rainbows"]))
 
-        QueryTests.client.fetchEntries(with: query) { result in
+        QueryTests.client.fetchMappedEntries(with: query) { result in
             switch result {
-            case .success(let cats):
+            case .success(let catsResponse):
+                let cats = catsResponse.items
                 expect(cats.count).to(equal(2))
                 expect(cats.first!.name).to(equal("Happy Cat"))
                 expect(cats.first!.likes!.count).to(equal(1))
@@ -231,9 +237,10 @@ class QueryTests: XCTestCase {
 
         let query = QueryOn<Cat>(where: "fields.likes", .hasAll(["rainbows","fish"]))
 
-        QueryTests.client.fetchEntries(with: query) { result in
+        QueryTests.client.fetchMappedEntries(with: query) { result in
             switch result {
-            case .success(let cats):
+            case .success(let catsResponse):
+                let cats = catsResponse.items
                 expect(cats.count).to(equal(1))
                 expect(cats.first!.name).to(equal("Nyan Cat"))
                 expect(cats.first!.likes!.count).to(equal(2))
@@ -254,9 +261,10 @@ class QueryTests: XCTestCase {
 
         let query = QueryOn<Cat>(where: "fields.color", .exists(true))
 
-        QueryTests.client.fetchEntries(with: query) { result in
+        QueryTests.client.fetchMappedEntries(with: query) { result in
             switch result {
-            case .success(let cats):
+            case .success(let catsResponse):
+                let cats = catsResponse.items
                 expect(cats.count).to(beGreaterThan(0))
                 expect(cats.first!.color).toNot(equal("gray"))
             case .error:
@@ -275,9 +283,10 @@ class QueryTests: XCTestCase {
         let query = QueryOn<Cat>(where: "fields.color", .doesNotEqual("gray"))
         query.where("fields.lives", .equals("9"))
 
-        QueryTests.client.fetchEntries(with: query) { result in
+        QueryTests.client.fetchMappedEntries(with: query) { result in
             switch result {
-            case .success(let cats):
+            case .success(let catsResponse):
+                let cats = catsResponse.items
                 expect(cats.count).to(equal(1))
                 expect(cats.first!.lives).to(equal(9))
 
@@ -298,7 +307,8 @@ class QueryTests: XCTestCase {
 
         QueryTests.client.fetchAssets(with: query) { result in
             switch result {
-            case .success(let assets):
+            case .success(let assetsResponse):
+                let assets = assetsResponse.items
                 expect(assets.count).to(equal(1))
                 expect(assets.first?.sys.id).to(equal("1x0xpXu4pSGS4OukSyWGUK"))
                 expect(assets.first?.fields["title"] as? String).to(equal("Doge"))
@@ -331,7 +341,8 @@ class QueryTests: XCTestCase {
 
         let query = Query(where: "sys.updatedAt", .isLessThanOrEqualTo(date))
 
-        QueryTests.client.fetchEntries(with: query).observable.then { entries in
+        QueryTests.client.fetchEntries(with: query).observable.then { entriesResponse in
+            let entries = entriesResponse.items
             expect(entries.count).to(equal(10))
             expectation.fulfill()
         }.error { fail("\($0)") }
@@ -347,7 +358,8 @@ class QueryTests: XCTestCase {
 
         let query = QueryOn<Cat>(where: "sys.updatedAt", .isLessThanOrEqualTo("2015-01-01T00:00:00Z"))
 
-        QueryTests.client.fetchEntries(with: query).observable.then { cats in
+        QueryTests.client.fetchMappedEntries(with: query).observable.then { catsResponse in
+            let cats = catsResponse.items
             expect(cats.count).to(equal(3))
             expectation.fulfill()
             }.error { fail("\($0)") }
@@ -360,9 +372,10 @@ class QueryTests: XCTestCase {
     func testFetchEntriesInSpecifiedOrder() {
         let expectation = self.expectation(description: "Order search")
 
-        let query = try! Query(orderedBy: "sys.createdAt")
+        let query = try! Query(orderedUsing: OrderParameter("sys.createdAt"))
 
-        QueryTests.client.fetchEntries(with: query).observable.then { entries in
+        QueryTests.client.fetchEntries(with: query).observable.then { entriesResponse in
+            let entries = entriesResponse.items
             let ids = entries.map { $0.sys.id }
             expect(ids).to(equal(EntryTests.orderedEntries))
             expectation.fulfill()
@@ -373,9 +386,10 @@ class QueryTests: XCTestCase {
     func testFetchEntriesInReverseOrder() {
         let expectation = self.expectation(description: "Reverese order search")
 
-        let query = try! Query(orderedBy: "sys.createdAt", reverse: true)
+        let query = try! Query(orderedUsing: OrderParameter("sys.createdAt", inReverse: true))
 
-        QueryTests.client.fetchEntries(with: query).observable.then { entries in
+        QueryTests.client.fetchEntries(with: query).observable.then { entriesResponse in
+            let entries = entriesResponse.items
             let ids = entries.map { $0.sys.id }
             expect(ids).to(equal(EntryTests.orderedEntries.reversed()))
             expectation.fulfill()
@@ -388,9 +402,10 @@ class QueryTests: XCTestCase {
     func testFetchEntriesWithTypeInOrder() {
         let expectation = self.expectation(description: "Ordered search with content type specified.")
 
-        let query = try! QueryOn<Cat>(orderedBy: "sys.createdAt")
+        let query = try! QueryOn<Cat>(orderedUsing: OrderParameter("sys.createdAt"))
 
-        QueryTests.client.fetchEntries(with: query).observable.then { cats in
+        QueryTests.client.fetchMappedEntries(with: query).observable.then { catsResponse in
+            let cats = catsResponse.items
             let ids = cats.map { $0.id }
             expect(cats.count).to(equal(3))
             expect(ids).to(equal(QueryTests.orderedCatNames))
@@ -402,9 +417,10 @@ class QueryTests: XCTestCase {
     func testFetchEntriesOrderedByMultipleAttributes() {
         let expectation = self.expectation(description: "Reverese order search")
 
-        let query = try! Query(orderedBy: "sys.revision", "sys.id")
+        let query = try! Query(orderedUsing: OrderParameter("sys.revision"), OrderParameter("sys.id"))
 
-        QueryTests.client.fetchEntries(with: query).observable.then { entries in
+        QueryTests.client.fetchEntries(with: query).observable.then { entriesResponse in
+            let entries = entriesResponse.items
             let ids = entries.map { $0.sys.id }
             expect(ids).to(equal(EntryTests.orderedEntriesByMultiple))
             expectation.fulfill()
@@ -419,7 +435,8 @@ class QueryTests: XCTestCase {
 
         let query = try! QueryOn<Dog>(searchingFor: "bacon")
 
-        QueryTests.client.fetchEntries(with: query).observable.then { dogs in
+        QueryTests.client.fetchMappedEntries(with: query).observable.then { dogsResponse in
+            let dogs = dogsResponse.items
             expect(dogs.count).to(equal(1))
             expectation.fulfill()
         }.error { fail("\($0)") }
@@ -431,7 +448,8 @@ class QueryTests: XCTestCase {
 
         let query = QueryOn<Dog>(where: "fields.description", .matches("bacon pancakes"))
 
-        QueryTests.client.fetchEntries(with: query).observable.then { dogs in
+        QueryTests.client.fetchMappedEntries(with: query).observable.then { dogsResponse in
+            let dogs = dogsResponse.items
             expect(dogs.count).to(equal(1))
             expect(dogs.first?.name).to(equal("Jake"))
             expectation.fulfill()
@@ -447,7 +465,8 @@ class QueryTests: XCTestCase {
         let expectation = self.expectation(description: "Location proximity search")
 
         let query = QueryOn<City>(where: "fields.center", .isNear(CLLocationCoordinate2D(latitude: 38, longitude: -122)))
-        QueryTests.client.fetchEntries(with: query).observable.then { cities in
+        QueryTests.client.fetchMappedEntries(with: query).observable.then { citiesResponse in
+            let cities = citiesResponse.items
             expect(cities.count).to(equal(4))
             expectation.fulfill()
         }.error { fail("\($0)") }
@@ -462,7 +481,8 @@ class QueryTests: XCTestCase {
 
         let query = QueryOn<City>(where: "fields.center", .isWithin(bounds))
 
-        QueryTests.client.fetchEntries(with: query).observable.then { cities in
+        QueryTests.client.fetchMappedEntries(with: query).observable.then { citiesResponse in
+            let cities = citiesResponse.items
             expect(cities.count).to(equal(1))
             expectation.fulfill()
         }.error { fail("\($0)") }
@@ -475,7 +495,8 @@ class QueryTests: XCTestCase {
         let expectation = self.expectation(description: "Limit results")
 
         let query = try! Query(limitingResultsTo: 5)
-        QueryTests.client.fetchEntries(with: query).observable.then { entries in
+        QueryTests.client.fetchEntries(with: query).observable.then { entriesResponse in
+            let entries = entriesResponse.items
             expect(entries.count).to(equal(5))
             expectation.fulfill()
         }.error { fail("\($0)") }
@@ -486,9 +507,10 @@ class QueryTests: XCTestCase {
         let expectation = self.expectation(description: "Skip results")
 
         let query = Query(skippingTheFirst: 9)
-        try! query.order(by: "sys.createdAt")
+        try! query.order(using: OrderParameter("sys.createdAt"))
 
-        QueryTests.client.fetchEntries(with: query).observable.then { entries in
+        QueryTests.client.fetchEntries(with: query).observable.then { entriesResponse in
+            let entries = entriesResponse.items
             expect(entries.count).to(equal(1))
             expect(entries.first?.sys.id).to(equal("7qVBlCjpWE86Oseo40gAEY"))
             expectation.fulfill()
@@ -504,7 +526,8 @@ class QueryTests: XCTestCase {
         let filterQuery = FilterQuery<Cat>(where: "fields.name", .matches("Happy Cat"))
         let query = QueryOn<Cat>(whereLinkAt: "bestFriend", matches: filterQuery)
 
-        QueryTests.client.fetchEntries(with: query).observable.then { catsWithHappyCatAsBestFriend in
+        QueryTests.client.fetchMappedEntries(with: query).observable.then { catsWithHappyCatAsBestFriendResponse in
+            let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
             expect(catsWithHappyCatAsBestFriend.count).to(equal(1))
             expect(catsWithHappyCatAsBestFriend.first?.name).to(equal("Nyan Cat"))
             expect(catsWithHappyCatAsBestFriend.first?.bestFriend?.name).to(equal("Happy Cat"))
@@ -523,7 +546,8 @@ class QueryTests: XCTestCase {
 
         let query = AssetQuery(whereMimetypeGroupIs: .image)
 
-        QueryTests.client.fetchAssets(query: query).result.next { assets in
+        QueryTests.client.fetchAssets(query: query).observable.next { assetsResponse in
+            let assets = assetsResponse.items
             expect(assets.count).to(equal(4))
             expectation.fulfill()
         }.error { fail("\($0)") }

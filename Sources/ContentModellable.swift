@@ -1,5 +1,5 @@
 //
-//  ContentModel.swift
+//  ContentModellable.swift
 //  Contentful
 //
 //  Created by JP Wright on 15/03/2017.
@@ -8,11 +8,11 @@
 
 import Foundation
 
-public protocol ContentModel: class {
+public protocol ContentModellable: class {
 
     init?(sys: Sys, fields: [String: Any], linkDepth: Int)
 }
 
-public protocol EntryModel: ContentModel {
+public protocol EntryModellable: ContentModellable {
     static var contentTypeId: String { get }
 }

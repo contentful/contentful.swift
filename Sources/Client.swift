@@ -181,6 +181,7 @@ open class Client {
     }
 }
 
+// MARK: - Query
 
 extension Client {
     /**
@@ -193,20 +194,11 @@ extension Client {
 
      - Returns: The data task being used, enables cancellation of requests.
      */
-    @discardableResult public func fetchEntries(with query: Query, completion: @escaping ResultsHandler<[Entry]>) -> URLSessionDataTask? {
+    @discardableResult public func fetchEntries(with query: Query,
+                                                then completion: @escaping ResultsHandler<ArrayResponse<Entry>>) -> URLSessionDataTask? {
 
         let url = URL(forComponent: "entries", parameters: query.parameters)
-        return fetch(url: url) { (result: Result<ArrayResponse<Entry>>) in
-            switch result {
-            case .success(let array):
-
-                let entries = array.items
-                completion(Result.success(entries))
-
-            case .error(let error):
-                completion(Result.error(error))
-            }
-        }
+        return fetch(url: url, then: completion)
     }
 
     /**
@@ -218,52 +210,42 @@ extension Client {
 
      - Returns: A tuple of data task and an observable for the resulting array of Entry's.
      */
-    @discardableResult public func fetchEntries(with query: Query) -> TaskObservable<[Entry]> {
-        let closure: SignalObservation<Query, [Entry]> = fetchEntries(with:completion:)
+    @discardableResult public func fetchEntries(with query: Query) -> TaskObservable<ArrayResponse<Entry>> {
+        let closure: SignalObservation<Query, ArrayResponse<Entry>> = fetchEntries(with:then:)
         return signalify(parameter: query, closure: closure)
     }
 
     /**
      Fetch a collection of Entries of a specified content type matching the query. The content_type
-     parameter is specified by passing in a generic parameter: a model class conforming to `EntryModel`.
+     parameter is specified by passing in a generic parameter: a model class conforming to `EntryModellable`.
 
-     - Parameter query: A QueryOn object to match results of the specified EntryModel against.
+     - Parameter query: A QueryOn object to match results of the specified EntryModellable against.
      - Parameter completion: A handler being called on completion of the request.
 
      - Returns: The data task being used, enables cancellation of requests.
      */
-    @discardableResult public func fetchEntries<EntryType: EntryModel>(with query: QueryOn<EntryType>,
-                                                completion: @escaping ResultsHandler<[EntryType]>) -> URLSessionDataTask? {
+    @discardableResult public func fetchMappedEntries<EntryType: EntryModellable>(with query: QueryOn<EntryType>,
+                                                then completion: @escaping ResultsHandler<MappedArrayResponse<EntryType>>) -> URLSessionDataTask? {
 
         let url = URL(forComponent: "entries", parameters: query.parameters)
 
         return fetch(url: url) { (result: Result<ArrayResponse<Entry>>) in
-            switch result {
-            case .success(let entries):
-
-                let mappedItems: [EntryType] = entries.items.flatMap { entry in
-                    let item = EntryType(sys: entry.sys, fields: entry.fields, linkDepth: 20)
-                    return item
-                }
-                completion(Result.success(mappedItems))
-
-            case .error(let error):
-                completion(Result.error(error))
-            }
+            let transformedResult: Result<MappedArrayResponse<EntryType>> = result.flatMap { return Result.success($0.toMappedArrayResponse()) }
+            completion(transformedResult)
         }
     }
 
     /**
      Fetch a collection of Entries of a specified content type matching the query. The content_type
-     parameter is specified by passing in a generic parameter: a model class conforming to `EntryModel`.
+     parameter is specified by passing in a generic parameter: a model class conforming to `EntryModellable`.
 
-     - Parameter query: A QueryOn object to match results of the specified EntryModel against.
+     - Parameter query: A QueryOn object to match results of the specified EntryModellable against.
 
-     - Returns: A tuple of data task and an observable for the resulting array of EntryModel types.
+     - Returns: A tuple of data task and an observable for the resulting array of EntryModellable types.
      */
-    @discardableResult public func fetchEntries<EntryType: EntryModel>(with query: QueryOn<EntryType>) -> TaskObservable<[EntryType]> {
+    @discardableResult public func fetchMappedEntries<EntryType: EntryModellable>(with query: QueryOn<EntryType>) -> TaskObservable<MappedArrayResponse<EntryType>> {
 
-        let closure: SignalObservation<QueryOn<EntryType>, [EntryType]> = fetchEntries(with:completion:)
+        let closure: SignalObservation<QueryOn<EntryType>, MappedArrayResponse<EntryType>> = fetchMappedEntries(with:then:)
         return signalify(parameter: query, closure: closure)
     }
 
@@ -276,21 +258,11 @@ extension Client {
 
      - Returns: The data task being used, enables cancellation of requests.
      */
-    @discardableResult public func fetchAssets(with query: AssetQuery, completion: @escaping ResultsHandler<[Asset]>) -> URLSessionDataTask? {
+    @discardableResult public func fetchAssets(with query: AssetQuery,
+                                               then completion: @escaping ResultsHandler<ArrayResponse<Asset>>) -> URLSessionDataTask? {
 
         let url = URL(forComponent: "assets", parameters: query.parameters)
-
-        return fetch(url: url) { (result: Result<ArrayResponse<Asset>>) in
-            switch result {
-            case .success(let array):
-
-                let assets: [Asset] = array.items
-                completion(Result.success(assets))
-
-            case .error(let error):
-                completion(Result.error(error))
-            }
-        }
+        return fetch(url: url, then: completion)
     }
 
     /**
@@ -300,9 +272,8 @@ extension Client {
 
      - Returns: A tuple of data task and an observable for the resulting array of Assets.
      */
-    @discardableResult public func fetchAssets
-        (query: AssetQuery) -> (task: URLSessionDataTask?, result: Observable<Result<[Asset]>>) {
-        let closure: SignalObservation<AssetQuery, [Asset]> = fetchAssets(with:completion:)
+    @discardableResult public func fetchAssets(query: AssetQuery) -> TaskObservable<ArrayResponse<Asset>> {
+        let closure: SignalObservation<AssetQuery, ArrayResponse<Asset>> = fetchAssets(with:then:)
         return signalify(parameter: query, closure: closure)
     }
 }
