@@ -42,7 +42,7 @@ class EntryTests: XCTestCase {
     func waitUntilMatchingEntries(_ matching: [String: Any], action: @escaping (_ entries: ArrayResponse<Entry>) -> ()) {
         let expecatation = self.expectation(description: "Entries matching query network expectation")
 
-        EntryTests.client.fetchEntries(matching: matching).1.then {
+        EntryTests.client.fetchEntries(matching: matching).then {
             action($0)
             expecatation.fulfill()
         }.error {
@@ -205,7 +205,7 @@ class EntryTests: XCTestCase {
 
     func testFetchEntriesOfContentType() {
         let expectation = self.expectation(description: "Fetch entires of content type expectation")
-        EntryTests.client.fetchEntries(matching: ["content_type": "cat"]).1.then {
+        EntryTests.client.fetchEntries(matching: ["content_type": "cat"]).then {
             let cats = $0.items.filter { $0.sys.contentTypeId == "cat" }
             expect(cats.count).to(equal($0.items.count))
             expectation.fulfill()

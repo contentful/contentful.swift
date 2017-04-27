@@ -103,33 +103,34 @@ open class Client {
     fileprivate func fetch<MappableType: ImmutableMappable>(url: URL?, then completion: @escaping ResultsHandler<MappableType>)
         -> URLSessionDataTask? {
 
-            guard let url = url else {
-                completion(Result.error(SDKError.invalidURL(string: "")))
-                return nil
+        guard let url = url else {
+            completion(Result.error(SDKError.invalidURL(string: "")))
+            return nil
+        }
+
+        // Get the signal.
+        let (task, observable) = fetch(url: url)
+
+        if MappableType.self == Space.self {
+            observable.then { [weak self] mappable in
+                self?.handleJSON(mappable, completion)
+            }.error { error in
+                completion(Result.error(error))
             }
+        } else {
 
-            let (task, signal) = fetch(url: url)
-
-            if MappableType.self == Space.self {
-                signal.then { mappable in
-                    self.handleJSON(mappable, completion)
+            fetchSpace().then { _ in
+                observable.then { [weak self] mappable in
+                    self?.handleJSON(mappable, completion)
                 }.error { error in
                     completion(Result.error(error))
                 }
-            } else {
-
-                fetchSpace().observable.then { _ in
-                    signal.then { mappable in
-                        self.handleJSON(mappable, completion)
-                    }.error { error in
-                        completion(Result.error(error))
-                    }
-                }.error { error in
-                    completion(Result.error(error))
-                }
+            }.error { error in
+                completion(Result.error(error))
             }
+        }
 
-            return task
+        return task
     }
 
     fileprivate func fetch(url: URL, completion: @escaping ResultsHandler<Data>) -> URLSessionDataTask {
@@ -152,9 +153,9 @@ open class Client {
         return task
     }
 
-    fileprivate func fetch(url: URL) -> TaskObservable<Data> {
-        let closure: SignalObservation<URL, Data> = fetch
-        return signalify(parameter: url, closure: closure)
+    fileprivate func fetch(url: URL) ->  (task: URLSessionDataTask?, observable: Observable<Result<Data>>) {
+        let asyncDataTask: AsyncDataTask<URL, Data> = fetch
+        return toObservable(parameter: url, asyncDataTask: asyncDataTask)
     }
 
     fileprivate func handleJSON<MappableType: ImmutableMappable>(_ data: Data, _ completion: ResultsHandler<MappableType>) {
@@ -210,9 +211,9 @@ extension Client {
 
      - Returns: A tuple of data task and an observable for the resulting array of Entry's.
      */
-    @discardableResult public func fetchEntries(with query: Query) -> TaskObservable<ArrayResponse<Entry>> {
-        let closure: SignalObservation<Query, ArrayResponse<Entry>> = fetchEntries(with:then:)
-        return signalify(parameter: query, closure: closure)
+    @discardableResult public func fetchEntries(with query: Query) -> Observable<Result<ArrayResponse<Entry>>> {
+        let asyncDataTask: AsyncDataTask<Query, ArrayResponse<Entry>> = fetchEntries(with:then:)
+        return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
     }
 
     /**
@@ -243,10 +244,11 @@ extension Client {
 
      - Returns: A tuple of data task and an observable for the resulting array of EntryModellable types.
      */
-    @discardableResult public func fetchMappedEntries<EntryType: EntryModellable>(with query: QueryOn<EntryType>) -> TaskObservable<MappedArrayResponse<EntryType>> {
+    @discardableResult public func fetchMappedEntries<EntryType: EntryModellable>(with query: QueryOn<EntryType>)
+        -> Observable<Result<MappedArrayResponse<EntryType>>> {
 
-        let closure: SignalObservation<QueryOn<EntryType>, MappedArrayResponse<EntryType>> = fetchMappedEntries(with:then:)
-        return signalify(parameter: query, closure: closure)
+        let asyncDataTask: AsyncDataTask<QueryOn<EntryType>, MappedArrayResponse<EntryType>> = fetchMappedEntries(with:then:)
+        return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
     }
 
 
@@ -269,12 +271,11 @@ extension Client {
      Fetch a collection of Assets from Contentful matching the specified query.
 
      - Parameter query: The Query object to match results againts.
-
      - Returns: A tuple of data task and an observable for the resulting array of Assets.
      */
-    @discardableResult public func fetchAssets(query: AssetQuery) -> TaskObservable<ArrayResponse<Asset>> {
-        let closure: SignalObservation<AssetQuery, ArrayResponse<Asset>> = fetchAssets(with:then:)
-        return signalify(parameter: query, closure: closure)
+    @discardableResult public func fetchAssets(query: AssetQuery) -> Observable<Result<ArrayResponse<Asset>>> {
+        let asyncDataTask: AsyncDataTask<AssetQuery, ArrayResponse<Asset>> = fetchAssets(with:then:)
+        return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
     }
 }
 
@@ -299,9 +300,9 @@ extension Client {
 
      - Returns: A tuple of data task and a signal for the resulting Asset.
      */
-    @discardableResult public func fetchAsset(id: String) -> TaskObservable<Asset> {
-        let closure: SignalObservation<String, Asset> = fetchAsset(id:completion:)
-        return signalify(parameter: id, closure: closure)
+    @discardableResult public func fetchAsset(id: String) -> Observable<Result<Asset>> {
+        let asyncDataTask: AsyncDataTask<String, Asset> = fetchAsset(id:completion:)
+        return toObservable(parameter: id, asyncDataTask: asyncDataTask).observable
     }
 
     /**
@@ -324,9 +325,9 @@ extension Client {
 
      - Returns: A tuple of data task and a signal for the resulting array of Assets.
      */
-    @discardableResult public func fetchAssets(matching: [String: Any] = [:]) -> TaskObservable<ArrayResponse<Asset>> {
-        let closure: SignalObservation<[String: Any], ArrayResponse<Asset>> = fetchAssets(matching:completion:)
-        return signalify(parameter: matching, closure: closure)
+    @discardableResult public func fetchAssets(matching: [String: Any] = [:]) -> Observable<Result<ArrayResponse<Asset>>> {
+        let asyncDataTask: AsyncDataTask<[String: Any], ArrayResponse<Asset>> = fetchAssets(matching:completion:)
+        return toObservable(parameter: matching, asyncDataTask: asyncDataTask).observable
     }
 
     /**
@@ -334,13 +335,13 @@ extension Client {
 
      - Returns: Tuple of the data task and a signal for the `Data` result.
      */
-    public func fetchData(for asset: Asset) -> TaskObservable<Data> {
+    public func fetchData(for asset: Asset) -> Observable<Result<Data>> {
         do {
-            return fetch(url: try asset.URL())
+            return fetch(url: try asset.URL()).observable
         } catch let error {
-            let signal = Observable<Result<Data>>()
-            signal.update(Result.error(error))
-            return (URLSessionDataTask(), signal)
+            let observable = Observable<Result<Data>>()
+            observable.update(Result.error(error))
+            return observable
         }
     }
 
@@ -348,17 +349,24 @@ extension Client {
     /**
      Fetch the underlying media file as `UIImage`.
 
-     - Returns: Tuple of data task and a signal for the `UIImage` result.
+     - returns: The signal for the `UIImage` result
      */
-    public func fetchImage(for asset: Asset) -> TaskObservable<UIImage> {
-        let closure = {
-            return self.fetchData(for: asset)
+    public func fetchImage(for asset: Asset) -> Observable<Result<UIImage>> {
+        return self.fetchData(for: asset).flatMap { result -> Observable<Result<UIImage>> in
+
+            let imageResult = result.flatMap { data -> Result<UIImage> in
+                if let image = UIImage(data: data) {
+                    return Result.success(image)
+                } else {
+                    return Result.error(QueryError.invalidOrderProperty)
+                }
+            }
+
+            return Observable<Result<UIImage>>(imageResult)
         }
-        return convert_signal(closure: closure) { UIImage(data: $0) }
     }
 #endif
 }
-
 
 extension Client {
     /**
@@ -380,9 +388,9 @@ extension Client {
 
      - Returns: A tuple of data task and a signal for the resulting Content Type.
      */
-    @discardableResult public func fetchContentType(id: String) -> TaskObservable<ContentType> {
-        let closure: SignalObservation<String, ContentType> = fetchContentType(id:completion:)
-        return signalify(parameter: id, closure: closure)
+    @discardableResult public func fetchContentType(id: String) -> Observable<Result<ContentType>> {
+        let asyncDataTask: AsyncDataTask<String, ContentType> = fetchContentType(id:completion:)
+        return toObservable(parameter: id, asyncDataTask: asyncDataTask).observable
     }
 
     /**
@@ -405,9 +413,9 @@ extension Client {
 
      - Returns: A tuple of data task and a signal for the resulting array of Content Types.
      */
-    @discardableResult public func fetchContentTypes(matching: [String: Any] = [:]) -> TaskObservable<ArrayResponse<ContentType>> {
-        let closure: SignalObservation<[String: Any], ArrayResponse<ContentType>> = fetchContentTypes(matching:completion:)
-        return signalify(parameter: matching, closure: closure)
+    @discardableResult public func fetchContentTypes(matching: [String: Any] = [:]) ->  Observable<Result<ArrayResponse<ContentType>>> {
+        let asyncDataTask: AsyncDataTask<[String: Any], ArrayResponse<ContentType>> = fetchContentTypes(matching:completion:)
+        return toObservable(parameter: matching, asyncDataTask: asyncDataTask).observable
     }
 }
 
@@ -432,9 +440,9 @@ extension Client {
 
      - Returns: A tuple of data task and a signal for the resulting array of Entries.
      */
-    @discardableResult public func fetchEntries(matching: [String: Any] = [:]) -> TaskObservable<ArrayResponse<Entry>> {
-        let closure: SignalObservation<[String: Any], ArrayResponse<Entry>> = fetchEntries(matching:completion:)
-        return signalify(parameter: matching, closure: closure)
+    @discardableResult public func fetchEntries(matching: [String: Any] = [:]) ->  Observable<Result<ArrayResponse<Entry>>> {
+        let asyncDataTask = fetchEntries(matching:completion:)
+        return toObservable(parameter: matching, asyncDataTask: asyncDataTask).observable
     }
 
     /**
@@ -467,9 +475,9 @@ extension Client {
 
      - Returns: A tuple of data task and a signal for the resulting Entry.
      */
-    @discardableResult public func fetchEntry(id: String) -> TaskObservable<Entry> {
-        let closure: SignalObservation<String, Entry> = fetchEntry(id:completion:)
-        return signalify(parameter: id, closure: closure)
+    @discardableResult public func fetchEntry(id: String) ->  Observable<Result<Entry>> {
+        let asyncDataTask: AsyncDataTask<String, Entry> = fetchEntry(id:completion:)
+        return toObservable(parameter: id, asyncDataTask: asyncDataTask).observable
     }
 }
 
@@ -496,9 +504,10 @@ extension Client {
 
      - Returns: A tuple of data task and a signal for the resulting Space.
      */
-    @discardableResult public func fetchSpace() -> TaskObservable<Space> {
-        let closure: SignalBang<Space> = fetchSpace(then:)
-        return signalify(closure: closure)
+
+    @discardableResult public func fetchSpace() -> Observable<Result<Space>> {
+        let asyncDataTask: SignalBang<Space> = fetchSpace(then:)
+        return toObservable(closure: asyncDataTask).observable
     }
 }
 
@@ -526,9 +535,10 @@ extension Client {
 
      - Returns: A tuple of data task and a signal for the resulting SyncSpace.
      */
-    @discardableResult public func initialSync(matching: [String: Any] = [:]) -> TaskObservable<SyncSpace> {
-        let closure: SignalObservation<[String: Any], SyncSpace> = initialSync(matching:completion:)
-        return signalify(parameter: matching, closure: closure)
+
+    @discardableResult public func initialSync(matching: [String: Any] = [:]) -> Observable<Result<SyncSpace>> {
+        let asyncDataTask: AsyncDataTask<[String: Any], SyncSpace> = initialSync(matching:completion:)
+        return toObservable(parameter: matching, asyncDataTask: asyncDataTask).observable
     }
 
     func sync(matching: [String: Any] = [:], completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
@@ -537,7 +547,7 @@ extension Client {
             return nil
         }
 
-        return fetch(url: URL(forComponent: "sync", parameters: matching), then: { (result: Result<SyncSpace>) in
+        return fetch(url: URL(forComponent: "sync", parameters: matching)) { (result: Result<SyncSpace>) in
             if let value = result.value {
                 value.client = self
 
@@ -551,11 +561,11 @@ extension Client {
             } else {
                 completion(result)
             }
-        })
+        }
     }
 
-    func sync(matching: [String: Any] = [:]) -> TaskObservable<SyncSpace> {
-        let closure: SignalObservation<[String: Any], SyncSpace> = sync(matching:completion:)
-        return signalify(parameter: matching, closure: closure)
+    func sync(matching: [String: Any] = [:]) -> Observable<Result<SyncSpace>> {
+        let asyncDataTask: AsyncDataTask<[String: Any], SyncSpace> = sync(matching:completion:)
+        return toObservable(parameter: matching, asyncDataTask: asyncDataTask).observable
     }
 }
