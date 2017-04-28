@@ -7,9 +7,11 @@
 //
 
 import Foundation
+import ObjectMapper
 
 /// A Locale represents possible translations for Entry Fields
-public struct Locale {
+public struct Locale: ImmutableMappable {
+
     /// The unique identifier for this Locale
     public let code: String
     /**
@@ -19,19 +21,36 @@ public struct Locale {
     public let isDefault: Bool
     /// The name of this Locale
     public let name: String
+
+    // MARK: <ImmutableMappable>
+
+    public init(map: Map) throws {
+        code        = try map.value("code")
+        isDefault   = try map.value("default")
+        name        = try map.value("name")
+    }
 }
 
 /// A Space represents a collection of Content Types, Assets and Entries in Contentful
-public struct Space: Resource {
-    /// System fields
-    public let sys: [String: Any]
+public class Space: Resource {
 
-    /// The unique identifier of this Space
-    public let identifier: String
     /// Available Locales for this Space
     public let locales: [Locale]
+
     /// The name of this Space
     public let name: String
+
     /// Resource type ("Space")
-    public let type: String
+    public var type: String {
+        return sys.type
+    }
+
+    // MARK: <ImmutableMappable>
+
+    public required init(map: Map) throws {
+        locales = try map.value("locales")
+        name    = try map.value("name")
+
+        try super.init(map: map)
+    }
 }

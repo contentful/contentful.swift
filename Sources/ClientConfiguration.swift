@@ -28,12 +28,12 @@ public struct ClientConfiguration {
     /// The server to use for performing requests, defaults to `cdn.contentful.com`
     public var server = Defaults.cdaHost
     /// The user agent to use for performing requests
-    public var userAgentClient = "contentful.swift/0.3.1"
+    public var userAgentClient = "contentful.swift/0.4.0-beta1"
 
     /// Computed version of the user agent, including OS name and version
     public var userAgent: String {
         var osName = "iOS"
-        let osVersion: Any = ProcessInfo.processInfo.operatingSystemVersionString as AnyObject? ?? "Unknown" as AnyObject
+        let osVersion: String = ProcessInfo.processInfo.operatingSystemVersionString
 
         #if os(OSX)
             osName = "OS X"
@@ -45,11 +45,4 @@ public struct ClientConfiguration {
 
         return "\(userAgentClient) (\(osName) \(osVersion))"
     }
-
-    /**
-     Initialize a clientConfiguration with default values
-
-     - returns: An initialized clientConfiguration instance
-     */
-    public init() {}
 }
