@@ -27,6 +27,14 @@ public struct LinkSys {
 */
 public enum Link {
 
+    public var id: String {
+        switch self {
+        case .asset(let asset): return asset.id
+        case .entry(let entry): return entry.id
+        case .unresolved(let sys): return sys.id
+        }
+    }
+    
     internal static func link(from fieldValue: Any) -> Link? {
         if let link = fieldValue as? Link {
             return link
