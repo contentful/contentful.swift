@@ -573,10 +573,10 @@
 			projectRoot = "";
 			targets = (
 				A19CA3C31B836EDD00A0EFCD /* Contentful_iOS */,
-				A19CA3CD1B836EDD00A0EFCD /* ContentfulTests */,
 				EDDC070E1E3BCE920022F2F9 /* Contentful_watchOS */,
 				EDDC071B1E3BCEA40022F2F9 /* Contentful_tvOS */,
 				EDDC07281E3BCEB10022F2F9 /* Contentful_macOS */,
+				A19CA3CD1B836EDD00A0EFCD /* ContentfulTests */,
 			);
 		};
 /* End PBXProject section */
