@@ -102,7 +102,8 @@ public final class SyncSpace: ImmutableMappable {
             return nil
         }
 
-        let syncCompletion: (Result<SyncSpace>) -> Void = { result in
+        // Callback to merge the most recent sync page with the current sync space.
+        let syncCompletion: (Result<SyncSpace>) -> Void = { [unowned self] result in
 
             switch result {
             case .success(let syncSpace):

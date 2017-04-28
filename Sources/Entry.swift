@@ -47,8 +47,9 @@ public class Entry: Resource, LocalizedResource {
 
                 if let unresolvedLink = Link.link(from: fieldValue), unresolvedLink.isResolved == false {
                     let resolvedLink = unresolvedLink.resolve(against: includedEntries, and: includedAssets)
+                    // Technically it's possible that the link is still unresolved at this point:
+                    // for instance if a user specify type=Entry when using the '/sync' endpoint
                     fields[fieldName] = resolvedLink
-                    assert(resolvedLink.isResolved)
                 }
 
                 // Resolve one-to-many links. We need to account for links that might not have been
