@@ -206,7 +206,6 @@ extension Client {
      Fetch a collection of Entries from Contentful matching the specified query. This method does not
      specify the content_type in the query parameters, so the entries returned in the results can be
      of any type.
-
      - Parameter query: The Query object to match results againts.
 
      - Returns: A tuple of data task and an observable for the resulting array of Entry's.
@@ -231,6 +230,7 @@ extension Client {
         let url = URL(forComponent: "entries", parameters: query.parameters)
 
         return fetch(url: url) { (result: Result<ArrayResponse<Entry>>) in
+            
             let transformedResult: Result<MappedArrayResponse<EntryType>> = result.flatMap { return Result.success($0.toMappedArrayResponse()) }
             completion(transformedResult)
         }
@@ -548,15 +548,15 @@ extension Client {
         }
 
         return fetch(url: URL(forComponent: "sync", parameters: matching)) { (result: Result<SyncSpace>) in
-            if let value = result.value {
-                value.client = self
+            if let syncSpace = result.value {
+                syncSpace.client = self
 
-                if value.hasMorePages == true {
+                if syncSpace.hasMorePages == true {
                     var parameters = matching
                     parameters.removeValue(forKey: "initial")
-                    value.sync(matching: parameters, completion: completion)
+                    syncSpace.sync(matching: parameters, completion: completion)
                 } else {
-                    completion(.success(value))
+                    completion(.success(syncSpace))
                 }
             } else {
                 completion(result)

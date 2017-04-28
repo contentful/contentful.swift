@@ -15,11 +15,6 @@ public class ContentType: Resource {
     /// The fields which are part of this Content Type
     public let fields: [Field]
 
-    /// The unique identifier of this Content Type
-    public var id: String {
-        return sys.id
-    }
-
     /// The name of this Content Type
     public let name: String
 

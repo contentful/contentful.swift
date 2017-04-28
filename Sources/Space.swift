@@ -34,11 +34,6 @@ public struct Locale: ImmutableMappable {
 /// A Space represents a collection of Content Types, Assets and Entries in Contentful
 public class Space: Resource {
 
-    /// The unique identifier of this Space
-    public var id: String {
-        return sys.id
-    }
-
     /// Available Locales for this Space
     public let locales: [Locale]
 

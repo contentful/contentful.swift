@@ -102,7 +102,8 @@ public final class SyncSpace: ImmutableMappable {
             return nil
         }
 
-        let syncCompletion: (Result<SyncSpace>) -> Void = { result in
+        // Callback to merge the most recent sync page with the current sync space.
+        let syncCompletion: (Result<SyncSpace>) -> Void = { [unowned self] result in
 
             switch result {
             case .success(let syncSpace):
@@ -206,6 +207,14 @@ public final class SyncSpace: ImmutableMappable {
         }
 
         cache(resources: resources)
+
+        // If it's a one page sync, resolve links.
+        // Otherwise, we will wait until all pages have come in to resolve them.
+        if hasMorePages == false {
+            for entry in entries {
+                entry.resolveLinks(against: entries, and: assets)
+            }
+        }
     }
 
     internal func cache(resources: [Resource]) {
