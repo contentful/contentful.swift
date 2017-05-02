@@ -1,0 +1,1678 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Client Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/Client" class="dashAnchor"></a>
+    <a title="Client Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">Contentful Docs</a> (75% documented)</p>
+        <p class="header-right"><a href="https://github.com/contentful/contentful.swift"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">Contentful Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        Client Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/Asset.html">Asset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AssetQuery.html">AssetQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Client.html">Client</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ContentType.html">ContentType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ContentfulError.html">ContentfulError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Entry.html">Entry</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/FilterQuery.html">FilterQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Query.html">Query</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/QueryOn.html">QueryOn</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Resource.html">Resource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Space.html">Space</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SyncSpace.html">SyncSpace</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/Bounds.html">Bounds</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/FieldType.html">FieldType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Link.html">Link</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MimetypeGroup.html">MimetypeGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/QueryError.html">QueryError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/QueryOperation.html">QueryOperation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SDKError.html">SDKError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/Date.html">Date</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Dictionary.html">Dictionary</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Int.html">Int</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/String.html">String</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/AbstractQuery.html">AbstractQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ChainableQuery.html">ChainableQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ContentModellable.html">ContentModellable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EntryModellable.html">EntryModellable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/QueryableRange.html">QueryableRange</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SyncSpaceDelegate.html">SyncSpaceDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structs</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/ArrayResponse.html">ArrayResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ClientConfiguration.html">ClientConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Field.html">Field</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/LinkSys.html">LinkSys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Locale.html">Locale</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/MappedArrayResponse.html">MappedArrayResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/OrderParameter.html">OrderParameter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:V10Contentful14QueryParameter">QueryParameter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Sys.html">Sys</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Typealiases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Contentful14ResultsHandler">ResultsHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Contentful14TaskObservable">TaskObservable</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Client</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">Client</span></code></pre>
+
+                </div>
+              </div>
+            <p>Client object for performing requests against the Contentful API.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC10Contentful6ClientcFT7spaceIdSS11accessTokenSS19clientConfigurationVS_19ClientConfiguration20sessionConfigurationCSo23URLSessionConfiguration_S0_"></a>
+                    <a name="//apple_ref/swift/Method/init(spaceId:accessToken:clientConfiguration:sessionConfiguration:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10Contentful6ClientcFT7spaceIdSS11accessTokenSS19clientConfigurationVS_19ClientConfiguration20sessionConfigurationCSo23URLSessionConfiguration_S0_">init(spaceId:accessToken:clientConfiguration:sessionConfiguration:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initializes a new Contentful client instance</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">spaceId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+                <span class="nv">accessToken</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+                <span class="nv">clientConfiguration</span><span class="p">:</span> <span class="kt"><a href="../Structs/ClientConfiguration.html">ClientConfiguration</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span>
+                <span class="nv">sessionConfiguration</span><span class="p">:</span> <span class="kt">URLSessionConfiguration</span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>spaceId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The space you want to perform requests against.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>accessToken</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The access token used for authorization.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>clientConfiguration</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Custom Configuration of the Client.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sessionConfiguration</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The configuration for the URLSession. Note that HTTP headers will be overwritten
+                              interally by the SDK so that requests can be authorized correctly.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An initialized client instance.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/0.4.0-beta1/Sources/Client.swift#L56-L69">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC10Contentful6Client12fetchEntriesFT4withCS_5Query4thenFGO12Interstellar6ResultGVS_13ArrayResponseCS_5Entry__T__GSqCSo18URLSessionDataTask_"></a>
+                    <a name="//apple_ref/swift/Method/fetchEntries(with:then:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10Contentful6Client12fetchEntriesFT4withCS_5Query4thenFGO12Interstellar6ResultGVS_13ArrayResponseCS_5Entry__T__GSqCSo18URLSessionDataTask_">fetchEntries(with:then:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetch a collection of Entries from Contentful matching the specified query. This method does not
+specify the content_type in the query parameters, so the entries returned in the results can be
+of any type.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@discardableResult</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchEntries</span><span class="p">(</span><span class="n">with</span> <span class="nv">query</span><span class="p">:</span> <span class="kt"><a href="../Classes/Query.html">Query</a></span><span class="p">,</span>
+                                                <span class="n">then</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Typealiases.html#/s:10Contentful14ResultsHandler">ResultsHandler</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/ArrayResponse.html">ArrayResponse</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Entry.html">Entry</a></span><span class="o">&gt;&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">URLSessionDataTask</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>query</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The Query object to match results againts.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A handler being called on completion of the request.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The data task being used, enables cancellation of requests.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/0.4.0-beta1/Sources/Client.swift#L198-L203">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC10Contentful6Client12fetchEntriesFT4withCS_5Query_GC12Interstellar10ObservableGOS2_6ResultGVS_13ArrayResponseCS_5Entry___"></a>
+                    <a name="//apple_ref/swift/Method/fetchEntries(with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10Contentful6Client12fetchEntriesFT4withCS_5Query_GC12Interstellar10ObservableGOS2_6ResultGVS_13ArrayResponseCS_5Entry___">fetchEntries(with:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetch a collection of Entries from Contentful matching the specified query. This method does not
+specify the content_type in the query parameters, so the entries returned in the results can be
+of any type.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@discardableResult</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchEntries</span><span class="p">(</span><span class="n">with</span> <span class="nv">query</span><span class="p">:</span> <span class="kt"><a href="../Classes/Query.html">Query</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Structs/ArrayResponse.html">ArrayResponse</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Entry.html">Entry</a></span><span class="o">&gt;&gt;&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>query</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The Query object to match results againts.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A tuple of data task and an observable for the resulting array of Entry&rsquo;s.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/0.4.0-beta1/Sources/Client.swift#L213-L216">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC10Contentful6Client18fetchMappedEntriesuRxS_15EntryModellablerFT4withGCS_7QueryOnx_4thenFGO12Interstellar6ResultGVS_19MappedArrayResponsex__T__GSqCSo18URLSessionDataTask_"></a>
+                    <a name="//apple_ref/swift/Method/fetchMappedEntries(with:then:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10Contentful6Client18fetchMappedEntriesuRxS_15EntryModellablerFT4withGCS_7QueryOnx_4thenFGO12Interstellar6ResultGVS_19MappedArrayResponsex__T__GSqCSo18URLSessionDataTask_">fetchMappedEntries(with:then:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetch a collection of Entries of a specified content type matching the query. The content_type
+parameter is specified by passing in a generic parameter: a model class conforming to <code><a href="../Protocols/EntryModellable.html">EntryModellable</a></code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@discardableResult</span> <span class="kd">public</span> <span class="kd">func</span> <span class="n">fetchMappedEntries</span><span class="o">&lt;</span><span class="kt">EntryType</span><span class="p">:</span> <span class="kt"><a href="../Protocols/EntryModellable.html">EntryModellable</a></span><span class="o">&gt;</span><span class="p">(</span><span class="n">with</span> <span class="nv">query</span><span class="p">:</span> <span class="kt"><a href="../Classes/QueryOn.html">QueryOn</a></span><span class="o">&lt;</span><span class="kt">EntryType</span><span class="o">&gt;</span><span class="p">,</span>
+                                                <span class="n">then</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Typealiases.html#/s:10Contentful14ResultsHandler">ResultsHandler</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/MappedArrayResponse.html">MappedArrayResponse</a></span><span class="o">&lt;</span><span class="kt">EntryType</span><span class="o">&gt;&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">URLSessionDataTask</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>query</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A QueryOn object to match results of the specified EntryModellable against.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A handler being called on completion of the request.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The data task being used, enables cancellation of requests.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/0.4.0-beta1/Sources/Client.swift#L227-L237">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC10Contentful6Client18fetchMappedEntriesuRxS_15EntryModellablerFT4withGCS_7QueryOnx__GC12Interstellar10ObservableGOS3_6ResultGVS_19MappedArrayResponsex___"></a>
+                    <a name="//apple_ref/swift/Method/fetchMappedEntries(with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10Contentful6Client18fetchMappedEntriesuRxS_15EntryModellablerFT4withGCS_7QueryOnx__GC12Interstellar10ObservableGOS3_6ResultGVS_19MappedArrayResponsex___">fetchMappedEntries(with:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetch a collection of Entries of a specified content type matching the query. The content_type
+parameter is specified by passing in a generic parameter: a model class conforming to <code><a href="../Protocols/EntryModellable.html">EntryModellable</a></code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@discardableResult</span> <span class="kd">public</span> <span class="kd">func</span> <span class="n">fetchMappedEntries</span><span class="o">&lt;</span><span class="kt">EntryType</span><span class="p">:</span> <span class="kt"><a href="../Protocols/EntryModellable.html">EntryModellable</a></span><span class="o">&gt;</span><span class="p">(</span><span class="n">with</span> <span class="nv">query</span><span class="p">:</span> <span class="kt"><a href="../Classes/QueryOn.html">QueryOn</a></span><span class="o">&lt;</span><span class="kt">EntryType</span><span class="o">&gt;</span><span class="p">)</span>
+        <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Structs/MappedArrayResponse.html">MappedArrayResponse</a></span><span class="o">&lt;</span><span class="kt">EntryType</span><span class="o">&gt;&gt;&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>query</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A QueryOn object to match results of the specified EntryModellable against.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A tuple of data task and an observable for the resulting array of EntryModellable types.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/0.4.0-beta1/Sources/Client.swift#L247-L252">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC10Contentful6Client11fetchAssetsFT4withCS_10AssetQuery4thenFGO12Interstellar6ResultGVS_13ArrayResponseCS_5Asset__T__GSqCSo18URLSessionDataTask_"></a>
+                    <a name="//apple_ref/swift/Method/fetchAssets(with:then:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10Contentful6Client11fetchAssetsFT4withCS_10AssetQuery4thenFGO12Interstellar6ResultGVS_13ArrayResponseCS_5Asset__T__GSqCSo18URLSessionDataTask_">fetchAssets(with:then:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetch a collection of Assets from Contentful matching the specified query.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@discardableResult</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchAssets</span><span class="p">(</span><span class="n">with</span> <span class="nv">query</span><span class="p">:</span> <span class="kt"><a href="../Classes/AssetQuery.html">AssetQuery</a></span><span class="p">,</span>
+                                               <span class="n">then</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Typealiases.html#/s:10Contentful14ResultsHandler">ResultsHandler</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/ArrayResponse.html">ArrayResponse</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Asset.html">Asset</a></span><span class="o">&gt;&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">URLSessionDataTask</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>query</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The Query object to match results againts.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A handler being called on completion of the request.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The data task being used, enables cancellation of requests.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/0.4.0-beta1/Sources/Client.swift#L263-L268">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC10Contentful6Client11fetchAssetsFT5queryCS_10AssetQuery_GC12Interstellar10ObservableGOS2_6ResultGVS_13ArrayResponseCS_5Asset___"></a>
+                    <a name="//apple_ref/swift/Method/fetchAssets(query:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10Contentful6Client11fetchAssetsFT5queryCS_10AssetQuery_GC12Interstellar10ObservableGOS2_6ResultGVS_13ArrayResponseCS_5Asset___">fetchAssets(query:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetch a collection of Assets from Contentful matching the specified query.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@discardableResult</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchAssets</span><span class="p">(</span><span class="nv">query</span><span class="p">:</span> <span class="kt"><a href="../Classes/AssetQuery.html">AssetQuery</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Structs/ArrayResponse.html">ArrayResponse</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Asset.html">Asset</a></span><span class="o">&gt;&gt;&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>query</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The Query object to match results againts.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A tuple of data task and an observable for the resulting array of Assets.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/0.4.0-beta1/Sources/Client.swift#L276-L279">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC10Contentful6Client10fetchAssetFT2idSS10completionFGO12Interstellar6ResultCS_5Asset_T__GSqCSo18URLSessionDataTask_"></a>
+                    <a name="//apple_ref/swift/Method/fetchAsset(id:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10Contentful6Client10fetchAssetFT2idSS10completionFGO12Interstellar6ResultCS_5Asset_T__GSqCSo18URLSessionDataTask_">fetchAsset(id:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetch a single Asset from Contentful.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@discardableResult</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchAsset</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Typealiases.html#/s:10Contentful14ResultsHandler">ResultsHandler</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Asset.html">Asset</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">URLSessionDataTask</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>id</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The identifier of the Asset to be fetched.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A handler being called on completion of the request.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The data task being used, enables cancellation of requests.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/0.4.0-beta1/Sources/Client.swift#L292-L294">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC10Contentful6Client10fetchAssetFT2idSS_GC12Interstellar10ObservableGOS1_6ResultCS_5Asset__"></a>
+                    <a name="//apple_ref/swift/Method/fetchAsset(id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10Contentful6Client10fetchAssetFT2idSS_GC12Interstellar10ObservableGOS1_6ResultCS_5Asset__">fetchAsset(id:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetch a single Asset from Contentful.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@discardableResult</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchAsset</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Asset.html">Asset</a></span><span class="o">&gt;&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>id</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The identifier of the Asset to be fetched.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A tuple of data task and a signal for the resulting Asset.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/0.4.0-beta1/Sources/Client.swift#L303-L306">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC10Contentful6Client11fetchAssetsFT8matchingGVs10DictionarySSP__10completionFGO12Interstellar6ResultGVS_13ArrayResponseCS_5Asset__T__GSqCSo18URLSessionDataTask_"></a>
+                    <a name="//apple_ref/swift/Method/fetchAssets(matching:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10Contentful6Client11fetchAssetsFT8matchingGVs10DictionarySSP__10completionFGO12Interstellar6ResultGVS_13ArrayResponseCS_5Asset__T__GSqCSo18URLSessionDataTask_">fetchAssets(matching:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetch a collection of Assets from Contentful.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@discardableResult</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchAssets</span><span class="p">(</span><span class="nv">matching</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[:],</span>
+                                               <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Typealiases.html#/s:10Contentful14ResultsHandler">ResultsHandler</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/ArrayResponse.html">ArrayResponse</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Asset.html">Asset</a></span><span class="o">&gt;&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">URLSessionDataTask</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>matching</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An optional list of search parameters the Assets must match.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A handler being called on completion of the request.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The data task being used, enables cancellation of requests.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/0.4.0-beta1/Sources/Client.swift#L316-L319">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC10Contentful6Client11fetchAssetsFT8matchingGVs10DictionarySSP___GC12Interstellar10ObservableGOS2_6ResultGVS_13ArrayResponseCS_5Asset___"></a>
+                    <a name="//apple_ref/swift/Method/fetchAssets(matching:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10Contentful6Client11fetchAssetsFT8matchingGVs10DictionarySSP___GC12Interstellar10ObservableGOS2_6ResultGVS_13ArrayResponseCS_5Asset___">fetchAssets(matching:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetch a collection of Assets from Contentful.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@discardableResult</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchAssets</span><span class="p">(</span><span class="nv">matching</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[:])</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Structs/ArrayResponse.html">ArrayResponse</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Asset.html">Asset</a></span><span class="o">&gt;&gt;&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>matching</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Optional list of search parameters the Assets must match.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A tuple of data task and a signal for the resulting array of Assets.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/0.4.0-beta1/Sources/Client.swift#L328-L331">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC10Contentful6Client9fetchDataFT3forCS_5Asset_GC12Interstellar10ObservableGOS2_6ResultV10Foundation4Data__"></a>
+                    <a name="//apple_ref/swift/Method/fetchData(for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10Contentful6Client9fetchDataFT3forCS_5Asset_GC12Interstellar10ObservableGOS2_6ResultV10Foundation4Data__">fetchData(for:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetch the underlying media file as <code>Data</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchData</span><span class="p">(</span><span class="k">for</span> <span class="nv">asset</span><span class="p">:</span> <span class="kt"><a href="../Classes/Asset.html">Asset</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">Data</span><span class="o">&gt;&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Tuple of the data task and a signal for the <code>Data</code> result.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/0.4.0-beta1/Sources/Client.swift#L338-L346">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC10Contentful6Client10fetchImageFT3forCS_5Asset_GC12Interstellar10ObservableGOS2_6ResultCSo7UIImage__"></a>
+                    <a name="//apple_ref/swift/Method/fetchImage(for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10Contentful6Client10fetchImageFT3forCS_5Asset_GC12Interstellar10ObservableGOS2_6ResultCSo7UIImage__">fetchImage(for:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetch the underlying media file as <code>UIImage</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchImage</span><span class="p">(</span><span class="k">for</span> <span class="nv">asset</span><span class="p">:</span> <span class="kt"><a href="../Classes/Asset.html">Asset</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">UIImage</span><span class="o">&gt;&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The signal for the <code>UIImage</code> result</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/0.4.0-beta1/Sources/Client.swift#L354-L367">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC10Contentful6Client16fetchContentTypeFT2idSS10completionFGO12Interstellar6ResultCS_11ContentType_T__GSqCSo18URLSessionDataTask_"></a>
+                    <a name="//apple_ref/swift/Method/fetchContentType(id:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10Contentful6Client16fetchContentTypeFT2idSS10completionFGO12Interstellar6ResultCS_11ContentType_T__GSqCSo18URLSessionDataTask_">fetchContentType(id:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetch a single Content Type from Contentful.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@discardableResult</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchContentType</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Typealiases.html#/s:10Contentful14ResultsHandler">ResultsHandler</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/ContentType.html">ContentType</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">URLSessionDataTask</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>id</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The identifier of the Content Type to be fetched.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A handler being called on completion of the request.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The data task being used, enables cancellation of requests.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/0.4.0-beta1/Sources/Client.swift#L380-L382">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC10Contentful6Client16fetchContentTypeFT2idSS_GC12Interstellar10ObservableGOS1_6ResultCS_11ContentType__"></a>
+                    <a name="//apple_ref/swift/Method/fetchContentType(id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10Contentful6Client16fetchContentTypeFT2idSS_GC12Interstellar10ObservableGOS1_6ResultCS_11ContentType__">fetchContentType(id:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetch a single Content Type from Contentful.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@discardableResult</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchContentType</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/ContentType.html">ContentType</a></span><span class="o">&gt;&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>id</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The identifier of the Content Type to be fetched.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A tuple of data task and a signal for the resulting Content Type.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/0.4.0-beta1/Sources/Client.swift#L391-L394">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC10Contentful6Client17fetchContentTypesFT8matchingGVs10DictionarySSP__10completionFGO12Interstellar6ResultGVS_13ArrayResponseCS_11ContentType__T__GSqCSo18URLSessionDataTask_"></a>
+                    <a name="//apple_ref/swift/Method/fetchContentTypes(matching:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10Contentful6Client17fetchContentTypesFT8matchingGVs10DictionarySSP__10completionFGO12Interstellar6ResultGVS_13ArrayResponseCS_11ContentType__T__GSqCSo18URLSessionDataTask_">fetchContentTypes(matching:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetch a collection of Content Types from Contentful.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@discardableResult</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchContentTypes</span><span class="p">(</span><span class="nv">matching</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[:],</span>
+                                                     <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Typealiases.html#/s:10Contentful14ResultsHandler">ResultsHandler</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/ArrayResponse.html">ArrayResponse</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/ContentType.html">ContentType</a></span><span class="o">&gt;&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">URLSessionDataTask</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>matching</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Optional list of search parameters the Content Types must match.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A handler being called on completion of the request.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The data task being used, enables cancellation of requests.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/0.4.0-beta1/Sources/Client.swift#L404-L407">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC10Contentful6Client17fetchContentTypesFT8matchingGVs10DictionarySSP___GC12Interstellar10ObservableGOS2_6ResultGVS_13ArrayResponseCS_11ContentType___"></a>
+                    <a name="//apple_ref/swift/Method/fetchContentTypes(matching:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10Contentful6Client17fetchContentTypesFT8matchingGVs10DictionarySSP___GC12Interstellar10ObservableGOS2_6ResultGVS_13ArrayResponseCS_11ContentType___">fetchContentTypes(matching:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetch a collection of Content Types from Contentful.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@discardableResult</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchContentTypes</span><span class="p">(</span><span class="nv">matching</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[:])</span> <span class="o">-&gt;</span>  <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Structs/ArrayResponse.html">ArrayResponse</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/ContentType.html">ContentType</a></span><span class="o">&gt;&gt;&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>matching</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Optional list of search parameters the Content Types must match.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A tuple of data task and a signal for the resulting array of Content Types.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/0.4.0-beta1/Sources/Client.swift#L416-L419">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC10Contentful6Client12fetchEntriesFT8matchingGVs10DictionarySSP__10completionFGO12Interstellar6ResultGVS_13ArrayResponseCS_5Entry__T__GSqCSo18URLSessionDataTask_"></a>
+                    <a name="//apple_ref/swift/Method/fetchEntries(matching:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10Contentful6Client12fetchEntriesFT8matchingGVs10DictionarySSP__10completionFGO12Interstellar6ResultGVS_13ArrayResponseCS_5Entry__T__GSqCSo18URLSessionDataTask_">fetchEntries(matching:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetch a collection of Entries from Contentful.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@discardableResult</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchEntries</span><span class="p">(</span><span class="nv">matching</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[:],</span>
+                                                <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Typealiases.html#/s:10Contentful14ResultsHandler">ResultsHandler</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/ArrayResponse.html">ArrayResponse</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Entry.html">Entry</a></span><span class="o">&gt;&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">URLSessionDataTask</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>matching</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Optional list of search parameters the Entries must match.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A handler being called on completion of the request.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The data task being used, enables cancellation of requests</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/0.4.0-beta1/Sources/Client.swift#L431-L434">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC10Contentful6Client12fetchEntriesFT8matchingGVs10DictionarySSP___GC12Interstellar10ObservableGOS2_6ResultGVS_13ArrayResponseCS_5Entry___"></a>
+                    <a name="//apple_ref/swift/Method/fetchEntries(matching:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10Contentful6Client12fetchEntriesFT8matchingGVs10DictionarySSP___GC12Interstellar10ObservableGOS2_6ResultGVS_13ArrayResponseCS_5Entry___">fetchEntries(matching:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetch a collection of Entries from Contentful.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@discardableResult</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchEntries</span><span class="p">(</span><span class="nv">matching</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[:])</span> <span class="o">-&gt;</span>  <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Structs/ArrayResponse.html">ArrayResponse</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Entry.html">Entry</a></span><span class="o">&gt;&gt;&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>matching</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Optional list of search parameters the Entries must match.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A tuple of data task and a signal for the resulting array of Entries.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/0.4.0-beta1/Sources/Client.swift#L443-L446">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC10Contentful6Client10fetchEntryFT2idSS10completionFGO12Interstellar6ResultCS_5Entry_T__GSqCSo18URLSessionDataTask_"></a>
+                    <a name="//apple_ref/swift/Method/fetchEntry(id:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10Contentful6Client10fetchEntryFT2idSS10completionFGO12Interstellar6ResultCS_5Entry_T__GSqCSo18URLSessionDataTask_">fetchEntry(id:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetch a single Entry from Contentful.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@discardableResult</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchEntry</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Typealiases.html#/s:10Contentful14ResultsHandler">ResultsHandler</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Entry.html">Entry</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">URLSessionDataTask</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>id</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The identifier of the Entry to be fetched.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A handler being called on completion of the request.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The data task being used, enables cancellation of requests.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/0.4.0-beta1/Sources/Client.swift#L456-L469">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC10Contentful6Client10fetchEntryFT2idSS_GC12Interstellar10ObservableGOS1_6ResultCS_5Entry__"></a>
+                    <a name="//apple_ref/swift/Method/fetchEntry(id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10Contentful6Client10fetchEntryFT2idSS_GC12Interstellar10ObservableGOS1_6ResultCS_5Entry__">fetchEntry(id:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetch a single Entry from Contentful.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@discardableResult</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchEntry</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span>  <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Entry.html">Entry</a></span><span class="o">&gt;&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>id</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The identifier of the Entry to be fetched.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A tuple of data task and a signal for the resulting Entry.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/0.4.0-beta1/Sources/Client.swift#L478-L481">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC10Contentful6Client10fetchSpaceFT4thenFGO12Interstellar6ResultCS_5Space_T__GSqCSo18URLSessionDataTask_"></a>
+                    <a name="//apple_ref/swift/Method/fetchSpace(then:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10Contentful6Client10fetchSpaceFT4thenFGO12Interstellar6ResultCS_5Space_T__GSqCSo18URLSessionDataTask_">fetchSpace(then:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetch the space this client is constrained to.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@discardableResult</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchSpace</span><span class="p">(</span><span class="n">then</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Typealiases.html#/s:10Contentful14ResultsHandler">ResultsHandler</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Space.html">Space</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">URLSessionDataTask</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A handler being called on completion of the request.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The data task being used, which enables cancellation of requests, or <code>nil</code> if the.
+Space was already cached locally</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/0.4.0-beta1/Sources/Client.swift#L494-L500">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC10Contentful6Client10fetchSpaceFT_GC12Interstellar10ObservableGOS1_6ResultCS_5Space__"></a>
+                    <a name="//apple_ref/swift/Method/fetchSpace()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10Contentful6Client10fetchSpaceFT_GC12Interstellar10ObservableGOS1_6ResultCS_5Space__">fetchSpace()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetch the space this client is constrained to.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@discardableResult</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchSpace</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Space.html">Space</a></span><span class="o">&gt;&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A tuple of data task and a signal for the resulting Space.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/0.4.0-beta1/Sources/Client.swift#L508-L511">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC10Contentful6Client11initialSyncFT8matchingGVs10DictionarySSP__10completionFGO12Interstellar6ResultCS_9SyncSpace_T__GSqCSo18URLSessionDataTask_"></a>
+                    <a name="//apple_ref/swift/Method/initialSync(matching:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10Contentful6Client11initialSyncFT8matchingGVs10DictionarySSP__10completionFGO12Interstellar6ResultCS_9SyncSpace_T__GSqCSo18URLSessionDataTask_">initialSync(matching:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Perform an initial synchronization of the Space this client is constrained to.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@discardableResult</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">initialSync</span><span class="p">(</span><span class="nv">matching</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[:],</span>
+                                               <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Typealiases.html#/s:10Contentful14ResultsHandler">ResultsHandler</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/SyncSpace.html">SyncSpace</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">URLSessionDataTask</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>matching</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Additional options for the synchronization.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A handler being called on completion of the request.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The data task being used, enables cancellation of requests.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/0.4.0-beta1/Sources/Client.swift#L523-L529">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC10Contentful6Client11initialSyncFT8matchingGVs10DictionarySSP___GC12Interstellar10ObservableGOS2_6ResultCS_9SyncSpace__"></a>
+                    <a name="//apple_ref/swift/Method/initialSync(matching:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10Contentful6Client11initialSyncFT8matchingGVs10DictionarySSP___GC12Interstellar10ObservableGOS2_6ResultCS_9SyncSpace__">initialSync(matching:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Perform an initial synchronization of the Space this client is constrained to.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@discardableResult</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">initialSync</span><span class="p">(</span><span class="nv">matching</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[:])</span> <span class="o">-&gt;</span> <span class="kt">Observable</span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/SyncSpace.html">SyncSpace</a></span><span class="o">&gt;&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>matching</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Additional options for the synchronization.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A tuple of data task and a signal for the resulting SyncSpace.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/0.4.0-beta1/Sources/Client.swift#L539-L542">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2017 <a class="link" href="https://www.contentful.com" target="_blank" rel="external">Contentful</a>. All rights reserved. (Last updated: 2017-05-02)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
