@@ -8,7 +8,7 @@ endif
 
 PROJECT=Contentful.xcodeproj
 
-.PHONY: open test integration_test setup lint coverage carthage
+.PHONY: open test integration_test setup lint coverage carthage docs
 
 open:
 	open $(PROJECT)
@@ -45,4 +45,7 @@ coverage:
 carthage:
 	carthage build --no-skip-current --platform all
 	carthage archive Contentful
+
+docs:
+	./Scripts/reference-docs.sh
 
