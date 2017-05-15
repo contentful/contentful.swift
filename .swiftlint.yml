@@ -3,6 +3,7 @@ excluded:
   - Carthage
   - Packages
   - Tests
+  - .build
 disabled_rules:
 - syntactic_sugar
 - type_body_length
