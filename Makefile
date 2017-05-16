@@ -32,11 +32,14 @@ integration_test: clean clean_simulators
 		-scheme Contentful_iOS -configuration "API_Coverage" \
 		-destination 'platform=iOS Simulator,name=iPhone 6s,OS=9.3' | xcpretty -c
 
-setup:
+setup_env:
+	brew outdated carthage || brew upgrade carthage
+	brew outdated swiftlint || brew upgrade swiftlint
+	brew outdated direnv || brew upgrade direnv
 	bundle install
-	bundle exec pod install --no-repo-update
 
 lint:
+	swiftlint
 	bundle exec pod lib lint Contentful.podspec
 
 coverage:

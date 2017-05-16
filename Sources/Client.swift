@@ -62,7 +62,7 @@ open class Client {
 
         let contentfulHTTPHeaders = [
             "Authorization": "Bearer \(accessToken)",
-            "User-Agent": clientConfiguration.userAgent
+            "X-Contentful-User-Agent": clientConfiguration.userAgentString
         ]
         sessionConfiguration.httpAdditionalHeaders = contentfulHTTPHeaders
         self.urlSession = URLSession(configuration: sessionConfiguration)
