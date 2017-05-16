@@ -162,6 +162,7 @@
 		ED3CBF161E7A990700E5B02E /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/watchOS/ObjectMapper.framework; sourceTree = "<group>"; };
 		ED3CBF191E7AD57100E5B02E /* Sys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Sys.swift; sourceTree = "<group>"; };
 		ED3CBF1E1E7AD58100E5B02E /* Link.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
+		ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		ED65CF941E3F6BF8000EBC62 /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
 		ED65CF951E3F6BF8000EBC62 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		ED65CF9A1E3F6C0C000EBC62 /* Interstellar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Interstellar.framework; path = Carthage/Build/iOS/Interstellar.framework; sourceTree = "<group>"; };
@@ -241,6 +242,7 @@
 		A19CA3BA1B836EDD00A0EFCD = {
 			isa = PBXGroup;
 			children = (
+				ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */,
 				A19CA3C61B836EDD00A0EFCD /* Code */,
 				A19CA3D21B836EDD00A0EFCD /* Tests */,
 				A19CA3DE1B836EF800A0EFCD /* Supporting Files */,
@@ -766,6 +768,7 @@
 /* Begin XCBuildConfiguration section */
 		A19CA3D61B836EDD00A0EFCD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -785,6 +788,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -818,6 +822,7 @@
 		};
 		A19CA3D71B836EDD00A0EFCD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -837,6 +842,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -864,6 +870,7 @@
 		};
 		A19CA3D91B836EDD00A0EFCD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				APPLICATION_EXTENSION_API_ONLY = NO;
@@ -892,6 +899,7 @@
 		};
 		A19CA3DA1B836EDD00A0EFCD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				APPLICATION_EXTENSION_API_ONLY = NO;
@@ -920,6 +928,7 @@
 		};
 		A19CA3DC1B836EDD00A0EFCD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -939,6 +948,7 @@
 		};
 		A19CA3DD1B836EDD00A0EFCD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -958,6 +968,7 @@
 		};
 		EDDC07141E3BCE920022F2F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -988,6 +999,7 @@
 		};
 		EDDC07151E3BCE920022F2F9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1018,6 +1030,7 @@
 		};
 		EDDC07221E3BCEA40022F2F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1048,6 +1061,7 @@
 		};
 		EDDC07231E3BCEA40022F2F9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1078,6 +1092,7 @@
 		};
 		EDDC072F1E3BCEB10022F2F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1109,6 +1124,7 @@
 		};
 		EDDC07301E3BCEB10022F2F9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1140,6 +1156,7 @@
 		};
 		EDF53E191E5B2B3000FE060A /* API_Coverage */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1159,6 +1176,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -1192,6 +1210,7 @@
 		};
 		EDF53E1A1E5B2B3000FE060A /* API_Coverage */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				APPLICATION_EXTENSION_API_ONLY = NO;
@@ -1220,6 +1239,7 @@
 		};
 		EDF53E1B1E5B2B3000FE060A /* API_Coverage */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1239,6 +1259,7 @@
 		};
 		EDF53E1C1E5B2B3000FE060A /* API_Coverage */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1269,6 +1290,7 @@
 		};
 		EDF53E1D1E5B2B3000FE060A /* API_Coverage */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1299,6 +1321,7 @@
 		};
 		EDF53E1E1E5B2B3000FE060A /* API_Coverage */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ANALYZER_NONNULL = YES;

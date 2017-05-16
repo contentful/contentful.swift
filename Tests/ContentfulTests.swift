@@ -35,10 +35,17 @@ class ClientConfigurationTests: XCTestCase {
 
     func testUserAgentString() {
 
-        let osVersion = ProcessInfo.processInfo.operatingSystemVersionString
-        let userAgentString = ClientConfiguration.default.userAgent
-        
-        expect(userAgentString).to(equal("contentful.swift/0.4.0-beta1 (iOS \(osVersion))"))
+        let osVersion = ProcessInfo.processInfo.operatingSystemVersion
+        let osVersionString = String(osVersion.majorVersion) + "." + String(osVersion.minorVersion) + "." + String(osVersion.patchVersion)
+
+        let clientConfiguration = ClientConfiguration.default
+        let userAgentString = clientConfiguration.userAgentString
+
+        expect(userAgentString).to(equal("sdk contentful.swift/0.4.0; platform Swift/3.1; os iOS/\(osVersionString);"))
+
+        let client = Client(spaceId: "", accessToken: "", clientConfiguration: clientConfiguration)
+        expect(client.urlSession.configuration.httpAdditionalHeaders?["X-Contentful-User-Agent"]).toNot(beNil())
+
     }
 
     func testDefaultConfiguration() {
