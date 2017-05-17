@@ -34,7 +34,7 @@ public enum Link {
         case .unresolved(let sys): return sys.id
         }
     }
-    
+
     internal static func link(from fieldValue: Any) -> Link? {
         if let link = fieldValue as? Link {
             return link
