@@ -14,7 +14,7 @@ import Nimble
 
 func url(_ asset: Asset) -> URL {
     var url = URL(string: "http://example.com")
-    url = try! asset.URL()
+    url = try! asset.url()
     return url!
 }
 
