@@ -62,7 +62,7 @@ open class Client {
 
         let contentfulHTTPHeaders = [
             "Authorization": "Bearer \(accessToken)",
-            "User-Agent": clientConfiguration.userAgent
+            "X-Contentful-User-Agent": clientConfiguration.userAgentString
         ]
         sessionConfiguration.httpAdditionalHeaders = contentfulHTTPHeaders
         self.urlSession = URLSession(configuration: sessionConfiguration)
@@ -230,7 +230,7 @@ extension Client {
         let url = URL(forComponent: "entries", parameters: query.parameters)
 
         return fetch(url: url) { (result: Result<ArrayResponse<Entry>>) in
-            
+
             let transformedResult: Result<MappedArrayResponse<EntryType>> = result.flatMap { return Result.success($0.toMappedArrayResponse()) }
             completion(transformedResult)
         }

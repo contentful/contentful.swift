@@ -20,7 +20,7 @@ public class Resource: ImmutableMappable {
     public var id: String {
         return sys.id
     }
-    
+
     internal init(sys: Sys) {
         self.sys = sys
     }

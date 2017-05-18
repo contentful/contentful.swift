@@ -1,8 +1,10 @@
 #!/usr/bin/ruby
 
+require 'dotenv/load'
+
 Pod::Spec.new do |spec|
   spec.name             = "Contentful"
-  spec.version          = "0.4.0-beta1"
+  spec.version          = ENV['CONTENTFUL_SDK_VERSION']
   spec.summary          = "Swift SDK for Contentful's Content Delivery API."
   spec.homepage         = "https://github.com/contentful/contentful.swift/"
   spec.social_media_url = 'https://twitter.com/contentful'
@@ -29,4 +31,5 @@ Pod::Spec.new do |spec|
   spec.dependency 'ObjectMapper', '~> 2.2'
   spec.dependency 'Interstellar', '~> 2.0.0'
 end
+
 

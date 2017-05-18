@@ -3,6 +3,8 @@ excluded:
   - Carthage
   - Packages
   - Tests
+  - .build
+  - build
 disabled_rules:
 - syntactic_sugar
 - type_body_length
@@ -17,6 +19,9 @@ disabled_rules:
 - class_delegate_protocol
 - weak_delegate
 - vertical_parameter_alignment
+# ignoring since some file that exists on travis, but not locally is throwing this as a compile error
+# Also, swiftlint says it will be removed in future versions
+- identifier_name 
 
 # Parameterized
 line_length: 150
@@ -24,7 +29,7 @@ vertical_whitespace:
   max_empty_lines: 2
 file_length: 650
 function_body_length: 110
-variable_name:
-  min_length: 2
-  max_length: 30
-
+#identifier_name:
+#  min_length: 2
+#  max_length: 30
+#

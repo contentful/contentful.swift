@@ -27,22 +27,105 @@ public struct ClientConfiguration {
     public var secure = true
     /// The server to use for performing requests, defaults to `cdn.contentful.com`
     public var server = Defaults.cdaHost
-    /// The user agent to use for performing requests
-    public var userAgentClient = "contentful.swift/0.4.0-beta1"
 
     /// Computed version of the user agent, including OS name and version
-    public var userAgent: String {
-        var osName = "iOS"
-        let osVersion: String = ProcessInfo.processInfo.operatingSystemVersionString
+    public var userAgentString: String {
+        // Inspired by Alamofire https://github.com/Alamofire/Alamofire/blob/25d8fdd8a36f510a2bc4fe98289f367ec385d337/Source/SessionManager.swift
 
-        #if os(OSX)
-            osName = "OS X"
-        #elseif os(tvOS)
-            osName = "tvOS"
-        #elseif os(watchOS)
-            osName = "watchOS"
+        var userAgentString = ""
+
+        // Fail gracefully in case any information is inaccessible.
+        // App info.
+        if let appVersionString = appVersionString() {
+            userAgentString = "app \(appVersionString); "
+        }
+        // SDK info.
+        userAgentString += "sdk \(sdkVersionString());"
+        // Platform/language info.
+        if let platformVersionString = platformVersionString() {
+            userAgentString += " platform \(platformVersionString);"
+        }
+
+        // Operating system info.
+        guard let operatingSystemVersionString = operatingSystemVersionString() else {
+            return userAgentString
+        }
+        userAgentString += " os \(operatingSystemVersionString);"
+        return userAgentString
+    }
+
+    private func platformVersionString() -> String? {
+        var swiftVersionString: String? = nil
+
+        /** Unfortunately, the swift build config macros don't have an equality `=` operator.
+            Note that the current version of the SDK is ONLY buildable using the Swift 3 compiler, so
+            versions of swift that are < 3.0 are ignored.
+         */
+        #if swift(>=3.0)
+            swiftVersionString = "3.0"
         #endif
 
-        return "\(userAgentClient) (\(osName) \(osVersion))"
+        #if swift(>=3.1)
+            swiftVersionString = "3.1"
+        #endif
+
+        guard let swiftVersion = swiftVersionString else { return nil }
+        return "Swift/\(swiftVersion)"
+    }
+
+    /**
+     Initialize a clientConfiguration with default values
+
+     - returns: An initialized clientConfiguration instance
+     */
+    public init() {}
+
+    // MARK: Private
+
+    private func operatingSystemVersionString() -> String? {
+        guard let osName = operatingSystemPlatform() else { return nil }
+
+        let osVersion = ProcessInfo.processInfo.operatingSystemVersion
+        let osVersionString = String(osVersion.majorVersion) + "." + String(osVersion.minorVersion) + "." + String(osVersion.patchVersion)
+        return "\(osName)/\(osVersionString)"
+    }
+
+    private func operatingSystemPlatform() -> String? {
+        let osName: String? = {
+
+        #if os(iOS)
+            return "iOS"
+        #elseif os(OSX)
+            return "macOS"
+        #elseif os(tvOS)
+            return "tvOS"
+        #elseif os(watchOS)
+            return "watchOS"
+        #elseif os(Linux)
+            return "Linux"
+        #else
+            return nil
+        #endif
+        }()
+        return osName
+    }
+
+
+    private func sdkVersionString() -> String {
+        guard
+            let bundleInfo = Bundle(for: Client.self).infoDictionary,
+            let versionNumberString = bundleInfo["CFBundleShortVersionString"] as? String
+            else { return "Unknown" }
+
+        return "contentful.swift/\(versionNumberString)"
+    }
+
+    private func appVersionString() -> String? {
+        guard
+            let bundleInfo = Bundle.main.infoDictionary,
+            let versionNumberString = bundleInfo["CFBundleShortVersionString"] as? String,
+            let appBundleId = Bundle.main.bundleIdentifier else { return nil }
+
+        return appBundleId + "/" + versionNumberString
     }
 }
