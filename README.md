@@ -12,7 +12,7 @@ Swift SDK for [Contentful's][1] Content Delivery API.
 
 [Contentful][1] is a content management platform for web applications, mobile apps and connected devices. It allows you to create, edit & manage content in the cloud and publish it anywhere via powerful API. Contentful offers tools for managing editorial teams and enabling cooperation between organizations.
 
-The Contentful Swift SDK hasn't reached 1.0, yet, but provides a much nicer API than using the [Objective-C SDK][4] from Swift. If you need some of the more advanced features, like [offline persistence][5] using Core Data, you have to stick to the Objective-C SDK for now. Check out our [Swift example][6] in this case.
+The Contentful Swift SDK hasn't reached 1.0.0 and is therefore subject to API changes. However, it provides a more usable API than the [Objective-C SDK][4] from Swift. If you need some of the more advanced features, like [offline persistence][5] using Core Data, you have to stick to the Objective-C SDK for now. Check out our [Swift example][6] in this case.
 
 ## Usage
 
