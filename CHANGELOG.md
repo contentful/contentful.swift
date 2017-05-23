@@ -14,8 +14,16 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 ## Table of contents
 
 #### 0.x Releases
-- `0.4.x` Releases - [0.4.0](#040)
+- `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041)
 - `0.3.x` Releases - [0.3.0](#030) | [0.3.1](#031)
+
+---
+
+## [`0.4.1`](https://github.com/contentful/contentful.swift/releases/tag/0.4.1)
+Released on 2017-05-23.
+
+#### Fixed
+- Potential crash during sync callback due to unretained `SyncSpace` instance
 
 ---
 
