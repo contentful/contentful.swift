@@ -16,16 +16,28 @@ The Contentful Swift SDK hasn't reached 1.0.0 and is therefore subject to API ch
 
 ## Usage
 
-
 ```swift
+import Dispatch
+import Contentful
+
 let client = Client(spaceIdentifier: "cfexampleapi", accessToken: "b4c0n73n7fu1")
-client.fetchEntry("nyancat") { (result) in
+
+DispatchQueue.global().sync {
+  let group = DispatchGroup()
+  group.enter()
+  
+  client.fetchEntry(identifier:"nyancat") { (result) in
     switch result {
-        case let .Success(entry):
+        case let .success(entry):
             print(entry)
-        case .Error(_):
+        case .error(_):
             print("Error!")
     }
+    group.leave()
+  }
+
+  group.wait()
+  print("Done")
 }
 ```
 
