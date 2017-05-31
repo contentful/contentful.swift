@@ -92,7 +92,7 @@ class ImageTests: XCTestCase {
     func testComplexURLIsProperlyConstructed() {
 
         let imageOptions: [ImageOption] = [
-            .sizedTo(width: 100, height: 100),
+            .width(100), .height(100),
             .formatAs(.jpg(withQuality: .unspecified)),
             .fit(for: .fill(focusingOn: nil)),
             .withCornerRadius(4.0)
@@ -188,7 +188,7 @@ class ImageTests: XCTestCase {
 
     func testInvalidWidthAndHeightThrowsError() {
         let imageOptions: [ImageOption] = [
-            .sizedTo(width: 4001, height: 100)
+            .width(4001), .height(100)
         ]
         do {
             let _ = try nyanCatAsset.url(with: imageOptions)
@@ -252,7 +252,7 @@ class ImageTests: XCTestCase {
         let expectation = self.expectation(description: "Fetch image network expectation")
 
         let imageOptions: [ImageOption] = [
-            .sizedTo(width: 100, height: 100),
+            .width(100), .height(100),
             .formatAs(.jpg(withQuality: .unspecified)),
             .fit(for: .fill(focusingOn: nil)),
             .withCornerRadius(4.0)

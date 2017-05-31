@@ -53,8 +53,11 @@ extension Asset {
 
 public enum ImageOption: Equatable, Hashable {
 
-    /// Specify the size of the image in pixels to be returned from the API. Valid ranges for width and height are between 0 and 4000.
-    case sizedTo(width: Int, height: Int)
+    /// Specify the height of the image in pixels to be returned from the API. Valid ranges for height are between 0 and 4000.
+    case height(UInt)
+
+    /// Specify the width of the image in pixels to be returned from the API. Valid ranges for width are between 0 and 4000.
+    case width(UInt)
 
     /// Specify the desired image filetype extension to be returned from the API.
     case formatAs(Format)
@@ -67,13 +70,15 @@ public enum ImageOption: Equatable, Hashable {
 
     internal func urlQueryItems() throws -> [URLQueryItem] {
         switch self {
-        case .sizedTo(let width, let height) where width > 0 && width <= 4000 && height > 0 && width <= 4000:
-            let widthQueryItem = URLQueryItem(name: ImageParameters.width, value: String(width))
-            let heightQueryItem = URLQueryItem(name: ImageParameters.height, value: String(height))
+        case .height(let height) where height > 0 && height <= 4000:
+            return [URLQueryItem(name: ImageParameters.height, value: String(height))]
 
-            return [widthQueryItem, heightQueryItem]
-        case .sizedTo:
-            throw SDKError.invalidImageParameters("The specified width and height are not within the acceptable range")
+        case .width(let width) where width > 0 && width <= 4000:
+            return [URLQueryItem(name: ImageParameters.width, value: String(width))]
+
+        case .width, .height:
+            throw SDKError.invalidImageParameters("The specified width or height parameters are not within the acceptable range")
+
         case .formatAs(let format):
             return try format.urlQueryItems()
 
@@ -90,10 +95,11 @@ public enum ImageOption: Equatable, Hashable {
     // Used to unique'ify an Array of ImageOption instances by converting to a Set.
     public var hashValue: Int {
         switch self {
-        case .sizedTo:              return 0
-        case .formatAs:          return 1
-        case .fit:                  return 2
-        case .withCornerRadius:     return 3
+        case .width:                return 0
+        case .height:               return 1
+        case .formatAs:             return 2
+        case .fit:                  return 3
+        case .withCornerRadius:     return 4
         }
     }
 }
@@ -104,7 +110,9 @@ public func == (lhs: ImageOption, rhs: ImageOption) -> Bool {
     // We don't need to check associated values, we only implement equatable to validate that
     // two ImageOptions of the same case can't be used in one request.
     switch (lhs, rhs) {
-    case (.sizedTo, .sizedTo):
+    case (.width, .width):
+        return true
+    case (.height, .height):
         return true
     case (.formatAs, .formatAs):
         return true
@@ -307,7 +315,7 @@ internal extension CGColor {
     // If for some reason the following code fails to create a hex string, the color black will be
     // returned.
     internal func hexRepresentation() -> String {
-        let hexForBlack = "ffffff"
+        let hexForBlack = "000000"
         guard let colorComponents = components else { return hexForBlack }
         guard let colorSpace = colorSpace else { return hexForBlack }
 
