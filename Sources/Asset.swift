@@ -13,6 +13,7 @@ import ObjectMapper
 public class Asset: Resource, LocalizedResource {
 
     /// URL of the media file associated with this asset. Optional for compatibility with `select` operator queries.
+    /// Also, If the media file is still being processed, as the final stage of uploading to your space, this property will be nil.
     public var urlString: String?
 
     /// The title of the asset. Optional for compatibility with `select` operator queries.
@@ -73,6 +74,7 @@ public class Asset: Resource, LocalizedResource {
         self.locale = locale
         self.defaultLocale = determineDefaultLocale(map.JSON)
         self.localizedFields = localizedFields
+
         // Optional properties
         self.title          <- map["fields.title"]
         self.description    <- map["fields.description"]
