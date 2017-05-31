@@ -5,17 +5,29 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 
 ## Unreleased
 
-#### Planned
-- Better support and Swift'ier API for [Images API](https://www.contentful.com/developers/docs/references/images-api/).
+#### Planned for 1.0.0 release
+- Support to mirror the API logic clientside when all locales are returned (i.e. when using the `/sync` endpoint or specifing `locale=*`)
+- Support for HTTP rate limit headers
+- Improved handling of ISO8601 dates to work with `ContentModellable` protocol.
 - Further iteration on `ContentModellable` protocol.
+- Add `@objc` annotations to capable methods for improved interoperability with Objective-C codebases.
 
 ---
 
 ## Table of contents
 
 #### 0.x Releases
+- `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041)
 - `0.3.x` Releases - [0.3.0](#030) | [0.3.1](#031)
+
+---
+
+## [`0.5.0`](https://github.com/contentful/contentful.swift/releases/tag/0.5.0)
+Released on 2017-05-31
+
+#### Added
+- Better support and Swifty API for [Images API](https://www.contentful.com/developers/docs/references/images-api/).
 
 ---
 
