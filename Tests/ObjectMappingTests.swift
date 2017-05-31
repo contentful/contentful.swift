@@ -12,24 +12,25 @@ import XCTest
 import Nimble
 import ObjectMapper
 
+
 class ObjectMappingTests: XCTestCase {
 
-    func jsonData(_ fileName: String) -> [String: Any] {
+
+    static func jsonData(_ fileName: String) -> [String: Any] {
         let path = NSString(string: "Data").appendingPathComponent(fileName)
         let bundle = Bundle(for: ObjectMappingTests.self)
         let urlPath = bundle.path(forResource: path, ofType: "json")!
         let data = try! Data(contentsOf: URL(fileURLWithPath: urlPath))
         return try! JSONSerialization.jsonObject(with: data, options: []) as! [String : Any]
     }
-
     func testDecodeAsset() {
         do {
-            let map = Map(mappingType: .fromJSON, JSON: self.jsonData("asset"))
+            let map = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("asset"))
             let asset = try Asset(map: map)
 
             expect(asset.sys.id).to(equal("nyancat"))
             expect(asset.sys.type).to(equal("Asset"))
-            expect(try asset.URL()).to(equal(URL(string: "https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png")))
+            expect(try asset.url()).to(equal(URL(string: "https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png")))
         } catch _ {
             fail("Asset decoding should not throw an error")
         }
@@ -37,7 +38,7 @@ class ObjectMappingTests: XCTestCase {
 
     func testDecodeSpaces() {
         do {
-            let map = Map(mappingType: .fromJSON, JSON: self.jsonData("space"))
+            let map = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("space"))
             let space = try Space(map: map)
 
             expect(space.sys.id).to(equal("cfexampleapi"))
@@ -53,7 +54,7 @@ class ObjectMappingTests: XCTestCase {
 
     func testDecodeLocalizedEntries() {
         do {
-            let map = Map(mappingType: .fromJSON, JSON: self.jsonData("localized"))
+            let map = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("localized"))
 
             let entry = try Entry(map: map)
 
@@ -70,7 +71,7 @@ class ObjectMappingTests: XCTestCase {
 
     func testDecodeSyncResponses() {
         do {
-            let map = Map(mappingType: .fromJSON, JSON: self.jsonData("sync"))
+            let map = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("sync"))
             let syncSpace = try SyncSpace(map: map)
 
             expect(syncSpace.assets.count).to(equal(4))
@@ -83,7 +84,7 @@ class ObjectMappingTests: XCTestCase {
 
     func testDecodeSyncResponsesWithDeletedAssets() {
         do {
-            let map = Map(mappingType: .fromJSON, JSON: self.jsonData("deleted-asset"))
+            let map = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("deleted-asset"))
 
             let syncSpace = try SyncSpace(map: map)
 
@@ -99,7 +100,7 @@ class ObjectMappingTests: XCTestCase {
     func testDecodeSyncResponsesWithDeletedEntries() {
         do {
 
-            let map = Map(mappingType: .fromJSON, JSON: self.jsonData("deleted"))
+            let map = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("deleted"))
             let syncSpace = try SyncSpace(map: map)
 
             expect(syncSpace.assets.count).to(equal(0))

@@ -24,7 +24,10 @@ disabled_rules:
 - identifier_name 
 
 # Parameterized
-line_length: 150
+line_length: 
+  warning: 150
+  ignores_comments: true
+  ignores_urls: true
 vertical_whitespace:
   max_empty_lines: 2
 file_length: 650
