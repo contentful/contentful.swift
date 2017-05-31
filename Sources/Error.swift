@@ -41,6 +41,12 @@ public enum SDKError: Error {
 
     /// Thrown when no entry is found matching a specific Entry id
     case noEntryFoundFor(id: String)
+
+    /// Thrown when the construction of a URL pointing to an underlying media file for an Asset is invalid.
+    case invalidImageParameters(String)
+
+    /// Thrown when a `Foundation.Data` object is unable to be transformed to a `UIImage` or an `NSImage` object.
+    case unableToDecodeImageData
 }
 
 /// Errors thrown for queries which have invalid construction.

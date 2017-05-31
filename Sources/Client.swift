@@ -9,9 +9,6 @@
 import ObjectMapper
 import Foundation
 import Interstellar
-#if os(iOS) || os(tvOS)
-    import UIKit
-#endif
 
 
 /// A tuple of data task, enabling the cancellation of http requests, and an `Observable` for the resulting
@@ -333,39 +330,20 @@ extension Client {
     /**
      Fetch the underlying media file as `Data`.
 
+     - Parameter asset: The `Asset` which contains the relevant media file.
+     - Parameter imageOptions: An optional array of options for server side manipulations.
      - Returns: Tuple of the data task and a signal for the `Data` result.
+
      */
-    public func fetchData(for asset: Asset) -> Observable<Result<Data>> {
+    public func fetchData(for asset: Asset, with imageOptions: [ImageOption] = []) -> Observable<Result<Data>> {
         do {
-            return fetch(url: try asset.URL()).observable
+            return fetch(url: try asset.url(with: imageOptions)).observable
         } catch let error {
             let observable = Observable<Result<Data>>()
             observable.update(Result.error(error))
             return observable
         }
     }
-
-#if os(iOS) || os(tvOS)
-    /**
-     Fetch the underlying media file as `UIImage`.
-
-     - returns: The signal for the `UIImage` result
-     */
-    public func fetchImage(for asset: Asset) -> Observable<Result<UIImage>> {
-        return self.fetchData(for: asset).flatMap { result -> Observable<Result<UIImage>> in
-
-            let imageResult = result.flatMap { data -> Result<UIImage> in
-                if let image = UIImage(data: data) {
-                    return Result.success(image)
-                } else {
-                    return Result.error(QueryError.invalidOrderProperty)
-                }
-            }
-
-            return Observable<Result<UIImage>>(imageResult)
-        }
-    }
-#endif
 }
 
 extension Client {
