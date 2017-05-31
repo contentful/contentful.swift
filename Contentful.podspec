@@ -19,9 +19,15 @@ Pod::Spec.new do |spec|
                         :tag => spec.version.to_s }
   spec.requires_arc = true
 
-  spec.source_files         = 'Sources/*.swift'
+  spec.source_files              = 'Sources/*.swift'
   
   spec.frameworks                = 'CoreLocation'
+  
+  ## Platform specific source code.
+  spec.ios.source_files          = 'Sources/UIKit/*.swift'
+  spec.watchos.source_files      = 'Sources/UIKit/*.swift'
+  spec.tvos.source_files         = 'Sources/UIKit/*.swift'
+  spec.osx.source_files          = 'Sources/AppKit/*.swift'
 
   spec.ios.deployment_target     = '8.0'
   spec.osx.deployment_target     = '10.10'
