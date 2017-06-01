@@ -39,7 +39,7 @@ protocol LocalizedResource {
     // Should this be moved to Resource?
     var fields: [String: Any]! { get }
 
-    var locale: String { get set }
+    var locale: String? { get set }
     var localizedFields: [String: [String: Any]] { get }
     var defaultLocale: String { get }
 }
@@ -69,14 +69,14 @@ func +<K: Hashable, V> (left: [K: V], right: [K: V]) -> [K: V] {
     return left += right
 }
 
-func fields(_ localizedFields: [String: [String: Any]], forLocale locale: String, defaultLocale: String) -> [String: Any] {
-    if let fields = localizedFields[locale], locale != defaultLocale {
-        let defaultLocaleFields = localizedFields[defaultLocale] ?? [String: Any]()
+func fields(_ localizedFields: [String: [String: Any]], forLocale locale: String?, defaultLocale: String) -> [String: Any] {
+    let localeFields = localizedFields[defaultLocale] ?? [String: Any]()
 
-        return defaultLocaleFields + fields
+    if let locale = locale, let fields = localizedFields[locale], locale != defaultLocale {
+        return localeFields + fields
+    } else {
+        return localeFields
     }
-
-    return localizedFields[locale] ?? [String: Any]()
 }
 
 public extension Dictionary where Key: ExpressibleByStringLiteral {
