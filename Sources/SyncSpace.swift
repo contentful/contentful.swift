@@ -103,37 +103,35 @@ public final class SyncSpace: ImmutableMappable {
         }
 
         // Callback to merge the most recent sync page with the current sync space.
-        let syncCompletion: (Result<SyncSpace>) -> Void = { [weak self] result in
-
-            guard let strongSelf = self else { return }
+        let syncCompletion: (Result<SyncSpace>) -> Void = { result in
 
             switch result {
             case .success(let syncSpace):
 
                 for asset in syncSpace.assets {
-                    strongSelf.delegate?.create(asset: asset)
-                    strongSelf.assetsMap[asset.sys.id] = asset
+                    self.delegate?.create(asset: asset)
+                    self.assetsMap[asset.sys.id] = asset
                 }
 
                 for entry in syncSpace.entries {
-                    entry.resolveLinks(against: strongSelf.entries + syncSpace.entries, and: strongSelf.assets)
-                    strongSelf.delegate?.create(entry: entry)
-                    strongSelf.entriesMap[entry.sys.id] = entry
+                    entry.resolveLinks(against: self.entries + syncSpace.entries, and: self.assets)
+                    self.delegate?.create(entry: entry)
+                    self.entriesMap[entry.sys.id] = entry
                 }
 
                 for deletedAssetId in syncSpace.deletedAssets {
-                    strongSelf.delegate?.delete(assetWithId: deletedAssetId)
-                    strongSelf.assetsMap.removeValue(forKey: deletedAssetId)
+                    self.delegate?.delete(assetWithId: deletedAssetId)
+                    self.assetsMap.removeValue(forKey: deletedAssetId)
                 }
 
                 for deletedEntryId in syncSpace.deletedEntries {
-                    strongSelf.delegate?.delete(entryWithId: deletedEntryId)
-                    strongSelf.entriesMap.removeValue(forKey: deletedEntryId)
+                    self.delegate?.delete(entryWithId: deletedEntryId)
+                    self.entriesMap.removeValue(forKey: deletedEntryId)
                 }
 
-                strongSelf.syncToken = syncSpace.syncToken
+                self.syncToken = syncSpace.syncToken
 
-                completion(.success(strongSelf))
+                completion(.success(self))
             case .error(let error):
                 completion(.error(error))
             }
