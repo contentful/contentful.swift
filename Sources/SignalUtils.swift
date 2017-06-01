@@ -8,7 +8,6 @@
 
 import Foundation
 import Interstellar
-import ObjectiveC.runtime
 
 
 typealias SignalBang<U> = (@escaping (Result<U>) -> Void) -> URLSessionDataTask?

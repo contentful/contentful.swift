@@ -8,24 +8,11 @@
 
 import Foundation
 import ObjectMapper
-import ObjectiveC.runtime
 
 private var key = "ContentfulClientKey"
 
-extension NSDictionary {
-    var client: Client? {
-        get {
-            return objc_getAssociatedObject(self, &key) as? Client
-        }
-        set {
-            objc_setAssociatedObject(self, &key, newValue, .OBJC_ASSOCIATION_RETAIN)
-        }
-    }
-}
-
-
-internal func determineDefaultLocale(_ json: Any) -> String {
-    if let json = json as? NSDictionary, let space = json.client?.space {
+internal func determineDefaultLocale(client: Client?) -> String {
+    if let space = client?.space {
         if let locale = (space.locales.filter { $0.isDefault }).first {
             return locale.code
         }
@@ -34,7 +21,7 @@ internal func determineDefaultLocale(_ json: Any) -> String {
     return Defaults.locale
 }
 
-internal func parseLocalizedFields(_ json: [String: Any]) throws -> (String, [String: [String: Any]]) {
+internal func parseLocalizedFields(_ json: [String: Any]) throws -> (String?, [String: [String: Any]]) {
     let map = Map(mappingType: .fromJSON, JSON: json)
     var fields: [String: Any]!
     fields <- map["fields"]
@@ -64,5 +51,5 @@ internal func parseLocalizedFields(_ json: [String: Any]) throws -> (String, [St
         }
     }
 
-    return (locale ?? Defaults.locale, localizedFields)
+    return (locale, localizedFields)
 }

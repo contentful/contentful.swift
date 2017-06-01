@@ -192,7 +192,7 @@ public final class SyncSpace: ImmutableMappable {
         items <- map["items"]
 
         let resources: [Resource] = items.flatMap { itemJSON in
-            let map = Map(mappingType: .fromJSON, JSON: itemJSON)
+            let map = Map(mappingType: .fromJSON, JSON: itemJSON, context: map.context)
 
             var type: String!
             type <- map["sys.type"]
