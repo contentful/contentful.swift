@@ -12,10 +12,21 @@ Swift SDK for [Contentful's][1] Content Delivery API.
 
 [Contentful][1] is a content management platform for web applications, mobile apps and connected devices. It allows you to create, edit & manage content in the cloud and publish it anywhere via powerful API. Contentful offers tools for managing editorial teams and enabling cooperation between organizations.
 
-The Contentful Swift SDK hasn't reached 1.0.0 and is therefore subject to API changes. However, it provides a more usable API than the [Objective-C SDK][4] from Swift. Check out our [Swift example][6] in this case.
+The Contentful Swift SDK hasn't reached 1.0.0 and is therefore subject to API changes. However, it provides a more usable API than the [Objective-C SDK][4] and has support for more API features.
+
+#### Full feature comparison of [contentful.swift][9] & [contentful.objc][4]
+
+| CDA Features | [contentful.swift][10] | [contentful.objc][4] |
+| -----------  | ----------- | ----------- |
+| API coverage* | :white_check_mark: | :white_check_mark: |
+| Images API | :white_check_mark: | :white_check_mark: |
+| Search Parameters | :white_check_mark: | :no_entry_sign: |
+| Fallback locales for sync api | :construction: | :no_entry_sign: |
+| Rate limit handling | :no_entry_sign: | :no_entry_sign: |
+
+*API Coverage definition: all endpoints can be interfaced with and complex queries can be constructed by passing in dictionaries of http parameter/argument pairs. Note that the Swift SDK provides much more comprehensive coverage and takes advantage of type system, outdoing the "stringly typed" interface that the Objective-C SDK offers.
 
 ## Usage
-
 
 ```swift
 let client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1")
@@ -40,12 +51,11 @@ The Contentful Swift SDK requires, at minimum, Swift 2.2 and therefore Xcode 7.3
  Swift version | Compatible Contentful tag |
 | --- | --- |
 | Swift 3.0 | `v0.5.0` |
-| Swift 2.3 | `v0.2.3`|
-| Swift 2.2 | `v0.2.1`|
+| Swift 2.3 | `v0.2.3` |
+| Swift 2.2 | `v0.2.1` |
 
 While there have been some patches applied to the [`Swift-2.3` branch][9], no future maintainence is intended on this branch. It is recommended to upgrade to Swift 3 and
 use the newest version of contentful.swift.
-
 
 ### CocoaPods installation
 
@@ -60,10 +70,10 @@ pod 'Contentful'
 You can specify a specific version of Contentful depending on your needs. To learn more about operators for dependency versioning within a Podfile, see the [CocoaPods doc on the Podfile][7].
 
 ```ruby
-pod 'Contentful', '0.2.3' 
+pod 'Contentful', '~> 0.5.0' 
 ```
 
-Note that for Swift 2.3 support (contentful.swift `v0.2.3`) you will need to add a post-install, configuration change to Pods.xcodeproj. You can do this via the Podfile:
+Note that for Swift 2.3 support (contentful.swift `v0.2.3`) you will need to add a post-install script to your Podfile if installing with Cocoapods:
 
 ```ruby
 post_install do |installer|
@@ -87,7 +97,6 @@ github "contentful/contentful.swift" ~> 0.5.0
 
 Copyright (c) 2016 Contentful GmbH. See LICENSE for further details.
 
-
 [1]: https://www.contentful.com
 [2]: http://www.cocoapods.org
 [3]: https://www.contentful.com/developers/documentation/content-delivery-api/
@@ -97,3 +106,4 @@ Copyright (c) 2016 Contentful GmbH. See LICENSE for further details.
 [7]: https://guides.cocoapods.org/using/the-podfile.html
 [8]: https://github.com/Carthage/Carthage
 [9]: https://github.com/contentful/contentful.swift/tree/Swift-2.3
+[10]: https://github.com/contentful/contentful.swift

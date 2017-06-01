@@ -33,10 +33,7 @@ integration_test: clean clean_simulators
 		-destination 'platform=iOS Simulator,name=iPhone 6s,OS=9.3' | xcpretty -c
 
 setup_env:
-	brew outdated carthage || brew upgrade carthage
-	brew outdated swiftlint || brew upgrade swiftlint
-	brew outdated direnv || brew upgrade direnv
-	bundle install
+	./Scripts/setup-env.sh
 
 lint:
 	swiftlint
