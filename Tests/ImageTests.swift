@@ -19,7 +19,11 @@ class ImageTests: XCTestCase {
 
     let nyanCatAsset: Asset = {
         // Load nyan cat from "asset.json" file.
-        let map = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("asset"))
+        let spaceMap = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("space"))
+        let space = try! Space(map: spaceMap)
+
+        let assetMappingContext = space.localizationContext
+        let map = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("asset"), context: assetMappingContext)
         let asset = try! Asset(map: map)
         return asset
     }()

@@ -15,7 +15,6 @@ import ObjectMapper
 
 class ObjectMappingTests: XCTestCase {
 
-
     static func jsonData(_ fileName: String) -> [String: Any] {
         let path = NSString(string: "Data").appendingPathComponent(fileName)
         let bundle = Bundle(for: ObjectMappingTests.self)
@@ -23,9 +22,25 @@ class ObjectMappingTests: XCTestCase {
         let data = try! Data(contentsOf: URL(fileURLWithPath: urlPath))
         return try! JSONSerialization.jsonObject(with: data, options: []) as! [String : Any]
     }
-    func testDecodeAsset() {
+
+    func testDecodingWithoutLocalizationContextThrows() {
         do {
             let map = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("asset"))
+            let _ = try Asset(map: map)
+            fail("Mapping without a localizatoin context should throw an error")
+        } catch _ {
+            XCTAssert(true)
+        }
+    }
+
+    func testDecodeAsset() {
+        do {
+            // We must have a space first to pass in locale information.
+            let spaceMap = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("space"))
+            let space = try Space(map: spaceMap)
+
+            let localesContext = space.localizationContext
+            let map = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("asset"), context: localesContext)
             let asset = try Asset(map: map)
 
             expect(asset.sys.id).to(equal("nyancat"))
@@ -54,14 +69,19 @@ class ObjectMappingTests: XCTestCase {
 
     func testDecodeLocalizedEntries() {
         do {
-            let map = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("localized"))
+            // We must have a space first to pass in locale information.
+            let spaceMap = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("space"))
+            let space = try Space(map: spaceMap)
+
+            let localesContext = space.localizationContext
+            let map = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("localized"), context: localesContext)
 
             let entry = try Entry(map: map)
 
             expect(entry.sys.id).to(equal("nyancat"))
             expect(entry.fields["name"] as? String).to(equal("Nyan Cat"))
 
-            entry.locale = "tlh"
+            entry.setLocale(withCode: "tlh")
 
             expect(entry.fields["name"] as? String).to(equal("Nyan vIghro'"))
         } catch _ {
@@ -71,7 +91,13 @@ class ObjectMappingTests: XCTestCase {
 
     func testDecodeSyncResponses() {
         do {
-            let map = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("sync"))
+            // We must have a space first to pass in locale information.
+            let spaceMap = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("space"))
+            let space = try Space(map: spaceMap)
+
+            let localesContext = space.localizationContext
+
+            let map = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("sync"), context: localesContext)
             let syncSpace = try SyncSpace(map: map)
 
             expect(syncSpace.assets.count).to(equal(4))

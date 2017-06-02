@@ -157,9 +157,14 @@ open class Client {
 
     fileprivate func handleJSON<MappableType: ImmutableMappable>(_ data: Data, _ completion: ResultsHandler<MappableType>) {
         do {
-            let json = try JSONSerialization.jsonObject(with: data, options: [])
+            guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+                let error = SDKError.unparseableJSON(data: data, errorMessage: "Foundation.JSONSerialization failed")
+                completion(Result.error(error))
+                return
+            }
 
-            let map = Map(mappingType: .fromJSON, JSON: json as! [String : Any], context: self)
+            let localizationContext = space?.localizationContext
+            let map = Map(mappingType: .fromJSON, JSON: json, context: localizationContext)
 
             // Use `Mappable` failable initialzer to optional rather throwing `ImmutableMappable` initializer
             // because failure to find an error in the JSON should error should not throw an error that JSON is not parseable.
@@ -168,6 +173,7 @@ open class Client {
                 return
             }
 
+            // Locales will be injected via the map.property option.
             let decodedObject = try MappableType(map: map)
             completion(Result.success(decodedObject))
 
@@ -178,8 +184,6 @@ open class Client {
         }
     }
 }
-
-extension Client: MapContext { }
 
 // MARK: - Query
 
