@@ -92,19 +92,42 @@ public enum QueryError: Error {
 
 
 /// Information regarding an error received from Contentful
-public class ContentfulError: Resource, Error {
+public class ContentfulError: Mappable, Error {
 
     /// Human readable error message.
-    public var message: String
+    public var message: String?
+
     /// The identifier of the request, can be useful when making support requests.
-    public var requestId: String
+    public var requestId: String?
 
-    // MARK: <ImmutableMappable>
+    // Developer note: API Errors are a special case for Object mapping from JSON. 
+    // Rather than throw an error which will trigger the Swift error breakpoint in Xcode, 
+    // we want to use failable ObjectMapper initializers.
 
-    public required init(map: ObjectMapper.Map) throws {
-        message     = try map.value("message")
-        requestId   = try map.value("requestId")
+    public var id: String?
 
-        try super.init(map: map)
+    public var type: String?
+
+    // MARK: <Mappable>
+
+    public required init?(map: Map) {
+        message     <- map["message"]
+        requestId   <- map["requestId"]
+
+        // An error must have these things. 
+        guard message != nil && requestId != nil else {
+            return nil
+        }
+
+        id          <- map["sys.id"]
+        type        <- map["sys.type"]
+    }
+
+    // Required by ObjectMapper.BaseMappable
+    public func mapping(map: Map) {
+        message     <- map["message"]
+        requestId   <- map["requestId"]
+        id          <- map["sys.id"]
+        type        <- map["sys.type"]
     }
 }
