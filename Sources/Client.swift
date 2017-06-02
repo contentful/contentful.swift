@@ -161,9 +161,10 @@ open class Client {
 
             let map = Map(mappingType: .fromJSON, JSON: json as! [String : Any], context: self)
 
-            // Handle error thrown by CDA.
-            if let error = try? ContentfulError(map: map) {
-                completion(Result.error(error))
+            // Use `Mappable` failable initialzer to optional rather throwing `ImmutableMappable` initializer
+            // because failure to find an error in the JSON should error should not throw an error that JSON is not parseable.
+            if let apiError = ContentfulError(map: map) {
+                completion(Result.error(apiError))
                 return
             }
 
