@@ -3,14 +3,20 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) starting from 1.x releases.
 
-## Unreleased
 
-#### Planned for 1.0.0 release
+## Planned for 1.0.0 release
 - Support to mirror the API logic clientside when all locales are returned (i.e. when using the `/sync` endpoint or specifing `locale=*`)
 - Support for HTTP rate limit headers
 - Improved handling of ISO8601 dates to work with `ContentModellable` protocol.
 - Further iteration on `ContentModellable` protocol.
 - Add `@objc` annotations to capable methods for improved interoperability with Objective-C codebases.
+
+### Merged, but not yet released
+> #### Fixed
+> - Unintentionally triggered Swift errors that were thrown during JSON deserialization. 
+> 	- Fixed by [@loudmouth](https://github.com/loudmouth) in [#71](https://github.com/contentful/contentful.swift/issues/71)
+> - Crash when using [contentful-persistence.swift](https://github.com/contentful/contentful-persistence.swift) caused by missing `defaultLocale` property: Issue [#68](https://github.com/contentful/contentful.swift/issues/68) and [#65](https://github.com/contentful/contentful.swift/issues/65)
+> 	- Fixed by [@sebastianludwig](https://github.com/sebastianludwig) and [@tapwork](https://github.com/tapwork) in [#70](https://github.com/contentful/contentful.swift/pull/70).
 
 ---
 
