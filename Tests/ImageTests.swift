@@ -27,7 +27,7 @@ class ImageTests: XCTestCase {
         return asset
     }()
 
-    static let client = TestClientFactory.cfExampleAPIClient(withCassetteNamed:  "ImageTests")
+    static let client = TestClientFactory.testClient(withCassetteNamed:  "ImageTests")
 
     override class func setUp() {
         super.setUp()

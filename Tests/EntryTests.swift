@@ -27,7 +27,7 @@ extension Date {
 
 class EntryTests: XCTestCase {
 
-    static let client = TestClientFactory.cfExampleAPIClient(withCassetteNamed:  "EntryTests")
+    static let client = TestClientFactory.testClient(withCassetteNamed:  "EntryTests")
 
     override class func setUp() {
         super.setUp()

@@ -13,7 +13,7 @@ import DVR
 
 class ContentTypeTests: XCTestCase {
 
-    static let client = TestClientFactory.cfExampleAPIClient(withCassetteNamed:  "ContentTypeTests")
+    static let client = TestClientFactory.testClient(withCassetteNamed:  "ContentTypeTests")
 
     override class func setUp() {
         super.setUp()
