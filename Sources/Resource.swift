@@ -99,7 +99,7 @@ public class LocalizableResource: Resource {
             self.currentlySelectedLocale = localizationContext.default
         }
 
-        self.localizableFields = try Localization.mapFieldsToMultiLocaleFormat(using: map, selectedLocale: currentlySelectedLocale)
+        self.localizableFields = try Localization.fieldsInMultiLocaleFormat(from: map, selectedLocale: currentlySelectedLocale)
 
         try super.init(map: map)
     }

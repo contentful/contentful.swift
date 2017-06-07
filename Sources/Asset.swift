@@ -37,16 +37,16 @@ public class Asset: LocalizableResource {
     public struct FileMetadata: ImmutableMappable {
 
         /// Original filename of the file.
-        let fileName: String
+        public let fileName: String
 
         ///  Content type of the file.
-        let contentType: String
+        public let contentType: String
 
         /// Details of the file, depending on it's MIME type.
-        let details: [String: Any]
+        public let details: [String: Any]
 
         /// The size of the file in bytes.
-        let size: Int
+        public let size: Int
 
         public init(map: Map) throws {
             self.fileName       = try map.value("fileName")

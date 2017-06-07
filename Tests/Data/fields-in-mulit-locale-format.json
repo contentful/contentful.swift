@@ -1,0 +1,61 @@
+{
+    "sys": {
+        "space": {
+            "sys": {
+                "type": "Link",
+                "linkType": "Space",
+                "id": "cfexampleapi"
+            }
+        },
+        "id": "happycat",
+        "type": "Entry",
+        "createdAt": "2013-06-27T22:46:20.171Z",
+        "updatedAt": "2013-11-18T15:58:02.018Z",
+        "revision": 8,
+        "contentType": {
+            "sys": {
+                "type": "Link",
+                "linkType": "ContentType",
+                "id": "cat"
+            }
+        }
+    },
+    "fields": {
+        "name": {
+            "en-US": "Happy Cat",
+            "tlh": "Quch vIghro"
+        },
+        "likes": {
+        "en-US": [
+            "cheezburger"
+            ]
+        },
+        "color": {
+            "en-US": "gray"
+        },
+        "bestFriend": {
+            "en-US": {
+                "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "nyancat"
+                }
+            }
+        },
+        "birthday": {
+            "en-US": "2003-10-28T23:00:00+00:00"
+        },
+        "lives": {
+            "en-US": 1
+        },
+        "image": {
+            "en-US": {
+                "sys": {
+                "type": "Link",
+                "linkType": "Asset",
+                "id": "happycat"
+                }
+            }
+        }
+    }
+}

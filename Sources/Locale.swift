@@ -44,9 +44,9 @@ public class Locale: ImmutableMappable {
 internal class LocalizationContext: MapContext {
 
     // An ordered collection of locales representing the fallback chain.
-    let locales: [LocaleCode: Locale]
+    internal let locales: [LocaleCode: Locale]
 
-    let `default`: Locale
+    internal let `default`: Locale
 
     init(default: Locale, locales: [Locale]) {
         self.`default` = `default`
@@ -60,7 +60,7 @@ internal class LocalizationContext: MapContext {
 internal struct Localization {
 
     // Walk down the fallback chain bla bla bla
-    static func fields(forLocale locale: Locale?,
+    internal static func fields(forLocale locale: Locale?,
                        localizableFields: [FieldName: [LocaleCode: Any]],
                        localizationContext: LocalizationContext) -> [FieldName: Any] {
 
@@ -93,7 +93,7 @@ internal struct Localization {
     }
 
     // Should localized fields
-    internal static func mapFieldsToMultiLocaleFormat(using map: Map,
+    internal static func fieldsInMultiLocaleFormat(from map: Map,
                                                       selectedLocale: Locale) throws -> [FieldName: [LocaleCode: Any]] {
         let fields: [FieldName: Any] = try map.value("fields")
 

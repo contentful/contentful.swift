@@ -1,0 +1,28 @@
+{
+    "sys": {
+        "locale": "en-US"
+    },
+    "fields": {
+        "name": "Happy Cat",
+        "likes": [
+                  "cheezburger"
+                  ],
+        "color": "gray",
+        "bestFriend": {
+            "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "nyancat"
+            }
+        },
+        "birthday": "2003-10-28T23:00:00+00:00",
+        "lives": 1,
+        "image": {
+            "sys": {
+                "type": "Link",
+                "linkType": "Asset",
+                "id": "happycat"
+            }
+        }
+    }
+}
