@@ -47,6 +47,9 @@ public enum SDKError: Error {
 
     /// Thrown when a `Foundation.Data` object is unable to be transformed to a `UIImage` or an `NSImage` object.
     case unableToDecodeImageData
+
+    /// Thrown when the SDK has issues mapping responses with the necessary locale information.
+    case localeHandlingError(message: String)
 }
 
 /// Errors thrown for queries which have invalid construction.
@@ -111,16 +114,12 @@ public class ContentfulError: Mappable, Error {
     // MARK: <Mappable>
 
     public required init?(map: Map) {
-        message     <- map["message"]
-        requestId   <- map["requestId"]
+        mapping(map: map)
 
-        // An error must have these things. 
+        // An error must have these things.
         guard message != nil && requestId != nil else {
             return nil
         }
-
-        id          <- map["sys.id"]
-        type        <- map["sys.type"]
     }
 
     // Required by ObjectMapper.BaseMappable

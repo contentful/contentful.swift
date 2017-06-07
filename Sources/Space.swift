@@ -9,27 +9,6 @@
 import Foundation
 import ObjectMapper
 
-/// A Locale represents possible translations for Entry Fields
-public struct Locale: ImmutableMappable {
-
-    /// The unique identifier for this Locale
-    public let code: String
-    /**
-     Whether this Locale is the default (if a Field is not translated in a given Locale, the value of
-     the default locale will be returned by the API)
-    */
-    public let isDefault: Bool
-    /// The name of this Locale
-    public let name: String
-
-    // MARK: <ImmutableMappable>
-
-    public init(map: Map) throws {
-        code        = try map.value("code")
-        isDefault   = try map.value("default")
-        name        = try map.value("name")
-    }
-}
 
 /// A Space represents a collection of Content Types, Assets and Entries in Contentful
 public class Space: Resource {
@@ -45,11 +24,18 @@ public class Space: Resource {
         return sys.type
     }
 
+    internal let localizationContext: LocalizationContext
+
     // MARK: <ImmutableMappable>
 
     public required init(map: Map) throws {
-        locales = try map.value("locales")
-        name    = try map.value("name")
+        name        = try map.value("name")
+        locales     = try map.value("locales")
+
+        guard let defaultLocale = locales.filter({ $0.isDefault }).first else {
+            throw SDKError.localeHandlingError(message: "Locale with default == true not found in Space!")
+        }
+        localizationContext = LocalizationContext(default: defaultLocale, locales: locales)
 
         try super.init(map: map)
     }

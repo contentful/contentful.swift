@@ -8,6 +8,8 @@
 
 import ObjectMapper
 
+public typealias FieldName = String
+
 /// The possible Field types in Contentful
 public enum FieldType: String {
     /// An array of links or symbols
