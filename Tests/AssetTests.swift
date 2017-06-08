@@ -9,7 +9,6 @@
 @testable import Contentful
 import XCTest
 import DVR
-import CryptoSwift
 import Nimble
 
 func url(_ asset: Asset) -> URL {
@@ -30,10 +29,6 @@ class AssetTests: XCTestCase {
     override class func tearDown() {
         super.tearDown()
         (client.urlSession as? DVR.Session)?.endRecording()
-    }
-
-    func md5(_ image: UIImage) -> String {
-        return UIImagePNGRepresentation(image)!.md5().toHexString()
     }
 
     // MARK: Tests
@@ -84,7 +79,8 @@ class AssetTests: XCTestCase {
         AssetTests.client.fetchAsset(id: "nyancat").then { asset in
             AssetTests.client.fetchImage(for: asset).then { image in
 
-                expect(self.md5(image)).to(equal("94fd9a22b0b6ecab15d91486922b8d7e"))
+                expect(image.size.width).to(equal(250.0))
+                expect(image.size.height).to(equal(250.0))
                 expectation.fulfill()
             }
         }.error {

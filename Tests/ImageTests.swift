@@ -11,7 +11,6 @@ import Foundation
 @testable import Contentful
 import XCTest
 import DVR
-import CryptoSwift
 import Nimble
 import ObjectMapper
 
