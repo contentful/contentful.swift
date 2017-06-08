@@ -99,7 +99,6 @@
 		ED3CBF211E7AD58100E5B02E /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3CBF1E1E7AD58100E5B02E /* Link.swift */; };
 		ED3CBF221E7AD58100E5B02E /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3CBF1E1E7AD58100E5B02E /* Link.swift */; };
 		ED6412EE1EDDBE1400332A99 /* ImageTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED6412EC1EDDBDFF00332A99 /* ImageTests.json */; };
-		ED65CF971E3F6BF8000EBC62 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65CF941E3F6BF8000EBC62 /* CryptoSwift.framework */; };
 		ED65CF981E3F6BF8000EBC62 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65CF951E3F6BF8000EBC62 /* Nimble.framework */; };
 		ED65CF9B1E3F6C0C000EBC62 /* Interstellar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65CF9A1E3F6C0C000EBC62 /* Interstellar.framework */; };
 		ED65CF9F1E3F6C2A000EBC62 /* Interstellar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65CF9D1E3F6C2A000EBC62 /* Interstellar.framework */; };
@@ -181,7 +180,6 @@
 		ED3CBF1E1E7AD58100E5B02E /* Link.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Link.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		ED6412EC1EDDBDFF00332A99 /* ImageTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ImageTests.json; sourceTree = "<group>"; };
-		ED65CF941E3F6BF8000EBC62 /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
 		ED65CF951E3F6BF8000EBC62 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		ED65CF9A1E3F6C0C000EBC62 /* Interstellar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Interstellar.framework; path = Carthage/Build/iOS/Interstellar.framework; sourceTree = "<group>"; };
 		ED65CF9D1E3F6C2A000EBC62 /* Interstellar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Interstellar.framework; path = Carthage/Build/Mac/Interstellar.framework; sourceTree = "<group>"; };
@@ -225,7 +223,6 @@
 				ED65CF981E3F6BF8000EBC62 /* Nimble.framework in Frameworks */,
 				ED65CF9B1E3F6C0C000EBC62 /* Interstellar.framework in Frameworks */,
 				A19CA3CF1B836EDD00A0EFCD /* Contentful.framework in Frameworks */,
-				ED65CF971E3F6BF8000EBC62 /* CryptoSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,7 +401,6 @@
 			children = (
 				ED9102651E65AADA0076FDBD /* DVR.framework */,
 				ED65CF9A1E3F6C0C000EBC62 /* Interstellar.framework */,
-				ED65CF941E3F6BF8000EBC62 /* CryptoSwift.framework */,
 				ED65CF951E3F6BF8000EBC62 /* Nimble.framework */,
 			);
 			name = TestFrameworks;
