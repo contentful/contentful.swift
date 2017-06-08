@@ -27,26 +27,41 @@ public struct LinkSys {
 */
 public enum Link {
 
-    /// The Link points to an `Asset`
-    public case asset(Asset)
-
-    /// The Link points to an `Entry`
-    public case entry(Entry)
-
-    /// The Link is unresolved, and therefore contains a dictionary of metadata describing the linked resource.
-    public case unresolved(LinkSys)
-
-    /// The unique identifier of the linked asset or entry
     public var id: String {
         switch self {
-        case .asset(let asset):     return asset.id
-        case .entry(let entry):     return entry.id
-        case .unresolved(let sys):  return sys.id
+        case .asset(let asset): return asset.id
+        case .entry(let entry): return entry.id
+        case .unresolved(let sys): return sys.id
         }
     }
 
+    internal static func link(from fieldValue: Any) -> Link? {
+        if let link = fieldValue as? Link {
+            return link
+        }
+
+        // Linked objects are stored as a dictionary with "type": "Link",
+        // value for "linkType" can be "Asset", "Entry", "Space", "ContentType".
+        if let linkJSON = fieldValue as? [String: AnyObject],
+            let sys = linkJSON["sys"] as? [String: AnyObject],
+            let id = sys["id"] as? String,
+            let linkType = sys["linkType"] as? String {
+            return Link.unresolved(LinkSys(id: id, linkType: linkType))
+        }
+        return nil
+    }
+
+    /// The Link points to an `Asset`
+    case asset(Asset)
+
+    /// The Link points to an `Entry`
+    case entry(Entry)
+
+    /// The Link is unresolved, and therefore contains a dictionary of metadata describing the linked resource.
+    case unresolved(LinkSys)
+
     /// The linked Entry, if it exists.
-    public var entry: Entry? {
+    var entry: Entry? {
         switch self {
         case .entry(let entry):     return entry
         default:                    return nil
@@ -54,7 +69,7 @@ public enum Link {
     }
 
     /// The linked Asset, if it exists.
-    public var asset: Asset? {
+    var asset: Asset? {
         switch self {
         case .asset(let asset):     return asset
         default:                    return nil
@@ -76,8 +91,6 @@ public enum Link {
         return value
     }
 
-    // MARK: Internal
-
     private func toDestinationType<DestinationType: ContentModellable>(linkDepth: Int) -> DestinationType? {
 
         guard linkDepth > 0 else { return nil }
@@ -94,21 +107,7 @@ public enum Link {
         }
     }
 
-    internal static func link(from fieldValue: Any) -> Link? {
-        if let link = fieldValue as? Link {
-            return link
-        }
-
-        // Linked objects are stored as a dictionary with "type": "Link",
-        // value for "linkType" can be "Asset", "Entry", "Space", "ContentType".
-        if let linkJSON = fieldValue as? [String: AnyObject],
-            let sys = linkJSON["sys"] as? [String: AnyObject],
-            let id = sys["id"] as? String,
-            let linkType = sys["linkType"] as? String {
-            return Link.unresolved(LinkSys(id: id, linkType: linkType))
-        }
-        return nil
-    }
+    // MARK: Private
 
     private var sys: LinkSys {
         switch self {

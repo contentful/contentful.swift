@@ -12,24 +12,24 @@ import ObjectMapper
 /// Possible errors being thrown by the SDK
 public enum SDKError: Error {
     /// Thrown when no valid client is available during sync
-    public case invalidClient()
+    case invalidClient()
 
     /**
      *  Thrown when receiving an invalid HTTP response
      *
      *  @param URLResponse? Optional URL response that has triggered the error
      */
-    public case invalidHTTPResponse(response: URLResponse?)
+    case invalidHTTPResponse(response: URLResponse?)
 
     /**
      *  Thrown when constructing an invalid URL
      *
      *  @param String The invalid URL string
      */
-    public case invalidURL(string: String)
+    case invalidURL(string: String)
 
     /// Thrown if the sync endpoint is called while being in preview mode
-    public case previewAPIDoesNotSupportSync()
+    case previewAPIDoesNotSupportSync()
 
     /**
      *  Thrown when receiving unparseable JSON responses
@@ -37,19 +37,19 @@ public enum SDKError: Error {
      *  @param Data The data being parsed
      *  @param String The error which occured during parsing
      */
-    public case unparseableJSON(data: Data, errorMessage: String)
+    case unparseableJSON(data: Data, errorMessage: String)
 
     /// Thrown when no entry is found matching a specific Entry id
-    public case noEntryFoundFor(id: String)
+    case noEntryFoundFor(id: String)
 
     /// Thrown when the construction of a URL pointing to an underlying media file for an Asset is invalid.
-    public case invalidImageParameters(String)
+    case invalidImageParameters(String)
 
     /// Thrown when a `Foundation.Data` object is unable to be transformed to a `UIImage` or an `NSImage` object.
-    public case unableToDecodeImageData
+    case unableToDecodeImageData
 
     /// Thrown when the SDK has issues mapping responses with the necessary locale information.
-    public case localeHandlingError(message: String)
+    case localeHandlingError(message: String)
 }
 
 /// Errors thrown for queries which have invalid construction.
@@ -74,23 +74,23 @@ public enum QueryError: Error {
     }
 
     /// Thrown if the query string for a full-text search query only has less than 2 characters.
-    public case textSearchTooShort
+    case textSearchTooShort
 
     /// Thrown when attempting to order query results with a property that is not prefixed with "fields." or "sys.".
-    public case invalidOrderProperty
+    case invalidOrderProperty
 
     /// Thrown when a value greater than 1000 is used for limiting the results of a query.
-    public case maximumLimitExceeded
+    case maximumLimitExceeded
 
     /// Thrown when attempting to specify a mimetype_group on model of `Entry` type.
-    public case mimetypeSpecifiedOnEntry
+    case mimetypeSpecifiedOnEntry
 
     /// Thrown when a selection for the `select` operator is constructed in a way that is invalid.
-    public case invalidSelection(fieldKeyPath: String)
+    case invalidSelection(fieldKeyPath: String)
 
     /// Thrown when over 99 properties have been selected. The CDA only supports 100 selections
     /// and the SDK always includes "sys" as one of them.
-    public case maxSelectionLimitExceeded
+    case maxSelectionLimitExceeded
 }
 
 
@@ -98,18 +98,18 @@ public enum QueryError: Error {
 public class ContentfulError: Mappable, Error {
 
     /// Human readable error message.
-    public private(set) var message: String?
+    public var message: String?
 
     /// The identifier of the request, can be useful when making support requests.
-    public private(set) var requestId: String?
+    public var requestId: String?
 
     // Developer note: API Errors are a special case for Object mapping from JSON. 
     // Rather than throw an error which will trigger the Swift error breakpoint in Xcode, 
     // we want to use failable ObjectMapper initializers.
 
-    public private(set) var id: String?
+    public var id: String?
 
-    public private(set) var type: String?
+    public var type: String?
 
     // MARK: <Mappable>
 
