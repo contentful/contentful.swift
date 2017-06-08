@@ -98,18 +98,18 @@ public enum QueryError: Error {
 public class ContentfulError: Mappable, Error {
 
     /// Human readable error message.
-    public var message: String?
+    public private(set) var message: String?
 
     /// The identifier of the request, can be useful when making support requests.
-    public var requestId: String?
+    public private(set) var requestId: String?
 
     // Developer note: API Errors are a special case for Object mapping from JSON. 
     // Rather than throw an error which will trigger the Swift error breakpoint in Xcode, 
     // we want to use failable ObjectMapper initializers.
 
-    public var id: String?
+    public private(set) var id: String?
 
-    public var type: String?
+    public private(set) var type: String?
 
     // MARK: <Mappable>
 
