@@ -108,7 +108,6 @@ open class Client {
         // Get the observable and the underlying url task.
         let (task, observable): (URLSessionDataTask?, Observable<Result<Data>>)
         (task, observable) = fetch(url: url)
-        // Fetch will call completion block if rate limit handler happens.
 
         if let spaceURL = self.URL(), spaceURL.absoluteString == url.absoluteString {
 
@@ -179,7 +178,7 @@ open class Client {
             }
             rateLimitError.timeBeforeLimitReset = timeUntilLimitReset
 
-            // In this case, .success means that a RateLimitError was successfully intialized.
+            // In this case, .success means that a RateLimitError was successfully initialized.
             completion(Result.success(rateLimitError))
         } catch _ {
             completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "SDK unable to parse RateLimitError payload")))
@@ -214,36 +213,35 @@ open class Client {
         return toObservable(parameter: url, asyncDataTask: asyncDataTask)
     }
 
-
     fileprivate func handleJSON<MappableType: ImmutableMappable>(_ data: Data, _ completion: ResultsHandler<MappableType>) {
-            do {
-                guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
-                    let error = SDKError.unparseableJSON(data: data, errorMessage: "Foundation.JSONSerialization failed")
-                    completion(Result.error(error))
-                    return
-                }
-
-                let localizationContext = space?.localizationContext
-                let map = Map(mappingType: .fromJSON, JSON: json, context: localizationContext)
-
-                // Use `Mappable` failable initialzer to optional rather throwing `ImmutableMappable` initializer
-                // because failure to find an error in the JSON should error should not throw an error that JSON is not parseable.
-                if let apiError = ContentfulError(map: map) {
-                    completion(Result.error(apiError))
-                    return
-                }
-
-                // Locales will be injected via the map.property option.
-                let decodedObject = try MappableType(map: map)
-                completion(Result.success(decodedObject))
-
-            } catch let error as MapError {
-                completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "\(error)")))
-            } catch _ {
-                completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "")))
+        do {
+            guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+                let error = SDKError.unparseableJSON(data: data, errorMessage: "Foundation.JSONSerialization failed")
+                completion(Result.error(error))
+                return
             }
+
+            let localizationContext = space?.localizationContext
+            let map = Map(mappingType: .fromJSON, JSON: json, context: localizationContext)
+
+            // Use `Mappable` failable initialzer to optional rather throwing `ImmutableMappable` initializer
+            // because failure to find an error in the JSON should error should not throw an error that JSON is not parseable.
+            if let apiError = ContentfulError(map: map) {
+                completion(Result.error(apiError))
+                return
+            }
+
+            // Locales will be injected via the map.property option.
+            let decodedObject = try MappableType(map: map)
+            completion(Result.success(decodedObject))
+
+        } catch let error as MapError {
+            completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "\(error)")))
+        } catch _ {
+            completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "")))
         }
     }
+}
 
 // MARK: - Query
 
