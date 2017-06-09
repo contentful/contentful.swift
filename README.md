@@ -22,7 +22,7 @@ The Contentful Swift SDK hasn't reached 1.0.0 and is therefore subject to API ch
 | Images API | :white_check_mark: | :white_check_mark: |
 | Search Parameters | :white_check_mark: | :no_entry_sign: |
 | Fallback locales for sync api | :white_check_mark: | :no_entry_sign: |
-| Rate limit handling | :no_entry_sign: | :no_entry_sign: |
+| Rate limit handling | :white_check_mark: | :no_entry_sign: |
 
 *API Coverage definition: all endpoints can be interfaced with and complex queries can be constructed by passing in dictionaries of http parameter/argument pairs. Note that the Swift SDK provides much more comprehensive coverage and takes advantage of type system, outdoing the "stringly typed" interface that the Objective-C SDK offers.
 

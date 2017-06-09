@@ -130,3 +130,21 @@ public class ContentfulError: Mappable, Error {
         type        <- map["sys.type"]
     }
 }
+
+/**
+ For requests that do hit the Contentful Delivery API enforces rate limits of 78 requests per second
+ and 280800 requests per hour by default. Higher rate limits may apply depending on your current plan.
+ */
+public final class RateLimitError: ContentfulError {
+    /**
+     An integer specifying the time before one of the two limits resets and another request 
+     to the API will be accepted. If the client is rate limited per second, the header will return 1, 
+     which means the next second. If the client is rate limited per hour, the next reset will be 
+     determined like this: Every request which was made in the last hour gets counted in one of four
+     15 minute buckets. Every time a request comes in, the API calculates how many seconds remain 
+     until the sum of all bucket counts will be below the hourly limit. 
+     See [the API Rate Limit docs](https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/api-rate-limits) 
+     for more information.
+     */
+    public internal(set) var timeBeforeLimitReset: Int?
+}

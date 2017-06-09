@@ -79,7 +79,7 @@ final class Dog: EntryModellable {
 
 class QueryTests: XCTestCase {
 
-    static let client = TestClientFactory.cfExampleAPIClient(withCassetteNamed: "QueryTests")
+    static let client = TestClientFactory.testClient(withCassetteNamed: "QueryTests")
 
     override class func setUp() {
         super.setUp()

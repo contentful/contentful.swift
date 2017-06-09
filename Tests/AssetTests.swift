@@ -19,7 +19,7 @@ func url(_ asset: Asset) -> URL {
 
 class AssetTests: XCTestCase {
 
-    static let client = TestClientFactory.cfExampleAPIClient(withCassetteNamed:  "AssetTests")
+    static let client = TestClientFactory.testClient(withCassetteNamed:  "AssetTests")
 
     override class func setUp() {
         super.setUp()

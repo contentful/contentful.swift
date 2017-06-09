@@ -30,7 +30,7 @@ test: clean clean_simulators
 integration_test: clean clean_simulators
 	set -x -o pipefail && xcodebuild test -project $(PROJECT) \
 		-scheme Contentful_iOS -configuration "API_Coverage" \
-		-destination 'platform=iOS Simulator,name=iPhone 6s,OS=9.3' | xcpretty -c
+		-destination 'platform=iOS Simulator,name=iPhone 6s,OS=9.3' | bundle exec xcpretty -c
 
 setup_env:
 	./Scripts/setup-env.sh

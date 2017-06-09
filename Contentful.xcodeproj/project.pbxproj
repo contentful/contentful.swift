@@ -36,6 +36,7 @@
 		ED1B1E621EB370F900347DD7 /* Interstellar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED1B1E611EB370F900347DD7 /* Interstellar.framework */; };
 		ED2C997B1ECDD0AF0039056E /* Client+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2C99791ECDD0AF0039056E /* Client+UIKit.swift */; };
 		ED2C99BB1ED5AE820039056E /* Client+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2C99791ECDD0AF0039056E /* Client+UIKit.swift */; };
+		ED2E46031EEACA2F008A43DB /* RateLimitTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED2E46011EEACA2D008A43DB /* RateLimitTests.json */; };
 		ED307F231EE6E5DF00633390 /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED307F211EE6E5D700633390 /* LocalizationTests.swift */; };
 		ED307F241EE6E5DF00633390 /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED307F211EE6E5D700633390 /* LocalizationTests.swift */; };
 		ED307F251EE6E5E000633390 /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED307F211EE6E5D700633390 /* LocalizationTests.swift */; };
@@ -98,6 +99,7 @@
 		ED3CBF201E7AD58100E5B02E /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3CBF1E1E7AD58100E5B02E /* Link.swift */; };
 		ED3CBF211E7AD58100E5B02E /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3CBF1E1E7AD58100E5B02E /* Link.swift */; };
 		ED3CBF221E7AD58100E5B02E /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3CBF1E1E7AD58100E5B02E /* Link.swift */; };
+		ED52DB401EE94C8E00225140 /* RateLimitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED52DB3F1EE94C8E00225140 /* RateLimitTests.swift */; };
 		ED6412EE1EDDBE1400332A99 /* ImageTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED6412EC1EDDBDFF00332A99 /* ImageTests.json */; };
 		ED65CF981E3F6BF8000EBC62 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65CF951E3F6BF8000EBC62 /* Nimble.framework */; };
 		ED65CF9B1E3F6C0C000EBC62 /* Interstellar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65CF9A1E3F6C0C000EBC62 /* Interstellar.framework */; };
@@ -170,6 +172,7 @@
 		ED1638C41ED5CA6D009BAA9F /* ImageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTests.swift; sourceTree = "<group>"; };
 		ED1B1E611EB370F900347DD7 /* Interstellar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Interstellar.framework; path = Carthage/Build/iOS/Interstellar.framework; sourceTree = "<group>"; };
 		ED2C99791ECDD0AF0039056E /* Client+UIKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Client+UIKit.swift"; sourceTree = "<group>"; };
+		ED2E46011EEACA2D008A43DB /* RateLimitTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RateLimitTests.json; sourceTree = "<group>"; };
 		ED307F211EE6E5D700633390 /* LocalizationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationTests.swift; sourceTree = "<group>"; };
 		ED3CBF0A1E793F8200E5B02E /* ContentModellable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentModellable.swift; sourceTree = "<group>"; };
 		ED3CBF0E1E7A98CF00E5B02E /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/tvOS/ObjectMapper.framework; sourceTree = "<group>"; };
@@ -179,6 +182,7 @@
 		ED3CBF191E7AD57100E5B02E /* Sys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Sys.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		ED3CBF1E1E7AD58100E5B02E /* Link.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Link.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		ED52DB3F1EE94C8E00225140 /* RateLimitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateLimitTests.swift; sourceTree = "<group>"; };
 		ED6412EC1EDDBDFF00332A99 /* ImageTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ImageTests.json; sourceTree = "<group>"; };
 		ED65CF951E3F6BF8000EBC62 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		ED65CF9A1E3F6C0C000EBC62 /* Interstellar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Interstellar.framework; path = Carthage/Build/iOS/Interstellar.framework; sourceTree = "<group>"; };
@@ -314,6 +318,7 @@
 				ED9102671E65AE880076FDBD /* DVRRecordings */,
 				A10FF9D61BBB3753001AA4E9 /* Data */,
 				A19C74421C47A812005334AD /* AssetTests.swift */,
+				ED52DB3F1EE94C8E00225140 /* RateLimitTests.swift */,
 				ED1638C41ED5CA6D009BAA9F /* ImageTests.swift */,
 				A19CA3D31B836EDD00A0EFCD /* ContentfulTests.swift */,
 				A19C743E1C47A7F5005334AD /* ContentTypeTests.swift */,
@@ -411,6 +416,7 @@
 			children = (
 				ED6412EC1EDDBDFF00332A99 /* ImageTests.json */,
 				ED9102721E65B4130076FDBD /* AssetTests.json */,
+				ED2E46011EEACA2D008A43DB /* RateLimitTests.json */,
 				ED00EABB1E8185BC001F4FA3 /* EntryTests.json */,
 				ED8E0F181E96B34E007015F8 /* QueryTests.json */,
 				ED91027C1E65BAFB0076FDBD /* ContentTypeTests.json */,
@@ -631,6 +637,7 @@
 				ED91027F1E65BB090076FDBD /* testClientCanAccessPreviewAPI.json in Resources */,
 				ED9102801E65BB0C0076FDBD /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */,
 				ED9102731E65B4130076FDBD /* AssetTests.json in Resources */,
+				ED2E46031EEACA2F008A43DB /* RateLimitTests.json in Resources */,
 				ED9102871E65BD250076FDBD /* SyncTests.json in Resources */,
 				ED8E0F1A1E96B38E007015F8 /* QueryTests.json in Resources */,
 				A10FF9D81BBB3860001AA4E9 /* Data in Resources */,
@@ -711,6 +718,7 @@
 			files = (
 				A17D044D1C4F974F002E568B /* UtilityTests.swift in Sources */,
 				ED1638C51ED5CA6D009BAA9F /* ImageTests.swift in Sources */,
+				ED52DB401EE94C8E00225140 /* RateLimitTests.swift in Sources */,
 				A19C74411C47A804005334AD /* EntryTests.swift in Sources */,
 				A114BBC31C50EA3200DE6679 /* SyncTests.swift in Sources */,
 				A19C743F1C47A7F5005334AD /* ContentTypeTests.swift in Sources */,

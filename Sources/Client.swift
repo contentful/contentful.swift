@@ -105,34 +105,92 @@ open class Client {
             return nil
         }
 
-        // Get the signal.
-        let (task, observable) = fetch(url: url)
+        // Get the observable and the underlying url task.
+        let (task, observable): (URLSessionDataTask?, Observable<Result<Data>>)
+        (task, observable) = fetch(url: url)
 
-        if MappableType.self == Space.self {
-            observable.then { [weak self] mappable in
-                self?.handleJSON(mappable, completion)
-            }.error { error in
-                completion(Result.error(error))
+        if let spaceURL = self.URL(), spaceURL.absoluteString == url.absoluteString {
+
+            // observable for space http request.
+            observable.then { [weak self] mappableSpaceData in
+                self?.handleJSON(mappableSpaceData, completion)
+                }.error { error in
+                    completion(Result.error(error))
             }
         } else {
-
-            fetchSpace().then { _ in
-                observable.then { [weak self] mappable in
-                    self?.handleJSON(mappable, completion)
+            // IMPORTANT: If there is an error fetching the space, the error is handled in the recursive call
+            // to fetch, so we do NOT want to handle the error case here.
+            _ = fetchSpace().then { _ in
+                observable.then { [weak self] mappableData in
+                    self?.handleJSON(mappableData, completion)
                 }.error { error in
                     completion(Result.error(error))
                 }
-            }.error { error in
-                completion(Result.error(error))
             }
         }
-
         return task
+    }
+
+    // Returns the rate limit reset.
+    fileprivate func readRateLimitHeaderIfPresent(response: URLResponse?) -> Int? {
+        if let httpResponse = response as? HTTPURLResponse {
+            if httpResponse.statusCode == 429 {
+                if let rateLimitResetString = httpResponse.allHeaderFields["X-Contentful-RateLimit-Reset"] as? String {
+                    return Int(rateLimitResetString)
+                }
+            }
+        }
+        return nil
+    }
+
+    // Returns true if a rate limit error was returned by the API.
+    fileprivate func didHandleRateLimitError(data: Data, response: URLResponse?, completion: ResultsHandler<Data>) -> Bool {
+        if let timeUntilLimitReset = self.readRateLimitHeaderIfPresent(response: response) {
+            // At this point, We know for sure that the type returned by the API can be mapped to a `ContentfulError` instance.
+            // Directly handle JSON and exit.
+            self.handleRateLimitJSON(data, timeUntilLimitReset: timeUntilLimitReset) { (_ result: Result<RateLimitError>) in
+                switch result {
+                case .success(let rateLimitError):
+                    completion(Result.error(rateLimitError))
+                case .error(let auxillaryError):
+                    // We should never get here, but we'll bubble up what should be a `SDKError.unparseableJSON` error just in case.
+                    completion(Result.error(auxillaryError))
+                }
+            }
+            return true
+        }
+        return false
+    }
+
+
+    fileprivate func handleRateLimitJSON(_ data: Data, timeUntilLimitReset: Int, _ completion: ResultsHandler<RateLimitError>) {
+        do {
+            guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+                let error = SDKError.unparseableJSON(data: data, errorMessage: "SDK unable to parse RateLimitError payload")
+                completion(Result.error(error))
+                return
+            }
+
+            let map = Map(mappingType: .fromJSON, JSON: json)
+            guard let rateLimitError = RateLimitError(map: map) else {
+                completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "SDK unable to parse RateLimitError payload")))
+                return
+            }
+            rateLimitError.timeBeforeLimitReset = timeUntilLimitReset
+
+            // In this case, .success means that a RateLimitError was successfully initialized.
+            completion(Result.success(rateLimitError))
+        } catch _ {
+            completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "SDK unable to parse RateLimitError payload")))
+        }
     }
 
     fileprivate func fetch(url: URL, completion: @escaping ResultsHandler<Data>) -> URLSessionDataTask {
         let task = urlSession.dataTask(with: url) { data, response, error in
             if let data = data {
+                if self.didHandleRateLimitError(data: data, response: response, completion: completion) == true {
+                    return // Exit if there was a RateLimitError.
+                }
                 completion(Result.success(data))
                 return
             }
