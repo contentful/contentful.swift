@@ -96,6 +96,21 @@ class SpaceTests: XCTestCase {
 
         waitForExpectations(timeout: 10, handler: nil)
     }
+
+    func testErrorWhenFetchingSpaceIsCalled() {
+        let networkExpectation = expectation(description: "Client can fetch space")
+
+        let client = Client(spaceId: "cfexampleapiadsfadfs", accessToken: "b4c0n73n7fu1")
+
+        client.fetchSpace().then { _ in
+            fail("Should not succeed")
+            networkExpectation.fulfill()
+        }.error { error in
+            XCTAssert(true)
+            networkExpectation.fulfill()
+        }
+        waitForExpectations(timeout: 10, handler: nil)
+    }
 }
 
 class PreviewAPITests: XCTestCase {
