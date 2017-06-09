@@ -5,7 +5,6 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 
 
 ## Planned for 1.0.0 release
-- Support for HTTP rate limit headers
 - Improved handling of ISO8601 dates to work with `ContentModellable` protocol.
 - Further iteration on `ContentModellable` protocol.
 - Add `@objc` annotations to capable methods for improved interoperability with Objective-C codebases.
@@ -13,6 +12,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 ### Merged, but not yet released
 > #### Added
 > - Support for mirroring API fallback locale logic in the SDK for scenarios when all locales are returned (i.e. when using the `/sync` endpoint or specifing `locale=*`)
+> - Support for HTTP rate limit headers
 > #### Fixed
 > - Unintentionally triggered Swift errors that were thrown during JSON deserialization. 
 > 	- Fixed by [@loudmouth](https://github.com/loudmouth) in [#71](https://github.com/contentful/contentful.swift/issues/71)
