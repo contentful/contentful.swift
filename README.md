@@ -12,7 +12,7 @@ Swift SDK for [Contentful's][1] Content Delivery API.
 
 [Contentful][1] is a content management platform for web applications, mobile apps and connected devices. It allows you to create, edit & manage content in the cloud and publish it anywhere via powerful API. Contentful offers tools for managing editorial teams and enabling cooperation between organizations.
 
-The Contentful Swift SDK hasn't reached 1.0.0 and is therefore subject to API changes. However, it provides a more usable API than the [Objective-C SDK][4] and has support for more API features.
+The Contentful Swift SDK hasn't reached 1.0.0 and is therefore subject to API changes. However, it provides a more usable API than the [Objective-C SDK][4] and has support for more API features. It is recommended to use contentful.swift over contentful.objc as future development at Contentful will focus on Swift rather than Objective-C. However, if your project must utilize Contentful's [Content Managamement API][11], Objective-C is the only  language supported at the moment. See [ContentfulManagementAPI at Cocoapods.org][12] for more information.
 
 #### Full feature comparison of [contentful.swift][9] & [contentful.objc][4]
 
@@ -32,7 +32,7 @@ The Contentful Swift SDK hasn't reached 1.0.0 and is therefore subject to API ch
 let client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1")
 client.fetchEntry("nyancat") { (result: Result<Entry>) in
     switch result {
-        case let .success(entry):
+        case .success(entry):
             print(entry)
         case .error(let error):
             print("Error \(error)!")
@@ -50,7 +50,7 @@ The Contentful Swift SDK requires, at minimum, Swift 2.2 and therefore Xcode 7.3
 
  Swift version | Compatible Contentful tag |
 | --- | --- |
-| Swift 3.0 | `v0.5.0` |
+| Swift 3.0 | `v0.6.0` |
 | Swift 2.3 | `v0.2.3` |
 | Swift 2.2 | `v0.2.1` |
 
@@ -90,7 +90,7 @@ end
 You can also use [Carthage][8] for integration by adding the following to your `Cartfile`:
 
 ```
-github "contentful/contentful.swift" ~> 0.5.0
+github "contentful/contentful.swift" ~> 0.6.0
 ```
 
 ## License
@@ -107,3 +107,6 @@ Copyright (c) 2016 Contentful GmbH. See LICENSE for further details.
 [8]: https://github.com/Carthage/Carthage
 [9]: https://github.com/contentful/contentful.swift/tree/Swift-2.3
 [10]: https://github.com/contentful/contentful.swift
+[11]: https://www.contentful.com/developers/docs/references/content-management-api/
+[12]: https://cocoapods.org/pods/ContentfulManagementAPI
+d
