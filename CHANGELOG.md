@@ -10,23 +10,31 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 - Add `@objc` annotations to capable methods for improved interoperability with Objective-C codebases.
 
 ### Merged, but not yet released
-> #### Added
-> - Support for mirroring API fallback locale logic in the SDK for scenarios when all locales are returned (i.e. when using the `/sync` endpoint or specifing `locale=*`)
-> - Support for HTTP rate limit headers
-> #### Fixed
-> - Unintentionally triggered Swift errors that were thrown during JSON deserialization. 
-> 	- Fixed by [@loudmouth](https://github.com/loudmouth) in [#71](https://github.com/contentful/contentful.swift/issues/71)
-> - Crash when using [contentful-persistence.swift](https://github.com/contentful/contentful-persistence.swift) caused by missing `defaultLocale` property: Issue [#68](https://github.com/contentful/contentful.swift/issues/68) and [#65](https://github.com/contentful/contentful.swift/issues/65)
-> 	- Fixed by [@sebastianludwig](https://github.com/sebastianludwig) and [@tapwork](https://github.com/tapwork) in [#70](https://github.com/contentful/contentful.swift/pull/70).
+> 
 
 ---
 
 ## Table of contents
 
 #### 0.x Releases
+- `0.6.x` Releases - [0.6.0](#060)
 - `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041)
 - `0.3.x` Releases - [0.3.0](#030) | [0.3.1](#031)
+
+---
+
+## [`0.6.0`](https://github.com/contentful/contentful.swift/releases/tag/0.6.0)
+Released on 2017-06-12
+
+#### Added
+- Support for mirroring API fallback locale logic in the SDK for scenarios when all locales are returned (i.e. when using the `/sync` endpoint or specifing `locale=*`)
+- Support for HTTP rate limit headers
+#### Fixed
+- Unintentionally triggered Swift errors that were thrown during JSON deserialization. 
+	- Fixed by [@loudmouth](https://github.com/loudmouth) in [#71](https://github.com/contentful/contentful.swift/issues/71)
+- Crash when using [contentful-persistence.swift](https://github.com/contentful/contentful-persistence.swift) caused by missing `defaultLocale` property: Issue [#68](https://github.com/contentful/contentful.swift/issues/68) and [#65](https://github.com/contentful/contentful.swift/issues/65)
+	- Fixed by [@sebastianludwig](https://github.com/sebastianludwig) and [@tapwork](https://github.com/tapwork) in [#70](https://github.com/contentful/contentful.swift/pull/70).
 
 ---
 
