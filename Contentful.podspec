@@ -14,7 +14,7 @@ Pod::Spec.new do |spec|
       :file => 'LICENSE'
   }
 
-  spec.authors      = { "Boris Bügling" => "boris@buegling.com", "JP Wright" => "jp@contentful.com" }
+  spec.authors      = { "JP Wright" => "jp@contentful.com", "Boris Bügling" => "boris@buegling.com" }
   spec.source       = { :git => "https://github.com/contentful/contentful.swift.git",
                         :tag => spec.version.to_s }
   spec.requires_arc = true
