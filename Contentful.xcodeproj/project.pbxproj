@@ -38,9 +38,6 @@
 		ED2C99BB1ED5AE820039056E /* Client+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2C99791ECDD0AF0039056E /* Client+UIKit.swift */; };
 		ED2E46031EEACA2F008A43DB /* RateLimitTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED2E46011EEACA2D008A43DB /* RateLimitTests.json */; };
 		ED307F231EE6E5DF00633390 /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED307F211EE6E5D700633390 /* LocalizationTests.swift */; };
-		ED307F241EE6E5DF00633390 /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED307F211EE6E5D700633390 /* LocalizationTests.swift */; };
-		ED307F251EE6E5E000633390 /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED307F211EE6E5D700633390 /* LocalizationTests.swift */; };
-		ED307F261EE6E5E000633390 /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED307F211EE6E5D700633390 /* LocalizationTests.swift */; };
 		ED36B6F51E3BD052005581FD /* ArrayResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E31B83888200A0EFCD /* ArrayResponse.swift */; };
 		ED36B6F61E3BD052005581FD /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0876D91E1D07B3008E1A06 /* Date.swift */; };
 		ED36B6F71E3BD052005581FD /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15193AD1BB9236300FB83CD /* Asset.swift */; };
@@ -754,7 +751,6 @@
 				ED3CBF0C1E793F8200E5B02E /* ContentModellable.swift in Sources */,
 				ED91C1411EDCB03900F0FC0A /* ImageOptions.swift in Sources */,
 				ED3CBF1B1E7AD57100E5B02E /* Sys.swift in Sources */,
-				ED307F261EE6E5E000633390 /* LocalizationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -782,7 +778,6 @@
 				ED36B70A1E3BD052005581FD /* ContentType.swift in Sources */,
 				ED3CBF0D1E793F8200E5B02E /* ContentModellable.swift in Sources */,
 				ED3CBF1C1E7AD57100E5B02E /* Sys.swift in Sources */,
-				ED307F251EE6E5E000633390 /* LocalizationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -810,7 +805,6 @@
 				ED3CBF181E7A991500E5B02E /* ContentModellable.swift in Sources */,
 				ED91C1431EDCB03B00F0FC0A /* ImageOptions.swift in Sources */,
 				ED3CBF1D1E7AD57100E5B02E /* Sys.swift in Sources */,
-				ED307F241EE6E5DF00633390 /* LocalizationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
