@@ -10,7 +10,8 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 - Add `@objc` annotations to capable methods for improved interoperability with Objective-C codebases.
 
 ### Merged, but not yet released
-> 
+> #### Fixed
+> - `ImageOption` that changed background using `Fit.pad(with: Color) now generates the correct URL.
 
 ---
 

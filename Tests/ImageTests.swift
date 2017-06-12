@@ -39,21 +39,6 @@ class ImageTests: XCTestCase {
         (client.urlSession as? DVR.Session)?.endRecording()
     }
 
-    func testHexRepresenation() {
-        let blueColor = UIColor.blue
-        expect(blueColor.cgColor.hexRepresentation()).to(equal("0000FF"))
-
-        let redColor = UIColor.red
-        expect(redColor.cgColor.hexRepresentation()).to(equal("FF0000"))
-
-        let darkViolet = UIColor(colorLiteralRed: 0.580, green: 0.00, blue: 0.830, alpha: 1.0)
-        expect(darkViolet.cgColor.hexRepresentation()).to(equal("9400D4"))
-
-        let carmine = UIColor(colorLiteralRed: 0.66274, green: 0.12549, blue: 0.243137, alpha: 1.0)
-        expect(carmine.cgColor.hexRepresentation()).to(equal("A9203E"))
-    }
-
-
     // MARK: URL construction tests.
 
     func testURLIsPropertyConstructedForJPGWithQuality() {
@@ -164,6 +149,12 @@ class ImageTests: XCTestCase {
         let fitToCropWithFacesFocusOptions = [ImageOption.fit(for: .crop(focusingOn: .faces))]
         let facesFocusURLWithOptions = try! nyanCatAsset.url(with: fitToCropWithFacesFocusOptions)
         expect(facesFocusURLWithOptions.absoluteString).to(equal("https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png?fit=crop&f=faces"))
+    }
+
+    func testMakingURLWithPaddingAndBackgroundColor() {
+        let options = [ImageOption.fit(for: .pad(withBackgroundColor: UIColor.blue))]
+        let urlWithOptions = try! nyanCatAsset.url(with: options)
+        expect(urlWithOptions.absoluteString).to(equal("https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png?fit=pad&bg=rgb:0000FF"))
     }
 
     func testThumbFillAndScaleFitOptions() {
