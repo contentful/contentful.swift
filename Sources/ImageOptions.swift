@@ -241,7 +241,7 @@ public enum Fit: URLImageQueryExtendable {
     /** 
      If specifying an optional `UIColor` or `NSColor` make sure to also provide a custom width and height
      or else you may receive an error from the server. If the color cannot be resolved to a hex string by the SDK,
-     black will be used.
+     an error will be thrown.
      */
     case pad(withBackgroundColor: Color?)
     case crop(focusingOn: Focus?)
@@ -265,12 +265,13 @@ public enum Fit: URLImageQueryExtendable {
         return ImageParameters.fit
     }
 
-    fileprivate func additionalQueryItem() -> URLQueryItem? {
+    fileprivate func additionalQueryItem() throws -> URLQueryItem? {
         switch self {
         case .pad(let .some(color)):
             let hexTransform = ObjectMapper.HexColorTransform()
-            let hexForBlack = "000000"
-            let hexRepresentation = hexTransform.transformToJSON(color) ?? hexForBlack
+            guard let hexRepresentation = hexTransform.transformToJSON(color) else {
+                throw SDKError.invalidImageParameters("Unable to generate Hex representation for color: \(color)")
+            }
             return URLQueryItem(name: ImageParameters.backgroundColor, value: "rgb:" + hexRepresentation)
 
         case .thumb(let .some(focus)):
