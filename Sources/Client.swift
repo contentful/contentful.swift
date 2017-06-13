@@ -628,8 +628,11 @@ extension Client {
                                             matching: [String: Any] = [:],
                                             completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
 
-        if clientConfiguration.previewMode && syncSpace.hasMorePages == false {
-            completion(.error(SDKError.previewAPIDoesNotSupportSync()))
+        // Preview mode only supports `initialSync` not `nextSync`. The only reason `nextSync` should
+        // be called is internally by the SDK to finish a multiple page sync. We are doing a multi
+        // page sync only when syncSpace.hasMorePages is true.
+        guard clientConfiguration.previewMode == false && syncSpace.hasMorePages == true else {
+            completion(Result.error(SDKError.previewAPIDoesNotSupportSync()))
             return nil
         }
 
