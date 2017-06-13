@@ -51,8 +51,8 @@ class SyncTests: XCTestCase {
         let expectation = self.expectation(description: "Subsequent Sync test expecation")
         SyncTests.client.initialSync().flatMap { (result: Result<SyncSpace>) -> Observable<Result<SyncSpace>> in
             switch result {
-            case .success(let space):
-                return space.sync()
+            case .success(let syncSpace):
+                return SyncTests.client.nextSync(for: syncSpace)
             case .error(let error):
                 fail("\(error)")
                 return Observable<Result<SyncSpace>>()

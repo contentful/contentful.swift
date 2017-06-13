@@ -24,7 +24,7 @@ open class Client {
 
     fileprivate let clientConfiguration: ClientConfiguration
     fileprivate let spaceId: String
-
+    fileprivate var persistenceDelegate: PersistenceDelegate?
     fileprivate var server: String {
 
         if clientConfiguration.previewMode && clientConfiguration.server == Defaults.cdaHost {
@@ -53,7 +53,8 @@ open class Client {
     public init(spaceId: String,
                 accessToken: String,
                 clientConfiguration: ClientConfiguration = .default,
-                sessionConfiguration: URLSessionConfiguration = .default) {
+                sessionConfiguration: URLSessionConfiguration = .default,
+                persistenceDelegate: PersistenceDelegate? = nil) {
         self.spaceId = spaceId
         self.clientConfiguration = clientConfiguration
 
@@ -455,7 +456,7 @@ extension Client {
 
      - Returns: A tuple of data task and a signal for the resulting array of Content Types.
      */
-    @discardableResult public func fetchContentTypes(matching: [String: Any] = [:]) ->  Observable<Result<ArrayResponse<ContentType>>> {
+    @discardableResult public func fetchContentTypes(matching: [String: Any] = [:]) -> Observable<Result<ArrayResponse<ContentType>>> {
         let asyncDataTask: AsyncDataTask<[String: Any], ArrayResponse<ContentType>> = fetchContentTypes(matching:completion:)
         return toObservable(parameter: matching, asyncDataTask: asyncDataTask).observable
     }
@@ -556,6 +557,8 @@ extension Client {
     }
 }
 
+// MARK: Sync
+
 extension Client {
     /**
      Perform an initial synchronization of the Space this client is constrained to.
@@ -586,20 +589,100 @@ extension Client {
         return toObservable(parameter: matching, asyncDataTask: asyncDataTask).observable
     }
 
-    func sync(matching: [String: Any] = [:], completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
-        if clientConfiguration.previewMode {
+    /**
+     Perform a subsequent synchronization operation, updating this object with
+     the latest content from Contentful.
+
+     Calling this will mutate the instance and also return a reference to itself to the completion
+     handler in order to allow chaining of operations.
+
+     - Parameter syncSpace: the relevant `SyncSpace` to perform the subsequent sync on.
+     - Parameter matching: Additional options for the synchronization
+
+     - Returns: An `Observable` which will be fired when the `SyncSpace` is fully synchronized with Contentful.
+     */
+    @discardableResult func nextSync(for syncSpace: SyncSpace, matching: [String: Any] = [:]) -> Observable<Result<SyncSpace>> {
+
+        let observable = Observable<Result<SyncSpace>>()
+        self.nextSync(for: syncSpace) { result in
+            observable.update(result)
+        }
+        return observable
+    }
+
+    /**
+     Perform a subsequent synchronization operation, updating the passed in `SyncSpace` with the
+     latest content from Contentful.
+
+     Calling this will mutate passed in SyncSpace and also return a reference to itself to the completion
+     handler in order to allow chaining of operations.
+
+     - Parameter syncSpace: the relevant `SyncSpace` to perform the subsequent sync on.
+     - Parameter matching:   Additional options for the synchronization
+     - Parameter completion: A handler which will be called on completion of the operation
+
+     - Returns: The data task being used, enables cancellation of requests
+     */
+
+    @discardableResult public func nextSync(for syncSpace: SyncSpace,
+                                            matching: [String: Any] = [:],
+                                            completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
+
+        if clientConfiguration.previewMode && syncSpace.hasMorePages == false {
             completion(.error(SDKError.previewAPIDoesNotSupportSync()))
             return nil
         }
 
+        var parameters = matching
+        parameters.removeValue(forKey: "initial")
+        parameters["sync_token"] = syncSpace.syncToken
+
+        // Callback to merge the most recent sync page with the current sync space.
+        let mergeSyncSpacesCompletion: (Result<SyncSpace>) -> Void = { result in
+
+            switch result {
+            case .success(let newSyncSpace):
+
+                for asset in newSyncSpace.assets {
+                    self.persistenceDelegate?.create(asset: asset)
+                    syncSpace.assetsMap[asset.sys.id] = asset
+                }
+
+                for entry in newSyncSpace.entries {
+                    entry.resolveLinks(against: syncSpace.entries + newSyncSpace.entries, and: syncSpace.assets)
+                    self.persistenceDelegate?.create(entry: entry)
+                    syncSpace.entriesMap[entry.sys.id] = entry
+                }
+
+                for deletedAssetId in newSyncSpace.deletedAssets {
+                    self.persistenceDelegate?.delete(assetWithId: deletedAssetId)
+                    syncSpace.assetsMap.removeValue(forKey: deletedAssetId)
+                }
+
+                for deletedEntryId in newSyncSpace.deletedEntries {
+                    self.persistenceDelegate?.delete(entryWithId: deletedEntryId)
+                    syncSpace.entriesMap.removeValue(forKey: deletedEntryId)
+                }
+
+                syncSpace.syncToken = newSyncSpace.syncToken
+
+                completion(.success(syncSpace))
+            case .error(let error):
+                completion(.error(error))
+            }
+        }
+
+        let task = self.sync(matching: parameters, completion: mergeSyncSpacesCompletion)
+        return task
+    }
+
+    fileprivate func sync(matching: [String: Any] = [:], completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
+
         return fetch(url: URL(forComponent: "sync", parameters: matching)) { (result: Result<SyncSpace>) in
             if let syncSpace = result.value {
-                syncSpace.client = self
 
                 if syncSpace.hasMorePages == true {
-                    var parameters = matching
-                    parameters.removeValue(forKey: "initial")
-                    syncSpace.sync(matching: parameters, completion: completion)
+                    self.nextSync(for: syncSpace, matching: matching, completion: completion)
                 } else {
                     completion(.success(syncSpace))
                 }
@@ -609,7 +692,7 @@ extension Client {
         }
     }
 
-    func sync(matching: [String: Any] = [:]) -> Observable<Result<SyncSpace>> {
+    fileprivate func sync(matching: [String: Any] = [:]) -> Observable<Result<SyncSpace>> {
         let asyncDataTask: AsyncDataTask<[String: Any], SyncSpace> = sync(matching:completion:)
         return toObservable(parameter: matching, asyncDataTask: asyncDataTask).observable
     }
