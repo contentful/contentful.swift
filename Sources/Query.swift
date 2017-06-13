@@ -70,7 +70,7 @@ extension String: QueryableRange {
 extension Date: QueryableRange {
 
     public var stringValue: String {
-        return self.toISO8601GMTString()!
+        return self.iso8601String
     }
 }
 

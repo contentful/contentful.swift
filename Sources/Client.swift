@@ -71,8 +71,8 @@ open class Client {
                 let queryItems: [URLQueryItem] = parameters.map { key, value in
                     var value = value
 
-                    if let date = value as? Date, let dateString = date.toISO8601GMTString() {
-                        value = dateString
+                    if let date = value as? Date {
+                        value = date.iso8601String
                     }
 
                     if let array = value as? NSArray {
