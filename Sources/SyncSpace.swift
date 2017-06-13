@@ -189,11 +189,11 @@ public final class SyncSpace: ImmutableMappable {
         var items: [[String: Any]]!
         items <- map["items"]
 
-        let resources: [Resource] = items.flatMap { itemJSON in
+        let resources: [Resource] = try items.flatMap { itemJSON in
             let map = Map(mappingType: .fromJSON, JSON: itemJSON, context: map.context)
 
-            var type: String!
-            type <- map["sys.type"]
+            let type: String = try map.value("sys.type")
+
             switch type {
             case "Asset":           return try? Asset(map: map)
             case "Entry":           return try? Entry(map: map)
