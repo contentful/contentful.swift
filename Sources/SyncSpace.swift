@@ -25,12 +25,12 @@ public final class SyncSpace: ImmutableMappable {
 
     /// List of Assets currently published on the Space being synchronized
     public var assets: [Asset] {
-        return Swift.Array(assetsMap.values)
+        return Array(assetsMap.values)
     }
 
     /// List of Entries currently published on the Space being synchronized
     public var entries: [Entry] {
-        return Swift.Array(entriesMap.values)
+        return Array(entriesMap.values)
     }
 
     /**
@@ -101,7 +101,25 @@ public final class SyncSpace: ImmutableMappable {
         }
     }
 
+    internal func updateWithDiffs(from syncSpace: SyncSpace) {
 
+        for asset in syncSpace.assets {
+            assetsMap[asset.sys.id] = asset
+        }
+
+        for entry in syncSpace.entries {
+            entriesMap[entry.sys.id] = entry
+        }
+
+        for deletedAssetId in syncSpace.deletedAssets {
+            assetsMap.removeValue(forKey: deletedAssetId)
+        }
+
+        for deletedEntryId in syncSpace.deletedEntries {
+            entriesMap.removeValue(forKey: deletedEntryId)
+        }
+        syncToken = syncSpace.syncToken
+    }
 
     internal func cache(resources: [Resource]) {
         for resource in resources {

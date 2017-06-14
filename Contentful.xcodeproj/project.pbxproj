@@ -113,8 +113,12 @@
 		ED737C7D1EF009F500ECB3F1 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C7B1EF009F200ECB3F1 /* QueryTests.json */; };
 		ED737C801EF00A0800ECB3F1 /* RateLimitTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C7E1EF00A0600ECB3F1 /* RateLimitTests.json */; };
 		ED737C831EF00A2000ECB3F1 /* testFetchSpace.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C811EF00A1B00ECB3F1 /* testFetchSpace.json */; };
-		ED737C861EF00A3300ECB3F1 /* SyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C841EF00A3100ECB3F1 /* SyncTests.json */; };
 		ED737C891EF15CCA00ECB3F1 /* PreviewSyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C871EF15CC600ECB3F1 /* PreviewSyncTests.json */; };
+		ED737C921EF1748700ECB3F1 /* SyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C901EF1748700ECB3F1 /* SyncTests.json */; };
+		ED737C941EF1785A00ECB3F1 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED737C931EF1785A00ECB3F1 /* Persistence.swift */; };
+		ED737C951EF1785A00ECB3F1 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED737C931EF1785A00ECB3F1 /* Persistence.swift */; };
+		ED737C961EF1785A00ECB3F1 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED737C931EF1785A00ECB3F1 /* Persistence.swift */; };
+		ED737C971EF1785A00ECB3F1 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED737C931EF1785A00ECB3F1 /* Persistence.swift */; };
 		ED9102661E65AADA0076FDBD /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED9102651E65AADA0076FDBD /* DVR.framework */; };
 		ED91C1401EDCB03600F0FC0A /* ImageOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */; };
 		ED91C1411EDCB03900F0FC0A /* ImageOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */; };
@@ -194,8 +198,9 @@
 		ED737C7B1EF009F200ECB3F1 /* QueryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QueryTests.json; sourceTree = "<group>"; };
 		ED737C7E1EF00A0600ECB3F1 /* RateLimitTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RateLimitTests.json; sourceTree = "<group>"; };
 		ED737C811EF00A1B00ECB3F1 /* testFetchSpace.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testFetchSpace.json; sourceTree = "<group>"; };
-		ED737C841EF00A3100ECB3F1 /* SyncTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SyncTests.json; sourceTree = "<group>"; };
 		ED737C871EF15CC600ECB3F1 /* PreviewSyncTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PreviewSyncTests.json; sourceTree = "<group>"; };
+		ED737C901EF1748700ECB3F1 /* SyncTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SyncTests.json; sourceTree = "<group>"; };
+		ED737C931EF1785A00ECB3F1 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		ED9102651E65AADA0076FDBD /* DVR.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVR.framework; path = Carthage/Build/iOS/DVR.framework; sourceTree = "<group>"; };
 		ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageOptions.swift; sourceTree = "<group>"; };
 		ED91C1471EDCB1F800F0FC0A /* Client+AppKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Client+AppKit.swift"; sourceTree = "<group>"; };
@@ -298,6 +303,7 @@
 				ED3CBF1E1E7AD58100E5B02E /* Link.swift */,
 				ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */,
 				ED3CBF0A1E793F8200E5B02E /* ContentModellable.swift */,
+				ED737C931EF1785A00ECB3F1 /* Persistence.swift */,
 				ED68BD711E6DC47A00939F6D /* Query.swift */,
 				ED0876D91E1D07B3008E1A06 /* Date.swift */,
 				A114BBBF1C4FD3C300DE6679 /* SyncSpace.swift */,
@@ -420,9 +426,9 @@
 				ED737C871EF15CC600ECB3F1 /* PreviewSyncTests.json */,
 				ED737C7B1EF009F200ECB3F1 /* QueryTests.json */,
 				ED737C7E1EF00A0600ECB3F1 /* RateLimitTests.json */,
-				ED737C841EF00A3100ECB3F1 /* SyncTests.json */,
 				ED737C751EF009C400ECB3F1 /* testClientCanAccessPreviewAPI.json */,
 				ED737C781EF009DB00ECB3F1 /* testClientCantAccessPreviewAPIWithProductionToken.json */,
+				ED737C901EF1748700ECB3F1 /* SyncTests.json */,
 				ED737C811EF00A1B00ECB3F1 /* testFetchSpace.json */,
 			);
 			path = DVRRecordings;
@@ -632,7 +638,6 @@
 			files = (
 				ED737C7D1EF009F500ECB3F1 /* QueryTests.json in Resources */,
 				ED737C711EF0098C00ECB3F1 /* EntryTests.json in Resources */,
-				ED737C861EF00A3300ECB3F1 /* SyncTests.json in Resources */,
 				ED737C771EF009C700ECB3F1 /* testClientCanAccessPreviewAPI.json in Resources */,
 				ED737C831EF00A2000ECB3F1 /* testFetchSpace.json in Resources */,
 				ED737C6E1EF0097000ECB3F1 /* ContentTypeTests.json in Resources */,
@@ -641,6 +646,7 @@
 				A10FF9D81BBB3860001AA4E9 /* Data in Resources */,
 				ED737C801EF00A0800ECB3F1 /* RateLimitTests.json in Resources */,
 				ED737C7A1EF009DD00ECB3F1 /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */,
+				ED737C921EF1748700ECB3F1 /* SyncTests.json in Resources */,
 				ED737C891EF15CCA00ECB3F1 /* PreviewSyncTests.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -693,6 +699,7 @@
 				A10FF9DD1BBB47D2001AA4E9 /* Entry.swift in Sources */,
 				A10FF9DE1BBB4829001AA4E9 /* Space.swift in Sources */,
 				ED0876DA1E1D07B3008E1A06 /* Date.swift in Sources */,
+				ED737C941EF1785A00ECB3F1 /* Persistence.swift in Sources */,
 				A19CA3E21B8386CC00A0EFCD /* ClientConfiguration.swift in Sources */,
 				A10FF9DA1BBB4680001AA4E9 /* ContentType.swift in Sources */,
 				ED91C1401EDCB03600F0FC0A /* ImageOptions.swift in Sources */,
@@ -738,6 +745,7 @@
 				ED36B7011E3BD052005581FD /* Resource.swift in Sources */,
 				ED36B6FE1E3BD052005581FD /* Entry.swift in Sources */,
 				ED36B7041E3BD052005581FD /* SyncSpace.swift in Sources */,
+				ED737C951EF1785A00ECB3F1 /* Persistence.swift in Sources */,
 				ED36B7021E3BD052005581FD /* SignalUtils.swift in Sources */,
 				ED36B7001E3BD052005581FD /* Field.swift in Sources */,
 				ED36B7031E3BD052005581FD /* Space.swift in Sources */,
@@ -765,6 +773,7 @@
 				ED36B7111E3BD052005581FD /* Resource.swift in Sources */,
 				ED36B70E1E3BD052005581FD /* Entry.swift in Sources */,
 				ED36B7141E3BD052005581FD /* SyncSpace.swift in Sources */,
+				ED737C961EF1785A00ECB3F1 /* Persistence.swift in Sources */,
 				ED36B7121E3BD052005581FD /* SignalUtils.swift in Sources */,
 				ED36B7101E3BD052005581FD /* Field.swift in Sources */,
 				ED36B7131E3BD052005581FD /* Space.swift in Sources */,
@@ -792,6 +801,7 @@
 				ED36B7211E3BD053005581FD /* Resource.swift in Sources */,
 				ED36B71E1E3BD053005581FD /* Entry.swift in Sources */,
 				ED36B7241E3BD053005581FD /* SyncSpace.swift in Sources */,
+				ED737C971EF1785A00ECB3F1 /* Persistence.swift in Sources */,
 				ED36B7221E3BD053005581FD /* SignalUtils.swift in Sources */,
 				ED91C1481EDCB1F800F0FC0A /* Client+AppKit.swift in Sources */,
 				ED36B7201E3BD053005581FD /* Field.swift in Sources */,

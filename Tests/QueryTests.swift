@@ -25,26 +25,13 @@ final class Cat: EntryModellable {
     let lives: Int?
     let likes: [String]?
 
-    init?(sys: Sys, fields: [String: Any], linkDepth: Int) {
-        id          = sys.id
-        name        = fields.string(at: "name")
-        color       = fields.string(at: "color")
-        lives       = fields.int(at:"lives")
-        likes       = fields.strings(at: "likes")
-        bestFriend  = Link.at("bestFriend", in: fields, linkDepth: linkDepth)
-    }
-}
-
-// TODO: Get rid of this and just use `Asset`
-final class ImageAsset: ContentModellable {
-
-    var id: String
-
-    var title: String?
-
-    init?(sys: Sys, fields: [String: Any], linkDepth: Int) {
-        self.id = sys.id
-        self.title = fields.string(at: "title")
+    init?(entry: Entry, linkDepth: Int) {
+        id          = entry.sys.id
+        name        = entry.fields.string(at: "name")
+        color       = entry.fields.string(at: "color")
+        lives       = entry.fields.int(at:"lives")
+        likes       = entry.fields.strings(at: "likes")
+        bestFriend  = Link.at("bestFriend", in: entry.fields, linkDepth: linkDepth)
     }
 }
 
@@ -55,8 +42,8 @@ final class City: EntryModellable {
     var id: String
     var location: CLLocationCoordinate2D
 
-    init?(sys: Sys, fields: [String: Any], linkDepth: Int) {
-        self.id = sys.id
+    init?(entry: Entry, linkDepth: Int) {
+        self.id = entry.sys.id
         // FIXME:
         self.location = CLLocationCoordinate2D(latitude: 1, longitude: 1)
     }
@@ -67,13 +54,13 @@ final class Dog: EntryModellable {
     static let contentTypeId: String = "dog"
 
     var id: String
-    var image: ImageAsset?
+    var image: Asset?
     var name: String?
 
-    init?(sys: Sys, fields: [String: Any], linkDepth: Int) {
-        self.id     = sys.id
-        self.name   = fields.string(at: "name")
-        self.image  = Link.at("image", in: fields, linkDepth: linkDepth)
+    init?(entry: Entry, linkDepth: Int) {
+        self.id     = entry.sys.id
+        self.name   = entry.fields.string(at: "name")
+        self.image  = Link.at("image", in: entry.fields)
     }
 }
 

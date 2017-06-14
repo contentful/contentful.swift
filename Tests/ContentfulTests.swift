@@ -40,7 +40,7 @@ class ClientConfigurationTests: XCTestCase {
         let osVersionString = String(osVersion.majorVersion) + "." + String(osVersion.minorVersion) + "." + String(osVersion.patchVersion)
 
         let clientConfiguration = ClientConfiguration.default
-        let userAgentString = clientConfiguration.userAgentString
+        let userAgentString = clientConfiguration.userAgentString(with: nil)
 
         let onlyVersionNumberRegexString = "\\d+\\.\\d+\\.\\d+(-(beta|RC|alpha)\\d*)?"
         let versionMatchingRegexString = onlyVersionNumberRegexString + "$"

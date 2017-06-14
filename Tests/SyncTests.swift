@@ -14,7 +14,7 @@ import Nimble
 
 class SyncTests: XCTestCase {
 
-    static let client = TestClientFactory.testClient(withCassetteNamed:  "SyncTests")
+    static let client = TestClientFactory.testClient(withCassetteNamed: "SyncTests")
 
     override class func setUp() {
         super.setUp()

@@ -72,7 +72,8 @@ open class Client {
         self.spaceId = spaceId
         self.clientConfiguration = clientConfiguration
         self.contentModel = contentModel
-        
+        self.persistenceDelegate = persistenceDelegate
+
         let contentfulHTTPHeaders = [
             "Authorization": "Bearer \(accessToken)",
             "X-Contentful-User-Agent": clientConfiguration.userAgentString(with: integration)
@@ -292,8 +293,6 @@ extension Client {
         return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
     }
 
-
-
     /**
      Fetch a collection of Assets from Contentful matching the specified query.
 
@@ -325,14 +324,28 @@ extension Client {
 // MARK: Mappable
 
 extension Client {
-    // TODO: Document
-    @discardableResult public func fetchMappedContent(with query: Query) -> Observable<Result<MappedContent>> {
-        let asyncDataTask: AsyncDataTask<Query, MappedContent> = fetchMappedContent(with:then:)
+    /**
+     Fetch a collection of Assets from Contentful matching the specified query.
+
+     - Parameter query: The Query object to match results againts.
+     - Returns: An Observable forr the resulting `MappedContent` container.
+     */
+    @discardableResult public func fetchMappedEntries(with query: Query) -> Observable<Result<MappedContent>> {
+        let asyncDataTask: AsyncDataTask<Query, MappedContent> = fetchMappedEntries(with:then:)
         return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
     }
 
-    // TODO: Document
-    @discardableResult public func fetchMappedContent(with query: Query, then completion: @escaping ResultsHandler<MappedContent>) -> URLSessionDataTask? {
+    /**
+     Fetches all entries and includes matching the passed in `Query`. The completion handler returned will return a `MappedContent` object which
+     contains an array of `Asset`s and a dictionary of ContentTypeId's to arrays of `EntryModellable` types of your own defining.
+     
+     - Parameter query: The Query object to match results against.
+     - Parameter completion: A handler being called on completion of the request containing a `MappedContent` instance.
+     
+     - Returns: The data task being used, enables cancellation of requests.
+     */
+    @discardableResult public func fetchMappedEntries(with query: Query,
+                                                      then completion: @escaping ResultsHandler<MappedContent>) -> URLSessionDataTask? {
 
         let url = URL(forComponent: "entries", parameters: query.parameters)
 
@@ -667,9 +680,9 @@ extension Client {
                                             completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
 
         // Preview mode only supports `initialSync` not `nextSync`. The only reason `nextSync` should
-        // be called is internally by the SDK to finish a multiple page sync. We are doing a multi
-        // page sync only when syncSpace.hasMorePages is true.
-        guard clientConfiguration.previewMode == false && syncSpace.hasMorePages == true else {
+        // be called while in preview mode, is internally by the SDK to finish a multiple page sync.
+        // We are doing a multi page sync only when syncSpace.hasMorePages is true.
+        if clientConfiguration.previewMode == true && syncSpace.hasMorePages == false {
             completion(Result.error(SDKError.previewAPIDoesNotSupportSync()))
             return nil
         }
@@ -684,37 +697,45 @@ extension Client {
             switch result {
             case .success(let newSyncSpace):
 
-                for asset in newSyncSpace.assets {
-                    self.persistenceDelegate?.create(asset: asset)
-                    syncSpace.assetsMap[asset.sys.id] = asset
-                }
+                // Send messages to persistence layer about the diffs (pre-merge state).
+                self.sendSyncSpaceDiffMessagesToPersistenceDelegate(newestSyncSpace: newSyncSpace, resolvingLinksWith: syncSpace)
+                syncSpace.updateWithDiffs(from: newSyncSpace)
 
-                for entry in newSyncSpace.entries {
-                    entry.resolveLinks(against: syncSpace.entries + newSyncSpace.entries, and: syncSpace.assets)
-                    self.persistenceDelegate?.create(entry: entry)
-                    syncSpace.entriesMap[entry.sys.id] = entry
-                }
-
-                for deletedAssetId in newSyncSpace.deletedAssets {
-                    self.persistenceDelegate?.delete(assetWithId: deletedAssetId)
-                    syncSpace.assetsMap.removeValue(forKey: deletedAssetId)
-                }
-
-                for deletedEntryId in newSyncSpace.deletedEntries {
-                    self.persistenceDelegate?.delete(entryWithId: deletedEntryId)
-                    syncSpace.entriesMap.removeValue(forKey: deletedEntryId)
-                }
-
-                syncSpace.syncToken = newSyncSpace.syncToken
-
-                completion(.success(syncSpace))
+                completion(Result.success(syncSpace))
             case .error(let error):
-                completion(.error(error))
+                completion(Result.error(error))
             }
         }
 
         let task = self.sync(matching: parameters, completion: mergeSyncSpacesCompletion)
         return task
+    }
+
+    fileprivate func sendSyncSpaceDiffMessagesToPersistenceDelegate(newestSyncSpace: SyncSpace, resolvingLinksWith originalSyncSpac: SyncSpace?) {
+
+        persistenceDelegate?.update(syncToken: newestSyncSpace.syncToken)
+
+        for asset in newestSyncSpace.assets {
+            persistenceDelegate?.create(asset: asset)
+        }
+
+        for entry in newestSyncSpace.entries {
+            let allEntries = newestSyncSpace.entries + (originalSyncSpac?.entries ?? [])
+            let allAssets = newestSyncSpace.assets + (originalSyncSpac?.assets ?? [])
+            entry.resolveLinks(against: allEntries, and: allAssets)
+            persistenceDelegate?.create(entry: entry)
+        }
+
+        for deletedAssetId in newestSyncSpace.deletedAssets {
+            persistenceDelegate?.delete(assetWithId: deletedAssetId)
+        }
+
+        for deletedEntryId in newestSyncSpace.deletedEntries {
+            persistenceDelegate?.delete(entryWithId: deletedEntryId)
+        }
+
+        persistenceDelegate?.resolveRelationships()
+        persistenceDelegate?.save()
     }
 
     fileprivate func sync(matching: [String: Any] = [:], completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
@@ -725,7 +746,8 @@ extension Client {
                 if syncSpace.hasMorePages == true {
                     self.nextSync(for: syncSpace, matching: matching, completion: completion)
                 } else {
-                    completion(.success(syncSpace))
+                    self.sendSyncSpaceDiffMessagesToPersistenceDelegate(newestSyncSpace: syncSpace, resolvingLinksWith: nil)
+                    completion(Result.success(syncSpace))
                 }
             } else {
                 completion(result)
