@@ -29,7 +29,7 @@ public struct ClientConfiguration {
     public var server = Defaults.cdaHost
 
     /// Computed version of the user agent, including OS name and version
-    public var userAgentString: String {
+    internal func userAgentString(with integration: Integration?) -> String {
         // Inspired by Alamofire https://github.com/Alamofire/Alamofire/blob/25d8fdd8a36f510a2bc4fe98289f367ec385d337/Source/SessionManager.swift
 
         var userAgentString = ""

@@ -67,7 +67,6 @@ public struct ArrayResponse<ItemType>: Array, ImmutableMappable where ItemType: 
             entry.resolveLinks(against: allIncludedEntries, and: (includedAssets ?? []))
         }
     }
-
 }
 
 /**
@@ -77,6 +76,7 @@ public struct ArrayResponse<ItemType>: Array, ImmutableMappable where ItemType: 
  */
 public struct MappedArrayResponse<ItemType>: Array where ItemType: EntryModellable {
 
+    // FIXME: instead of items there should be a single `MappedContent` ivar in order to make a more consistent API.
     /// The resources which are part of the given array
     public let items: [ItemType]
 
@@ -99,3 +99,6 @@ internal extension ArrayResponse where ItemType: Entry {
         return MappedArrayResponse<EntryType>(items: mappedItems, limit: limit, skip: skip, total: total)
     }
 }
+
+
+

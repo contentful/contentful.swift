@@ -11,6 +11,15 @@ import Foundation
 import Interstellar
 
 
+// FIXME: Use.
+public protocol Integration {
+
+    var name: String { get }
+
+    var version: String { get set }
+}
+
+
 /// A tuple of data task, enabling the cancellation of http requests, and an `Observable` for the resulting
 /// items that were fetched from the Contentful Content Delivery API.
 public typealias TaskObservable<T> = (task: URLSessionDataTask?, observable: Observable<Result<T>>)
@@ -35,6 +44,8 @@ open class Client {
 
     internal var urlSession: URLSession
 
+    fileprivate let contentModel: ContentModel?
+
     fileprivate(set) var space: Space?
 
     fileprivate var scheme: String { return clientConfiguration.secure ? "https": "http" }
@@ -54,13 +65,17 @@ open class Client {
                 accessToken: String,
                 clientConfiguration: ClientConfiguration = .default,
                 sessionConfiguration: URLSessionConfiguration = .default,
-                persistenceDelegate: PersistenceDelegate? = nil) {
+                persistenceDelegate: PersistenceDelegate? = nil,
+                integration: Integration? = nil,
+                contentModel: ContentModel? = nil) {
+
         self.spaceId = spaceId
         self.clientConfiguration = clientConfiguration
-
+        self.contentModel = contentModel
+        
         let contentfulHTTPHeaders = [
             "Authorization": "Bearer \(accessToken)",
-            "X-Contentful-User-Agent": clientConfiguration.userAgentString
+            "X-Contentful-User-Agent": clientConfiguration.userAgentString(with: integration)
         ]
         sessionConfiguration.httpAdditionalHeaders = contentfulHTTPHeaders
         self.urlSession = URLSession(configuration: sessionConfiguration)
@@ -277,6 +292,56 @@ extension Client {
         return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
     }
 
+
+
+    /**
+     Fetch a collection of Assets from Contentful matching the specified query.
+
+     - Parameter query: The Query object to match results againts.
+     - Parameter completion: A handler being called on completion of the request.
+
+     - Returns: The data task being used, enables cancellation of requests.
+     */
+    @discardableResult public func fetchAssets(with query: AssetQuery,
+                                               then completion: @escaping ResultsHandler<ArrayResponse<Asset>>) -> URLSessionDataTask? {
+
+        let url = URL(forComponent: "assets", parameters: query.parameters)
+        return fetch(url: url, then: completion)
+    }
+
+    /**
+     Fetch a collection of Assets from Contentful matching the specified query.
+
+     - Parameter query: The Query object to match results againts.
+     - Returns: A tuple of data task and an observable for the resulting array of Assets.
+     */
+    @discardableResult public func fetchAssets(query: AssetQuery) -> Observable<Result<ArrayResponse<Asset>>> {
+        let asyncDataTask: AsyncDataTask<AssetQuery, ArrayResponse<Asset>> = fetchAssets(with:then:)
+        return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
+    }
+}
+
+
+// MARK: Mappable
+
+extension Client {
+    // TODO: Document
+    @discardableResult public func fetchMappedContent(with query: Query) -> Observable<Result<MappedContent>> {
+        let asyncDataTask: AsyncDataTask<Query, MappedContent> = fetchMappedContent(with:then:)
+        return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
+    }
+
+    // TODO: Document
+    @discardableResult public func fetchMappedContent(with query: Query, then completion: @escaping ResultsHandler<MappedContent>) -> URLSessionDataTask? {
+
+        let url = URL(forComponent: "entries", parameters: query.parameters)
+
+        return fetch(url: url) { (result: Result<ArrayResponse<Entry>>) in
+            let mappedResult: Result<MappedContent> = result.flatMap { return Result.success($0.toMappedContent(for: self.contentModel)) }
+            completion(mappedResult)
+        }
+    }
+
     /**
      Fetch a collection of Entries of a specified content type matching the query. The content_type
      parameter is specified by passing in a generic parameter: a model class conforming to `EntryModellable`.
@@ -310,33 +375,6 @@ extension Client {
         -> Observable<Result<MappedArrayResponse<EntryType>>> {
 
         let asyncDataTask: AsyncDataTask<QueryOn<EntryType>, MappedArrayResponse<EntryType>> = fetchMappedEntries(with:then:)
-        return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
-    }
-
-
-    /**
-     Fetch a collection of Assets from Contentful matching the specified query.
-
-     - Parameter query: The Query object to match results againts.
-     - Parameter completion: A handler being called on completion of the request.
-
-     - Returns: The data task being used, enables cancellation of requests.
-     */
-    @discardableResult public func fetchAssets(with query: AssetQuery,
-                                               then completion: @escaping ResultsHandler<ArrayResponse<Asset>>) -> URLSessionDataTask? {
-
-        let url = URL(forComponent: "assets", parameters: query.parameters)
-        return fetch(url: url, then: completion)
-    }
-
-    /**
-     Fetch a collection of Assets from Contentful matching the specified query.
-
-     - Parameter query: The Query object to match results againts.
-     - Returns: A tuple of data task and an observable for the resulting array of Assets.
-     */
-    @discardableResult public func fetchAssets(query: AssetQuery) -> Observable<Result<ArrayResponse<Asset>>> {
-        let asyncDataTask: AsyncDataTask<AssetQuery, ArrayResponse<Asset>> = fetchAssets(with:then:)
         return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
     }
 }
