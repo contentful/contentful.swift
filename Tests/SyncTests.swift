@@ -85,4 +85,61 @@ class SyncTests: XCTestCase {
             expect($0.entries.count).to(equal(3))
         }
     }
+
+}
+class PreviewSyncTests: XCTestCase {
+
+    static let client: Client = {
+        var clientConfiguration = Contentful.ClientConfiguration()
+        clientConfiguration.previewMode = true
+        let client = TestClientFactory.testClient(withCassetteNamed: "PreviewSyncTests",
+                                     accessToken: "e5e8d4c5c122cf28fc1af3ff77d28bef78a3952957f15067bbc29f2f0dde0b50",
+                                     clientConfiguration: clientConfiguration)
+        return client
+    }()
+
+    override class func setUp() {
+        super.setUp()
+        (client.urlSession as? DVR.Session)?.beginRecording()
+    }
+
+    override class func tearDown() {
+        super.tearDown()
+        (client.urlSession as? DVR.Session)?.endRecording()
+    }
+
+    func testDoInitialSyncWithPreviewAPI() {
+        let expectation = self.expectation(description: "Can do initial sync with preview API Sync test expecation")
+
+        PreviewSyncTests.client.initialSync().then { syncSpace in
+            expect(syncSpace.entries.count).to(beGreaterThan(0))
+            expect(syncSpace.assets.count).to(beGreaterThan(0))
+            expectation.fulfill()
+        }.error {
+            fail("\($0)")
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testSubsequentSyncWithPreviewAPIReturnsSDKError() {
+        let expectation = self.expectation(description: "Can do initial sync with preview API Sync test expecation")
+
+        PreviewSyncTests.client.initialSync().then { syncSpace in
+            expect(syncSpace.entries.count).to(beGreaterThan(0))
+            expect(syncSpace.assets.count).to(beGreaterThan(0))
+
+            PreviewSyncTests.client.nextSync(for: syncSpace).then { nextSyncSpace in
+                fail("Should not be able to do subsequent sync")
+                expectation.fulfill()
+            }.error { error in
+                expect(error).to(beAKindOf(SDKError.self))
+                expectation.fulfill()
+            }
+        }.error {
+            fail("\($0)")
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
 }

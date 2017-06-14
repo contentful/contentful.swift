@@ -114,6 +114,7 @@
 		ED737C801EF00A0800ECB3F1 /* RateLimitTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C7E1EF00A0600ECB3F1 /* RateLimitTests.json */; };
 		ED737C831EF00A2000ECB3F1 /* testFetchSpace.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C811EF00A1B00ECB3F1 /* testFetchSpace.json */; };
 		ED737C861EF00A3300ECB3F1 /* SyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C841EF00A3100ECB3F1 /* SyncTests.json */; };
+		ED737C891EF15CCA00ECB3F1 /* PreviewSyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C871EF15CC600ECB3F1 /* PreviewSyncTests.json */; };
 		ED9102661E65AADA0076FDBD /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED9102651E65AADA0076FDBD /* DVR.framework */; };
 		ED91C1401EDCB03600F0FC0A /* ImageOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */; };
 		ED91C1411EDCB03900F0FC0A /* ImageOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */; };
@@ -194,6 +195,7 @@
 		ED737C7E1EF00A0600ECB3F1 /* RateLimitTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RateLimitTests.json; sourceTree = "<group>"; };
 		ED737C811EF00A1B00ECB3F1 /* testFetchSpace.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testFetchSpace.json; sourceTree = "<group>"; };
 		ED737C841EF00A3100ECB3F1 /* SyncTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SyncTests.json; sourceTree = "<group>"; };
+		ED737C871EF15CC600ECB3F1 /* PreviewSyncTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PreviewSyncTests.json; sourceTree = "<group>"; };
 		ED9102651E65AADA0076FDBD /* DVR.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVR.framework; path = Carthage/Build/iOS/DVR.framework; sourceTree = "<group>"; };
 		ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageOptions.swift; sourceTree = "<group>"; };
 		ED91C1471EDCB1F800F0FC0A /* Client+AppKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Client+AppKit.swift"; sourceTree = "<group>"; };
@@ -415,6 +417,7 @@
 				ED737C6C1EF0096D00ECB3F1 /* ContentTypeTests.json */,
 				ED737C6F1EF0098A00ECB3F1 /* EntryTests.json */,
 				ED737C721EF009A000ECB3F1 /* ImageTests.json */,
+				ED737C871EF15CC600ECB3F1 /* PreviewSyncTests.json */,
 				ED737C7B1EF009F200ECB3F1 /* QueryTests.json */,
 				ED737C7E1EF00A0600ECB3F1 /* RateLimitTests.json */,
 				ED737C841EF00A3100ECB3F1 /* SyncTests.json */,
@@ -638,6 +641,7 @@
 				A10FF9D81BBB3860001AA4E9 /* Data in Resources */,
 				ED737C801EF00A0800ECB3F1 /* RateLimitTests.json in Resources */,
 				ED737C7A1EF009DD00ECB3F1 /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */,
+				ED737C891EF15CCA00ECB3F1 /* PreviewSyncTests.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

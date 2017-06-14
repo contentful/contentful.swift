@@ -15,17 +15,16 @@ import DVR
 
 struct TestClientFactory {
 
-    static func testClient(withCassetteNamed cassetteName: String, spaceId: String? = nil, accessToken: String? = nil) -> Client {
+    static func testClient(withCassetteNamed cassetteName: String, spaceId: String? = nil, accessToken: String? = nil, clientConfiguration: ClientConfiguration = .default) -> Client {
         let client: Client
         let testSpaceId = spaceId ?? "cfexampleapi"
         let testAccessToken =  accessToken ?? "b4c0n73n7fu1"
         #if API_COVERAGE
-            var clientConfiguration = Contentful.ClientConfiguration()
             clientConfiguration.server = "127.0.0.1:5000"
             clientConfiguration.secure = false
             client = Client(spaceId: testSpaceId, accessToken: testAccessToken, clientConfiguration: clientConfiguration)
         #else
-            client = Client(spaceId: testSpaceId, accessToken: testAccessToken)
+            client = Client(spaceId: testSpaceId, accessToken: testAccessToken, clientConfiguration: clientConfiguration)
             let dvrSession = DVR.Session(cassetteName: cassetteName, backingSession: client.urlSession)
             client.urlSession = dvrSession
         #endif
@@ -119,6 +118,7 @@ class PreviewAPITests: XCTestCase {
     func testClientCanAccessPreviewAPI() {
         var clientConfiguration = Contentful.ClientConfiguration()
         clientConfiguration.previewMode = true
+
         let client = Client(spaceId: "cfexampleapi",
                             accessToken: "e5e8d4c5c122cf28fc1af3ff77d28bef78a3952957f15067bbc29f2f0dde0b50",
                             clientConfiguration: clientConfiguration)
@@ -142,8 +142,12 @@ class PreviewAPITests: XCTestCase {
 
         var clientConfiguration = Contentful.ClientConfiguration()
         clientConfiguration.previewMode = true
-        let client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1", clientConfiguration: clientConfiguration)
-        client.urlSession = DVR.Session(cassetteName: "testClientCantAccessPreviewAPIWithProductionToken", backingSession: client.urlSession)
+
+
+        let client = TestClientFactory.testClient(withCassetteNamed: "testClientCantAccessPreviewAPIWithProductionToken",
+                                                  accessToken: "e5e8d4c5c122cf28fc1af3ff77d28bef78a3952957f15067bbc29f2f0dde0b50",
+                                                  clientConfiguration: clientConfiguration)
+
 
         let networkExpectation = expectation(description: "Client can't fetch space with wrong token")
 

@@ -101,6 +101,8 @@ public final class SyncSpace: ImmutableMappable {
         }
     }
 
+
+
     internal func cache(resources: [Resource]) {
         for resource in resources {
             switch resource {
