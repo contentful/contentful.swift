@@ -109,4 +109,4 @@ Copyright (c) 2016 Contentful GmbH. See LICENSE for further details.
 [10]: https://github.com/contentful/contentful.swift
 [11]: https://www.contentful.com/developers/docs/references/content-management-api/
 [12]: https://cocoapods.org/pods/ContentfulManagementAPI
-d
+
