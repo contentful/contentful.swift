@@ -10,12 +10,16 @@ import ObjectMapper
 import Foundation
 import Interstellar
 
-
-// FIXME: Use.
+/**
+ The `Integration` protocol describes the libary name and version number for external integrations
+ to be used in conjunction with the contentful.swift SDK.
+ */
 public protocol Integration {
 
+    /// The name of the integrated library.
     var name: String { get }
 
+    /// The version number for the intergrated library.
     var version: String { get set }
 }
 

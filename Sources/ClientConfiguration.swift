@@ -47,10 +47,14 @@ public struct ClientConfiguration {
         }
 
         // Operating system info.
-        guard let operatingSystemVersionString = operatingSystemVersionString() else {
-            return userAgentString
+        if let operatingSystemVersionString = operatingSystemVersionString() {
+            userAgentString += " os \(operatingSystemVersionString);"
         }
-        userAgentString += " os \(operatingSystemVersionString);"
+        // Integration
+        if let integration = integration {
+            userAgentString += " integration \(integration.name)/\(integration.version)"
+        }
+
         return userAgentString
     }
 
