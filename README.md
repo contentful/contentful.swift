@@ -40,9 +40,19 @@ client.fetchEntry("nyancat") { (result: Result<Entry>) in
 }
 ```
 
-## Documentation
+## `ContentModellable` and `MappedContent` (beta)
 
-For further information, check out the [Content Delivery API Reference Documentation][3].
+The `ContentModellable` and `EntryModellable` protocols allows you to define types that will be mapped from `Entry`s of the various content types in your Contentful space. When using methods such as:
+
+```
+func fetchMappedEntries(with query: Query) -> Observable<Result<MappedContent>>
+```
+
+the asynchronously returned result will be an instance of `MappedContent` which will contain a dictionary which maps content type identifiers to arrays of `EntryModellable` (types of your own definition) that have been fetched. Note that these features are in beta and the API is subject to change.
+
+## Reference Documentation
+
+For further information about the API, check out the [Content Delivery API Reference Documentation][3].
 
 ## Swift Versioning
 
@@ -50,7 +60,7 @@ The Contentful Swift SDK requires, at minimum, Swift 2.2 and therefore Xcode 7.3
 
  Swift version | Compatible Contentful tag |
 | --- | --- |
-| Swift 3.0 | `v0.6.0` |
+| Swift 3.0 | `v0.7.0` |
 | Swift 2.3 | `v0.2.3` |
 | Swift 2.2 | `v0.2.1` |
 
@@ -90,7 +100,7 @@ end
 You can also use [Carthage][8] for integration by adding the following to your `Cartfile`:
 
 ```
-github "contentful/contentful.swift" ~> 0.6.0
+github "contentful/contentful.swift" ~> 0.7.0
 ```
 
 ## License
@@ -109,4 +119,4 @@ Copyright (c) 2016 Contentful GmbH. See LICENSE for further details.
 [10]: https://github.com/contentful/contentful.swift
 [11]: https://www.contentful.com/developers/docs/references/content-management-api/
 [12]: https://cocoapods.org/pods/ContentfulManagementAPI
-d
+

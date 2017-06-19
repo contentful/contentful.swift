@@ -15,8 +15,9 @@ public class Asset: LocalizableResource {
     /// URL of the media file associated with this asset. Optional for compatibility with `select` operator queries.
     /// Also, If the media file is still being processed, as the final stage of uploading to your space, this property will be nil.
     public var urlString: String? {
-        let urlString = accessLocalizedString(path: "file.url")
-        return urlString
+        guard let urlString = accessLocalizedString(path: "file.url") else { return nil }
+        let urlStringWithScheme = "https:" + urlString
+        return urlStringWithScheme
     }
 
     /// The title of the asset. Optional for compatibility with `select` operator queries.
@@ -59,7 +60,7 @@ public class Asset: LocalizableResource {
     /// The URL for the underlying media file
     public func url() throws -> URL {
         guard let urlString = self.urlString else { throw SDKError.invalidURL(string: "") }
-        guard let url = URL(string: "https:\(urlString)") else { throw SDKError.invalidURL(string: urlString) }
+        guard let url = URL(string: urlString) else { throw SDKError.invalidURL(string: urlString) }
 
         return url
     }
@@ -84,4 +85,15 @@ public class Asset: LocalizableResource {
         value <- accessorMap[path]
         return value
     }
+}
+
+extension Resource: Hashable {
+    public var hashValue: Int {
+        return id.hashValue
+    }
+}
+
+extension Resource: Equatable {}
+public func == (lhs: Resource, rhs: Resource) -> Bool {
+    return lhs.id == rhs.id && lhs.sys.updatedAt == rhs.sys.updatedAt
 }

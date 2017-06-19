@@ -13,21 +13,21 @@
           "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
           "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
           "Connection" : "keep-alive",
-          "X-Contentful-Request-Id" : "1cd68e09029065112142ed41318e710a",
+          "X-Contentful-Request-Id" : "da68ba2a8e74314999b6021e346ab017",
           "X-Content-Type-Options" : "nosniff",
           "CF-Cache-Name" : "content_delivery",
           "Access-Control-Allow-Origin" : "*",
           "CF-Space-Id" : "cfexampleapi",
-          "Date" : "Tue, 28 Feb 2017 13:12:08 GMT",
+          "Date" : "Tue, 13 Jun 2017 11:53:19 GMT",
           "Server" : "Contentful"
         },
         "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJTcGFjZSIsCiAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogIH0sCiAgIm5hbWUiOiAiQ29udGVudGZ1bCBFeGFtcGxlIEFQSSIsCiAgImxvY2FsZXMiOiBbCiAgICB7CiAgICAgICJjb2RlIjogImVuLVVTIiwKICAgICAgImRlZmF1bHQiOiB0cnVlLAogICAgICAibmFtZSI6ICJFbmdsaXNoIiwKICAgICAgImZhbGxiYWNrQ29kZSI6IG51bGwKICAgIH0sCiAgICB7CiAgICAgICJjb2RlIjogInRsaCIsCiAgICAgICJkZWZhdWx0IjogZmFsc2UsCiAgICAgICJuYW1lIjogIktsaW5nb24iLAogICAgICAiZmFsbGJhY2tDb2RlIjogImVuLVVTIgogICAgfQogIF0KfQo=",
         "url" : "https:\/\/preview.contentful.com\/spaces\/cfexampleapi\/"
       },
-      "recorded_at" : 1488287527.557075,
+      "recorded_at" : 1497354799.204287,
       "request" : {
         "headers" : {
-          "User-Agent" : "contentful.swift\/0.3.1 (iOS Version 10.2 (Build 14C89))",
+          "X-Contentful-User-Agent" : "sdk contentful.swift\/0.6.1; platform Swift\/3.1; os iOS\/10.3.1;",
           "Authorization" : "Bearer e5e8d4c5c122cf28fc1af3ff77d28bef78a3952957f15067bbc29f2f0dde0b50"
         },
         "method" : "GET",

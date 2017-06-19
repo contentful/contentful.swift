@@ -24,7 +24,7 @@ open class Client {
 
     fileprivate let clientConfiguration: ClientConfiguration
     fileprivate let spaceId: String
-
+    fileprivate var persistenceIntegration: PersistenceIntegration?
     fileprivate var server: String {
 
         if clientConfiguration.previewMode && clientConfiguration.server == Defaults.cdaHost {
@@ -34,6 +34,8 @@ open class Client {
     }
 
     internal var urlSession: URLSession
+
+    fileprivate let contentModel: ContentModel?
 
     fileprivate(set) var space: Space?
 
@@ -53,13 +55,18 @@ open class Client {
     public init(spaceId: String,
                 accessToken: String,
                 clientConfiguration: ClientConfiguration = .default,
-                sessionConfiguration: URLSessionConfiguration = .default) {
+                sessionConfiguration: URLSessionConfiguration = .default,
+                persistenceIntegration: PersistenceIntegration? = nil,
+                contentModel: ContentModel? = nil) {
+
         self.spaceId = spaceId
         self.clientConfiguration = clientConfiguration
+        self.contentModel = contentModel
+        self.persistenceIntegration = persistenceIntegration
 
         let contentfulHTTPHeaders = [
             "Authorization": "Bearer \(accessToken)",
-            "X-Contentful-User-Agent": clientConfiguration.userAgentString
+            "X-Contentful-User-Agent": clientConfiguration.userAgentString(with: persistenceIntegration)
         ]
         sessionConfiguration.httpAdditionalHeaders = contentfulHTTPHeaders
         self.urlSession = URLSession(configuration: sessionConfiguration)
@@ -71,8 +78,8 @@ open class Client {
                 let queryItems: [URLQueryItem] = parameters.map { key, value in
                     var value = value
 
-                    if let date = value as? Date, let dateString = date.toISO8601GMTString() {
-                        value = dateString
+                    if let date = value as? Date {
+                        value = date.iso8601String
                     }
 
                     if let array = value as? NSArray {
@@ -277,6 +284,71 @@ extension Client {
     }
 
     /**
+     Fetch a collection of Assets from Contentful matching the specified query.
+
+     - Parameter query: The Query object to match results againts.
+     - Parameter completion: A handler being called on completion of the request.
+
+     - Returns: The data task being used, enables cancellation of requests.
+     */
+    @discardableResult public func fetchAssets(with query: AssetQuery,
+                                               then completion: @escaping ResultsHandler<ArrayResponse<Asset>>) -> URLSessionDataTask? {
+
+        let url = URL(forComponent: "assets", parameters: query.parameters)
+        return fetch(url: url, then: completion)
+    }
+
+    /**
+     Fetch a collection of Assets from Contentful matching the specified query.
+
+     - Parameter query: The Query object to match results againts.
+     - Returns: A tuple of data task and an observable for the resulting array of Assets.
+     */
+    @discardableResult public func fetchAssets(query: AssetQuery) -> Observable<Result<ArrayResponse<Asset>>> {
+        let asyncDataTask: AsyncDataTask<AssetQuery, ArrayResponse<Asset>> = fetchAssets(with:then:)
+        return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
+    }
+}
+
+
+// MARK: Modellable
+
+extension Client {
+    /**
+     Fetch a collection of Assets from Contentful matching the specified query.
+
+     - Parameter query: The Query object to match results againts.
+     - Returns: An Observable forr the resulting `MappedContent` container.
+     */
+    @discardableResult public func fetchMappedEntries(with query: Query) -> Observable<Result<MappedContent>> {
+        let asyncDataTask: AsyncDataTask<Query, MappedContent> = fetchMappedEntries(with:then:)
+        return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
+    }
+
+    /**
+     Fetches all entries and includes matching the passed in `Query`. The completion handler returned will return a `MappedContent` object which
+     contains an array of `Asset`s and a dictionary of ContentTypeId's to arrays of `EntryModellable` types of your own defining.
+     
+     - Parameter query: The Query object to match results against.
+     - Parameter completion: A handler being called on completion of the request containing a `MappedContent` instance.
+     
+     - Returns: The data task being used, enables cancellation of requests.
+     */
+    @discardableResult public func fetchMappedEntries(with query: Query,
+                                                      then completion: @escaping ResultsHandler<MappedContent>) -> URLSessionDataTask? {
+
+        let url = URL(forComponent: "entries", parameters: query.parameters)
+
+        return fetch(url: url) { (result: Result<ArrayResponse<Entry>>) in
+            let mappedResult: Result<MappedContent> = result.flatMap { entriesArrayResponse in
+                let mappedContent = entriesArrayResponse.toMappedContent(for: self.contentModel)
+                return Result.success(mappedContent)
+            }
+            completion(mappedResult)
+        }
+    }
+
+    /**
      Fetch a collection of Entries of a specified content type matching the query. The content_type
      parameter is specified by passing in a generic parameter: a model class conforming to `EntryModellable`.
 
@@ -309,33 +381,6 @@ extension Client {
         -> Observable<Result<MappedArrayResponse<EntryType>>> {
 
         let asyncDataTask: AsyncDataTask<QueryOn<EntryType>, MappedArrayResponse<EntryType>> = fetchMappedEntries(with:then:)
-        return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
-    }
-
-
-    /**
-     Fetch a collection of Assets from Contentful matching the specified query.
-
-     - Parameter query: The Query object to match results againts.
-     - Parameter completion: A handler being called on completion of the request.
-
-     - Returns: The data task being used, enables cancellation of requests.
-     */
-    @discardableResult public func fetchAssets(with query: AssetQuery,
-                                               then completion: @escaping ResultsHandler<ArrayResponse<Asset>>) -> URLSessionDataTask? {
-
-        let url = URL(forComponent: "assets", parameters: query.parameters)
-        return fetch(url: url, then: completion)
-    }
-
-    /**
-     Fetch a collection of Assets from Contentful matching the specified query.
-
-     - Parameter query: The Query object to match results againts.
-     - Returns: A tuple of data task and an observable for the resulting array of Assets.
-     */
-    @discardableResult public func fetchAssets(query: AssetQuery) -> Observable<Result<ArrayResponse<Asset>>> {
-        let asyncDataTask: AsyncDataTask<AssetQuery, ArrayResponse<Asset>> = fetchAssets(with:then:)
         return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
     }
 }
@@ -455,7 +500,7 @@ extension Client {
 
      - Returns: A tuple of data task and a signal for the resulting array of Content Types.
      */
-    @discardableResult public func fetchContentTypes(matching: [String: Any] = [:]) ->  Observable<Result<ArrayResponse<ContentType>>> {
+    @discardableResult public func fetchContentTypes(matching: [String: Any] = [:]) -> Observable<Result<ArrayResponse<ContentType>>> {
         let asyncDataTask: AsyncDataTask<[String: Any], ArrayResponse<ContentType>> = fetchContentTypes(matching:completion:)
         return toObservable(parameter: matching, asyncDataTask: asyncDataTask).observable
     }
@@ -556,6 +601,8 @@ extension Client {
     }
 }
 
+// MARK: Sync
+
 extension Client {
     /**
      Perform an initial synchronization of the Space this client is constrained to.
@@ -586,22 +633,114 @@ extension Client {
         return toObservable(parameter: matching, asyncDataTask: asyncDataTask).observable
     }
 
-    func sync(matching: [String: Any] = [:], completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
-        if clientConfiguration.previewMode {
-            completion(.error(SDKError.previewAPIDoesNotSupportSync()))
+    /**
+     Perform a subsequent synchronization operation, updating this object with
+     the latest content from Contentful.
+
+     Calling this will mutate the instance and also return a reference to itself to the completion
+     handler in order to allow chaining of operations.
+
+     - Parameter syncSpace: the relevant `SyncSpace` to perform the subsequent sync on.
+     - Parameter matching: Additional options for the synchronization
+
+     - Returns: An `Observable` which will be fired when the `SyncSpace` is fully synchronized with Contentful.
+     */
+    @discardableResult func nextSync(for syncSpace: SyncSpace, matching: [String: Any] = [:]) -> Observable<Result<SyncSpace>> {
+
+        let observable = Observable<Result<SyncSpace>>()
+        self.nextSync(for: syncSpace) { result in
+            observable.update(result)
+        }
+        return observable
+    }
+
+    /**
+     Perform a subsequent synchronization operation, updating the passed in `SyncSpace` with the
+     latest content from Contentful.
+
+     Calling this will mutate passed in SyncSpace and also return a reference to itself to the completion
+     handler in order to allow chaining of operations.
+
+     - Parameter syncSpace: the relevant `SyncSpace` to perform the subsequent sync on.
+     - Parameter matching:   Additional options for the synchronization
+     - Parameter completion: A handler which will be called on completion of the operation
+
+     - Returns: The data task being used, enables cancellation of requests
+     */
+
+    @discardableResult public func nextSync(for syncSpace: SyncSpace,
+                                            matching: [String: Any] = [:],
+                                            completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
+
+        // Preview mode only supports `initialSync` not `nextSync`. The only reason `nextSync` should
+        // be called while in preview mode, is internally by the SDK to finish a multiple page sync.
+        // We are doing a multi page sync only when syncSpace.hasMorePages is true.
+        if clientConfiguration.previewMode == true && syncSpace.hasMorePages == false {
+            completion(Result.error(SDKError.previewAPIDoesNotSupportSync()))
             return nil
         }
 
+        var parameters = matching
+        parameters.removeValue(forKey: "initial")
+        parameters["sync_token"] = syncSpace.syncToken
+
+        // Callback to merge the most recent sync page with the current sync space.
+        let mergeSyncSpacesCompletion: (Result<SyncSpace>) -> Void = { result in
+
+            switch result {
+            case .success(let newSyncSpace):
+
+                // Send messages to persistence layer about the diffs (pre-merge state).
+                self.sendSyncSpaceDiffMessagesToPersistenceIntegration(newestSyncSpace: newSyncSpace, resolvingLinksWith: syncSpace)
+                syncSpace.updateWithDiffs(from: newSyncSpace)
+
+                completion(Result.success(syncSpace))
+            case .error(let error):
+                completion(Result.error(error))
+            }
+        }
+
+        let task = self.sync(matching: parameters, completion: mergeSyncSpacesCompletion)
+        return task
+    }
+
+    fileprivate func sendSyncSpaceDiffMessagesToPersistenceIntegration(newestSyncSpace: SyncSpace, resolvingLinksWith originalSyncSpac: SyncSpace?) {
+
+        persistenceIntegration?.update(syncToken: newestSyncSpace.syncToken)
+
+        let allEntries = newestSyncSpace.entries + (originalSyncSpac?.entries ?? [])
+        for entry in allEntries {
+            let allAssets = newestSyncSpace.assets + (originalSyncSpac?.assets ?? [])
+            entry.resolveLinks(against: allEntries, and: allAssets)
+            persistenceIntegration?.create(entry: entry)
+        }
+
+        for asset in newestSyncSpace.assets {
+            persistenceIntegration?.create(asset: asset)
+        }
+
+        for deletedAssetId in newestSyncSpace.deletedAssets {
+            persistenceIntegration?.delete(assetWithId: deletedAssetId)
+        }
+
+        for deletedEntryId in newestSyncSpace.deletedEntries {
+            persistenceIntegration?.delete(entryWithId: deletedEntryId)
+        }
+
+        persistenceIntegration?.resolveRelationships()
+        persistenceIntegration?.save()
+    }
+
+    fileprivate func sync(matching: [String: Any] = [:], completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
+
         return fetch(url: URL(forComponent: "sync", parameters: matching)) { (result: Result<SyncSpace>) in
             if let syncSpace = result.value {
-                syncSpace.client = self
 
                 if syncSpace.hasMorePages == true {
-                    var parameters = matching
-                    parameters.removeValue(forKey: "initial")
-                    syncSpace.sync(matching: parameters, completion: completion)
+                    self.nextSync(for: syncSpace, matching: matching, completion: completion)
                 } else {
-                    completion(.success(syncSpace))
+                    self.sendSyncSpaceDiffMessagesToPersistenceIntegration(newestSyncSpace: syncSpace, resolvingLinksWith: nil)
+                    completion(Result.success(syncSpace))
                 }
             } else {
                 completion(result)
@@ -609,7 +748,7 @@ extension Client {
         }
     }
 
-    func sync(matching: [String: Any] = [:]) -> Observable<Result<SyncSpace>> {
+    fileprivate func sync(matching: [String: Any] = [:]) -> Observable<Result<SyncSpace>> {
         let asyncDataTask: AsyncDataTask<[String: Any], SyncSpace> = sync(matching:completion:)
         return toObservable(parameter: matching, asyncDataTask: asyncDataTask).observable
     }

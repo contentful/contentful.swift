@@ -67,7 +67,6 @@ public struct ArrayResponse<ItemType>: Array, ImmutableMappable where ItemType: 
             entry.resolveLinks(against: allIncludedEntries, and: (includedAssets ?? []))
         }
     }
-
 }
 
 /**
@@ -94,7 +93,7 @@ internal extension ArrayResponse where ItemType: Entry {
 
     internal func toMappedArrayResponse<EntryType: EntryModellable>() -> MappedArrayResponse<EntryType> {
         let mappedItems = items.flatMap { entry in
-            return EntryType(sys: entry.sys, fields: entry.fields, linkDepth: 20)
+            return EntryType(entry: entry, linkDepth: 20)
         }
         return MappedArrayResponse<EntryType>(items: mappedItems, limit: limit, skip: skip, total: total)
     }

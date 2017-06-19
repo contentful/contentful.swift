@@ -14,6 +14,19 @@ enum Defaults {
     static let previewHost = "preview.contentful.com"
 }
 
+/**
+ The `Integration` protocol describes the libary name and version number for external integrations
+ to be used in conjunction with the contentful.swift SDK.
+ */
+public protocol Integration {
+
+    /// The name of the integrated library.
+    var name: String { get }
+
+    /// The version number for the intergrated library.
+    var version: String { get }
+}
+
 /// ClientConfiguration parameters for a client instance
 public struct ClientConfiguration {
 
@@ -29,7 +42,7 @@ public struct ClientConfiguration {
     public var server = Defaults.cdaHost
 
     /// Computed version of the user agent, including OS name and version
-    public var userAgentString: String {
+    internal func userAgentString(with integration: Integration?) -> String {
         // Inspired by Alamofire https://github.com/Alamofire/Alamofire/blob/25d8fdd8a36f510a2bc4fe98289f367ec385d337/Source/SessionManager.swift
 
         var userAgentString = ""
@@ -47,10 +60,14 @@ public struct ClientConfiguration {
         }
 
         // Operating system info.
-        guard let operatingSystemVersionString = operatingSystemVersionString() else {
-            return userAgentString
+        if let operatingSystemVersionString = operatingSystemVersionString() {
+            userAgentString += " os \(operatingSystemVersionString);"
         }
-        userAgentString += " os \(operatingSystemVersionString);"
+        // Integration
+        if let integration = integration {
+            userAgentString += " integration \(integration.name)/\(integration.version)"
+        }
+
         return userAgentString
     }
 

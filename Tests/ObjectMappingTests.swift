@@ -45,6 +45,7 @@ class ObjectMappingTests: XCTestCase {
 
             expect(asset.sys.id).to(equal("nyancat"))
             expect(asset.sys.type).to(equal("Asset"))
+            expect(asset.sys.createdAt).toNot(beNil())
             expect(try asset.url()).to(equal(URL(string: "https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png")))
         } catch _ {
             fail("Asset decoding should not throw an error")

@@ -66,28 +66,37 @@ public enum Link {
 
      - Parameter fieldName: The name of the field where there is a linked Resource.
      - Parameter linkDepth: Interally used by the SDK to prevent infinite loops when resolving links.
-     - Returns: Intance of concrete type conforming to `ContentModellable` that is Linked.
+     - Returns:  Intance of concrete type conforming to `ContentModellable` that is Linked.
     */
-    public static func at<ValueType: ContentModellable>(_ fieldName: String, in fields: [String: Any], linkDepth: Int) -> ValueType? {
+    public static func at<ValueType: EntryModellable>(_ fieldName: String, in fields: [String: Any], linkDepth: Int) -> ValueType? {
 
         guard let link = fields[fieldName] as? Link else { return nil }
-
-        let value: ValueType? = link.toDestinationType(linkDepth: linkDepth)
+        let value: ValueType? = link.toEntryModellableType(linkDepth: linkDepth)
         return value
     }
 
-    // MARK: Internal
+    /**
+     Extract the concrete type conforming to ContentModellable which the specified field points to.
 
-    private func toDestinationType<DestinationType: ContentModellable>(linkDepth: Int) -> DestinationType? {
+     - Parameter fieldName: The name of the field where there is a linked Resource.
+     - Returns:  The linked Asset.
+     */
+    public static func at(_ fieldName: String, in fields: [String: Any]) -> Asset? {
+
+        guard let link = fields[fieldName] as? Link else { return nil }
+        let asset = link.asset
+        return asset
+    }
+
+    private func toEntryModellableType<DestinationType: EntryModellable>(linkDepth: Int) -> DestinationType? {
 
         guard linkDepth > 0 else { return nil }
 
         switch self {
-        case .asset(let asset):
-            let item = DestinationType(sys: asset.sys, fields: asset.fields, linkDepth: linkDepth - 1 )
-            return item
+        case .asset:
+            return nil
         case .entry(let entry):
-            let item = DestinationType(sys: entry.sys, fields: entry.fields, linkDepth: linkDepth - 1 )
+            let item = DestinationType(entry: entry, linkDepth: linkDepth - 1)
             return item
         case .unresolved:
             fatalError("Should not try to decode an unresolved link.")

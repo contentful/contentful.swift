@@ -28,9 +28,10 @@ line_length:
   warning: 150
   ignores_comments: true
   ignores_urls: true
+file_length:
+  warning: 800
 vertical_whitespace:
   max_empty_lines: 2
-file_length: 650
 function_body_length: 110
 #identifier_name:
 #  min_length: 2
