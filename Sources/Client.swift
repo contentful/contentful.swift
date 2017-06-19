@@ -10,19 +10,6 @@ import ObjectMapper
 import Foundation
 import Interstellar
 
-/**
- The `Integration` protocol describes the libary name and version number for external integrations
- to be used in conjunction with the contentful.swift SDK.
- */
-public protocol Integration {
-
-    /// The name of the integrated library.
-    var name: String { get }
-
-    /// The version number for the intergrated library.
-    var version: String { get set }
-}
-
 
 /// A tuple of data task, enabling the cancellation of http requests, and an `Observable` for the resulting
 /// items that were fetched from the Contentful Content Delivery API.
@@ -37,7 +24,7 @@ open class Client {
 
     fileprivate let clientConfiguration: ClientConfiguration
     fileprivate let spaceId: String
-    fileprivate var persistenceDelegate: PersistenceDelegate?
+    fileprivate var persistenceIntegration: PersistenceIntegration?
     fileprivate var server: String {
 
         if clientConfiguration.previewMode && clientConfiguration.server == Defaults.cdaHost {
@@ -69,18 +56,17 @@ open class Client {
                 accessToken: String,
                 clientConfiguration: ClientConfiguration = .default,
                 sessionConfiguration: URLSessionConfiguration = .default,
-                persistenceDelegate: PersistenceDelegate? = nil,
-                integration: Integration? = nil,
+                persistenceIntegration: PersistenceIntegration? = nil,
                 contentModel: ContentModel? = nil) {
 
         self.spaceId = spaceId
         self.clientConfiguration = clientConfiguration
         self.contentModel = contentModel
-        self.persistenceDelegate = persistenceDelegate
+        self.persistenceIntegration = persistenceIntegration
 
         let contentfulHTTPHeaders = [
             "Authorization": "Bearer \(accessToken)",
-            "X-Contentful-User-Agent": clientConfiguration.userAgentString(with: integration)
+            "X-Contentful-User-Agent": clientConfiguration.userAgentString(with: persistenceIntegration)
         ]
         sessionConfiguration.httpAdditionalHeaders = contentfulHTTPHeaders
         self.urlSession = URLSession(configuration: sessionConfiguration)
@@ -702,7 +688,7 @@ extension Client {
             case .success(let newSyncSpace):
 
                 // Send messages to persistence layer about the diffs (pre-merge state).
-                self.sendSyncSpaceDiffMessagesToPersistenceDelegate(newestSyncSpace: newSyncSpace, resolvingLinksWith: syncSpace)
+                self.sendSyncSpaceDiffMessagesToPersistenceIntegration(newestSyncSpace: newSyncSpace, resolvingLinksWith: syncSpace)
                 syncSpace.updateWithDiffs(from: newSyncSpace)
 
                 completion(Result.success(syncSpace))
@@ -715,31 +701,31 @@ extension Client {
         return task
     }
 
-    fileprivate func sendSyncSpaceDiffMessagesToPersistenceDelegate(newestSyncSpace: SyncSpace, resolvingLinksWith originalSyncSpac: SyncSpace?) {
+    fileprivate func sendSyncSpaceDiffMessagesToPersistenceIntegration(newestSyncSpace: SyncSpace, resolvingLinksWith originalSyncSpac: SyncSpace?) {
 
-        persistenceDelegate?.update(syncToken: newestSyncSpace.syncToken)
+        persistenceIntegration?.update(syncToken: newestSyncSpace.syncToken)
 
         for asset in newestSyncSpace.assets {
-            persistenceDelegate?.create(asset: asset)
+            persistenceIntegration?.create(asset: asset)
         }
 
         for entry in newestSyncSpace.entries {
             let allEntries = newestSyncSpace.entries + (originalSyncSpac?.entries ?? [])
             let allAssets = newestSyncSpace.assets + (originalSyncSpac?.assets ?? [])
             entry.resolveLinks(against: allEntries, and: allAssets)
-            persistenceDelegate?.create(entry: entry)
+            persistenceIntegration?.create(entry: entry)
         }
 
         for deletedAssetId in newestSyncSpace.deletedAssets {
-            persistenceDelegate?.delete(assetWithId: deletedAssetId)
+            persistenceIntegration?.delete(assetWithId: deletedAssetId)
         }
 
         for deletedEntryId in newestSyncSpace.deletedEntries {
-            persistenceDelegate?.delete(entryWithId: deletedEntryId)
+            persistenceIntegration?.delete(entryWithId: deletedEntryId)
         }
 
-        persistenceDelegate?.resolveRelationships()
-        persistenceDelegate?.save()
+        persistenceIntegration?.resolveRelationships()
+        persistenceIntegration?.save()
     }
 
     fileprivate func sync(matching: [String: Any] = [:], completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
@@ -750,7 +736,7 @@ extension Client {
                 if syncSpace.hasMorePages == true {
                     self.nextSync(for: syncSpace, matching: matching, completion: completion)
                 } else {
-                    self.sendSyncSpaceDiffMessagesToPersistenceDelegate(newestSyncSpace: syncSpace, resolvingLinksWith: nil)
+                    self.sendSyncSpaceDiffMessagesToPersistenceIntegration(newestSyncSpace: syncSpace, resolvingLinksWith: nil)
                     completion(Result.success(syncSpace))
                 }
             } else {

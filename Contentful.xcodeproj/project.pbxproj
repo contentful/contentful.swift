@@ -119,6 +119,7 @@
 		ED737C951EF1785A00ECB3F1 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED737C931EF1785A00ECB3F1 /* Persistence.swift */; };
 		ED737C961EF1785A00ECB3F1 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED737C931EF1785A00ECB3F1 /* Persistence.swift */; };
 		ED737C971EF1785A00ECB3F1 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED737C931EF1785A00ECB3F1 /* Persistence.swift */; };
+		ED88B7DA1EF7CD3800538D1F /* ClientConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED88B7D91EF7CD3800538D1F /* ClientConfigurationTests.swift */; };
 		ED9102661E65AADA0076FDBD /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED9102651E65AADA0076FDBD /* DVR.framework */; };
 		ED91C1401EDCB03600F0FC0A /* ImageOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */; };
 		ED91C1411EDCB03900F0FC0A /* ImageOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */; };
@@ -201,6 +202,7 @@
 		ED737C871EF15CC600ECB3F1 /* PreviewSyncTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PreviewSyncTests.json; sourceTree = "<group>"; };
 		ED737C901EF1748700ECB3F1 /* SyncTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SyncTests.json; sourceTree = "<group>"; };
 		ED737C931EF1785A00ECB3F1 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		ED88B7D91EF7CD3800538D1F /* ClientConfigurationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientConfigurationTests.swift; sourceTree = "<group>"; };
 		ED9102651E65AADA0076FDBD /* DVR.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVR.framework; path = Carthage/Build/iOS/DVR.framework; sourceTree = "<group>"; };
 		ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageOptions.swift; sourceTree = "<group>"; };
 		ED91C1471EDCB1F800F0FC0A /* Client+AppKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Client+AppKit.swift"; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 				ED52DB3F1EE94C8E00225140 /* RateLimitTests.swift */,
 				ED1638C41ED5CA6D009BAA9F /* ImageTests.swift */,
 				A19CA3D31B836EDD00A0EFCD /* ContentfulTests.swift */,
+				ED88B7D91EF7CD3800538D1F /* ClientConfigurationTests.swift */,
 				A19C743E1C47A7F5005334AD /* ContentTypeTests.swift */,
 				ED307F211EE6E5D700633390 /* LocalizationTests.swift */,
 				A1B2E3661BBAD06000814D63 /* ObjectMappingTests.swift */,
@@ -731,6 +734,7 @@
 				A114BBC31C50EA3200DE6679 /* SyncTests.swift in Sources */,
 				A19C743F1C47A7F5005334AD /* ContentTypeTests.swift in Sources */,
 				ED02BC611E7047B900BAB2CA /* QueryTests.swift in Sources */,
+				ED88B7DA1EF7CD3800538D1F /* ClientConfigurationTests.swift in Sources */,
 				ED307F231EE6E5DF00633390 /* LocalizationTests.swift in Sources */,
 				A10FF9D21BBB2E5F001AA4E9 /* ObjectMappingTests.swift in Sources */,
 				A19C74431C47A812005334AD /* AssetTests.swift in Sources */,

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol PersistenceDelegate {
+public protocol PersistenceIntegration: Integration {
 
     /**
      This is called whenever a new Asset was created or an existing one was updated.
