@@ -705,15 +705,15 @@ extension Client {
 
         persistenceIntegration?.update(syncToken: newestSyncSpace.syncToken)
 
-        for asset in newestSyncSpace.assets {
-            persistenceIntegration?.create(asset: asset)
-        }
-
-        for entry in newestSyncSpace.entries {
-            let allEntries = newestSyncSpace.entries + (originalSyncSpac?.entries ?? [])
+        let allEntries = newestSyncSpace.entries + (originalSyncSpac?.entries ?? [])
+        for entry in allEntries {
             let allAssets = newestSyncSpace.assets + (originalSyncSpac?.assets ?? [])
             entry.resolveLinks(against: allEntries, and: allAssets)
             persistenceIntegration?.create(entry: entry)
+        }
+
+        for asset in newestSyncSpace.assets {
+            persistenceIntegration?.create(asset: asset)
         }
 
         for deletedAssetId in newestSyncSpace.deletedAssets {
