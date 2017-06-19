@@ -311,7 +311,7 @@ extension Client {
 }
 
 
-// MARK: Mappable
+// MARK: Modellable
 
 extension Client {
     /**
@@ -340,7 +340,10 @@ extension Client {
         let url = URL(forComponent: "entries", parameters: query.parameters)
 
         return fetch(url: url) { (result: Result<ArrayResponse<Entry>>) in
-            let mappedResult: Result<MappedContent> = result.flatMap { return Result.success($0.toMappedContent(for: self.contentModel)) }
+            let mappedResult: Result<MappedContent> = result.flatMap { entriesArrayResponse in
+                let mappedContent = entriesArrayResponse.toMappedContent(for: self.contentModel)
+                return Result.success(mappedContent)
+            }
             completion(mappedResult)
         }
     }

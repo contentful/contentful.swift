@@ -4,26 +4,31 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) starting from 1.x releases.
 
 ### Merged, but not yet released
-> #### Changed
-> - *BREAKING:* Subsequent sync is now a method on the `Client` called `nextSync` rather than being a method on `SyncSpace`.
-> #### Added
-> - `PersistenceIntegration` protocol. `Client` can now be initialized with a `persisistenceIntegration` which will receive messages when `Asset`s & `Entry`s are ready to be transformed to a persistable format and cached in persistent store such as CoreData. Note that this only works for the `initialSync` and `nextSync` operations.
-> - The `updatedAt` and `createdAt` properties of the `Sys` type are now stored as `Date` objects instead of as `String`s.
-> - `Integration` protocol to append information about external integrations to Contentul HTTP user-agent headers.
-> - A `ContentModel` type used to contain mapped `ContentModellable` (user-defined types) instances rather than `Entry` & `Asset`s.
-> - Support for `initialSync` when using the Content Preview API.
-
+> All recent changes are published
 ---
 
 ## Table of contents
 
 #### 0.x Releases
+- `0.7.x` Releases - [0.7.0](#070)
 - `0.6.x` Releases - [0.6.0](#060) | [0.6.1](#061)
 - `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041)
 - `0.3.x` Releases - [0.3.0](#030) | [0.3.1](#031)
 
 ---
+
+## [`0.7.0`](https://github.com/contentful/contentful.swift/releases/tag/0.7.0)
+Released on 2017-06-19
+
+#### Changed
+- *BREAKING:* Subsequent sync is now a method on the `Client` called `nextSync` rather than being a method on `SyncSpace`.
+#### Added
+- `PersistenceIntegration` protocol. `Client` can now be initialized with a `persisistenceIntegration` which will receive messages when `Asset`s & `Entry`s are ready to be transformed to a persistable format and cached in persistent store such as CoreData. Note that this only works for the `initialSync` and `nextSync` operations.
+- The `updatedAt` and `createdAt` properties of the `Sys` type are now stored as `Date` objects instead of as `String`s.
+- `Integration` protocol to append information about external integrations to Contentul HTTP user-agent headers.
+- A `ContentModel` type used to contain mapped `ContentModellable` (user-defined types) instances rather than `Entry` & `Asset`s.
+- Support for `initialSync` when using the Content Preview API.
 
 ## [`0.6.1`](https://github.com/contentful/contentful.swift/releases/tag/0.6.1)
 Released on 2017-06-12
