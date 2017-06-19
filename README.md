@@ -60,7 +60,7 @@ The Contentful Swift SDK requires, at minimum, Swift 2.2 and therefore Xcode 7.3
 
  Swift version | Compatible Contentful tag |
 | --- | --- |
-| Swift 3.0 | `v0.6.0` |
+| Swift 3.0 | `v0.7.0` |
 | Swift 2.3 | `v0.2.3` |
 | Swift 2.2 | `v0.2.1` |
 
@@ -100,7 +100,7 @@ end
 You can also use [Carthage][8] for integration by adding the following to your `Cartfile`:
 
 ```
-github "contentful/contentful.swift" ~> 0.6.0
+github "contentful/contentful.swift" ~> 0.7.0
 ```
 
 ## License
