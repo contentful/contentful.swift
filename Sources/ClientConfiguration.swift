@@ -24,7 +24,7 @@ public protocol Integration {
     var name: String { get }
 
     /// The version number for the intergrated library.
-    var version: String { get set }
+    var version: String { get }
 }
 
 /// ClientConfiguration parameters for a client instance
