@@ -40,9 +40,19 @@ client.fetchEntry("nyancat") { (result: Result<Entry>) in
 }
 ```
 
-## Documentation
+## `ContentModellable` and `MappedContent` (beta)
 
-For further information, check out the [Content Delivery API Reference Documentation][3].
+The `ContentModellable` and `EntryModellable` protocols allows you to define types that will be mapped from `Entry`s of the various content types in your Contentful space. When using methods such as:
+
+```
+func fetchMappedEntries(with query: Query) -> Observable<Result<MappedContent>>
+```
+
+the asynchronously returned result will be an instance of `MappedContent` which will contain a dictionary which maps content type identifiers to arrays of `EntryModellable` (types of your own definition) that have been fetched. Note that these features are in beta and the API is subject to change.
+
+## Reference Documentation
+
+For further information about the API, check out the [Content Delivery API Reference Documentation][3].
 
 ## Swift Versioning
 

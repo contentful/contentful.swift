@@ -18,13 +18,6 @@ public protocol SpaceModellable: ContentModellable {
     /// The current synchronization token
     var syncToken: String? { get set }
 }
-//
-//public protocol AssetModellable: ContentModellable {
-//    /// URL of the Asset
-//    var urlString: String? { get set }
-//
-//    init?(asset: Asset)
-//}
 
 public protocol EntryModellable: ContentModellable {
     static var contentTypeId: ContentTypeId { get }
@@ -34,12 +27,10 @@ public protocol EntryModellable: ContentModellable {
 
 public class ContentModel {
     let spaceType: SpaceModellable.Type
-//    let assetType: AssetModellable.Type
     let entryTypes: [EntryModellable.Type]
 
     init(spaceType: SpaceModellable.Type, entryTypes: [EntryModellable.Type]) {
         self.spaceType = spaceType
-//        self.assetType = assetType
         self.entryTypes = entryTypes
     }
 }
