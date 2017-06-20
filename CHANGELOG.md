@@ -10,11 +10,19 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 ## Table of contents
 
 #### 0.x Releases
-- `0.7.x` Releases - [0.7.0](#070)
+- `0.7.x` Releases - [0.7.0](#070) | [0.7.1](#071)
 - `0.6.x` Releases - [0.6.0](#060) | [0.6.1](#061)
 - `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041)
 - `0.3.x` Releases - [0.3.0](#030) | [0.3.1](#031)
+
+---
+
+## [`0.7.1`](https://github.com/contentful/contentful.swift/releases/tag/0.7.1)
+Released on 2017-06-20
+
+#### Fixed
+- Delta messages were not always forwarded to `PersistenceIntegration` when calling `Client.nextSync()` and `Client.initialSync()` in [#71](https://github.com/contentful/contentful.swift/issues/71)
 
 ---
 
@@ -29,6 +37,8 @@ Released on 2017-06-19
 - `Integration` protocol to append information about external integrations to Contentul HTTP user-agent headers.
 - A `ContentModel` type used to contain mapped `ContentModellable` (user-defined types) instances rather than `Entry` & `Asset`s.
 - Support for `initialSync` when using the Content Preview API.
+
+---
 
 ## [`0.6.1`](https://github.com/contentful/contentful.swift/releases/tag/0.6.1)
 Released on 2017-06-12
