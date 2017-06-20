@@ -8,6 +8,13 @@
 
 import Foundation
 
+/**
+ Conform to this protocol and initialize your `Client` instance with the `persistenceIntegration` 
+ initialization parameter set to recieve messages about creation and deletion of `Entry`s and `Asset`s 
+ in your space when doing sync operations using the `Client.initialSync()` and Client.nextSync()` methods.
+ Proper conformance to this protocol should enable persisting the state changes that happen in your Contentful
+ space to a persistent store such as `CoreData`.
+ */
 public protocol PersistenceIntegration: Integration {
 
     /**

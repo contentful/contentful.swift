@@ -118,6 +118,10 @@ public final class SyncSpace: ImmutableMappable {
         for deletedEntryId in syncSpace.deletedEntries {
             entriesMap.removeValue(forKey: deletedEntryId)
         }
+        // Reset so that we can't send same deletion messages twice.
+        self.deletedEntries = [String]()
+        self.deletedAssets = [String]()
+
         syncToken = syncSpace.syncToken
     }
 

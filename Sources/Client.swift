@@ -49,6 +49,8 @@ open class Client {
      - Parameter clientConfiguration: Custom Configuration of the Client.
      - Parameter sessionConfiguration: The configuration for the URLSession. Note that HTTP headers will be overwritten
                                        interally by the SDK so that requests can be authorized correctly.
+     - Parameter persistenceIntegration: An object conforming to the `PersistenceIntegration` protocol
+                                         which will receive messages about created/deleted Resources when calling `sync()` methods.
 
      - Returns: An initialized client instance.
      */
@@ -691,7 +693,8 @@ extension Client {
             case .success(let newSyncSpace):
 
                 // Send messages to persistence layer about the diffs (pre-merge state).
-                self.sendSyncSpaceDiffMessagesToPersistenceIntegration(newestSyncSpace: newSyncSpace, resolvingLinksWith: syncSpace)
+                // Must send messages for the first sync space that was originally passed in.
+                self.sendDiffMessagesToPersistenceIntegration(for: syncSpace, resolvingLinksWith: newSyncSpace)
                 syncSpace.updateWithDiffs(from: newSyncSpace)
 
                 completion(Result.success(syncSpace))
@@ -704,26 +707,32 @@ extension Client {
         return task
     }
 
-    fileprivate func sendSyncSpaceDiffMessagesToPersistenceIntegration(newestSyncSpace: SyncSpace, resolvingLinksWith originalSyncSpac: SyncSpace?) {
+    fileprivate func sendDiffMessagesToPersistenceIntegration(for syncSpacePage: SyncSpace, resolvingLinksWith originalSyncSpac: SyncSpace?) {
 
-        persistenceIntegration?.update(syncToken: newestSyncSpace.syncToken)
+        persistenceIntegration?.update(syncToken: syncSpacePage.syncToken)
 
-        let allEntries = newestSyncSpace.entries + (originalSyncSpac?.entries ?? [])
-        for entry in allEntries {
-            let allAssets = newestSyncSpace.assets + (originalSyncSpac?.assets ?? [])
+        let allEntries = syncSpacePage.entries + (originalSyncSpac?.entries ?? [])
+        let allAssets = syncSpacePage.assets + (originalSyncSpac?.assets ?? [])
+
+        // Resolve links and send to delegate.
+        for entry in syncSpacePage.entries {
             entry.resolveLinks(against: allEntries, and: allAssets)
             persistenceIntegration?.create(entry: entry)
         }
+        // Also resolve links among entries that were returned earlier.
+        for entry in (originalSyncSpac?.entries ?? []) {
+            entry.resolveLinks(against: allEntries, and: allAssets)
+        }
 
-        for asset in newestSyncSpace.assets {
+        for asset in syncSpacePage.assets {
             persistenceIntegration?.create(asset: asset)
         }
 
-        for deletedAssetId in newestSyncSpace.deletedAssets {
+        for deletedAssetId in syncSpacePage.deletedAssets {
             persistenceIntegration?.delete(assetWithId: deletedAssetId)
         }
 
-        for deletedEntryId in newestSyncSpace.deletedEntries {
+        for deletedEntryId in syncSpacePage.deletedEntries {
             persistenceIntegration?.delete(entryWithId: deletedEntryId)
         }
 
@@ -736,10 +745,11 @@ extension Client {
         return fetch(url: URL(forComponent: "sync", parameters: matching)) { (result: Result<SyncSpace>) in
             if let syncSpace = result.value {
 
-                if syncSpace.hasMorePages == true {
+                if syncSpace.hasMorePages == true { // multipage sync.
                     self.nextSync(for: syncSpace, matching: matching, completion: completion)
                 } else {
-                    self.sendSyncSpaceDiffMessagesToPersistenceIntegration(newestSyncSpace: syncSpace, resolvingLinksWith: nil)
+                    // Either a single page sync, or, in the recursive case of a multipage sync, the last page.
+                    self.sendDiffMessagesToPersistenceIntegration(for: syncSpace, resolvingLinksWith: nil)
                     completion(Result.success(syncSpace))
                 }
             } else {
