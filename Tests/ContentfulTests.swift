@@ -103,7 +103,7 @@ class PreviewAPITests: XCTestCase {
 
 
         let client = TestClientFactory.testClient(withCassetteNamed: "testClientCantAccessPreviewAPIWithProductionToken",
-                                                  accessToken: "e5e8d4c5c122cf28fc1af3ff77d28bef78a3952957f15067bbc29f2f0dde0b50",
+                                                  accessToken: "b4c0n73n7fu1",
                                                   clientConfiguration: clientConfiguration)
 
 
