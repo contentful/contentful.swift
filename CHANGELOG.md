@@ -18,6 +18,14 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 
 ---
 
+## [`0.7.1`](https://github.com/contentful/contentful.swift/releases/tag/0.7.2)
+Released on 2017-07-12
+
+#### Added
+- `LocalizationContext` is now a public variable on `Space` so that SDK consumers can direclty initialize `Entry` or `Asset` instances from bundled JSON.
+
+---
+
 ## [`0.7.1`](https://github.com/contentful/contentful.swift/releases/tag/0.7.1)
 Released on 2017-06-20
 

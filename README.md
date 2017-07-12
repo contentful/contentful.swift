@@ -60,9 +60,9 @@ The Contentful Swift SDK requires, at minimum, Swift 2.2 and therefore Xcode 7.3
 
  Swift version | Compatible Contentful tag |
 | --- | --- |
-| Swift 3.0 | `v0.7.1` |
-| Swift 2.3 | `v0.2.3` |
-| Swift 2.2 | `v0.2.1` |
+| Swift 3.0 | > `0.3.0` |
+| Swift 2.3 | `0.2.3` |
+| Swift 2.2 | `0.2.1` |
 
 While there have been some patches applied to the [`Swift-2.3` branch][9], no future maintainence is intended on this branch. It is recommended to upgrade to Swift 3 and
 use the newest version of contentful.swift.
@@ -80,7 +80,7 @@ pod 'Contentful'
 You can specify a specific version of Contentful depending on your needs. To learn more about operators for dependency versioning within a Podfile, see the [CocoaPods doc on the Podfile][7].
 
 ```ruby
-pod 'Contentful', '~> 0.7.1' 
+pod 'Contentful', '~> 0.7.2' 
 ```
 
 Note that for Swift 2.3 support (contentful.swift `v0.2.3`) you will need to add a post-install script to your Podfile if installing with Cocoapods:
@@ -100,7 +100,7 @@ end
 You can also use [Carthage][8] for integration by adding the following to your `Cartfile`:
 
 ```
-github "contentful/contentful.swift" ~> 0.7.1
+github "contentful/contentful.swift" ~> 0.7.2
 ```
 
 ## License
