@@ -41,7 +41,16 @@ public class Locale: ImmutableMappable {
     }
 }
 
-internal class LocalizationContext: MapContext {
+/**
+ The `LocalizationContext` contains meta information about a Space about locales including
+ information about which locale is the default, and what the fallback locale chain is.
+ 
+ This contextual information is necessary to intiialize `Entry` and `Asset` instances properly so that
+ the correct data is displayed for the currently selected locale. For instance, if a particular field
+ for an `Entry` does not have data for the currently selected locale, the SDK will walk the fallback
+ chain for this field until a non-null value is found, or full chain has been walked.
+ */
+public class LocalizationContext: MapContext {
 
     // An ordered collection of locales representing the fallback chain.
     internal let locales: [LocaleCode: Locale]

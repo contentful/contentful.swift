@@ -24,7 +24,8 @@ public class Space: Resource {
         return sys.type
     }
 
-    internal let localizationContext: LocalizationContext
+    /// Context for holding information about the fallback chain of locales for the Space.
+    public let localizationContext: LocalizationContext
 
     // MARK: <ImmutableMappable>
 
