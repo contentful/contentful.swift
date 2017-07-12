@@ -10,7 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 ## Table of contents
 
 #### 0.x Releases
-- `0.7.x` Releases - [0.7.0](#070) | [0.7.1](#071)
+- `0.7.x` Releases - [0.7.0](#070) | [0.7.1](#071) | [0.7.2](#072)
 - `0.6.x` Releases - [0.6.0](#060) | [0.6.1](#061)
 - `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041)
@@ -18,7 +18,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 
 ---
 
-## [`0.7.1`](https://github.com/contentful/contentful.swift/releases/tag/0.7.2)
+## [`0.7.2`](https://github.com/contentful/contentful.swift/releases/tag/0.7.2)
 Released on 2017-07-12
 
 #### Added
