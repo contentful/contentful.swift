@@ -694,7 +694,7 @@ extension Client {
 
                 // Send messages to persistence layer about the diffs (pre-merge state).
                 // Must send messages for the first sync space that was originally passed in.
-                self.sendDiffMessagesToPersistenceIntegration(for: syncSpace, resolvingLinksWith: newSyncSpace)
+                self.sendDiffMessagesToPersistenceIntegration(for: newSyncSpace, resolvingLinksWith: syncSpace)
                 syncSpace.updateWithDiffs(from: newSyncSpace)
 
                 completion(Result.success(syncSpace))
@@ -743,13 +743,16 @@ extension Client {
     fileprivate func sync(matching: [String: Any] = [:], completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
 
         return fetch(url: URL(forComponent: "sync", parameters: matching)) { (result: Result<SyncSpace>) in
+
             if let syncSpace = result.value {
+
+                // Whenever we get a page, send the diffs to the persistence integration.
+                self.sendDiffMessagesToPersistenceIntegration(for: syncSpace, resolvingLinksWith: nil)
 
                 if syncSpace.hasMorePages == true { // multipage sync.
                     self.nextSync(for: syncSpace, matching: matching, completion: completion)
                 } else {
-                    // Either a single page sync, or, in the recursive case of a multipage sync, the last page.
-                    self.sendDiffMessagesToPersistenceIntegration(for: syncSpace, resolvingLinksWith: nil)
+                    // Merge all the sync spaces together.
                     completion(Result.success(syncSpace))
                 }
             } else {
