@@ -619,7 +619,11 @@ extension Client {
 
         var parameters = matching
         parameters["initial"] = true
-        return sync(matching: parameters, completion: completion)
+
+        let syncCompletion: (Result<SyncSpace>) -> Void = { result in
+            self.finishSync(for: SyncSpace(syncToken: ""), newestSyncResults: result, completion: completion)
+        }
+        return sync(matching: parameters, completion: syncCompletion)
     }
 
     /**
@@ -686,83 +690,34 @@ extension Client {
         parameters.removeValue(forKey: "initial")
         parameters["sync_token"] = syncSpace.syncToken
 
-        // Callback to merge the most recent sync page with the current sync space.
-        let mergeSyncSpacesCompletion: (Result<SyncSpace>) -> Void = { result in
-
-            switch result {
-            case .success(let newSyncSpace):
-
-                // Send messages to persistence layer about the diffs (pre-merge state).
-                // Must send messages for the first sync space that was originally passed in.
-                self.sendDiffMessagesToPersistenceIntegration(for: newSyncSpace, resolvingLinksWith: syncSpace)
-                syncSpace.updateWithDiffs(from: newSyncSpace)
-
-                completion(Result.success(syncSpace))
-            case .error(let error):
-                completion(Result.error(error))
-            }
+        let syncCompletion: (Result<SyncSpace>) -> Void = { result in
+            self.finishSync(for: syncSpace, newestSyncResults: result, completion: completion)
         }
 
-        let task = self.sync(matching: parameters, completion: mergeSyncSpacesCompletion)
+        let task = self.sync(matching: parameters, completion: syncCompletion)
         return task
-    }
-
-    fileprivate func sendDiffMessagesToPersistenceIntegration(for syncSpacePage: SyncSpace, resolvingLinksWith originalSyncSpac: SyncSpace?) {
-
-        persistenceIntegration?.update(syncToken: syncSpacePage.syncToken)
-
-        let allEntries = syncSpacePage.entries + (originalSyncSpac?.entries ?? [])
-        let allAssets = syncSpacePage.assets + (originalSyncSpac?.assets ?? [])
-
-        // Resolve links and send to delegate.
-        for entry in syncSpacePage.entries {
-            entry.resolveLinks(against: allEntries, and: allAssets)
-            persistenceIntegration?.create(entry: entry)
-        }
-        // Also resolve links among entries that were returned earlier.
-        for entry in (originalSyncSpac?.entries ?? []) {
-            entry.resolveLinks(against: allEntries, and: allAssets)
-        }
-
-        for asset in syncSpacePage.assets {
-            persistenceIntegration?.create(asset: asset)
-        }
-
-        for deletedAssetId in syncSpacePage.deletedAssets {
-            persistenceIntegration?.delete(assetWithId: deletedAssetId)
-        }
-
-        for deletedEntryId in syncSpacePage.deletedEntries {
-            persistenceIntegration?.delete(entryWithId: deletedEntryId)
-        }
-
-        persistenceIntegration?.resolveRelationships()
-        persistenceIntegration?.save()
     }
 
     fileprivate func sync(matching: [String: Any] = [:], completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
 
         return fetch(url: URL(forComponent: "sync", parameters: matching)) { (result: Result<SyncSpace>) in
 
-            if let syncSpace = result.value {
-
-                // Whenever we get a page, send the diffs to the persistence integration.
-                self.sendDiffMessagesToPersistenceIntegration(for: syncSpace, resolvingLinksWith: nil)
-
-                if syncSpace.hasMorePages == true { // multipage sync.
-                    self.nextSync(for: syncSpace, matching: matching, completion: completion)
-                } else {
-                    // Merge all the sync spaces together.
-                    completion(Result.success(syncSpace))
-                }
+            if let syncSpace = result.value, syncSpace.hasMorePages == true {
+                self.nextSync(for: syncSpace, matching: matching, completion: completion)
             } else {
                 completion(result)
             }
         }
     }
 
-    fileprivate func sync(matching: [String: Any] = [:]) -> Observable<Result<SyncSpace>> {
-        let asyncDataTask: AsyncDataTask<[String: Any], SyncSpace> = sync(matching:completion:)
-        return toObservable(parameter: matching, asyncDataTask: asyncDataTask).observable
+    fileprivate func finishSync(for syncSpace: SyncSpace, newestSyncResults: Result<SyncSpace>, completion: ResultsHandler<SyncSpace>) {
+
+        switch newestSyncResults {
+        case .success(let newSyncSpace):
+            syncSpace.updateWithDiffs(from: newSyncSpace, persistenceIntegration: self.persistenceIntegration)
+            completion(Result.success(syncSpace))
+        case .error(let error):
+            completion(Result.error(error))
+        }
     }
 }

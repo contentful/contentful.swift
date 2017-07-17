@@ -101,28 +101,43 @@ public final class SyncSpace: ImmutableMappable {
         }
     }
 
-    internal func updateWithDiffs(from syncSpace: SyncSpace) {
+    internal func updateWithDiffs(from syncSpace: SyncSpace, persistenceIntegration: PersistenceIntegration?) {
 
         for asset in syncSpace.assets {
             assetsMap[asset.sys.id] = asset
+            persistenceIntegration?.create(asset: asset)
         }
 
+        // Update and deduplicate all entries.
         for entry in syncSpace.entries {
             entriesMap[entry.sys.id] = entry
         }
 
+        // resolve all entries.
+        for entry in entries {
+            entry.resolveLinks(against: entries, and: assets)
+            persistenceIntegration?.create(entry: entry)
+        }
+
         for deletedAssetId in syncSpace.deletedAssets {
             assetsMap.removeValue(forKey: deletedAssetId)
+            persistenceIntegration?.delete(assetWithId: deletedAssetId)
         }
 
         for deletedEntryId in syncSpace.deletedEntries {
             entriesMap.removeValue(forKey: deletedEntryId)
+            persistenceIntegration?.delete(entryWithId: deletedEntryId)
         }
+
         // Reset so that we can't send same deletion messages twice.
         self.deletedEntries = [String]()
         self.deletedAssets = [String]()
 
         syncToken = syncSpace.syncToken
+
+        persistenceIntegration?.update(syncToken: syncToken)
+        persistenceIntegration?.resolveRelationships()
+        persistenceIntegration?.save()
     }
 
     internal func cache(resources: [Resource]) {
