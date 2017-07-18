@@ -466,7 +466,8 @@ extension Client {
 
      - Returns: The data task being used, enables cancellation of requests.
      */
-    @discardableResult public func fetchContentType(id: String, completion: @escaping ResultsHandler<ContentType>) -> URLSessionDataTask? {
+    @discardableResult public func fetchContentType(id: String,
+                                                    completion: @escaping ResultsHandler<ContentType>) -> URLSessionDataTask? {
         return fetch(url: URL(forComponent: "content_types/\(id)"), then: completion)
     }
 
@@ -542,7 +543,8 @@ extension Client {
 
      - Returns: The data task being used, enables cancellation of requests.
      */
-    @discardableResult public func fetchEntry(id: String, completion: @escaping ResultsHandler<Entry>) -> URLSessionDataTask? {
+    @discardableResult public func fetchEntry(id: String,
+                                              completion: @escaping ResultsHandler<Entry>) -> URLSessionDataTask? {
         let fetchEntriesCompletion: (Result<ArrayResponse<Entry>>) -> Void = { result in
             switch result {
             case .success(let entries) where entries.items.first != nil:
@@ -651,7 +653,8 @@ extension Client {
 
      - Returns: An `Observable` which will be fired when the `SyncSpace` is fully synchronized with Contentful.
      */
-    @discardableResult func nextSync(for syncSpace: SyncSpace, matching: [String: Any] = [:]) -> Observable<Result<SyncSpace>> {
+    @discardableResult func nextSync(for syncSpace: SyncSpace,
+                                     matching: [String: Any] = [:]) -> Observable<Result<SyncSpace>> {
 
         let observable = Observable<Result<SyncSpace>>()
         self.nextSync(for: syncSpace) { result in
@@ -698,7 +701,8 @@ extension Client {
         return task
     }
 
-    fileprivate func sync(matching: [String: Any] = [:], completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
+    fileprivate func sync(matching: [String: Any] = [:],
+                          completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
 
         return fetch(url: URL(forComponent: "sync", parameters: matching)) { (result: Result<SyncSpace>) in
 
@@ -710,11 +714,16 @@ extension Client {
         }
     }
 
-    fileprivate func finishSync(for syncSpace: SyncSpace, newestSyncResults: Result<SyncSpace>, completion: ResultsHandler<SyncSpace>) {
+    fileprivate func finishSync(for syncSpace: SyncSpace,
+                                newestSyncResults: Result<SyncSpace>,
+                                completion: ResultsHandler<SyncSpace>) {
 
         switch newestSyncResults {
         case .success(let newSyncSpace):
-            syncSpace.updateWithDiffs(from: newSyncSpace, persistenceIntegration: self.persistenceIntegration)
+            syncSpace.updateWithDiffs(from: newSyncSpace)
+            persistenceIntegration?.update(with: newSyncSpace)
+
+            // Send fully merged syncSpace to completion handler.
             completion(Result.success(syncSpace))
         case .error(let error):
             completion(Result.error(error))

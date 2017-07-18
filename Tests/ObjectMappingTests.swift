@@ -109,7 +109,7 @@ class ObjectMappingTests: XCTestCase {
         }
     }
 
-    func testDecodeSyncResponsesWithDeletedAssets() {
+    func testDecodeSyncResponsesWithdeletedAssetIds() {
         do {
             let map = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("deleted-asset"))
 
@@ -117,14 +117,14 @@ class ObjectMappingTests: XCTestCase {
 
             expect(syncSpace.assets.count).to(equal(0))
             expect(syncSpace.entries.count).to(equal(0))
-            expect(syncSpace.deletedAssets.count).to(equal(1))
-            expect(syncSpace.deletedEntries.count).to(equal(0))
+            expect(syncSpace.deletedAssetIds.count).to(equal(1))
+            expect(syncSpace.deletedEntryIds.count).to(equal(0))
         } catch _ {
             fail("Decoding sync responses with deleted Assets should not throw an error")
         }
     }
 
-    func testDecodeSyncResponsesWithDeletedEntries() {
+    func testDecodeSyncResponsesWithdeletedEntryIds() {
         do {
 
             let map = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("deleted"))
@@ -132,8 +132,8 @@ class ObjectMappingTests: XCTestCase {
 
             expect(syncSpace.assets.count).to(equal(0))
             expect(syncSpace.entries.count).to(equal(0))
-            expect(syncSpace.deletedAssets.count).to(equal(0))
-            expect(syncSpace.deletedEntries.count).to(equal(1))
+            expect(syncSpace.deletedAssetIds.count).to(equal(0))
+            expect(syncSpace.deletedEntryIds.count).to(equal(1))
         } catch _ {
             fail("Decoding sync responses with deleted Entries should not throw an error")
         }

@@ -15,8 +15,8 @@ public final class SyncSpace: ImmutableMappable {
     internal var assetsMap = [String: Asset]()
     internal var entriesMap = [String: Entry]()
 
-    var deletedAssets = [String]()
-    var deletedEntries = [String]()
+    public var deletedAssetIds = [String]()
+    public var deletedEntryIds = [String]()
 
     var hasMorePages: Bool
 
@@ -101,11 +101,10 @@ public final class SyncSpace: ImmutableMappable {
         }
     }
 
-    internal func updateWithDiffs(from syncSpace: SyncSpace, persistenceIntegration: PersistenceIntegration?) {
+    internal func updateWithDiffs(from syncSpace: SyncSpace) {
 
         for asset in syncSpace.assets {
             assetsMap[asset.sys.id] = asset
-            persistenceIntegration?.create(asset: asset)
         }
 
         // Update and deduplicate all entries.
@@ -113,31 +112,20 @@ public final class SyncSpace: ImmutableMappable {
             entriesMap[entry.sys.id] = entry
         }
 
-        // resolve all entries.
+        // Resolve all entries in-memory.
         for entry in entries {
             entry.resolveLinks(against: entries, and: assets)
-            persistenceIntegration?.create(entry: entry)
         }
 
-        for deletedAssetId in syncSpace.deletedAssets {
+        for deletedAssetId in syncSpace.deletedAssetIds {
             assetsMap.removeValue(forKey: deletedAssetId)
-            persistenceIntegration?.delete(assetWithId: deletedAssetId)
         }
 
-        for deletedEntryId in syncSpace.deletedEntries {
+        for deletedEntryId in syncSpace.deletedEntryIds {
             entriesMap.removeValue(forKey: deletedEntryId)
-            persistenceIntegration?.delete(entryWithId: deletedEntryId)
         }
-
-        // Reset so that we can't send same deletion messages twice.
-        self.deletedEntries = [String]()
-        self.deletedAssets = [String]()
 
         syncToken = syncSpace.syncToken
-
-        persistenceIntegration?.update(syncToken: syncToken)
-        persistenceIntegration?.resolveRelationships()
-        persistenceIntegration?.save()
     }
 
     internal func cache(resources: [Resource]) {
@@ -151,8 +139,8 @@ public final class SyncSpace: ImmutableMappable {
 
             case let deletedResource as DeletedResource:
                 switch deletedResource.sys.type {
-                case "DeletedAsset": self.deletedAssets.append(deletedResource.sys.id)
-                case "DeletedEntry": self.deletedEntries.append(deletedResource.sys.id)
+                case "DeletedAsset": self.deletedAssetIds.append(deletedResource.sys.id)
+                case "DeletedEntry": self.deletedEntryIds.append(deletedResource.sys.id)
                 default: break
                 }
             default: break
