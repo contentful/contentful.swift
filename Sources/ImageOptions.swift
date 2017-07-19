@@ -15,7 +15,25 @@ import ObjectMapper
     import Cocoa
 #endif
 
-extension Asset {
+
+public extension Asset {
+    /**
+     The URL for the underlying media file with additional options for server side manipulations
+     such as format changes, resizing, cropping, and focusing on different areas including on faces,
+     among others.
+
+     - Parameter imageOptions: An array of `ImageOption` that will be used for server side manipulations.
+     - Throws: Will throw SDKError if the SDK is unable to generate a valid URL with the desired ImageOptions.
+     */
+    public func url(with imageOptions: [ImageOption] = []) throws -> URL {
+        guard let url = try urlString?.url(with: imageOptions) else {
+            throw SDKError.invalidURL(string: urlString ?? "No url string is stored for Asset: \(sys.id)")
+        }
+        return url
+    }
+}
+
+public extension String {
 
     /**
      The URL for the underlying media file with additional options for server side manipulations

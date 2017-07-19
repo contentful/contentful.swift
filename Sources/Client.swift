@@ -624,7 +624,9 @@ extension Client {
         parameters["initial"] = true
 
         let syncCompletion: (Result<SyncSpace>) -> Void = { result in
-            self.finishSync(for: SyncSpace(syncToken: ""), newestSyncResults: result, completion: completion)
+            self.finishSync(for: SyncSpace(syncToken: ""),
+                            newestSyncResults: result,
+                            completion: completion)
         }
         return sync(matching: parameters, completion: syncCompletion)
     }
