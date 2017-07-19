@@ -104,40 +104,69 @@ open class Client {
         return nil
     }
 
-    // MARK: -
-
-    fileprivate func fetch<MappableType: ImmutableMappable>(url: URL?, then completion: @escaping ResultsHandler<MappableType>)
-        -> URLSessionDataTask? {
+    fileprivate func fetch<MappableType: ImmutableMappable>(url: URL?,
+                           then completion: @escaping ResultsHandler<MappableType>) -> URLSessionDataTask? {
 
         guard let url = url else {
             completion(Result.error(SDKError.invalidURL(string: "")))
             return nil
         }
 
-        // Get the observable and the underlying url task.
-        let (task, observable): (URLSessionDataTask?, Observable<Result<Data>>)
-        (task, observable) = fetch(url: url)
-
-        if let spaceURL = self.URL(), spaceURL.absoluteString == url.absoluteString {
-
-            // observable for space http request.
-            observable.then { [weak self] mappableSpaceData in
-                self?.handleJSON(mappableSpaceData, completion)
-                }.error { error in
-                    completion(Result.error(error))
+        let finishDataFetch: (ResultsHandler<Data>) = { result in
+            switch result {
+            case .success(let mappableData):
+                self.handleJSON(mappableData, completion)
+            case .error(let error):
+                completion(Result.error(error))
             }
-        } else {
-            // IMPORTANT: If there is an error fetching the space, the error is handled in the recursive call
-            // to fetch, so we do NOT want to handle the error case here.
-            _ = fetchSpace().then { _ in
-                observable.then { [weak self] mappableData in
-                    self?.handleJSON(mappableData, completion)
-                }.error { error in
-                    completion(Result.error(error))
+        }
+
+        let task = fetch(url: url) { dataResult in
+            if let spaceURL = self.URL(), spaceURL.absoluteString == url.absoluteString {
+                // Now that we have a space, start callback chain.
+                finishDataFetch(dataResult)
+            } else {
+                self.fetchSpace { spaceResult in
+                    switch spaceResult {
+                    case .success:
+                        // Trigger chain with data we're currently interested in.
+                        finishDataFetch(dataResult)
+                    case .error(let error):
+                        // Return the current error.
+                        finishDataFetch(Result.error(error))
+                    }
                 }
             }
         }
         return task
+    }
+
+    fileprivate func fetch(url: URL, completion: @escaping ResultsHandler<Data>) -> URLSessionDataTask {
+        let task = urlSession.dataTask(with: url) { data, response, error in
+            if let data = data {
+                if self.didHandleRateLimitError(data: data, response: response, completion: completion) == true {
+                    return // Exit if there was a RateLimitError.
+                }
+                completion(Result.success(data))
+                return
+            }
+
+            if let error = error {
+                completion(Result.error(error))
+                return
+            }
+
+            let sdkError = SDKError.invalidHTTPResponse(response: response)
+            completion(Result.error(sdkError))
+        }
+
+        task.resume()
+        return task
+    }
+
+    fileprivate func fetch(url: URL) ->  (task: URLSessionDataTask?, observable: Observable<Result<Data>>) {
+        let asyncDataTask: AsyncDataTask<URL, Data> = fetch
+        return toObservable(parameter: url, asyncDataTask: asyncDataTask)
     }
 
     // Returns the rate limit reset.
@@ -192,34 +221,6 @@ open class Client {
         } catch _ {
             completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "SDK unable to parse RateLimitError payload")))
         }
-    }
-
-    fileprivate func fetch(url: URL, completion: @escaping ResultsHandler<Data>) -> URLSessionDataTask {
-        let task = urlSession.dataTask(with: url) { data, response, error in
-            if let data = data {
-                if self.didHandleRateLimitError(data: data, response: response, completion: completion) == true {
-                    return // Exit if there was a RateLimitError.
-                }
-                completion(Result.success(data))
-                return
-            }
-
-            if let error = error {
-                completion(Result.error(error))
-                return
-            }
-
-            let sdkError = SDKError.invalidHTTPResponse(response: response)
-            completion(Result.error(sdkError))
-        }
-
-        task.resume()
-        return task
-    }
-
-    fileprivate func fetch(url: URL) ->  (task: URLSessionDataTask?, observable: Observable<Result<Data>>) {
-        let asyncDataTask: AsyncDataTask<URL, Data> = fetch
-        return toObservable(parameter: url, asyncDataTask: asyncDataTask)
     }
 
     fileprivate func handleJSON<MappableType: ImmutableMappable>(_ data: Data, _ completion: ResultsHandler<MappableType>) {
@@ -694,7 +695,9 @@ extension Client {
         parameters["sync_token"] = syncSpace.syncToken
 
         let syncCompletion: (Result<SyncSpace>) -> Void = { result in
-            self.finishSync(for: syncSpace, newestSyncResults: result, completion: completion)
+            self.finishSync(for: syncSpace,
+                            newestSyncResults: result,
+                            completion: completion)
         }
 
         let task = self.sync(matching: parameters, completion: syncCompletion)
