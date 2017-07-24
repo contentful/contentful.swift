@@ -105,6 +105,18 @@ public class LocalizableResource: Resource {
     }
 }
 
+extension Resource: Hashable {
+    public var hashValue: Int {
+        return id.hashValue
+    }
+}
+
+extension Resource: Equatable {}
+public func == (lhs: Resource, rhs: Resource) -> Bool {
+    return lhs.id == rhs.id && lhs.sys.updatedAt == rhs.sys.updatedAt
+}
+
+
 func +=<K: Hashable, V> (left: [K: V], right: [K: V]) -> [K: V] {
     var result = left
     right.forEach { (key, value) in result[key] = value }
