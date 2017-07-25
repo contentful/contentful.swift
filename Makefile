@@ -6,12 +6,12 @@ ifeq ($(strip $(SIM_ID)),)
 $(error Could not find $(SIM_NAME) simulator)
 endif
 
-PROJECT=Contentful.xcodeproj
+WORKSPACE=Contentful.xcworkspace
 
 .PHONY: open test integration_test setup lint coverage carthage docs
 
 open:
-	open $(PROJECT)
+	open $(WORKSPACE)
 
 clean:
 	rm -rf $(HOME)/Library/Developer/Xcode/DerivedData/*
@@ -23,12 +23,12 @@ kill_simulator:
 	killall "Simulator" || true
 
 test: clean clean_simulators
-	set -x -o pipefail && xcodebuild test -project $(PROJECT) \
+	set -x -o pipefail && xcodebuild test -workspace $(WORKSPACE) \
 		-scheme Contentful_iOS -destination 'id=$(SIM_ID)' \
 		OTHER_SWIFT_FLAGS="-warnings-as-errors" | xcpretty -c
 
 integration_test: clean clean_simulators
-	set -x -o pipefail && xcodebuild test -project $(PROJECT) \
+	set -x -o pipefail && xcodebuild test -workspace $(WORKSPACE) \
 		-scheme Contentful_iOS -configuration "API_Coverage" \
 		-destination 'platform=iOS Simulator,name=iPhone 6s,OS=9.3' | bundle exec xcpretty -c
 
@@ -40,7 +40,7 @@ lint:
 	bundle exec pod lib lint Contentful.podspec
 
 coverage:
-	bundle exec slather coverage -s $(PROJECT)
+	bundle exec slather coverage -s  
 
 carthage:
 	carthage build --no-skip-current --platform all
