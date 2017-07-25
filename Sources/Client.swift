@@ -23,14 +23,28 @@ public typealias ResultsHandler<T> = (_ result: Result<T>) -> Void
 open class Client {
 
     fileprivate let clientConfiguration: ClientConfiguration
+
     fileprivate let spaceId: String
-    fileprivate var persistenceIntegration: PersistenceIntegration?
+
     fileprivate var server: String {
 
         if clientConfiguration.previewMode && clientConfiguration.server == Defaults.cdaHost {
             return Defaults.previewHost
         }
         return clientConfiguration.server
+    }
+
+    public var persistenceIntegration: PersistenceIntegration? {
+        didSet {
+            guard var headers = self.urlSession.configuration.httpAdditionalHeaders else {
+                // TODO:
+                assertionFailure()
+                return
+            }
+            assert(headers["Authorization"] != nil)
+            headers["X-Contentful-User-Agent"] = clientConfiguration.userAgentString(with: persistenceIntegration)
+            self.urlSession.configuration.httpAdditionalHeaders = headers
+        }
     }
 
     internal var urlSession: URLSession
