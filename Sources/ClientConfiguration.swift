@@ -10,7 +10,7 @@ import Foundation
 
 enum Defaults {
     static let cdaHost = "cdn.contentful.com"
-    static let locale = "en-US"
+//    static let locale = "en-US"
     static let previewHost = "preview.contentful.com"
 }
 

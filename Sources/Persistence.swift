@@ -18,6 +18,11 @@ import Foundation
 public protocol PersistenceIntegration: Integration {
 
     /**
+     Updates the PersistenceIntegration with information about the locales supported in the current space.
+     */
+    func update(localeCodes: [LocaleCode])
+
+    /**
      Update the local datastore with the latest delta messages from the most recently fetched SyncSpace response.
      
      There is no guarantee which thread this will be called from, so it is your responsibility when implementing
