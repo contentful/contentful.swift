@@ -35,5 +35,8 @@ brew outdated carthage || brew upgrade carthage
 brew outdated swiftlint || brew upgrade swiftlint
 brew outdated direnv || brew upgrade direnv
 
+# Install project dependencies
 bundle install
+carthage bootstrap --use-submodules --no-build
+
 

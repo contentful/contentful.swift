@@ -15,4 +15,5 @@ build
 Packages
 *.xcscmblueprint
 
-Carthage
+# Carthage
+Carthage/Build/

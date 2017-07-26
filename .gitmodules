@@ -1,0 +1,12 @@
+[submodule "Carthage/Checkouts/ObjectMapper"]
+	path = Carthage/Checkouts/ObjectMapper
+	url = https://github.com/Hearst-DD/ObjectMapper.git
+[submodule "Carthage/Checkouts/Interstellar"]
+	path = Carthage/Checkouts/Interstellar
+	url = https://github.com/JensRavens/Interstellar.git
+[submodule "Carthage/Checkouts/DVR"]
+	path = Carthage/Checkouts/DVR
+	url = https://github.com/venmo/DVR.git
+[submodule "Carthage/Checkouts/Nimble"]
+	path = Carthage/Checkouts/Nimble
+	url = https://github.com/Quick/Nimble.git
