@@ -282,7 +282,7 @@ extension Client {
      Space was already cached locally
      */
     @discardableResult public func fetchSpace(then completion: @escaping ResultsHandler<Space>) -> URLSessionDataTask? {
-        // Attempt to pull from cache first.s
+        // Attempt to pull from cache first.
         if let space = self.space {
             let localeCodes = space.locales.map { $0.code }
             persistenceIntegration?.update(localeCodes: localeCodes)
