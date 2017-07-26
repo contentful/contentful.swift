@@ -15,14 +15,20 @@ import DVR
 
 struct TestClientFactory {
 
-    static func testClient(withCassetteNamed cassetteName: String, spaceId: String? = nil, accessToken: String? = nil, clientConfiguration: ClientConfiguration = .default) -> Client {
+    static func testClient(withCassetteNamed cassetteName: String,
+                           spaceId: String? = nil,
+                           accessToken: String? = nil,
+                           clientConfiguration: ClientConfiguration = .default) -> Client {
+
         let client: Client
         let testSpaceId = spaceId ?? "cfexampleapi"
         let testAccessToken =  accessToken ?? "b4c0n73n7fu1"
+
         #if API_COVERAGE
-            clientConfiguration.server = "127.0.0.1:5000"
-            clientConfiguration.secure = false
-            client = Client(spaceId: testSpaceId, accessToken: testAccessToken, clientConfiguration: clientConfiguration)
+            var apiCoverageConfiguration = clientConfiguration // Mutable copy.
+            apiCoverageConfiguration.server = "127.0.0.1:5000"
+            apiCoverageConfiguration.secure = false
+            client = Client(spaceId: testSpaceId, accessToken: testAccessToken, clientConfiguration: apiCoverageConfiguration)
         #else
             client = Client(spaceId: testSpaceId, accessToken: testAccessToken, clientConfiguration: clientConfiguration)
             let dvrSession = DVR.Session(cassetteName: cassetteName, backingSession: client.urlSession)
