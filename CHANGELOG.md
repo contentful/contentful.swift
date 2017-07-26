@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 
 ### Merged, but not yet released
 > All recent changes are published
+> #### Fixed
+> - Project configuration so that contentful.swift may be built from source without warnings.
+>   - Dependencies are still managed with carthage but with the `--use-submodules` flag the source (i.e. Carthage/Checkouts) is now tracked in git
+>   - Now travis doesn't install carthage or use it at all to build the project and Contentful.xcodeproj framework search paths are cleared.
 ---
 
 ## Table of contents
