@@ -4,10 +4,7 @@ rvm:
   - 2.4.0
 before_install:
   - brew update
-#  - brew outdated carthage || brew upgrade carthage
   - brew outdated swiftlint || brew upgrade swiftlint
-#before_script:
-#  - carthage bootstrap --use-submodules --no-build --platform iOS
 script:
   - ./Scripts/travis-build-test.sh
 after_success:
