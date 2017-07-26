@@ -4,16 +4,16 @@ rvm:
   - 2.4.0
 before_install:
   - brew update
-  - brew outdated carthage || brew upgrade carthage
+#  - brew outdated carthage || brew upgrade carthage
   - brew outdated swiftlint || brew upgrade swiftlint
-before_script:
-  - carthage bootstrap --platform iOS
+#before_script:
+#  - carthage bootstrap --use-submodules --no-build --platform iOS
 script:
   - ./Scripts/travis-build-test.sh
 after_success:
   - ./Scripts/integration-test.sh
-  - bundle exec slather coverage
-  - pod lib lint Contentful.podspec
+  - bundle exec slather coverage -s
+  - bundle exec pod lib lint Contentful.podspec
 env:
   global:
     - secure: JLkG75LSPkXdxZ4DRmjdvcie+YbOx1mkf2b7Ddny4dFYivw1nAQtJYTsqgog/hYwzxxGYD+93DiXkm4ElvxwHLq19s4aCuQY3uu3PO/N8gTqcJpsGfcFFkyqhEjpKrJKuWtLLS78CjXnfeRvIT7wT0nySvqotRZ4pOGZnCiEqOkGXjUv/eI9d4YZu4VVu46OMS27kTOV7CoeHhWiXV5L+owU8t3gffIpuuhkKr4LDtl/VhjdVmmwwDWjEfSNflCo0T/XiFNEF5mmF86BI5njjU0RVzmcRwWOjqgvA0nrvarae6SVn/QZC6JZutG+pKWWoSOAollbAXwjxcLIYMF/wIRXc3NJrS4VGW+Z2ORojcdbosoohPVrnayOy4Szq+I8Afa1dIQ+vYq2JxWuaOA2X+Toy9m81svIaE7CLNMK52aA0z8fOQFwFUAmFGOKVtHtiYkHcItUuFk7+c0feekfvmDsawtgACXTIUua6DIq0g54QTc9PidxGQti2kXoqRBaKzpGSbbMHIxh0A6wnPw9r/+26y8nipATNBmKbkwKOuLm6M4eMKRpvGNncv9z4zM66DAQH8EA5A92Qt9g1ETXeC+R9+SUd8r8ryFr/hr0jpjXEuk0aanM7BuLAjCFDXdQKFbjOtpR0ary6GNQK0FdGSmxKku1CXaUH9gNWg1cKpU=

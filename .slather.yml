@@ -1,4 +1,5 @@
 coverage_service: coveralls
+workspace: Contentful.xcworkspace
 xcodeproj: Contentful.xcodeproj
 scheme: "Contentful_iOS"
 
