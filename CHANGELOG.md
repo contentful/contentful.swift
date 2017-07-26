@@ -5,20 +5,31 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 
 ### Merged, but not yet released
 > All recent changes are published
-> #### Fixed
-> - Project configuration so that contentful.swift may be built from source without warnings.
->   - Dependencies are still managed with carthage but with the `--use-submodules` flag the source (i.e. Carthage/Checkouts) is now tracked in git
->   - Now travis doesn't install carthage or use it at all to build the project and Contentful.xcodeproj framework search paths are cleared.
 ---
 
 ## Table of contents
 
 #### 0.x Releases
+- `0.8.x` Releases - [0.8.0](#080)
 - `0.7.x` Releases - [0.7.0](#070) | [0.7.1](#071) | [0.7.2](#072)) | [0.7.3](#073) | [0.7.4](#074) | [0.7.5](#075) | | [0.7.6](#076) | [0.7.7](#077)
 - `0.6.x` Releases - [0.6.0](#060) | [0.6.1](#061)
 - `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041)
 - `0.3.x` Releases - [0.3.0](#030) | [0.3.1](#031)
+
+---
+
+## [`0.8.0`](https://github.com/contentful/contentful.swift/releases/tag/0.8.0)
+Released on 2017-07-26
+
+#### Fixed
+- Project configuration so that contentful.swift may be built from source without warnings. Thanks to [@brentleyjones](https://github.com/brentleyjones) for the help and guidance. Implications for this change are that:
+  - Dependencies are still managed with carthage but with the `--use-submodules` flag and the source (i.e. Carthage/Checkouts) is now tracked in git
+  - Now travis doesn't install carthage or use it at all to build the project and Contentful.xcodeproj framework search paths are cleared.
+- [#100](https://github.com/contentful/contentful.swift/issues/100) enabling the usage of contentful.swift in app extensions.
+  
+#### Added
+- The previously private `persistenceIntegration` instance variable is now a `public var` which means it can be set anytime after `Client` initialization.
 
 ---
 
