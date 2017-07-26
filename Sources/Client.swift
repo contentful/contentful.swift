@@ -23,14 +23,33 @@ public typealias ResultsHandler<T> = (_ result: Result<T>) -> Void
 open class Client {
 
     fileprivate let clientConfiguration: ClientConfiguration
+
     fileprivate let spaceId: String
-    fileprivate var persistenceIntegration: PersistenceIntegration?
+
     fileprivate var server: String {
 
         if clientConfiguration.previewMode && clientConfiguration.server == Defaults.cdaHost {
             return Defaults.previewHost
         }
         return clientConfiguration.server
+    }
+
+    /**
+     The persistence integration which will receive delegate messages from the `Client` when new 
+     `Entry` and `Asset` objects are created from data being sent over the network. Currently, these
+     messages are only sent for `client.initialSync()` and `client.nextSync`. The relevant 
+     persistence integration lives at <https://github.com/contentful/contentful-persistence.swift>.
+     */
+    public var persistenceIntegration: PersistenceIntegration? {
+        didSet {
+            guard var headers = self.urlSession.configuration.httpAdditionalHeaders else {
+                assertionFailure("Headers should have already been set on the current URL Session.")
+                return
+            }
+            assert(headers["Authorization"] != nil)
+            headers["X-Contentful-User-Agent"] = clientConfiguration.userAgentString(with: persistenceIntegration)
+            self.urlSession.configuration.httpAdditionalHeaders = headers
+        }
     }
 
     internal var urlSession: URLSession
@@ -252,6 +271,45 @@ open class Client {
         }
     }
 }
+
+extension Client {
+    /**
+     Fetch the space this client is constrained to.
+
+     - Parameter completion: A handler being called on completion of the request.
+
+     - Returns: The data task being used, which enables cancellation of requests, or `nil` if the.
+     Space was already cached locally
+     */
+    @discardableResult public func fetchSpace(then completion: @escaping ResultsHandler<Space>) -> URLSessionDataTask? {
+        // Attempt to pull from cache first.
+        if let space = self.space {
+            let localeCodes = space.locales.map { $0.code }
+            persistenceIntegration?.update(localeCodes: localeCodes)
+
+            completion(Result.success(space))
+            return nil
+        }
+        return fetch(url: self.URL()) { (result: Result<Space>) in
+            self.space = result.value
+            let localeCodes = self.space?.locales.map { $0.code } ?? []
+            self.persistenceIntegration?.update(localeCodes: localeCodes)
+            completion(result)
+        }
+    }
+
+    /**
+     Fetch the space this client is constrained to.
+
+     - Returns: A tuple of data task and a signal for the resulting Space.
+     */
+
+    @discardableResult public func fetchSpace() -> Observable<Result<Space>> {
+        let asyncDataTask: SignalBang<Space> = fetchSpace(then:)
+        return toObservable(closure: asyncDataTask).observable
+    }
+}
+
 
 // MARK: - Query
 
@@ -573,38 +631,6 @@ extension Client {
     }
 }
 
-
-extension Client {
-    /**
-     Fetch the space this client is constrained to.
-
-     - Parameter completion: A handler being called on completion of the request.
-
-     - Returns: The data task being used, which enables cancellation of requests, or `nil` if the.
-        Space was already cached locally
-     */
-    @discardableResult public func fetchSpace(then completion: @escaping ResultsHandler<Space>) -> URLSessionDataTask? {
-        if let space = self.space {
-            completion(.success(space))
-            return nil
-        }
-        return fetch(url: self.URL()) { (result: Result<Space>) in
-            self.space = result.value
-            completion(result)
-        }
-    }
-
-    /**
-     Fetch the space this client is constrained to.
-
-     - Returns: A tuple of data task and a signal for the resulting Space.
-     */
-
-    @discardableResult public func fetchSpace() -> Observable<Result<Space>> {
-        let asyncDataTask: SignalBang<Space> = fetchSpace(then:)
-        return toObservable(closure: asyncDataTask).observable
-    }
-}
 
 // MARK: Sync
 

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import ObjectMapper
 
 
 /// An Entry represents a typed collection of data in Contentful
