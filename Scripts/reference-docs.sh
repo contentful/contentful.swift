@@ -11,5 +11,4 @@ bundle exec jazzy \
   --module-version ${CONTENTFUL_SDK_VERSION} \
   --module Contentful \
   --theme apple
-#  --root-url https://realm.io/docs/swift/$SDK_VERSION/api/ \
 
