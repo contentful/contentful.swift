@@ -35,9 +35,9 @@ open class Client {
     }
 
     /**
-     The persistence integration which will receive delegate messages from the `Client` when new 
+     The persistence integration which will receive delegate messages from the `Client` when new
      `Entry` and `Asset` objects are created from data being sent over the network. Currently, these
-     messages are only sent for `client.initialSync()` and `client.nextSync`. The relevant 
+     messages are only sent for `client.initialSync()` and `client.nextSync`. The relevant
      persistence integration lives at <https://github.com/contentful/contentful-persistence.swift>.
      */
     public var persistenceIntegration: PersistenceIntegration? {
@@ -54,7 +54,7 @@ open class Client {
 
     internal var urlSession: URLSession
 
-    fileprivate let contentModel: ContentModel?
+    internal let contentModel: ContentModel?
 
     fileprivate(set) var space: Space?
 
@@ -67,9 +67,9 @@ open class Client {
      - Parameter accessToken: The access token used for authorization.
      - Parameter clientConfiguration: Custom Configuration of the Client.
      - Parameter sessionConfiguration: The configuration for the URLSession. Note that HTTP headers will be overwritten
-                                       interally by the SDK so that requests can be authorized correctly.
+     interally by the SDK so that requests can be authorized correctly.
      - Parameter persistenceIntegration: An object conforming to the `PersistenceIntegration` protocol
-                                         which will receive messages about created/deleted Resources when calling `sync()` methods.
+     which will receive messages about created/deleted Resources when calling `sync()` methods.
 
      - Returns: An initialized client instance.
      */
@@ -83,6 +83,7 @@ open class Client {
         self.spaceId = spaceId
         self.clientConfiguration = clientConfiguration
         self.contentModel = contentModel
+
         self.persistenceIntegration = persistenceIntegration
 
         let contentfulHTTPHeaders = [
@@ -96,8 +97,8 @@ open class Client {
     internal func URL(forComponent component: String = "", parameters: [String: Any]? = nil) -> URL? {
         if var components = URLComponents(string: "\(scheme)://\(server)/spaces/\(spaceId)/\(component)") {
             if let parameters = parameters {
-                let queryItems: [URLQueryItem] = parameters.map { key, value in
-                    var value = value
+                let queryItems: [URLQueryItem] = parameters.map { (arg) in
+                    var (key, value) = arg
 
                     if let date = value as? Date {
                         value = date.iso8601String
@@ -123,8 +124,8 @@ open class Client {
         return nil
     }
 
-    fileprivate func fetch<MappableType: ImmutableMappable>(url: URL?,
-                           then completion: @escaping ResultsHandler<MappableType>) -> URLSessionDataTask? {
+    internal func fetch<MappableType: ImmutableMappable>(url: URL?,
+                        then completion: @escaping ResultsHandler<MappableType>) -> URLSessionDataTask? {
 
         guard let url = url else {
             completion(Result.error(SDKError.invalidURL(string: "")))
@@ -160,7 +161,7 @@ open class Client {
         return task
     }
 
-    fileprivate func fetch(url: URL, completion: @escaping ResultsHandler<Data>) -> URLSessionDataTask {
+    internal func fetch(url: URL, completion: @escaping ResultsHandler<Data>) -> URLSessionDataTask {
         let task = urlSession.dataTask(with: url) { data, response, error in
             if let data = data {
                 if self.didHandleRateLimitError(data: data, response: response, completion: completion) == true {
@@ -183,7 +184,7 @@ open class Client {
         return task
     }
 
-    fileprivate func fetch(url: URL) ->  (task: URLSessionDataTask?, observable: Observable<Result<Data>>) {
+    internal func fetch(url: URL) ->  (task: URLSessionDataTask?, observable: Observable<Result<Data>>) {
         let asyncDataTask: AsyncDataTask<URL, Data> = fetch
         return toObservable(parameter: url, asyncDataTask: asyncDataTask)
     }
@@ -372,79 +373,6 @@ extension Client {
 }
 
 
-// MARK: Modellable
-
-extension Client {
-    /**
-     Fetch a collection of Assets from Contentful matching the specified query.
-
-     - Parameter query: The Query object to match results againts.
-     - Returns: An Observable forr the resulting `MappedContent` container.
-     */
-    @discardableResult public func fetchMappedEntries(with query: Query) -> Observable<Result<MappedContent>> {
-        let asyncDataTask: AsyncDataTask<Query, MappedContent> = fetchMappedEntries(with:then:)
-        return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
-    }
-
-    /**
-     Fetches all entries and includes matching the passed in `Query`. The completion handler returned will return a `MappedContent` object which
-     contains an array of `Asset`s and a dictionary of ContentTypeId's to arrays of `EntryModellable` types of your own defining.
-     
-     - Parameter query: The Query object to match results against.
-     - Parameter completion: A handler being called on completion of the request containing a `MappedContent` instance.
-     
-     - Returns: The data task being used, enables cancellation of requests.
-     */
-    @discardableResult public func fetchMappedEntries(with query: Query,
-                                                      then completion: @escaping ResultsHandler<MappedContent>) -> URLSessionDataTask? {
-
-        let url = URL(forComponent: "entries", parameters: query.parameters)
-
-        return fetch(url: url) { (result: Result<ArrayResponse<Entry>>) in
-            let mappedResult: Result<MappedContent> = result.flatMap { entriesArrayResponse in
-                let mappedContent = entriesArrayResponse.toMappedContent(for: self.contentModel)
-                return Result.success(mappedContent)
-            }
-            completion(mappedResult)
-        }
-    }
-
-    /**
-     Fetch a collection of Entries of a specified content type matching the query. The content_type
-     parameter is specified by passing in a generic parameter: a model class conforming to `EntryModellable`.
-
-     - Parameter query: A QueryOn object to match results of the specified EntryModellable against.
-     - Parameter completion: A handler being called on completion of the request.
-
-     - Returns: The data task being used, enables cancellation of requests.
-     */
-    @discardableResult public func fetchMappedEntries<EntryType: EntryModellable>(with query: QueryOn<EntryType>,
-                                                then completion: @escaping ResultsHandler<MappedArrayResponse<EntryType>>) -> URLSessionDataTask? {
-
-        let url = URL(forComponent: "entries", parameters: query.parameters)
-
-        return fetch(url: url) { (result: Result<ArrayResponse<Entry>>) in
-
-            let transformedResult: Result<MappedArrayResponse<EntryType>> = result.flatMap { return Result.success($0.toMappedArrayResponse()) }
-            completion(transformedResult)
-        }
-    }
-
-    /**
-     Fetch a collection of Entries of a specified content type matching the query. The content_type
-     parameter is specified by passing in a generic parameter: a model class conforming to `EntryModellable`.
-
-     - Parameter query: A QueryOn object to match results of the specified EntryModellable against.
-
-     - Returns: A tuple of data task and an observable for the resulting array of EntryModellable types.
-     */
-    @discardableResult public func fetchMappedEntries<EntryType: EntryModellable>(with query: QueryOn<EntryType>)
-        -> Observable<Result<MappedArrayResponse<EntryType>>> {
-
-        let asyncDataTask: AsyncDataTask<QueryOn<EntryType>, MappedArrayResponse<EntryType>> = fetchMappedEntries(with:then:)
-        return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
-    }
-}
 
 
 extension Client {
@@ -744,16 +672,16 @@ extension Client {
             }
         }
     }
-
+    
     fileprivate func finishSync(for syncSpace: SyncSpace,
                                 newestSyncResults: Result<SyncSpace>,
                                 completion: ResultsHandler<SyncSpace>) {
-
+        
         switch newestSyncResults {
         case .success(let newSyncSpace):
             syncSpace.updateWithDiffs(from: newSyncSpace)
             persistenceIntegration?.update(with: newSyncSpace)
-
+            
             // Send fully merged syncSpace to completion handler.
             completion(Result.success(syncSpace))
         case .error(let error):
