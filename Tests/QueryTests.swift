@@ -26,7 +26,7 @@ final class Cat: EntryModellable {
     var lives: Int?
     var likes: [String]?
 
-    init() {}
+    init(context: ModellingContext?) {}
 
     func populateFields(from cache: [FieldName: Any]) {
         self.name       = cache["name"] as? String
@@ -64,7 +64,7 @@ final class City: EntryModellable {
     var localeCode: String?
     var location: CLLocationCoordinate2D?
 
-    init() {}
+    init(context: ModellingContext?) {}
 
     static func fieldMapping() -> [FieldName: String] {
         return [:]
@@ -88,7 +88,7 @@ final class Dog: EntryModellable {
     var image: Asset?
     var name: String?
 
-    init() {}
+    init(context: ModellingContext?) {}
 
     static func fieldMapping() -> [FieldName: String] {
         return [
@@ -173,7 +173,6 @@ class QueryTests: XCTestCase {
         QueryTests.client.fetchMappedEntries(with: query) { result in
             switch result {
             case .success(let catsResponse):
-                let totalCount = catsResponse.total
                 let cats = catsResponse.items
                 expect(cats.count).to(equal(1))
                 expect(cats.first?.color).to(equal("gray"))

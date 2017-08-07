@@ -15,14 +15,7 @@ public protocol ContentModellable: class {
     init()
 
     // FIXME: Document that the system must provide a new instance.
-
     var id: String? { get set }
-
-    //    /// The date representing the last time the Contentful Resource was updated.
-    //    var updatedAt: Date? { get set }
-    //
-    //    /// The date that the Contentful Resource was first created.
-    //    var createdAt: Date? { get set }
 
     /// The code which represents which locale the Resource of interest contains data for.
     var localeCode: String? { get set }
@@ -308,12 +301,17 @@ public extension ArrayResponse where ItemType: Entry {
         return mappedEntriesForContentType
     }
 
-    internal func toMappedArrayResponse<EntryType>(for contentModel: ContentModel) -> MappedArrayResponse<EntryType> where EntryType: EntryModellable {
+    internal func toMappedArrayResponse<EntryType>(for contentModel: ContentModel) -> MappedArrayResponse<EntryType>
+        where EntryType: EntryModellable {
 
         let mappedContent = self.toMappedContent(for: contentModel)
 
-        // TODO: ensure we are only returning the items not the includes.
-        let mappedItems = mappedContent.entries[EntryType.contentTypeId] as! [EntryType]
+        let mappedItems = (mappedContent.entries[EntryType.contentTypeId] as! [EntryType]).filter { entryModellable in
+            // Only forward the "items" member of the original JSON.
+            guard let entryId = entryModellable.id else { return false }
+            return items.flatMap({ $0.id }).contains(entryId)
+        }
+
         return MappedArrayResponse<EntryType>(items: mappedItems, limit: limit, skip: skip, total: total)
     }
 
@@ -375,7 +373,7 @@ extension Dictionary {
     }
 }
 
-// TOOD: Document that i'm using this to get the type that the optional wraps.
+// TOOD: Document that I'm using this to get the type that the optional wraps.
 protocol OptionalProtocol {
     static func wrappedType() -> Any.Type
 }
