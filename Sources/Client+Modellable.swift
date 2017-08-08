@@ -9,9 +9,28 @@
 import Foundation
 import Interstellar
 
+/**
+ A small container to hold intances of your own `EntryModellable` types to be returned when using 
+ `Client` methods such as:
+
+ ```
+ func fetchMappedEntries(with query: Query,
+    then completion: @escaping ResultsHandler<MappedContent>) -> URLSessionDataTask?
+ ```
+ */
+public struct MappedContent {
+
+    /// The `Asset` instances contained in the response.
+    public let assets: [Asset]
+
+    /// A Dictionary mapping `EntryModellable.contentTypeId` identifiers to instances of your `EntryModellable` types. 
+    public let entries: [ContentTypeId: [EntryModellable]]
+}
+
+
 extension Client {
     /**
-     Fetch a collection of Assets from Contentful matching the specified query.
+     Fetch a collection of Entries from Contentful matching the specified query.
 
      - Parameter query: The Query object to match results againts.
      - Returns: An Observable forr the resulting `MappedContent` container.
@@ -28,17 +47,17 @@ extension Client {
      - Parameter query: The Query object to match results against.
      - Parameter completion: A handler being called on completion of the request containing a `MappedContent` instance.
 
-     - Returns: The data task being used, enables cancellation of requests.
+     - Returns: The data task being used, enables cancellation of requests. If there is no `contentModel` property set on the Client, this method
+                will return nil.
      */
     @discardableResult public func fetchMappedEntries(with query: Query,
                                                       then completion: @escaping ResultsHandler<MappedContent>) -> URLSessionDataTask? {
-
+        guard let contentModel = self.contentModel else { return nil }
         let url = URL(forComponent: "entries", parameters: query.parameters)
 
         return fetch(url: url) { (result: Result<ArrayResponse<Entry>>) in
             let mappedResult: Result<MappedContent> = result.flatMap { entriesArrayResponse in
-                // FIXME: remove implicitly unwrapped optionals.
-                let mappedContent = entriesArrayResponse.toMappedContent(for: self.contentModel!)
+                let mappedContent = entriesArrayResponse.toMappedContent(for: contentModel)
                 return Result.success(mappedContent)
             }
             completion(mappedResult)
@@ -52,17 +71,21 @@ extension Client {
      - Parameter query: A QueryOn object to match results of the specified EntryModellable against.
      - Parameter completion: A handler being called on completion of the request.
 
-     - Returns: The data task being used, enables cancellation of requests.
+     - Returns: The data task being used, enables cancellation of requests. If there is no `contentModel` property set on the Client, this method
+                will return nil.
+
      */
     @discardableResult public func fetchMappedEntries<EntryType>(with query: QueryOn<EntryType>,
-                                                      then completion: @escaping ResultsHandler<MappedArrayResponse<EntryType>>) -> URLSessionDataTask? where EntryType: EntryModellable {
+        then completion: @escaping ResultsHandler<MappedArrayResponse<EntryType>>) -> URLSessionDataTask? where EntryType: EntryModellable {
+
+        guard let contentModel = self.contentModel else { return nil }
 
         let url = URL(forComponent: "entries", parameters: query.parameters)
 
         return fetch(url: url) { (result: Result<ArrayResponse<Entry>>) in
 
             let transformedResult: Result<MappedArrayResponse<EntryType>> = result.flatMap { entriesArrayResponse in
-                return Result.success(entriesArrayResponse.toMappedArrayResponse(for: self.contentModel!))
+                return Result.success(entriesArrayResponse.toMappedArrayResponse(for: contentModel))
             }
             completion(transformedResult)
         }

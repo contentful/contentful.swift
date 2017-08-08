@@ -12,6 +12,10 @@ import Foundation
 /// An Entry represents a typed collection of data in Contentful
 public class Entry: LocalizableResource {
 
+    public var localeCode: String {
+        return sys.locale!
+    }
+
     public subscript(key: String) -> String? {
         return fields[key] as? String
     }

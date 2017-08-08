@@ -8,37 +8,40 @@
 
 import Foundation
 
-protocol DataCacheProtocol {
-
-    func entry(for identifier: String) -> EntryModellable?
-
-    func item(for identifier: String) -> AnyObject?
-}
-
 
 /// Implemented using `NSCache`
-class DataCache {
+internal class DataCache {
 
-    public static func cacheKey(for resource: ContentModellable) -> String {
-        // FIXME: Implicitly unwrapped optional.
-        let cacheKey =  resource.id! + "_" + (resource.localeCode ?? "")
+    static let cacheKeyDelimiter = "_"
+
+    public static func cacheKey(for resource: EntryModellable) -> String {
+        let delimeter = DataCache.cacheKeyDelimiter
+
+        let cacheKey =  resource.id + delimeter + "entry" + delimeter + resource.localeCode
         return cacheKey
     }
 
     public static func cacheKey(for resource: LocalizableResource) -> String {
-        let cacheKey =  resource.id + "_" + resource.currentlySelectedLocale.code
+        let delimeter = "_"
+
+        // Look at the type info.
+        let cacheKey =  resource.id + delimeter + resource.sys.type.lowercased() + delimeter + resource.currentlySelectedLocale.code
         return cacheKey
     }
 
     let assetCache = NSCache<AnyObject, AnyObject>()
     let entryCache = NSCache<AnyObject, AnyObject>()
 
-    func add(entry: EntryModellable) {
+    internal func add(asset: Asset) {
+        assetCache.setObject(asset, forKey: DataCache.cacheKey(for: asset) as AnyObject)
+    }
+
+    internal func add(entry: EntryModellable) {
         entryCache.setObject(entry, forKey: DataCache.cacheKey(for: entry) as AnyObject)
     }
 
-    func asset(for identifier: String) -> AssetModellable? {
-        return assetCache.object(forKey: identifier as AnyObject) as? AssetModellable
+    func asset(for identifier: String) -> Asset? {
+        return assetCache.object(forKey: identifier as AnyObject) as? Asset
     }
 
     func entry(for identifier: String) -> EntryModellable? {
@@ -49,18 +52,13 @@ class DataCache {
         return item(for: identifier) as? T
     }
 
-    func item(for identifier: String) -> ContentModellable? {
-        var target: ContentModellable? = self.asset(for: identifier)
+    func item(for identifier: String) -> AnyObject? {
+        var target: AnyObject? = self.asset(for: identifier)
 
         if target == nil {
             target = self.entry(for: identifier)
         }
 
         return target
-    }
-
-    fileprivate static func cacheResource(in cache: NSCache<AnyObject, AnyObject>, resource: ContentModellable) {
-        let cacheKey = DataCache.cacheKey(for: resource)
-        cache.setObject(resource as AnyObject, forKey: cacheKey as AnyObject)
     }
 }

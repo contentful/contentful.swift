@@ -70,7 +70,8 @@ open class Client {
      interally by the SDK so that requests can be authorized correctly.
      - Parameter persistenceIntegration: An object conforming to the `PersistenceIntegration` protocol
      which will receive messages about created/deleted Resources when calling `sync()` methods.
-
+     - Parameter contentModel: the ContentModel which references the model classes to map responses with Contentful entries 
+                               to when using the relevant fetch methods.
      - Returns: An initialized client instance.
      */
     public init(spaceId: String,
@@ -310,70 +311,6 @@ extension Client {
         return toObservable(closure: asyncDataTask).observable
     }
 }
-
-
-// MARK: - Query
-
-extension Client {
-    /**
-     Fetch a collection of Entries from Contentful matching the specified query. This method does not
-     specify the content_type in the query parameters, so the entries returned in the results can be
-     of any type.
-
-     - Parameter query: The Query object to match results againts.
-     - Parameter completion: A handler being called on completion of the request.
-
-     - Returns: The data task being used, enables cancellation of requests.
-     */
-    @discardableResult public func fetchEntries(with query: Query,
-                                                then completion: @escaping ResultsHandler<ArrayResponse<Entry>>) -> URLSessionDataTask? {
-
-        let url = URL(forComponent: "entries", parameters: query.parameters)
-        return fetch(url: url, then: completion)
-    }
-
-    /**
-     Fetch a collection of Entries from Contentful matching the specified query. This method does not
-     specify the content_type in the query parameters, so the entries returned in the results can be
-     of any type.
-     - Parameter query: The Query object to match results againts.
-
-     - Returns: A tuple of data task and an observable for the resulting array of Entry's.
-     */
-    @discardableResult public func fetchEntries(with query: Query) -> Observable<Result<ArrayResponse<Entry>>> {
-        let asyncDataTask: AsyncDataTask<Query, ArrayResponse<Entry>> = fetchEntries(with:then:)
-        return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
-    }
-
-    /**
-     Fetch a collection of Assets from Contentful matching the specified query.
-
-     - Parameter query: The Query object to match results againts.
-     - Parameter completion: A handler being called on completion of the request.
-
-     - Returns: The data task being used, enables cancellation of requests.
-     */
-    @discardableResult public func fetchAssets(with query: AssetQuery,
-                                               then completion: @escaping ResultsHandler<ArrayResponse<Asset>>) -> URLSessionDataTask? {
-
-        let url = URL(forComponent: "assets", parameters: query.parameters)
-        return fetch(url: url, then: completion)
-    }
-
-    /**
-     Fetch a collection of Assets from Contentful matching the specified query.
-
-     - Parameter query: The Query object to match results againts.
-     - Returns: A tuple of data task and an observable for the resulting array of Assets.
-     */
-    @discardableResult public func fetchAssets(query: AssetQuery) -> Observable<Result<ArrayResponse<Asset>>> {
-        let asyncDataTask: AsyncDataTask<AssetQuery, ArrayResponse<Asset>> = fetchAssets(with:then:)
-        return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
-    }
-}
-
-
-
 
 extension Client {
     /**
@@ -672,16 +609,16 @@ extension Client {
             }
         }
     }
-    
+
     fileprivate func finishSync(for syncSpace: SyncSpace,
                                 newestSyncResults: Result<SyncSpace>,
                                 completion: ResultsHandler<SyncSpace>) {
-        
+
         switch newestSyncResults {
         case .success(let newSyncSpace):
             syncSpace.updateWithDiffs(from: newSyncSpace)
             persistenceIntegration?.update(with: newSyncSpace)
-            
+
             // Send fully merged syncSpace to completion handler.
             completion(Result.success(syncSpace))
         case .error(let error):

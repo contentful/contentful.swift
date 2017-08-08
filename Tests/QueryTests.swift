@@ -18,84 +18,67 @@ final class Cat: EntryModellable {
 
     static let contentTypeId: String = "cat"
 
-    var id: String?
-    var localeCode: String?
-    var color: String?
+    let id: String
+    let localeCode: String
+    let color: String?
+    let name: String?
+    let lives: Int?
+    let likes: [String]?
+
+    // Relationship fields.
     var bestFriend: Cat?
-    var name: String?
-    var lives: Int?
-    var likes: [String]?
 
-    init(context: ModellingContext?) {}
+    init(entry: Entry) {
+        self.id         = entry.id
+        self.localeCode = entry.localeCode
 
-    func populateFields(from cache: [FieldName: Any]) {
-        self.name       = cache["name"] as? String
-        self.color      = cache["color"] as? String
-        self.likes      = cache["likes"] as? [String]
-        self.lives      = cache["lives"] as? Int
+        self.name       = entry.fields["name"] as? String
+        self.color      = entry.fields["color"] as? String
+        self.likes      = entry.fields["likes"] as? [String]
+        self.lives      = entry.fields["lives"] as? Int
     }
 
     func populateLinks(from cache: [FieldName: Any]) {
         self.bestFriend = cache["bestFriend"] as? Cat
     }
-
-    static func fieldMapping() -> [FieldName: String] {
-        return [
-            "name": "name",
-            "color": "color",
-            "bestFriend": "bestFriend",
-            "lives": "lives",
-            "likes": "likes"
-        ]
-    }
 }
 
 final class City: EntryModellable {
-    func populateFields(from cache: [FieldName : Any]) {
+
+    init(entry: Entry) {
+        self.id         = entry.id
+        self.localeCode = entry.localeCode
         self.location = CLLocationCoordinate2D(latitude: 1, longitude: 1)
     }
 
     func populateLinks(from cache: [FieldName : Any]) {}
 
-
     static let contentTypeId: String = "1t9IbcfdCk6m04uISSsaIK"
 
-    var id: String?
-    var localeCode: String?
+    var id: String
+    var localeCode: String
     var location: CLLocationCoordinate2D?
-
-    init(context: ModellingContext?) {}
-
-    static func fieldMapping() -> [FieldName: String] {
-        return [:]
-    }
 }
 
 final class Dog: EntryModellable {
-    func populateFields(from cache: [FieldName : Any]) {
-        self.name = cache["name"] as? String
+
+    static let contentTypeId: String = "dog"
+
+    init(entry: Entry) {
+        self.id         = entry.id
+        self.localeCode = entry.localeCode
+        self.name       = entry.fields["name"] as? String
     }
 
     func populateLinks(from cache: [FieldName : Any]) {
         self.image = cache["image"] as? Asset
     }
 
+    let id: String
+    let localeCode: String
+    let name: String?
 
-    static let contentTypeId: String = "dog"
-
-    var id: String?
-    var localeCode: String?
     var image: Asset?
-    var name: String?
-
-    init(context: ModellingContext?) {}
-
-    static func fieldMapping() -> [FieldName: String] {
-        return [
-            "name": "name",
-            "image": "image"
-        ]
-    }
 }
 
 class QueryTests: XCTestCase {

@@ -22,7 +22,7 @@ public struct LinkSys {
 /** 
  A representation of Linked Resources that a field may point to in your content model.
  This stateful type safely highlights links that have been resolved to Entries, Assets, or if they are
- still unresolved. If your data model conforms to `ContentModellable` or `EntryModellable` you can also use the `at` method
+ still unresolved. If your data model conforms to `EntryModellable` you can also use the `at` method
  to extract an instance of your linked type.
 */
 public enum Link {
@@ -60,52 +60,6 @@ public enum Link {
         default:                    return nil
         }
     }
-
-
-    // FIXME: Instead of using this method, cache the identifier that the link points to!
-//    /**
-//     Extract the concrete type conforming to ContentModellable which the specified field points to.
-//
-//     - Parameter fieldName: The name of the field where there is a linked Resource.
-//     - Parameter linkDepth: Interally used by the SDK to prevent infinite loops when resolving links.
-//     - Returns:  Intance of concrete type conforming to `ContentModellable` that is Linked.
-//    */
-//    public static func at<ValueType: EntryModellable>(_ fieldName: String, in fields: [String: Any], linkDepth: Int) -> ValueType? {
-//
-//
-//        guard let link = fields[fieldName] as? Link else { return nil }
-//        let value: ValueType? = link.toEntryModellableType(linkDepth: linkDepth)
-//        return value
-//    }
-//
-//    /**
-//     Extract the concrete type conforming to ContentModellable which the specified field points to.
-//
-//     - Parameter fieldName: The name of the field where there is a linked Resource.
-//     - Returns:  The linked Asset.
-//     */
-//    public static func at(_ fieldName: String, in fields: [String: Any]) -> Asset? {
-//
-//        guard let link = fields[fieldName] as? Link else { return nil }
-//        let asset = link.asset
-//        return asset
-//    }
-//
-//    private func toEntryModellableType<DestinationType: EntryModellable>(linkDepth: Int) -> DestinationType? {
-//
-//        guard linkDepth > 0 else { return nil }
-//
-//        switch self {
-//        case .asset:
-//            return nil
-//        case .entry(let entry):
-//            // FIXME:
-//            let item = DestinationType(entry: entry, linkDepth: linkDepth - 1)
-//            return item
-//        case .unresolved:
-//            fatalError("Should not try to decode an unresolved link.")
-//        }
-//    }
 
     internal static func link(from fieldValue: Any) -> Link? {
         if let link = fieldValue as? Link {
