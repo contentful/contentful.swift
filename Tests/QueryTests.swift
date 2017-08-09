@@ -110,6 +110,9 @@ class QueryTests: XCTestCase {
                 expect(nyanCat.name).to(equal("Nyan Cat"))
                 // Test links
                 expect(nyanCat.bestFriend?.name).to(equal("Happy Cat"))
+
+                // Test uniqueness in memory.
+                expect(nyanCat).to(be(nyanCat.bestFriend?.bestFriend))
             case .error:
                 fail("Should not throw an error")
             }
