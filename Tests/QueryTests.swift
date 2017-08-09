@@ -19,54 +19,71 @@ final class Cat: EntryModellable {
     static let contentTypeId: String = "cat"
 
     let id: String
+    let localeCode: String
     let color: String?
-    let bestFriend: Cat?
     let name: String?
     let lives: Int?
     let likes: [String]?
 
-    init?(entry: Entry, linkDepth: Int) {
-        id          = entry.sys.id
-        name        = entry.fields.string(at: "name")
-        color       = entry.fields.string(at: "color")
-        lives       = entry.fields.int(at:"lives")
-        likes       = entry.fields.strings(at: "likes")
-        bestFriend  = Link.at("bestFriend", in: entry.fields, linkDepth: linkDepth)
+    // Relationship fields.
+    var bestFriend: Cat?
+
+    init(entry: Entry) {
+        self.id         = entry.id
+        self.localeCode = entry.localeCode
+
+        self.name       = entry.fields["name"] as? String
+        self.color      = entry.fields["color"] as? String
+        self.likes      = entry.fields["likes"] as? [String]
+        self.lives      = entry.fields["lives"] as? Int
+    }
+
+    func populateLinks(from cache: [FieldName: Any]) {
+        self.bestFriend = cache["bestFriend"] as? Cat
     }
 }
 
 final class City: EntryModellable {
 
-    static let contentTypeId: String = "1t9IbcfdCk6m04uISSsaIK"
-    
-    var id: String
-    var location: CLLocationCoordinate2D
-
-    init?(entry: Entry, linkDepth: Int) {
-        self.id = entry.sys.id
-        // FIXME:
+    init(entry: Entry) {
+        self.id         = entry.id
+        self.localeCode = entry.localeCode
         self.location = CLLocationCoordinate2D(latitude: 1, longitude: 1)
     }
+
+    func populateLinks(from cache: [FieldName : Any]) {}
+
+    static let contentTypeId: String = "1t9IbcfdCk6m04uISSsaIK"
+
+    var id: String
+    var localeCode: String
+    var location: CLLocationCoordinate2D?
 }
 
 final class Dog: EntryModellable {
 
     static let contentTypeId: String = "dog"
 
-    var id: String
-    var image: Asset?
-    var name: String?
-
-    init?(entry: Entry, linkDepth: Int) {
-        self.id     = entry.sys.id
-        self.name   = entry.fields.string(at: "name")
-        self.image  = Link.at("image", in: entry.fields)
+    init(entry: Entry) {
+        self.id         = entry.id
+        self.localeCode = entry.localeCode
+        self.name       = entry.fields["name"] as? String
     }
+
+    func populateLinks(from cache: [FieldName : Any]) {
+        self.image = cache["image"] as? Asset
+    }
+
+    let id: String
+    let localeCode: String
+    let name: String?
+
+    var image: Asset?
 }
 
 class QueryTests: XCTestCase {
 
-    static let client = TestClientFactory.testClient(withCassetteNamed: "QueryTests")
+    static let client = TestClientFactory.testClient(withCassetteNamed: "QueryTests", contentModel: ContentModel(entryTypes: [Cat.self, City.self, Dog.self]))
 
     override class func setUp() {
         super.setUp()
@@ -93,6 +110,9 @@ class QueryTests: XCTestCase {
                 expect(nyanCat.name).to(equal("Nyan Cat"))
                 // Test links
                 expect(nyanCat.bestFriend?.name).to(equal("Happy Cat"))
+
+                // Test uniqueness in memory.
+                expect(nyanCat).to(be(nyanCat.bestFriend?.bestFriend))
             case .error:
                 fail("Should not throw an error")
             }
@@ -114,12 +134,12 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let dogsResponse):
                 let dogs = dogsResponse.items
-                let doge = dogs.first!
-                expect(doge.name).to(equal("Doge"))
+                let doge = dogs.first
+                expect(doge?.name).to(equal("Doge"))
 
                 // Test links
-                expect(doge.image).toNot(beNil())
-                expect(doge.image?.id).to(equal("1x0xpXu4pSGS4OukSyWGUK"))
+                expect(doge?.image).toNot(beNil())
+                expect(doge?.image?.id).to(equal("1x0xpXu4pSGS4OukSyWGUK"))
             case .error(let error):
                 fail("Should not throw an error \(error)")
             }
@@ -129,7 +149,7 @@ class QueryTests: XCTestCase {
     }
 
     // MARK: - Test QueryOperations
-    
+
     func testEqualityQuery() {
 
         let expectation = self.expectation(description: "Equality operator expectation")
@@ -141,7 +161,7 @@ class QueryTests: XCTestCase {
             case .success(let catsResponse):
                 let cats = catsResponse.items
                 expect(cats.count).to(equal(1))
-                expect(cats.first!.color).to(equal("gray"))
+                expect(cats.first?.color).to(equal("gray"))
             case .error:
                 fail("Should not throw an error")
             }
@@ -162,7 +182,7 @@ class QueryTests: XCTestCase {
             case .success(let catsResponse):
                 let cats = catsResponse.items
                 expect(cats.count).to(beGreaterThan(0))
-                expect(cats.first!.color).toNot(equal("gray"))
+                expect(cats.first?.color).toNot(equal("gray"))
             case .error:
                 fail("Should not throw an error")
             }
@@ -182,10 +202,10 @@ class QueryTests: XCTestCase {
             case .success(let catsResponse):
                 let cats = catsResponse.items
                 expect(cats.count).to(equal(1))
-                expect(cats.first!.name).to(equal("Nyan Cat"))
-                expect(cats.first!.likes!.count).to(equal(2))
-                expect(cats.first!.likes).to(contain("rainbows"))
-                expect(cats.first!.likes).to(contain("fish"))
+                expect(cats.first?.name).to(equal("Nyan Cat"))
+                expect(cats.first?.likes?.count).to(equal(2))
+                expect(cats.first?.likes).to(contain("rainbows"))
+                expect(cats.first?.likes).to(contain("fish"))
 
             case .error:
                 fail("Should not throw an error")
@@ -206,9 +226,13 @@ class QueryTests: XCTestCase {
             case .success(let catsResponse):
                 let cats = catsResponse.items
                 expect(cats.count).to(equal(2))
-                expect(cats.first!.name).to(equal("Happy Cat"))
-                expect(cats.first!.likes!.count).to(equal(1))
-                expect(cats.first!.likes).to(contain("cheezburger"))
+                expect(cats.first).toNot(beNil())
+                if let happyCat = cats.first {
+                    expect(happyCat.name).to(equal("Happy Cat"))
+                    expect(happyCat.likes?.count).to(equal(1))
+                    expect(happyCat.likes).to(contain("cheezburger"))
+                }
+
 
             case .error:
                 fail("Should not throw an error")
@@ -229,10 +253,10 @@ class QueryTests: XCTestCase {
             case .success(let catsResponse):
                 let cats = catsResponse.items
                 expect(cats.count).to(equal(1))
-                expect(cats.first!.name).to(equal("Nyan Cat"))
-                expect(cats.first!.likes!.count).to(equal(2))
-                expect(cats.first!.likes).to(contain("rainbows"))
-                expect(cats.first!.likes).to(contain("fish"))
+                expect(cats.first?.name).to(equal("Nyan Cat"))
+                expect(cats.first?.likes?.count).to(equal(2))
+                expect(cats.first?.likes).to(contain("rainbows"))
+                expect(cats.first?.likes).to(contain("fish"))
 
             case .error:
                 fail("Should not throw an error")
@@ -253,7 +277,7 @@ class QueryTests: XCTestCase {
             case .success(let catsResponse):
                 let cats = catsResponse.items
                 expect(cats.count).to(beGreaterThan(0))
-                expect(cats.first!.color).toNot(equal("gray"))
+                expect(cats.first?.color).toNot(equal("gray"))
             case .error:
                 fail("Should not throw an error")
             }
@@ -275,7 +299,7 @@ class QueryTests: XCTestCase {
             case .success(let catsResponse):
                 let cats = catsResponse.items
                 expect(cats.count).to(equal(1))
-                expect(cats.first!.lives).to(equal(9))
+                expect(cats.first?.lives).to(equal(9))
 
             case .error(let error):
                 fail("Should not throw an error \(error)")
@@ -332,7 +356,7 @@ class QueryTests: XCTestCase {
             let entries = entriesResponse.items
             expect(entries.count).to(equal(10))
             expectation.fulfill()
-        }.error { fail("\($0)") }
+            }.error { fail("\($0)") }
 
         waitForExpectations(timeout: 10.0, handler: nil)
     }
@@ -366,7 +390,7 @@ class QueryTests: XCTestCase {
             let ids = entries.map { $0.sys.id }
             expect(ids).to(equal(EntryTests.orderedEntries))
             expectation.fulfill()
-        }.error { fail("\($0)") }
+            }.error { fail("\($0)") }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
@@ -426,7 +450,7 @@ class QueryTests: XCTestCase {
             let dogs = dogsResponse.items
             expect(dogs.count).to(equal(1))
             expectation.fulfill()
-        }.error { fail("\($0)") }
+            }.error { fail("\($0)") }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
@@ -440,7 +464,7 @@ class QueryTests: XCTestCase {
             expect(dogs.count).to(equal(1))
             expect(dogs.first?.name).to(equal("Jake"))
             expectation.fulfill()
-        }.error { fail("\($0)") }
+            }.error { fail("\($0)") }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
@@ -457,7 +481,7 @@ class QueryTests: XCTestCase {
             let cities = citiesResponse.items
             expect(cities.count).to(equal(4))
             expectation.fulfill()
-        }.error { fail("\($0)") }
+            }.error { fail("\($0)") }
 
         waitForExpectations(timeout: 10.0, handler: nil)
     }
@@ -473,7 +497,7 @@ class QueryTests: XCTestCase {
             let cities = citiesResponse.items
             expect(cities.count).to(equal(1))
             expectation.fulfill()
-        }.error { fail("\($0)") }
+            }.error { fail("\($0)") }
 
         waitForExpectations(timeout: 10.0, handler: nil)
     }
@@ -488,7 +512,7 @@ class QueryTests: XCTestCase {
             let entries = entriesResponse.items
             expect(entries.count).to(equal(5))
             expectation.fulfill()
-        }.error { fail("\($0)") }
+            }.error { fail("\($0)") }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
@@ -503,7 +527,7 @@ class QueryTests: XCTestCase {
             expect(entries.count).to(equal(1))
             expect(entries.first?.sys.id).to(equal("7qVBlCjpWE86Oseo40gAEY"))
             expectation.fulfill()
-        }.error { fail("\($0)") }
+            }.error { fail("\($0)") }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
@@ -521,26 +545,26 @@ class QueryTests: XCTestCase {
             expect(catsWithHappyCatAsBestFriend.first?.name).to(equal("Nyan Cat"))
             expect(catsWithHappyCatAsBestFriend.first?.bestFriend?.name).to(equal("Happy Cat"))
             expectation.fulfill()
-        }.error { error in
-            fail("Should not throw an error \(error)")
+            }.error { error in
+                fail("Should not throw an error \(error)")
         }
-
+        
         waitForExpectations(timeout: 10.0, handler: nil)
     }
-
+    
     // MARK: - Asset mimetype
-
+    
     func testFilterAssetsByMIMETypeGroup() {
         let expectation = self.expectation(description: "Fetch image from asset network expectation")
-
+        
         let query = AssetQuery(whereMimetypeGroupIs: .image)
-
+        
         QueryTests.client.fetchAssets(query: query).then { assetsResponse in
             let assets = assetsResponse.items
             expect(assets.count).to(equal(4))
             expectation.fulfill()
-        }.error { fail("\($0)") }
-
+            }.error { fail("\($0)") }
+        
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 }

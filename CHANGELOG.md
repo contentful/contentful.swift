@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) starting from 1.x releases.
 
 ### Merged, but not yet released
-> All recent changes are published
+> ~~All recent changes are published~~
+> #### Changed
+> - **BREAKING:** `Modellable` protocol now splits mapping of regular (non-relationship) fields, and link fields into two separate methods.
+> 
+> #### Fixed
+> - [#108](https://github.com/contentful/contentful.swift/issues/108) circular link references causing recursive loops. Also, duplicate objects being mapped by the system is now fixed. Thanks to [@AntonTheDev](https://github.com/AntonTheDev) for help scoping the fix.
+
 ---
 
 ## Table of contents

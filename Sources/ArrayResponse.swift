@@ -88,13 +88,3 @@ public struct MappedArrayResponse<ItemType>: Array where ItemType: EntryModellab
     /// The total number of resources which matched the original request
     public let total: UInt
 }
-
-internal extension ArrayResponse where ItemType: Entry {
-
-    internal func toMappedArrayResponse<EntryType: EntryModellable>() -> MappedArrayResponse<EntryType> {
-        let mappedItems = items.flatMap { entry in
-            return EntryType(entry: entry, linkDepth: 20)
-        }
-        return MappedArrayResponse<EntryType>(items: mappedItems, limit: limit, skip: skip, total: total)
-    }
-}
