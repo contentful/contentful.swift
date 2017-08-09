@@ -33,7 +33,7 @@ extension Client {
      Fetch a collection of Entries from Contentful matching the specified query.
 
      - Parameter query: The Query object to match results againts.
-     - Returns: An Observable forr the resulting `MappedContent` container.
+     - Returns: An Observable for the resulting `MappedContent` container.
      */
     @discardableResult public func fetchMappedEntries(with query: Query) -> Observable<Result<MappedContent>> {
         let asyncDataTask: AsyncDataTask<Query, MappedContent> = fetchMappedEntries(with:then:)
@@ -42,7 +42,7 @@ extension Client {
 
     /**
      Fetches all entries and includes matching the passed in `Query`. The completion handler returned will return a `MappedContent` object which
-     contains an array of `Asset`s and a dictionary of ContentTypeId's to arrays of `EntryModellable` types of your own defining.
+     contains an array of `Asset`s and a dictionary of ContentTypeId's to arrays of `EntryModellable` types of your own definition.
 
      - Parameter query: The Query object to match results against.
      - Parameter completion: A handler being called on completion of the request containing a `MappedContent` instance.

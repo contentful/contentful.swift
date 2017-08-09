@@ -54,7 +54,7 @@ public class ContentModel {
     /**
      Initializes a new `ContentModel` instance.
      
-     - Parameter entryTypes: References to the the types of your own defition, conforming to `EntryModellable`, which
+     - Parameter entryTypes: References to the the types of your own definition, conforming to `EntryModellable`, which
                              which will be returned when using the relevant fetch methods on `Client`.
      */
     init(entryTypes: [EntryModellable.Type]) {

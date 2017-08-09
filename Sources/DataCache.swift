@@ -22,7 +22,7 @@ internal class DataCache {
     }
 
     public static func cacheKey(for resource: LocalizableResource) -> String {
-        let delimeter = "_"
+        let delimeter = DataCache.cacheKeyDelimiter
 
         // Look at the type info.
         let cacheKey =  resource.id + delimeter + resource.sys.type.lowercased() + delimeter + resource.currentlySelectedLocale.code
