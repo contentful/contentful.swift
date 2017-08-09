@@ -40,11 +40,11 @@ client.fetchEntry("nyancat") { (result: Result<Entry>) in
 }
 ```
 
-## `ContentModellable` and `MappedContent` (beta)
+## `EntryModellable` and `MappedContent`
 
-The `ContentModellable` and `EntryModellable` protocols allows you to define types that will be mapped from `Entry`s of the various content types in your Contentful space. When using methods such as:
+The `EntryModellable` protocols allows you to define types that will be mapped from `Entry`s of the various content types in your Contentful space. When using methods such as:
 
-```
+```swift
 func fetchMappedEntries(with query: Query) -> Observable<Result<MappedContent>>
 ```
 
@@ -60,7 +60,7 @@ The Contentful Swift SDK requires, at minimum, Swift 2.2 and therefore Xcode 7.3
 
  Swift version | Compatible Contentful tag |
 | --- | --- |
-| Swift 3.0 | [`0.3.0` - `0.8.0`] |
+| Swift 3.0 | [`0.3.0` - `0.9.0`] |
 | Swift 2.3 | `0.2.3` |
 | Swift 2.2 | `0.2.1` |
 
@@ -80,7 +80,7 @@ pod 'Contentful'
 You can specify a specific version of Contentful depending on your needs. To learn more about operators for dependency versioning within a Podfile, see the [CocoaPods doc on the Podfile][7].
 
 ```ruby
-pod 'Contentful', '~> 0.8.0' 
+pod 'Contentful', '~> 0.9.0' 
 ```
 
 Note that for Swift 2.3 support (contentful.swift `v0.2.3`) you will need to add a post-install script to your Podfile if installing with Cocoapods:
@@ -100,7 +100,7 @@ end
 You can also use [Carthage][8] for integration by adding the following to your `Cartfile`:
 
 ```
-github "contentful/contentful.swift" ~> 0.8.0
+github "contentful/contentful.swift" ~> 0.9.0
 ```
 
 ## License

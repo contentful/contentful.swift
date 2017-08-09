@@ -150,6 +150,26 @@ class QueryTests: XCTestCase {
 
     // MARK: - Test QueryOperations
 
+    func testFetchingEntriesOfContentType() {
+        let expectation = self.expectation(description: "Equality operator expectation")
+
+        let query = Query(where: "content_type", .equals("cat"))
+
+        QueryTests.client.fetchEntries(with: query) { result in
+            switch result {
+            case .success(let catsResponse):
+                let cats = catsResponse.items
+                for cat in cats {
+                    expect(cat.sys.contentTypeId).to(equal("cat"))
+                }
+            case .error:
+                fail("Should not throw an error")
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
     func testEqualityQuery() {
 
         let expectation = self.expectation(description: "Equality operator expectation")
