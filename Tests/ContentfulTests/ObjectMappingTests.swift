@@ -138,4 +138,10 @@ class ObjectMappingTests: XCTestCase {
             fail("Decoding sync responses with deleted Entries should not throw an error")
         }
     }
+
+    // MARK: Field parsing tests
+
+    func testParseFieldsWithConvenienceMethods() {
+        
+    }
 }

@@ -7,6 +7,9 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 > ~~All recent changes are published~~
 > #### Fixed
 > - Corrupt reference to AppKit extensions in xcodeproj which prevented compilation on macOS
+> #### Added
+> - Convenience methods for extracting typed values, including `Entry`s and `Asset`s, from `fields` dictionaries.
+
 ---
 
 ## Table of contents
