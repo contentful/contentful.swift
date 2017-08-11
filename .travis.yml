@@ -1,7 +1,7 @@
 language: objective-c
 osx_image: xcode8.3
 rvm:
-  - 2.4.0
+  - 2.4.1
 cache: bundler
 script:
   - ./Scripts/travis-build-test.sh
