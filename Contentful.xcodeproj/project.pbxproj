@@ -138,7 +138,7 @@
 		ED91C1421EDCB03A00F0FC0A /* ImageOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */; };
 		ED91C1431EDCB03B00F0FC0A /* ImageOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */; };
 		ED91C1451EDCB14D00F0FC0A /* Client+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2C99791ECDD0AF0039056E /* Client+UIKit.swift */; };
-		ED91C1481EDCB1F800F0FC0A /* Client+AppKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED91C1471EDCB1F800F0FC0A /* Client+AppKit.swift */; };
+		EDBB1F4F1F3DF44A00D90FBE /* Client+AppKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBB1F4D1F3DF44700D90FBE /* Client+AppKit.swift */; };
 		EDBEC94A1E3F51FE0040FC56 /* Contentful.h in Headers */ = {isa = PBXBuildFile; fileRef = EDBEC9491E3F51FE0040FC56 /* Contentful.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EDBEC9511E3F548F0040FC56 /* Contentful.h in Headers */ = {isa = PBXBuildFile; fileRef = EDBEC9491E3F51FE0040FC56 /* Contentful.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EDBEC9521E3F548F0040FC56 /* Contentful.h in Headers */ = {isa = PBXBuildFile; fileRef = EDBEC9491E3F51FE0040FC56 /* Contentful.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -220,7 +220,7 @@
 		ED88B7D91EF7CD3800538D1F /* ClientConfigurationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientConfigurationTests.swift; sourceTree = "<group>"; };
 		ED9102651E65AADA0076FDBD /* DVR.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVR.framework; path = Carthage/Build/iOS/DVR.framework; sourceTree = "<group>"; };
 		ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageOptions.swift; sourceTree = "<group>"; };
-		ED91C1471EDCB1F800F0FC0A /* Client+AppKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Client+AppKit.swift"; path = "Sources/Contentful/AppKit/Client+AppKit.swift"; sourceTree = "<group>"; };
+		EDBB1F4D1F3DF44700D90FBE /* Client+AppKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Client+AppKit.swift"; sourceTree = "<group>"; };
 		EDBEC9371E3F4ADE0040FC56 /* Info_macOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info_macOS.plist; sourceTree = "<group>"; };
 		EDBEC9381E3F4ADE0040FC56 /* Info_tvOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info_tvOS.plist; sourceTree = "<group>"; };
 		EDBEC9391E3F4ADE0040FC56 /* Info_watchOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info_watchOS.plist; sourceTree = "<group>"; };
@@ -474,10 +474,9 @@
 		ED91C1461EDCB1DE00F0FC0A /* AppKit */ = {
 			isa = PBXGroup;
 			children = (
-				ED91C1471EDCB1F800F0FC0A /* Client+AppKit.swift */,
+				EDBB1F4D1F3DF44700D90FBE /* Client+AppKit.swift */,
 			);
-			name = AppKit;
-			path = AppKit/AppKit;
+			path = AppKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -847,12 +846,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED36B7211E3BD053005581FD /* Resource.swift in Sources */,
+				EDBB1F4F1F3DF44A00D90FBE /* Client+AppKit.swift in Sources */,
 				ED36B71E1E3BD053005581FD /* Entry.swift in Sources */,
 				ED36B7241E3BD053005581FD /* SyncSpace.swift in Sources */,
 				ED737C971EF1785A00ECB3F1 /* Persistence.swift in Sources */,
 				ED36B7221E3BD053005581FD /* SignalUtils.swift in Sources */,
 				ED2AD58F1F3B08BC00C101E6 /* Client+Query.swift in Sources */,
-				ED91C1481EDCB1F800F0FC0A /* Client+AppKit.swift in Sources */,
 				ED1D789D1F2F96260048E169 /* DataCache.swift in Sources */,
 				ED36B7201E3BD053005581FD /* Field.swift in Sources */,
 				ED1D78A21F3069FF0048E169 /* Client+Modellable.swift in Sources */,
