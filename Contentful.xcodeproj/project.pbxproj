@@ -171,7 +171,7 @@
 		A19CA3C41B836EDD00A0EFCD /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A19CA3C91B836EDD00A0EFCD /* Info_iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info_iOS.plist; sourceTree = "<group>"; };
 		A19CA3CE1B836EDD00A0EFCD /* ContentfulTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContentfulTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A19CA3D31B836EDD00A0EFCD /* ContentfulTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ContentfulTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		A19CA3D31B836EDD00A0EFCD /* ContentfulTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ContentfulTests.swift; path = Tests/ContentfulTests/ContentfulTests.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A19CA3D51B836EDD00A0EFCD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A19CA3DF1B836F2500A0EFCD /* Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Client.swift; sourceTree = "<group>"; };
 		A19CA3E11B8386CC00A0EFCD /* ClientConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ClientConfiguration.swift; sourceTree = "<group>"; };
@@ -220,7 +220,7 @@
 		ED88B7D91EF7CD3800538D1F /* ClientConfigurationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientConfigurationTests.swift; sourceTree = "<group>"; };
 		ED9102651E65AADA0076FDBD /* DVR.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVR.framework; path = Carthage/Build/iOS/DVR.framework; sourceTree = "<group>"; };
 		ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageOptions.swift; sourceTree = "<group>"; };
-		ED91C1471EDCB1F800F0FC0A /* Client+AppKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Client+AppKit.swift"; sourceTree = "<group>"; };
+		ED91C1471EDCB1F800F0FC0A /* Client+AppKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Client+AppKit.swift"; path = "Sources/Contentful/AppKit/Client+AppKit.swift"; sourceTree = "<group>"; };
 		EDBEC9371E3F4ADE0040FC56 /* Info_macOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info_macOS.plist; sourceTree = "<group>"; };
 		EDBEC9381E3F4ADE0040FC56 /* Info_tvOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info_tvOS.plist; sourceTree = "<group>"; };
 		EDBEC9391E3F4ADE0040FC56 /* Info_watchOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info_watchOS.plist; sourceTree = "<group>"; };
@@ -308,6 +308,34 @@
 		A19CA3C61B836EDD00A0EFCD /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				ED07C0151F3DCE47004449FC /* Contentful */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		A19CA3D21B836EDD00A0EFCD /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				ED07C0161F3DD0DC004449FC /* ContentfulTests */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		A19CA3DE1B836EF800A0EFCD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				EDBEC9491E3F51FE0040FC56 /* Contentful.h */,
+				EDBEC9371E3F4ADE0040FC56 /* Info_macOS.plist */,
+				EDBEC9381E3F4ADE0040FC56 /* Info_tvOS.plist */,
+				EDBEC9391E3F4ADE0040FC56 /* Info_watchOS.plist */,
+				A19CA3C91B836EDD00A0EFCD /* Info_iOS.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		ED07C0151F3DCE47004449FC /* Contentful */ = {
+			isa = PBXGroup;
+			children = (
 				A19CA3DF1B836F2500A0EFCD /* Client.swift */,
 				A19CA3E11B8386CC00A0EFCD /* ClientConfiguration.swift */,
 				ED3CBF191E7AD57100E5B02E /* Sys.swift */,
@@ -334,10 +362,10 @@
 				ED91C1461EDCB1DE00F0FC0A /* AppKit */,
 				ED2C99781ECDD0990039056E /* UIKit */,
 			);
-			path = Sources;
+			path = Contentful;
 			sourceTree = "<group>";
 		};
-		A19CA3D21B836EDD00A0EFCD /* Tests */ = {
+		ED07C0161F3DD0DC004449FC /* ContentfulTests */ = {
 			isa = PBXGroup;
 			children = (
 				ED9102671E65AE880076FDBD /* DVRRecordings */,
@@ -356,19 +384,7 @@
 				A17D044C1C4F974F002E568B /* UtilityTests.swift */,
 				A19CA3D51B836EDD00A0EFCD /* Info.plist */,
 			);
-			path = Tests;
-			sourceTree = "<group>";
-		};
-		A19CA3DE1B836EF800A0EFCD /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				EDBEC9491E3F51FE0040FC56 /* Contentful.h */,
-				EDBEC9371E3F4ADE0040FC56 /* Info_macOS.plist */,
-				EDBEC9381E3F4ADE0040FC56 /* Info_tvOS.plist */,
-				EDBEC9391E3F4ADE0040FC56 /* Info_watchOS.plist */,
-				A19CA3C91B836EDD00A0EFCD /* Info_iOS.plist */,
-			);
-			path = "Supporting Files";
+			path = ContentfulTests;
 			sourceTree = "<group>";
 		};
 		ED2C99781ECDD0990039056E /* UIKit */ = {
@@ -460,7 +476,8 @@
 			children = (
 				ED91C1471EDCB1F800F0FC0A /* Client+AppKit.swift */,
 			);
-			path = AppKit;
+			name = AppKit;
+			path = AppKit/AppKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1031,7 +1048,7 @@
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				INFOPLIST_FILE = Tests/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Tests/ContentfulTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(FRAMEWORK_SEARCH_PATHS) @executable_path/Frameworks @loader_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
@@ -1049,7 +1066,7 @@
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				INFOPLIST_FILE = Tests/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Tests/ContentfulTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(FRAMEWORK_SEARCH_PATHS) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "-D RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.contentful.ContentfulTests;
@@ -1324,7 +1341,7 @@
 					"$(BUILD_DIR)/Release-$(PLATFORM_NAME)",
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				INFOPLIST_FILE = Tests/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Tests/ContentfulTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(FRAMEWORK_SEARCH_PATHS) @executable_path/Frameworks @loader_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-D API_COVERAGE";
