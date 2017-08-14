@@ -184,8 +184,6 @@
 		EDA690BD1F43188500581FC6 /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C781EF009DB00ECB3F1 /* testClientCantAccessPreviewAPIWithProductionToken.json */; };
 		EDA690BE1F43188500581FC6 /* SyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C901EF1748700ECB3F1 /* SyncTests.json */; };
 		EDA690BF1F43188500581FC6 /* testFetchSpace.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C811EF00A1B00ECB3F1 /* testFetchSpace.json */; };
-		EDA690C91F4319A000581FC6 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDA690C81F4319A000581FC6 /* Nimble.framework */; };
-		EDA690CB1F4319AC00581FC6 /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDA690CA1F4319AC00581FC6 /* DVR.framework */; };
 		EDA690CE1F431A0C00581FC6 /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDA690CC1F431A0C00581FC6 /* DVR.framework */; };
 		EDA690CF1F431A0C00581FC6 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDA690CD1F431A0C00581FC6 /* Nimble.framework */; };
 		EDA690D41F431A5600581FC6 /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDA690CA1F4319AC00581FC6 /* DVR.framework */; };
@@ -360,8 +358,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EDA690C91F4319A000581FC6 /* Nimble.framework in Frameworks */,
-				EDA690CB1F4319AC00581FC6 /* DVR.framework in Frameworks */,
 				ED3CBF131E7A98EB00E5B02E /* ObjectMapper.framework in Frameworks */,
 				ED65CF9F1E3F6C2A000EBC62 /* Interstellar.framework in Frameworks */,
 			);
@@ -684,6 +680,7 @@
 				EDDC070B1E3BCE920022F2F9 /* Frameworks */,
 				EDDC070C1E3BCE920022F2F9 /* Headers */,
 				EDDC070D1E3BCE920022F2F9 /* Resources */,
+				EDA690D61F433BFA00581FC6 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -702,6 +699,7 @@
 				EDDC07181E3BCEA40022F2F9 /* Frameworks */,
 				EDDC07191E3BCEA40022F2F9 /* Headers */,
 				EDDC071A1E3BCEA40022F2F9 /* Resources */,
+				EDA690D71F433C0700581FC6 /* Swiftlint */,
 			);
 			buildRules = (
 			);
@@ -720,6 +718,7 @@
 				EDDC07251E3BCEB10022F2F9 /* Frameworks */,
 				EDDC07261E3BCEB10022F2F9 /* Headers */,
 				EDDC07271E3BCEB10022F2F9 /* Resources */,
+				EDA690D81F433C1E00581FC6 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -885,6 +884,48 @@
 
 /* Begin PBXShellScriptBuildPhase section */
 		ED5F497C1E54D64100E3C8F2 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = $SRCROOT/Scripts/BuildPhases/SwiftLint.sh;
+		};
+		EDA690D61F433BFA00581FC6 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = $SRCROOT/Scripts/BuildPhases/SwiftLint.sh;
+		};
+		EDA690D71F433C0700581FC6 /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = $SRCROOT/Scripts/BuildPhases/SwiftLint.sh;
+		};
+		EDA690D81F433C1E00581FC6 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1855,6 +1896,7 @@
 				EDA6907E1F43185200581FC6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EDA6908C1F43186600581FC6 /* Build configuration list for PBXNativeTarget "ContentfulTests_tvOS" */ = {
 			isa = XCConfigurationList;
@@ -1864,6 +1906,7 @@
 				EDA6908F1F43186600581FC6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EDDC07161E3BCE920022F2F9 /* Build configuration list for PBXNativeTarget "Contentful_watchOS" */ = {
 			isa = XCConfigurationList;

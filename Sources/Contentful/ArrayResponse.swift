@@ -9,7 +9,7 @@
 import ObjectMapper
 
 
-fileprivate protocol Array {
+private protocol Array {
 
     associatedtype ItemType
 

@@ -95,6 +95,18 @@ class QueryTests: XCTestCase {
         (client.urlSession as? DVR.Session)?.endRecording()
     }
 
+    func testQueryConstruction() {
+        let expectedQueryParameters: [String: String] = [
+            "content_type": "<content_type_id>",
+            "fields.<field_name>.sys.id": "<entry_id>",
+            "include": String(
+                2)
+        ]
+        let query = try! Query(where: "content_type", .equals("<content_type_id>"))
+            .where("fields.<field_name>.sys.id", .equals("<entry_id>")).includesLevel(2)
+        expect(query.parameters).to(equal(expectedQueryParameters))
+    }
+
     func testQueryReturningClientDefinedModel() {
         let selections = ["fields.bestFriend", "fields.color", "fields.name"]
 
@@ -320,6 +332,27 @@ class QueryTests: XCTestCase {
                 let cats = catsResponse.items
                 expect(cats.count).to(equal(1))
                 expect(cats.first?.lives).to(equal(9))
+
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testChainingQueriesWithUntypedQuery() {
+        let expectation = self.expectation(description: "Chained operator expectation")
+
+        let query = Query(onContentTypeFor: "cat").where("fields.color", .doesNotEqual("gray")).where("fields.lives", .equals("9"))
+
+        QueryTests.client.fetchEntries(with: query) { result in
+            switch result {
+            case .success(let catsResponse):
+                let cats = catsResponse.items
+                expect(cats.count).to(equal(1))
+                expect(cats.first?.fields["lives"] as? Int).to(equal(9))
 
             case .error(let error):
                 fail("Should not throw an error \(error)")
@@ -571,7 +604,28 @@ class QueryTests: XCTestCase {
         
         waitForExpectations(timeout: 10.0, handler: nil)
     }
-    
+
+    func testUntypedSearchOnReferences() {
+        let expectation = self.expectation(description: "Search on references")
+        let query = Query(whereLinkAtFieldNamed: "bestFriend",
+                          forType: "cat",
+                          hasValueAt: "fields.name",
+                          ofType: "cat", that: .matches("Happy Cat"))
+
+        QueryTests.client.fetchEntries(with: query).then { catsWithHappyCatAsBestFriendResponse in
+            let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
+            expect(catsWithHappyCatAsBestFriend.count).to(equal(1))
+            expect(catsWithHappyCatAsBestFriend.first?.fields["name"] as? String).to(equal("Nyan Cat"))
+            expect((catsWithHappyCatAsBestFriend.first?.fields["bestFriend"] as? Link)?.entry).toNot(beNil())
+            expect((catsWithHappyCatAsBestFriend.first?.fields["bestFriend"] as? Link)?.entry?.fields["name"] as? String).to(equal("Happy Cat"))
+            expectation.fulfill()
+            }.error { error in
+                fail("Should not throw an error \(error)")
+        }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
     // MARK: - Asset mimetype
     
     func testFilterAssetsByMIMETypeGroup() {
