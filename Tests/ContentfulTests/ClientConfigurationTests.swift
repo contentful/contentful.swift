@@ -38,7 +38,15 @@ class ClientConfigurationTests: XCTestCase {
             expect(matches.count).to(equal(0))
         }
 
-        let regex = try! NSRegularExpression(pattern: "sdk contentful.swift/\(onlyVersionNumberRegexString); platform Swift/3.1; os iOS/\(osVersionString);" , options: [])
+        #if os(macOS)
+            let platform = "macOS"
+        #elseif os(tvOS)
+            let platform = "tvOS"
+        #elseif os(iOS)
+            let platform = "iOS"
+        #endif
+
+        let regex = try! NSRegularExpression(pattern: "sdk contentful.swift/\(onlyVersionNumberRegexString); platform Swift/3.1; os \(platform)/\(osVersionString);" , options: [])
         let matches = regex.matches(in: userAgentString, options: [], range: NSRange(location: 0, length: userAgentString.characters.count))
         expect(matches.count).to(equal(1))
 

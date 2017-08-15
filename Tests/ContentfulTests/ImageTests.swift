@@ -152,7 +152,11 @@ class ImageTests: XCTestCase {
     }
 
     func testMakingURLWithPaddingAndBackgroundColor() {
+        #if os(macOS)
+        let options = [ImageOption.fit(for: .pad(withBackgroundColor: NSColor.blue))]
+        #else
         let options = [ImageOption.fit(for: .pad(withBackgroundColor: UIColor.blue))]
+        #endif
         let urlWithOptions = try! nyanCatAsset.url(with: options)
         expect(urlWithOptions.absoluteString).to(equal("https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png?fit=pad&bg=rgb:0000FF"))
     }

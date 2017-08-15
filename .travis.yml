@@ -3,6 +3,11 @@ osx_image: xcode8.3
 rvm:
   - 2.4.1
 cache: bundler
+matrix:
+  include:
+    - env: SDK=iphonesimulator PLATFORM="iOS Simulator,name=iPhone 6s,OS=10.3.1" SCHEME=Contentful_iOS
+    - env: SDK=appletvsimulator PLATFORM="tvOS Simulator,name=Apple TV 1080p,OS=10.2" SCHEME=Contentful_tvOS
+    - env: SDK=macosx PLATFORM="OS X" SCHEME=Contentful_macOS
 script:
   - ./Scripts/travis-build-test.sh
 after_success:

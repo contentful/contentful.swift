@@ -29,7 +29,26 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       codeCoverageEnabled = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "EDA690831F43186600581FC6"
+               BuildableName = "ContentfulTests_tvOS.xctest"
+               BlueprintName = "ContentfulTests_tvOS"
+               ReferencedContainer = "container:Contentful.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "EDDC071B1E3BCEA40022F2F9"
+            BuildableName = "Contentful.framework"
+            BlueprintName = "Contentful_tvOS"
+            ReferencedContainer = "container:Contentful.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
