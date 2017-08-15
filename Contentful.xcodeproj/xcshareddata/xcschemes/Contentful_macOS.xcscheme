@@ -29,7 +29,26 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       codeCoverageEnabled = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "EDA690731F43185200581FC6"
+               BuildableName = "ContentfulTests_macOS.xctest"
+               BlueprintName = "ContentfulTests_macOS"
+               ReferencedContainer = "container:Contentful.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "EDDC07281E3BCEB10022F2F9"
+            BuildableName = "Contentful.framework"
+            BlueprintName = "Contentful_macOS"
+            ReferencedContainer = "container:Contentful.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>

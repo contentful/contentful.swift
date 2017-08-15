@@ -34,8 +34,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A19CA3CD1B836EDD00A0EFCD"
-               BuildableName = "ContentfulTests.xctest"
-               BlueprintName = "ContentfulTests"
+               BuildableName = "ContentfulTests_iOS.xctest"
+               BlueprintName = "ContentfulTests_iOS"
                ReferencedContainer = "container:Contentful.xcodeproj">
             </BuildableReference>
          </TestableReference>
