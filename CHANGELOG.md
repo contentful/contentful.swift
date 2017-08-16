@@ -4,18 +4,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) starting from 1.x releases.
 
 ### Merged, but not yet released
-> ~~All recent changes are published~~
-> #### Fixed
-> - Corrupt reference to AppKit extensions in xcodeproj which prevented compilation on macOS
-> #### Added
-> - Convenience methods for extracting typed values, including `Entry`s and `Asset`s, from `fields` dictionaries.
-
+> All recent changes are published
 ---
 
 ## Table of contents
 
 #### 0.x Releases
-- `0.9.x` Releases - [0.9.0](#090) | [0.9.1](#091)
+- `0.9.x` Releases - [0.9.0](#090) | [0.9.1](#091) | [0.9.2](#092)
 - `0.8.x` Releases - [0.8.0](#080)
 - `0.7.x` Releases - [0.7.0](#070) | [0.7.1](#071) | [0.7.2](#072) | [0.7.3](#073) | [0.7.4](#074) | [0.7.5](#075) | [0.7.6](#076) | [0.7.7](#077)
 - `0.6.x` Releases - [0.6.0](#060) | [0.6.1](#061)
@@ -24,6 +19,18 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 - `0.3.x` Releases - [0.3.0](#030) | [0.3.1](#031)
 
 ---
+
+## [`0.9.2`](https://github.com/contentful/contentful.swift/releases/tag/0.9.2)
+Released on 2017-08-16
+
+> #### Fixed
+> - Corrupt reference to AppKit extensions in xcodeproj which prevented compilation on macOS. In order to prevent future regressions, travis now runs unit tests for tvOS and macOS.
+> #### Added
+> - Convenience methods for extracting typed values, including `Entry`s and `Asset`s, from `fields` dictionaries.
+> - Ability to make `Query`s on specific content types without conforming to `EntryModellable`.
+
+---
+
 ## [`0.9.1`](https://github.com/contentful/contentful.swift/releases/tag/0.9.1)
 Released on 2017-08-11
 

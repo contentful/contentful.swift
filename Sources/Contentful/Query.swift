@@ -250,7 +250,7 @@ public protocol ChainableQuery: AbstractQuery {}
 public extension ChainableQuery {
 
     /**
-     Convenience intializer for creating a QueryOn with a QueryOperation. Example usage:
+     Convenience intializer for creating a Query with a QueryOperation. Example usage:
 
      ```
      let query = QueryOn<Cat>(where: "fields.color", .doesNotEqual("gray"))
@@ -303,6 +303,9 @@ public extension ChainableQuery {
      level of includes at the API level is 10, so the SDK will throw an error before the network request is made if the value is too high.
      To omit all linked items, specify an include level of 0.
      
+     - Parameter includesLevel: An unsigned integer specifying the level of includes to be resolved.
+     - Throws: A `QueryError` if the level of includes specified is greater than 10.
+     
      See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/links/retrieval-of-linked-items>
      */
     public init(includesLevel: UInt) throws {
@@ -316,67 +319,15 @@ public extension ChainableQuery {
      To omit all linked items, specify an include level of 0.
 
      See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/links/retrieval-of-linked-items>
+     
+     - Parameter includesLevel: An unsigned integer specifying the level of includes to be resolved.
+     - Throws: A `QueryError` if the level of includes specified is greater than 10.
      */
     @discardableResult public func includesLevel(_ includesLevel: UInt) throws -> Self {
         guard includesLevel <= 10 else {
             throw QueryError.maximumIncludesLevelExceeded
         }
         self.parameters[QueryParameter.include] = String(includesLevel)
-        return self
-    }
-
-    /**
-     Initialize a query to do a ["Search on References"](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references)
-     which enables searching for entries based on value's for members of referenced entries.
-     Example usage:
-     ```
-     let query = Query(whereLinkAtFieldNamed: "bestFriend", 
-                       forType: "cat",
-                       hasValueAt: "fields.name",
-                       ofType: "cat",
-                       that: .matches("Happy Cat"))
-
-     ```
-     - Parameter linkingFieldName: The field name which holds a reference to a link.
-     - Parameter sourceContentTypeId: The content type identifier of the link source.
-     - Parameter targetKeyPath: The member path for the value you would like to search on for the link destination resource.
-     - Parameter targetContentTypeId: The content type idenifier of the item(s) being linked to at the specified linking field name.
-     - Parameter operation: The `QueryOperation` used to match the value of at the target key path.
-     */
-    public init(whereLinkAtFieldNamed linkingFieldName: String,
-                forType sourceContentTypeId: ContentTypeId,
-                hasValueAt targetKeyPath: FieldName,
-                ofType targetContentTypeId: ContentTypeId,
-                that operation: QueryOperation) {
-        self.init()
-        self.whereLinkAtFieldNamed(linkingFieldName,
-                                   forType: sourceContentTypeId,
-                                   hasValueAt: targetKeyPath,
-                                   ofType: targetContentTypeId,
-                                   that: operation)
-    }
-
-    /**
-     Use this method to do a ["Search on References"](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references)
-     which enables searching for entries based on value's for members of referenced entries.
-     Example usage:
-
-     - Parameter linkingFieldName: The field name which holds a reference to a link.
-     - Parameter sourceContentTypeId: The content type identifier of the link source.
-     - Parameter targetKeyPath: The member path for the value you would like to search on for the link destination resource.
-     - Parameter targetContentTypeId: The content type idenifier of the item(s) being linked to at the specified linking field name.
-     - Parameter operation: The `QueryOperation` used to match the value of at the target key path.
-     */
-    @discardableResult public func whereLinkAtFieldNamed(_ linkingFieldName: String,
-                                                         forType sourceContentTypeId: ContentTypeId,
-                                                         hasValueAt targetKeyPath: FieldName,
-                                                         ofType targetContentTypeId: ContentTypeId,
-                                                         that operation: QueryOperation) -> Self {
-        self.parameters[QueryParameter.contentType] = sourceContentTypeId
-        self.parameters["fields.\(linkingFieldName).sys.contentType.sys.id"] = targetContentTypeId
-
-        let filterParameterName = "fields.\(linkingFieldName).\(targetKeyPath)\(operation.string)"
-        self.parameters[filterParameterName] = operation.values
         return self
     }
 
@@ -467,8 +418,7 @@ public extension ChainableQuery {
      - Parameter operation: the QueryOperation
      - Parameter locale: An optional locale argument to return localized results. If unspecified, the locale originally
      set on the `Client` instance is used.
-
-
+     - Returns: A reference to the receiving query to enable chaining.
      */
     @discardableResult public func `where`(_ name: String, _ operation: QueryOperation, for locale: String? = nil) -> Self {
         self.addFilter(where: name, operation, for: locale)
@@ -497,6 +447,7 @@ public extension ChainableQuery {
      set on the `Client` instance is used.
      - Throws: Will throw an error if property names are not prefixed with `"fields."`, if selections go more than 2 levels deep
                ("fields.bestFriend.sys" is not valid), or if more than 99 properties are selected.
+     - Returns: A reference to the receiving query to enable chaining.
      */
     @discardableResult public func select(fieldsNamed fieldNames: [String], locale: String? = nil) throws -> Self {
 
@@ -531,6 +482,7 @@ public extension ChainableQuery {
      - Parameter propertyName: One or more properties on the Resource by which the results will be ordered.
      - Parameter reverse: An Bool specifying if the returned order should be reversed or not. Defaults to `false`.
      - Throws: Will throw an error if property names are not prefixed with either `"sys."` or `"fields."`.
+     - Returns: A reference to the receiving query to enable chaining.
      */
     @discardableResult public func order(using orderParameters: OrderParameter...) throws -> Self {
         return try order(using: orderParameters)
@@ -552,6 +504,8 @@ public extension ChainableQuery {
      ```
 
      - Parameter numberOfResults: The number of results the response will be limited to.
+     - Throws: A QueryError if the number of results specified is greater than 1000.
+     - Returns: A reference to the receiving query to enable chaining.
      */
     @discardableResult public func limit(to numberOfResults: UInt) throws -> Self {
         guard numberOfResults <= QueryConstants.maxLimit else { throw QueryError.maximumLimitExceeded }
@@ -574,8 +528,8 @@ public extension ChainableQuery {
         // Do stuff with entries.
      }
      ```
-
      - Parameter numberOfResults: The number of results that will be skipped in the query.
+     - Returns: A reference to the receiving query to enable chaining.
      */
     @discardableResult public func skip(theFirst numberOfResults: UInt) -> Self {
         self.parameters[QueryParameter.skip] = String(numberOfResults)
@@ -593,11 +547,11 @@ public extension ChainableQuery {
      - Parameter text: The text string to match against.
      - Parameter locale: An optional locale argument to return localized results. If unspecified, the locale originally
                          set on the `Client` instance is used.
+     - Throws: A QueryError if the text being searched for is 1 character in length or less.
      */
     public init(searchingFor text: String, for locale: String? = nil) throws {
-        guard text.characters.count > 1 else { throw QueryError.textSearchTooShort }
-        let parameters = [QueryParameter.fullTextSearch: text]
-        self.init(parameters: parameters, locale: locale)
+        self.init()
+        try self.search(for: text, for: locale)
     }
 
     /**
@@ -608,9 +562,15 @@ public extension ChainableQuery {
      - Parameter text: The text string to match against.
      - Parameter locale: An optional locale argument to return localized results. If unspecified, the locale originally
      set on the `Client` instance is used.
+     - Throws: A QueryError if the text being searched for is 1 character in length or less.
+     - Returns: A reference to the receiving query to enable chaining.
      */
-    @discardableResult public func search(for text: String) -> Self {
+    @discardableResult public func search(for text: String, for locale: String? = nil) throws -> Self {
+        guard text.characters.count > 1 else { throw QueryError.textSearchTooShort }
         self.parameters[QueryParameter.fullTextSearch] = text
+        if let locale = locale {
+            parameters[QueryParameter.locale] = locale
+        }
         return self
     }
 
@@ -633,6 +593,61 @@ public extension ChainableQuery {
         let joinedPropertyNames = namesWithReverseParameter.joined(separator: ",")
 
         self.parameters[QueryParameter.order] = joinedPropertyNames
+        return self
+    }
+
+    /**
+     Initialize a query to do a ["Search on References"](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references)
+     which enables searching for entries based on value's for members of referenced entries.
+     Example usage:
+     ```
+     let query = Query(whereLinkAtFieldNamed: "bestFriend",
+     forType: "cat",
+     hasValueAt: "fields.name",
+     ofType: "cat",
+     that: .matches("Happy Cat"))
+     ```
+     - Parameter linkingFieldName: The field name which holds a reference to a link.
+     - Parameter sourceContentTypeId: The content type identifier of the link source.
+     - Parameter targetKeyPath: The member path for the value you would like to search on for the link destination resource.
+     - Parameter targetContentTypeId: The content type idenifier of the item(s) being linked to at the specified linking field name.
+     - Parameter operation: The `QueryOperation` used to match the value of at the target key path.
+     */
+    public init(whereLinkAtFieldNamed linkingFieldName: String,
+                forType sourceContentTypeId: ContentTypeId,
+                hasValueAt targetKeyPath: FieldName,
+                ofType targetContentTypeId: ContentTypeId,
+                that operation: QueryOperation) {
+        self.init()
+        self.whereLinkAtFieldNamed(linkingFieldName,
+                                   forType: sourceContentTypeId,
+                                   hasValueAt: targetKeyPath,
+                                   ofType: targetContentTypeId,
+                                   that: operation)
+    }
+
+    /**
+     Use this method to do a ["Search on References"](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references)
+     which enables searching for entries based on value's for members of referenced entries.
+     Example usage:
+
+     - Parameter linkingFieldName: The field name which holds a reference to a link.
+     - Parameter sourceContentTypeId: The content type identifier of the link source.
+     - Parameter targetKeyPath: The member path for the value you would like to search on for the link destination resource.
+     - Parameter targetContentTypeId: The content type idenifier of the item(s) being linked to at the specified linking field name.
+     - Parameter operation: The `QueryOperation` used to match the value of at the target key path.
+     - Returns: A reference to the receiving query to enable chaining.
+     */
+    @discardableResult public func whereLinkAtFieldNamed(_ linkingFieldName: String,
+                                                         forType sourceContentTypeId: ContentTypeId,
+                                                         hasValueAt targetKeyPath: FieldName,
+                                                         ofType targetContentTypeId: ContentTypeId,
+                                                         that operation: QueryOperation) -> Self {
+        self.parameters[QueryParameter.contentType] = sourceContentTypeId
+        self.parameters["fields.\(linkingFieldName).sys.contentType.sys.id"] = targetContentTypeId
+
+        let filterParameterName = "fields.\(linkingFieldName).\(targetKeyPath)\(operation.string)"
+        self.parameters[filterParameterName] = operation.values
         return self
     }
 }
@@ -658,8 +673,12 @@ public class Query: ChainableQuery {
         self.on(contentTypeFor: id)
     }
 
-    /// Append the `content_type` parameter to narrow the results to entries that have that content type identifier.
-    /// See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters>
+    /** 
+     Append the `content_type` parameter to narrow the results to entries that have that content type identifier.
+     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters>
+     - Parameter id: the identifier of the content type which the query will be performed on.
+     - Returns: A reference to the receiving query to enable chaining.
+     */
     @discardableResult func on(contentTypeFor id: ContentTypeId) -> Query {
         self.parameters[QueryParameter.contentType] = id
         return self
