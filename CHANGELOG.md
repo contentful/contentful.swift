@@ -23,11 +23,12 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 ## [`0.9.2`](https://github.com/contentful/contentful.swift/releases/tag/0.9.2)
 Released on 2017-08-16
 
-> #### Fixed
-> - Corrupt reference to AppKit extensions in xcodeproj which prevented compilation on macOS. In order to prevent future regressions, travis now runs unit tests for tvOS and macOS.
-> #### Added
-> - Convenience methods for extracting typed values, including `Entry`s and `Asset`s, from `fields` dictionaries.
-> - Ability to make `Query`s on specific content types without conforming to `EntryModellable`.
+#### Fixed
+- Corrupt reference to AppKit extensions in xcodeproj which prevented compilation on macOS. In order to prevent future regressions, travis now runs unit tests for tvOS and macOS.
+- Initializer for `ContentModel` which was implicitly `internal`. The initializer is now exposed as public.
+#### Added
+- Convenience methods for extracting typed values, including `Entry`s and `Asset`s, from `fields` dictionaries.
+- Ability to make `Query`s on specific content types without conforming to `EntryModellable`.
 
 ---
 
