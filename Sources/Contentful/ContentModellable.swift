@@ -57,7 +57,7 @@ public class ContentModel {
      - Parameter entryTypes: References to the the types of your own definition, conforming to `EntryModellable`, which
                              which will be returned when using the relevant fetch methods on `Client`.
      */
-    init(entryTypes: [EntryModellable.Type]) {
+    public init(entryTypes: [EntryModellable.Type]) {
         self.entryTypes = entryTypes
         self.dataCache = DataCache()
         self.cachedRelationshipNames = [ContentTypeId: [String]]()

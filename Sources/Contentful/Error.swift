@@ -61,6 +61,8 @@ public enum QueryError: Error {
             return "Selection for \(fieldKeyPath) is invalid. Make sure it has at most 1 '.' character in it."
         case .maxSelectionLimitExceeded:
             return "Can select at most 99 key paths when using the select operator on a content type."
+        case .maximumIncludesLevelExceeded:
+            return "Can only specify at most 10 for the level of includes to be resolved in a response"
         case .maximumLimitExceeded:
             return "When limiting the results of a query, results must be limited to a value less than or equal to 1000."
         case .mimetypeSpecifiedOnEntry:
@@ -81,6 +83,9 @@ public enum QueryError: Error {
 
     /// Thrown when a value greater than 1000 is used for limiting the results of a query.
     case maximumLimitExceeded
+
+    /// Thrown when a value greater than 10 is specified as for the include level of a query.
+    case maximumIncludesLevelExceeded
 
     /// Thrown when attempting to specify a mimetype_group on model of `Entry` type.
     case mimetypeSpecifiedOnEntry

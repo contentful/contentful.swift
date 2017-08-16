@@ -310,7 +310,7 @@ public enum Fit: URLImageQueryExtendable {
 
 // MARK: - Private
 
-fileprivate protocol URLImageQueryExtendable {
+private protocol URLImageQueryExtendable {
 
     var imageQueryParameter: String { get }
 
@@ -319,7 +319,7 @@ fileprivate protocol URLImageQueryExtendable {
     func urlArgument() -> String
 }
 
-fileprivate extension URLImageQueryExtendable {
+extension URLImageQueryExtendable {
 
     fileprivate func urlQueryItems() throws -> [URLQueryItem] {
         var urlQueryItems = [URLQueryItem]()
@@ -335,7 +335,7 @@ fileprivate extension URLImageQueryExtendable {
     }
 }
 
-fileprivate struct ImageParameters {
+private struct ImageParameters {
 
     static let width            = "w"
     static let height           = "h"

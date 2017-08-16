@@ -44,7 +44,6 @@
 		ED2AD58D1F3B08BC00C101E6 /* Client+Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2AD58B1F3B08BC00C101E6 /* Client+Query.swift */; };
 		ED2AD58E1F3B08BC00C101E6 /* Client+Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2AD58B1F3B08BC00C101E6 /* Client+Query.swift */; };
 		ED2AD58F1F3B08BC00C101E6 /* Client+Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2AD58B1F3B08BC00C101E6 /* Client+Query.swift */; };
-		ED2AD5971F3B559D00C101E6 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED2AD5951F3B559700C101E6 /* QueryTests.json */; };
 		ED2C997B1ECDD0AF0039056E /* Client+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2C99791ECDD0AF0039056E /* Client+UIKit.swift */; };
 		ED2C99BB1ED5AE820039056E /* Client+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2C99791ECDD0AF0039056E /* Client+UIKit.swift */; };
 		ED307F231EE6E5DF00633390 /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED307F211EE6E5D700633390 /* LocalizationTests.swift */; };
@@ -115,6 +114,9 @@
 		ED68BD731E6DC47F00939F6D /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED68BD711E6DC47A00939F6D /* Query.swift */; };
 		ED68BD741E6DC48000939F6D /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED68BD711E6DC47A00939F6D /* Query.swift */; };
 		ED68BD751E6DC48000939F6D /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED68BD711E6DC47A00939F6D /* Query.swift */; };
+		ED6EA90A1F44675F00FCA0F2 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED6EA9081F44675C00FCA0F2 /* QueryTests.json */; };
+		ED6EA90B1F44676000FCA0F2 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED6EA9081F44675C00FCA0F2 /* QueryTests.json */; };
+		ED6EA90C1F44676000FCA0F2 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED6EA9081F44675C00FCA0F2 /* QueryTests.json */; };
 		ED737C6B1EF0095400ECB3F1 /* AssetTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C691EF0095200ECB3F1 /* AssetTests.json */; };
 		ED737C6E1EF0097000ECB3F1 /* ContentTypeTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C6C1EF0096D00ECB3F1 /* ContentTypeTests.json */; };
 		ED737C711EF0098C00ECB3F1 /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C6F1EF0098A00ECB3F1 /* EntryTests.json */; };
@@ -166,7 +168,6 @@
 		EDA690AB1F43188500581FC6 /* ContentTypeTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C6C1EF0096D00ECB3F1 /* ContentTypeTests.json */; };
 		EDA690AC1F43188500581FC6 /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C6F1EF0098A00ECB3F1 /* EntryTests.json */; };
 		EDA690AD1F43188500581FC6 /* ImageTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C721EF009A000ECB3F1 /* ImageTests.json */; };
-		EDA690AE1F43188500581FC6 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED2AD5951F3B559700C101E6 /* QueryTests.json */; };
 		EDA690AF1F43188500581FC6 /* PreviewSyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C871EF15CC600ECB3F1 /* PreviewSyncTests.json */; };
 		EDA690B01F43188500581FC6 /* RateLimitTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C7E1EF00A0600ECB3F1 /* RateLimitTests.json */; };
 		EDA690B11F43188500581FC6 /* testClientCanAccessPreviewAPI.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C751EF009C400ECB3F1 /* testClientCanAccessPreviewAPI.json */; };
@@ -177,15 +178,12 @@
 		EDA690B61F43188500581FC6 /* ContentTypeTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C6C1EF0096D00ECB3F1 /* ContentTypeTests.json */; };
 		EDA690B71F43188500581FC6 /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C6F1EF0098A00ECB3F1 /* EntryTests.json */; };
 		EDA690B81F43188500581FC6 /* ImageTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C721EF009A000ECB3F1 /* ImageTests.json */; };
-		EDA690B91F43188500581FC6 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED2AD5951F3B559700C101E6 /* QueryTests.json */; };
 		EDA690BA1F43188500581FC6 /* PreviewSyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C871EF15CC600ECB3F1 /* PreviewSyncTests.json */; };
 		EDA690BB1F43188500581FC6 /* RateLimitTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C7E1EF00A0600ECB3F1 /* RateLimitTests.json */; };
 		EDA690BC1F43188500581FC6 /* testClientCanAccessPreviewAPI.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C751EF009C400ECB3F1 /* testClientCanAccessPreviewAPI.json */; };
 		EDA690BD1F43188500581FC6 /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C781EF009DB00ECB3F1 /* testClientCantAccessPreviewAPIWithProductionToken.json */; };
 		EDA690BE1F43188500581FC6 /* SyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C901EF1748700ECB3F1 /* SyncTests.json */; };
 		EDA690BF1F43188500581FC6 /* testFetchSpace.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C811EF00A1B00ECB3F1 /* testFetchSpace.json */; };
-		EDA690C91F4319A000581FC6 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDA690C81F4319A000581FC6 /* Nimble.framework */; };
-		EDA690CB1F4319AC00581FC6 /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDA690CA1F4319AC00581FC6 /* DVR.framework */; };
 		EDA690CE1F431A0C00581FC6 /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDA690CC1F431A0C00581FC6 /* DVR.framework */; };
 		EDA690CF1F431A0C00581FC6 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDA690CD1F431A0C00581FC6 /* Nimble.framework */; };
 		EDA690D41F431A5600581FC6 /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDA690CA1F4319AC00581FC6 /* DVR.framework */; };
@@ -254,7 +252,6 @@
 		ED1D78991F2F96260048E169 /* DataCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataCache.swift; sourceTree = "<group>"; };
 		ED1D789E1F3069FF0048E169 /* Client+Modellable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Client+Modellable.swift"; sourceTree = "<group>"; };
 		ED2AD58B1F3B08BC00C101E6 /* Client+Query.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Client+Query.swift"; sourceTree = "<group>"; };
-		ED2AD5951F3B559700C101E6 /* QueryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QueryTests.json; sourceTree = "<group>"; };
 		ED2C99791ECDD0AF0039056E /* Client+UIKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Client+UIKit.swift"; sourceTree = "<group>"; };
 		ED307F211EE6E5D700633390 /* LocalizationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationTests.swift; sourceTree = "<group>"; };
 		ED3CBF0A1E793F8200E5B02E /* ContentModellable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentModellable.swift; sourceTree = "<group>"; };
@@ -271,6 +268,7 @@
 		ED65CFA11E3F6C3B000EBC62 /* Interstellar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Interstellar.framework; path = Carthage/Build/tvOS/Interstellar.framework; sourceTree = "<group>"; };
 		ED65CFA51E3F6C55000EBC62 /* Interstellar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Interstellar.framework; path = Carthage/Build/watchOS/Interstellar.framework; sourceTree = "<group>"; };
 		ED68BD711E6DC47A00939F6D /* Query.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Query.swift; sourceTree = "<group>"; };
+		ED6EA9081F44675C00FCA0F2 /* QueryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QueryTests.json; sourceTree = "<group>"; };
 		ED737C691EF0095200ECB3F1 /* AssetTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AssetTests.json; sourceTree = "<group>"; };
 		ED737C6C1EF0096D00ECB3F1 /* ContentTypeTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ContentTypeTests.json; sourceTree = "<group>"; };
 		ED737C6F1EF0098A00ECB3F1 /* EntryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EntryTests.json; sourceTree = "<group>"; };
@@ -360,8 +358,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EDA690C91F4319A000581FC6 /* Nimble.framework in Frameworks */,
-				EDA690CB1F4319AC00581FC6 /* DVR.framework in Frameworks */,
 				ED3CBF131E7A98EB00E5B02E /* ObjectMapper.framework in Frameworks */,
 				ED65CF9F1E3F6C2A000EBC62 /* Interstellar.framework in Frameworks */,
 			);
@@ -546,7 +542,7 @@
 				ED737C6C1EF0096D00ECB3F1 /* ContentTypeTests.json */,
 				ED737C6F1EF0098A00ECB3F1 /* EntryTests.json */,
 				ED737C721EF009A000ECB3F1 /* ImageTests.json */,
-				ED2AD5951F3B559700C101E6 /* QueryTests.json */,
+				ED6EA9081F44675C00FCA0F2 /* QueryTests.json */,
 				ED737C871EF15CC600ECB3F1 /* PreviewSyncTests.json */,
 				ED737C7E1EF00A0600ECB3F1 /* RateLimitTests.json */,
 				ED737C751EF009C400ECB3F1 /* testClientCanAccessPreviewAPI.json */,
@@ -684,6 +680,7 @@
 				EDDC070B1E3BCE920022F2F9 /* Frameworks */,
 				EDDC070C1E3BCE920022F2F9 /* Headers */,
 				EDDC070D1E3BCE920022F2F9 /* Resources */,
+				EDA690D61F433BFA00581FC6 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -702,6 +699,7 @@
 				EDDC07181E3BCEA40022F2F9 /* Frameworks */,
 				EDDC07191E3BCEA40022F2F9 /* Headers */,
 				EDDC071A1E3BCEA40022F2F9 /* Resources */,
+				EDA690D71F433C0700581FC6 /* Swiftlint */,
 			);
 			buildRules = (
 			);
@@ -720,6 +718,7 @@
 				EDDC07251E3BCEB10022F2F9 /* Frameworks */,
 				EDDC07261E3BCEB10022F2F9 /* Headers */,
 				EDDC07271E3BCEB10022F2F9 /* Resources */,
+				EDA690D81F433C1E00581FC6 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -811,7 +810,7 @@
 				ED737C771EF009C700ECB3F1 /* testClientCanAccessPreviewAPI.json in Resources */,
 				ED737C831EF00A2000ECB3F1 /* testFetchSpace.json in Resources */,
 				ED737C6E1EF0097000ECB3F1 /* ContentTypeTests.json in Resources */,
-				ED2AD5971F3B559D00C101E6 /* QueryTests.json in Resources */,
+				ED6EA90C1F44676000FCA0F2 /* QueryTests.json in Resources */,
 				ED737C6B1EF0095400ECB3F1 /* AssetTests.json in Resources */,
 				ED737C741EF009A500ECB3F1 /* ImageTests.json in Resources */,
 				A10FF9D81BBB3860001AA4E9 /* Data in Resources */,
@@ -830,10 +829,10 @@
 				EDA690B41F43188500581FC6 /* testFetchSpace.json in Resources */,
 				EDA690B01F43188500581FC6 /* RateLimitTests.json in Resources */,
 				EDA690B31F43188500581FC6 /* SyncTests.json in Resources */,
+				ED6EA90B1F44676000FCA0F2 /* QueryTests.json in Resources */,
 				EDA690AB1F43188500581FC6 /* ContentTypeTests.json in Resources */,
 				EDA690AA1F43188500581FC6 /* AssetTests.json in Resources */,
 				EDA690AD1F43188500581FC6 /* ImageTests.json in Resources */,
-				EDA690AE1F43188500581FC6 /* QueryTests.json in Resources */,
 				EDA690AF1F43188500581FC6 /* PreviewSyncTests.json in Resources */,
 				EDA690B21F43188500581FC6 /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */,
 				EDA690B11F43188500581FC6 /* testClientCanAccessPreviewAPI.json in Resources */,
@@ -849,10 +848,10 @@
 				EDA690BF1F43188500581FC6 /* testFetchSpace.json in Resources */,
 				EDA690BB1F43188500581FC6 /* RateLimitTests.json in Resources */,
 				EDA690BE1F43188500581FC6 /* SyncTests.json in Resources */,
+				ED6EA90A1F44675F00FCA0F2 /* QueryTests.json in Resources */,
 				EDA690B61F43188500581FC6 /* ContentTypeTests.json in Resources */,
 				EDA690B51F43188500581FC6 /* AssetTests.json in Resources */,
 				EDA690B81F43188500581FC6 /* ImageTests.json in Resources */,
-				EDA690B91F43188500581FC6 /* QueryTests.json in Resources */,
 				EDA690BA1F43188500581FC6 /* PreviewSyncTests.json in Resources */,
 				EDA690BD1F43188500581FC6 /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */,
 				EDA690BC1F43188500581FC6 /* testClientCanAccessPreviewAPI.json in Resources */,
@@ -885,6 +884,48 @@
 
 /* Begin PBXShellScriptBuildPhase section */
 		ED5F497C1E54D64100E3C8F2 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = $SRCROOT/Scripts/BuildPhases/SwiftLint.sh;
+		};
+		EDA690D61F433BFA00581FC6 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = $SRCROOT/Scripts/BuildPhases/SwiftLint.sh;
+		};
+		EDA690D71F433C0700581FC6 /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = $SRCROOT/Scripts/BuildPhases/SwiftLint.sh;
+		};
+		EDA690D81F433C1E00581FC6 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1305,12 +1346,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = RWJ5E97L7R;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Checkouts/DVR/build/Debug",
-					"$(PROJECT_DIR)/Carthage/Checkouts/Nimble/build/Debug",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/Tests/ContentfulTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
@@ -1334,9 +1370,7 @@
 				DEVELOPMENT_TEAM = RWJ5E97L7R;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Checkouts/DVR/build/Debug",
-					"$(PROJECT_DIR)/Carthage/Checkouts/Nimble/build/Debug",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
+					"$(BUILD_DIR)/Release-$(PLATFORM_NAME)",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Tests/ContentfulTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
@@ -1359,12 +1393,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = RWJ5E97L7R;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Checkouts/DVR/build/Debug",
-					"$(PROJECT_DIR)/Carthage/Checkouts/Nimble/build/Debug",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/Tests/ContentfulTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
@@ -1384,10 +1413,7 @@
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				DEVELOPMENT_TEAM = RWJ5E97L7R;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/tvOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/Tests/ContentfulTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.ContentfulTests-tvOS";
@@ -1409,7 +1435,7 @@
 				DEVELOPMENT_TEAM = RWJ5E97L7R;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+					"$(BUILD_DIR)/Release-$(PLATFORM_NAME)",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Tests/ContentfulTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1430,10 +1456,7 @@
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				DEVELOPMENT_TEAM = RWJ5E97L7R;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/tvOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/Tests/ContentfulTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.ContentfulTests-tvOS";
@@ -1570,10 +1593,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_macOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1602,10 +1622,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_macOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1738,7 +1755,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(BUILD_DIR)/Release-$(PLATFORM_NAME)",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1766,7 +1786,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(BUILD_DIR)/Release-$(PLATFORM_NAME)",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1797,7 +1820,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
+					"$(BUILD_DIR)/Release-$(PLATFORM_NAME)",
 				);
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_macOS.plist";
@@ -1855,6 +1878,7 @@
 				EDA6907E1F43185200581FC6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EDA6908C1F43186600581FC6 /* Build configuration list for PBXNativeTarget "ContentfulTests_tvOS" */ = {
 			isa = XCConfigurationList;
@@ -1864,6 +1888,7 @@
 				EDA6908F1F43186600581FC6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EDDC07161E3BCE920022F2F9 /* Build configuration list for PBXNativeTarget "Contentful_watchOS" */ = {
 			isa = XCConfigurationList;

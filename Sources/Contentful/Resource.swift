@@ -105,6 +105,127 @@ public class LocalizableResource: Resource {
     }
 }
 
+/// Convenience methods for reading from dictionaries without conditional casts.0
+public extension Dictionary where Key: ExpressibleByStringLiteral {
+
+    /**
+     Extract the String at the specified fieldName.
+
+     - Parameter key: The name of the field to extract the `String` from
+     - Returns: The `String` value, or `nil` if data contained is not convertible to a `String`.
+     */
+    func string(at key: Key) -> String? {
+        return self[key] as? String
+    }
+
+    /** 
+     Extract the array of `String` at the specified fieldName.
+     
+     - Parameter key: The name of the field to extract the `[String]` from
+     - Returns: The `[String]`, or nil if data contained is not convertible to an `[String]`.
+     */
+    func strings(at key: Key) -> [String]? {
+        return self[key] as? [String]
+    }
+
+    /**
+     Extract the `Int` at the specified fieldName.
+
+     - Parameter key: The name of the field to extract the `Int` value from.
+     - Returns: The `Int` value, or `nil` if data contained is not convertible to an `Int`.
+     */
+    func int(at key: Key) -> Int? {
+        return self[key] as? Int
+    }
+
+    /**
+     Extract the `Date` at the specified fieldName.
+
+     - Parameter key: The name of the field to extract the `Date` value from.
+     - Returns: The `Date` value, or `nil` if data contained is not convertible to a `Date`.
+     */
+    func int(at key: Key) -> Date? {
+        let dateString = self[key] as? String
+        let date = dateString?.iso8601StringDate
+        return date
+    }
+
+    /**
+     Extract the `Entry` at the specified fieldName.
+
+     - Parameter key: The name of the field to extract the `Entry` from.
+     - Returns: The `Entry` value, or `nil` if data contained does not have contain a Link referencing an `Entry`.
+     */
+    func linkedEntry(at key: Key) -> Entry? {
+        let link = self[key] as? Link
+        let entry = link?.entry
+        return entry
+    }
+
+    /**
+     Extract the `Asset` at the specified fieldName.
+
+     - Parameter key: The name of the field to extract the `Asset` from.
+     - Returns: The `Asset` value, or `nil` if data contained does not have contain a Link referencing an `Asset`.
+     */
+    func linkedAsset(at key: Key) -> Asset? {
+        let link = self[key] as? Link
+        let asset = link?.asset
+        return asset
+    }
+
+    /**
+     Extract the `[Entry]` at the specified fieldName.
+
+     - Parameter key: The name of the field to extract the `[Entry]` from.
+     - Returns: The `[Entry]` value, or `nil` if data contained does not have contain a Link referencing an `Entry`.
+     */
+    func linkedEntries(at key: Key) -> [Entry]? {
+        let links = self[key] as? [Link]
+        let entries = links?.flatMap { $0.entry }
+        return entries
+    }
+
+    /**
+     Extract the `[Asset]` at the specified fieldName.
+
+     - Parameter key: The name of the field to extract the `[Asset]` from.
+     - Returns: The `[Asset]` value, or `nil` if data contained does not have contain a Link referencing an `[Asset]`.
+     */
+    func linkedAssets(at key: Key) -> [Asset]? {
+        let links = self[key] as? [Link]
+        let assets = links?.flatMap { $0.asset }
+        return assets
+    }
+
+    /**
+     Extract the `CLLocationCoordinate2D` at the specified fieldName.
+
+     - Parameter key: The name of the field to extract the `CLLocationCoordinate2D` value from.
+     - Returns: The `Bool` value, or `nil` if data contained is not convertible to a `Bool`.
+     */
+    func bool(at key: Key) -> Bool? {
+        return self[key] as? Bool
+    }
+
+    /**
+     Extract the `Bool` at the specified fieldName.
+
+     - Parameter key: The name of the field to extract the `Bool` value from.
+     - Returns: The `Bool` value, or `nil` if data contained is not convertible to a `Bool`.
+     */
+    func location(at key: Key) -> CLLocationCoordinate2D? {
+        let coordinateJSON = self[key] as? [String: Any]
+        guard let longitude = coordinateJSON?["lon"] as? Double else { return nil }
+        guard let latitude = coordinateJSON?["lat"] as? Double else { return nil }
+        let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        return location
+    }
+
+}
+
+// MARK: Internal
+
 extension Resource: Hashable {
     public var hashValue: Int {
         return id.hashValue
@@ -125,19 +246,4 @@ func +=<K: Hashable, V> (left: [K: V], right: [K: V]) -> [K: V] {
 
 func +<K: Hashable, V> (left: [K: V], right: [K: V]) -> [K: V] {
     return left += right
-}
-
-public extension Dictionary where Key: ExpressibleByStringLiteral {
-
-    func string(at key: Key) -> String? {
-        return self[key] as? String
-    }
-
-    func strings(at key: Key) -> [String]? {
-        return self[key] as? [String]
-    }
-
-    func int(at key: Key) -> Int? {
-        return self[key] as? Int
-    }
 }
