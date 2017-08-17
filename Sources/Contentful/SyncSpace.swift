@@ -18,7 +18,7 @@ public final class SyncSpace: ImmutableMappable {
     public var deletedAssetIds = [String]()
     public var deletedEntryIds = [String]()
 
-    var hasMorePages: Bool
+    internal var hasMorePages: Bool
 
     /// A token which needs to be present to perform a subsequent synchronization operation
     internal(set) public var syncToken = ""
@@ -45,7 +45,7 @@ public final class SyncSpace: ImmutableMappable {
         self.syncToken = syncToken
     }
 
-    func syncToken(from urlString: String) -> String {
+    internal func syncToken(from urlString: String) -> String {
         guard let components = URLComponents(string: urlString)?.queryItems else { return "" }
         for component in components {
             if let value = component.value, component.name == "sync_token" {

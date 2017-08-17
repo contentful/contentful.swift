@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 /// An Entry represents a typed collection of data in Contentful
 public class Entry: LocalizableResource {
 

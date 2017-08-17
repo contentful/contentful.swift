@@ -10,12 +10,12 @@ import Foundation
 import Interstellar
 
 
-typealias SignalBang<U> = (@escaping (Result<U>) -> Void) -> URLSessionDataTask?
+public typealias SignalBang<U> = (@escaping (Result<U>) -> Void) -> URLSessionDataTask?
 
 // Take a QueryPattern to query on and closure that takes a Result of type U and reutrns a URLSessionData task...
-typealias AsyncDataTask<QueryPattern, U> = (QueryPattern, @escaping (Result<U>) -> Void) -> URLSessionDataTask?
+public typealias AsyncDataTask<QueryPattern, U> = (QueryPattern, @escaping (Result<U>) -> Void) -> URLSessionDataTask?
 
-func toObservable<QueryPattern, ResultType>(parameter: QueryPattern,
+internal func toObservable<QueryPattern, ResultType>(parameter: QueryPattern,
                asyncDataTask: AsyncDataTask<QueryPattern, ResultType>) -> (task: URLSessionDataTask?, observable: Observable<Result<ResultType>>) {
 
     let observable = Observable<Result<ResultType>>()
@@ -27,7 +27,7 @@ func toObservable<QueryPattern, ResultType>(parameter: QueryPattern,
     return (task, observable)
 }
 
-func toObservable<ResultType>(closure: SignalBang<ResultType>) -> (task: URLSessionDataTask?, observable: Observable<Result<ResultType>>) {
+internal func toObservable<ResultType>(closure: SignalBang<ResultType>) -> (task: URLSessionDataTask?, observable: Observable<Result<ResultType>>) {
 
     let observable = Observable<Result<ResultType>>()
     let task = closure { result in

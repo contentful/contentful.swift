@@ -370,7 +370,7 @@ extension Client {
      - Returns: Tuple of the data task and a signal for the `Data` result.
 
      */
-    public func fetchData(for asset: Asset, with imageOptions: [ImageOption] = []) -> Observable<Result<Data>> {
+    @discardableResult public func fetchData(for asset: Asset, with imageOptions: [ImageOption] = []) -> Observable<Result<Data>> {
         do {
             return fetch(url: try asset.url(with: imageOptions)).observable
         } catch let error {
@@ -547,7 +547,7 @@ extension Client {
 
      - Returns: An `Observable` which will be fired when the `SyncSpace` is fully synchronized with Contentful.
      */
-    @discardableResult func nextSync(for syncSpace: SyncSpace,
+    @discardableResult public func nextSync(for syncSpace: SyncSpace,
                                      matching: [String: Any] = [:]) -> Observable<Result<SyncSpace>> {
 
         let observable = Observable<Result<SyncSpace>>()

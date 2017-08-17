@@ -52,12 +52,13 @@ public class Locale: ImmutableMappable {
  */
 public class LocalizationContext: MapContext {
 
-    // An ordered collection of locales representing the fallback chain.
-    internal let locales: [LocaleCode: Locale]
+    /// An ordered collection of locales representing the fallback chain.
+    public  let locales: [LocaleCode: Locale]
 
-    internal let `default`: Locale
+    /// The default locale of the space.
+    public let `default`: Locale
 
-    init(default: Locale, locales: [Locale]) {
+    internal init(default: Locale, locales: [Locale]) {
         self.`default` = `default`
 
         var localeMap = [LocaleCode: Locale]()
