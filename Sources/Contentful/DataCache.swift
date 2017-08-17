@@ -14,14 +14,14 @@ internal class DataCache {
 
     static let cacheKeyDelimiter = "_"
 
-    public static func cacheKey(for resource: EntryModellable) -> String {
+    internal static func cacheKey(for resource: EntryModellable) -> String {
         let delimeter = DataCache.cacheKeyDelimiter
 
         let cacheKey =  resource.id + delimeter + "entry" + delimeter + resource.localeCode
         return cacheKey
     }
 
-    public static func cacheKey(for resource: LocalizableResource) -> String {
+    internal static func cacheKey(for resource: LocalizableResource) -> String {
         let delimeter = DataCache.cacheKeyDelimiter
 
         // Look at the type info.
@@ -40,19 +40,19 @@ internal class DataCache {
         entryCache.setObject(entry, forKey: DataCache.cacheKey(for: entry) as AnyObject)
     }
 
-    func asset(for identifier: String) -> Asset? {
+    internal func asset(for identifier: String) -> Asset? {
         return assetCache.object(forKey: identifier as AnyObject) as? Asset
     }
 
-    func entry(for identifier: String) -> EntryModellable? {
+    internal func entry(for identifier: String) -> EntryModellable? {
         return entryCache.object(forKey: identifier as AnyObject) as? EntryModellable
     }
 
-    func item<T>(for identifier: String) -> T? {
+    internal func item<T>(for identifier: String) -> T? {
         return item(for: identifier) as? T
     }
 
-    func item(for identifier: String) -> AnyObject? {
+    internal func item(for identifier: String) -> AnyObject? {
         var target: AnyObject? = self.asset(for: identifier)
 
         if target == nil {

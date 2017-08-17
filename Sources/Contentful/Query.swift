@@ -15,15 +15,15 @@ import CoreLocation
 /// advantage of `Client` "fetch" methods that take `Query` types instead of constructing query dictionaries on your own.
 public struct QueryParameter {
 
-    static let contentType      = "content_type"
-    static let select           = "select"
-    static let order            = "order"
-    static let limit            = "limit"
-    static let skip             = "skip"
-    static let include          = "include"
-    static let locale           = "locale"
-    static let mimetypeGroup    = "mimetype_group"
-    static let fullTextSearch   = "query"
+    public static let contentType      = "content_type"
+    public static let select           = "select"
+    public static let order            = "order"
+    public static let limit            = "limit"
+    public static let skip             = "skip"
+    public static let include          = "include"
+    public static let locale           = "locale"
+    public static let mimetypeGroup    = "mimetype_group"
+    public static let fullTextSearch   = "query"
 }
 
 /**
@@ -38,13 +38,13 @@ public struct OrderParameter {
         self.propertyName = propertyName
     }
 
-    let propertyName: String
-    let reverse: Bool
+    internal let propertyName: String
+    internal let reverse: Bool
 }
 
 private struct QueryConstants {
-    static let maxLimit: UInt               = 1000
-    static let maxSelectedProperties: UInt  = 99
+    fileprivate static let maxLimit: UInt               = 1000
+    fileprivate static let maxSelectedProperties: UInt  = 99
 }
 
 /// Use types that conform to QueryableRange to perform queries with the four Range operators
@@ -679,7 +679,7 @@ public class Query: ChainableQuery {
      - Parameter id: the identifier of the content type which the query will be performed on.
      - Returns: A reference to the receiving query to enable chaining.
      */
-    @discardableResult func on(contentTypeFor id: ContentTypeId) -> Query {
+    @discardableResult public func on(contentTypeFor id: ContentTypeId) -> Query {
         self.parameters[QueryParameter.contentType] = id
         return self
     }

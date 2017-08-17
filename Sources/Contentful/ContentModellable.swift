@@ -136,7 +136,7 @@ public class ContentModel {
         return relationships
     }
 
-    func resolveRelationships() {
+    fileprivate func resolveRelationships() {
 
         for (entryId, fields) in relationshipsToResolve {
 
@@ -167,7 +167,7 @@ public class ContentModel {
         relationshipsToResolve.removeAll()
     }
 
-    static func cacheKey(for link: Link, with sourceLocaleCode: LocaleCode) -> String {
+    internal static func cacheKey(for link: Link, with sourceLocaleCode: LocaleCode) -> String {
         let linkType: String
         switch link {
         case .asset:
