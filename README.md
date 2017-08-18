@@ -1,5 +1,7 @@
-# contentful.swift
+<a href="https://www.contentful.com" target="_blank"><img src="./Resources/contentful-logo.svg" alt="Contentful" width="680" height="140"/></a>
 
+# contentful.swift
+  
 [![Version](https://img.shields.io/cocoapods/v/Contentful.svg?style=flat)](http://cocoadocs.org/docsets/Contentful)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Swift Package Manager](https://rawgit.com/jlyonsmith/artwork/master/SwiftPackageManager/swiftpackagemanager-compatible.svg)](https://swift.org/package-manager/)
