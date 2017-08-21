@@ -69,7 +69,7 @@ public class LocalizationContext: MapContext {
 
 internal struct Localization {
 
-    // Walk down the fallback chain bla bla bla
+    // Walks down the fallback chain and returns the field values for the specified locale.
     internal static func fields(forLocale locale: Locale?,
                        localizableFields: [FieldName: [LocaleCode: Any]],
                        localizationContext: LocalizationContext) -> [FieldName: Any] {
@@ -102,7 +102,7 @@ internal struct Localization {
         return fields
     }
 
-    // Should localized fields
+    // Normalizes fields to have a value for every locale in the space.
     internal static func fieldsInMultiLocaleFormat(from map: Map,
                                                       selectedLocale: Locale) throws -> [FieldName: [LocaleCode: Any]] {
         let fields: [FieldName: Any] = try map.value("fields")

@@ -616,8 +616,11 @@ class QueryTests: XCTestCase {
             let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
             expect(catsWithHappyCatAsBestFriend.count).to(equal(1))
             expect(catsWithHappyCatAsBestFriend.first?.fields["name"] as? String).to(equal("Nyan Cat"))
-            expect((catsWithHappyCatAsBestFriend.first?.fields["bestFriend"] as? Link)?.entry).toNot(beNil())
-            expect((catsWithHappyCatAsBestFriend.first?.fields["bestFriend"] as? Link)?.entry?.fields["name"] as? String).to(equal("Happy Cat"))
+            if let happyCatsBestFriend = catsWithHappyCatAsBestFriend.first?.fields.linkedEntry(at: "bestFriend") {
+                expect(happyCatsBestFriend.fields.string(at: "name")).to(equal("Happy Cat"))
+            } else {
+                fail("Should be able to get linked entry.")
+            }
             expectation.fulfill()
             }.error { error in
                 fail("Should not throw an error \(error)")

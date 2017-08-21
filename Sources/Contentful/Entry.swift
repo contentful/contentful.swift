@@ -9,7 +9,7 @@
 import Foundation
 
 /// An Entry represents a typed collection of data in Contentful
-public class Entry: LocalizableResource, CustomDebugStringConvertible {
+public class Entry: LocalizableResource {
 
     public var localeCode: String {
         return sys.locale!
@@ -64,12 +64,5 @@ public class Entry: LocalizableResource, CustomDebugStringConvertible {
         }
 
         self.localizableFields = localizableFields
-    }
-
-    // MARK: <CustomDebugStringConvertible>
-
-    public var debugDescription: String {
-        let description = "Entry(sys: \(sys),\nfields: \(fields.debugDescription))"
-        return description
     }
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='macos' display-mode='raw'>
+    <pages>
+        <page name='Introduction'/>
+        <page name='Working with Entries'/>
+        <page name='Working with Assets'/>
+        <page name='Search Parameters'/>
+        <page name='Modellabe Protocols'/>
+    </pages>
+</playground>
