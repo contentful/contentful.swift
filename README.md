@@ -1,4 +1,4 @@
-![Contentful](./Resources/contentful-logo.png)
+<a href="https://www.contentful.com" target="_blank"><img src="./Resources/contentful-logo.svg" alt="Contentful" width="680" height="140"/></a>
 
 # contentful.swift
   
