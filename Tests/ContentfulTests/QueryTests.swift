@@ -32,7 +32,7 @@ final class Cat: EntryModellable {
         self.id         = entry.id
         self.localeCode = entry.localeCode
 
-        self.name       = entry.fields["name"] as? String
+        self.name       = entry.fields.string(at: "name")
         self.color      = entry.fields["color"] as? String
         self.likes      = entry.fields["likes"] as? [String]
         self.lives      = entry.fields["lives"] as? Int
@@ -633,7 +633,7 @@ class QueryTests: XCTestCase {
         
         let query = AssetQuery(whereMimetypeGroupIs: .image)
         
-        QueryTests.client.fetchAssets(query: query).then { assetsResponse in
+        QueryTests.client.fetchAssets(with: query).then { assetsResponse in
             let assets = assetsResponse.items
             expect(assets.count).to(equal(4))
             expectation.fulfill()
