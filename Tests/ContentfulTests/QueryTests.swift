@@ -32,7 +32,7 @@ final class Cat: EntryModellable {
         self.id         = entry.id
         self.localeCode = entry.localeCode
 
-        self.name       = entry.fields["name"] as? String
+        self.name       = entry.fields.string(at: "name")
         self.color      = entry.fields["color"] as? String
         self.likes      = entry.fields["likes"] as? [String]
         self.lives      = entry.fields["lives"] as? Int
@@ -616,8 +616,11 @@ class QueryTests: XCTestCase {
             let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
             expect(catsWithHappyCatAsBestFriend.count).to(equal(1))
             expect(catsWithHappyCatAsBestFriend.first?.fields["name"] as? String).to(equal("Nyan Cat"))
-            expect((catsWithHappyCatAsBestFriend.first?.fields["bestFriend"] as? Link)?.entry).toNot(beNil())
-            expect((catsWithHappyCatAsBestFriend.first?.fields["bestFriend"] as? Link)?.entry?.fields["name"] as? String).to(equal("Happy Cat"))
+            if let happyCatsBestFriend = catsWithHappyCatAsBestFriend.first?.fields.linkedEntry(at: "bestFriend") {
+                expect(happyCatsBestFriend.fields.string(at: "name")).to(equal("Happy Cat"))
+            } else {
+                fail("Should be able to get linked entry.")
+            }
             expectation.fulfill()
             }.error { error in
                 fail("Should not throw an error \(error)")
@@ -633,7 +636,7 @@ class QueryTests: XCTestCase {
         
         let query = AssetQuery(whereMimetypeGroupIs: .image)
         
-        QueryTests.client.fetchAssets(query: query).then { assetsResponse in
+        QueryTests.client.fetchAssets(with: query).then { assetsResponse in
             let assets = assetsResponse.items
             expect(assets.count).to(equal(4))
             expectation.fulfill()

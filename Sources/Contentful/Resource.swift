@@ -105,7 +105,7 @@ public class LocalizableResource: Resource {
     }
 }
 
-/// Convenience methods for reading from dictionaries without conditional casts.0
+/// Convenience methods for reading from dictionaries without conditional casts.
 public extension Dictionary where Key: ExpressibleByStringLiteral {
 
     /**
@@ -196,6 +196,28 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
         let links = self[key] as? [Link]
         let assets = links?.flatMap { $0.asset }
         return assets
+    }
+
+    /**
+     Extract the linked value of type `T` at the specified fieldName.
+
+     - Parameter key: The name of the field to extract the `T` from.
+     - Returns: The `T` value, or `nil` if data contained does not have contain a Link referencing an `T`.
+     */
+    public func linkedValue<T>(at key: Key) -> T? where T: EntryModellable {
+        let value = self[key] as? T
+        return value
+    }
+
+    /**
+     Extract the linked array of type `[T]` at the specified fieldName.
+
+     - Parameter key: The name of the field to extract the `[T]` from.
+     - Returns: The `[T]` value, or `nil` if data contained does not have contain a Link referencing an `[T]`.
+     */
+    public func linkedValues<T>(at key: Key) -> [T]? where T: EntryModellable {
+        let value = self[key] as? [T]
+        return value
     }
 
     /**

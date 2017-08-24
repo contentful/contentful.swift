@@ -61,7 +61,7 @@ extension Client {
      - Parameter query: The Query object to match results againts.
      - Returns: A tuple of data task and an observable for the resulting array of Assets.
      */
-    @discardableResult public func fetchAssets(query: AssetQuery) -> Observable<Result<ArrayResponse<Asset>>> {
+    @discardableResult public func fetchAssets(with query: AssetQuery) -> Observable<Result<ArrayResponse<Asset>>> {
         let asyncDataTask: AsyncDataTask<AssetQuery, ArrayResponse<Asset>> = fetchAssets(with:then:)
         return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
     }
