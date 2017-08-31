@@ -53,6 +53,18 @@ func fetchMappedEntries(with query: Query) -> Observable<Result<MappedContent>>
 
 the asynchronously returned result will be an instance of `MappedContent` which will contain a dictionary which maps content type identifiers to arrays of `EntryModellable` (types of your own definition) that have been fetched. Note that these features are in beta and the API is subject to change.
 
+## Swift playground
+
+If you'd like to try an interactive demo of the API via a Swift Playground, do the following:
+
+```bash
+git clone --recursive https://github.com/contentful/contentful.swift.git
+cd contentful.swift
+make open
+```
+
+Then build the "Contentful_macOS" scheme, open the playground file and go! Note: make sure the "Render Documentation" button is switched on in the Utilities menu on the right of Xcode, and also open up the console to see the outputs of the calls to `print`.
+
 ## Reference Documentation
 
 For further information about the API, check out the [Content Delivery API Reference Documentation][3].
