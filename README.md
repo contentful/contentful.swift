@@ -69,6 +69,10 @@ Then build the "Contentful_macOS" scheme, open the playground file and go! Note:
 
 For further information about the API, check out the [Content Delivery API Reference Documentation][3].
 
+## Xcode versioning
+
+Unless you're using Swift 2.x, the project is built and unit tested in Travis CI on both Xcode 8.3 and Xcode 9. You should be able to integrate the SDK with either version of Xcode.
+
 ## Swift Versioning
 
 The Contentful Swift SDK requires, at minimum, Swift 2.2 and therefore Xcode 7.3.
