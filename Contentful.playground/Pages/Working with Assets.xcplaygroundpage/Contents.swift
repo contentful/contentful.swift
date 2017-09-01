@@ -2,7 +2,6 @@
 import PlaygroundSupport
 PlaygroundPage.current.needsIndefiniteExecution = true
 import Contentful
-import Interstellar
 import AppKit
 
 /*: In order to execute this playground, please build the "Contentful_macOS" scheme to build the SDK.*/
@@ -19,14 +18,16 @@ client.fetchAssets { (result: Result<ArrayResponse<Asset>>) in
 client.fetchAsset(id: "nyancat") { (result: Result<Asset>) in
     guard let asset = result.value else { return }
 //: Fetching the underlying binary data of an asset is simple.
-    client.fetchData(for: asset).then { data in
+    client.fetchData(for: asset) { result in
+        guard let data = result.value else { return }
         let base64EncodedString = data.base64EncodedString()
         let substring = base64EncodedString.substring(to: base64EncodedString.index(base64EncodedString.startIndex, offsetBy: 8))
         print("The first 8 characters of the base64EncodedString for the data are '" + substring + "'")
     }
 //: Since many assets will be images, there is a short-hand API for them.
 //: On iOS, tvOS, and watchOS the resulting value will be a `UIImage` on success.
-    client.fetchImage(for: asset).then { (image: NSImage) in
+    client.fetchImage(for: asset) { result in
+        guard let image = result.value else { return }
         let imageView = NSImageView(frame: CGRect(x: 0, y: 0, width: 600, height: 600))
         imageView.image = image
         DispatchQueue.main.async {

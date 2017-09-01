@@ -8,7 +8,6 @@
 
 @testable import Contentful
 import XCTest
-import Interstellar
 import Nimble
 import DVR
 

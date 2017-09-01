@@ -2,7 +2,7 @@
 import PlaygroundSupport
 PlaygroundPage.current.needsIndefiniteExecution = true
 import Contentful
-import Interstellar
+
 /*: In order to execute this playground, please build the "Contentful_macOS" scheme to build the SDK.*/
 /*: Sometimes, it is more convenient to work directly with native Swift classes which define the model in our application and use methods which give us back our own types as opposed to `Entry`s. In order to do this, we will define our types to conform to the `EntryModellable` protocol. */
 class Cat: EntryModellable {
@@ -44,7 +44,9 @@ let client = Client(spaceId: "cfexampleapi",
                     contentModel: contentModel)
 //: Now dealing with the same entry as before becomes a lot more natural.
 let query = QueryOn<Cat>(where: "sys.id", .equals("nyancat"))
-client.fetchMappedEntries(with: query).next { (mappedCatsArrayResponse: MappedArrayResponse<Cat>) in
+client.fetchMappedEntries(with: query) { result in
+    guard let mappedCatsArrayResponse = result.value else { return }
+    (mappedCatsArrayResponse: MappedArrayResponse<Cat>) in
     guard let nyanCat = mappedCatsArrayResponse.items.first else { return }
 /*: We can see that we have directly received a `Cat` via the SDK and we can access properties directly without the indirection of the `fields` dictionary that we would normally access data through on `Entry`. */
     guard let name = nyanCat.name else { return }

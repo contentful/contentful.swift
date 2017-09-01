@@ -55,20 +55,21 @@ class AssetTests: XCTestCase {
     func testFetchAllAssetsInSpace() {
         let expectation = self.expectation(description: "Fetch all assets network expectation")
         
-        AssetTests.client.fetchAssets().then { assets in
-            expect(assets.items.count).to(equal(4))
-
-            if let asset = (assets.items.filter { $0.sys.id == "nyancat" }).first {
-                expect(asset.sys.id).to(equal("nyancat"))
-                expect(asset.sys.type).to(equal("Asset"))
-                expect(url(asset).absoluteString).to(equal("https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png"))
-            } else {
-                fail("Could not find asset with id 'nyancat'")
+        AssetTests.client.fetchAssets() { result in
+            switch result {
+            case .success(let assetsArrayResponse):
+                expect(assetsArrayResponse.items.count).to(equal(4))
+                if let asset = (assetsArrayResponse.items.filter { $0.sys.id == "nyancat" }).first {
+                    expect(asset.sys.id).to(equal("nyancat"))
+                    expect(asset.sys.type).to(equal("Asset"))
+                    expect(url(asset).absoluteString).to(equal("https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png"))
+                } else {
+                    fail("Could not find asset with id 'nyancat'")
+                }
+            case .error(let error):
+                fail("\(error)")
             }
-
             expectation.fulfill()
-        }.error {
-            fail("\($0)")
         }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
@@ -76,15 +77,22 @@ class AssetTests: XCTestCase {
     func testFetchImageForAsset() {
         let expectation = self.expectation(description: "Fetch image from asset network expectation")
 
-        AssetTests.client.fetchAsset(id: "nyancat").then { asset in
-            AssetTests.client.fetchImage(for: asset).then { image in
-
-                expect(image.size.width).to(equal(250.0))
-                expect(image.size.height).to(equal(250.0))
+        AssetTests.client.fetchAsset(id: "nyancat") { result in
+            if let asset = result.value {
+                AssetTests.client.fetchImage(for: asset) { imageResult in
+                    switch imageResult {
+                    case .success(let image):
+                        expect(image.size.width).to(equal(250.0))
+                        expect(image.size.height).to(equal(250.0))
+                    case .error(let error):
+                        fail("\(error)")
+                    }
+                    expectation.fulfill()
+                }
+            } else {
+                fail("\(result.error!)")
                 expectation.fulfill()
             }
-        }.error {
-            fail("\($0)")
         }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
@@ -93,12 +101,14 @@ class AssetTests: XCTestCase {
         let expectation = self.expectation(description: "Fetch image from asset network expectation")
 
         // FIXME: We should have a different test expectation as this mimics the one above
-        AssetTests.client.fetchAssets(matching: ["mimetype_group": "image"]).then { assets in
-
-            expect(assets.items.count).to(equal(4))
+        AssetTests.client.fetchAssets(matching: ["mimetype_group": "image"]) { result in
+            switch result {
+            case .success(let assetsArrayResponse):
+               expect(assetsArrayResponse.items.count).to(equal(4))
+            case .error(let error):
+                fail("\(error)")
+            }
             expectation.fulfill()
-        }.error {
-            fail("\($0)")
         }
 
         waitForExpectations(timeout: 10.0, handler: nil)

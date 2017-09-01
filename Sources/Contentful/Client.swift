@@ -8,12 +8,6 @@
 
 import ObjectMapper
 import Foundation
-import Interstellar
-
-
-/// A tuple of data task, enabling the cancellation of http requests, and an `Observable` for the resulting
-/// items that were fetched from the Contentful Content Delivery API.
-public typealias TaskObservable<T> = (task: URLSessionDataTask?, observable: Observable<Result<T>>)
 
 /// The completion callback for an API request with a `Result<T>` containing the requested object of
 /// type `T` on success, or an error if the request was unsuccessful.
@@ -185,11 +179,6 @@ open class Client {
         return task
     }
 
-    internal func fetch(url: URL) ->  (task: URLSessionDataTask?, observable: Observable<Result<Data>>) {
-        let asyncDataTask: AsyncDataTask<URL, Data> = fetch
-        return toObservable(parameter: url, asyncDataTask: asyncDataTask)
-    }
-
     // Returns the rate limit reset.
     fileprivate func readRateLimitHeaderIfPresent(response: URLResponse?) -> Int? {
         if let httpResponse = response as? HTTPURLResponse {
@@ -299,17 +288,6 @@ extension Client {
             completion(result)
         }
     }
-
-    /**
-     Fetch the space this client is constrained to.
-
-     - Returns: A tuple of data task and a signal for the resulting Space.
-     */
-
-    @discardableResult public func fetchSpace() -> Observable<Result<Space>> {
-        let asyncDataTask: SignalBang<Space> = fetchSpace(then:)
-        return toObservable(closure: asyncDataTask).observable
-    }
 }
 
 extension Client {
@@ -326,18 +304,6 @@ extension Client {
     }
 
     /**
-     Fetch a single Asset from Contentful.
-
-     - Parameter id: The identifier of the Asset to be fetched.
-
-     - Returns: A tuple of data task and a signal for the resulting Asset.
-     */
-    @discardableResult public func fetchAsset(id: String) -> Observable<Result<Asset>> {
-        let asyncDataTask: AsyncDataTask<String, Asset> = fetchAsset(id:completion:)
-        return toObservable(parameter: id, asyncDataTask: asyncDataTask).observable
-    }
-
-    /**
      Fetch a collection of Assets from Contentful.
 
      - Parameter matching: An optional list of search parameters the Assets must match.
@@ -351,18 +317,6 @@ extension Client {
     }
 
     /**
-     Fetch a collection of Assets from Contentful.
-
-     - Parameter matching: Optional list of search parameters the Assets must match.
-
-     - Returns: A tuple of data task and a signal for the resulting array of Assets.
-     */
-    @discardableResult public func fetchAssets(matching: [String: Any] = [:]) -> Observable<Result<ArrayResponse<Asset>>> {
-        let asyncDataTask: AsyncDataTask<[String: Any], ArrayResponse<Asset>> = fetchAssets(matching:completion:)
-        return toObservable(parameter: matching, asyncDataTask: asyncDataTask).observable
-    }
-
-    /**
      Fetch the underlying media file as `Data`.
 
      - Parameter asset: The `Asset` which contains the relevant media file.
@@ -370,13 +324,15 @@ extension Client {
      - Returns: Tuple of the data task and a signal for the `Data` result.
 
      */
-    @discardableResult public func fetchData(for asset: Asset, with imageOptions: [ImageOption] = []) -> Observable<Result<Data>> {
+    @discardableResult public func fetchData(for asset: Asset,
+                                             with imageOptions: [ImageOption] = [],
+                                             completion: @escaping ResultsHandler<Data>) -> URLSessionDataTask? {
         do {
-            return fetch(url: try asset.url(with: imageOptions)).observable
+            let task = fetch(url: try asset.url(with: imageOptions), completion: completion)
+            return task
         } catch let error {
-            let observable = Observable<Result<Data>>()
-            observable.update(Result.error(error))
-            return observable
+            completion(Result.error(error))
+            return nil
         }
     }
 }
@@ -396,18 +352,6 @@ extension Client {
     }
 
     /**
-     Fetch a single Content Type from Contentful.
-
-     - Parameter id: The identifier of the Content Type to be fetched.
-
-     - Returns: A tuple of data task and a signal for the resulting Content Type.
-     */
-    @discardableResult public func fetchContentType(id: String) -> Observable<Result<ContentType>> {
-        let asyncDataTask: AsyncDataTask<String, ContentType> = fetchContentType(id:completion:)
-        return toObservable(parameter: id, asyncDataTask: asyncDataTask).observable
-    }
-
-    /**
      Fetch a collection of Content Types from Contentful.
 
      - Parameter matching:   Optional list of search parameters the Content Types must match.
@@ -418,18 +362,6 @@ extension Client {
     @discardableResult public func fetchContentTypes(matching: [String: Any] = [:],
                                                      completion: @escaping ResultsHandler<ArrayResponse<ContentType>>) -> URLSessionDataTask? {
         return fetch(url: URL(forComponent: "content_types", parameters: matching), then: completion)
-    }
-
-    /**
-     Fetch a collection of Content Types from Contentful.
-
-     - Parameter matching: Optional list of search parameters the Content Types must match.
-
-     - Returns: A tuple of data task and a signal for the resulting array of Content Types.
-     */
-    @discardableResult public func fetchContentTypes(matching: [String: Any] = [:]) -> Observable<Result<ArrayResponse<ContentType>>> {
-        let asyncDataTask: AsyncDataTask<[String: Any], ArrayResponse<ContentType>> = fetchContentTypes(matching:completion:)
-        return toObservable(parameter: matching, asyncDataTask: asyncDataTask).observable
     }
 }
 
@@ -445,18 +377,6 @@ extension Client {
     @discardableResult public func fetchEntries(matching: [String: Any] = [:],
                                                 completion: @escaping ResultsHandler<ArrayResponse<Entry>>) -> URLSessionDataTask? {
         return fetch(url: URL(forComponent: "entries", parameters: matching), then: completion)
-    }
-
-    /**
-     Fetch a collection of Entries from Contentful.
-
-     - Parameter matching: Optional list of search parameters the Entries must match.
-
-     - Returns: A tuple of data task and a signal for the resulting array of Entries.
-     */
-    @discardableResult public func fetchEntries(matching: [String: Any] = [:]) ->  Observable<Result<ArrayResponse<Entry>>> {
-        let asyncDataTask = fetchEntries(matching:completion:)
-        return toObservable(parameter: matching, asyncDataTask: asyncDataTask).observable
     }
 
     /**
@@ -481,18 +401,6 @@ extension Client {
         }
 
         return fetchEntries(matching: ["sys.id": id], completion: fetchEntriesCompletion)
-    }
-
-    /**
-     Fetch a single Entry from Contentful.
-
-     - Parameter id: The identifier of the Entry to be fetched.
-
-     - Returns: A tuple of data task and a signal for the resulting Entry.
-     */
-    @discardableResult public func fetchEntry(id: String) ->  Observable<Result<Entry>> {
-        let asyncDataTask: AsyncDataTask<String, Entry> = fetchEntry(id:completion:)
-        return toObservable(parameter: id, asyncDataTask: asyncDataTask).observable
     }
 }
 
@@ -520,41 +428,6 @@ extension Client {
                             completion: completion)
         }
         return sync(matching: parameters, completion: syncCompletion)
-    }
-
-    /**
-     Perform an initial synchronization of the Space this client is constrained to.
-
-     - Parameter matching: Additional options for the synchronization.
-
-     - Returns: A tuple of data task and a signal for the resulting SyncSpace.
-     */
-
-    @discardableResult public func initialSync(matching: [String: Any] = [:]) -> Observable<Result<SyncSpace>> {
-        let asyncDataTask: AsyncDataTask<[String: Any], SyncSpace> = initialSync(matching:completion:)
-        return toObservable(parameter: matching, asyncDataTask: asyncDataTask).observable
-    }
-
-    /**
-     Perform a subsequent synchronization operation, updating this object with
-     the latest content from Contentful.
-
-     Calling this will mutate the instance and also return a reference to itself to the completion
-     handler in order to allow chaining of operations.
-
-     - Parameter syncSpace: the relevant `SyncSpace` to perform the subsequent sync on.
-     - Parameter matching: Additional options for the synchronization
-
-     - Returns: An `Observable` which will be fired when the `SyncSpace` is fully synchronized with Contentful.
-     */
-    @discardableResult public func nextSync(for syncSpace: SyncSpace,
-                                     matching: [String: Any] = [:]) -> Observable<Result<SyncSpace>> {
-
-        let observable = Observable<Result<SyncSpace>>()
-        self.nextSync(for: syncSpace) { result in
-            observable.update(result)
-        }
-        return observable
     }
 
     /**

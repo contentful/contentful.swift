@@ -8,26 +8,28 @@
 
 #if os(macOS)
 import Foundation
-import Interstellar
 import AppKit
 
 extension Client {
     /**
      Fetch the underlying media file as `NSImage`.
 
-     - returns: The signal for the `NSImage` result
+     - returns: A cancellable `URLSessionDataTask?`. Use the completion callback to extrac the `NSImage` result.
      */
-    public func fetchImage(for asset: Asset, with imageOptions: [ImageOption] = []) -> Observable<Result<NSImage>> {
-        return self.fetchData(for: asset, with: imageOptions).flatMap { result -> Observable<Result<NSImage>> in
+    @discardableResult public func fetchImage(for asset: Asset,
+                           with imageOptions: [ImageOption] = [],
+                           completion: @escaping ResultsHandler<NSImage>) -> URLSessionDataTask? {
+        return self.fetchData(for: asset, with: imageOptions) { (result: Result<Data>) in
 
-            let imageResult = result.flatMap { data -> Result<NSImage> in
+            _ = result.map { data in
                 if let image = NSImage(data: data) {
-                    return Result.success(image)
+                    completion(Result.success(image))
+                } else {
+                    completion(Result.error(SDKError.unableToDecodeImageData))
                 }
-                return Result.error(SDKError.unableToDecodeImageData)
             }
-            return Observable<Result<NSImage>>(imageResult)
         }
+
     }
 }
 

@@ -220,9 +220,9 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
     }
 
     /**
-     Extract the `CLLocationCoordinate2D` at the specified fieldName.
+     Extract the `Location` at the specified fieldName.
 
-     - Parameter key: The name of the field to extract the `CLLocationCoordinate2D` value from.
+     - Parameter key: The name of the field to extract the `Location` value from.
      - Returns: The `Bool` value, or `nil` if data contained is not convertible to a `Bool`.
      */
     public func bool(at key: Key) -> Bool? {
