@@ -9,7 +9,6 @@
 
 @testable import Contentful
 import XCTest
-import Interstellar
 import Nimble
 import DVR
 
@@ -48,13 +47,16 @@ class SpaceTests: XCTestCase {
 
         let client = TestClientFactory.testClient(withCassetteNamed: "testFetchSpace")
 
-        client.fetchSpace().then { space in
-            expect(space.id).to(equal("cfexampleapi"))
-            expect(space.type).to(equal("Space"))
-            expect(space.name).to(equal("Contentful Example API"))
-        }
-        .error { fail("\($0)") }
-        .subscribe { _ in
+        client.fetchSpace() { result in
+            switch result  {
+            case .success(let space):
+
+                expect(space.id).to(equal("cfexampleapi"))
+                expect(space.type).to(equal("Space"))
+                expect(space.name).to(equal("Contentful Example API"))
+            case .error(let error):
+                fail("\(error)")
+            }
             networkExpectation.fulfill()
         }
 
@@ -66,11 +68,13 @@ class SpaceTests: XCTestCase {
 
         let client = Client(spaceId: "cfexampleapiadsfadfs", accessToken: "b4c0n73n7fu1")
 
-        client.fetchSpace().then { _ in
-            fail("Should not succeed")
-            networkExpectation.fulfill()
-        }.error { error in
-            XCTAssert(true)
+        client.fetchSpace() { result in
+            switch result {
+            case .success:
+                fail("Should not succeed")
+            case .error:
+                XCTAssert(true)
+            }
             networkExpectation.fulfill()
         }
         waitForExpectations(timeout: 10, handler: nil)
@@ -92,12 +96,14 @@ class PreviewAPITests: XCTestCase {
 
         let networkExpectation = expectation(description: "Client can fetch space with preview API")
 
-        client.fetchSpace().then {
-            expect($0.id).to(equal("cfexampleapi"))
+        client.fetchSpace() { result in
+            switch result {
+            case .success(let space):
+                expect(space.id).to(equal("cfexampleapi"))
+            case .error(let error):
+                fail("\(error)")
+            }
             networkExpectation.fulfill()
-            }.error {
-                fail("\($0)")
-                networkExpectation.fulfill()
         }
         waitForExpectations(timeout: 10, handler: nil)
     }
@@ -116,16 +122,16 @@ class PreviewAPITests: XCTestCase {
 
         let networkExpectation = expectation(description: "Client can't fetch space with wrong token")
 
-        client.fetchSpace().then { _ in
-            fail("expected error not received")
-            networkExpectation.fulfill()
-        }.error {
-            if let error = $0 as? ContentfulError {
-                expect(error.id).to(equal("AccessTokenInvalid"))
-            } else {
+        client.fetchSpace() { result in
+            switch result {
+            case .success:
                 fail("expected error not received")
-            }
+            case .error(let error as ContentfulError):
+                expect(error.id).to(equal("AccessTokenInvalid"))
+            case .error:
+                fail("expected error not received")
 
+            }
             networkExpectation.fulfill()
         }
 

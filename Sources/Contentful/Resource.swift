@@ -8,7 +8,6 @@
 
 import Foundation
 import ObjectMapper
-import CoreLocation
 
 /// Protocol for resources inside Contentful
 public class Resource: ImmutableMappable {
@@ -221,9 +220,9 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
     }
 
     /**
-     Extract the `CLLocationCoordinate2D` at the specified fieldName.
+     Extract the `Location` at the specified fieldName.
 
-     - Parameter key: The name of the field to extract the `CLLocationCoordinate2D` value from.
+     - Parameter key: The name of the field to extract the `Location` value from.
      - Returns: The `Bool` value, or `nil` if data contained is not convertible to a `Bool`.
      */
     public func bool(at key: Key) -> Bool? {
@@ -236,11 +235,11 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
      - Parameter key: The name of the field to extract the `Bool` value from.
      - Returns: The `Bool` value, or `nil` if data contained is not convertible to a `Bool`.
      */
-    public func location(at key: Key) -> CLLocationCoordinate2D? {
+    public func location(at key: Key) -> Location? {
         let coordinateJSON = self[key] as? [String: Any]
         guard let longitude = coordinateJSON?["lon"] as? Double else { return nil }
         guard let latitude = coordinateJSON?["lat"] as? Double else { return nil }
-        let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let location = Location(latitude: latitude, longitude: longitude)
         return location
     }
 

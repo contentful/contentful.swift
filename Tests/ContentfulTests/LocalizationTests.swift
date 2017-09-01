@@ -65,28 +65,31 @@ class LocalizationTests: XCTestCase {
         let expecatation = self.expectation(description: "Entries matching query network expectation")
 
         let matchingDictionary = ["locale": "*", "sys.id": "nyancat"]
-        LocalizationTests.client.fetchEntries(matching: matchingDictionary).then { entriesArrayResponse in
-            let entry = entriesArrayResponse.items.first!
+        LocalizationTests.client.fetchEntries(matching: matchingDictionary) { result in
+            switch result {
+            case .success(let entriesArrayResponse):
 
-            expect(entry.currentlySelectedLocale.code).to(equal("en-US"))
-            expect(entry.sys.id).to(equal("nyancat"))
-            expect(entry.fields["name"] as? String).to(equal("Nyan Cat"))
-            expect(entry.fields["likes"] as? [String]).to(equal(["rainbows", "fish"]))
+                let entry = entriesArrayResponse.items.first!
 
-            // Set new locale.
-            entry.setLocale(withCode: "tlh")
-            expect(entry.currentlySelectedLocale.code).to(equal("tlh"))
+                expect(entry.currentlySelectedLocale.code).to(equal("en-US"))
+                expect(entry.sys.id).to(equal("nyancat"))
+                expect(entry.fields["name"] as? String).to(equal("Nyan Cat"))
+                expect(entry.fields["likes"] as? [String]).to(equal(["rainbows", "fish"]))
 
-            expect(entry.fields["name"] as? String).to(equal("Nyan vIghro'"))
-            // fields with no value for "tlh" should fallback.
-            expect(entry.fields["likes"] as? [String]).to(equal(["rainbows", "fish"]))
+                // Set new locale.
+                entry.setLocale(withCode: "tlh")
+                expect(entry.currentlySelectedLocale.code).to(equal("tlh"))
 
-            expecatation.fulfill()
-        }.error {
-            fail("\($0)")
-            expecatation.fulfill()
+                expect(entry.fields["name"] as? String).to(equal("Nyan vIghro'"))
+                // fields with no value for "tlh" should fallback.
+                expect(entry.fields["likes"] as? [String]).to(equal(["rainbows", "fish"]))
+
+                expecatation.fulfill()
+            case .error(let error):
+                fail("\(error)")
+                expecatation.fulfill()
+            }
         }
-
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 }

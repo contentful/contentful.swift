@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Interstellar
 import ObjectMapper
 
 /// A container for the synchronized state of a Space
