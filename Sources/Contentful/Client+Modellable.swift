@@ -65,7 +65,7 @@ extension Client {
 
      */
     @discardableResult public func fetchMappedEntries<EntryType>(with query: QueryOn<EntryType>,
-        then completion: @escaping ResultsHandler<MappedArrayResponse<EntryType>>) -> URLSessionDataTask? where EntryType: EntryModellable {
+        then completion: @escaping ResultsHandler<MappedArrayResponse<EntryType>>) -> URLSessionDataTask? {
 
         guard let contentModel = self.contentModel else { return nil }
 

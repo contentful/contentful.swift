@@ -259,12 +259,12 @@ public func == (lhs: Resource, rhs: Resource) -> Bool {
 }
 
 
-internal func +=<K: Hashable, V> (left: [K: V], right: [K: V]) -> [K: V] {
+internal func +=<K, V> (left: [K: V], right: [K: V]) -> [K: V] {
     var result = left
     right.forEach { (key, value) in result[key] = value }
     return result
 }
 
-internal func +<K: Hashable, V> (left: [K: V], right: [K: V]) -> [K: V] {
+internal func +<K, V> (left: [K: V], right: [K: V]) -> [K: V] {
     return left += right
 }
