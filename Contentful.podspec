@@ -35,7 +35,7 @@ Pod::Spec.new do |spec|
   spec.tvos.deployment_target    = '9.0'
 
   spec.dependency 'ObjectMapper', '~> 2.2'
-  spec.dependency 'Interstellar', '~> 2.0.0'
+  spec.dependency 'Interstellar', '~> 2.1.0'
 end
 
 
