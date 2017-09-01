@@ -5,8 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 
 ### Merged, but not yet released
 > ~~All recent changes are published~~
-> Fixed
+> #### Changed
+> - **BREAKING:** [Interstellar](https://github.com/JensRavens/Interstellar) has been pruned, and therefore all method that previously returned an `Observable` are no longer part of the SDK.
+> #### Fixed
 > - Ensured all functions and instance members had an explicit protection level set.
+> #### Added
+> - Xcode 8 and 9 are now tested on Travis CI for iOS, macOS, and tvOS in a matrix build. You can now rest easy knowing that if you are developing for one of these platforms, the SDK will work for you!
+> - The Swift playground has been migrated from it's former home to live here, with the main SDK. Instructions have been added to the README. 
 ---
 
 ## Table of contents
