@@ -2,27 +2,13 @@
 import PlaygroundSupport
 PlaygroundPage.current.needsIndefiniteExecution = true
 import Contentful
-import Interstellar
 
 /*: In order to execute this playground, please build the "Contentful_macOS" scheme to build the SDK.*/
 //: As a first step, we again create an instance of `Client` connected to the space of interest.
 let client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1")
 
-/*: You can fetch all entries from a space.
-There are two sets of methods method's for fetching data from Contentful. One set returns an `Observable` from the [Interstellar](https://github.com/JensRavens/Interstellar) framework. */
-let observable = client.fetchEntries()
-//: The signal represents a stream of values over time, you can react to the eventual result of an array of entries:
-observable.next { entriesArrayResponse in
-    let total = entriesArrayResponse.total
-    guard let firstEntry = entriesArrayResponse.items.first else { return }
-    guard let entryName = firstEntry.fields.string(at: "name") else { return }
-    print("The first entry in the response has a 'name' of '\(entryName)' and it is of type '\(firstEntry.sys.contentTypeId!)' ")
-}
-//: and you can also react to errors:
-observable.error { error in
-    print("Oh no, an error: \(error)!")
-}
-//: If you prefer a callback-based API, it is also available and has the added bonus of enabling request cancellation.
+// TODO:
+//: You can fetch all entries from a space with methods prefixed with `fetch` which have a callback-based API. These methods it is also available and has the added bonus of enabling request cancellation.
 let urlTask = client.fetchEntries { result in
     switch result {
     case .success(let entriesArrayResponse):
@@ -38,7 +24,8 @@ let urlTask = client.fetchEntries { result in
  In this case we'll limit our query results to only entries of type 'cat' and sort the results in reverse chronological order.
  */
 let query = try! Query(onContentTypeFor: "cat").order(using: OrderParameter("sys.createdAt", inReverse: true))
-client.fetchEntries(with: query).next { catsArrayResponse in
+client.fetchEntries(with: query) { result in
+    guard let catsArrayResponse = result.value else { return }
     let catNames = catsArrayResponse.items.flatMap { $0.fields["name"] }
     print("All cat names as an array: '\(catNames)'")
 
@@ -64,14 +51,16 @@ client.fetchEntries(with: query).next { catsArrayResponse in
 }
 //: Contentful also supports localization of entries, you can fetch a specific locale using the `Query` type.
 let localeSpecificQuery = Query(where: "sys.id", .equals("nyancat"), for: "tlh")
-client.fetchEntries(with: localeSpecificQuery).next { catsArrayResponse in
+client.fetchEntries(with: localeSpecificQuery) { result in
+    guard let catsArrayResponse = result.value else { return }
     let name = catsArrayResponse.items.first?.fields.string(at: "name") ?? ""
 
     print("The name of the first cat in the 'tlh' locale is '\(name)'")
 }
 //: It is also possible to fetch content for all locales, by specific the "*" locale.
 let wildcardLocaleQuery = Query(where: "sys.id", .equals("nyancat"), for: "*")
-client.fetchEntries(with: wildcardLocaleQuery).next { catsArrayResponse in
+client.fetchEntries(with: wildcardLocaleQuery) { result in
+    guard let catsArrayResponse = result.value else { return }
     var cat = catsArrayResponse.items.first
 
 //: In that case, the fields property will point to values of the currently selected locale.
