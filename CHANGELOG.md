@@ -5,8 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 
 ### Merged, but not yet released
 > ~~All recent changes are published~~
-> Fixed
-> - Ensured all functions and instance members had an explicit protection level set.
+> #### Changed
+> - **BREAKING:** [Interstellar](https://github.com/JensRavens/Interstellar) has been pruned, and therefore all method that previously returned an `Observable` are no longer part of the SDK.
 ---
 
 ## Table of contents
