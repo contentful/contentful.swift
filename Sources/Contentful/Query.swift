@@ -74,8 +74,12 @@ extension Date: QueryableRange {
 
 // TODO: Document
 public struct Location {
-    let latitude: Double
-    let longitude: Double
+    public let latitude: Double
+    public let longitude: Double
+    public init(latitude: Double, longitude: Double) {
+        self.latitude = latitude
+        self.longitude = longitude
+    }
 }
 
 /// Use bounding boxes or bounding circles to perform queries on location-enabled content.
@@ -829,7 +833,7 @@ public final class QueryOn<EntryType>: ChainableQuery where EntryType: EntryMode
                          set on the `Client` instance is used.
      */
     public convenience init<LinkType>(whereLinkAt fieldNameForLink: String, matches filterQuery: FilterQuery<LinkType>? = nil,
-                            for locale: String? = nil) where LinkType: EntryModellable {
+                            for locale: String? = nil) {
         self.init()
 
         self.parameters["fields.\(fieldNameForLink).sys.contentType.sys.id"] = LinkType.contentTypeId

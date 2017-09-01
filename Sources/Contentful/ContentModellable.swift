@@ -84,7 +84,7 @@ public class ContentModel {
         let mirror = Mirror(reflecting: emptyInstance)
 
         let relationshipNames: [String] = mirror.children.flatMap { propertyName, value in
-            let type = type(of: value)
+            let type = Swift.type(of: value)
 
             // Filter out relationship names.
             if type is EntryModellable.Type || type is Asset.Type {
