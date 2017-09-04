@@ -100,7 +100,7 @@ extension Client {
      - Returns: A tuple of data task and an observable for the resulting array of EntryModellable types.
      */
     @discardableResult public func fetchMappedEntries<EntryType>(with query: QueryOn<EntryType>)
-        -> Observable<Result<MappedArrayResponse<EntryType>>> where EntryType: EntryModellable {
+        -> Observable<Result<MappedArrayResponse<EntryType>>> {
 
             let asyncDataTask: AsyncDataTask<QueryOn<EntryType>, MappedArrayResponse<EntryType>> = fetchMappedEntries(with:then:)
             return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable

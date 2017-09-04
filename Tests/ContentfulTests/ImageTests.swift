@@ -12,18 +12,18 @@ import Foundation
 import XCTest
 import DVR
 import Nimble
-import ObjectMapper
 
 class ImageTests: XCTestCase {
 
     let nyanCatAsset: Asset = {
-        // Load nyan cat from "asset.json" file.
-        let spaceMap = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("space"))
-        let space = try! Space(map: spaceMap)
+        let jsonDecoder = Client.jsonDecoderWithoutContext
+        let spaceJSONData = JSONDecodingTests.jsonData("space")
+        let space = try! jsonDecoder.decode(Space.self, from: spaceJSONData)
+        jsonDecoder.userInfo[LocalizableResource.localizationContextKey] = space.localizationContext
 
-        let assetMappingContext = space.localizationContext
-        let map = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("asset"), context: assetMappingContext)
-        let asset = try! Asset(map: map)
+        // Load nyan cat from "asset.json" file.
+        let nyanCatJSONData = JSONDecodingTests.jsonData("asset")
+        let asset = try! jsonDecoder.decode(Asset.self, from: nyanCatJSONData)
         return asset
     }()
 
@@ -267,3 +267,4 @@ class ImageTests: XCTestCase {
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 }
+

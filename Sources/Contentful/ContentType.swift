@@ -7,10 +7,12 @@
 //
 
 import Foundation
-import ObjectMapper
 
 /// A Content Type represents your data model for Entries in a Contentful Space
-public class ContentType: Resource {
+public class ContentType: Resource, Decodable {
+
+    ///  System fields.
+    public let sys: Sys
 
     /// The fields which are part of this Content Type
     public let fields: [Field]
@@ -23,13 +25,14 @@ public class ContentType: Resource {
         return sys.type
     }
 
+    public required init(from decoder: Decoder) throws {
+        let container   = try decoder.container(keyedBy: CodingKeys.self)
+        sys             = try container.decode(Sys.self, forKey: .sys)
+        fields          = try container.decode([Field].self, forKey: .fields)
+        name            = try container.decode(String.self, forKey: .name)
+    }
 
-    // MARK: <ImmutableMappable>
-
-    public required init(map: Map) throws {
-        fields  = try map.value("fields")
-        name    = try map.value("name")
-
-        try super.init(map: map)
+    enum CodingKeys: String, CodingKey {
+        case sys, fields, name
     }
 }
