@@ -7,8 +7,6 @@
 //
 
 import Foundation
-import ObjectMapper
-
 
 public extension String {
 
@@ -27,6 +25,8 @@ public class Asset: LocalizableResource {
 
     /// URL of the media file associated with this asset. Optional for compatibility with `select` operator queries.
     /// Also, If the media file is still being processed, as the final stage of uploading to your space, this property will be nil.
+
+    // TODO: REturn raw URL type with Codable!
     public var urlString: String? {
         guard let urlString = localizedString(path: "file.url") else { return nil }
         let urlStringWithScheme = "https:" + urlString
@@ -45,10 +45,12 @@ public class Asset: LocalizableResource {
 
     /// Metadata describing the file associated with the asset. Optional for compatibility with `select` operator queries.
     public var file: FileMetadata? {
-        return localizedBaseMappable(path: "file")
+        let localizableValue = localizableFields["file"]
+        let value = localizableValue?[currentlySelectedLocale.code] as? FileMetadata
+        return value
     }
 
-    public struct FileMetadata: ImmutableMappable {
+    public struct FileMetadata: Decodable {
 
         /// Original filename of the file.
         public let fileName: String
@@ -57,22 +59,44 @@ public class Asset: LocalizableResource {
         public let contentType: String
 
         /// Details of the file, depending on it's MIME type.
-        public let details: [String: Any]
+        public let details: Details?
 
-        /// The size of the file in bytes.
-        public let size: Int
+        // TODO: Implement custom decoder that appends "https"
+        public let url: URL
 
-        public init(map: Map) throws {
-            self.fileName       = try map.value("fileName")
-            self.contentType    = try map.value("contentType")
-            self.details        = try map.value("details")
-            self.size           = try map.value("details.size")
+        public struct Details: Decodable {
+            /// The size of the file in bytes.
+            public let size: Int
+
+            public let image: Image?
+
+            public struct Image: Decodable {
+                let width: Double
+                let height: Double
+            }
+        }
+        public init(from decoder: Decoder) throws {
+            let container   = try decoder.container(keyedBy: CodingKeys.self)
+            fileName        = try container.decode(String.self, forKey: .fileName)
+            contentType     = try container.decode(String.self, forKey: .contentType)
+            details         = try container.decode(Details.self, forKey: .details)
+            // Decodable handles URL's automatically but we need to prepend the https protocol.
+            let urlString   = try container.decode(String.self, forKey: .url)
+            guard let url = URL(string: "https:" + urlString) else {
+                // TODO:
+                throw SDKError.invalidURL(string: urlString)
+            }
+            self.url = url
+        }
+        private enum CodingKeys: String, CodingKey {
+            case fileName, contentType, url, details
         }
     }
 
     /// The URL for the underlying media file
     public func url() throws -> URL {
-        guard let url = try urlString?.url() else {
+        guard let url = file?.url else {
+            // TODO:
             throw SDKError.invalidURL(string: urlString ?? "No url string is stored for Asset: \(sys.id)")
         }
         return url
@@ -80,22 +104,9 @@ public class Asset: LocalizableResource {
 
     // MARK: Private
 
-    // Helper methods to enable retreiving localized values for fields which are static `Asset`.
-    // i.e. all `Asset` instances have fields named "description", "title" etc.
-    private var map: Map {
-        let map = Map(mappingType: .fromJSON, JSON: fields)
-        return map
-    }
-
     private func localizedString(path: String) -> String? {
-        var value: String?
-        value <- map[path]
-        return value
-    }
-
-    private func localizedBaseMappable<MappableType: BaseMappable>(path: String) -> MappableType? {
-        var value: MappableType?
-        value <- map[path]
+        let localizableValue = localizableFields[path]
+        let value = localizableValue?[currentlySelectedLocale.code] as? String
         return value
     }
 }

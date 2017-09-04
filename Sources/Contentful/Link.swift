@@ -7,17 +7,6 @@
 //
 
 import Foundation
-import ObjectMapper
-
-public struct LinkSys {
-
-    /// The identifier of the linked resource
-    public let id: String
-
-    /// The type of the linked resource: either "Entry" or "Asset".
-    public let linkType: String
-}
-
 
 /** 
  A representation of Linked Resources that a field may point to in your content model.
@@ -27,6 +16,19 @@ public struct LinkSys {
 */
 public enum Link {
 
+    public struct Sys: Decodable {
+
+        /// The identifier of the linked resource
+        public let id: String
+
+        /// The type of the linked resource: either "Entry" or "Asset".
+        public let linkType: String
+
+        // TODO:
+        public let type: String
+    }
+
+
     /// The Link points to an `Asset`
     case asset(Asset)
 
@@ -34,7 +36,7 @@ public enum Link {
     case entry(Entry)
 
     /// The Link is unresolved, and therefore contains a dictionary of metadata describing the linked resource.
-    case unresolved(LinkSys)
+    case unresolved(Link.Sys)
 
     /// The unique identifier of the linked asset or entry
     public var id: String {
@@ -68,16 +70,19 @@ public enum Link {
 
         // Linked objects are stored as a dictionary with "type": "Link",
         // value for "linkType" can be "Asset", "Entry", "Space", "ContentType".
-        if let linkJSON = fieldValue as? [String: AnyObject],
-            let sys = linkJSON["sys"] as? [String: AnyObject],
+        if let linkJSON = fieldValue as? [String: Any],
+            let sys = linkJSON["sys"] as? [String: Any],
             let id = sys["id"] as? String,
-            let linkType = sys["linkType"] as? String {
-            return Link.unresolved(LinkSys(id: id, linkType: linkType))
+            let linkType = sys["linkType"] as? String,
+            let type = sys["type"] as? String {
+            // TODO: Use a dictionary decoder
+            return Link.unresolved(Link.Sys(id: id, linkType: linkType, type: type))
         }
+
         return nil
     }
 
-    private var sys: LinkSys {
+    private var sys: Link.Sys {
         switch self {
         case .unresolved(let sys):
             return sys

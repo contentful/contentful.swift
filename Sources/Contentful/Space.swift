@@ -7,11 +7,12 @@
 //
 
 import Foundation
-import ObjectMapper
 
 
 /// A Space represents a collection of Content Types, Assets and Entries in Contentful
-public class Space: Resource {
+public class Space: Resource, Decodable {
+
+    public let sys: Sys
 
     /// Available Locales for this Space
     public let locales: [Locale]
@@ -29,15 +30,22 @@ public class Space: Resource {
 
     // MARK: <ImmutableMappable>
 
-    public required init(map: Map) throws {
-        name        = try map.value("name")
-        locales     = try map.value("locales")
+    public required init(from decoder: Decoder) throws {
+        let container       = try decoder.container(keyedBy: CodingKeys.self)
+        sys                 = try container.decode(Sys.self, forKey: .sys)
+        name                = try container.decode(String.self, forKey: .name)
+        locales             = try container.decode([Locale].self, forKey: .locales)
 
         guard let defaultLocale = locales.filter({ $0.isDefault }).first else {
             throw SDKError.localeHandlingError(message: "Locale with default == true not found in Space!")
         }
         localizationContext = LocalizationContext(default: defaultLocale, locales: locales)
 
-        try super.init(map: map)
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case sys
+        case name
+        case locales
     }
 }

@@ -21,7 +21,8 @@ disabled_rules:
 - vertical_parameter_alignment
 # ignoring since some file that exists on travis, but not locally is throwing this as a compile error
 # Also, swiftlint says it will be removed in future versions
-- identifier_name 
+- identifier_name
+- nesting # Disable warnings about structures nested more than 1 level deep.
 
 # Parameterized
 line_length: 

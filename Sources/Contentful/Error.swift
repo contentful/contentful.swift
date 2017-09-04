@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import ObjectMapper
 
 /// Possible errors being thrown by the SDK
 public enum SDKError: Error {
@@ -100,7 +99,15 @@ public enum QueryError: Error {
 
 
 /// Information regarding an error received from Contentful
-public class ContentfulError: Mappable, Error {
+public class ContentfulError: Decodable, Error {
+
+    // TODO: Document
+    public struct Sys: Decodable {
+        let id: String?
+        let type: String?
+    }
+
+    public let sys: Sys
 
     /// Human readable error message.
     public private(set) var message: String?
@@ -112,27 +119,35 @@ public class ContentfulError: Mappable, Error {
     // Rather than throw an error which will trigger the Swift error breakpoint in Xcode, 
     // we want to use failable ObjectMapper initializers.
 
-    public private(set) var id: String?
-
-    public private(set) var type: String?
-
-    // MARK: <Mappable>
-
-    public required init?(map: Map) {
-        mapping(map: map)
-
-        // An error must have these things.
-        guard message != nil && requestId != nil else {
-            return nil
-        }
+    public var id: String? {
+        return sys.id
     }
 
-    // Required by ObjectMapper.BaseMappable
-    public func mapping(map: Map) {
-        message     <- map["message"]
-        requestId   <- map["requestId"]
-        id          <- map["sys.id"]
-        type        <- map["sys.type"]
+    public var type: String? {
+        return sys.type
+    }
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        sys = try container.decode(Sys.self, forKey: .sys)
+        message = try container.decodeIfPresent(String.self, forKey: .message)
+        requestId = try container.decodeIfPresent(String.self, forKey: .requestId)
+
+    }
+
+    static func error(with decoder: JSONDecoder, and data: Data) -> ContentfulError? {
+        if let error = try? decoder.decode(ContentfulError.self, from: data) {
+            // An error must have these things.
+            guard error.message != nil && error.requestId != nil else {
+                return nil
+            }
+            return error
+        }
+        return nil
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case sys, message, requestId
     }
 }
 

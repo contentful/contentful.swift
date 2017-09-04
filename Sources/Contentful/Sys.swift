@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import ObjectMapper
 
-public struct Sys: ImmutableMappable {
+public struct Sys {
 
     /// The unique id.
     public let id: String
@@ -24,28 +23,36 @@ public struct Sys: ImmutableMappable {
     public let updatedAt: Date?
 
     /// Currently selected locale
-    public var locale: String?
+    public var locale: LocaleCode? // Not present when hitting /sync or using "*" wildcard locale in request.
 
-    /// The identifier for the ContentType. 
-    public let contentTypeId: String?
+    /// The identifier for the ContentType, if the Resource is an `Entry`.
+    public var contentTypeId: String? {
+        return contentTypeInfo?["sys"]?.id
+    }
 
+    // Because we have a root key of "sys" we will use a dictionary.
+    private let contentTypeInfo: [String: Link.Sys]? // Not present on `Asset` or `ContentType`
+
+    // TODO: Document.
     public let revision: Int?
+}
 
-    // MARK: <ImmutableMappable>
+extension Sys: Decodable {
 
-    public init(map: Map) throws {
-        // Properties present in all sys structures.
-        id              = try map.value("id")
-        type            = try map.value("type")
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        // Optional properties.
-        locale          = try? map.value("locale")
-        contentTypeId   = try? map.value("contentType.sys.id")
-        revision        = try? map.value("revision")
+        id              = try container.decode(String.self, forKey: .id)
+        type            = try container.decode(String.self, forKey: .type)
+        createdAt       = try container.decodeIfPresent(Date.self, forKey: .createdAt)
+        updatedAt       = try container.decodeIfPresent(Date.self, forKey: .updatedAt)
+        locale          = try container.decodeIfPresent(String.self, forKey: .locale)
+        revision        = try container.decodeIfPresent(Int.self, forKey: .revision)
+        contentTypeInfo = try container.decodeIfPresent([String: Link.Sys].self, forKey: .contentTypeId)
+    }
 
-        // Dates
-        let iso8601DateTransform = SysISO8601DateTransform()
-        createdAt       = try? map.value("createdAt", using: iso8601DateTransform)
-        updatedAt       = try? map.value("updatedAt", using: iso8601DateTransform)
+    private enum CodingKeys: String, CodingKey {
+        case id, type, createdAt, updatedAt, locale, revision
+        case contentTypeId = "contentType"
     }
 }

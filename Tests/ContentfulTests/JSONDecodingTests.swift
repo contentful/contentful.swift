@@ -10,38 +10,46 @@
 import Foundation
 import XCTest
 import Nimble
-import ObjectMapper
 
 
-class ObjectMappingTests: XCTestCase {
+class JSONDecodingTests: XCTestCase {
 
-    static func jsonData(_ fileName: String) -> [String: Any] {
+    static func jsonData(_ fileName: String) -> Data {
         let path = NSString(string: "Data").appendingPathComponent(fileName)
-        let bundle = Bundle(for: ObjectMappingTests.self)
+        let bundle = Bundle(for: JSONDecodingTests.self)
         let urlPath = bundle.path(forResource: path, ofType: "json")!
         let data = try! Data(contentsOf: URL(fileURLWithPath: urlPath))
-        return try! JSONSerialization.jsonObject(with: data, options: []) as! [String : Any]
+        return data
     }
 
     func testDecodingWithoutLocalizationContextThrows() {
         do {
-            let map = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("asset"))
-            let _ = try Asset(map: map)
+            let assetData = JSONDecodingTests.jsonData("asset")
+            let jsonDecoder = Client.jsonDecoderWithoutContext
+            // Reset userInfo state since it's a static var that exists through the test cycle.
+            jsonDecoder.userInfo = [CodingUserInfoKey: Any]()
+            let _ = try jsonDecoder.decode(Asset.self, from: assetData)
             fail("Mapping without a localizatoin context should throw an error")
+        } catch let error as SDKError  {
+            switch error {
+            case .localeHandlingError:
+                XCTAssert(true)
+            default: fail("Wrong error thrown")
+            }
         } catch _ {
-            XCTAssert(true)
+            fail("Wrong error thrown")
         }
     }
 
     func testDecodeAsset() {
         do {
-            // We must have a space first to pass in locale information.
-            let spaceMap = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("space"))
-            let space = try Space(map: spaceMap)
+            let jsonDecoder = Client.jsonDecoderWithoutContext
+            let spaceJSONData = JSONDecodingTests.jsonData("space")
+            let space = try! jsonDecoder.decode(Space.self, from: spaceJSONData)
+            jsonDecoder.userInfo[LocalizableResource.localizationContextKey] = space.localizationContext
 
-            let localesContext = space.localizationContext
-            let map = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("asset"), context: localesContext)
-            let asset = try Asset(map: map)
+            let assetJSONData = JSONDecodingTests.jsonData("asset")
+            let asset = try jsonDecoder.decode(Asset.self, from: assetJSONData)
 
             expect(asset.sys.id).to(equal("nyancat"))
             expect(asset.sys.type).to(equal("Asset"))
@@ -54,8 +62,9 @@ class ObjectMappingTests: XCTestCase {
 
     func testDecodeSpaces() {
         do {
-            let map = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("space"))
-            let space = try Space(map: map)
+            let jsonDecoder = Client.jsonDecoderWithoutContext
+            let spaceJSONData = JSONDecodingTests.jsonData("space")
+            let space = try jsonDecoder.decode(Space.self, from: spaceJSONData)
 
             expect(space.sys.id).to(equal("cfexampleapi"))
             expect(space.name).to(equal("Contentful Example API"))
@@ -71,13 +80,14 @@ class ObjectMappingTests: XCTestCase {
     func testDecodeLocalizedEntries() {
         do {
             // We must have a space first to pass in locale information.
-            let spaceMap = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("space"))
-            let space = try Space(map: spaceMap)
 
-            let localesContext = space.localizationContext
-            let map = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("localized"), context: localesContext)
+            let jsonDecoder = Client.jsonDecoderWithoutContext
+            let spaceJSONData = JSONDecodingTests.jsonData("space")
+            let space = try! jsonDecoder.decode(Space.self, from: spaceJSONData)
+            jsonDecoder.userInfo[LocalizableResource.localizationContextKey] = space.localizationContext
 
-            let entry = try Entry(map: map)
+            let localizedEntryJSONData = JSONDecodingTests.jsonData("localized")
+            let entry = try jsonDecoder.decode(Entry.self, from: localizedEntryJSONData)
 
             expect(entry.sys.id).to(equal("nyancat"))
             expect(entry.fields["name"] as? String).to(equal("Nyan Cat"))
@@ -92,14 +102,14 @@ class ObjectMappingTests: XCTestCase {
 
     func testDecodeSyncResponses() {
         do {
-            // We must have a space first to pass in locale information.
-            let spaceMap = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("space"))
-            let space = try Space(map: spaceMap)
 
-            let localesContext = space.localizationContext
+            let jsonDecoder = Client.jsonDecoderWithoutContext
+            let spaceJSONData = JSONDecodingTests.jsonData("space")
+            let space = try! jsonDecoder.decode(Space.self, from: spaceJSONData)
+            jsonDecoder.userInfo[LocalizableResource.localizationContextKey] = space.localizationContext
 
-            let map = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("sync"), context: localesContext)
-            let syncSpace = try SyncSpace(map: map)
+            let syncSpaceJSONData = JSONDecodingTests.jsonData("sync")
+            let syncSpace = try jsonDecoder.decode(SyncSpace.self, from: syncSpaceJSONData)
 
             expect(syncSpace.assets.count).to(equal(4))
             expect(syncSpace.entries.count).to(equal(11))
@@ -109,11 +119,11 @@ class ObjectMappingTests: XCTestCase {
         }
     }
 
-    func testDecodeSyncResponsesWithdeletedAssetIds() {
+    func testDecodeSyncResponsesWithDeletedAssetIds() {
         do {
-            let map = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("deleted-asset"))
-
-            let syncSpace = try SyncSpace(map: map)
+            let jsonDecoder = Client.jsonDecoderWithoutContext
+            let syncDeletedAssetData = JSONDecodingTests.jsonData("deleted-asset")
+            let syncSpace = try jsonDecoder.decode(SyncSpace.self, from: syncDeletedAssetData)
 
             expect(syncSpace.assets.count).to(equal(0))
             expect(syncSpace.entries.count).to(equal(0))
@@ -127,8 +137,9 @@ class ObjectMappingTests: XCTestCase {
     func testDecodeSyncResponsesWithdeletedEntryIds() {
         do {
 
-            let map = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("deleted"))
-            let syncSpace = try SyncSpace(map: map)
+            let jsonDecoder = Client.jsonDecoderWithoutContext
+            let syncDeletedEntryData = JSONDecodingTests.jsonData("deleted")
+            let syncSpace = try jsonDecoder.decode(SyncSpace.self, from: syncDeletedEntryData)
 
             expect(syncSpace.assets.count).to(equal(0))
             expect(syncSpace.entries.count).to(equal(0))
@@ -138,10 +149,5 @@ class ObjectMappingTests: XCTestCase {
             fail("Decoding sync responses with deleted Entries should not throw an error")
         }
     }
-
-    // MARK: Field parsing tests
-
-    func testParseFieldsWithConvenienceMethods() {
-        
-    }
 }
+

@@ -7,31 +7,29 @@
 //
 
 import Foundation
-import ObjectMapper
 
 /// Protocol for resources inside Contentful
-public class Resource: ImmutableMappable {
+public protocol Resource {
 
     /// System fields
-    public let sys: Sys
+    var sys: Sys { get }
+}
 
+extension Resource {
     /// The unique identifier of this Resource
     public var id: String {
         return sys.id
     }
-
-    internal init(sys: Sys) {
-        self.sys = sys
-    }
-
-    // MARK: - <ImmutableMappable>
-
-    public required init(map: Map) throws {
-        sys = try map.value("sys")
-    }
 }
 
-class DeletedResource: Resource {}
+class DeletedResource: Resource, Decodable {
+
+    let sys: Sys
+
+    init(sys: Sys) {
+        self.sys = sys
+    }
+}
 
 /**
  LocalizableResource
@@ -42,7 +40,10 @@ class DeletedResource: Resource {}
  all locales. This class gives an interface to specify which locale should be used when fetching data
  from `Resource` instances that are in memory.
  */
-public class LocalizableResource: Resource {
+public class LocalizableResource: Resource, Decodable {
+
+    /// System fields
+    public let sys: Sys
 
     /// Currently selected locale to use when reading data from the `fields` dictionary.
     public var currentlySelectedLocale: Locale
@@ -74,35 +75,43 @@ public class LocalizableResource: Resource {
     // Context used for handling locales during decoding of `Asset` and `Entry` instances.
     internal let localizationContext: LocalizationContext
 
+    // TODO: Make sure implicit unwrapping doesn't do bad things.
+    static let localizationContextKey = CodingUserInfoKey(rawValue: "localizationContext")!
 
-    // MARK: <ImmutableMappable>
+    public required init(from decoder: Decoder) throws {
 
-    public required init(map: Map) throws {
+        let container       = try decoder.container(keyedBy: CodingKeys.self)
+        let sys             = try container.decode(Sys.self, forKey: .sys)
 
-        // Optional propery, not returned when hitting `/sync`.
-        var localeCodeSelectedAtAPILevel: LocaleCode?
-        localeCodeSelectedAtAPILevel <- map["sys.locale"]
-
-        guard let localizationContext = map.context as? LocalizationContext else {
-            // Should never get here; but just in case, let's inform the user what the deal is.
-            throw SDKError.localeHandlingError(message: "SDK failed to find the necessary LocalizationContext"
-            + "necessary to properly map API responses to internal format.")
+        guard let localizationContext = decoder.userInfo[LocalizableResource.localizationContextKey] as? LocalizationContext else {
+            throw SDKError.localeHandlingError(message: """
+                SDK failed to find the necessary LocalizationContext
+                necessary to properly map API responses to internal format.
+                """
+            )
         }
 
         self.localizationContext = localizationContext
-
         // Get currently selected locale.
-        if let localeCode = localeCodeSelectedAtAPILevel, let locale = localizationContext.locales[localeCode] {
-            self.currentlySelectedLocale = locale
+        if let localeCode = sys.locale, let locale = localizationContext.locales[localeCode] {
+            currentlySelectedLocale = locale
         } else {
-            self.currentlySelectedLocale = localizationContext.default
+            currentlySelectedLocale = localizationContext.default
         }
+        self.sys = sys
 
-        self.localizableFields = try Localization.fieldsInMultiLocaleFormat(from: map, selectedLocale: currentlySelectedLocale)
+        let fieldsDictionary = try container.decode(Dictionary<FieldName, Any>.self, forKey: .fields)
+        localizableFields = try Localization.fieldsInMultiLocaleFormat(from: fieldsDictionary,
+                                                                       selectedLocale: currentlySelectedLocale,
+                                                                       wasSelectedOnAPILevel: sys.locale != nil)
+    }
 
-        try super.init(map: map)
+    private enum CodingKeys: String, CodingKey {
+        case sys
+        case fields
     }
 }
+
 
 /// Convenience methods for reading from dictionaries without conditional casts.
 public extension Dictionary where Key: ExpressibleByStringLiteral {
@@ -247,14 +256,14 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
 
 // MARK: Internal
 
-extension Resource: Hashable {
+extension LocalizableResource: Hashable {
     public var hashValue: Int {
         return id.hashValue
     }
 }
 
-extension Resource: Equatable {}
-public func == (lhs: Resource, rhs: Resource) -> Bool {
+extension LocalizableResource: Equatable {}
+public func == (lhs: LocalizableResource, rhs: LocalizableResource) -> Bool {
     return lhs.id == rhs.id && lhs.sys.updatedAt == rhs.sys.updatedAt
 }
 

@@ -47,7 +47,7 @@ public class Entry: LocalizableResource {
 
                 if let dictionaryRepresentationArray = fieldValueForLocaleCode as? [[String: Any]] {
 
-                    let mixedLinks = dictionaryRepresentationArray.flatMap({ Link.link(from: $0) })
+                    let mixedLinks = dictionaryRepresentationArray.flatMap { Link.link(from: $0) }
 
                     // The conversion from dictionary representation should only ever happen once
                     let alreadyResolvedLinks = mixedLinks.filter { $0.isResolved == true }

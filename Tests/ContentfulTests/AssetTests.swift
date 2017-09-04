@@ -94,7 +94,7 @@ class AssetTests: XCTestCase {
                 expectation.fulfill()
             }
         }
-        waitForExpectations(timeout: 10.0, handler: nil)
+        waitForExpectations(timeout: 100.0, handler: nil)
     }
 
     func testFilterAssetsByMIMETypeGroup() {

@@ -6,7 +6,6 @@
 //  Copyright © 2015 Contentful GmbH. All rights reserved.
 //
 
-import ObjectMapper
 import Foundation
 
 /// The completion callback for an API request with a `Result<T>` containing the requested object of
@@ -119,8 +118,8 @@ open class Client {
         return nil
     }
 
-    internal func fetch<MappableType: ImmutableMappable>(url: URL?,
-                        then completion: @escaping ResultsHandler<MappableType>) -> URLSessionDataTask? {
+    internal func fetch<DecodableType: Decodable>(url: URL?,
+                        then completion: @escaping ResultsHandler<DecodableType>) -> URLSessionDataTask? {
 
         guard let url = url else {
             completion(Result.error(SDKError.invalidURL(string: "")))
@@ -212,15 +211,10 @@ open class Client {
 
 
     fileprivate func handleRateLimitJSON(_ data: Data, timeUntilLimitReset: Int, _ completion: ResultsHandler<RateLimitError>) {
-        do {
-            guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
-                let error = SDKError.unparseableJSON(data: data, errorMessage: "SDK unable to parse RateLimitError payload")
-                completion(Result.error(error))
-                return
-            }
 
-            let map = Map(mappingType: .fromJSON, JSON: json)
-            guard let rateLimitError = RateLimitError(map: map) else {
+            let jsonDecoder = JSONDecoder()
+
+            guard let rateLimitError = try? jsonDecoder.decode(RateLimitError.self, from: data) else {
                 completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "SDK unable to parse RateLimitError payload")))
                 return
             }
@@ -228,37 +222,38 @@ open class Client {
 
             // In this case, .success means that a RateLimitError was successfully initialized.
             completion(Result.success(rateLimitError))
-        } catch _ {
-            completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "SDK unable to parse RateLimitError payload")))
-        }
     }
 
-    fileprivate func handleJSON<MappableType: ImmutableMappable>(_ data: Data, _ completion: ResultsHandler<MappableType>) {
-        do {
-            guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
-                let error = SDKError.unparseableJSON(data: data, errorMessage: "Foundation.JSONSerialization failed")
-                completion(Result.error(error))
-                return
-            }
+    internal static var jsonDecoderWithoutContext: JSONDecoder = {
+        let jsonDecoder = JSONDecoder()
+        jsonDecoder.dateDecodingStrategy = .formatted(Date.Formatter.iso8601)
+        return jsonDecoder
+    }()
 
+    fileprivate func handleJSON<DecodableType: Decodable>(_ data: Data, _ completion: ResultsHandler<DecodableType>) {
+        do {
             let localizationContext = space?.localizationContext
-            let map = Map(mappingType: .fromJSON, JSON: json, context: localizationContext)
+
+            let jsonDecoder = Client.jsonDecoderWithoutContext // JSONDecoder()
+            jsonDecoder.userInfo[LocalizableResource.localizationContextKey] = localizationContext
 
             // Use `Mappable` failable initialzer to optional rather throwing `ImmutableMappable` initializer
             // because failure to find an error in the JSON should error should not throw an error that JSON is not parseable.
-            if let apiError = ContentfulError(map: map) {
+
+            if let apiError = ContentfulError.error(with: jsonDecoder, and: data) {
                 completion(Result.error(apiError))
                 return
             }
 
-            // Locales will be injected via the map.property option.
-            let decodedObject = try MappableType(map: map)
+            // Locales will be injected via the JSONDecoder's userInfo property.
+            let decodedObject = try jsonDecoder.decode(DecodableType.self, from: data)
             completion(Result.success(decodedObject))
 
-        } catch let error as MapError {
-            completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "\(error)")))
+        } catch let error as DecodingError {
+            // TODO:
+            completion(Result.error(SDKError.unparseableJSON(data: data, errorMessage: "\(error)")))
         } catch _ {
-            completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "")))
+            completion(Result.error(SDKError.unparseableJSON(data: data, errorMessage: "")))
         }
     }
 }
