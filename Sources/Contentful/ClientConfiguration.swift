@@ -26,6 +26,15 @@ public protocol Integration {
     var version: String { get }
 }
 
+/**
+ Conform to this protocol to directly receive raw JSON `Data` from the Contentful API via delegate methods.
+ */
+public protocol DataDelegate {
+
+    /// Implement this method to directly handle data from the server and bypass the SDK's object mapping system.
+    func handleDataFetchedAtURL(_ data: Data, url: URL)
+}
+
 /// ClientConfiguration parameters for a client instance
 public struct ClientConfiguration {
 
@@ -39,6 +48,8 @@ public struct ClientConfiguration {
     public var secure = true
     /// The server to use for performing requests, defaults to `cdn.contentful.com`
     public var server = Defaults.cdaHost
+    /// The delegate which will receive messages containing the raw JSON data fetched at a specified URL.
+    public var dataDelegate: DataDelegate?
 
     /// Computed version of the user agent, including OS name and version
     internal func userAgentString(with integration: Integration?) -> String {
