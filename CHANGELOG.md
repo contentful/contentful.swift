@@ -12,13 +12,25 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 ## Table of contents
 
 #### 0.x Releases
-- `0.9.x` Releases - [0.9.0](#090) | [0.9.1](#091) | [0.9.2](#092)
+- `0.9.x` Releases - [0.9.0](#090) | [0.9.1](#091) | [0.9.2](#092) | [0.9.3](#093)
 - `0.8.x` Releases - [0.8.0](#080)
 - `0.7.x` Releases - [0.7.0](#070) | [0.7.1](#071) | [0.7.2](#072) | [0.7.3](#073) | [0.7.4](#074) | [0.7.5](#075) | [0.7.6](#076) | [0.7.7](#077)
 - `0.6.x` Releases - [0.6.0](#060) | [0.6.1](#061)
 - `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041)
 - `0.3.x` Releases - [0.3.0](#030) | [0.3.1](#031)
+
+---
+
+## [`0.9.3`](https://github.com/contentful/contentful.swift/releases/tag/0.9.3)
+Released on 2017-09-08
+
+#### Fixed
+- Ensured all functions and instance members had an explicit protection level set.
+#### Added
+- Xcode 8 and 9 are now tested on Travis CI for iOS, macOS, and tvOS in a matrix build. You can now rest easy knowing that if you are developing for one of these platforms, the SDK will work for you!
+- The Swift playground has been migrated from it's former home to live here, with the main SDK. Instructions have been added to the README.
+- `DataDelegate` protocol to receive callbacks from SDK which contain raw `Data` from fetches to the API.
 
 ---
 
