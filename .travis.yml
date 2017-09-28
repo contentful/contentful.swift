@@ -4,13 +4,6 @@ rvm:
 cache: bundler
 matrix:
   include:
-    # Xcode8
-    - osx_image: xcode8.3
-      env: SDK=iphonesimulator PLATFORM="iOS Simulator,name=iPhone 6s,OS=10.3.1" SCHEME=Contentful_iOS
-    - osx_image: xcode8.3
-      env: SDK=appletvsimulator PLATFORM="tvOS Simulator,name=Apple TV 1080p,OS=10.2" SCHEME=Contentful_tvOS
-    - osx_image: xcode8.3           
-      env: SDK=macosx PLATFORM="OS X" SCHEME=Contentful_macOS
       # Xcode9
     - osx_image: xcode9
       env: SDK=iphonesimulator PLATFORM="iOS Simulator,name=iPhone 6s,OS=11.0" SCHEME=Contentful_iOS
@@ -18,6 +11,7 @@ matrix:
       env: SDK=appletvsimulator PLATFORM="tvOS Simulator,name=Apple TV 1080p,OS=11.0" SCHEME=Contentful_tvOS
     - osx_image: xcode9           
       env: SDK=macosx PLATFORM="OS X" SCHEME=Contentful_macOS
+    - env: SWIFT_BUILD=true
       
 script:
   - ./Scripts/travis-build-test.sh
