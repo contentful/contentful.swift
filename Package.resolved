@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Interstellar",
+        "repositoryURL": "https://github.com/jensravens/Interstellar",
+        "state": {
+          "branch": null,
+          "revision": "5fb8f1f2b7d869380555cca5f44a8cfdca390633",
+          "version": "2.1.0"
+        }
+      },
+      {
+        "package": "Nimble",
+        "repositoryURL": "https://github.com/Quick/Nimble",
+        "state": {
+          "branch": null,
+          "revision": "38c9ab0846a3fbec308eb2aa9ef68b10a7434eb4",
+          "version": "7.0.2"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
