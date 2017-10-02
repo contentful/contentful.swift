@@ -361,6 +361,7 @@ internal extension CGColor {
 
         switch colorSpace.model {
         case .monochrome:
+            // In this case, we're assigning the single shade of gray to all of r, g, and b.
             r = Float(colorComponents[0])
             g = Float(colorComponents[0])
             b = Float(colorComponents[0])

@@ -571,8 +571,8 @@ class QueryTests: XCTestCase {
         QueryTests.client.fetchMappedEntries(with: query) { result in
             switch result {
             case .success(let citiesResponse):
-            let cities = citiesResponse.items
-            expect(cities.count).to(equal(4))
+                let cities = citiesResponse.items
+                expect(cities.count).to(equal(4))
             case .error(let error):
                 fail("Should not throw an error \(error)")
             }

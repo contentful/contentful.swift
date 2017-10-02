@@ -252,9 +252,8 @@ open class Client {
             let jsonDecoder = Client.jsonDecoderWithoutContext // JSONDecoder()
             jsonDecoder.userInfo[LocalizableResource.localizationContextKey] = localizationContext
 
-            // Use `Mappable` failable initialzer to optional rather throwing `ImmutableMappable` initializer
+            // Use failable initialzer to optional rather than initializer that throws,
             // because failure to find an error in the JSON should error should not throw an error that JSON is not parseable.
-
             if let apiError = ContentfulError.error(with: jsonDecoder, and: data) {
                 completion(Result.error(apiError))
                 return
@@ -263,11 +262,8 @@ open class Client {
             // Locales will be injected via the JSONDecoder's userInfo property.
             let decodedObject = try jsonDecoder.decode(DecodableType.self, from: data)
             completion(Result.success(decodedObject))
-
-        } catch let error as DecodingError {
+        } catch {
             completion(Result.error(SDKError.unparseableJSON(data: data, errorMessage: "The SDK was unable to parse the JSON: \(error)")))
-        } catch _ {
-            completion(Result.error(SDKError.unparseableJSON(data: data, errorMessage: "")))
         }
     }
 }
