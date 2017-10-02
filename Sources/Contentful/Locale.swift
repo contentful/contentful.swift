@@ -7,12 +7,11 @@
 //
 
 import Foundation
-import ObjectMapper
 
 public typealias LocaleCode = String
 
 /// A Locale represents possible translations for Entry Fields
-public class Locale: ImmutableMappable {
+public class Locale: Decodable {
 
     /// Linked list accessor for going to the next fallback locale
     public let fallbackLocaleCode: LocaleCode?
@@ -27,17 +26,11 @@ public class Locale: ImmutableMappable {
     /// The name of this Locale
     public let name: String
 
-    // MARK: <ImmutableMappable>
-
-    public required init(map: Map) throws {
-        code                = try map.value("code")
-        isDefault           = try map.value("default")
-        name                = try map.value("name")
-
-        // Fallback locale code isn't always present.
-        var fallbackLocaleCode: LocaleCode?
-        fallbackLocaleCode <- map["fallbackCode"]
-        self.fallbackLocaleCode = fallbackLocaleCode
+    private enum CodingKeys: String, CodingKey {
+        case code
+        case isDefault          = "default"
+        case name
+        case fallbackLocaleCode = "fallbackCode"
     }
 }
 
@@ -50,10 +43,10 @@ public class Locale: ImmutableMappable {
  for an `Entry` does not have data for the currently selected locale, the SDK will walk the fallback
  chain for this field until a non-null value is found, or full chain has been walked.
  */
-public class LocalizationContext: MapContext {
+public class LocalizationContext {
 
     /// An ordered collection of locales representing the fallback chain.
-    public  let locales: [LocaleCode: Locale]
+    public let locales: [LocaleCode: Locale]
 
     /// The default locale of the space.
     public let `default`: Locale
@@ -103,15 +96,11 @@ internal struct Localization {
     }
 
     // Normalizes fields to have a value for every locale in the space.
-    internal static func fieldsInMultiLocaleFormat(from map: Map,
-                                                      selectedLocale: Locale) throws -> [FieldName: [LocaleCode: Any]] {
-        let fields: [FieldName: Any] = try map.value("fields")
+    internal static func fieldsInMultiLocaleFormat(from fields: [FieldName: Any],
+                                                   selectedLocale: Locale,
+                                                   wasSelectedOnAPILevel: Bool) throws -> [FieldName: [LocaleCode: Any]] {
 
-        var firstLocaleForThisResource: LocaleCode?
-        // For locale=* and /sync, this property will not be present.
-        firstLocaleForThisResource <- map["sys.locale"]
-        if firstLocaleForThisResource == nil { // sanitize.
-
+        if wasSelectedOnAPILevel == false { // sanitize.
             // If there was no locale it the response, then we have the format with all locales present and we can simply map from localecode to locale and exit
             guard let fields = fields as? [FieldName: [LocaleCode: Any]] else {
                 throw SDKError.localeHandlingError(message: "Unexpected response format: 'sys.locale' not present, and"

@@ -1,11 +1,10 @@
-/*:
- [Previous](@previous)
-
-Before running this, please build the "Contentful_macOS" scheme to build the SDK. The following is some Playground specific setup. */
+//: [Previous](@previous)
 import PlaygroundSupport
 PlaygroundPage.current.needsIndefiniteExecution = true
 import Contentful
 import Interstellar
+
+//: In order to execute this playground, please build the "Contentful_macOS" scheme to build the SDK.
 //: As a first step, you have to create a client object again.
 let client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1")
 /*:
@@ -77,16 +76,15 @@ client.fetchEntries(with: query).next {
 }
 
 //: If you have location-enabled content, you can use it for searching as well. Sort results by distance:
-import CoreLocation
-query = Query(onContentTypeFor: "1t9IbcfdCk6m04uISSsaIK").where("fields.center", .isNear(CLLocationCoordinate2D(latitude: 38, longitude: -122)))
+query = Query(onContentTypeFor: "1t9IbcfdCk6m04uISSsaIK").where("fields.center", .isNear(Location(latitude: 38, longitude: -122)))
 client.fetchEntries(with: query).next {
     let names = $0.items.flatMap { $0.fields.string(at: "name") }
     print(names)
 }
 
 //: Or retrieve all resources in a bounding rectangle:
-let bottomLeft = CLLocationCoordinate2D(latitude: 40, longitude: -124)
-let topRight = CLLocationCoordinate2D(latitude: 36, longitude: -121)
+let bottomLeft = Location(latitude: 40, longitude: -124)
+let topRight = Location(latitude: 36, longitude: -121)
 let boundingBox = Bounds.box(bottomLeft: bottomLeft, topRight: topRight)
 query = Query(onContentTypeFor: "1t9IbcfdCk6m04uISSsaIK").where("fields.center", .isWithin(boundingBox))
 client.fetchEntries(with: query).next {

@@ -8,10 +8,9 @@
 
 import Foundation
 import Interstellar
-import ObjectMapper
 
 /// A container for the synchronized state of a Space
-public final class SyncSpace: ImmutableMappable {
+public final class SyncSpace: Decodable {
     internal var assetsMap = [String: Asset]()
     internal var entriesMap = [String: Entry]()
 
@@ -45,7 +44,7 @@ public final class SyncSpace: ImmutableMappable {
         self.syncToken = syncToken
     }
 
-    internal func syncToken(from urlString: String) -> String {
+    internal static func syncToken(from urlString: String) -> String {
         guard let components = URLComponents(string: urlString)?.queryItems else { return "" }
         for component in components {
             if let value = component.value, component.name == "sync_token" {
@@ -55,50 +54,54 @@ public final class SyncSpace: ImmutableMappable {
         return ""
     }
 
-    // MARK: <ImmutableMappable>
+    public required init(from decoder: Decoder) throws {
+        let container   = try decoder.container(keyedBy: CodingKeys.self)
+        var syncUrl     = try container.decodeIfPresent(String.self, forKey: .nextPageUrl)
 
-    public required init(map: Map) throws {
         var hasMorePages = true
-        var syncUrl: String?
-        syncUrl <- map["nextPageUrl"]
-
         if syncUrl == nil {
             hasMorePages = false
-            syncUrl <- map["nextSyncUrl"]
+            syncUrl     = try container.decodeIfPresent(String.self, forKey: .nextSyncUrl)
         }
 
+        guard let nextSyncUrl = syncUrl else {
+            throw SDKError.unparseableJSON(data: nil, errorMessage: "No sync url for future sync operations was serialized from the response.")
+        }
+
+        self.syncToken = SyncSpace.syncToken(from: nextSyncUrl)
         self.hasMorePages = hasMorePages
-        self.syncToken = self.syncToken(from: syncUrl!)
 
-        var items: [[String: Any]]!
-        items <- map["items"]
+        // A copy as an array of dictionaries just to extract "sys.type" field.
+        guard let items = try container.decode(Array<Any>.self, forKey: .items) as? [[String: Any]] else {
+            throw SDKError.unparseableJSON(data: nil, errorMessage: "SDK was unable to serialize returned resources")
+        }
+        var itemsArrayContainer = try container.nestedUnkeyedContainer(forKey: .items)
 
-        let resources: [Resource] = try items.flatMap { itemJSON in
-            let map = Map(mappingType: .fromJSON, JSON: itemJSON, context: map.context)
+        var resources = [Resource]()
+        while itemsArrayContainer.isAtEnd == false {
 
-            let type: String = try map.value("sys.type")
-
+            guard let sys = items[itemsArrayContainer.currentIndex]["sys"] as? [String: Any], let type = sys["type"] as? String else {
+                let errorMessage = "SDK was unable to parse sys.type property necessary to finish resource serialization."
+                throw SDKError.unparseableJSON(data: nil, errorMessage: errorMessage)
+            }
+            let item: Resource
             switch type {
-            case "Asset":           return try? Asset(map: map)
-            case "Entry":           return try? Entry(map: map)
-            case "ContentType":     return try? ContentType(map: map)
-            case "DeletedAsset":    return try? DeletedResource(map: map)
-            case "DeletedEntry":    return try? DeletedResource(map: map)
+            case "Asset":           item = try itemsArrayContainer.decode(Asset.self)
+            case "Entry":           item = try itemsArrayContainer.decode(Entry.self)
+            case "DeletedAsset":    item = try itemsArrayContainer.decode(DeletedResource.self)
+            case "DeletedEntry":    item = try itemsArrayContainer.decode(DeletedResource.self)
             default: fatalError("Unsupported resource type '\(type)'")
             }
-
-            return nil
+            resources.append(item)
         }
 
         cache(resources: resources)
+    }
 
-        // If it's a one page sync, resolve links.
-        // Otherwise, we will wait until all pages have come in to resolve them.
-        if hasMorePages == false {
-            for entry in entries {
-                entry.resolveLinks(against: entries, and: assets)
-            }
-        }
+    private enum CodingKeys: String, CodingKey {
+        case nextSyncUrl
+        case nextPageUrl
+        case items
     }
 
     internal func updateWithDiffs(from syncSpace: SyncSpace) {

@@ -1,10 +1,10 @@
-/*: [Previous](@previous) */
+//: [Previous](@previous)
 import PlaygroundSupport
 PlaygroundPage.current.needsIndefiniteExecution = true
 import Contentful
 import Interstellar
 
-/*: In order to execute this playground, please build the "Contentful_macOS" scheme to build the SDK.*/
+//: In order to execute this playground, please build the "Contentful_macOS" scheme to build the SDK.
 //: As a first step, we again create an instance of `Client` connected to the space of interest.
 let client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1")
 

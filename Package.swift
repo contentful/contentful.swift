@@ -1,10 +1,21 @@
+// swift-tools-version:4.0
 import PackageDescription
 
 let package = Package(
     name: "Contentful",
-    dependencies: [
-        .Package(url: "https://github.com/Hearst-DD/ObjectMapper", majorVersion: 2, minor: 2),
-        .Package(url: "https://github.com/jensravens/Interstellar", majorVersion: 2, minor: 1)
+    products: [
+        .library(
+            name: "Contentful",
+            targets: ["Contentful"])
     ],
-    exclude: ["Tests/"]
+    dependencies: [
+        .package(url: "https://github.com/jensravens/Interstellar", .upToNextMinor(from: "2.1.0"))
+    ],
+    targets: [
+        .target(
+            name: "Contentful",
+            dependencies: [
+                "Interstellar"
+            ])
+    ]
 )

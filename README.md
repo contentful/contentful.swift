@@ -75,16 +75,14 @@ Unless you're using Swift 2.x, the project is built and unit tested in Travis CI
 
 ## Swift Versioning
 
-The Contentful Swift SDK requires, at minimum, Swift 2.2 and therefore Xcode 7.3.
+It is recommended to use Swift 4, as older versions of the SDK will not have fixes backported. If you must use older Swift versions, see the compatible tags below.
 
  Swift version | Compatible Contentful tag |
 | --- | --- |
-| Swift 3.0 | [`0.3.0` - `0.9.3`] |
+| Swift 4.0 | [ > `0.10.0`] |
+| Swift 3.x | [`0.3.0` - `0.9.3`] |
 | Swift 2.3 | `0.2.3` |
 | Swift 2.2 | `0.2.1` |
-
-While there have been some patches applied to the [`Swift-2.3` branch][9], no future maintainence is intended on this branch. It is recommended to upgrade to Swift 3 and
-use the newest version of contentful.swift.
 
 ### CocoaPods installation
 
@@ -99,16 +97,16 @@ pod 'Contentful'
 You can specify a specific version of Contentful depending on your needs. To learn more about operators for dependency versioning within a Podfile, see the [CocoaPods doc on the Podfile][7].
 
 ```ruby
-pod 'Contentful', '~> 0.9.3' 
+pod 'Contentful', '~> 0.10.0' 
 ```
 
-Note that for Swift 2.3 support (contentful.swift `v0.2.3`) you will need to add a post-install script to your Podfile if installing with Cocoapods:
+Note that for Swift 3 support (contentful.swift versions [`0.3.0` - `0.9.3`]) you will need to add a post-install script to your Podfile if installing with Cocoapods:
 
 ```ruby
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
-      config.build_settings['SWIFT_VERSION'] = '2.3'
+      config.build_settings['SWIFT_VERSION'] = '3.2'
     end
   end
 end
@@ -119,7 +117,7 @@ end
 You can also use [Carthage][8] for integration by adding the following to your `Cartfile`:
 
 ```
-github "contentful/contentful.swift" ~> 0.9.3
+github "contentful/contentful.swift" ~> 0.10.0
 ```
 
 ## License
@@ -134,7 +132,6 @@ Copyright (c) 2016 Contentful GmbH. See LICENSE for further details.
 [6]: https://github.com/contentful-labs/swiftful
 [7]: https://guides.cocoapods.org/using/the-podfile.html
 [8]: https://github.com/Carthage/Carthage
-[9]: https://github.com/contentful/contentful.swift/tree/Swift-2.3
 [10]: https://github.com/contentful/contentful.swift
 [11]: https://www.contentful.com/developers/docs/references/content-management-api/
 [12]: https://cocoapods.org/pods/ContentfulManagementAPI

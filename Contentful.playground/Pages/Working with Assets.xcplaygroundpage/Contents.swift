@@ -1,11 +1,11 @@
-/*: [Previous](@previous) */
+//: [Previous](@previous)
 import PlaygroundSupport
 PlaygroundPage.current.needsIndefiniteExecution = true
 import Contentful
 import Interstellar
 import AppKit
 
-/*: In order to execute this playground, please build the "Contentful_macOS" scheme to build the SDK.*/
+//: In order to execute this playground, please build the "Contentful_macOS" scheme to build the SDK.
 //: We again create an instance of `Client` connected to the space of interest.
 let client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1")
 //: Assets represent any kind of media you are storing in Contentful. The API is similar to fetching entries.

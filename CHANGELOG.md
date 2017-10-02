@@ -4,14 +4,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) starting from 1.x releases.
 
 ### Merged, but not yet released
-> ~~All recent changes are published~~
-> Fixed
-> - Ensured all functions and instance members had an explicit protection level set.
+> All recent changes are published
+
 ---
 
 ## Table of contents
 
 #### 0.x Releases
+- `0.10.x` Releases - [0.10.0](#0100)
 - `0.9.x` Releases - [0.9.0](#090) | [0.9.1](#091) | [0.9.2](#092) | [0.9.3](#093)
 - `0.8.x` Releases - [0.8.0](#080)
 - `0.7.x` Releases - [0.7.0](#070) | [0.7.1](#071) | [0.7.2](#072) | [0.7.3](#073) | [0.7.4](#074) | [0.7.5](#075) | [0.7.6](#076) | [0.7.7](#077)
@@ -19,6 +19,17 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 - `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041)
 - `0.3.x` Releases - [0.3.0](#030) | [0.3.1](#031)
+
+---
+
+## [`0.10.0`](https://github.com/contentful/contentful.swift/releases/tag/0.10.0)
+Released on 2017-10-02
+
+#### Changed
+- **BREAKING:** The project is now compiled using Swift 4 and therefore must be developed against with Xcode 9. Backwards compatibility with Swift 3 is not possible as the SDK now uses Swift 4 features like JSON decoding via the `Decodable` protocol in Foundation.
+- **BREAKING:** `CLLocationCoordinate2D` has been replaced with `Location` type native to the SDK so that linking with CoreLocation is no longer necessary. If you have location enabled queries, you'll need to migrate your code.
+• `Resource` is now a protocol and is no longer the base class for `Asset` and `Entry`. `LocalizableResource` is the new base class.
+- [ObjectMapper](https://github.com/Hearst-DD/ObjectMapper) has been pruned and is no longer a dependency of the SDK. If managing your dependencies with Carthage, make sure to manually remove ObjectMapper if you aren't using it yourself.
 
 ---
 

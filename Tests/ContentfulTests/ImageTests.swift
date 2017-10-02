@@ -12,18 +12,23 @@ import Foundation
 import XCTest
 import DVR
 import Nimble
-import ObjectMapper
+#if os(iOS) || os(tvOS) || os(watchOS)
+    import UIKit
+#elseif os(macOS)
+    import Cocoa
+#endif
 
 class ImageTests: XCTestCase {
 
     let nyanCatAsset: Asset = {
-        // Load nyan cat from "asset.json" file.
-        let spaceMap = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("space"))
-        let space = try! Space(map: spaceMap)
+        let jsonDecoder = Client.jsonDecoderWithoutContext
+        let spaceJSONData = JSONDecodingTests.jsonData("space")
+        let space = try! jsonDecoder.decode(Space.self, from: spaceJSONData)
+        jsonDecoder.userInfo[LocalizableResource.localizationContextKey] = space.localizationContext
 
-        let assetMappingContext = space.localizationContext
-        let map = Map(mappingType: .fromJSON, JSON: ObjectMappingTests.jsonData("asset"), context: assetMappingContext)
-        let asset = try! Asset(map: map)
+        // Load nyan cat from "asset.json" file.
+        let nyanCatJSONData = JSONDecodingTests.jsonData("asset")
+        let asset = try! jsonDecoder.decode(Asset.self, from: nyanCatJSONData)
         return asset
     }()
 
@@ -37,6 +42,37 @@ class ImageTests: XCTestCase {
     override class func tearDown() {
         super.tearDown()
         (client.urlSession as? DVR.Session)?.endRecording()
+    }
+
+    func testColorHexRepresenations() {
+
+        #if os(iOS) || os(tvOS) || os(watchOS)
+            let blueColor = UIColor.blue
+        #elseif os(macOS)
+            let blueColor = NSColor.blue
+        #endif
+        expect(blueColor.cgColor.hexRepresentation()).to(equal("0000FF"))
+
+        #if os(iOS) || os(tvOS) || os(watchOS)
+            let redColor = UIColor.red
+        #elseif os(macOS)
+            let redColor = NSColor.red
+        #endif
+        expect(redColor.cgColor.hexRepresentation()).to(equal("FF0000"))
+
+        #if os(iOS) || os(tvOS) || os(watchOS)
+            let darkViolet = UIColor(red: 0.580, green: 0.00, blue: 0.830, alpha: 1.0)
+        #elseif os(macOS)
+            let darkViolet = NSColor(red: 0.580, green: 0.00, blue: 0.830, alpha: 1.0)
+        #endif
+        expect(darkViolet.cgColor.hexRepresentation()).to(equal("9400D4"))
+
+        #if os(iOS) || os(tvOS) || os(watchOS)
+            let carmine = UIColor(red: 0.66274, green: 0.12549, blue: 0.243137, alpha: 1.0)
+        #elseif os(macOS)
+            let carmine = NSColor(red: 0.66274, green: 0.12549, blue: 0.243137, alpha: 1.0)
+        #endif
+        expect(carmine.cgColor.hexRepresentation()).to(equal("A9203E"))
     }
 
     // MARK: URL construction tests.
@@ -267,3 +303,4 @@ class ImageTests: XCTestCase {
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 }
+

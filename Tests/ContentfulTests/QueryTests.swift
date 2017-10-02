@@ -10,9 +10,7 @@
 import XCTest
 import Nimble
 import DVR
-import Interstellar
 import CoreData
-import CoreLocation
 
 final class Cat: EntryModellable {
 
@@ -48,7 +46,7 @@ final class City: EntryModellable {
     init(entry: Entry) {
         self.id         = entry.id
         self.localeCode = entry.localeCode
-        self.location = CLLocationCoordinate2D(latitude: 1, longitude: 1)
+        self.location = Location(latitude: 1, longitude: 1)
     }
 
     func populateLinks(from cache: [FieldName : Any]) {}
@@ -57,7 +55,7 @@ final class City: EntryModellable {
 
     var id: String
     var localeCode: String
-    var location: CLLocationCoordinate2D?
+    var location: Location?
 }
 
 final class Dog: EntryModellable {
@@ -405,11 +403,17 @@ class QueryTests: XCTestCase {
 
         let query = Query(where: "sys.updatedAt", .isLessThanOrEqualTo(date))
 
-        QueryTests.client.fetchEntries(with: query).then { entriesResponse in
-            let entries = entriesResponse.items
-            expect(entries.count).to(equal(10))
+        QueryTests.client.fetchEntries(with: query) { result in
+            switch result {
+            case .success(let entriesResponse):
+                let entries = entriesResponse.items
+                expect(entries.count).to(equal(10))
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
             expectation.fulfill()
-            }.error { fail("\($0)") }
+
+        }
 
         waitForExpectations(timeout: 10.0, handler: nil)
     }
@@ -422,12 +426,16 @@ class QueryTests: XCTestCase {
 
         let query = QueryOn<Cat>(where: "sys.updatedAt", .isLessThanOrEqualTo("2015-01-01T00:00:00Z"))
 
-        QueryTests.client.fetchMappedEntries(with: query).then { catsResponse in
-            let cats = catsResponse.items
-            expect(cats.count).to(equal(3))
+        QueryTests.client.fetchMappedEntries(with: query) { result in
+            switch result {
+            case .success(let catsResponse):
+                let cats = catsResponse.items
+                expect(cats.count).to(equal(3))
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
             expectation.fulfill()
-            }.error { fail("\($0)") }
-
+        }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
@@ -438,12 +446,17 @@ class QueryTests: XCTestCase {
 
         let query = try! Query(orderedUsing: OrderParameter("sys.createdAt"))
 
-        QueryTests.client.fetchEntries(with: query).then { entriesResponse in
-            let entries = entriesResponse.items
-            let ids = entries.map { $0.sys.id }
-            expect(ids).to(equal(EntryTests.orderedEntries))
+        QueryTests.client.fetchEntries(with: query) { result in
+            switch result {
+            case .success(let entriesResponse):
+                let entries = entriesResponse.items
+                let ids = entries.map { $0.sys.id }
+                expect(ids).to(equal(EntryTests.orderedEntries))
+            case .error(let error):
+                fail("\(error)")
+            }
             expectation.fulfill()
-            }.error { fail("\($0)") }
+        }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
@@ -452,12 +465,17 @@ class QueryTests: XCTestCase {
 
         let query = try! Query(orderedUsing: OrderParameter("sys.createdAt", inReverse: true))
 
-        QueryTests.client.fetchEntries(with: query).then { entriesResponse in
-            let entries = entriesResponse.items
-            let ids = entries.map { $0.sys.id }
-            expect(ids).to(equal(EntryTests.orderedEntries.reversed()))
+        QueryTests.client.fetchEntries(with: query) { result in
+            switch result {
+            case .success(let entriesResponse):
+                let entries = entriesResponse.items
+                let ids = entries.map { $0.sys.id }
+                expect(ids).to(equal(EntryTests.orderedEntries.reversed()))
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
             expectation.fulfill()
-            }.error { fail("\($0)") }
+        }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
@@ -468,13 +486,18 @@ class QueryTests: XCTestCase {
 
         let query = try! QueryOn<Cat>(orderedUsing: OrderParameter("sys.createdAt"))
 
-        QueryTests.client.fetchMappedEntries(with: query).then { catsResponse in
-            let cats = catsResponse.items
-            let ids = cats.map { $0.id }
-            expect(cats.count).to(equal(3))
-            expect(ids).to(equal(QueryTests.orderedCatNames))
+        QueryTests.client.fetchMappedEntries(with: query) { result in
+            switch result {
+            case .success(let catsResponse):
+                let cats = catsResponse.items
+                let ids = cats.map { $0.id }
+                expect(cats.count).to(equal(3))
+                expect(ids).to(equal(QueryTests.orderedCatNames))
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
             expectation.fulfill()
-            }.error { fail("\($0)") }
+        }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
@@ -483,12 +506,17 @@ class QueryTests: XCTestCase {
 
         let query = try! Query(orderedUsing: OrderParameter("sys.revision"), OrderParameter("sys.id"))
 
-        QueryTests.client.fetchEntries(with: query).then { entriesResponse in
-            let entries = entriesResponse.items
-            let ids = entries.map { $0.sys.id }
-            expect(ids).to(equal(EntryTests.orderedEntriesByMultiple))
+        QueryTests.client.fetchEntries(with: query) { result in
+            switch result {
+            case .success(let entriesResponse):
+                let entries = entriesResponse.items
+                let ids = entries.map { $0.sys.id }
+                expect(ids).to(equal(EntryTests.orderedEntriesByMultiple))
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
             expectation.fulfill()
-            }.error { fail("\($0)") }
+        }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
@@ -499,11 +527,16 @@ class QueryTests: XCTestCase {
 
         let query = try! QueryOn<Dog>(searchingFor: "bacon")
 
-        QueryTests.client.fetchMappedEntries(with: query).then { dogsResponse in
-            let dogs = dogsResponse.items
-            expect(dogs.count).to(equal(1))
+        QueryTests.client.fetchMappedEntries(with: query) { result in
+            switch result {
+            case .success(let dogsResponse):
+                let dogs = dogsResponse.items
+                expect(dogs.count).to(equal(1))
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
             expectation.fulfill()
-            }.error { fail("\($0)") }
+        }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
@@ -512,12 +545,17 @@ class QueryTests: XCTestCase {
 
         let query = QueryOn<Dog>(where: "fields.description", .matches("bacon pancakes"))
 
-        QueryTests.client.fetchMappedEntries(with: query).then { dogsResponse in
-            let dogs = dogsResponse.items
-            expect(dogs.count).to(equal(1))
-            expect(dogs.first?.name).to(equal("Jake"))
+        QueryTests.client.fetchMappedEntries(with: query) { result in
+            switch result {
+            case .success(let dogsResponse):
+                let dogs = dogsResponse.items
+                expect(dogs.count).to(equal(1))
+                expect(dogs.first?.name).to(equal("Jake"))
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
             expectation.fulfill()
-            }.error { fail("\($0)") }
+        }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
@@ -528,29 +566,38 @@ class QueryTests: XCTestCase {
     func testFetchEntriesWithLocationProximitySearch() {
         let expectation = self.expectation(description: "Location proximity search")
 
-        let query = QueryOn<City>(where: "fields.center", .isNear(CLLocationCoordinate2D(latitude: 38, longitude: -122)))
+        let query = QueryOn<City>(where: "fields.center", .isNear(Location(latitude: 38, longitude: -122)))
 
-        QueryTests.client.fetchMappedEntries(with: query).then { citiesResponse in
-            let cities = citiesResponse.items
-            expect(cities.count).to(equal(4))
+        QueryTests.client.fetchMappedEntries(with: query) { result in
+            switch result {
+            case .success(let citiesResponse):
+                let cities = citiesResponse.items
+                expect(cities.count).to(equal(4))
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
             expectation.fulfill()
-            }.error { fail("\($0)") }
-
+        }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
     func testFetchEntriesWithBoundingBoxLocationsSearch() {
         let expectation = self.expectation(description: "Location bounding box")
 
-        let bounds = Bounds.box(bottomLeft: CLLocationCoordinate2D(latitude: 36, longitude: -124), topRight: CLLocationCoordinate2D(latitude: 40, longitude: -120))
+        let bounds = Bounds.box(bottomLeft: Location(latitude: 36, longitude: -124), topRight: Location(latitude: 40, longitude: -120))
 
         let query = QueryOn<City>(where: "fields.center", .isWithin(bounds))
 
-        QueryTests.client.fetchMappedEntries(with: query).then { citiesResponse in
-            let cities = citiesResponse.items
-            expect(cities.count).to(equal(1))
+        QueryTests.client.fetchMappedEntries(with: query) { result in
+            switch result {
+            case .success(let citiesResponse):
+                let cities = citiesResponse.items
+                expect(cities.count).to(equal(1))
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
             expectation.fulfill()
-            }.error { fail("\($0)") }
+        }
 
         waitForExpectations(timeout: 10.0, handler: nil)
     }
@@ -561,11 +608,16 @@ class QueryTests: XCTestCase {
 
         let query = try! Query(limitingResultsTo: 5)
 
-        QueryTests.client.fetchEntries(with: query).then { entriesResponse in
-            let entries = entriesResponse.items
-            expect(entries.count).to(equal(5))
+        QueryTests.client.fetchEntries(with: query) { result in
+            switch result {
+            case .success(let entriesResponse):
+                let entries = entriesResponse.items
+                expect(entries.count).to(equal(5))
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
             expectation.fulfill()
-            }.error { fail("\($0)") }
+        }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
@@ -575,12 +627,17 @@ class QueryTests: XCTestCase {
         let query = Query(skippingTheFirst: 9)
         try! query.order(using: OrderParameter("sys.createdAt"))
 
-        QueryTests.client.fetchEntries(with: query).then { entriesResponse in
-            let entries = entriesResponse.items
-            expect(entries.count).to(equal(1))
-            expect(entries.first?.sys.id).to(equal("7qVBlCjpWE86Oseo40gAEY"))
+        QueryTests.client.fetchEntries(with: query) { result in
+            switch result {
+            case .success(let entriesResponse):
+                let entries = entriesResponse.items
+                expect(entries.count).to(equal(1))
+                expect(entries.first?.sys.id).to(equal("7qVBlCjpWE86Oseo40gAEY"))
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
             expectation.fulfill()
-            }.error { fail("\($0)") }
+        }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
@@ -592,16 +649,18 @@ class QueryTests: XCTestCase {
         let filterQuery = FilterQuery<Cat>(where: "fields.name", .matches("Happy Cat"))
         let query = QueryOn<Cat>(whereLinkAt: "bestFriend", matches: filterQuery)
 
-        QueryTests.client.fetchMappedEntries(with: query).then { catsWithHappyCatAsBestFriendResponse in
-            let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
-            expect(catsWithHappyCatAsBestFriend.count).to(equal(1))
-            expect(catsWithHappyCatAsBestFriend.first?.name).to(equal("Nyan Cat"))
-            expect(catsWithHappyCatAsBestFriend.first?.bestFriend?.name).to(equal("Happy Cat"))
-            expectation.fulfill()
-            }.error { error in
+        QueryTests.client.fetchMappedEntries(with: query) { result in
+            switch result {
+            case .success(let catsWithHappyCatAsBestFriendResponse):
+                let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
+                expect(catsWithHappyCatAsBestFriend.count).to(equal(1))
+                expect(catsWithHappyCatAsBestFriend.first?.name).to(equal("Nyan Cat"))
+                expect(catsWithHappyCatAsBestFriend.first?.bestFriend?.name).to(equal("Happy Cat"))
+            case .error(let error):
                 fail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
         }
-        
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
@@ -612,18 +671,21 @@ class QueryTests: XCTestCase {
                           hasValueAt: "fields.name",
                           ofType: "cat", that: .matches("Happy Cat"))
 
-        QueryTests.client.fetchEntries(with: query).then { catsWithHappyCatAsBestFriendResponse in
-            let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
-            expect(catsWithHappyCatAsBestFriend.count).to(equal(1))
-            expect(catsWithHappyCatAsBestFriend.first?.fields["name"] as? String).to(equal("Nyan Cat"))
-            if let happyCatsBestFriend = catsWithHappyCatAsBestFriend.first?.fields.linkedEntry(at: "bestFriend") {
-                expect(happyCatsBestFriend.fields.string(at: "name")).to(equal("Happy Cat"))
-            } else {
-                fail("Should be able to get linked entry.")
+        QueryTests.client.fetchEntries(with: query) { result in
+            switch result {
+            case .success(let catsWithHappyCatAsBestFriendResponse):
+                let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
+                expect(catsWithHappyCatAsBestFriend.count).to(equal(1))
+                expect(catsWithHappyCatAsBestFriend.first?.fields["name"] as? String).to(equal("Nyan Cat"))
+                if let happyCatsBestFriend = catsWithHappyCatAsBestFriend.first?.fields.linkedEntry(at: "bestFriend") {
+                    expect(happyCatsBestFriend.fields.string(at: "name")).to(equal("Happy Cat"))
+                } else {
+                    fail("Should be able to get linked entry.")
+                }
+            case .error(let error):
+                fail("Should not throw an error \(error)")
             }
             expectation.fulfill()
-            }.error { error in
-                fail("Should not throw an error \(error)")
         }
 
         waitForExpectations(timeout: 10.0, handler: nil)
@@ -636,11 +698,16 @@ class QueryTests: XCTestCase {
         
         let query = AssetQuery(whereMimetypeGroupIs: .image)
         
-        QueryTests.client.fetchAssets(with: query).then { assetsResponse in
-            let assets = assetsResponse.items
-            expect(assets.count).to(equal(4))
+        QueryTests.client.fetchAssets(with: query) { result in
+            switch result {
+            case .success(let assetsResponse):
+                let assets = assetsResponse.items
+                expect(assets.count).to(equal(4))
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
             expectation.fulfill()
-            }.error { fail("\($0)") }
+        }
         
         waitForExpectations(timeout: 10.0, handler: nil)
     }

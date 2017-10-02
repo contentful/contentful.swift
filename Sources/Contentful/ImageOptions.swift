@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreGraphics
-import ObjectMapper
+
 #if os(iOS) || os(tvOS) || os(watchOS)
     import UIKit
 #elseif os(macOS)
@@ -286,10 +286,8 @@ public enum Fit: URLImageQueryExtendable {
     fileprivate func additionalQueryItem() throws -> URLQueryItem? {
         switch self {
         case .pad(let .some(color)):
-            let hexTransform = ObjectMapper.HexColorTransform()
-            guard let hexRepresentation = hexTransform.transformToJSON(color) else {
-                throw SDKError.invalidImageParameters("Unable to generate Hex representation for color: \(color)")
-            }
+            let cgColor = color.cgColor
+            let hexRepresentation = cgColor.hexRepresentation()
             return URLQueryItem(name: ImageParameters.backgroundColor, value: "rgb:" + hexRepresentation)
 
         case .thumb(let .some(focus)):
@@ -346,4 +344,39 @@ private struct ImageParameters {
     static let format           = "fm"
     static let quality          = "q"
     static let progressiveJPG   = "fl"
+}
+
+
+// Use CGColor instead of UIColor to enable cross-platform compatibility: macOS, iOS, tvOS, watchOS.
+internal extension CGColor {
+
+    // If for some reason the following code fails to create a hex string, the color black will be
+    // returned.
+    internal func hexRepresentation() -> String {
+        let hexForBlack = "000000"
+        guard let colorComponents = components else { return hexForBlack }
+        guard let colorSpace = colorSpace else { return hexForBlack }
+
+        let r, g, b: Float
+
+        switch colorSpace.model {
+        case .monochrome:
+            // In this case, we're assigning the single shade of gray to all of r, g, and b.
+            r = Float(colorComponents[0])
+            g = Float(colorComponents[0])
+            b = Float(colorComponents[0])
+
+        case .rgb:
+            r = Float(colorComponents[0])
+            g = Float(colorComponents[1])
+            b = Float(colorComponents[2])
+        default:
+            return hexForBlack
+        }
+
+        // Search the web for Swift UIColor to hex.
+        // This answer helped: https://stackoverflow.com/a/30967091/4068264
+        let hexString = String(format: "%02lX%02lX%02lX", lroundf(r * 255), lroundf(g * 255), lroundf(b * 255))
+        return hexString
+    }
 }

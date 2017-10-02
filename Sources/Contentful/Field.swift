@@ -6,12 +6,10 @@
 //  Copyright © 2015 Contentful GmbH. All rights reserved.
 //
 
-import ObjectMapper
-
 public typealias FieldName = String
 
 /// The possible Field types in Contentful
-public enum FieldType: String {
+public enum FieldType: String, Decodable {
     /// An array of links or symbols
     case array                          = "Array"
     /// A link to an Asset
@@ -43,7 +41,7 @@ public enum FieldType: String {
 /// A Field describes a single value inside an Entry
 // Hitting the /content_types endpoint will return a JSON field "fields" that
 // maps to an array where each element has the following structure.
-public struct Field: ImmutableMappable {
+public struct Field: Decodable {
     /// The unique identifier of this Field
     public let id: String
     /// The name of this Field
@@ -64,25 +62,37 @@ public struct Field: ImmutableMappable {
     // For `Link`s, itemType is inferred via "linkType"
     public let itemType: FieldType?
 
-    // MARK: <ImmutableMappable>
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        name = try container.decode(String.self, forKey: .name)
+        disabled = try container.decode(Bool.self, forKey: .disabled)
+        localized = try container.decode(Bool.self, forKey: .localized)
+        required = try container.decode(Bool.self, forKey: .required)
 
-    public init(map: Map) throws {
-        id          = try map.value("id")
-        name        = try map.value("name")
-        disabled    = try map.value("disabled")
-        localized   = try map.value("localized")
-        required    = try map.value("required")
-
-        var typeString: String!
-        typeString <- map["type"]
-        type = FieldType(rawValue: typeString) ?? .none
+        type = try container.decode(FieldType.self, forKey: .type)
 
         var itemTypeString: String?
 
-        itemTypeString <- map["items.type"]
-        itemTypeString <- map["items.linkType"]
-        itemTypeString <- map["linkType"]
 
+        if type == FieldType.array {
+            if let items = try container.decodeIfPresent([String: Any].self, forKey: .items) {
+                itemTypeString = items["type"] as? String
+                if itemTypeString == FieldType.link.rawValue {
+                    itemTypeString = items["linkType"] as? String
+                }
+            }
+        } else if type == FieldType.link {
+            itemTypeString = try container.decode(String.self, forKey: .linkType)
+        }
         self.itemType = FieldType(rawValue: itemTypeString ?? FieldType.none.rawValue) ?? .none
+    }
+
+
+    private enum CodingKeys: String, CodingKey {
+        case id, name, disabled, localized, required
+        case type
+        case items
+        case linkType
     }
 }

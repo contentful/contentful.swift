@@ -6,9 +6,6 @@
 //  Copyright © 2015 Contentful GmbH. All rights reserved.
 //
 
-import ObjectMapper
-
-
 private protocol Array {
 
     associatedtype ItemType
@@ -28,7 +25,7 @@ private protocol Array {
  This is the result type for any request of a collection of resources.
  See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/collection-resources-and-pagination>
 **/
-public struct ArrayResponse<ItemType>: Array, ImmutableMappable where ItemType: Resource {
+public struct ArrayResponse<ItemType>: Array where ItemType: Resource, ItemType: Decodable {
 
     /// The resources which are part of the given array
     public let items: [ItemType]
@@ -42,20 +39,41 @@ public struct ArrayResponse<ItemType>: Array, ImmutableMappable where ItemType: 
     /// The total number of resources which matched the original request
     public let total: UInt
 
-    internal let includedAssets: [Asset]?
-    internal let includedEntries: [Entry]?
+    internal let includes: Includes?
 
-    // MARK: <ImmutableMappable>
+    internal var includedAssets: [Asset]? {
+        return includes?.assets
+    }
+    internal var includedEntries: [Entry]? {
+        return includes?.entries
+    }
 
-    public init(map: Map) throws {
+    internal struct Includes: Decodable {
+        let assets: [Asset]?
+        let entries: [Entry]?
 
-        items           = try map.value("items")
-        limit           = try map.value("limit")
-        skip            = try map.value("skip")
-        total           = try map.value("total")
+        private enum CodingKeys: String, CodingKey {
+            case assets     = "Asset"
+            case entries    = "Entry"
+        }
 
-        includedAssets  = try? map.value("includes.Asset")
-        includedEntries = try? map.value("includes.Entry")
+        init(from decoder: Decoder) throws {
+            let values  = try decoder.container(keyedBy: CodingKeys.self)
+            assets      = try values.decodeIfPresent([Asset].self, forKey: CodingKeys.assets)
+            entries     = try values.decodeIfPresent([Entry].self, forKey: CodingKeys.entries)
+        }
+    }
+}
+
+
+extension ArrayResponse: Decodable {
+    public init(from decoder: Decoder) throws {
+        let container   = try decoder.container(keyedBy: CodingKeys.self)
+        items           = try container.decode([ItemType].self, forKey: .items)
+        includes        = try container.decodeIfPresent(ArrayResponse.Includes.self, forKey: .includes)
+        skip            = try container.decode(UInt.self, forKey: .skip)
+        total           = try container.decode(UInt.self, forKey: .total)
+        limit           = try container.decode(UInt.self, forKey: .limit)
 
         // Annoying workaround for type system not allowing cast of items to [Entry]
         let entries: [Entry] = items.flatMap { $0 as? Entry }
@@ -67,8 +85,10 @@ public struct ArrayResponse<ItemType>: Array, ImmutableMappable where ItemType: 
             entry.resolveLinks(against: allIncludedEntries, and: (includedAssets ?? []))
         }
     }
+    private enum CodingKeys: String, CodingKey {
+        case items, includes, skip, limit, total
+    }
 }
-
 /**
  A list of Contentful entries that have been mapped to types conforming to `EntryModellable`
 
