@@ -11,7 +11,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 ## Table of contents
 
 #### 0.x Releases
-- `0.10.x` Releases - [0.10.0](#0100)
+- `0.10.x` Releases - [0.10.0](#0100) | [0.10.1](#0101)
 - `0.9.x` Releases - [0.9.0](#090) | [0.9.1](#091) | [0.9.2](#092) | [0.9.3](#093)
 - `0.8.x` Releases - [0.8.0](#080)
 - `0.7.x` Releases - [0.7.0](#070) | [0.7.1](#071) | [0.7.2](#072) | [0.7.3](#073) | [0.7.4](#074) | [0.7.5](#075) | [0.7.6](#076) | [0.7.7](#077)
@@ -19,6 +19,17 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 - `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041)
 - `0.3.x` Releases - [0.3.0](#030) | [0.3.1](#031)
+
+---
+
+## [`0.10.1`](https://github.com/contentful/contentful.swift/releases/tag/0.10.1)
+Released on 2017-10-03
+
+#### Added
+- API for retreiving a JSONDecoder from the SDK and configuring it with localization information from your Contentful space.
+
+#### Fixed
+- Array's of links not being decoded.
 
 ---
 
