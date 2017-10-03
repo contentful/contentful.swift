@@ -14,7 +14,7 @@ import Foundation
  still unresolved. If your data model conforms to `EntryModellable` you can also use the `at` method
  to extract an instance of your linked type.
 */
-public enum Link {
+public enum Link: Decodable {
 
     public struct Sys: Decodable {
 
@@ -63,7 +63,7 @@ public enum Link {
         }
     }
 
-    internal static func link(from fieldValue: Any) -> Link? {
+    public static func link(from fieldValue: Any) -> Link? {
         if let link = fieldValue as? Link {
             return link
         }
@@ -81,7 +81,7 @@ public enum Link {
         return nil
     }
 
-    private var sys: Link.Sys {
+    public var sys: Link.Sys {
         switch self {
         case .unresolved(let sys):
             return sys
@@ -124,5 +124,15 @@ public enum Link {
         let sys = link["sys"] as? [String: Any]
         let id = sys?["id"] as? String
         return id
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container   = try decoder.container(keyedBy: CodingKeys.self)
+        let sys         = try container.decode(Link.Sys.self, forKey: .sys)
+        self            = .unresolved(sys)
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case sys
     }
 }

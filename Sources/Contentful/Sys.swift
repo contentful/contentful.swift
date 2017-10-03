@@ -27,14 +27,14 @@ public struct Sys {
 
     /// The identifier for the ContentType, if the Resource is an `Entry`.
     public var contentTypeId: String? {
-        return contentTypeInfo?["sys"]?.id
+        return contentTypeInfo?.sys.id
     }
 
     /// The number denoting what published version of the resource is.
     public let revision: Int?
 
     // Because we have a root key of "sys" we will use a dictionary.
-    private let contentTypeInfo: [String: Link.Sys]? // Not present on `Asset` or `ContentType`
+    private let contentTypeInfo: Link? // Not present on `Asset` or `ContentType`
 
 
 }
@@ -50,7 +50,7 @@ extension Sys: Decodable {
         updatedAt       = try container.decodeIfPresent(Date.self, forKey: .updatedAt)
         locale          = try container.decodeIfPresent(String.self, forKey: .locale)
         revision        = try container.decodeIfPresent(Int.self, forKey: .revision)
-        contentTypeInfo = try container.decodeIfPresent([String: Link.Sys].self, forKey: .contentTypeId)
+        contentTypeInfo = try container.decodeIfPresent(Link.self, forKey: .contentTypeId)
     }
 
     private enum CodingKeys: String, CodingKey {
