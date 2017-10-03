@@ -8,6 +8,15 @@
 
 import Foundation
 
+public extension EntryModellable where Self: EntryDecodable {
+    static func makeFrom(container: inout UnkeyedDecodingContainer) throws -> Self {
+        let this = try container.decode(self)
+        return this
+    }
+}
+
+public typealias EntryDecodable = Resource & EntryModellable
+
 public extension Client {
 
     public static var jsonDecoderWithoutLocalizationContext: JSONDecoder = {
@@ -36,6 +45,55 @@ internal struct JSONCodingKeys: CodingKey {
         self.intValue = intValue
     }
 }
+
+public let linkResolverContext = CodingUserInfoKey(rawValue: "linkResolverContext")!
+public let contentTypesContextKey = CodingUserInfoKey(rawValue: "contentTypesContextKey")!
+
+public extension Decoder {
+    public var linkResolver: LinkResolver {
+        return userInfo[linkResolverContext] as! LinkResolver
+    }
+
+    public func contentfulFieldsContainer<NestedKey>(keyedBy keyType: NestedKey.Type) throws -> KeyedDecodingContainer<NestedKey> {
+        let container = try self.container(keyedBy: LocalizableResource.CodingKeys.self)
+        let fieldsContainer = try container.nestedContainer(keyedBy: keyType, forKey: .fields)
+        return fieldsContainer
+    }
+}
+
+public extension KeyedDecodingContainer {
+
+    public func resolveLink(forKey key: KeyedDecodingContainer.Key, resolver: LinkResolver, callback: @escaping (Any) -> Void) throws {
+        if let link = try decodeIfPresent(Link.self, forKey: key) {
+            resolver.resolve(link, callback: callback)
+        }
+    }
+}
+
+public class LinkResolver {
+
+    let dataCache: DataCache = DataCache()
+
+    func churnLinks() {
+        for (linkKey, callback) in callbacks {
+            let item = dataCache.item(for: linkKey)
+            callback(item as Any)
+        }
+        self.callbacks = [:]
+    }
+
+    public func resolve(_ link: Link, callback: @escaping (Any) -> Void) {
+        // FIXME: Use the link for cacheKey
+
+        // TODO: Inject correct source locale.
+        callbacks[DataCache.cacheKey(for: link, with: "en-US")] = callback
+
+    }
+
+    var callbacks: [String: (Any) -> Void] = [:]
+}
+
+
 
 internal extension KeyedDecodingContainer {
 
@@ -84,7 +142,7 @@ internal extension KeyedDecodingContainer {
             } else if let location = try? decode(Location.self, forKey: key) {
                 dictionary[key.stringValue] = location
             }
-                
+
             // These must be called after attempting to decode all other custom types.
             else if let nestedDictionary = try? decode(Dictionary<String, Any>.self, forKey: key) {
                 dictionary[key.stringValue] = nestedDictionary

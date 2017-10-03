@@ -20,6 +20,10 @@ extension Resource {
     public var id: String {
         return sys.id
     }
+
+    public var localeCode: String? {
+        return sys.locale
+    }
 }
 
 class DeletedResource: Resource, Decodable {
@@ -105,7 +109,7 @@ public class LocalizableResource: Resource, Decodable {
                                                                        wasSelectedOnAPILevel: sys.locale != nil)
     }
 
-    private enum CodingKeys: String, CodingKey {
+    public enum CodingKeys: String, CodingKey {
         case sys
         case fields
     }

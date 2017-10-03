@@ -10,14 +10,13 @@
 import XCTest
 import Nimble
 import DVR
-import CoreData
+import Interstellar
 
-final class Cat: EntryModellable {
+final class Cat: EntryDecodable {
 
     static let contentTypeId: String = "cat"
 
-    let id: String
-    let localeCode: String
+    let sys: Sys
     let color: String?
     let name: String?
     let lives: Int?
@@ -26,62 +25,83 @@ final class Cat: EntryModellable {
     // Relationship fields.
     var bestFriend: Cat?
 
-    init(entry: Entry) {
-        self.id         = entry.id
-        self.localeCode = entry.localeCode
+    public required init(from decoder: Decoder) throws {
+        let container   = try decoder.container(keyedBy: LocalizableResource.CodingKeys.self)
+        sys             = try container.decode(Sys.self, forKey: .sys)
+        let fields      = try decoder.contentfulFieldsContainer(keyedBy: CodingKeys.self)
 
-        self.name       = entry.fields.string(at: "name")
-        self.color      = entry.fields["color"] as? String
-        self.likes      = entry.fields["likes"] as? [String]
-        self.lives      = entry.fields["lives"] as? Int
+        self.name       = try fields.decodeIfPresent(String.self, forKey: .name)
+        self.color      = try fields.decodeIfPresent(String.self, forKey: .color )
+        self.likes      = try fields.decodeIfPresent(Array<String>.self, forKey: .likes)
+        self.lives      = try fields.decodeIfPresent(Int.self, forKey: .lives)
+
+        let linkResolver = decoder.linkResolver
+        try fields.resolveLink(forKey: .bestFriend, resolver: linkResolver) { [weak self] linkedCat in
+            self?.bestFriend = linkedCat as? Cat
+        }
     }
-
-    func populateLinks(from cache: [FieldName: Any]) {
-        self.bestFriend = cache["bestFriend"] as? Cat
+    
+    private enum CodingKeys: String, CodingKey {
+        case sys, name, color, likes, lives, bestFriend
     }
 }
 
-final class City: EntryModellable {
-
-    init(entry: Entry) {
-        self.id         = entry.id
-        self.localeCode = entry.localeCode
-        self.location = Location(latitude: 1, longitude: 1)
-    }
-
-    func populateLinks(from cache: [FieldName : Any]) {}
+final class City: EntryDecodable {
 
     static let contentTypeId: String = "1t9IbcfdCk6m04uISSsaIK"
 
-    var id: String
-    var localeCode: String
+    let sys: Sys
     var location: Location?
+
+    public required init(from decoder: Decoder) throws {
+        let container   = try decoder.container(keyedBy: LocalizableResource.CodingKeys.self)
+        sys             = try container.decode(Sys.self, forKey: .sys)
+        let fields      = try decoder.contentfulFieldsContainer(keyedBy: CodingKeys.self)
+
+        self.location   = try fields.decode(Location.self, forKey: .location)
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case location = "center"
+    }
 }
 
-final class Dog: EntryModellable {
+final class Dog: EntryDecodable {
 
     static let contentTypeId: String = "dog"
 
-    init(entry: Entry) {
-        self.id         = entry.id
-        self.localeCode = entry.localeCode
-        self.name       = entry.fields["name"] as? String
-    }
-
-    func populateLinks(from cache: [FieldName : Any]) {
-        self.image = cache["image"] as? Asset
-    }
-
-    let id: String
-    let localeCode: String
+    let sys: Sys
     let name: String?
-
     var image: Asset?
+
+
+    public required init(from decoder: Decoder) throws {
+        let container   = try decoder.container(keyedBy: LocalizableResource.CodingKeys.self)
+        sys             = try container.decode(Sys.self, forKey: .sys)
+        let fields      = try decoder.contentfulFieldsContainer(keyedBy: CodingKeys.self)
+        name            = try fields.decode(String.self, forKey: .name)
+
+        let linkResolver = decoder.linkResolver
+        try fields.resolveLink(forKey: .image, resolver: linkResolver) { [weak self] linkedImage in
+            self?.image = linkedImage as? Asset
+        }
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case image, name
+    }
 }
 
 class QueryTests: XCTestCase {
 
-    static let client = TestClientFactory.testClient(withCassetteNamed: "QueryTests", contentModel: ContentModel(entryTypes: [Cat.self, City.self, Dog.self]))
+    static let client: Client = {
+        let contentTypeClasses: [EntryDecodable.Type] = [
+            Cat.self,
+            Dog.self,
+            City.self
+        ]
+        return TestClientFactory.testClient(withCassetteNamed: "QueryTests", contentTypeClasses: contentTypeClasses)
+    }()
 
     override class func setUp() {
         super.setUp()
@@ -123,8 +143,8 @@ class QueryTests: XCTestCase {
 
                 // Test uniqueness in memory.
                 expect(nyanCat).to(be(nyanCat.bestFriend?.bestFriend))
-            case .error:
-                fail("Should not throw an error")
+            case .error(let error):
+                fail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -139,7 +159,7 @@ class QueryTests: XCTestCase {
 
         let query = try! QueryOn<Dog>(selectingFieldsNamed: selections)
 
-        QueryTests.client.fetchMappedEntries(with: query) { result in
+        QueryTests.client.fetchMappedEntries(with: query) { (result: Result<MappedArrayResponse<Dog>>) in
 
             switch result {
             case .success(let dogsResponse):
@@ -186,7 +206,7 @@ class QueryTests: XCTestCase {
 
         let query = QueryOn<Cat>(where: "fields.color", .equals("gray"))
 
-        QueryTests.client.fetchMappedEntries(with: query) { result in
+        QueryTests.client.fetchMappedEntries(with: query) { (result: Result<MappedArrayResponse<Cat>>) in
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
@@ -213,8 +233,8 @@ class QueryTests: XCTestCase {
                 let cats = catsResponse.items
                 expect(cats.count).to(beGreaterThan(0))
                 expect(cats.first?.color).toNot(equal("gray"))
-            case .error:
-                fail("Should not throw an error")
+            case .error(let error):
+                fail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -237,8 +257,8 @@ class QueryTests: XCTestCase {
                 expect(cats.first?.likes).to(contain("rainbows"))
                 expect(cats.first?.likes).to(contain("fish"))
 
-            case .error:
-                fail("Should not throw an error")
+            case .error(let error):
+                fail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -262,10 +282,8 @@ class QueryTests: XCTestCase {
                     expect(happyCat.likes?.count).to(equal(1))
                     expect(happyCat.likes).to(contain("cheezburger"))
                 }
-
-
-            case .error:
-                fail("Should not throw an error")
+            case .error(let error):
+                fail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -288,8 +306,8 @@ class QueryTests: XCTestCase {
                 expect(cats.first?.likes).to(contain("rainbows"))
                 expect(cats.first?.likes).to(contain("fish"))
 
-            case .error:
-                fail("Should not throw an error")
+            case .error(let error):
+                fail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -308,8 +326,8 @@ class QueryTests: XCTestCase {
                 let cats = catsResponse.items
                 expect(cats.count).to(beGreaterThan(0))
                 expect(cats.first?.color).toNot(equal("gray"))
-            case .error:
-                fail("Should not throw an error")
+            case .error(let error):
+                fail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -692,12 +710,12 @@ class QueryTests: XCTestCase {
     }
 
     // MARK: - Asset mimetype
-    
+
     func testFilterAssetsByMIMETypeGroup() {
         let expectation = self.expectation(description: "Fetch image from asset network expectation")
-        
+
         let query = AssetQuery(whereMimetypeGroupIs: .image)
-        
+
         QueryTests.client.fetchAssets(with: query) { result in
             switch result {
             case .success(let assetsResponse):
@@ -708,7 +726,7 @@ class QueryTests: XCTestCase {
             }
             expectation.fulfill()
         }
-        
+
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 }

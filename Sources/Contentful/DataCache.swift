@@ -14,11 +14,27 @@ internal class DataCache {
 
     static let cacheKeyDelimiter = "_"
 
-    internal static func cacheKey(for resource: EntryModellable) -> String {
+    internal static func cacheKey(for resource: EntryModellable & Resource) -> String {
         let delimeter = DataCache.cacheKeyDelimiter
 
-        let cacheKey =  resource.id + delimeter + "entry" + delimeter + resource.localeCode
+        let cacheKey =  resource.sys.id + delimeter + "entry" + delimeter + resource.sys.locale!
         return cacheKey
+    }
+
+
+    internal static func cacheKey(for link: Link, with sourceLocaleCode: LocaleCode) -> String {
+        let linkType: String
+        switch link {
+        case .asset:
+            linkType = "asset"
+        case .entry:
+            linkType = "entry"
+        case .unresolved(let sys):
+            linkType = sys.linkType.lowercased()
+        }
+        let id = link.id
+        let delimeter = "_"
+        return id + delimeter + linkType + delimeter + sourceLocaleCode
     }
 
     internal static func cacheKey(for resource: LocalizableResource) -> String {
@@ -36,7 +52,7 @@ internal class DataCache {
         assetCache.setObject(asset, forKey: DataCache.cacheKey(for: asset) as AnyObject)
     }
 
-    internal func add(entry: EntryModellable) {
+    internal func add(entry: EntryModellable & Resource) {
         entryCache.setObject(entry, forKey: DataCache.cacheKey(for: entry) as AnyObject)
     }
 
@@ -56,7 +72,7 @@ internal class DataCache {
         var target: AnyObject? = self.asset(for: identifier)
 
         if target == nil {
-            target = self.entry(for: identifier)
+            target = self.entry(for: identifier) as? AnyObject
         }
 
         return target

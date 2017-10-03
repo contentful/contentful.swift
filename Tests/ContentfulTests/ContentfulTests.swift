@@ -18,7 +18,7 @@ struct TestClientFactory {
     static func testClient(withCassetteNamed cassetteName: String,
                            spaceId: String? = nil,
                            accessToken: String? = nil,
-                           contentModel: ContentModel? = nil,
+                           contentTypeClasses: [EntryDecodable.Type]? = nil,
                            clientConfiguration: ClientConfiguration = .default) -> Client {
 
         let client: Client
@@ -29,9 +29,9 @@ struct TestClientFactory {
             var apiCoverageConfiguration = clientConfiguration // Mutable copy.
             apiCoverageConfiguration.server = "127.0.0.1:5000"
             apiCoverageConfiguration.secure = false
-            client = Client(spaceId: testSpaceId, accessToken: testAccessToken, clientConfiguration: apiCoverageConfiguration, contentModel: contentModel)
+            client = Client(spaceId: testSpaceId, accessToken: testAccessToken, clientConfiguration: apiCoverageConfiguration, contentTypeClasses: contentTypeClasses)
         #else
-            client = Client(spaceId: testSpaceId, accessToken: testAccessToken, clientConfiguration: clientConfiguration, contentModel: contentModel)
+            client = Client(spaceId: testSpaceId, accessToken: testAccessToken, clientConfiguration: clientConfiguration, contentTypeClasses: contentTypeClasses)
             let dvrSession = DVR.Session(cassetteName: cassetteName, backingSession: client.urlSession)
             client.urlSession = dvrSession
         #endif

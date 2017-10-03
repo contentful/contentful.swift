@@ -33,7 +33,7 @@ public struct Sys {
     /// The number denoting what published version of the resource is.
     public let revision: Int?
 
-    // Because we have a root key of "sys" we will use a dictionary.
+    // The link describing the content type.
     fileprivate let contentTypeInfo: Link? // Not present on `Asset` or `ContentType`
 }
 

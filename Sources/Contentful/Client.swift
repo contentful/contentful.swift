@@ -33,6 +33,8 @@ open class Client {
         return clientConfiguration.server
     }
 
+    public var jsonDecoder: JSONDecoder
+
     /**
      The persistence integration which will receive delegate messages from the `Client` when new
      `Entry` and `Asset` objects are created from data being sent over the network. Currently, these
@@ -55,8 +57,6 @@ open class Client {
     private var dataDelegate: DataDelegate?
 
     internal var urlSession: URLSession
-
-    internal let contentModel: ContentModel?
 
     fileprivate(set) var space: Space?
 
@@ -81,11 +81,20 @@ open class Client {
                 clientConfiguration: ClientConfiguration = .default,
                 sessionConfiguration: URLSessionConfiguration = .default,
                 persistenceIntegration: PersistenceIntegration? = nil,
-                contentModel: ContentModel? = nil) {
+                contentTypeClasses: [EntryDecodable.Type]? = nil) {
 
         self.spaceId = spaceId
         self.clientConfiguration = clientConfiguration
-        self.contentModel = contentModel
+
+        self.jsonDecoder = Client.jsonDecoderWithoutLocalizationContext
+        if let contentTypeClasses = contentTypeClasses {
+            var contentTypes = [ContentTypeId: EntryDecodable.Type]()
+            for type in contentTypeClasses {
+                contentTypes[type.contentTypeId] = type
+            }
+            jsonDecoder.userInfo[contentTypesContextKey] = contentTypes
+            jsonDecoder.userInfo[linkResolverContext] = LinkResolver()
+        }
 
         self.persistenceIntegration = persistenceIntegration
         self.dataDelegate = clientConfiguration.dataDelegate
@@ -225,11 +234,8 @@ open class Client {
     }
 
     fileprivate func handleRateLimitJSON(_ data: Data, timeUntilLimitReset: Int, _ completion: ResultsHandler<RateLimitError>) {
-
-            let jsonDecoder = JSONDecoder()
-
             guard let rateLimitError = try? jsonDecoder.decode(RateLimitError.self, from: data) else {
-                completion(.error(SDKError.unparseableJSON(data: data, errorMessage: "SDK unable to parse RateLimitError payload")))
+                completion(Result.error(SDKError.unparseableJSON(data: data, errorMessage: "SDK unable to parse RateLimitError payload")))
                 return
             }
             rateLimitError.timeBeforeLimitReset = timeUntilLimitReset
@@ -240,9 +246,6 @@ open class Client {
 
     fileprivate func handleJSON<DecodableType: Decodable>(_ data: Data, _ completion: ResultsHandler<DecodableType>) {
         do {
-            let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext
-            Client.update(jsonDecoder, withLocalizationContextFrom: space)
-
             // Use failable initialzer to optional rather than initializer that throws,
             // because failure to find an error in the JSON should error should not throw an error that JSON is not parseable.
             if let apiError = ContentfulError.error(with: jsonDecoder, and: data) {
@@ -250,7 +253,6 @@ open class Client {
                 return
             }
 
-            // Locales will be injected via the JSONDecoder's userInfo property.
             let decodedObject = try jsonDecoder.decode(DecodableType.self, from: data)
             completion(Result.success(decodedObject))
         } catch {
@@ -279,6 +281,11 @@ extension Client {
         }
         return fetch(url: self.URL()) { (result: Result<Space>) in
             self.space = result.value
+
+            // Inject locale information to JSONDecoder.
+            Client.update(self.jsonDecoder, withLocalizationContextFrom: self.space)
+
+            // Inject locale information to
             let localeCodes = self.space?.locales.map { $0.code } ?? []
             self.persistenceIntegration?.update(localeCodes: localeCodes)
             completion(result)
