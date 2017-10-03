@@ -17,7 +17,7 @@ Swift SDK for [Contentful's][1] Content Delivery API.
 
 The Contentful Swift SDK hasn't reached 1.0.0 and is therefore subject to API changes. However, it provides a more usable API than the [Objective-C SDK][4] and has support for more API features. It is recommended to use contentful.swift over contentful.objc as future development at Contentful will focus on Swift rather than Objective-C. However, if your project must utilize Contentful's [Content Managamement API][11], Objective-C is the only  language supported at the moment. See [ContentfulManagementAPI at Cocoapods.org][12] for more information.
 
-#### Full feature comparison of [contentful.swift][9] & [contentful.objc][4]
+#### Full feature comparison of [contentful.swift][10] & [contentful.objc][4]
 
 | CDA Features | [contentful.swift][10] | [contentful.objc][4] |
 | -----------  | ----------- | ----------- |
@@ -97,7 +97,7 @@ pod 'Contentful'
 You can specify a specific version of Contentful depending on your needs. To learn more about operators for dependency versioning within a Podfile, see the [CocoaPods doc on the Podfile][7].
 
 ```ruby
-pod 'Contentful', '~> 0.10.0' 
+pod 'Contentful', '~> 0.10.1' 
 ```
 
 Note that for Swift 3 support (contentful.swift versions [`0.3.0` - `0.9.3`]) you will need to add a post-install script to your Podfile if installing with Cocoapods:
@@ -117,7 +117,7 @@ end
 You can also use [Carthage][8] for integration by adding the following to your `Cartfile`:
 
 ```
-github "contentful/contentful.swift" ~> 0.10.0
+github "contentful/contentful.swift" ~> 0.10.1`
 ```
 
 ## License

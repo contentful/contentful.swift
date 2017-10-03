@@ -8,8 +8,20 @@
 
 import Foundation
 
-// Inspired by https://gist.github.com/mbuchetics/c9bc6c22033014aa0c550d3b4324411a
+public extension Client {
 
+    public static var jsonDecoderWithoutLocalizationContext: JSONDecoder = {
+        let jsonDecoder = JSONDecoder()
+        jsonDecoder.dateDecodingStrategy = .formatted(Date.Formatter.iso8601)
+        return jsonDecoder
+    }()
+
+    public static func update(_ jsonDecoder: JSONDecoder, withLocalizationContextFrom space: Space?) {
+        jsonDecoder.userInfo[LocalizableResource.localizationContextKey] = space?.localizationContext
+    }
+}
+
+// Inspired by https://gist.github.com/mbuchetics/c9bc6c22033014aa0c550d3b4324411a
 internal struct JSONCodingKeys: CodingKey {
     internal var stringValue: String
 
@@ -63,9 +75,18 @@ internal extension KeyedDecodingContainer {
                 dictionary[key.stringValue] = boolValue
             } else if let doubleValue = try? decode(Double.self, forKey: key) {
                 dictionary[key.stringValue] = doubleValue
-            } else if let fileMetaData = try? decode(Asset.FileMetadata.self, forKey: key) {
-                dictionary[key.stringValue] = fileMetaData // Custom contentful type.
-            } else if let nestedDictionary = try? decode(Dictionary<String, Any>.self, forKey: key) {
+            }
+            // Custom contentful types.
+            else if let fileMetaData = try? decode(Asset.FileMetadata.self, forKey: key) {
+                dictionary[key.stringValue] = fileMetaData
+            } else if let link = try? decode(Link.self, forKey: key) {
+                dictionary[key.stringValue] = link
+            } else if let location = try? decode(Location.self, forKey: key) {
+                dictionary[key.stringValue] = location
+            }
+                
+            // These must be called after attempting to decode all other custom types.
+            else if let nestedDictionary = try? decode(Dictionary<String, Any>.self, forKey: key) {
                 dictionary[key.stringValue] = nestedDictionary
             } else if let nestedArray = try? decode(Array<Any>.self, forKey: key) {
                 dictionary[key.stringValue] = nestedArray
@@ -88,10 +109,20 @@ internal extension UnkeyedDecodingContainer {
                 array.append(value)
             } else if let value = try? decode(String.self) {
                 array.append(value)
-            } else if let nestedDictionary = try? decode(Dictionary<String, Any>.self) {
+            }
+            // Custom contentful types.
+            else if let fileMetaData = try? decode(Asset.FileMetadata.self) {
+                array.append(fileMetaData) // Custom contentful type.
+            } else if let link = try? decode(Link.self) {
+                array.append(link) // Custom contentful type.
+            }
+            // These must be called after attempting to decode all other custom types.
+            else if let nestedDictionary = try? decode(Dictionary<String, Any>.self) {
                 array.append(nestedDictionary)
             } else if let nestedArray = try? decode(Array<Any>.self) {
                 array.append(nestedArray)
+            } else if let location = try? decode(Location.self) {
+                array.append(location)
             }
         }
         return array

@@ -21,10 +21,10 @@ import Nimble
 class ImageTests: XCTestCase {
 
     let nyanCatAsset: Asset = {
-        let jsonDecoder = Client.jsonDecoderWithoutContext
+        let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext
         let spaceJSONData = JSONDecodingTests.jsonData("space")
         let space = try! jsonDecoder.decode(Space.self, from: spaceJSONData)
-        jsonDecoder.userInfo[LocalizableResource.localizationContextKey] = space.localizationContext
+        Client.update(jsonDecoder, withLocalizationContextFrom: space)
 
         // Load nyan cat from "asset.json" file.
         let nyanCatJSONData = JSONDecodingTests.jsonData("asset")

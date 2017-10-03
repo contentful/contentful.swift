@@ -224,7 +224,6 @@ open class Client {
         return false
     }
 
-
     fileprivate func handleRateLimitJSON(_ data: Data, timeUntilLimitReset: Int, _ completion: ResultsHandler<RateLimitError>) {
 
             let jsonDecoder = JSONDecoder()
@@ -239,18 +238,10 @@ open class Client {
             completion(Result.success(rateLimitError))
     }
 
-    internal static var jsonDecoderWithoutContext: JSONDecoder = {
-        let jsonDecoder = JSONDecoder()
-        jsonDecoder.dateDecodingStrategy = .formatted(Date.Formatter.iso8601)
-        return jsonDecoder
-    }()
-
     fileprivate func handleJSON<DecodableType: Decodable>(_ data: Data, _ completion: ResultsHandler<DecodableType>) {
         do {
-            let localizationContext = space?.localizationContext
-
-            let jsonDecoder = Client.jsonDecoderWithoutContext // JSONDecoder()
-            jsonDecoder.userInfo[LocalizableResource.localizationContextKey] = localizationContext
+            let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext
+            Client.update(jsonDecoder, withLocalizationContextFrom: space)
 
             // Use failable initialzer to optional rather than initializer that throws,
             // because failure to find an error in the JSON should error should not throw an error that JSON is not parseable.

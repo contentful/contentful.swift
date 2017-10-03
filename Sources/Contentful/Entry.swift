@@ -34,7 +34,7 @@ public class Entry: LocalizableResource {
 
             for (localeCode, fieldValueForLocaleCode) in localizableFieldMap {
 
-                if let unresolvedLink = Link.link(from: fieldValueForLocaleCode), unresolvedLink.isResolved == false {
+                if let unresolvedLink = fieldValueForLocaleCode as? Link, unresolvedLink.isResolved == false {
                     let resolvedLink = unresolvedLink.resolve(against: includedEntries, and: includedAssets)
                     // Technically it's possible that the link is still unresolved at this point:
                     // for instance if a user specify type=Entry when using the '/sync' endpoint
@@ -45,9 +45,7 @@ public class Entry: LocalizableResource {
                 // resolved because of a multiple page sync so we will store a dictionary rather
                 // than a Swift object in the link body. The link will be resolved at a later time.
 
-                if let dictionaryRepresentationArray = fieldValueForLocaleCode as? [[String: Any]] {
-
-                    let mixedLinks = dictionaryRepresentationArray.flatMap { Link.link(from: $0) }
+                if let mixedLinks = fieldValueForLocaleCode as? [Link] {
 
                     // The conversion from dictionary representation should only ever happen once
                     let alreadyResolvedLinks = mixedLinks.filter { $0.isResolved == true }
