@@ -8,8 +8,20 @@
 
 import Foundation
 
-// Inspired by https://gist.github.com/mbuchetics/c9bc6c22033014aa0c550d3b4324411a
+public extension Client {
 
+    public static var jsonDecoderWithoutLocalizationContext: JSONDecoder = {
+        let jsonDecoder = JSONDecoder()
+        jsonDecoder.dateDecodingStrategy = .formatted(Date.Formatter.iso8601)
+        return jsonDecoder
+    }()
+
+    public static func update(_ jsonDecoder: JSONDecoder, withLocalizationContextFrom space: Space?) {
+        jsonDecoder.userInfo[LocalizableResource.localizationContextKey] = space?.localizationContext
+    }
+}
+
+// Inspired by https://gist.github.com/mbuchetics/c9bc6c22033014aa0c550d3b4324411a
 internal struct JSONCodingKeys: CodingKey {
     internal var stringValue: String
 

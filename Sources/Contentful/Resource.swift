@@ -75,7 +75,7 @@ public class LocalizableResource: Resource, Decodable {
     // Context used for handling locales during decoding of `Asset` and `Entry` instances.
     internal let localizationContext: LocalizationContext
 
-    static let localizationContextKey = CodingUserInfoKey(rawValue: "localizationContext")!
+    public static let localizationContextKey = CodingUserInfoKey(rawValue: "localizationContext")!
 
     public required init(from decoder: Decoder) throws {
 
