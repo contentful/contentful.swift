@@ -34,9 +34,7 @@ public struct Sys {
     public let revision: Int?
 
     // Because we have a root key of "sys" we will use a dictionary.
-    private let contentTypeInfo: Link? // Not present on `Asset` or `ContentType`
-
-
+    fileprivate let contentTypeInfo: Link? // Not present on `Asset` or `ContentType`
 }
 
 extension Sys: Decodable {
