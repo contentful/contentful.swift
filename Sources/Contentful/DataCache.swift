@@ -8,16 +8,15 @@
 
 import Foundation
 
-
-/// Implemented using `NSCache`
+// Implemented using `NSCache`
 internal class DataCache {
 
     static let cacheKeyDelimiter = "_"
 
-    internal static func cacheKey(for resource: EntryModellable & Resource) -> String {
+    internal static func cacheKey(for resource: Resource) -> String {
         let delimeter = DataCache.cacheKeyDelimiter
 
-        let cacheKey =  resource.sys.id + delimeter + "entry" + delimeter + resource.sys.locale!
+        let cacheKey =  resource.sys.id + delimeter + resource.sys.type.lowercased() + delimeter + resource.sys.locale!
         return cacheKey
     }
 
@@ -37,14 +36,6 @@ internal class DataCache {
         return id + delimeter + linkType + delimeter + sourceLocaleCode
     }
 
-    internal static func cacheKey(for resource: LocalizableResource) -> String {
-        let delimeter = DataCache.cacheKeyDelimiter
-
-        // Look at the type info.
-        let cacheKey =  resource.id + delimeter + resource.sys.type.lowercased() + delimeter + resource.currentlySelectedLocale.code
-        return cacheKey
-    }
-
     let assetCache = NSCache<AnyObject, AnyObject>()
     let entryCache = NSCache<AnyObject, AnyObject>()
 
@@ -52,7 +43,7 @@ internal class DataCache {
         assetCache.setObject(asset, forKey: DataCache.cacheKey(for: asset) as AnyObject)
     }
 
-    internal func add(entry: EntryModellable & Resource) {
+    internal func add(entry: EntryDecodable) {
         entryCache.setObject(entry, forKey: DataCache.cacheKey(for: entry) as AnyObject)
     }
 
@@ -60,8 +51,8 @@ internal class DataCache {
         return assetCache.object(forKey: identifier as AnyObject) as? Asset
     }
 
-    internal func entry(for identifier: String) -> EntryModellable? {
-        return entryCache.object(forKey: identifier as AnyObject) as? EntryModellable
+    internal func entry(for identifier: String) -> EntryDecodable? {
+        return entryCache.object(forKey: identifier as AnyObject) as? EntryDecodable
     }
 
     internal func item<T>(for identifier: String) -> T? {
@@ -72,7 +63,7 @@ internal class DataCache {
         var target: AnyObject? = self.asset(for: identifier)
 
         if target == nil {
-            target = self.entry(for: identifier) as? AnyObject
+            target = self.entry(for: identifier)
         }
 
         return target

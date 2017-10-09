@@ -46,7 +46,7 @@ client.fetchEntries(with: query).next { catsArrayResponse in
 //: Each entry has a number of read-only system fields, like its creation date
     let creationDate = cat.sys.createdAt
 //: You also have access to its user-defined fields in a similar fashion
-    let name = cat.fields.string(at:"name") ?? ""
+    let name = cat.fields.string(at: "name") ?? ""
     let likes = cat.fields.strings(at: "likes")?.joined(separator: " and ") ?? ""
     let lives = cat.fields.int(at: "lives") ?? 0
 
@@ -56,7 +56,7 @@ client.fetchEntries(with: query).next { catsArrayResponse in
 //: The SDK will also resolve any included links automatically for you.
     guard let friend = cat.fields.linkedEntry(at: "bestFriend") else { return }
 
-    let friendsName = friend.fields.string(at:"name") ?? ""
+    let friendsName = friend.fields.string(at: "name") ?? ""
     let friendsLikes = friend.fields.strings(at: "likes")?.joined(separator: " and ") ?? ""
 
     print("\(name)'s friend is named: '\(friendsName)'")

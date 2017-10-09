@@ -11,8 +11,7 @@ import Foundation
 /** 
  A representation of Linked Resources that a field may point to in your content model.
  This stateful type safely highlights links that have been resolved to Entries, Assets, or if they are
- still unresolved. If your data model conforms to `EntryModellable` you can also use the `at` method
- to extract an instance of your linked type.
+ still unresolved.
 */
 public enum Link: Decodable {
 
@@ -61,24 +60,6 @@ public enum Link: Decodable {
         case .asset(let asset):     return asset
         default:                    return nil
         }
-    }
-
-    public static func link(from fieldValue: Any) -> Link? {
-        if let link = fieldValue as? Link {
-            return link
-        }
-
-        // Linked objects are stored as a dictionary with "type": "Link",
-        // value for "linkType" can be "Asset", "Entry", "Space", "ContentType".
-        if let linkJSON = fieldValue as? [String: Any],
-            let sys = linkJSON["sys"] as? [String: Any],
-            let id = sys["id"] as? String,
-            let linkType = sys["linkType"] as? String,
-            let type = sys["type"] as? String {
-            return Link.unresolved(Link.Sys(id: id, linkType: linkType, type: type))
-        }
-
-        return nil
     }
 
     public var sys: Link.Sys {

@@ -92,8 +92,8 @@ open class Client {
             for type in contentTypeClasses {
                 contentTypes[type.contentTypeId] = type
             }
-            jsonDecoder.userInfo[contentTypesContextKey] = contentTypes
-            jsonDecoder.userInfo[linkResolverContext] = LinkResolver()
+            jsonDecoder.userInfo[DecoderContext.contentTypesContextKey] = contentTypes
+            jsonDecoder.userInfo[DecoderContext.linkResolverContextKey] = LinkResolver()
         }
 
         self.persistenceIntegration = persistenceIntegration

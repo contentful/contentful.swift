@@ -30,6 +30,9 @@
 		A1BF6BBC1C0D0FBD00049712 /* SignalUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BF6BBB1C0D0FBD00049712 /* SignalUtils.swift */; };
 		ED02BC611E7047B900BAB2CA /* QueryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02BC5F1E7047AE00BAB2CA /* QueryTests.swift */; };
 		ED0876DA1E1D07B3008E1A06 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0876D91E1D07B3008E1A06 /* Date.swift */; };
+		ED10F3FA1F8BD82200A00180 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED10F3F81F8BD81F00A00180 /* QueryTests.json */; };
+		ED10F3FB1F8BD82300A00180 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED10F3F81F8BD81F00A00180 /* QueryTests.json */; };
+		ED10F3FC1F8BD82300A00180 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED10F3F81F8BD81F00A00180 /* QueryTests.json */; };
 		ED1638C51ED5CA6D009BAA9F /* ImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1638C41ED5CA6D009BAA9F /* ImageTests.swift */; };
 		ED1D789A1F2F96260048E169 /* DataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1D78991F2F96260048E169 /* DataCache.swift */; };
 		ED1D789B1F2F96260048E169 /* DataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1D78991F2F96260048E169 /* DataCache.swift */; };
@@ -110,9 +113,6 @@
 		ED68BD731E6DC47F00939F6D /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED68BD711E6DC47A00939F6D /* Query.swift */; };
 		ED68BD741E6DC48000939F6D /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED68BD711E6DC47A00939F6D /* Query.swift */; };
 		ED68BD751E6DC48000939F6D /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED68BD711E6DC47A00939F6D /* Query.swift */; };
-		ED6EA90A1F44675F00FCA0F2 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED6EA9081F44675C00FCA0F2 /* QueryTests.json */; };
-		ED6EA90B1F44676000FCA0F2 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED6EA9081F44675C00FCA0F2 /* QueryTests.json */; };
-		ED6EA90C1F44676000FCA0F2 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED6EA9081F44675C00FCA0F2 /* QueryTests.json */; };
 		ED737C6B1EF0095400ECB3F1 /* AssetTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C691EF0095200ECB3F1 /* AssetTests.json */; };
 		ED737C6E1EF0097000ECB3F1 /* ContentTypeTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C6C1EF0096D00ECB3F1 /* ContentTypeTests.json */; };
 		ED737C711EF0098C00ECB3F1 /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED737C6F1EF0098A00ECB3F1 /* EntryTests.json */; };
@@ -247,6 +247,7 @@
 		A1BF6BBB1C0D0FBD00049712 /* SignalUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SignalUtils.swift; sourceTree = "<group>"; };
 		ED02BC5F1E7047AE00BAB2CA /* QueryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryTests.swift; sourceTree = "<group>"; };
 		ED0876D91E1D07B3008E1A06 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		ED10F3F81F8BD81F00A00180 /* QueryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QueryTests.json; sourceTree = "<group>"; };
 		ED1638C41ED5CA6D009BAA9F /* ImageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTests.swift; sourceTree = "<group>"; };
 		ED1D78991F2F96260048E169 /* DataCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataCache.swift; sourceTree = "<group>"; };
 		ED1D789E1F3069FF0048E169 /* Client+Modellable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Client+Modellable.swift"; sourceTree = "<group>"; };
@@ -261,7 +262,6 @@
 		ED535E631F5E8E1300886D93 /* Decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decodable.swift; sourceTree = "<group>"; };
 		ED65CF951E3F6BF8000EBC62 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		ED68BD711E6DC47A00939F6D /* Query.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Query.swift; sourceTree = "<group>"; };
-		ED6EA9081F44675C00FCA0F2 /* QueryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QueryTests.json; sourceTree = "<group>"; };
 		ED737C691EF0095200ECB3F1 /* AssetTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AssetTests.json; sourceTree = "<group>"; };
 		ED737C6C1EF0096D00ECB3F1 /* ContentTypeTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ContentTypeTests.json; sourceTree = "<group>"; };
 		ED737C6F1EF0098A00ECB3F1 /* EntryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EntryTests.json; sourceTree = "<group>"; };
@@ -520,11 +520,11 @@
 		ED9102671E65AE880076FDBD /* DVRRecordings */ = {
 			isa = PBXGroup;
 			children = (
+				ED10F3F81F8BD81F00A00180 /* QueryTests.json */,
 				ED737C691EF0095200ECB3F1 /* AssetTests.json */,
 				ED737C6C1EF0096D00ECB3F1 /* ContentTypeTests.json */,
 				ED737C6F1EF0098A00ECB3F1 /* EntryTests.json */,
 				ED737C721EF009A000ECB3F1 /* ImageTests.json */,
-				ED6EA9081F44675C00FCA0F2 /* QueryTests.json */,
 				ED737C871EF15CC600ECB3F1 /* PreviewSyncTests.json */,
 				ED737C7E1EF00A0600ECB3F1 /* RateLimitTests.json */,
 				ED737C751EF009C400ECB3F1 /* testClientCanAccessPreviewAPI.json */,
@@ -794,7 +794,7 @@
 				ED737C771EF009C700ECB3F1 /* testClientCanAccessPreviewAPI.json in Resources */,
 				ED737C831EF00A2000ECB3F1 /* testFetchSpace.json in Resources */,
 				ED737C6E1EF0097000ECB3F1 /* ContentTypeTests.json in Resources */,
-				ED6EA90C1F44676000FCA0F2 /* QueryTests.json in Resources */,
+				ED10F3FC1F8BD82300A00180 /* QueryTests.json in Resources */,
 				ED737C6B1EF0095400ECB3F1 /* AssetTests.json in Resources */,
 				ED737C741EF009A500ECB3F1 /* ImageTests.json in Resources */,
 				A10FF9D81BBB3860001AA4E9 /* Data in Resources */,
@@ -813,7 +813,7 @@
 				EDA690B41F43188500581FC6 /* testFetchSpace.json in Resources */,
 				EDA690B01F43188500581FC6 /* RateLimitTests.json in Resources */,
 				EDA690B31F43188500581FC6 /* SyncTests.json in Resources */,
-				ED6EA90B1F44676000FCA0F2 /* QueryTests.json in Resources */,
+				ED10F3FB1F8BD82300A00180 /* QueryTests.json in Resources */,
 				EDA690AB1F43188500581FC6 /* ContentTypeTests.json in Resources */,
 				EDA690AA1F43188500581FC6 /* AssetTests.json in Resources */,
 				EDA690AD1F43188500581FC6 /* ImageTests.json in Resources */,
@@ -832,7 +832,7 @@
 				EDA690BF1F43188500581FC6 /* testFetchSpace.json in Resources */,
 				EDA690BB1F43188500581FC6 /* RateLimitTests.json in Resources */,
 				EDA690BE1F43188500581FC6 /* SyncTests.json in Resources */,
-				ED6EA90A1F44675F00FCA0F2 /* QueryTests.json in Resources */,
+				ED10F3FA1F8BD82200A00180 /* QueryTests.json in Resources */,
 				EDA690B61F43188500581FC6 /* ContentTypeTests.json in Resources */,
 				EDA690B51F43188500581FC6 /* AssetTests.json in Resources */,
 				EDA690B81F43188500581FC6 /* ImageTests.json in Resources */,

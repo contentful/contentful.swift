@@ -11,20 +11,14 @@ import Foundation
 public typealias ContentTypeId = String
 
 /**
- Classes conforming to this protocol can be passed into your ContentModel to leverage the type system 
- to return instances of your own model classes when using methods such as:
-
- ```
- func fetchMappedEntries(with query: Query,
-    then completion: @escaping ResultsHandler<MappedContent>) -> URLSessionDataTask?
- ```
+ Implement this protocol in conjunction with the Resource protocol to enable deserialization to
+ types of your own definition. See `EntryDecodable` for more info.
  */
 public protocol EntryModellable: class, Decodable {
 
     /// The identifier of the Contentful content type that will map to this type of `EntryPersistable`
     static var contentTypeId: ContentTypeId { get }
 }
-
 
 // Convenience protocol and accompanying extension for extracting the type of data wrapped in an Optional.
 internal protocol OptionalProtocol {

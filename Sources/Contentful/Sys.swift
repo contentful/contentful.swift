@@ -48,11 +48,10 @@ extension Sys: Decodable {
         updatedAt       = try container.decodeIfPresent(Date.self, forKey: .updatedAt)
         locale          = try container.decodeIfPresent(String.self, forKey: .locale)
         revision        = try container.decodeIfPresent(Int.self, forKey: .revision)
-        contentTypeInfo = try container.decodeIfPresent(Link.self, forKey: .contentTypeId)
+        contentTypeInfo = try container.decodeIfPresent(Link.self, forKey: .contentType)
     }
 
     private enum CodingKeys: String, CodingKey {
-        case id, type, createdAt, updatedAt, locale, revision
-        case contentTypeId = "contentType"
+        case id, type, createdAt, updatedAt, locale, revision, contentType
     }
 }

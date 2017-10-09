@@ -26,17 +26,15 @@ final class Cat: EntryDecodable {
     var bestFriend: Cat?
 
     public required init(from decoder: Decoder) throws {
-        let container   = try decoder.container(keyedBy: LocalizableResource.CodingKeys.self)
-        sys             = try container.decode(Sys.self, forKey: .sys)
+        sys             = try decoder.sys()
         let fields      = try decoder.contentfulFieldsContainer(keyedBy: CodingKeys.self)
 
         self.name       = try fields.decodeIfPresent(String.self, forKey: .name)
-        self.color      = try fields.decodeIfPresent(String.self, forKey: .color )
+        self.color      = try fields.decodeIfPresent(String.self, forKey: .color)
         self.likes      = try fields.decodeIfPresent(Array<String>.self, forKey: .likes)
         self.lives      = try fields.decodeIfPresent(Int.self, forKey: .lives)
 
-        let linkResolver = decoder.linkResolver
-        try fields.resolveLink(forKey: .bestFriend, resolver: linkResolver) { [weak self] linkedCat in
+        try fields.resolveLink(forKey: .bestFriend, inLocale: sys.locale!, decoder: decoder) { [weak self] linkedCat in
             self?.bestFriend = linkedCat as? Cat
         }
     }
@@ -54,8 +52,7 @@ final class City: EntryDecodable {
     var location: Location?
 
     public required init(from decoder: Decoder) throws {
-        let container   = try decoder.container(keyedBy: LocalizableResource.CodingKeys.self)
-        sys             = try container.decode(Sys.self, forKey: .sys)
+        sys             = try decoder.sys()
         let fields      = try decoder.contentfulFieldsContainer(keyedBy: CodingKeys.self)
 
         self.location   = try fields.decode(Location.self, forKey: .location)
@@ -72,23 +69,50 @@ final class Dog: EntryDecodable {
 
     let sys: Sys
     let name: String?
+    let description: String?
     var image: Asset?
 
-
     public required init(from decoder: Decoder) throws {
-        let container   = try decoder.container(keyedBy: LocalizableResource.CodingKeys.self)
-        sys             = try container.decode(Sys.self, forKey: .sys)
+        sys             = try decoder.sys()
         let fields      = try decoder.contentfulFieldsContainer(keyedBy: CodingKeys.self)
         name            = try fields.decode(String.self, forKey: .name)
+        description     = try fields.decodeIfPresent(String.self, forKey: .description)
 
-        let linkResolver = decoder.linkResolver
-        try fields.resolveLink(forKey: .image, resolver: linkResolver) { [weak self] linkedImage in
+        try fields.resolveLink(forKey: .image, inLocale: sys.locale!, decoder: decoder) { [weak self] linkedImage in
             self?.image = linkedImage as? Asset
         }
     }
 
     private enum CodingKeys: String, CodingKey {
-        case image, name
+        case image, name, description
+    }
+}
+
+class Human: EntryDecodable {
+
+    static let contentTypeId = "human"
+
+    let sys: Sys
+    let name: String?
+    let description: String?
+    let likes: [String]?
+
+    var image: Asset?
+
+    public required init(from decoder: Decoder) throws {
+        sys             = try decoder.sys()
+        let fields      = try decoder.contentfulFieldsContainer(keyedBy: CodingKeys.self)
+        name            = try fields.decode(String.self, forKey: .name)
+        description     = try fields.decode(String.self, forKey: .description)
+        likes           = try fields.decode(Array<String>.self, forKey: .likes)
+
+        try fields.resolveLink(forKey: .image, inLocale: sys.locale!, decoder: decoder) { [weak self] linkedImage in
+            self?.image = linkedImage as? Asset
+        }
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case name, description, likes, image
     }
 }
 
@@ -98,7 +122,8 @@ class QueryTests: XCTestCase {
         let contentTypeClasses: [EntryDecodable.Type] = [
             Cat.self,
             Dog.self,
-            City.self
+            City.self,
+            Human.self
         ]
         return TestClientFactory.testClient(withCassetteNamed: "QueryTests", contentTypeClasses: contentTypeClasses)
     }()
@@ -152,6 +177,39 @@ class QueryTests: XCTestCase {
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
+    func testQueryReturningHeterogeneousArray() {
+
+        let expectation = self.expectation(description: "Fetch all entries expectation")
+
+        // Empty query means: get all entries. i.e. /entries
+        QueryTests.client.fetchMappedEntries(with: Query()) { (result: Result<MixedMappedArrayResponse>) in
+
+            switch result {
+            case .success(let response):
+                let entries = response.items
+                expect(entries.count).to(equal(10))
+
+                if let cat = entries.first as? Cat, let bestFriend = cat.bestFriend {
+                    expect(bestFriend.name).to(equal("Nyan Cat"))
+                } else {
+                    fail("The first entry in the heterogenous array should be a cat wiht a best friend named 'Nyan Cat'")
+                }
+
+                if let dog = entries.last as? Dog, let image = dog.image {
+                    expect(dog.description).to(equal("Bacon pancakes, makin' bacon pancakes!"))
+                    expect(image.id).to(equal("jake"))
+                } else {
+                    fail("The last entry in the heterogenous array should be a dog with an image with named 'jake'")
+                }
+
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
     func testQueryClientDefinedModelResolvesIncludes() {
         let selections = ["fields.image", "fields.name"]
 
@@ -200,6 +258,7 @@ class QueryTests: XCTestCase {
 
         waitForExpectations(timeout: 10.0, handler: nil)
     }
+
     func testEqualityQuery() {
 
         let expectation = self.expectation(description: "Equality operator expectation")
