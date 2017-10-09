@@ -100,6 +100,26 @@ public extension KeyedDecodingContainer {
             linkResolver.resolve(link, inLocale: localeCode, callback: callback)
         }
     }
+
+    /**
+     Caches an array of linked entries to be resolved once all resources in the response have been serialized.
+
+     - Parameter key: The KeyedDecodingContainer.Key representing the JSON key were the related resources arem found
+     - Parameter localeCode: The locale of the link source to be used when caching the relationship for future resolving
+     - Parameter decoder: The Decoder being used to deserialize the JSON to a user-defined class
+     - Parameter callback: The callback used to assign the linked item at a later time.
+     - Throws: Forwards the error if no link object is in the JSON at the specified key.
+     */
+    public func resolveLinksArray(forKey key: KeyedDecodingContainer.Key,
+                                  inLocale localeCode: LocaleCode,
+                                  decoder: Decoder,
+                                  callback: @escaping (Any) -> Void) throws {
+
+        let linkResolver = decoder.linkResolver
+        if let links = try decodeIfPresent(Array<Link>.self, forKey: key) {
+            linkResolver.resolve(links, inLocale: localeCode, callback: callback)
+        }
+    }
 }
 
 internal class LinkResolver {
@@ -107,6 +127,8 @@ internal class LinkResolver {
     private var dataCache: DataCache = DataCache()
 
     private var callbacks: [String: (Any) -> Void] = [:]
+
+    private static let linksArrayPrefix = "linksArrayPrefix"
 
     internal func cache(assets: [Asset]) {
         for asset in assets {
@@ -125,12 +147,28 @@ internal class LinkResolver {
         callbacks[DataCache.cacheKey(for: link, with: localeCode)] = callback
     }
 
+    internal func resolve(_ links: [Link], inLocale localeCode: LocaleCode, callback: @escaping (Any) -> Void) {
+        let linksIdentifier: String = links.reduce(into: LinkResolver.linksArrayPrefix) { (id, link) in
+            id += "," + DataCache.cacheKey(for: link, with: localeCode)
+        }
+        callbacks[linksIdentifier] = callback
+    }
+
     // Executes all cached callbacks to resolve links and then clears the callback cache and the data cache
     // where resources are cached before being resolved.
     internal func churnLinks() {
         for (linkKey, callback) in callbacks {
-            let item = dataCache.item(for: linkKey)
-            callback(item as Any)
+            if linkKey.hasPrefix(LinkResolver.linksArrayPrefix) {
+                let firstKeyIndex = linkKey.index(linkKey.startIndex, offsetBy: LinkResolver.linksArrayPrefix.count)
+                let onlyKeysString = linkKey[firstKeyIndex ..< linkKey.endIndex]
+                // Split creates a [Substring] array, but we need [String] to index the cache
+                let keys = onlyKeysString.split(separator: ",").map { String($0) }
+                let items: [Any] = keys.map { dataCache.item(for: $0) as Any }
+                callback(items as Any)
+            } else {
+                let item = dataCache.item(for: linkKey)
+                callback(item as Any)
+            }
         }
         self.callbacks = [:]
         self.dataCache = DataCache()
