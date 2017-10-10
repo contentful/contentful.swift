@@ -8,18 +8,173 @@
 
 import Foundation
 
-public extension Client {
+/**
+ Classes conforming to this protocol can be passed into your Client instance so that fetch methods
+ asynchronously returning MappedArrayResponse can be used and classes of your own definition can be returned.
 
-    public static var jsonDecoderWithoutLocalizationContext: JSONDecoder = {
+ It's important to note that there is no special handling of locales so if using the locale=* query parameter,
+ you will need to implement the special handing in your `init(from decoder: Decoder) throws` initializer for your class.
+
+ Example:
+
+ ```
+ func fetchMappedEntries(with query: Query<Cat>,
+ then completion: @escaping ResultsHandler<MappedArrayResponse<Cat>>) -> URLSessionDataTask?
+ ```
+ */
+public typealias EntryDecodable = Resource & EntryModellable
+
+/// Helper methods for decoding instances of the various types in your content model.
+public extension Decoder {
+
+    // The LinkResolver used by the SDK to cache and resolve links.
+    internal var linkResolver: LinkResolver {
+        return userInfo[DecoderContext.linkResolverContextKey] as! LinkResolver
+    }
+
+    /// Helper method to extract the sys property of a Contentful resource.
+    public func sys() throws -> Sys {
+        let container = try self.container(keyedBy: LocalizableResource.CodingKeys.self)
+        let sys = try container.decode(Sys.self, forKey: .sys)
+        return sys
+    }
+
+    /// Extract the nested JSON container for the "fields" dictionary present in Entry and Asset resources.
+    public func contentfulFieldsContainer<NestedKey>(keyedBy keyType: NestedKey.Type) throws -> KeyedDecodingContainer<NestedKey> {
+        let container = try self.container(keyedBy: LocalizableResource.CodingKeys.self)
+        let fieldsContainer = try container.nestedContainer(keyedBy: keyType, forKey: .fields)
+        return fieldsContainer
+    }
+}
+
+internal extension EntryModellable where Self: EntryDecodable {
+    // This is a magic workaround for the fact that dynamic metatypes cannot be passed into
+    // initializers such as UnkeyedDecodingContainer.decode(Decodable.Type), yet static methods CAN
+    // be called on metatypes.
+    static func popEntryDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
+        let entryDecodable = try container.decode(self)
+        return entryDecodable
+    }
+}
+
+internal struct DecoderContext {
+    static let linkResolverContextKey = CodingUserInfoKey(rawValue: "linkResolverContext")!
+    static let contentTypesContextKey = CodingUserInfoKey(rawValue: "contentTypesContext")!
+    static let localizationContextKey = CodingUserInfoKey(rawValue: "localizationContext")!
+}
+
+internal extension Client {
+
+    // Returns the JSONDecoder owned by the Client. Until the first request to the CDA is made, this
+    // decoder won't have the necessary localization content required to
+    internal static var jsonDecoderWithoutLocalizationContext: JSONDecoder = {
         let jsonDecoder = JSONDecoder()
         jsonDecoder.dateDecodingStrategy = .formatted(Date.Formatter.iso8601)
         return jsonDecoder
     }()
 
-    public static func update(_ jsonDecoder: JSONDecoder, withLocalizationContextFrom space: Space?) {
-        jsonDecoder.userInfo[LocalizableResource.localizationContextKey] = space?.localizationContext
+    internal static func update(_ jsonDecoder: JSONDecoder, withLocalizationContextFrom space: Space?) {
+        jsonDecoder.userInfo[DecoderContext.localizationContextKey] = space?.localizationContext
     }
 }
+
+// Fields JSON container.
+public extension KeyedDecodingContainer {
+
+    /**
+     Caches a link to be resolved once all resources in the response have been serialized.
+
+     - Parameter key: The KeyedDecodingContainer.Key representing the JSON key were the related resource is found
+     - Parameter localeCode: The locale of the link source to be used when caching the relationship for future resolving
+     - Parameter decoder: The Decoder being used to deserialize the JSON to a user-defined class
+     - Parameter callback: The callback used to assign the linked item at a later time.
+     - Throws: Forwards the error if no link object is in the JSON at the specified key.
+     */
+    public func resolveLink(forKey key: KeyedDecodingContainer.Key,
+                            inLocale localeCode: LocaleCode,
+                            decoder: Decoder,
+                            callback: @escaping (Any) -> Void) throws {
+
+        let linkResolver = decoder.linkResolver
+        if let link = try decodeIfPresent(Link.self, forKey: key) {
+            linkResolver.resolve(link, inLocale: localeCode, callback: callback)
+        }
+    }
+
+    /**
+     Caches an array of linked entries to be resolved once all resources in the response have been serialized.
+
+     - Parameter key: The KeyedDecodingContainer.Key representing the JSON key were the related resources arem found
+     - Parameter localeCode: The locale of the link source to be used when caching the relationship for future resolving
+     - Parameter decoder: The Decoder being used to deserialize the JSON to a user-defined class
+     - Parameter callback: The callback used to assign the linked item at a later time.
+     - Throws: Forwards the error if no link object is in the JSON at the specified key.
+     */
+    public func resolveLinksArray(forKey key: KeyedDecodingContainer.Key,
+                                  inLocale localeCode: LocaleCode,
+                                  decoder: Decoder,
+                                  callback: @escaping (Any) -> Void) throws {
+
+        let linkResolver = decoder.linkResolver
+        if let links = try decodeIfPresent(Array<Link>.self, forKey: key) {
+            linkResolver.resolve(links, inLocale: localeCode, callback: callback)
+        }
+    }
+}
+
+internal class LinkResolver {
+
+    private var dataCache: DataCache = DataCache()
+
+    private var callbacks: [String: (Any) -> Void] = [:]
+
+    private static let linksArrayPrefix = "linksArrayPrefix"
+
+    internal func cache(assets: [Asset]) {
+        for asset in assets {
+            dataCache.add(asset: asset)
+        }
+    }
+
+    internal func cache(entryDecodables: [EntryDecodable]) {
+        for entryDecodable in entryDecodables {
+            dataCache.add(entry: entryDecodable)
+        }
+    }
+
+    // Caches the callback to resolve the relationship represented by a Link at a later time.
+    internal func resolve(_ link: Link, inLocale localeCode: LocaleCode, callback: @escaping (Any) -> Void) {
+        callbacks[DataCache.cacheKey(for: link, with: localeCode)] = callback
+    }
+
+    internal func resolve(_ links: [Link], inLocale localeCode: LocaleCode, callback: @escaping (Any) -> Void) {
+        let linksIdentifier: String = links.reduce(into: LinkResolver.linksArrayPrefix) { (id, link) in
+            id += "," + DataCache.cacheKey(for: link, with: localeCode)
+        }
+        callbacks[linksIdentifier] = callback
+    }
+
+    // Executes all cached callbacks to resolve links and then clears the callback cache and the data cache
+    // where resources are cached before being resolved.
+    internal func churnLinks() {
+        for (linkKey, callback) in callbacks {
+            if linkKey.hasPrefix(LinkResolver.linksArrayPrefix) {
+                let firstKeyIndex = linkKey.index(linkKey.startIndex, offsetBy: LinkResolver.linksArrayPrefix.count)
+                let onlyKeysString = linkKey[firstKeyIndex ..< linkKey.endIndex]
+                // Split creates a [Substring] array, but we need [String] to index the cache
+                let keys = onlyKeysString.split(separator: ",").map { String($0) }
+                let items: [Any] = keys.map { dataCache.item(for: $0) as Any }
+                callback(items as Any)
+            } else {
+                let item = dataCache.item(for: linkKey)
+                callback(item as Any)
+            }
+        }
+        self.callbacks = [:]
+        self.dataCache = DataCache()
+    }
+}
+
 
 // Inspired by https://gist.github.com/mbuchetics/c9bc6c22033014aa0c550d3b4324411a
 internal struct JSONCodingKeys: CodingKey {
@@ -84,7 +239,7 @@ internal extension KeyedDecodingContainer {
             } else if let location = try? decode(Location.self, forKey: key) {
                 dictionary[key.stringValue] = location
             }
-                
+
             // These must be called after attempting to decode all other custom types.
             else if let nestedDictionary = try? decode(Dictionary<String, Any>.self, forKey: key) {
                 dictionary[key.stringValue] = nestedDictionary

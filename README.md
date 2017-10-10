@@ -43,15 +43,15 @@ client.fetchEntry("nyancat") { (result: Result<Entry>) in
 }
 ```
 
-## `EntryModellable` and `MappedContent`
+## `EntryDecodable`
 
-The `EntryModellable` protocols allows you to define types that will be mapped from `Entry`s of the various content types in your Contentful space. When using methods such as:
+The `EntryDecodable` protocol allows you to define types that will be mapped from `Entry`s of the various content types in your Contentful space. When using methods such as:
 
 ```swift
-func fetchMappedEntries(with query: Query) -> Observable<Result<MappedContent>>
+func fetchMappedEntries(with query: Query) -> Observable<Result<MappedArrayResponse<EntryDecodable>>>
 ```
 
-the asynchronously returned result will be an instance of `MappedContent` which will contain a dictionary which maps content type identifiers to arrays of `EntryModellable` (types of your own definition) that have been fetched. Note that these features are in beta and the API is subject to change.
+the asynchronously returned result will be an instance of `MappedArrayResponse` in which the generic type parameter is the class you've defined for your content type. If you are using a `Query` that does not restrict the response to contain entries of one content type, you will use methods that return `MixedMappedArrayResponse` instead of `MappedArrayResponse`. The `EntryDecodable` protocol extends the `Decodable` protocol in Swift 4's Foundation standard library. The SDK provides helper methods for resolving relationships between `EntryDecodable`s and also for grabbing values from the fields container in the JSON for each resource.
 
 ## Swift playground
 

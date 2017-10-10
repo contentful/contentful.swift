@@ -768,10 +768,10 @@ public final class AssetQuery: Query {
 /** 
  An additional query to filter by the properties of linked objects when searching on references.
  See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references>
- and see the init<LinkType: EntryModellable>(whereLinkAt fieldNameForLink: String, matches filterQuery: FilterQuery<LinkType>? = nil) methods
+ and see the init<LinkType: EntryDecodable>(whereLinkAt fieldNameForLink: String, matches filterQuery: FilterQuery<LinkType>? = nil) methods
  on QueryOn for example usage.
 */
-public final class FilterQuery<EntryType>: AbstractQuery where EntryType: EntryModellable {
+public final class FilterQuery<EntryType>: AbstractQuery where EntryType: EntryDecodable {
 
     /// The parameters dictionary that are converted to `URLComponents` (HTTP parameters/arguments) on the HTTP URL. Useful for debugging.
     public var parameters: [String: String] = [String: String]()
@@ -818,7 +818,7 @@ public final class FilterQuery<EntryType>: AbstractQuery where EntryType: EntryM
  Operations that are only available when querying `Entry`s on specific content types (i.e. content_type must be set) 
  are available through this class.
  */
-public final class QueryOn<EntryType>: ChainableQuery where EntryType: EntryModellable {
+public final class QueryOn<EntryType>: ChainableQuery where EntryType: EntryDecodable {
 
     /// The parameters dictionary that are converted to `URLComponents` (HTTP parameters/arguments) on the HTTP URL. Useful for debugging.
     public var parameters: [String: String] = [String: String]()

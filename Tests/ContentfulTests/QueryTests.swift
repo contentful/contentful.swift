@@ -10,14 +10,13 @@
 import XCTest
 import Nimble
 import DVR
-import CoreData
+import Interstellar
 
-final class Cat: EntryModellable {
+final class Cat: EntryDecodable {
 
     static let contentTypeId: String = "cat"
 
-    let id: String
-    let localeCode: String
+    let sys: Sys
     let color: String?
     let name: String?
     let lives: Int?
@@ -26,62 +25,108 @@ final class Cat: EntryModellable {
     // Relationship fields.
     var bestFriend: Cat?
 
-    init(entry: Entry) {
-        self.id         = entry.id
-        self.localeCode = entry.localeCode
+    public required init(from decoder: Decoder) throws {
+        sys             = try decoder.sys()
+        let fields      = try decoder.contentfulFieldsContainer(keyedBy: CodingKeys.self)
 
-        self.name       = entry.fields.string(at: "name")
-        self.color      = entry.fields["color"] as? String
-        self.likes      = entry.fields["likes"] as? [String]
-        self.lives      = entry.fields["lives"] as? Int
+        self.name       = try fields.decodeIfPresent(String.self, forKey: .name)
+        self.color      = try fields.decodeIfPresent(String.self, forKey: .color)
+        self.likes      = try fields.decodeIfPresent(Array<String>.self, forKey: .likes)
+        self.lives      = try fields.decodeIfPresent(Int.self, forKey: .lives)
+
+        try fields.resolveLink(forKey: .bestFriend, inLocale: sys.locale!, decoder: decoder) { [weak self] linkedCat in
+            self?.bestFriend = linkedCat as? Cat
+        }
     }
-
-    func populateLinks(from cache: [FieldName: Any]) {
-        self.bestFriend = cache["bestFriend"] as? Cat
+    
+    private enum CodingKeys: String, CodingKey {
+        case sys, name, color, likes, lives, bestFriend
     }
 }
 
-final class City: EntryModellable {
-
-    init(entry: Entry) {
-        self.id         = entry.id
-        self.localeCode = entry.localeCode
-        self.location = Location(latitude: 1, longitude: 1)
-    }
-
-    func populateLinks(from cache: [FieldName : Any]) {}
+final class City: EntryDecodable {
 
     static let contentTypeId: String = "1t9IbcfdCk6m04uISSsaIK"
 
-    var id: String
-    var localeCode: String
+    let sys: Sys
     var location: Location?
+
+    public required init(from decoder: Decoder) throws {
+        sys             = try decoder.sys()
+        let fields      = try decoder.contentfulFieldsContainer(keyedBy: CodingKeys.self)
+
+        self.location   = try fields.decode(Location.self, forKey: .location)
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case location = "center"
+    }
 }
 
-final class Dog: EntryModellable {
+final class Dog: EntryDecodable {
 
     static let contentTypeId: String = "dog"
 
-    init(entry: Entry) {
-        self.id         = entry.id
-        self.localeCode = entry.localeCode
-        self.name       = entry.fields["name"] as? String
+    let sys: Sys
+    let name: String!
+    let description: String?
+    var image: Asset?
+
+    public required init(from decoder: Decoder) throws {
+        sys             = try decoder.sys()
+        let fields      = try decoder.contentfulFieldsContainer(keyedBy: CodingKeys.self)
+        name            = try fields.decode(String.self, forKey: .name)
+        description     = try fields.decodeIfPresent(String.self, forKey: .description)
+
+        try fields.resolveLink(forKey: .image, inLocale: sys.locale!, decoder: decoder) { [weak self] linkedImage in
+            self?.image = linkedImage as? Asset
+        }
     }
 
-    func populateLinks(from cache: [FieldName : Any]) {
-        self.image = cache["image"] as? Asset
+    private enum CodingKeys: String, CodingKey {
+        case image, name, description
     }
+}
 
-    let id: String
-    let localeCode: String
+class Human: EntryDecodable {
+
+    static let contentTypeId = "human"
+
+    let sys: Sys
     let name: String?
+    let description: String?
+    let likes: [String]?
 
     var image: Asset?
+
+    public required init(from decoder: Decoder) throws {
+        sys             = try decoder.sys()
+        let fields      = try decoder.contentfulFieldsContainer(keyedBy: CodingKeys.self)
+        name            = try fields.decode(String.self, forKey: .name)
+        description     = try fields.decode(String.self, forKey: .description)
+        likes           = try fields.decode(Array<String>.self, forKey: .likes)
+
+        try fields.resolveLink(forKey: .image, inLocale: sys.locale!, decoder: decoder) { [weak self] linkedImage in
+            self?.image = linkedImage as? Asset
+        }
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case name, description, likes, image
+    }
 }
 
 class QueryTests: XCTestCase {
 
-    static let client = TestClientFactory.testClient(withCassetteNamed: "QueryTests", contentModel: ContentModel(entryTypes: [Cat.self, City.self, Dog.self]))
+    static let client: Client = {
+        let contentTypeClasses: [EntryDecodable.Type] = [
+            Cat.self,
+            Dog.self,
+            City.self,
+            Human.self
+        ]
+        return TestClientFactory.testClient(withCassetteNamed: "QueryTests", contentTypeClasses: contentTypeClasses)
+    }()
 
     override class func setUp() {
         super.setUp()
@@ -123,12 +168,45 @@ class QueryTests: XCTestCase {
 
                 // Test uniqueness in memory.
                 expect(nyanCat).to(be(nyanCat.bestFriend?.bestFriend))
-            case .error:
-                fail("Should not throw an error")
+            case .error(let error):
+                fail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
 
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testQueryReturningHeterogeneousArray() {
+
+        let expectation = self.expectation(description: "Fetch all entries expectation")
+
+        // Empty query means: get all entries. i.e. /entries
+        QueryTests.client.fetchMappedEntries(with: Query()) { (result: Result<MixedMappedArrayResponse>) in
+
+            switch result {
+            case .success(let response):
+                let entries = response.items
+                expect(entries.count).to(equal(10))
+
+                if let cat = entries.first as? Cat, let bestFriend = cat.bestFriend {
+                    expect(bestFriend.name).to(equal("Nyan Cat"))
+                } else {
+                    fail("The first entry in the heterogenous array should be a cat wiht a best friend named 'Nyan Cat'")
+                }
+
+                if let dog = entries.last as? Dog, let image = dog.image {
+                    expect(dog.description).to(equal("Bacon pancakes, makin' bacon pancakes!"))
+                    expect(image.id).to(equal("jake"))
+                } else {
+                    fail("The last entry in the heterogenous array should be a dog with an image with named 'jake'")
+                }
+
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
@@ -139,7 +217,7 @@ class QueryTests: XCTestCase {
 
         let query = try! QueryOn<Dog>(selectingFieldsNamed: selections)
 
-        QueryTests.client.fetchMappedEntries(with: query) { result in
+        QueryTests.client.fetchMappedEntries(with: query) { (result: Result<MappedArrayResponse<Dog>>) in
 
             switch result {
             case .success(let dogsResponse):
@@ -180,13 +258,14 @@ class QueryTests: XCTestCase {
 
         waitForExpectations(timeout: 10.0, handler: nil)
     }
+
     func testEqualityQuery() {
 
         let expectation = self.expectation(description: "Equality operator expectation")
 
         let query = QueryOn<Cat>(where: "fields.color", .equals("gray"))
 
-        QueryTests.client.fetchMappedEntries(with: query) { result in
+        QueryTests.client.fetchMappedEntries(with: query) { (result: Result<MappedArrayResponse<Cat>>) in
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
@@ -213,8 +292,8 @@ class QueryTests: XCTestCase {
                 let cats = catsResponse.items
                 expect(cats.count).to(beGreaterThan(0))
                 expect(cats.first?.color).toNot(equal("gray"))
-            case .error:
-                fail("Should not throw an error")
+            case .error(let error):
+                fail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -237,8 +316,8 @@ class QueryTests: XCTestCase {
                 expect(cats.first?.likes).to(contain("rainbows"))
                 expect(cats.first?.likes).to(contain("fish"))
 
-            case .error:
-                fail("Should not throw an error")
+            case .error(let error):
+                fail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -262,10 +341,8 @@ class QueryTests: XCTestCase {
                     expect(happyCat.likes?.count).to(equal(1))
                     expect(happyCat.likes).to(contain("cheezburger"))
                 }
-
-
-            case .error:
-                fail("Should not throw an error")
+            case .error(let error):
+                fail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -288,8 +365,8 @@ class QueryTests: XCTestCase {
                 expect(cats.first?.likes).to(contain("rainbows"))
                 expect(cats.first?.likes).to(contain("fish"))
 
-            case .error:
-                fail("Should not throw an error")
+            case .error(let error):
+                fail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -308,8 +385,8 @@ class QueryTests: XCTestCase {
                 let cats = catsResponse.items
                 expect(cats.count).to(beGreaterThan(0))
                 expect(cats.first?.color).toNot(equal("gray"))
-            case .error:
-                fail("Should not throw an error")
+            case .error(let error):
+                fail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -692,12 +769,12 @@ class QueryTests: XCTestCase {
     }
 
     // MARK: - Asset mimetype
-    
+
     func testFilterAssetsByMIMETypeGroup() {
         let expectation = self.expectation(description: "Fetch image from asset network expectation")
-        
+
         let query = AssetQuery(whereMimetypeGroupIs: .image)
-        
+
         QueryTests.client.fetchAssets(with: query) { result in
             switch result {
             case .success(let assetsResponse):
@@ -708,7 +785,98 @@ class QueryTests: XCTestCase {
             }
             expectation.fulfill()
         }
-        
+
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 }
+
+// From Complex-Sync-Test-Space
+class LinkClass: EntryDecodable {
+
+    static let contentTypeId = "link"
+
+    let sys: Sys
+    let awesomeLinkTitle: String?
+
+    public required init(from decoder: Decoder) throws {
+        sys             = try decoder.sys()
+        let fields      = try decoder.contentfulFieldsContainer(keyedBy: CodingKeys.self)
+        awesomeLinkTitle = try fields.decodeIfPresent(String.self, forKey: .awesomeLinkTitle)
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case awesomeLinkTitle
+    }
+}
+
+
+class SingleRecord: EntryDecodable {
+
+    static let contentTypeId = "singleRecord"
+
+    let sys: Sys
+    let textBody: String?
+    var arrayLinkField: [LinkClass]?
+
+    public required init(from decoder: Decoder) throws {
+        sys             = try decoder.sys()
+        let fields      = try decoder.contentfulFieldsContainer(keyedBy: CodingKeys.self)
+        textBody        = try fields.decodeIfPresent(String.self, forKey: .textBody)
+        try fields.resolveLinksArray(forKey: .arrayLinkField, inLocale: sys.locale!, decoder: decoder) { [weak self] arrayOfLinks in
+            self?.arrayLinkField = arrayOfLinks as? [LinkClass]
+        }
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case textBody, arrayLinkField
+    }
+}
+
+class LinkResolverTests: XCTestCase {
+    static let client: Client = {
+        let contentTypeClasses: [EntryDecodable.Type] = [SingleRecord.self, LinkClass.self]
+        return TestClientFactory.testClient(withCassetteNamed: "LinkResolverTests",
+                                                  spaceId: "smf0sqiu0c5s",
+                                                  accessToken: "14d305ad526d4487e21a99b5b9313a8877ce6fbf540f02b12189eea61550ef34",
+                                                  contentTypeClasses: contentTypeClasses)
+    }()
+
+    override class func setUp() {
+        super.setUp()
+        (client.urlSession as? DVR.Session)?.beginRecording()
+    }
+
+    override class func tearDown() {
+        super.tearDown()
+        (client.urlSession as? DVR.Session)?.endRecording()
+    }
+
+    func testDecoderCanResolveArrayOfLinks() {
+
+        let expectation = self.expectation(description: "CanResolveArrayOfLinksTests")
+
+        let query = QueryOn<SingleRecord>(where: "sys.id", .equals("7BwFiM0nxCS4EGYaIAIkyU"))
+        LinkResolverTests.client.fetchMappedEntries(with: query) { result in
+
+            switch result {
+            case .success(let arrayResponse):
+                let records = arrayResponse.items
+                expect(records.count).to(equal(1))
+                if let singleRecord = records.first {
+                    expect(singleRecord.arrayLinkField).toNot(beNil())
+                    expect(singleRecord.arrayLinkField?.count).to(equal(2))
+                    expect(singleRecord.arrayLinkField?.first?.awesomeLinkTitle).to(equal("AWESOMELINK!!!"))
+                    expect(singleRecord.arrayLinkField?[1].awesomeLinkTitle).to(equal("The second link"))
+                } else {
+                    fail("There shoudl be at least one entry in the array of records")
+                }
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
+
+            expectation.fulfill()
+        }
+        self.waitForExpectations(timeout: 10.0, handler: nil)
+    }
+}
+

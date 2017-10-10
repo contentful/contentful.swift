@@ -33,7 +33,7 @@ public struct Sys {
     /// The number denoting what published version of the resource is.
     public let revision: Int?
 
-    // Because we have a root key of "sys" we will use a dictionary.
+    // The link describing the content type.
     fileprivate let contentTypeInfo: Link? // Not present on `Asset` or `ContentType`
 }
 
@@ -48,11 +48,10 @@ extension Sys: Decodable {
         updatedAt       = try container.decodeIfPresent(Date.self, forKey: .updatedAt)
         locale          = try container.decodeIfPresent(String.self, forKey: .locale)
         revision        = try container.decodeIfPresent(Int.self, forKey: .revision)
-        contentTypeInfo = try container.decodeIfPresent(Link.self, forKey: .contentTypeId)
+        contentTypeInfo = try container.decodeIfPresent(Link.self, forKey: .contentType)
     }
 
     private enum CodingKeys: String, CodingKey {
-        case id, type, createdAt, updatedAt, locale, revision
-        case contentTypeId = "contentType"
+        case id, type, createdAt, updatedAt, locale, revision, contentType
     }
 }

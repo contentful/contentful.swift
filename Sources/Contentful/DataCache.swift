@@ -8,52 +8,58 @@
 
 import Foundation
 
-
-/// Implemented using `NSCache`
 internal class DataCache {
 
     static let cacheKeyDelimiter = "_"
 
-    internal static func cacheKey(for resource: EntryModellable) -> String {
+    internal static func cacheKey(for resource: Resource) -> String {
         let delimeter = DataCache.cacheKeyDelimiter
 
-        let cacheKey =  resource.id + delimeter + "entry" + delimeter + resource.localeCode
+        let cacheKey =  resource.sys.id + delimeter + resource.sys.type.lowercased() + delimeter + resource.sys.locale!
         return cacheKey
     }
 
-    internal static func cacheKey(for resource: LocalizableResource) -> String {
-        let delimeter = DataCache.cacheKeyDelimiter
 
-        // Look at the type info.
-        let cacheKey =  resource.id + delimeter + resource.sys.type.lowercased() + delimeter + resource.currentlySelectedLocale.code
-        return cacheKey
+    internal static func cacheKey(for link: Link, with sourceLocaleCode: LocaleCode) -> String {
+        let linkType: String
+        switch link {
+        case .asset:
+            linkType = "asset"
+        case .entry:
+            linkType = "entry"
+        case .unresolved(let sys):
+            linkType = sys.linkType.lowercased()
+        }
+        let id = link.id
+        let delimeter = "_"
+        return id + delimeter + linkType + delimeter + sourceLocaleCode
     }
 
-    let assetCache = NSCache<AnyObject, AnyObject>()
-    let entryCache = NSCache<AnyObject, AnyObject>()
+    var assetCache = Dictionary<String, Asset>()
+    var entryCache = Dictionary<String, Any>()
 
     internal func add(asset: Asset) {
-        assetCache.setObject(asset, forKey: DataCache.cacheKey(for: asset) as AnyObject)
+        assetCache[DataCache.cacheKey(for: asset)] = asset
     }
 
-    internal func add(entry: EntryModellable) {
-        entryCache.setObject(entry, forKey: DataCache.cacheKey(for: entry) as AnyObject)
+    internal func add(entry: EntryDecodable) {
+        entryCache[DataCache.cacheKey(for: entry)] = entry
     }
 
     internal func asset(for identifier: String) -> Asset? {
-        return assetCache.object(forKey: identifier as AnyObject) as? Asset
+        return assetCache[identifier]
     }
 
-    internal func entry(for identifier: String) -> EntryModellable? {
-        return entryCache.object(forKey: identifier as AnyObject) as? EntryModellable
+    internal func entry(for identifier: String) -> EntryDecodable? {
+        return entryCache[identifier] as? EntryDecodable
     }
 
     internal func item<T>(for identifier: String) -> T? {
         return item(for: identifier) as? T
     }
 
-    internal func item(for identifier: String) -> AnyObject? {
-        var target: AnyObject? = self.asset(for: identifier)
+    internal func item(for identifier: String) -> Any? {
+        var target: Any? = self.asset(for: identifier)
 
         if target == nil {
             target = self.entry(for: identifier)

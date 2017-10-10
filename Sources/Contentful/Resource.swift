@@ -20,9 +20,13 @@ extension Resource {
     public var id: String {
         return sys.id
     }
+
+    public var localeCode: String? {
+        return sys.locale
+    }
 }
 
-class DeletedResource: Resource, Decodable {
+internal class DeletedResource: Resource, Decodable {
 
     let sys: Sys
 
@@ -75,14 +79,13 @@ public class LocalizableResource: Resource, Decodable {
     // Context used for handling locales during decoding of `Asset` and `Entry` instances.
     internal let localizationContext: LocalizationContext
 
-    public static let localizationContextKey = CodingUserInfoKey(rawValue: "localizationContext")!
 
     public required init(from decoder: Decoder) throws {
 
         let container       = try decoder.container(keyedBy: CodingKeys.self)
         let sys             = try container.decode(Sys.self, forKey: .sys)
 
-        guard let localizationContext = decoder.userInfo[LocalizableResource.localizationContextKey] as? LocalizationContext else {
+        guard let localizationContext = decoder.userInfo[DecoderContext.localizationContextKey] as? LocalizationContext else {
             throw SDKError.localeHandlingError(message: """
                 SDK failed to find the necessary LocalizationContext
                 necessary to properly map API responses to internal format.
@@ -105,7 +108,7 @@ public class LocalizableResource: Resource, Decodable {
                                                                        wasSelectedOnAPILevel: sys.locale != nil)
     }
 
-    private enum CodingKeys: String, CodingKey {
+    public enum CodingKeys: String, CodingKey {
         case sys
         case fields
     }
@@ -203,28 +206,6 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
         let links = self[key] as? [Link]
         let assets = links?.flatMap { $0.asset }
         return assets
-    }
-
-    /**
-     Extract the linked value of type `T` at the specified fieldName.
-
-     - Parameter key: The name of the field to extract the `T` from.
-     - Returns: The `T` value, or `nil` if data contained does not have contain a Link referencing an `T`.
-     */
-    public func linkedValue<T>(at key: Key) -> T? where T: EntryModellable {
-        let value = self[key] as? T
-        return value
-    }
-
-    /**
-     Extract the linked array of type `[T]` at the specified fieldName.
-
-     - Parameter key: The name of the field to extract the `[T]` from.
-     - Returns: The `[T]` value, or `nil` if data contained does not have contain a Link referencing an `[T]`.
-     */
-    public func linkedValues<T>(at key: Key) -> [T]? where T: EntryModellable {
-        let value = self[key] as? [T]
-        return value
     }
 
     /**
