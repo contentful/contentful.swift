@@ -11,6 +11,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 ## Table of contents
 
 #### 0.x Releases
+- `0.10.x` Releases - [0.11.0](#0110)
 - `0.10.x` Releases - [0.10.0](#0100) | [0.10.1](#0101) | [0.10.2](#0102)
 - `0.9.x` Releases - [0.9.0](#090) | [0.9.1](#091) | [0.9.2](#092) | [0.9.3](#093)
 - `0.8.x` Releases - [0.8.0](#080)
@@ -22,12 +23,25 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 
 ---
 
+## [`0.11.0`](https://github.com/contentful/contentful.swift/releases/tag/0.11.0)
+Released on 2017-10-10
+
+#### Changed
+- **BREAKING:** `EntryModellable` is now called `EntryDecodable` and extends `Decodable` from the Swift 4 Foundation standard library. There are convenience methods for deserializing fields in the "fields" container for an entry.
+- **BREAKING:** The `MappedContent` type no longer exists. If requesting heterogeneous collections (by hitting "/entries" with no query paramters for intance), you will get a `Result<MixedMappedArrayResponse>` and it is up to you to filter the array by the contained types. 
+
+#### Fixed
+- [#132](https://github.com/contentful/contentful.swift/issues/132) `EntryDecodable` not synthesizing arrays of links
+- [#133](https://github.com/contentful/contentful.swift/issues/133) `EntryDecodable` not allowing properties that are implicit optionals 
+
+---
+
 ## [`0.10.2`](https://github.com/contentful/contentful.swift/releases/tag/0.10.2)
 Released on 2017-10-06
 
 #### Fixed
 - Compile error due to incorrect protection level setting
-`
+
 ---
 
 ## [`0.10.1`](https://github.com/contentful/contentful.swift/releases/tag/0.10.1)
