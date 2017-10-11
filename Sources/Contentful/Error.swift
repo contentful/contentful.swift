@@ -52,7 +52,11 @@ public enum SDKError: Error {
 }
 
 /// Errors thrown for queries which have invalid construction.
-public enum QueryError: Error {
+public enum QueryError: Error, CustomDebugStringConvertible {
+    
+    public var debugDescription: String {
+        return message
+    }
 
     var message: String {
         switch self {
@@ -98,28 +102,43 @@ public enum QueryError: Error {
 }
 
 
-/// Information regarding an error received from Contentful
-public class ContentfulError: Decodable, Error {
+/// Information regarding an error received from Contentful's API.
+public class ContentfulError: Decodable, Error, CustomDebugStringConvertible {
+
+    // Format the output for printing from the debug console
+    public var debugDescription: String {
+        let detailsStrings = details?.errors.flatMap({ $0.details }).joined(separator: ",") ?? ""
+        return message! + " " + detailsStrings
+    }
 
     /// System fields for the error.
     public struct Sys: Decodable {
-        /// The identifier for fo rth eerror.
-        let id: String?
+        /// The identifier for the error.
+        let id: String
         /// The type of the error.
-        let type: String?
+        let type: String
     }
 
     public let sys: Sys
 
     /// Human readable error message.
-    public private(set) var message: String?
+    public let message: String?
 
     /// The identifier of the request, can be useful when making support requests.
-    public private(set) var requestId: String?
+    public let requestId: String?
 
-    // Developer note: API Errors are a special case for Object mapping from JSON. 
-    // Rather than throw an error which will trigger the Swift error breakpoint in Xcode, 
-    // we want to use failable ObjectMapper initializers.
+    internal let details: Details?
+
+    internal struct Details: Decodable {
+
+        internal let errors: [Details.Error]
+
+        internal struct Error: Decodable {
+            internal let name: String
+            internal let path: [String]
+            internal let details: String
+        }
+    }
 
     public var id: String? {
         return sys.id
@@ -130,14 +149,20 @@ public class ContentfulError: Decodable, Error {
     }
 
     public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        sys = try container.decode(Sys.self, forKey: .sys)
-        message = try container.decodeIfPresent(String.self, forKey: .message)
-        requestId = try container.decodeIfPresent(String.self, forKey: .requestId)
-
+        let container   = try decoder.container(keyedBy: CodingKeys.self)
+        sys             = try container.decode(Sys.self, forKey: .sys)
+        message         = try container.decodeIfPresent(String.self, forKey: .message)
+        requestId       = try container.decodeIfPresent(String.self, forKey: .requestId)
+        details         = try container.decodeIfPresent(Details.self, forKey: .details)
     }
 
-    static func error(with decoder: JSONDecoder, and data: Data) -> ContentfulError? {
+    /**
+     * API Errors from the Contentful Delivery API are special cased for JSON deserialization:
+     * Rather than throw an error and trigger a Swift error breakpoint in Xcode,
+     * we use failable initializers so that consumers don't experience error breakpoints when
+     * no error was returned from the API.
+     */
+    internal static func error(with decoder: JSONDecoder, and data: Data) -> ContentfulError? {
         if let error = try? decoder.decode(ContentfulError.self, from: data) {
             // An error must have these things.
             guard error.message != nil && error.requestId != nil else {
@@ -149,7 +174,7 @@ public class ContentfulError: Decodable, Error {
     }
 
     private enum CodingKeys: String, CodingKey {
-        case sys, message, requestId
+        case sys, message, requestId, details
     }
 }
 
@@ -169,4 +194,11 @@ public final class RateLimitError: ContentfulError {
      for more information.
      */
     public internal(set) var timeBeforeLimitReset: Int?
+
+    // Format the output for printing from the debug console
+    override public var debugDescription: String {
+        let detailsStrings = details?.errors.flatMap({ $0.details }).joined(separator: ",") ?? ""
+        let timeInfoString = ( timeBeforeLimitReset == nil ? "" : "Wait " + String(timeBeforeLimitReset!)) + " seconds before making more requests."
+        return message! + " " + detailsStrings + timeInfoString
+    }
 }
