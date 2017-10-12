@@ -100,13 +100,6 @@ public enum Link: Decodable {
         return self
     }
 
-    private func id(for link: Any?) -> String? {
-        guard let link = link as? [String: Any] else { return nil }
-        let sys = link["sys"] as? [String: Any]
-        let id = sys?["id"] as? String
-        return id
-    }
-
     public init(from decoder: Decoder) throws {
         let container   = try decoder.container(keyedBy: CodingKeys.self)
         let sys         = try container.decode(Link.Sys.self, forKey: .sys)

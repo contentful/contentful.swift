@@ -146,16 +146,17 @@ class QueryTests: XCTestCase {
             "include": String(
                 2)
         ]
-        let query = try! Query(where: "content_type", .equals("<content_type_id>"))
-            .where("fields.<field_name>.sys.id", .equals("<entry_id>")).includesLevel(2)
+        let query = Query.where(contentTypeId: "<content_type_id>")
+                         .where(valueAtKeyPath: "fields.<field_name>.sys.id", .equals("<entry_id>"))
+                         .include(2)
         expect(query.parameters).to(equal(expectedQueryParameters))
     }
 
     func testQueryReturningClientDefinedModel() {
-        let selections = ["fields.bestFriend", "fields.color", "fields.name"]
+        let selections = ["bestFriend", "color", "name"]
 
         let expectation = self.expectation(description: "Select operator expectation")
-        let query = try! QueryOn<Cat>(selectingFieldsNamed: selections)
+        let query = try! QueryOn<Cat>.select(fieldsNamed: selections)
 
         QueryTests.client.fetchMappedEntries(matching: query) { result in
             switch result {
@@ -212,11 +213,11 @@ class QueryTests: XCTestCase {
     }
 
     func testQueryClientDefinedModelResolvesIncludes() {
-        let selections = ["fields.image", "fields.name"]
+        let selections = ["image", "name"]
 
         let expectation = self.expectation(description: "Select operator expectation")
 
-        let query = try! QueryOn<Dog>(selectingFieldsNamed: selections)
+        let query = try! QueryOn<Dog>.select(fieldsNamed: selections)
 
         QueryTests.client.fetchMappedEntries(matching: query) { (result: Result<MappedArrayResponse<Dog>>) in
 
@@ -242,7 +243,7 @@ class QueryTests: XCTestCase {
     func testFetchingEntriesOfContentType() {
         let expectation = self.expectation(description: "Equality operator expectation")
 
-        let query = Query(where: "content_type", .equals("cat"))
+        let query = Query.where(contentTypeId: "cat")
 
         QueryTests.client.fetchEntries(matching: query) { result in
             switch result {
@@ -264,7 +265,7 @@ class QueryTests: XCTestCase {
 
         let expectation = self.expectation(description: "Equality operator expectation")
 
-        let query = QueryOn<Cat>(fields: .color, .equals("gray"))
+        let query = QueryOn<Cat>.where(field: .color, .equals("gray"))
 
         QueryTests.client.fetchMappedEntries(matching: query) { (result: Result<MappedArrayResponse<Cat>>) in
             switch result {
@@ -285,7 +286,7 @@ class QueryTests: XCTestCase {
 
         let expectation = self.expectation(description: "Inequality operator expectation")
 
-        let query = QueryOn<Cat>(where: "fields.color", .doesNotEqual("gray"))
+        let query = QueryOn<Cat>.where(valueAtKeyPath: "fields.color", .doesNotEqual("gray"))
 
         QueryTests.client.fetchMappedEntries(matching: query) { result in
             switch result {
@@ -305,7 +306,7 @@ class QueryTests: XCTestCase {
     func testInclusionQuery() {
         let expectation = self.expectation(description: "Inclusion query operator expectation")
 
-        let query = QueryOn<Cat>(where: "fields.likes", .includes(["rainbows"]))
+        let query = QueryOn<Cat>.where(valueAtKeyPath: "fields.likes", .includes(["rainbows"]))
 
         QueryTests.client.fetchMappedEntries(matching: query) { result in
             switch result {
@@ -329,7 +330,7 @@ class QueryTests: XCTestCase {
     func testExclusionQuery() {
         let expectation = self.expectation(description: "Exclusion query operator expectation")
 
-        let query = QueryOn<Cat>(where: "fields.likes", .excludes(["rainbows"]))
+        let query = QueryOn<Cat>.where(valueAtKeyPath: "fields.likes", .excludes(["rainbows"]))
 
         QueryTests.client.fetchMappedEntries(matching: query) { result in
             switch result {
@@ -354,7 +355,7 @@ class QueryTests: XCTestCase {
     func testMultipleValuesQuery() {
         let expectation = self.expectation(description: "Multiple values operator expectation")
 
-        let query = QueryOn<Cat>(where: "fields.likes", .hasAll(["rainbows","fish"]))
+        let query = QueryOn<Cat>.where(valueAtKeyPath: "fields.likes", .hasAll(["rainbows","fish"]))
 
         QueryTests.client.fetchMappedEntries(matching: query) { result in
             switch result {
@@ -378,7 +379,7 @@ class QueryTests: XCTestCase {
     func testExistenceQuery() {
         let expectation = self.expectation(description: "Existence operator expectation")
 
-        let query = QueryOn<Cat>(where: "fields.color", .exists(true))
+        let query = QueryOn<Cat>.where(valueAtKeyPath: "fields.color", .exists(true))
 
         QueryTests.client.fetchMappedEntries(matching: query) { result in
             switch result {
@@ -399,8 +400,8 @@ class QueryTests: XCTestCase {
 
         let expectation = self.expectation(description: "Chained operator expectation")
 
-        let query = QueryOn<Cat>(where: "fields.color", .doesNotEqual("gray"))
-        query.where("fields.lives", .equals("9"))
+        let query = QueryOn<Cat>.where(valueAtKeyPath: "fields.color", .doesNotEqual("gray"))
+            query.where(valueAtKeyPath:"fields.lives", .equals("9"))
 
         QueryTests.client.fetchMappedEntries(matching: query) { result in
             switch result {
@@ -421,7 +422,9 @@ class QueryTests: XCTestCase {
     func testChainingQueriesWithUntypedQuery() {
         let expectation = self.expectation(description: "Chained operator expectation")
 
-        let query = Query(onContentTypeFor: "cat").where("fields.color", .doesNotEqual("gray")).where("fields.lives", .equals("9"))
+        let query = Query.where(contentTypeId: "cat")
+            .where(valueAtKeyPath: "fields.color", .doesNotEqual("gray"))
+            .where(valueAtKeyPath: "fields.lives", .equals("9"))
 
         QueryTests.client.fetchEntries(matching: query) { result in
             switch result {
@@ -442,8 +445,8 @@ class QueryTests: XCTestCase {
     func testQueryAssetsWithSelect() {
         let expectation = self.expectation(description: "Equality operator expectation")
 
-        let query = AssetQuery(where: "sys.id", .equals("1x0xpXu4pSGS4OukSyWGUK"))
-        try! query.select(fieldsNamed: ["fields.title"])
+        let query = AssetQuery.where(sys: .id, .equals("1x0xpXu4pSGS4OukSyWGUK"))
+        try! query.select(fieldsNamed: ["title"])
 
         QueryTests.client.fetchAssets(matching: query) { result in
             switch result {
@@ -464,7 +467,7 @@ class QueryTests: XCTestCase {
         let fieldNames = ["sys.contentType.sys.id"]
 
         do {
-            let _ = try QueryOn<Dog>(selectingFieldsNamed: fieldNames)
+            let _ = try QueryOn<Dog>.select(fieldsNamed: fieldNames)
 
             fail("Query selection with depth > 2 should throw an error and not reahc here")
         } catch let error as QueryError {
@@ -479,7 +482,7 @@ class QueryTests: XCTestCase {
         let expectation = self.expectation(description: "Range query")
         let date = Date.fromComponents(year: 2015, month: 1, day: 1, hour: 0, minute: 0, second: 0)
 
-        let query = Query(where: "sys.updatedAt", .isLessThanOrEqualTo(date))
+        let query = Query.where(valueAtKeyPath: "sys.updatedAt", .isLessThanOrEqualTo(date))
 
         QueryTests.client.fetchEntries(matching: query) { result in
             switch result {
@@ -502,7 +505,7 @@ class QueryTests: XCTestCase {
 
         let expectation = self.expectation(description: "Range query")
 
-        let query = QueryOn<Cat>(where: "sys.updatedAt", .isLessThanOrEqualTo("2015-01-01T00:00:00Z"))
+        let query = QueryOn<Cat>.where(valueAtKeyPath: "sys.updatedAt", .isLessThanOrEqualTo("2015-01-01T00:00:00Z"))
 
         QueryTests.client.fetchMappedEntries(matching: query) { result in
             switch result {
@@ -522,7 +525,7 @@ class QueryTests: XCTestCase {
     func testFetchEntriesInSpecifiedOrder() {
         let expectation = self.expectation(description: "Order search")
 
-        let query = try! Query(orderedUsing: OrderParameter("sys.createdAt"))
+        let query = try! Query.order(by: Ordering(sys: .createdAt))
 
         QueryTests.client.fetchEntries(matching: query) { result in
             switch result {
@@ -541,7 +544,7 @@ class QueryTests: XCTestCase {
     func testFetchEntriesInReverseOrder() {
         let expectation = self.expectation(description: "Reverese order search")
 
-        let query = try! Query(orderedUsing: OrderParameter("sys.createdAt", inReverse: true))
+        let query = try! Query.order(by: Ordering("sys.createdAt", inReverse: true))
 
         QueryTests.client.fetchEntries(matching: query) { result in
             switch result {
@@ -562,7 +565,7 @@ class QueryTests: XCTestCase {
     func testFetchEntriesWithTypeInOrder() {
         let expectation = self.expectation(description: "Ordered search with content type specified.")
 
-        let query = try! QueryOn<Cat>(orderedUsing: OrderParameter("sys.createdAt"))
+        let query = try! QueryOn<Cat>.order(by: Ordering(sys: .createdAt))
 
         QueryTests.client.fetchMappedEntries(matching: query) { result in
             switch result {
@@ -582,7 +585,7 @@ class QueryTests: XCTestCase {
     func testFetchEntriesOrderedByMultipleAttributes() {
         let expectation = self.expectation(description: "Reverese order search")
 
-        let query = try! Query(orderedUsing: OrderParameter("sys.revision"), OrderParameter("sys.id"))
+        let query = try! Query.order(by: Ordering("sys.revision"), Ordering(sys: .id))
 
         QueryTests.client.fetchEntries(matching: query) { result in
             switch result {
@@ -603,7 +606,7 @@ class QueryTests: XCTestCase {
     func testFetchEntriesWithFullTextSearch() {
         let expectation = self.expectation(description: "Full text search")
 
-        let query = try! QueryOn<Dog>(searchingFor: "bacon")
+        let query = try! QueryOn<Dog>.searching(for: "bacon")
 
         QueryTests.client.fetchMappedEntries(matching: query) { result in
             switch result {
@@ -621,7 +624,7 @@ class QueryTests: XCTestCase {
     func testFetchEntriesWithFullTextSearchOnSpecificField() {
         let expectation = self.expectation(description: "Full text search on specific field")
 
-        let query = QueryOn<Dog>(where: "fields.description", .matches("bacon pancakes"))
+        let query = QueryOn<Dog>.where(valueAtKeyPath: "fields.description", .matches("bacon pancakes"))
 
         QueryTests.client.fetchMappedEntries(matching: query) { result in
             switch result {
@@ -644,7 +647,7 @@ class QueryTests: XCTestCase {
     func testFetchEntriesWithLocationProximitySearch() {
         let expectation = self.expectation(description: "Location proximity search")
 
-        let query = QueryOn<City>(where: "fields.center", .isNear(Location(latitude: 38, longitude: -122)))
+        let query = QueryOn<City>.where(valueAtKeyPath:  "fields.center", .isNear(Location(latitude: 38, longitude: -122)))
 
         QueryTests.client.fetchMappedEntries(matching: query) { result in
             switch result {
@@ -664,7 +667,7 @@ class QueryTests: XCTestCase {
 
         let bounds = Bounds.box(bottomLeft: Location(latitude: 36, longitude: -124), topRight: Location(latitude: 40, longitude: -120))
 
-        let query = QueryOn<City>(where: "fields.center", .isWithin(bounds))
+        let query = QueryOn<City>.where(valueAtKeyPath:  "fields.center", .isWithin(bounds))
 
         QueryTests.client.fetchMappedEntries(matching: query) { result in
             switch result {
@@ -684,7 +687,7 @@ class QueryTests: XCTestCase {
     func testLimitNumberOfEntriesBeingFetched() {
         let expectation = self.expectation(description: "Limit results")
 
-        let query = try! Query(limitingResultsTo: 5)
+        let query = Query.limit(to: 5)
 
         QueryTests.client.fetchEntries(matching: query) { result in
             switch result {
@@ -702,8 +705,8 @@ class QueryTests: XCTestCase {
     func testSkipEntriesInAQuery() {
         let expectation = self.expectation(description: "Skip results")
 
-        let query = Query(skippingTheFirst: 9)
-        try! query.order(using: OrderParameter("sys.createdAt"))
+        let query = Query.skip(theFirst: 9)
+        try! query.order(by: Ordering("sys.createdAt"))
 
         QueryTests.client.fetchEntries(matching: query) { result in
             switch result {
@@ -724,8 +727,9 @@ class QueryTests: XCTestCase {
     func testSearchOnReferences() {
         let expectation = self.expectation(description: "Search on references")
 
-        let filterQuery = FilterQuery<Cat>(where: "fields.name", .matches("Happy Cat"))
-        let query = QueryOn<Cat>(whereLinkAt: "bestFriend", matches: filterQuery)
+        let linkQuery = LinkQuery<Cat>.where(field: .name, .matches("Happy Cat"))
+
+        let query = QueryOn<Cat>.where(linkAtField: .bestFriend, matches: linkQuery)
 
         QueryTests.client.fetchMappedEntries(matching: query) { result in
             switch result {
@@ -744,10 +748,11 @@ class QueryTests: XCTestCase {
 
     func testUntypedSearchOnReferences() {
         let expectation = self.expectation(description: "Search on references")
+
         let query = Query(whereLinkAtFieldNamed: "bestFriend",
-                          forType: "cat",
+                          onSourceContentTypeWithId: "cat",
                           hasValueAt: "fields.name",
-                          ofType: "cat", that: .matches("Happy Cat"))
+                          withTargetContentTypeId: "cat", that: .matches("Happy Cat"))
 
         QueryTests.client.fetchEntries(matching: query) { result in
             switch result {
@@ -774,7 +779,7 @@ class QueryTests: XCTestCase {
     func testFilterAssetsByMIMETypeGroup() {
         let expectation = self.expectation(description: "Fetch image from asset network expectation")
 
-        let query = AssetQuery(whereMimetypeGroupIs: .image)
+        let query = AssetQuery.where(mimetypeGroup: .image)
 
         QueryTests.client.fetchAssets(matching: query) { result in
             switch result {
@@ -837,9 +842,9 @@ class LinkResolverTests: XCTestCase {
     static let client: Client = {
         let contentTypeClasses: [EntryDecodable.Type] = [SingleRecord.self, LinkClass.self]
         return TestClientFactory.testClient(withCassetteNamed: "LinkResolverTests",
-                                                  spaceId: "smf0sqiu0c5s",
-                                                  accessToken: "14d305ad526d4487e21a99b5b9313a8877ce6fbf540f02b12189eea61550ef34",
-                                                  contentTypeClasses: contentTypeClasses)
+                                            spaceId: "smf0sqiu0c5s",
+                                            accessToken: "14d305ad526d4487e21a99b5b9313a8877ce6fbf540f02b12189eea61550ef34",
+                                            contentTypeClasses: contentTypeClasses)
     }()
 
     override class func setUp() {
@@ -852,11 +857,12 @@ class LinkResolverTests: XCTestCase {
         (client.urlSession as? DVR.Session)?.endRecording()
     }
 
+    // FIXME: Test link query with array of lijnks.
     func testDecoderCanResolveArrayOfLinks() {
 
         let expectation = self.expectation(description: "CanResolveArrayOfLinksTests")
 
-        let query = QueryOn<SingleRecord>(sys: .id, .equals("7BwFiM0nxCS4EGYaIAIkyU"))
+        let query = QueryOn<SingleRecord>.where(sys: .id, .equals("7BwFiM0nxCS4EGYaIAIkyU"))
         LinkResolverTests.client.fetchMappedEntries(matching: query) { result in
 
 

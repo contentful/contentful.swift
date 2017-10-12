@@ -108,6 +108,10 @@
 		ED535E651F5E8E1300886D93 /* Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED535E631F5E8E1300886D93 /* Decodable.swift */; };
 		ED535E661F5E8E1300886D93 /* Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED535E631F5E8E1300886D93 /* Decodable.swift */; };
 		ED535E671F5E8E1300886D93 /* Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED535E631F5E8E1300886D93 /* Decodable.swift */; };
+		ED5F8F911F8F9EA200C86411 /* TypedQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F8F901F8F9EA200C86411 /* TypedQuery.swift */; };
+		ED5F8F921F8F9EA200C86411 /* TypedQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F8F901F8F9EA200C86411 /* TypedQuery.swift */; };
+		ED5F8F931F8F9EA200C86411 /* TypedQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F8F901F8F9EA200C86411 /* TypedQuery.swift */; };
+		ED5F8F941F8F9EA200C86411 /* TypedQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F8F901F8F9EA200C86411 /* TypedQuery.swift */; };
 		ED65CF981E3F6BF8000EBC62 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED65CF951E3F6BF8000EBC62 /* Nimble.framework */; };
 		ED68BD721E6DC47A00939F6D /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED68BD711E6DC47A00939F6D /* Query.swift */; };
 		ED68BD731E6DC47F00939F6D /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED68BD711E6DC47A00939F6D /* Query.swift */; };
@@ -263,6 +267,7 @@
 		ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		ED52DB3F1EE94C8E00225140 /* RateLimitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateLimitTests.swift; sourceTree = "<group>"; };
 		ED535E631F5E8E1300886D93 /* Decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decodable.swift; sourceTree = "<group>"; };
+		ED5F8F901F8F9EA200C86411 /* TypedQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypedQuery.swift; sourceTree = "<group>"; };
 		ED65CF951E3F6BF8000EBC62 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		ED68BD711E6DC47A00939F6D /* Query.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Query.swift; sourceTree = "<group>"; };
 		ED737C691EF0095200ECB3F1 /* AssetTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AssetTests.json; sourceTree = "<group>"; };
@@ -437,6 +442,7 @@
 				ED1D78991F2F96260048E169 /* DataCache.swift */,
 				ED737C931EF1785A00ECB3F1 /* Persistence.swift */,
 				ED68BD711E6DC47A00939F6D /* Query.swift */,
+				ED5F8F901F8F9EA200C86411 /* TypedQuery.swift */,
 				ED2AD58B1F3B08BC00C101E6 /* Client+Query.swift */,
 				ED0876D91E1D07B3008E1A06 /* Date.swift */,
 				A114BBBF1C4FD3C300DE6679 /* SyncSpace.swift */,
@@ -955,6 +961,7 @@
 				A1BF6BBC1C0D0FBD00049712 /* SignalUtils.swift in Sources */,
 				A114BBC01C4FD3C300DE6679 /* SyncSpace.swift in Sources */,
 				A10FF9DC1BBB4692001AA4E9 /* Field.swift in Sources */,
+				ED5F8F911F8F9EA200C86411 /* TypedQuery.swift in Sources */,
 				A19CA3E81B83890D00A0EFCD /* Resource.swift in Sources */,
 				A1B2E3651BBACF2C00814D63 /* Locale.swift in Sources */,
 				ED2C997B1ECDD0AF0039056E /* Client+UIKit.swift in Sources */,
@@ -1044,6 +1051,7 @@
 				ED91C1451EDCB14D00F0FC0A /* Client+UIKit.swift in Sources */,
 				ED36B6F51E3BD052005581FD /* ArrayResponse.swift in Sources */,
 				ED36B6F81E3BD052005581FD /* Client.swift in Sources */,
+				ED5F8F921F8F9EA200C86411 /* TypedQuery.swift in Sources */,
 				ED36B6F61E3BD052005581FD /* Date.swift in Sources */,
 				ED36B6FC1E3BD052005581FD /* Locale.swift in Sources */,
 				ED68BD731E6DC47F00939F6D /* Query.swift in Sources */,
@@ -1076,6 +1084,7 @@
 				ED2C99BB1ED5AE820039056E /* Client+UIKit.swift in Sources */,
 				ED36B7051E3BD052005581FD /* ArrayResponse.swift in Sources */,
 				ED36B7081E3BD052005581FD /* Client.swift in Sources */,
+				ED5F8F931F8F9EA200C86411 /* TypedQuery.swift in Sources */,
 				ED36B7061E3BD052005581FD /* Date.swift in Sources */,
 				ED36B70C1E3BD052005581FD /* Locale.swift in Sources */,
 				ED68BD741E6DC48000939F6D /* Query.swift in Sources */,
@@ -1108,6 +1117,7 @@
 				ED36B7191E3BD053005581FD /* ClientConfiguration.swift in Sources */,
 				ED36B7151E3BD053005581FD /* ArrayResponse.swift in Sources */,
 				ED36B7181E3BD053005581FD /* Client.swift in Sources */,
+				ED5F8F941F8F9EA200C86411 /* TypedQuery.swift in Sources */,
 				ED36B7161E3BD053005581FD /* Date.swift in Sources */,
 				ED36B71C1E3BD053005581FD /* Locale.swift in Sources */,
 				ED68BD751E6DC48000939F6D /* Query.swift in Sources */,
