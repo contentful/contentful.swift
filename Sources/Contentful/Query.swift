@@ -293,6 +293,22 @@ public extension ChainableQuery {
         self.addFilter(where: name, operation, for: locale)
     }
 
+    // FIXME: Document
+    public init(sys key: Sys.CodingKeys, _ operation: QueryOperation) {
+        self.init()
+        self.addFilter(where: "sys.\(key.stringValue)", operation)
+    }
+
+    public func `where`(sys key: Sys.CodingKeys, _ operation: QueryOperation) {
+        self.addFilter(where: "sys.\(key.stringValue)", operation)
+    }
+
+    // FIXME: Add additional method with regular stringvalue
+    public init(field key: CodingKey, _ operation: QueryOperation) {
+        self.init()
+        self.addFilter(where: "fields.\(key.stringValue)", operation)
+    }
+
     /**
      Convenience initializer for a select operation query in which only the fields specified
      in the fieldNames property will be returned in the JSON response.
@@ -818,7 +834,7 @@ public final class FilterQuery<EntryType>: AbstractQuery where EntryType: EntryD
  Operations that are only available when querying `Entry`s on specific content types (i.e. content_type must be set) 
  are available through this class.
  */
-public final class QueryOn<EntryType>: ChainableQuery where EntryType: EntryDecodable {
+public final class QueryOn<EntryType>: ChainableQuery where EntryType: EntryDecodable & EntryQueryable {
 
     /// The parameters dictionary that are converted to `URLComponents` (HTTP parameters/arguments) on the HTTP URL. Useful for debugging.
     public var parameters: [String: String] = [String: String]()
@@ -861,6 +877,21 @@ public final class QueryOn<EntryType>: ChainableQuery where EntryType: EntryDeco
         }
         self.set(locale: locale)
     }
+
+    public convenience init(fields: EntryType.Fields, _ operation: QueryOperation) {
+        self.init()
+        self.addFilter(where: "fields.\(fields.stringValue)", operation)
+    }
+
+    public func `where`(fields: EntryType.Fields, _ operation: QueryOperation) {
+        self.addFilter(where: "fields.\(fields.stringValue)", operation)
+    }
+}
+
+// TODO: Document
+public protocol EntryQueryable {
+
+    associatedtype Fields: CodingKey
 }
 
 internal extension String {

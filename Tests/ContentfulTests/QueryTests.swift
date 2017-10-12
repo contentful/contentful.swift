@@ -12,7 +12,7 @@ import Nimble
 import DVR
 import Interstellar
 
-final class Cat: EntryDecodable {
+final class Cat: EntryDecodable, EntryQueryable {
 
     static let contentTypeId: String = "cat"
 
@@ -27,7 +27,7 @@ final class Cat: EntryDecodable {
 
     public required init(from decoder: Decoder) throws {
         sys             = try decoder.sys()
-        let fields      = try decoder.contentfulFieldsContainer(keyedBy: CodingKeys.self)
+        let fields      = try decoder.contentfulFieldsContainer(keyedBy: Cat.Fields.self)
 
         self.name       = try fields.decodeIfPresent(String.self, forKey: .name)
         self.color      = try fields.decodeIfPresent(String.self, forKey: .color)
@@ -39,12 +39,13 @@ final class Cat: EntryDecodable {
         }
     }
     
-    private enum CodingKeys: String, CodingKey {
-        case sys, name, color, likes, lives, bestFriend
+    enum Fields: String, CodingKey {
+        case bestFriend
+        case name, color, likes, lives
     }
 }
 
-final class City: EntryDecodable {
+final class City: EntryDecodable, EntryQueryable {
 
     static let contentTypeId: String = "1t9IbcfdCk6m04uISSsaIK"
 
@@ -53,17 +54,17 @@ final class City: EntryDecodable {
 
     public required init(from decoder: Decoder) throws {
         sys             = try decoder.sys()
-        let fields      = try decoder.contentfulFieldsContainer(keyedBy: CodingKeys.self)
+        let fields      = try decoder.contentfulFieldsContainer(keyedBy: City.Fields.self)
 
         self.location   = try fields.decode(Location.self, forKey: .location)
     }
 
-    private enum CodingKeys: String, CodingKey {
+    enum Fields: String, CodingKey {
         case location = "center"
     }
 }
 
-final class Dog: EntryDecodable {
+final class Dog: EntryDecodable, EntryQueryable {
 
     static let contentTypeId: String = "dog"
 
@@ -74,7 +75,7 @@ final class Dog: EntryDecodable {
 
     public required init(from decoder: Decoder) throws {
         sys             = try decoder.sys()
-        let fields      = try decoder.contentfulFieldsContainer(keyedBy: CodingKeys.self)
+        let fields      = try decoder.contentfulFieldsContainer(keyedBy: Dog.Fields.self)
         name            = try fields.decode(String.self, forKey: .name)
         description     = try fields.decodeIfPresent(String.self, forKey: .description)
 
@@ -83,12 +84,12 @@ final class Dog: EntryDecodable {
         }
     }
 
-    private enum CodingKeys: String, CodingKey {
+    enum Fields: String, CodingKey {
         case image, name, description
     }
 }
 
-class Human: EntryDecodable {
+class Human: EntryDecodable, EntryQueryable {
 
     static let contentTypeId = "human"
 
@@ -101,7 +102,7 @@ class Human: EntryDecodable {
 
     public required init(from decoder: Decoder) throws {
         sys             = try decoder.sys()
-        let fields      = try decoder.contentfulFieldsContainer(keyedBy: CodingKeys.self)
+        let fields      = try decoder.contentfulFieldsContainer(keyedBy: Human.Fields.self)
         name            = try fields.decode(String.self, forKey: .name)
         description     = try fields.decode(String.self, forKey: .description)
         likes           = try fields.decode(Array<String>.self, forKey: .likes)
@@ -111,7 +112,7 @@ class Human: EntryDecodable {
         }
     }
 
-    private enum CodingKeys: String, CodingKey {
+    enum Fields: String, CodingKey {
         case name, description, likes, image
     }
 }
@@ -263,7 +264,7 @@ class QueryTests: XCTestCase {
 
         let expectation = self.expectation(description: "Equality operator expectation")
 
-        let query = QueryOn<Cat>(where: "fields.color", .equals("gray"))
+        let query = QueryOn<Cat>(field: .color, .equals("gray"))
 
         QueryTests.client.fetchMappedEntries(with: query) { (result: Result<MappedArrayResponse<Cat>>) in
             switch result {
@@ -791,7 +792,7 @@ class QueryTests: XCTestCase {
 }
 
 // From Complex-Sync-Test-Space
-class LinkClass: EntryDecodable {
+class LinkClass: EntryDecodable, EntryQueryable {
 
     static let contentTypeId = "link"
 
@@ -800,17 +801,17 @@ class LinkClass: EntryDecodable {
 
     public required init(from decoder: Decoder) throws {
         sys             = try decoder.sys()
-        let fields      = try decoder.contentfulFieldsContainer(keyedBy: CodingKeys.self)
+        let fields      = try decoder.contentfulFieldsContainer(keyedBy: Fields.self)
         awesomeLinkTitle = try fields.decodeIfPresent(String.self, forKey: .awesomeLinkTitle)
     }
 
-    private enum CodingKeys: String, CodingKey {
+    enum Fields: String, CodingKey {
         case awesomeLinkTitle
     }
 }
 
 
-class SingleRecord: EntryDecodable {
+class SingleRecord: EntryDecodable, EntryQueryable {
 
     static let contentTypeId = "singleRecord"
 
@@ -820,14 +821,14 @@ class SingleRecord: EntryDecodable {
 
     public required init(from decoder: Decoder) throws {
         sys             = try decoder.sys()
-        let fields      = try decoder.contentfulFieldsContainer(keyedBy: CodingKeys.self)
+        let fields      = try decoder.contentfulFieldsContainer(keyedBy: Fields.self)
         textBody        = try fields.decodeIfPresent(String.self, forKey: .textBody)
         try fields.resolveLinksArray(forKey: .arrayLinkField, inLocale: sys.locale!, decoder: decoder) { [weak self] arrayOfLinks in
             self?.arrayLinkField = arrayOfLinks as? [LinkClass]
         }
     }
 
-    private enum CodingKeys: String, CodingKey {
+    enum Fields: String, CodingKey {
         case textBody, arrayLinkField
     }
 }
@@ -855,8 +856,9 @@ class LinkResolverTests: XCTestCase {
 
         let expectation = self.expectation(description: "CanResolveArrayOfLinksTests")
 
-        let query = QueryOn<SingleRecord>(where: "sys.id", .equals("7BwFiM0nxCS4EGYaIAIkyU"))
-        LinkResolverTests.client.fetchMappedEntries(with: query) { result in
+        let query = QueryOn<SingleRecord>(sys: .id, .equals("7BwFiM0nxCS4EGYaIAIkyU"))
+        LinkResolverTests.client.fetchMappedEntries(matching: query) { result in
+
 
             switch result {
             case .success(let arrayResponse):
