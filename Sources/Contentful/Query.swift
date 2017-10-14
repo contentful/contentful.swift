@@ -140,101 +140,7 @@ public enum MimetypeGroup: String {
     case markup
 }
 
-/** 
- Property-value query operations used for matching patterns on either "sys" or "fields" properties of `Asset`s and `Entry`s.
- Each operation specifies a property name on the left-hand side, with a value to match on the right.
- For instance, using the doesNotEqual operation in an a concrete Query like:
- 
-    ```
-    Query(where:"fields.name", .doesNotEqual("Happy Cat"))
-    ```
- 
- would append the following to the http URL:
 
-    ```
-    "fields.name[ne]=Happy%20Cat"
-    ```
- 
- Refer to the documentation for the various Query classes for more information.
-*/
-public enum QueryOperation {
-
-    case equals(String)
-    case doesNotEqual(String)
-    case hasAll([String])
-    case includes([String])
-    case excludes([String])
-    case exists(Bool)
-
-    /// Full text search on a field.
-    case matches(String)
-
-    /// MARK: Ranges
-    case isLessThan(QueryableRange)
-    case isLessThanOrEqualTo(QueryableRange)
-    case isGreaterThan(QueryableRange)
-    case isGreaterThanOrEqualTo(QueryableRange)
-    case isBefore(Date)
-    case isAfter(Date)
-
-    /// Proximity searches.
-    case isNear(Location)
-    case isWithin(Bounds)
-
-    internal var string: String {
-        switch self {
-        case .equals:                                       return ""
-        case .doesNotEqual:                                 return "[ne]"
-        case .hasAll:                                       return "[all]"
-        case .includes:                                     return "[in]"
-        case .excludes:                                     return "[nin]"
-        case .exists:                                       return "[exists]"
-        case .matches:                                      return "[match]"
-
-        case .isLessThan:                                   return "[lt]"
-        case .isLessThanOrEqualTo:                          return "[lte]"
-        case .isGreaterThan:                                return "[gt]"
-        case .isGreaterThanOrEqualTo:                       return "[gte]"
-        case .isBefore:                                     return "[lte]"
-        case .isAfter:                                      return "[gte]"
-
-        case .isNear:                                       return "[near]"
-        case .isWithin:                                     return "[within]"
-        }
-    }
-
-    internal var values: String {
-        switch self {
-        case .equals(let value):                            return value
-        case .doesNotEqual(let value):                      return value
-        case .hasAll(let values):                           return values.joined(separator: ",")
-        case .includes(let values):                         return values.joined(separator: ",")
-        case .excludes(let values):                         return values.joined(separator: ",")
-        case .exists(let value):                            return String(value)
-        case .matches(let value):                           return value
-
-        case .isLessThan(let queryableRange):               return queryableRange.stringValue
-        case .isLessThanOrEqualTo(let queryableRange):      return queryableRange.stringValue
-        case .isGreaterThan(let queryableRange):            return queryableRange.stringValue
-        case .isGreaterThanOrEqualTo(let queryableRange):   return queryableRange.stringValue
-        case .isBefore(let date):                           return date.stringValue
-        case .isAfter(let date):                            return date.stringValue
-
-        case .isNear(let coordinates):                      return "\(coordinates.latitude),\(coordinates.longitude)"
-        case .isWithin(let bounds):                         return string(for: bounds)
-        }
-    }
-
-    private func string(for bounds: Bounds) -> String {
-        switch bounds {
-        case .box(let bottomLeft, let topRight):
-            return "\(bottomLeft.latitude),\(bottomLeft.longitude),\(topRight.latitude),\(topRight.longitude)"
-
-        case .circle(let center, let radius):
-            return "\(center.latitude),\(center.longitude),\(radius)"
-        }
-    }
-}
 
 
 public protocol AbstractQuery: class {
@@ -250,18 +156,18 @@ public protocol AbstractQuery: class {
 public extension AbstractQuery {
 
     /**
-     Convenience intializer for creating a Query with a QueryOperation. See concrete types Query, FilterQuery, AssetQuery, and QueryOn
+     Convenience intializer for creating a Query with a Query.Operation. See concrete types Query, FilterQuery, AssetQuery, and QueryOn
      for more information and example usage.
 
-     - Parameter name: The name of the property you are performing the QueryOperation against. For instance,
+     - Parameter name: The name of the property you are performing the Query.Operation against. For instance,
                        `"sys.id"` or `"fields.yourFieldName"`
-     - Parameter operation: the QueryOperation
+     - Parameter operation: the Query.Operation
      - Parameter locale: An optional locale argument to return localized results. If unspecified, the locale originally
                          set on the `Client` instance is used.
 
 
      */
-    public static func `where`(valueAtKeyPath keyPath: String, _ operation: QueryOperation, locale: LocaleCode? = nil) -> Self {
+    public static func `where`(valueAtKeyPath keyPath: String, _ operation: Query.Operation, locale: LocaleCode? = nil) -> Self {
         let parameter = keyPath + operation.string
 
         let query = Self()
@@ -287,13 +193,13 @@ public extension AbstractQuery {
 }
 
 /// Protocol which enables concrete query implementations to be 'chained' together so that results
-/// can be filtered by more than one QueryOperation or other query. Protocol extensions give default implementation
+/// can be filtered by more than one Query.Operation or other query. Protocol extensions give default implementation
 /// so that all concrete types, `Query`, `AssetQuery`, `FilterQuery`, and `QueryOn<EntryType>`, can use the same implementation.
 public protocol ChainableQuery: AbstractQuery {}
 public extension ChainableQuery {
 
     /**
-     Instance method for appending more QueryOperation's to further filter results on the API. Example usage:
+     Instance method for appending more Query.Operation's to further filter results on the API. Example usage:
 
      ```
      let query = Query(contentTypeId: "cat").where("fields.color", .doesNotEqual("gray"))
@@ -302,14 +208,14 @@ public extension ChainableQuery {
      query.where("fields.lives", .equals("9"))
      ```
 
-     - Parameter name: The name of the property you are performing the QueryOperation against. For instance,
+     - Parameter name: The name of the property you are performing the Query.Operation against. For instance,
      `"sys.id" or `"fields.yourFieldName"`
-     - Parameter operation: the QueryOperation
+     - Parameter operation: the Query.Operation
      - Parameter locale: An optional locale argument to return localized results. If unspecified, the locale originally
      set on the `Client` instance is used.
      - Returns: A reference to the receiving query to enable chaining.
      */
-    @discardableResult public func `where`(valueAtKeyPath keyPath: String, _ operation: QueryOperation, locale: LocaleCode? = nil) -> Self {
+    @discardableResult public func `where`(valueAtKeyPath keyPath: String, _ operation: Query.Operation, locale: LocaleCode? = nil) -> Self {
 
         // Create parameter for this query operation.
         let parameter = keyPath + operation.string
@@ -640,13 +546,13 @@ public extension ChainableQuery {
      - Parameter sourceContentTypeId: The content type identifier of the link source.
      - Parameter targetKeyPath: The member path for the value you would like to search on for the link destination resource.
      - Parameter targetContentTypeId: The content type idenifier of the item(s) being linked to at the specified linking field name.
-     - Parameter operation: The `QueryOperation` used to match the value of at the target key path.
+     - Parameter operation: The `Query.Operation` used to match the value of at the target key path.
      */
     public init(whereLinkAtFieldNamed linkingFieldName: String,
                 onSourceContentTypeWithId sourceContentTypeId: ContentTypeId,
                 hasValueAt targetKeyPath: FieldName,
                 withTargetContentTypeId targetContentTypeId: ContentTypeId,
-                that operation: QueryOperation) {
+                that operation: Query.Operation) {
         self.init()
         self.whereLinkAtFieldNamed(linkingFieldName,
                                    onSourceContentTypeWithId: sourceContentTypeId,
@@ -664,14 +570,14 @@ public extension ChainableQuery {
      - Parameter sourceContentTypeId: The content type identifier of the link source.
      - Parameter targetKeyPath: The member path for the value you would like to search on for the link destination resource.
      - Parameter targetContentTypeId: The content type idenifier of the item(s) being linked to at the specified linking field name.
-     - Parameter operation: The `QueryOperation` used to match the value of at the target key path.
+     - Parameter operation: The `Query.Operation` used to match the value of at the target key path.
      - Returns: A reference to the receiving query to enable chaining.
      */
     @discardableResult public func whereLinkAtFieldNamed(_ linkingFieldName: String,
                                                          onSourceContentTypeWithId sourceContentTypeId: ContentTypeId,
                                                          hasValueAt targetKeyPath: FieldName,
                                                          withTargetContentTypeId targetContentTypeId: ContentTypeId,
-                                                         that operation: QueryOperation) -> Self {
+                                                         that operation: Query.Operation) -> Self {
         self.parameters[QueryParameter.contentType] = sourceContentTypeId
         self.parameters["fields.\(linkingFieldName).sys.contentType.sys.id"] = targetContentTypeId
 
@@ -724,7 +630,7 @@ public class Query: EntryQuery {
         self.setLocaleWithCode(locale)
     }
 
-    fileprivate class func validate(selectedKeyPaths: [String]) throws {
+    fileprivate static func validate(selectedKeyPaths: [String]) throws {
         for fieldKeyPath in selectedKeyPaths {
             guard fieldKeyPath.isValidSelection() else {
                 throw QueryError.invalidSelection(fieldKeyPath: fieldKeyPath)
@@ -732,12 +638,108 @@ public class Query: EntryQuery {
         }
     }
 
-    fileprivate class func addSysIfNeeded(to selectedFieldNames: [String]) -> [String] {
+    fileprivate static func addSysIfNeeded(to selectedFieldNames: [String]) -> [String] {
         var completeSelections = selectedFieldNames
         if !completeSelections.contains("sys") {
             completeSelections.append("sys")
         }
         return completeSelections
+    }
+
+    /**
+     Property-value query operations used for matching patterns on either "sys" or "fields" properties of `Asset`s and `Entry`s.
+     Each operation specifies a property name on the left-hand side, with a value to match on the right.
+     For instance, using the doesNotEqual operation in an a concrete Query like:
+
+     ```
+     Query(where:"fields.name", .doesNotEqual("Happy Cat"))
+     ```
+
+     would append the following to the http URL:
+
+     ```
+     "fields.name[ne]=Happy%20Cat"
+     ```
+
+     Refer to the documentation for the various Query classes for more information.
+     */
+    public enum Operation {
+
+        case equals(String)
+        case doesNotEqual(String)
+        case hasAll([String])
+        case includes([String])
+        case excludes([String])
+        case exists(Bool)
+
+        /// Full text search on a field.
+        case matches(String)
+
+        /// MARK: Ranges
+        case isLessThan(QueryableRange)
+        case isLessThanOrEqualTo(QueryableRange)
+        case isGreaterThan(QueryableRange)
+        case isGreaterThanOrEqualTo(QueryableRange)
+        case isBefore(Date)
+        case isAfter(Date)
+
+        /// Proximity searches.
+        case isNear(Location)
+        case isWithin(Bounds)
+
+        internal var string: String {
+            switch self {
+            case .equals:                                       return ""
+            case .doesNotEqual:                                 return "[ne]"
+            case .hasAll:                                       return "[all]"
+            case .includes:                                     return "[in]"
+            case .excludes:                                     return "[nin]"
+            case .exists:                                       return "[exists]"
+            case .matches:                                      return "[match]"
+
+            case .isLessThan:                                   return "[lt]"
+            case .isLessThanOrEqualTo:                          return "[lte]"
+            case .isGreaterThan:                                return "[gt]"
+            case .isGreaterThanOrEqualTo:                       return "[gte]"
+            case .isBefore:                                     return "[lte]"
+            case .isAfter:                                      return "[gte]"
+
+            case .isNear:                                       return "[near]"
+            case .isWithin:                                     return "[within]"
+            }
+        }
+
+        internal var values: String {
+            switch self {
+            case .equals(let value):                            return value
+            case .doesNotEqual(let value):                      return value
+            case .hasAll(let values):                           return values.joined(separator: ",")
+            case .includes(let values):                         return values.joined(separator: ",")
+            case .excludes(let values):                         return values.joined(separator: ",")
+            case .exists(let value):                            return String(value)
+            case .matches(let value):                           return value
+
+            case .isLessThan(let queryableRange):               return queryableRange.stringValue
+            case .isLessThanOrEqualTo(let queryableRange):      return queryableRange.stringValue
+            case .isGreaterThan(let queryableRange):            return queryableRange.stringValue
+            case .isGreaterThanOrEqualTo(let queryableRange):   return queryableRange.stringValue
+            case .isBefore(let date):                           return date.stringValue
+            case .isAfter(let date):                            return date.stringValue
+
+            case .isNear(let coordinates):                      return "\(coordinates.latitude),\(coordinates.longitude)"
+            case .isWithin(let bounds):                         return string(for: bounds)
+            }
+        }
+
+        private func string(for bounds: Bounds) -> String {
+            switch bounds {
+            case .box(let bottomLeft, let topRight):
+                return "\(bottomLeft.latitude),\(bottomLeft.longitude),\(topRight.latitude),\(topRight.longitude)"
+
+            case .circle(let center, let radius):
+                return "\(center.latitude),\(center.longitude),\(radius)"
+            }
+        }
     }
 }
 

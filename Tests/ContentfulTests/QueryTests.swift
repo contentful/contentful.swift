@@ -238,7 +238,7 @@ class QueryTests: XCTestCase {
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
-    // MARK: - Test QueryOperations
+    // MARK: - Test Query.Operations
 
     func testFetchingEntriesOfContentType() {
         let expectation = self.expectation(description: "Equality operator expectation")

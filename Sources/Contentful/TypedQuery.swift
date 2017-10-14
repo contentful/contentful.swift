@@ -20,12 +20,12 @@ public protocol EntryQueryable {
 public extension AbstractQuery {
 
     // FIXME: Document
-    public static func `where`(sys key: Sys.CodingKeys, _ operation: QueryOperation, locale: LocaleCode? = nil) -> Self {
+    public static func `where`(sys key: Sys.CodingKeys, _ operation: Query.Operation, locale: LocaleCode? = nil) -> Self {
         return Self.where(valueAtKeyPath: "sys.\(key.stringValue)", operation, locale: locale)
     }
 
     // FIXME: Add additional method with regular stringvalue
-    public static func `where`(_ fieldsKey: CodingKey, _ operation: QueryOperation, locale: LocaleCode? = nil) -> Self {
+    public static func `where`(_ fieldsKey: CodingKey, _ operation: Query.Operation, locale: LocaleCode? = nil) -> Self {
         return Self.where(valueAtKeyPath: "fields.\(fieldsKey.stringValue)", operation, locale: locale)
     }
 }
@@ -33,12 +33,12 @@ public extension AbstractQuery {
 public extension ChainableQuery {
 
     // static version in Abstract query
-    public func `where`(sys key: Sys.CodingKeys, _ operation: QueryOperation, locale: LocaleCode? = nil) -> Self {
+    public func `where`(sys key: Sys.CodingKeys, _ operation: Query.Operation, locale: LocaleCode? = nil) -> Self {
         self.where(valueAtKeyPath: "sys.\(key.stringValue)", operation, locale: locale)
         return self
     }
 
-    public func `where`(_ fieldsKey: CodingKey, _ operation: QueryOperation, locale: LocaleCode? = nil) -> Self {
+    public func `where`(_ fieldsKey: CodingKey, _ operation: Query.Operation, locale: LocaleCode? = nil) -> Self {
         self.where(valueAtKeyPath: "fields.\(fieldsKey.stringValue)", operation, locale: locale)
         return self
     }
@@ -46,11 +46,11 @@ public extension ChainableQuery {
 
 
     // FIXME: Add additional method with regular stringvalue
-    public static func `where`(field fieldName: FieldName, _ operation: QueryOperation, locale: LocaleCode? = nil) -> Self  {
+    public static func `where`(field fieldName: FieldName, _ operation: Query.Operation, locale: LocaleCode? = nil) -> Self  {
         return Self.where(valueAtKeyPath: "fields.\(fieldName)", operation, locale: locale)
     }
 
-    public func `where`(field fieldName: FieldName, _ operation: QueryOperation, locale: LocaleCode? = nil) -> Self {
+    public func `where`(field fieldName: FieldName, _ operation: Query.Operation, locale: LocaleCode? = nil) -> Self {
         self.where(valueAtKeyPath: "fields.\(fieldName)", operation, locale: locale)
         return self
     }
@@ -82,14 +82,14 @@ public final class LinkQuery<EntryType>: AbstractQuery where EntryType: EntryDec
     public var parameters: [String: String] = [String: String]()
 
     // Different function name to ensure inner call to where(valueAtKeyPath:operation:locale) doesn't recurse.
-    private static func with(valueAtKeyPath keyPath: String, _ operation: QueryOperation, locale: String? = nil) -> LinkQuery<EntryType> {
+    private static func with(valueAtKeyPath keyPath: String, _ operation: Query.Operation, locale: String? = nil) -> LinkQuery<EntryType> {
         let filterQuery = LinkQuery<EntryType>.where(valueAtKeyPath: keyPath, operation, locale: locale)
         filterQuery.propertyName = keyPath
         filterQuery.operation = operation
         return filterQuery
     }
 
-    public static func `where`(field: EntryType.Fields, _ operation: QueryOperation, locale: String? = nil) -> LinkQuery<EntryType> {
+    public static func `where`(field: EntryType.Fields, _ operation: Query.Operation, locale: String? = nil) -> LinkQuery<EntryType> {
         return LinkQuery<EntryType>.with(valueAtKeyPath: "fields.\(field.stringValue)", operation, locale: locale)
     }
 
@@ -100,7 +100,7 @@ public final class LinkQuery<EntryType>: AbstractQuery where EntryType: EntryDec
 
     // MARK: FilterQuery<EntryType>.Private
 
-    fileprivate var operation: QueryOperation!
+    fileprivate var operation: Query.Operation!
     fileprivate var propertyName: String?
 }
 
@@ -123,12 +123,12 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
         self.parameters = [QueryParameter.contentType: EntryType.contentTypeId]
     }
 
-    public static func `where`(field fieldsKey: EntryType.Fields, _ operation: QueryOperation, locale: LocaleCode? = nil) -> QueryOn<EntryType> {
+    public static func `where`(field fieldsKey: EntryType.Fields, _ operation: Query.Operation, locale: LocaleCode? = nil) -> QueryOn<EntryType> {
         let query = QueryOn<EntryType>.where(valueAtKeyPath: "fields.\(fieldsKey.stringValue)", operation)
         return query
     }
 
-    public func `where`(field fieldsKey: EntryType.Fields, _ operation: QueryOperation, locale: LocaleCode? = nil) -> Self {
+    public func `where`(field fieldsKey: EntryType.Fields, _ operation: Query.Operation, locale: LocaleCode? = nil) -> Self {
         self.where(valueAtKeyPath: "fields.\(fieldsKey.stringValue)", operation, locale: locale)
         return self
     }
