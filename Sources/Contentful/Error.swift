@@ -53,7 +53,7 @@ public enum SDKError: Error {
 
 /// Errors thrown for queries which have invalid construction.
 public enum QueryError: Error, CustomDebugStringConvertible {
-    
+
     public var debugDescription: String {
         return message
     }
@@ -87,12 +87,19 @@ public enum QueryError: Error, CustomDebugStringConvertible {
 
 
 /// Information regarding an error received from Contentful's API.
-public class ContentfulError: Decodable, Error, CustomDebugStringConvertible {
+public class APIError: Decodable, Error, CustomDebugStringConvertible {
 
     // Format the output for printing from the debug console
     public var debugDescription: String {
-        let detailsStrings = details?.errors.flatMap({ $0.details }).joined(separator: ",") ?? ""
-        return message! + " " + detailsStrings
+        let statusCodeString = "HTTP status code " + String(statusCode)
+        let detailsStrings = details?.errors.flatMap({ $0.details }).joined(separator: "\n") ?? ""
+        let debugDescription =
+        """
+        \(statusCodeString): \(message!)
+        \(detailsStrings).
+        Contentful Request ID: \(requestId!)
+        """
+        return debugDescription
     }
 
     /// System fields for the error.
@@ -106,10 +113,13 @@ public class ContentfulError: Decodable, Error, CustomDebugStringConvertible {
     public let sys: Sys
 
     /// Human readable error message.
-    public let message: String?
+    public let message: String!
 
     /// The identifier of the request, can be useful when making support requests.
-    public let requestId: String?
+    public let requestId: String!
+
+    // The HTTP status code.
+    internal var statusCode: Int!
 
     internal let details: Details?
 
@@ -146,12 +156,13 @@ public class ContentfulError: Decodable, Error, CustomDebugStringConvertible {
      * we use failable initializers so that consumers don't experience error breakpoints when
      * no error was returned from the API.
      */
-    internal static func error(with decoder: JSONDecoder, and data: Data) -> ContentfulError? {
-        if let error = try? decoder.decode(ContentfulError.self, from: data) {
+    internal static func error(with decoder: JSONDecoder, data: Data, statusCode: Int) -> APIError? {
+        if let error = try? decoder.decode(APIError.self, from: data) {
             // An error must have these things.
             guard error.message != nil && error.requestId != nil else {
                 return nil
             }
+            error.statusCode = statusCode
             return error
         }
         return nil
@@ -166,7 +177,7 @@ public class ContentfulError: Decodable, Error, CustomDebugStringConvertible {
  For requests that do hit the Contentful Delivery API enforces rate limits of 78 requests per second
  and 280800 requests per hour by default. Higher rate limits may apply depending on your current plan.
  */
-public final class RateLimitError: ContentfulError {
+public final class RateLimitError: APIError {
     /**
      An integer specifying the time before one of the two limits resets and another request 
      to the API will be accepted. If the client is rate limited per second, the header will return 1, 
@@ -181,8 +192,11 @@ public final class RateLimitError: ContentfulError {
 
     // Format the output for printing from the debug console
     override public var debugDescription: String {
-        let detailsStrings = details?.errors.flatMap({ $0.details }).joined(separator: ",") ?? ""
+        let debugDescription = super.debugDescription
         let timeInfoString = ( timeBeforeLimitReset == nil ? "" : "Wait " + String(timeBeforeLimitReset!)) + " seconds before making more requests."
-        return message! + " " + detailsStrings + timeInfoString
+        return """
+        \(debugDescription)
+        \(timeInfoString)
+        """
     }
 }

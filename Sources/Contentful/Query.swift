@@ -453,7 +453,7 @@ public extension ChainableQuery {
     @discardableResult private func order(by order: [Ordering]) -> Self {
         let propertyPathsWithReversals = order.map { return $0.parameterValue }
         let joinedPropertyNames = propertyPathsWithReversals.joined(separator: ",")
-        
+
         self.parameters[QueryParameter.order] = joinedPropertyNames
         return self
     }
