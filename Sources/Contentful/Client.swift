@@ -500,18 +500,15 @@ extension Client {
 
      - Returns: The data task being used, enables cancellation of requests.
      */
-    @discardableResult public func initialSync(matching: [String: Any] = [:],
+    @discardableResult public func initialSync(options: SyncSpace.SyncType = .all,
                                                completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
-
-        var parameters = matching
-        parameters["initial"] = true
 
         let syncCompletion: (Result<SyncSpace>) -> Void = { result in
             self.finishSync(for: SyncSpace(syncToken: ""),
                             newestSyncResults: result,
                             completion: completion)
         }
-        return sync(matching: parameters, completion: syncCompletion)
+        return sync(options: options, initial: true, completion: syncCompletion)
     }
 
     /**
@@ -522,9 +519,9 @@ extension Client {
      - Returns: A tuple of data task and a signal for the resulting SyncSpace.
      */
 
-    @discardableResult public func initialSync(matching: [String: Any] = [:]) -> Observable<Result<SyncSpace>> {
-        let asyncDataTask: AsyncDataTask<[String: Any], SyncSpace> = initialSync(matching:completion:)
-        return toObservable(parameter: matching, asyncDataTask: asyncDataTask).observable
+    @discardableResult public func initialSync(options: SyncSpace.SyncType = .all) -> Observable<Result<SyncSpace>> {
+        let asyncDataTask: AsyncDataTask<SyncSpace.SyncType, SyncSpace> = initialSync(options:completion:)
+        return toObservable(parameter: options, asyncDataTask: asyncDataTask).observable
     }
 
     /**
@@ -540,7 +537,7 @@ extension Client {
      - Returns: An `Observable` which will be fired when the `SyncSpace` is fully synchronized with Contentful.
      */
     @discardableResult public func nextSync(for syncSpace: SyncSpace,
-                                     matching: [String: Any] = [:]) -> Observable<Result<SyncSpace>> {
+                                            options: SyncSpace.SyncType = .all) -> Observable<Result<SyncSpace>> {
 
         let observable = Observable<Result<SyncSpace>>()
         self.nextSync(for: syncSpace) { result in
@@ -564,7 +561,7 @@ extension Client {
      */
 
     @discardableResult public func nextSync(for syncSpace: SyncSpace,
-                                            matching: [String: Any] = [:],
+                                            options: SyncSpace.SyncType = .all,
                                             completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
 
         // Preview mode only supports `initialSync` not `nextSync`. The only reason `nextSync` should
@@ -575,27 +572,29 @@ extension Client {
             return nil
         }
 
-        var parameters = matching
-        parameters.removeValue(forKey: "initial")
-        parameters["sync_token"] = syncSpace.syncToken
-
         let syncCompletion: (Result<SyncSpace>) -> Void = { result in
             self.finishSync(for: syncSpace,
                             newestSyncResults: result,
                             completion: completion)
         }
 
-        let task = self.sync(matching: parameters, completion: syncCompletion)
+        let task = self.sync(options: options, initial: false, completion: syncCompletion)
         return task
     }
 
-    fileprivate func sync(matching: [String: Any] = [:],
+    fileprivate func sync(options: SyncSpace.SyncType = .all,
+                          initial: Bool,
                           completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
 
-        return fetch(url: URL(forComponent: "sync", parameters: matching)) { (result: Result<SyncSpace>) in
+        var parameters = options.parameters
+        if initial == true {
+            parameters["initial"] = true
+        }
+
+        return fetch(url: URL(forComponent: "sync", parameters: parameters)) { (result: Result<SyncSpace>) in
 
             if let syncSpace = result.value, syncSpace.hasMorePages == true {
-                self.nextSync(for: syncSpace, matching: matching, completion: completion)
+                self.nextSync(for: syncSpace, options: options, completion: completion)
             } else {
                 completion(result)
             }
