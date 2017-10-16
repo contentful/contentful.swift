@@ -12,12 +12,22 @@ import Interstellar
 /// A container for the synchronized state of a Space
 public final class SyncSpace: Decodable {
 
-    public enum State {
+    internal enum Operation {
         case initial
         case next(syncToken: String)
+
+        var parameters: [String: Any] {
+            switch self {
+            case .initial:
+                return ["initial": true]
+            case .next(let syncToken):
+                return ["sync_token": syncToken]
+            }
+        }
     }
 
-    public enum SyncType {
+    /// The types in Contentful that a sync can be restricted to.
+    public enum SyncableTypes {
         case all
         case entries
         case assets
@@ -31,6 +41,7 @@ public final class SyncSpace: Decodable {
             let typeParameter = "type"
             switch self {
             case .all:
+                // Return empty dictionary to specify that all content should be sync'ed.
                 return [:]
             case .entries:
                 return [typeParameter: "Entry"]

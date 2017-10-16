@@ -20,6 +20,9 @@ public class ContentType: Resource, Decodable {
     /// The name of this Content Type
     public let name: String
 
+    /// The description of this Content Type.
+    public let description: String?
+
     /// Resource type ("ContentType")
     public var type: String {
         return sys.type
@@ -30,9 +33,14 @@ public class ContentType: Resource, Decodable {
         sys             = try container.decode(Sys.self, forKey: .sys)
         fields          = try container.decode([Field].self, forKey: .fields)
         name            = try container.decode(String.self, forKey: .name)
+        description     = try container.decodeIfPresent(String.self, forKey: .description)
     }
 
-    enum CodingKeys: String, CodingKey {
-        case sys, fields, name
+    private enum CodingKeys: String, CodingKey {
+        case sys, fields, name, description
+    }
+
+    public enum QueryableCodingKey: String, CodingKey {
+        case name, description
     }
 }

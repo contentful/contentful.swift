@@ -330,6 +330,31 @@ extension Client {
     }
 
     /**
+     Fetch a collection of Assets from Contentful matching the specified query.
+
+     - Parameter query: The AssetQuery object to match results againts.
+     - Parameter completion: A handler being called on completion of the request.
+
+     - Returns: The data task being used, enables cancellation of requests.
+     */
+    @discardableResult public func fetchAssets(matching query: AssetQuery? = nil,
+                                               then completion: @escaping ResultsHandler<ArrayResponse<Asset>>) -> URLSessionDataTask? {
+        let url = URL(forComponent: "assets", parameters: query?.parameters)
+        return fetch(url: url, then: completion)
+    }
+
+    /**
+     Fetch a collection of Assets from Contentful matching the specified query.
+
+     - Parameter query: The AssetQuery object to match results againts.
+     - Returns: A tuple of data task and an observable for the resulting array of Assets.
+     */
+    @discardableResult public func fetchAssets(matching query: AssetQuery? = nil) -> Observable<Result<ArrayResponse<Asset>>> {
+        let asyncDataTask: AsyncDataTask<AssetQuery?, ArrayResponse<Asset>> = fetchAssets(matching:then:)
+        return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
+    }
+
+    /**
      Fetch the underlying media file as `Data`.
 
      - Parameter asset: The `Asset` which contains the relevant media file.
@@ -437,6 +462,35 @@ extension Client {
         let asyncDataTask: AsyncDataTask<String, Entry> = fetchEntry(id:then:)
         return toObservable(parameter: id, asyncDataTask: asyncDataTask).observable
     }
+
+    /**
+     Fetch a collection of Entries from Contentful matching the specified query. This method does not
+     specify the content_type in the query parameters, so the entries returned in the results can be
+     of any type.
+
+     - Parameter query: The Query object to match results againts.
+     - Parameter completion: A handler being called on completion of the request.
+
+     - Returns: The data task being used, enables cancellation of requests.
+     */
+    @discardableResult public func fetchEntries(matching query: Query? = nil,
+                                                then completion: @escaping ResultsHandler<ArrayResponse<Entry>>) -> URLSessionDataTask? {
+        let url = URL(forComponent: "entries", parameters: query?.parameters)
+        return fetch(url: url, then: completion)
+    }
+
+    /**
+     Fetch a collection of Entries from Contentful matching the specified query. This method does not
+     specify the content_type in the query parameters, so the entries returned in the results can be
+     of any type.
+     - Parameter query: The Query object to match results againts.
+
+     - Returns: A tuple of data task and an observable for the resulting array of Entry's.
+     */
+    @discardableResult public func fetchEntries(matching query: Query? = nil) -> Observable<Result<ArrayResponse<Entry>>> {
+        let asyncDataTask: AsyncDataTask<Query?, ArrayResponse<Entry>> = fetchEntries(matching:then:)
+        return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
+    }
 }
 
 
@@ -451,7 +505,7 @@ extension Client {
 
      - Returns: The data task being used, enables cancellation of requests.
      */
-    @discardableResult public func initialSync(options: SyncSpace.SyncType = .all,
+    @discardableResult public func initialSync(syncableTypes: SyncSpace.SyncableTypes = .all,
                                                then completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
 
         let syncCompletion: (Result<SyncSpace>) -> Void = { result in
@@ -459,7 +513,7 @@ extension Client {
                             newestSyncResults: result,
                             then: completion)
         }
-        return sync(options: options, state: .initial, then: syncCompletion)
+        return sync(operation: .initial, syncableTypes: syncableTypes, then: syncCompletion)
     }
 
     /**
@@ -470,9 +524,9 @@ extension Client {
      - Returns: A tuple of data task and a signal for the resulting SyncSpace.
      */
 
-    @discardableResult public func initialSync(options: SyncSpace.SyncType = .all) -> Observable<Result<SyncSpace>> {
-        let asyncDataTask: AsyncDataTask<SyncSpace.SyncType, SyncSpace> = initialSync(options:then:)
-        return toObservable(parameter: options, asyncDataTask: asyncDataTask).observable
+    @discardableResult public func initialSync(syncableTypes: SyncSpace.SyncableTypes = .all) -> Observable<Result<SyncSpace>> {
+        let asyncDataTask: AsyncDataTask<SyncSpace.SyncableTypes, SyncSpace> = initialSync(syncableTypes:then:)
+        return toObservable(parameter: syncableTypes, asyncDataTask: asyncDataTask).observable
     }
 
     /**
@@ -488,10 +542,10 @@ extension Client {
      - Returns: An `Observable` which will be fired when the `SyncSpace` is fully synchronized with Contentful.
      */
     @discardableResult public func nextSync(for syncSpace: SyncSpace,
-                                            options: SyncSpace.SyncType = .all) -> Observable<Result<SyncSpace>> {
+                                            syncableTypes: SyncSpace.SyncableTypes = .all) -> Observable<Result<SyncSpace>> {
 
         let observable = Observable<Result<SyncSpace>>()
-        self.nextSync(for: syncSpace) { result in
+        self.nextSync(for: syncSpace, syncableTypes: syncableTypes) { result in
             observable.update(result)
         }
         return observable
@@ -512,7 +566,7 @@ extension Client {
      */
 
     @discardableResult public func nextSync(for syncSpace: SyncSpace,
-                                            options: SyncSpace.SyncType = .all,
+                                            syncableTypes: SyncSpace.SyncableTypes = .all,
                                             then completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
 
         // Preview mode only supports `initialSync` not `nextSync`. The only reason `nextSync` should
@@ -523,32 +577,26 @@ extension Client {
             return nil
         }
 
-        let syncCompletion: (Result<SyncSpace>) -> Void = { result in
+        let syncCompletion: (Result<SyncSpace>) -> Void = { results in
             self.finishSync(for: syncSpace,
-                            newestSyncResults: result,
+                            newestSyncResults: results,
                             then: completion)
         }
 
-        let task = self.sync(options: options, state: .next(syncToken: syncSpace.syncToken), then: syncCompletion)
+        let task = self.sync(operation: .next(syncToken: syncSpace.syncToken), syncableTypes: syncableTypes, then: syncCompletion)
         return task
     }
 
-    fileprivate func sync(options: SyncSpace.SyncType = .all,
-                          state: SyncSpace.State,
+    fileprivate func sync(operation: SyncSpace.Operation,
+                          syncableTypes: SyncSpace.SyncableTypes = .all,
                           then completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
 
-        var parameters = options.parameters
-        switch state {
-        case .initial:
-            parameters["initial"] = true
-        case .next(let syncToken):
-            parameters["sync_token"] = syncToken
-        }
+        let parameters = syncableTypes.parameters + operation.parameters
 
         return fetch(url: URL(forComponent: "sync", parameters: parameters)) { (result: Result<SyncSpace>) in
 
             if let syncSpace = result.value, syncSpace.hasMorePages == true {
-                self.nextSync(for: syncSpace, options: options, then: completion)
+                self.nextSync(for: syncSpace, syncableTypes: syncableTypes, then: completion)
             } else {
                 completion(result)
             }

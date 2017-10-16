@@ -12,7 +12,7 @@ import Nimble
 import DVR
 import Interstellar
 
-final class Cat: EntryDecodable, EntryQueryable {
+final class Cat: EntryDecodable, ResourceQueryable {
 
     static let contentTypeId: String = "cat"
 
@@ -45,7 +45,7 @@ final class Cat: EntryDecodable, EntryQueryable {
     }
 }
 
-final class City: EntryDecodable, EntryQueryable {
+final class City: EntryDecodable, ResourceQueryable {
 
     static let contentTypeId: String = "1t9IbcfdCk6m04uISSsaIK"
 
@@ -64,7 +64,7 @@ final class City: EntryDecodable, EntryQueryable {
     }
 }
 
-final class Dog: EntryDecodable, EntryQueryable {
+final class Dog: EntryDecodable, ResourceQueryable {
 
     static let contentTypeId: String = "dog"
 
@@ -89,7 +89,7 @@ final class Dog: EntryDecodable, EntryQueryable {
     }
 }
 
-class Human: EntryDecodable, EntryQueryable {
+class Human: EntryDecodable, ResourceQueryable {
 
     static let contentTypeId = "human"
 
@@ -798,7 +798,7 @@ class QueryTests: XCTestCase {
 }
 
 // From Complex-Sync-Test-Space
-class LinkClass: EntryDecodable, EntryQueryable {
+class LinkClass: EntryDecodable, ResourceQueryable {
 
     static let contentTypeId = "link"
 
@@ -817,7 +817,7 @@ class LinkClass: EntryDecodable, EntryQueryable {
 }
 
 
-class SingleRecord: EntryDecodable, EntryQueryable {
+class SingleRecord: EntryDecodable, ResourceQueryable {
 
     static let contentTypeId = "singleRecord"
 

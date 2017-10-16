@@ -88,4 +88,25 @@ class ContentTypeTests: XCTestCase {
         }
         waitForExpectations(timeout: 10, handler: nil)
     }
+
+    func testFetchContentTypeMatchingQuery() {
+        let expectation = self.expectation(description: "can fetch all content types of a space")
+
+        let query = ContentTypeQuery.where(queryableCodingKey: .name, .equals("Cat"))
+        ContentTypeTests.client.fetchContentTypes(matching: query) { result in
+            switch result {
+            case let .success(array):
+                expect(array.total).to(equal(1))
+
+                let _ = array.items.first.flatMap { (type: ContentType) in
+                    expect(type.name).to(equal("Cat"))
+                }
+            case let .error(error):
+                fail("\(error)")
+            }
+
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 10, handler: nil)
+    }
 }
