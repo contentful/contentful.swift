@@ -180,6 +180,13 @@ open class Client {
                 if self.didHandleRateLimitError(data: data, response: response, completion: completion) == true {
                     return // Exit if there was a RateLimitError.
                 }
+
+                // Use failable initialzer to optional rather than initializer that throws,
+                // because failure to find an error in the JSON should error should not throw an error that JSON is not parseable.
+                if let apiError = APIError.error(with: self.jsonDecoder, data: data, statusCode: (response as! HTTPURLResponse).statusCode) {
+                    completion(Result.error(apiError))
+                    return
+                }
                 completion(Result.success(data))
                 return
             }
@@ -217,7 +224,7 @@ open class Client {
     // Returns true if a rate limit error was returned by the API.
     fileprivate func didHandleRateLimitError(data: Data, response: URLResponse?, completion: ResultsHandler<Data>) -> Bool {
         if let timeUntilLimitReset = self.readRateLimitHeaderIfPresent(response: response) {
-            // At this point, We know for sure that the type returned by the API can be mapped to a `ContentfulError` instance.
+            // At this point, We know for sure that the type returned by the API can be mapped to a `APIError` instance.
             // Directly handle JSON and exit.
             self.handleRateLimitJSON(data, timeUntilLimitReset: timeUntilLimitReset) { (_ result: Result<RateLimitError>) in
                 switch result {
@@ -246,13 +253,6 @@ open class Client {
 
     fileprivate func handleJSON<DecodableType: Decodable>(_ data: Data, _ completion: ResultsHandler<DecodableType>) {
         do {
-            // Use failable initialzer to optional rather than initializer that throws,
-            // because failure to find an error in the JSON should error should not throw an error that JSON is not parseable.
-            if let apiError = ContentfulError.error(with: jsonDecoder, and: data) {
-                completion(Result.error(apiError))
-                return
-            }
-
             let decodedObject = try jsonDecoder.decode(DecodableType.self, from: data)
             completion(Result.success(decodedObject))
         } catch {

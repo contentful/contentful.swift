@@ -21,7 +21,12 @@ class ErrorTests: XCTestCase {
             case .success:
                 fail("Request should not succeed")
             case .error(let error):
-                expect((error as! ContentfulError).debugDescription).to(equal("The query you sent was invalid. Probably a filter or ordering specification is not applicable to the type of a field." + " " + "The path \"sys.888\" is not recognized"))
+                let expectedString = """
+                    HTTP status code 400: The query you sent was invalid. Probably a filter or ordering specification is not applicable to the type of a field.
+                    The path \"sys.888\" is not recognized
+                    Contentful Request ID: e9ed3187948a786c08088e66fb7b6188
+                    """
+                expect((error as! APIError).debugDescription).to(equal(expectedString))
             }
             expectation.fulfill()
         }

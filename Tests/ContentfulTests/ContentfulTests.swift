@@ -120,7 +120,7 @@ class PreviewAPITests: XCTestCase {
             fail("expected error not received")
             networkExpectation.fulfill()
         }.error { error in
-            if let error = error as? ContentfulError {
+            if let error = error as? APIError {
                 expect(error.id).to(equal("AccessTokenInvalid"))
             } else {
                 fail("expected error not received")
