@@ -93,7 +93,7 @@ class AssetTests: XCTestCase {
         let expectation = self.expectation(description: "Fetch image from asset network expectation")
 
         // FIXME: We should have a different test expectation as this mimics the one above
-        AssetTests.client.fetchAssets(matching: ["mimetype_group": "image"]).then { assets in
+        AssetTests.client.fetchAssets(matching: AssetQuery.where(mimetypeGroup: .image)).then { assets in
 
             expect(assets.items.count).to(equal(4))
             expectation.fulfill()

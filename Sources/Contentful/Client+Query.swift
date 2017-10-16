@@ -20,10 +20,11 @@ extension Client {
 
      - Returns: The data task being used, enables cancellation of requests.
      */
-    @discardableResult public func fetchEntries(matching query: Query,
+    @discardableResult public func fetchEntries(matching query: Query? = nil,
                                                 then completion: @escaping ResultsHandler<ArrayResponse<Entry>>) -> URLSessionDataTask? {
 
-        let url = URL(forComponent: "entries", parameters: query.parameters)
+        let parameters = query?.parameters ?? [:]
+        let url = URL(forComponent: "entries", parameters: parameters)
         return fetch(url: url, then: completion)
     }
 
@@ -35,8 +36,8 @@ extension Client {
 
      - Returns: A tuple of data task and an observable for the resulting array of Entry's.
      */
-    @discardableResult public func fetchEntries(matching query: Query) -> Observable<Result<ArrayResponse<Entry>>> {
-        let asyncDataTask: AsyncDataTask<Query, ArrayResponse<Entry>> = fetchEntries(matching:then:)
+    @discardableResult public func fetchEntries(matching query: Query? = nil) -> Observable<Result<ArrayResponse<Entry>>> {
+        let asyncDataTask: AsyncDataTask<Query?, ArrayResponse<Entry>> = fetchEntries(matching:then:)
         return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
     }
 
@@ -48,10 +49,10 @@ extension Client {
 
      - Returns: The data task being used, enables cancellation of requests.
      */
-    @discardableResult public func fetchAssets(matching query: AssetQuery,
+    @discardableResult public func fetchAssets(matching query: AssetQuery? = nil,
                                                then completion: @escaping ResultsHandler<ArrayResponse<Asset>>) -> URLSessionDataTask? {
-
-        let url = URL(forComponent: "assets", parameters: query.parameters)
+        let parameters = query?.parameters ?? [:]
+        let url = URL(forComponent: "assets", parameters: parameters)
         return fetch(url: url, then: completion)
     }
 
@@ -61,8 +62,8 @@ extension Client {
      - Parameter query: The Query object to match results againts.
      - Returns: A tuple of data task and an observable for the resulting array of Assets.
      */
-    @discardableResult public func fetchAssets(matching query: AssetQuery) -> Observable<Result<ArrayResponse<Asset>>> {
-        let asyncDataTask: AsyncDataTask<AssetQuery, ArrayResponse<Asset>> = fetchAssets(matching:then:)
+    @discardableResult public func fetchAssets(matching query: AssetQuery? = nil) -> Observable<Result<ArrayResponse<Asset>>> {
+        let asyncDataTask: AsyncDataTask<AssetQuery?, ArrayResponse<Asset>> = fetchAssets(matching:then:)
         return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
     }
 }

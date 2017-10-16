@@ -140,9 +140,6 @@ public enum MimetypeGroup: String {
     case markup
 }
 
-
-
-
 public protocol AbstractQuery: class {
 
     // Unfortunately (compiler forced) required designated initializer so that default implementation of AbstractQuery
@@ -530,61 +527,6 @@ public extension ChainableQuery {
         self.parameters[QueryParameter.order] = joinedPropertyNames
         return self
     }
-
-    /**
-     Initialize a query to do a ["Search on References"](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references)
-     which enables searching for entries based on value's for members of referenced entries.
-     Example usage:
-     ```
-     let query = Query(whereLinkAtFieldNamed: "bestFriend",
-                       onSourceContentTypeWithId: "cat",
-                       hasValueAt: "fields.name",
-                       withTargetContentTypeId: "cat",
-                       that: .matches("Happy Cat"))
-     ```
-     - Parameter linkingFieldName: The field name which holds a reference to a link.
-     - Parameter sourceContentTypeId: The content type identifier of the link source.
-     - Parameter targetKeyPath: The member path for the value you would like to search on for the link destination resource.
-     - Parameter targetContentTypeId: The content type idenifier of the item(s) being linked to at the specified linking field name.
-     - Parameter operation: The `Query.Operation` used to match the value of at the target key path.
-     */
-    public init(whereLinkAtFieldNamed linkingFieldName: String,
-                onSourceContentTypeWithId sourceContentTypeId: ContentTypeId,
-                hasValueAt targetKeyPath: FieldName,
-                withTargetContentTypeId targetContentTypeId: ContentTypeId,
-                that operation: Query.Operation) {
-        self.init()
-        self.whereLinkAtFieldNamed(linkingFieldName,
-                                   onSourceContentTypeWithId: sourceContentTypeId,
-                                   hasValueAt: targetKeyPath,
-                                   withTargetContentTypeId: targetContentTypeId,
-                                   that: operation)
-    }
-
-    /**
-     Use this method to do a ["Search on References"](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references)
-     which enables searching for entries based on value's for members of referenced entries.
-     Example usage:
-
-     - Parameter linkingFieldName: The field name which holds a reference to a link.
-     - Parameter sourceContentTypeId: The content type identifier of the link source.
-     - Parameter targetKeyPath: The member path for the value you would like to search on for the link destination resource.
-     - Parameter targetContentTypeId: The content type idenifier of the item(s) being linked to at the specified linking field name.
-     - Parameter operation: The `Query.Operation` used to match the value of at the target key path.
-     - Returns: A reference to the receiving query to enable chaining.
-     */
-    @discardableResult public func whereLinkAtFieldNamed(_ linkingFieldName: String,
-                                                         onSourceContentTypeWithId sourceContentTypeId: ContentTypeId,
-                                                         hasValueAt targetKeyPath: FieldName,
-                                                         withTargetContentTypeId targetContentTypeId: ContentTypeId,
-                                                         that operation: Query.Operation) -> Self {
-        self.parameters[QueryParameter.contentType] = sourceContentTypeId
-        self.parameters["fields.\(linkingFieldName).sys.contentType.sys.id"] = targetContentTypeId
-
-        let filterParameterName = "fields.\(linkingFieldName).\(targetKeyPath)\(operation.string)"
-        self.parameters[filterParameterName] = operation.values
-        return self
-    }
 }
 
 public protocol EntryQuery: ChainableQuery {}
@@ -606,6 +548,62 @@ public extension EntryQuery {
      */
     @discardableResult public func `where`(contentTypeId: ContentTypeId) -> Self {
         self.parameters[QueryParameter.contentType] = contentTypeId
+        return self
+    }
+
+    /**
+     Initialize a query to do a ["Search on References"](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references)
+     which enables searching for entries based on value's for members of referenced entries.
+     Example usage:
+     ```
+     let query = Query(whereLinkAtFieldNamed: "bestFriend",
+     onSourceContentTypeWithId: "cat",
+     hasValueAt: "fields.name",
+     withTargetContentTypeId: "cat",
+     that: .matches("Happy Cat"))
+     ```
+     - Parameter linkingFieldName: The field name which holds a reference to a link.
+     - Parameter sourceContentTypeId: The content type identifier of the link source.
+     - Parameter targetKeyPath: The member path for the value you would like to search on for the link destination resource.
+     - Parameter targetContentTypeId: The content type idenifier of the item(s) being linked to at the specified linking field name.
+     - Parameter operation: The `Query.Operation` used to match the value of at the target key path.
+     */
+    public static func `where`(linkAtFieldNamed linkingFieldName: String,
+                               onSourceContentTypeWithId sourceContentTypeId: ContentTypeId,
+                               hasValueAtKeyPath targetKeyPath: String,
+                               withTargetContentTypeId targetContentTypeId: ContentTypeId,
+                               that operation: Query.Operation) -> Self {
+        let query = Self()
+        query.where(linkAtFieldNamed: linkingFieldName,
+                    onSourceContentTypeWithId: sourceContentTypeId,
+                    hasValueAtKeyPath: targetKeyPath,
+                    withTargetContentTypeId: targetContentTypeId,
+                    that: operation)
+        return query
+    }
+
+    /**
+     Use this method to do a ["Search on References"](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references)
+     which enables searching for entries based on value's for members of referenced entries.
+     Example usage:
+
+     - Parameter linkingFieldName: The field name which holds a reference to a link.
+     - Parameter sourceContentTypeId: The content type identifier of the link source.
+     - Parameter targetKeyPath: The member path for the value you would like to search on for the link destination resource.
+     - Parameter targetContentTypeId: The content type idenifier of the item(s) being linked to at the specified linking field name.
+     - Parameter operation: The `Query.Operation` used to match the value of at the target key path.
+     - Returns: A reference to the receiving query to enable chaining.
+     */
+    @discardableResult public func `where`(linkAtFieldNamed linkingFieldName: String,
+                                           onSourceContentTypeWithId sourceContentTypeId: ContentTypeId,
+                                           hasValueAtKeyPath targetKeyPath: String,
+                                           withTargetContentTypeId targetContentTypeId: ContentTypeId,
+                                           that operation: Query.Operation) -> Self {
+        self.parameters[QueryParameter.contentType] = sourceContentTypeId
+        self.parameters["fields.\(linkingFieldName).sys.contentType.sys.id"] = targetContentTypeId
+
+        let filterParameterName = "fields.\(linkingFieldName).\(targetKeyPath)\(operation.string)"
+        self.parameters[filterParameterName] = operation.values
         return self
     }
 }
@@ -680,8 +678,8 @@ public class Query: EntryQuery {
         case isLessThanOrEqualTo(QueryableRange)
         case isGreaterThan(QueryableRange)
         case isGreaterThanOrEqualTo(QueryableRange)
-        case isBefore(Date)
-        case isAfter(Date)
+        case isBefore(QueryableRange)
+        case isAfter(QueryableRange)
 
         /// Proximity searches.
         case isNear(Location)
@@ -723,8 +721,8 @@ public class Query: EntryQuery {
             case .isLessThanOrEqualTo(let queryableRange):      return queryableRange.stringValue
             case .isGreaterThan(let queryableRange):            return queryableRange.stringValue
             case .isGreaterThanOrEqualTo(let queryableRange):   return queryableRange.stringValue
-            case .isBefore(let date):                           return date.stringValue
-            case .isAfter(let date):                            return date.stringValue
+            case .isBefore(let queryableRange):                           return queryableRange.stringValue
+            case .isAfter(let queryableRange):                            return queryableRange.stringValue
 
             case .isNear(let coordinates):                      return "\(coordinates.latitude),\(coordinates.longitude)"
             case .isWithin(let bounds):                         return string(for: bounds)

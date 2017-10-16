@@ -313,7 +313,7 @@ extension Client {
 
      - Returns: The data task being used, enables cancellation of requests.
      */
-    @discardableResult public func fetchAsset(id: String, completion: @escaping ResultsHandler<Asset>) -> URLSessionDataTask? {
+    @discardableResult public func fetchAsset(id: String, then completion: @escaping ResultsHandler<Asset>) -> URLSessionDataTask? {
         return fetch(url: URL(forComponent: "assets/\(id)"), then: completion)
     }
 
@@ -325,34 +325,34 @@ extension Client {
      - Returns: A tuple of data task and a signal for the resulting Asset.
      */
     @discardableResult public func fetchAsset(id: String) -> Observable<Result<Asset>> {
-        let asyncDataTask: AsyncDataTask<String, Asset> = fetchAsset(id:completion:)
+        let asyncDataTask: AsyncDataTask<String, Asset> = fetchAsset(id:then:)
         return toObservable(parameter: id, asyncDataTask: asyncDataTask).observable
     }
 
-    /**
-     Fetch a collection of Assets from Contentful.
-
-     - Parameter matching: An optional list of search parameters the Assets must match.
-     - Parameter completion: A handler being called on completion of the request.
-
-     - Returns: The data task being used, enables cancellation of requests.
-     */
-    @discardableResult public func fetchAssets(matching: [String: Any] = [:],
-                                               completion: @escaping ResultsHandler<ArrayResponse<Asset>>) -> URLSessionDataTask? {
-        return fetch(url: URL(forComponent: "assets", parameters: matching), then: completion)
-    }
-
-    /**
-     Fetch a collection of Assets from Contentful.
-
-     - Parameter matching: Optional list of search parameters the Assets must match.
-
-     - Returns: A tuple of data task and a signal for the resulting array of Assets.
-     */
-    @discardableResult public func fetchAssets(matching: [String: Any] = [:]) -> Observable<Result<ArrayResponse<Asset>>> {
-        let asyncDataTask: AsyncDataTask<[String: Any], ArrayResponse<Asset>> = fetchAssets(matching:completion:)
-        return toObservable(parameter: matching, asyncDataTask: asyncDataTask).observable
-    }
+//    /**
+//     Fetch a collection of Assets from Contentful.
+//
+//     - Parameter matching: An optional list of search parameters the Assets must match.
+//     - Parameter completion: A handler being called on completion of the request.
+//
+//     - Returns: The data task being used, enables cancellation of requests.
+//     */
+//    @discardableResult public func fetchAssets(matching: [String: Any] = [:],
+//                                               completion: @escaping ResultsHandler<ArrayResponse<Asset>>) -> URLSessionDataTask? {
+//        return fetch(url: URL(forComponent: "assets", parameters: matching), then: completion)
+//    }
+//
+//    /**
+//     Fetch a collection of Assets from Contentful.
+//
+//     - Parameter matching: Optional list of search parameters the Assets must match.
+//
+//     - Returns: A tuple of data task and a signal for the resulting array of Assets.
+//     */
+//    @discardableResult public func fetchAssets(matching: [String: Any] = [:]) -> Observable<Result<ArrayResponse<Asset>>> {
+//        let asyncDataTask: AsyncDataTask<[String: Any], ArrayResponse<Asset>> = fetchAssets(matching:completion:)
+//        return toObservable(parameter: matching, asyncDataTask: asyncDataTask).observable
+//    }
 
     /**
      Fetch the underlying media file as `Data`.
@@ -383,7 +383,7 @@ extension Client {
      - Returns: The data task being used, enables cancellation of requests.
      */
     @discardableResult public func fetchContentType(id: String,
-                                                    completion: @escaping ResultsHandler<ContentType>) -> URLSessionDataTask? {
+                                                    then completion: @escaping ResultsHandler<ContentType>) -> URLSessionDataTask? {
         return fetch(url: URL(forComponent: "content_types/\(id)"), then: completion)
     }
 
@@ -395,61 +395,62 @@ extension Client {
      - Returns: A tuple of data task and a signal for the resulting Content Type.
      */
     @discardableResult public func fetchContentType(id: String) -> Observable<Result<ContentType>> {
-        let asyncDataTask: AsyncDataTask<String, ContentType> = fetchContentType(id:completion:)
+        let asyncDataTask: AsyncDataTask<String, ContentType> = fetchContentType(id:then:)
         return toObservable(parameter: id, asyncDataTask: asyncDataTask).observable
     }
 
-    /**
-     Fetch a collection of Content Types from Contentful.
-
-     - Parameter matching:   Optional list of search parameters the Content Types must match.
-     - Parameter completion: A handler being called on completion of the request.
-
-     - Returns: The data task being used, enables cancellation of requests.
-     */
-    @discardableResult public func fetchContentTypes(matching: [String: Any] = [:],
-                                                     completion: @escaping ResultsHandler<ArrayResponse<ContentType>>) -> URLSessionDataTask? {
-        return fetch(url: URL(forComponent: "content_types", parameters: matching), then: completion)
-    }
-
-    /**
-     Fetch a collection of Content Types from Contentful.
-
-     - Parameter matching: Optional list of search parameters the Content Types must match.
-
-     - Returns: A tuple of data task and a signal for the resulting array of Content Types.
-     */
-    @discardableResult public func fetchContentTypes(matching: [String: Any] = [:]) -> Observable<Result<ArrayResponse<ContentType>>> {
-        let asyncDataTask: AsyncDataTask<[String: Any], ArrayResponse<ContentType>> = fetchContentTypes(matching:completion:)
-        return toObservable(parameter: matching, asyncDataTask: asyncDataTask).observable
-    }
+    // TODO:
+//    /**
+//     Fetch a collection of Content Types from Contentful.
+//
+//     - Parameter matching:   Optional list of search parameters the Content Types must match.
+//     - Parameter completion: A handler being called on completion of the request.
+//
+//     - Returns: The data task being used, enables cancellation of requests.
+//     */
+//    @discardableResult public func fetchContentTypes(matching: [String: Any] = [:],
+//                                                     completion: @escaping ResultsHandler<ArrayResponse<ContentType>>) -> URLSessionDataTask? {
+//        return fetch(url: URL(forComponent: "content_types", parameters: matching), then: completion)
+//    }
+//
+//    /**
+//     Fetch a collection of Content Types from Contentful.
+//
+//     - Parameter matching: Optional list of search parameters the Content Types must match.
+//
+//     - Returns: A tuple of data task and a signal for the resulting array of Content Types.
+//     */
+//    @discardableResult public func fetchContentTypes(matching: [String: Any] = [:]) -> Observable<Result<ArrayResponse<ContentType>>> {
+//        let asyncDataTask: AsyncDataTask<[String: Any], ArrayResponse<ContentType>> = fetchContentTypes(matching:completion:)
+//        return toObservable(parameter: matching, asyncDataTask: asyncDataTask).observable
+//    }
 }
 
 extension Client {
-    /**
-     Fetch a collection of Entries from Contentful.
-
-     - Parameter matching:   Optional list of search parameters the Entries must match.
-     - Parameter completion: A handler being called on completion of the request.
-
-     - Returns: The data task being used, enables cancellation of requests
-     */
-    @discardableResult public func fetchEntries(matching: [String: Any] = [:],
-                                                completion: @escaping ResultsHandler<ArrayResponse<Entry>>) -> URLSessionDataTask? {
-        return fetch(url: URL(forComponent: "entries", parameters: matching), then: completion)
-    }
-
-    /**
-     Fetch a collection of Entries from Contentful.
-
-     - Parameter matching: Optional list of search parameters the Entries must match.
-
-     - Returns: A tuple of data task and a signal for the resulting array of Entries.
-     */
-    @discardableResult public func fetchEntries(matching: [String: Any] = [:]) ->  Observable<Result<ArrayResponse<Entry>>> {
-        let asyncDataTask = fetchEntries(matching:completion:)
-        return toObservable(parameter: matching, asyncDataTask: asyncDataTask).observable
-    }
+//    /**
+//     Fetch a collection of Entries from Contentful.
+//
+//     - Parameter matching:   Optional list of search parameters the Entries must match.
+//     - Parameter completion: A handler being called on completion of the request.
+//
+//     - Returns: The data task being used, enables cancellation of requests
+//     */
+//    @discardableResult public func fetchEntries(matching: [String: Any] = [:],
+//                                                completion: @escaping ResultsHandler<ArrayResponse<Entry>>) -> URLSessionDataTask? {
+//        return fetch(url: URL(forComponent: "entries", parameters: matching), then: completion)
+//    }
+//
+//    /**
+//     Fetch a collection of Entries from Contentful.
+//
+//     - Parameter matching: Optional list of search parameters the Entries must match.
+//
+//     - Returns: A tuple of data task and a signal for the resulting array of Entries.
+//     */
+//    @discardableResult public func fetchEntries(matching: [String: Any] = [:]) ->  Observable<Result<ArrayResponse<Entry>>> {
+//        let asyncDataTask = fetchEntries(matching:completion:)
+//        return toObservable(parameter: matching, asyncDataTask: asyncDataTask).observable
+//    }
 
     /**
      Fetch a single Entry from Contentful.
@@ -460,7 +461,7 @@ extension Client {
      - Returns: The data task being used, enables cancellation of requests.
      */
     @discardableResult public func fetchEntry(id: String,
-                                              completion: @escaping ResultsHandler<Entry>) -> URLSessionDataTask? {
+                                              then completion: @escaping ResultsHandler<Entry>) -> URLSessionDataTask? {
         let fetchEntriesCompletion: (Result<ArrayResponse<Entry>>) -> Void = { result in
             switch result {
             case .success(let entries) where entries.items.first != nil:
@@ -472,7 +473,8 @@ extension Client {
             }
         }
 
-        return fetchEntries(matching: ["sys.id": id], completion: fetchEntriesCompletion)
+        let query = Query.where(sys: .id, .equals(id))
+        return fetchEntries(matching: query, then: fetchEntriesCompletion)
     }
 
     /**
@@ -483,7 +485,7 @@ extension Client {
      - Returns: A tuple of data task and a signal for the resulting Entry.
      */
     @discardableResult public func fetchEntry(id: String) ->  Observable<Result<Entry>> {
-        let asyncDataTask: AsyncDataTask<String, Entry> = fetchEntry(id:completion:)
+        let asyncDataTask: AsyncDataTask<String, Entry> = fetchEntry(id:then:)
         return toObservable(parameter: id, asyncDataTask: asyncDataTask).observable
     }
 }
@@ -501,14 +503,14 @@ extension Client {
      - Returns: The data task being used, enables cancellation of requests.
      */
     @discardableResult public func initialSync(options: SyncSpace.SyncType = .all,
-                                               completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
+                                               then completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
 
         let syncCompletion: (Result<SyncSpace>) -> Void = { result in
             self.finishSync(for: SyncSpace(syncToken: ""),
                             newestSyncResults: result,
-                            completion: completion)
+                            then: completion)
         }
-        return sync(options: options, initial: true, completion: syncCompletion)
+        return sync(options: options, initial: true, then: syncCompletion)
     }
 
     /**
@@ -520,7 +522,7 @@ extension Client {
      */
 
     @discardableResult public func initialSync(options: SyncSpace.SyncType = .all) -> Observable<Result<SyncSpace>> {
-        let asyncDataTask: AsyncDataTask<SyncSpace.SyncType, SyncSpace> = initialSync(options:completion:)
+        let asyncDataTask: AsyncDataTask<SyncSpace.SyncType, SyncSpace> = initialSync(options:then:)
         return toObservable(parameter: options, asyncDataTask: asyncDataTask).observable
     }
 
@@ -562,7 +564,7 @@ extension Client {
 
     @discardableResult public func nextSync(for syncSpace: SyncSpace,
                                             options: SyncSpace.SyncType = .all,
-                                            completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
+                                            then completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
 
         // Preview mode only supports `initialSync` not `nextSync`. The only reason `nextSync` should
         // be called while in preview mode, is internally by the SDK to finish a multiple page sync.
@@ -575,16 +577,16 @@ extension Client {
         let syncCompletion: (Result<SyncSpace>) -> Void = { result in
             self.finishSync(for: syncSpace,
                             newestSyncResults: result,
-                            completion: completion)
+                            then: completion)
         }
 
-        let task = self.sync(options: options, initial: false, completion: syncCompletion)
+        let task = self.sync(options: options, initial: false, then: syncCompletion)
         return task
     }
 
     fileprivate func sync(options: SyncSpace.SyncType = .all,
                           initial: Bool,
-                          completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
+                          then completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
 
         var parameters = options.parameters
         if initial == true {
@@ -594,7 +596,7 @@ extension Client {
         return fetch(url: URL(forComponent: "sync", parameters: parameters)) { (result: Result<SyncSpace>) in
 
             if let syncSpace = result.value, syncSpace.hasMorePages == true {
-                self.nextSync(for: syncSpace, options: options, completion: completion)
+                self.nextSync(for: syncSpace, options: options, then: completion)
             } else {
                 completion(result)
             }
@@ -603,7 +605,7 @@ extension Client {
 
     fileprivate func finishSync(for syncSpace: SyncSpace,
                                 newestSyncResults: Result<SyncSpace>,
-                                completion: ResultsHandler<SyncSpace>) {
+                                then completion: ResultsHandler<SyncSpace>) {
 
         switch newestSyncResults {
         case .success(let newSyncSpace):

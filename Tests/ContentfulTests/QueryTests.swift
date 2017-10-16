@@ -749,10 +749,11 @@ class QueryTests: XCTestCase {
     func testUntypedSearchOnReferences() {
         let expectation = self.expectation(description: "Search on references")
 
-        let query = Query(whereLinkAtFieldNamed: "bestFriend",
-                          onSourceContentTypeWithId: "cat",
-                          hasValueAt: "fields.name",
-                          withTargetContentTypeId: "cat", that: .matches("Happy Cat"))
+        let query = Query.where(linkAtFieldNamed: "bestFriend",
+                                onSourceContentTypeWithId: "cat",
+                                hasValueAtKeyPath: "fields.name",
+                                withTargetContentTypeId: "cat",
+                                that: .matches("Happy Cat"))
 
         QueryTests.client.fetchEntries(matching: query) { result in
             switch result {
