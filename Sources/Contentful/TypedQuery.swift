@@ -43,8 +43,6 @@ public extension ChainableQuery {
         return self
     }
 
-
-
     // FIXME: Add additional method with regular stringvalue
     public static func `where`(field fieldName: FieldName, _ operation: Query.Operation, locale: LocaleCode? = nil) -> Self  {
         return Self.where(valueAtKeyPath: "fields.\(fieldName)", operation, locale: locale)
@@ -54,8 +52,9 @@ public extension ChainableQuery {
         self.where(valueAtKeyPath: "fields.\(fieldName)", operation, locale: locale)
         return self
     }
+}
 
-
+public extension ResourceQuery {
 
     public static func select(fields fieldsKeys: [CodingKey], locale: String? = nil) throws -> Self  {
         let query = Self()
@@ -68,8 +67,8 @@ public extension ChainableQuery {
         try self.select(fieldsNamed: fieldPaths, locale: locale)
         return self
     }
-
 }
+
 /**
  An additional query to filter by the properties of linked objects when searching on references.
  See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references>
@@ -178,5 +177,46 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
         }
         query.setLocaleWithCode(locale)
         return query
+    }
+}
+
+/// Queries on Asset types. All methods from Query, and therefore ChainableQuery, are inherited and available.
+public final class AssetQuery: Query {
+    /**
+     Convenience intializer for creating an AssetQuery with the "mimetype_group" parameter specified. Example usage:
+
+     ```
+     let query = AssetQuery(whereMimetypeGroupIs: .image)
+     client.fetchAssets(with: query).observable.then { assetsResponse in
+     let assets = assetsResponse.items
+     // Do stuff with assets.
+     }
+     ```
+
+     - Parameter mimetypeGroup: The `mimetype_group` which all returned Assets will match.
+     */
+    public static func `where`(mimetypeGroup: MimetypeGroup) -> AssetQuery {
+        let query = AssetQuery()
+        query.where(mimetypeGroup: mimetypeGroup)
+        return query
+    }
+
+    /**
+     Instance method for mutating the query further to specify the mimetype group when querying assets.
+
+     - Parameter mimetypeGroup: The `mimetype_group` which all returned Assets will match.
+     */
+    public func `where`(mimetypeGroup: MimetypeGroup) {
+        self.parameters[QueryParameter.mimetypeGroup] = mimetypeGroup.rawValue
+    }
+}
+
+public final class ContentTypeQuery: ChainableQuery {
+    /// The parameters dictionary that are converted to `URLComponents` (HTTP parameters/arguments) on the HTTP URL. Useful for debugging.
+    public var parameters: [String: String] = [String: String]()
+
+    /// Designated initalizer for Query.
+    public required init() {
+        self.parameters = [String: String]()
     }
 }

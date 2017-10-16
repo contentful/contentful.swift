@@ -374,31 +374,30 @@ extension Client {
         return toObservable(parameter: id, asyncDataTask: asyncDataTask).observable
     }
 
-    // TODO:
-//    /**
-//     Fetch a collection of Content Types from Contentful.
-//
-//     - Parameter matching:   Optional list of search parameters the Content Types must match.
-//     - Parameter completion: A handler being called on completion of the request.
-//
-//     - Returns: The data task being used, enables cancellation of requests.
-//     */
-//    @discardableResult public func fetchContentTypes(matching: [String: Any] = [:],
-//                                                     completion: @escaping ResultsHandler<ArrayResponse<ContentType>>) -> URLSessionDataTask? {
-//        return fetch(url: URL(forComponent: "content_types", parameters: matching), then: completion)
-//    }
-//
-//    /**
-//     Fetch a collection of Content Types from Contentful.
-//
-//     - Parameter matching: Optional list of search parameters the Content Types must match.
-//
-//     - Returns: A tuple of data task and a signal for the resulting array of Content Types.
-//     */
-//    @discardableResult public func fetchContentTypes(matching: [String: Any] = [:]) -> Observable<Result<ArrayResponse<ContentType>>> {
-//        let asyncDataTask: AsyncDataTask<[String: Any], ArrayResponse<ContentType>> = fetchContentTypes(matching:completion:)
-//        return toObservable(parameter: matching, asyncDataTask: asyncDataTask).observable
-//    }
+    /**
+     Fetch a collection of Content Types from Contentful.
+
+     - Parameter matching:   Optional list of search parameters the Content Types must match.
+     - Parameter completion: A handler being called on completion of the request.
+
+     - Returns: The data task being used, enables cancellation of requests.
+     */
+    @discardableResult public func fetchContentTypes(matching query: ContentTypeQuery? = nil,
+                                                     then completion: @escaping ResultsHandler<ArrayResponse<ContentType>>) -> URLSessionDataTask? {
+        return fetch(url: URL(forComponent: "content_types", parameters: query?.parameters), then: completion)
+    }
+
+    /**
+     Fetch a collection of Content Types from Contentful.
+
+     - Parameter matching: Optional list of search parameters the Content Types must match.
+
+     - Returns: A tuple of data task and a signal for the resulting array of Content Types.
+     */
+    @discardableResult public func fetchContentTypes(matching query: ContentTypeQuery? = nil) -> Observable<Result<ArrayResponse<ContentType>>> {
+        let asyncDataTask: AsyncDataTask<ContentTypeQuery?, ArrayResponse<ContentType>> = fetchContentTypes(matching:then:)
+        return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
+    }
 }
 
 extension Client {

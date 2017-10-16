@@ -65,29 +65,27 @@ class ContentTypeTests: XCTestCase {
         waitForExpectations(timeout: 10, handler: nil)
     }
 
-    // TODO:
-//
-//    func testFetchAllContentTypesInSpace() {
-//
-//        let expectation = self.expectation(description: "can fetch all content types of a space")
-//
-//        ContentTypeTests.client.fetchContentTypes { result in
-//            switch result {
-//            case let .success(array):
-//                expect(array.total).to(equal(4))
-//                expect(array.limit).to(equal(100))
-//                expect(array.skip).to(equal(0))
-//                expect(array.items.count).to(equal(4))
-//
-//                let _ = array.items.first.flatMap { (type: ContentType) in
-//                    expect(type.name).to(equal("City"))
-//                }
-//            case let .error(error):
-//                fail("\(error)")
-//            }
-//
-//            expectation.fulfill()
-//        }
-//        waitForExpectations(timeout: 10, handler: nil)
-//    }
+    func testFetchAllContentTypesInSpace() {
+
+        let expectation = self.expectation(description: "can fetch all content types of a space")
+
+        ContentTypeTests.client.fetchContentTypes { result in
+            switch result {
+            case let .success(array):
+                expect(array.total).to(equal(4))
+                expect(array.limit).to(equal(100))
+                expect(array.skip).to(equal(0))
+                expect(array.items.count).to(equal(4))
+
+                let _ = array.items.first.flatMap { (type: ContentType) in
+                    expect(type.name).to(equal("City"))
+                }
+            case let .error(error):
+                fail("\(error)")
+            }
+
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 10, handler: nil)
+    }
 }

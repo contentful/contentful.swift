@@ -182,10 +182,7 @@ public extension AbstractQuery {
     fileprivate init(parameters: [String: String], locale: String?) {
         self.init()
         self.parameters = parameters
-
-        if let locale = locale {
-            self.parameters[QueryParameter.locale] = locale
-        }
+        self.setLocaleWithCode(locale)
     }
 }
 
@@ -219,36 +216,6 @@ public extension ChainableQuery {
         self.parameters[parameter] = operation.values
         self.setLocaleWithCode(locale)
         return self
-    }
-
-    /**
-     Convenience initializer for a select operation query in which only the fields specified
-     in the fieldNames property will be returned in the JSON response.
-     The `"sys"` dictionary is always requested by the SDK. 
-     Note that if you are using the select operator with an instance `QueryOn<EntryType>`
-     that your model types must have optional types for properties that you are omitting in the response (by not including them in your selections array).
-     If you are not using the `QueryOn` type while querying entries, make sure to specify the content type id.
-     Example usage:
-     
-     ```
-     let query = try! Query(selectFieldsNamed: ["fields.bestFriend", "fields.color", "fields.name"]).on(contentTypeWith: "cat")
-     client.fetchMappedEntries(with: query).observable.then { catsResponse in
-        let cats = catsResponse.items
-        // Do stuff with cats.
-     }
-     ```
-
-     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/select-operator>
-     - Parameter fieldNames: An array of field names to include in the JSON response.
-     - Parameter locale: An optional locale argument to return localized results. If unspecified, the locale originally
-     set on the `Client` instance is used.
-     - Throws: Will throw an error if property names are not prefixed with `"fields."`, if selections go more than 2 levels deep
-               ("fields.bestFriend.sys" is not valid), or if more than 99 properties are selected.
-    */
-    public static func select(fieldsNamed fieldNames: [FieldName], locale: LocaleCode? = nil) throws -> Self {
-        let query = Self()
-        try query.select(fieldsNamed: fieldNames, locale: locale)
-        return query
     }
 
     /**
@@ -355,44 +322,6 @@ public extension ChainableQuery {
         let query = Self()
         query.skip(theFirst: numberOfResults)
         return query
-    }
-
-    /**
-     Instance method for select operation in which only the fields specified in the fieldNames property will be returned in the JSON response.
-     The `"sys"` dictionary is always requested by the SDK.
-     Note that if you are using the select operator with an instance `QueryOn<EntryType>`
-     that you must make properties that you are ommitting in the response (by not including them in your selections array) optional properties.
-     Example usage:
-
-     ```
-     let query = try! Query().select(fieldsNamed: ["fields.bestFriend", "fields.color", "fields.name"])
-     client.fetchEntries(with: query).observable.then { catsResponse in
-        let cats = catsResponse.items
-        // Do stuff with cats.
-     }
-     ```
-
-     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/select-operator>
-     - Parameter fieldNames: An array of field names to include in the JSON response.
-     - Parameter locale: An optional locale argument to return localized results. If unspecified, the locale originally
-     set on the `Client` instance is used.
-     - Throws: Will throw an error if property names are not prefixed with `"fields."`, if selections go more than 2 levels deep
-               ("fields.bestFriend.sys" is not valid), or if more than 99 properties are selected.
-     - Returns: A reference to the receiving query to enable chaining.
-     */
-    @discardableResult public func select(fieldsNamed fieldNames: [FieldName], locale: LocaleCode? = nil) throws -> Self {
-
-        guard fieldNames.count <= Int(QueryConstants.maxSelectedProperties) else { throw QueryError.maxSelectionLimitExceeded }
-
-        let keyPaths = fieldNames.map { "fields.\($0)" }
-        try Query.validate(selectedKeyPaths: keyPaths)
-
-        let validSelections = Query.addSysIfNeeded(to: keyPaths).joined(separator: ",")
-
-        let parameters = self.parameters + [QueryParameter.select: validSelections]
-        self.parameters = parameters
-        self.setLocaleWithCode(locale)
-        return self
     }
 
     /**
@@ -529,7 +458,78 @@ public extension ChainableQuery {
     }
 }
 
-public protocol EntryQuery: ChainableQuery {}
+public protocol ResourceQuery: ChainableQuery {}
+public extension ResourceQuery {
+    /**
+     Convenience initializer for a select operation query in which only the fields specified
+     in the fieldNames property will be returned in the JSON response.
+     The `"sys"` dictionary is always requested by the SDK.
+     Note that if you are using the select operator with an instance `QueryOn<EntryType>`
+     that your model types must have optional types for properties that you are omitting in the response (by not including them in your selections array).
+     If you are not using the `QueryOn` type while querying entries, make sure to specify the content type id.
+     Example usage:
+
+     ```
+     let query = try! Query(selectFieldsNamed: ["fields.bestFriend", "fields.color", "fields.name"]).on(contentTypeWith: "cat")
+     client.fetchMappedEntries(with: query).observable.then { catsResponse in
+     let cats = catsResponse.items
+     // Do stuff with cats.
+     }
+     ```
+
+     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/select-operator>
+     - Parameter fieldNames: An array of field names to include in the JSON response.
+     - Parameter locale: An optional locale argument to return localized results. If unspecified, the locale originally
+     set on the `Client` instance is used.
+     - Throws: Will throw an error if property names are not prefixed with `"fields."`, if selections go more than 2 levels deep
+     ("fields.bestFriend.sys" is not valid), or if more than 99 properties are selected.
+     */
+    public static func select(fieldsNamed fieldNames: [FieldName], locale: LocaleCode? = nil) throws -> Self {
+        let query = Self()
+        try query.select(fieldsNamed: fieldNames, locale: locale)
+        return query
+    }
+
+    /**
+     Instance method for select operation in which only the fields specified in the fieldNames property will be returned in the JSON response.
+     The `"sys"` dictionary is always requested by the SDK.
+     Note that if you are using the select operator with an instance `QueryOn<EntryType>`
+     that you must make properties that you are ommitting in the response (by not including them in your selections array) optional properties.
+     Example usage:
+
+     ```
+     let query = try! Query().select(fieldsNamed: ["fields.bestFriend", "fields.color", "fields.name"])
+     client.fetchEntries(with: query).observable.then { catsResponse in
+     let cats = catsResponse.items
+     // Do stuff with cats.
+     }
+     ```
+
+     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/select-operator>
+     - Parameter fieldNames: An array of field names to include in the JSON response.
+     - Parameter locale: An optional locale argument to return localized results. If unspecified, the locale originally
+     set on the `Client` instance is used.
+     - Throws: Will throw an error if property names are not prefixed with `"fields."`, if selections go more than 2 levels deep
+     ("fields.bestFriend.sys" is not valid), or if more than 99 properties are selected.
+     - Returns: A reference to the receiving query to enable chaining.
+     */
+    @discardableResult public func select(fieldsNamed fieldNames: [FieldName], locale: LocaleCode? = nil) throws -> Self {
+
+        guard fieldNames.count <= Int(QueryConstants.maxSelectedProperties) else { throw QueryError.maxSelectionLimitExceeded }
+
+        let keyPaths = fieldNames.map { "fields.\($0)" }
+        try Query.validate(selectedKeyPaths: keyPaths)
+
+        let validSelections = Query.addSysIfNeeded(to: keyPaths).joined(separator: ",")
+
+        let parameters = self.parameters + [QueryParameter.select: validSelections]
+        self.parameters = parameters
+        self.setLocaleWithCode(locale)
+        return self
+    }
+}
+
+public protocol EntryQuery: ResourceQuery {}
 public extension EntryQuery {
     /// Initialize a new query specifying the `content_type` parameter to narrow the results to
     /// entries that have that content type identifier.
@@ -738,37 +738,6 @@ public class Query: EntryQuery {
                 return "\(center.latitude),\(center.longitude),\(radius)"
             }
         }
-    }
-}
-
-/// Queries on Asset types. All methods from Query, and therefore ChainableQuery, are inherited and available.
-public final class AssetQuery: Query {
-    /**
-     Convenience intializer for creating an AssetQuery with the "mimetype_group" parameter specified. Example usage:
-
-     ```
-     let query = AssetQuery(whereMimetypeGroupIs: .image)
-     client.fetchAssets(with: query).observable.then { assetsResponse in
-        let assets = assetsResponse.items
-        // Do stuff with assets.
-     }
-     ```
-
-     - Parameter mimetypeGroup: The `mimetype_group` which all returned Assets will match.
-     */
-    public static func `where`(mimetypeGroup: MimetypeGroup) -> AssetQuery {
-        let query = AssetQuery()
-        query.where(mimetypeGroup: mimetypeGroup)
-        return query
-    }
-
-    /**
-     Instance method for mutating the query further to specify the mimetype group when querying assets.
-
-     - Parameter mimetypeGroup: The `mimetype_group` which all returned Assets will match.
-     */
-    public func `where`(mimetypeGroup: MimetypeGroup) {
-        self.parameters[QueryParameter.mimetypeGroup] = mimetypeGroup.rawValue
     }
 }
 

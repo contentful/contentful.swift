@@ -22,9 +22,7 @@ extension Client {
      */
     @discardableResult public func fetchEntries(matching query: Query? = nil,
                                                 then completion: @escaping ResultsHandler<ArrayResponse<Entry>>) -> URLSessionDataTask? {
-
-        let parameters = query?.parameters ?? [:]
-        let url = URL(forComponent: "entries", parameters: parameters)
+        let url = URL(forComponent: "entries", parameters: query?.parameters)
         return fetch(url: url, then: completion)
     }
 
@@ -51,8 +49,7 @@ extension Client {
      */
     @discardableResult public func fetchAssets(matching query: AssetQuery? = nil,
                                                then completion: @escaping ResultsHandler<ArrayResponse<Asset>>) -> URLSessionDataTask? {
-        let parameters = query?.parameters ?? [:]
-        let url = URL(forComponent: "assets", parameters: parameters)
+        let url = URL(forComponent: "assets", parameters: query?.parameters)
         return fetch(url: url, then: completion)
     }
 
