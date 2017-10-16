@@ -721,8 +721,8 @@ public class Query: EntryQuery {
             case .isLessThanOrEqualTo(let queryableRange):      return queryableRange.stringValue
             case .isGreaterThan(let queryableRange):            return queryableRange.stringValue
             case .isGreaterThanOrEqualTo(let queryableRange):   return queryableRange.stringValue
-            case .isBefore(let queryableRange):                           return queryableRange.stringValue
-            case .isAfter(let queryableRange):                            return queryableRange.stringValue
+            case .isBefore(let queryableRange):                 return queryableRange.stringValue
+            case .isAfter(let queryableRange):                  return queryableRange.stringValue
 
             case .isNear(let coordinates):                      return "\(coordinates.latitude),\(coordinates.longitude)"
             case .isWithin(let bounds):                         return string(for: bounds)

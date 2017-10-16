@@ -285,8 +285,9 @@ class EntryTests: XCTestCase {
     }
 
     func testFetchEntriesWithExistenceSearch() {
-        waitUntilMatchingEntries(Query.where(valueAtKeyPath: "sys.archivedVersion", .exists(false))) {
-            expect($0.items.count).to(equal(10))
+        let query = Query.where(contentTypeId: "cat").where(valueAtKeyPath: "fields.bestFriend", .exists(true))
+        waitUntilMatchingEntries(query) {
+            expect($0.items.count).to(equal(2))
         }
     }
 

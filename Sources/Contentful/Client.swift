@@ -329,31 +329,6 @@ extension Client {
         return toObservable(parameter: id, asyncDataTask: asyncDataTask).observable
     }
 
-//    /**
-//     Fetch a collection of Assets from Contentful.
-//
-//     - Parameter matching: An optional list of search parameters the Assets must match.
-//     - Parameter completion: A handler being called on completion of the request.
-//
-//     - Returns: The data task being used, enables cancellation of requests.
-//     */
-//    @discardableResult public func fetchAssets(matching: [String: Any] = [:],
-//                                               completion: @escaping ResultsHandler<ArrayResponse<Asset>>) -> URLSessionDataTask? {
-//        return fetch(url: URL(forComponent: "assets", parameters: matching), then: completion)
-//    }
-//
-//    /**
-//     Fetch a collection of Assets from Contentful.
-//
-//     - Parameter matching: Optional list of search parameters the Assets must match.
-//
-//     - Returns: A tuple of data task and a signal for the resulting array of Assets.
-//     */
-//    @discardableResult public func fetchAssets(matching: [String: Any] = [:]) -> Observable<Result<ArrayResponse<Asset>>> {
-//        let asyncDataTask: AsyncDataTask<[String: Any], ArrayResponse<Asset>> = fetchAssets(matching:completion:)
-//        return toObservable(parameter: matching, asyncDataTask: asyncDataTask).observable
-//    }
-
     /**
      Fetch the underlying media file as `Data`.
 
@@ -427,31 +402,6 @@ extension Client {
 }
 
 extension Client {
-//    /**
-//     Fetch a collection of Entries from Contentful.
-//
-//     - Parameter matching:   Optional list of search parameters the Entries must match.
-//     - Parameter completion: A handler being called on completion of the request.
-//
-//     - Returns: The data task being used, enables cancellation of requests
-//     */
-//    @discardableResult public func fetchEntries(matching: [String: Any] = [:],
-//                                                completion: @escaping ResultsHandler<ArrayResponse<Entry>>) -> URLSessionDataTask? {
-//        return fetch(url: URL(forComponent: "entries", parameters: matching), then: completion)
-//    }
-//
-//    /**
-//     Fetch a collection of Entries from Contentful.
-//
-//     - Parameter matching: Optional list of search parameters the Entries must match.
-//
-//     - Returns: A tuple of data task and a signal for the resulting array of Entries.
-//     */
-//    @discardableResult public func fetchEntries(matching: [String: Any] = [:]) ->  Observable<Result<ArrayResponse<Entry>>> {
-//        let asyncDataTask = fetchEntries(matching:completion:)
-//        return toObservable(parameter: matching, asyncDataTask: asyncDataTask).observable
-//    }
-
     /**
      Fetch a single Entry from Contentful.
 
@@ -510,7 +460,7 @@ extension Client {
                             newestSyncResults: result,
                             then: completion)
         }
-        return sync(options: options, initial: true, then: syncCompletion)
+        return sync(options: options, state: .initial, then: syncCompletion)
     }
 
     /**
@@ -580,17 +530,20 @@ extension Client {
                             then: completion)
         }
 
-        let task = self.sync(options: options, initial: false, then: syncCompletion)
+        let task = self.sync(options: options, state: .next(syncToken: syncSpace.syncToken), then: syncCompletion)
         return task
     }
 
     fileprivate func sync(options: SyncSpace.SyncType = .all,
-                          initial: Bool,
+                          state: SyncSpace.State,
                           then completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
 
         var parameters = options.parameters
-        if initial == true {
+        switch state {
+        case .initial:
             parameters["initial"] = true
+        case .next(let syncToken):
+            parameters["sync_token"] = syncToken
         }
 
         return fetch(url: URL(forComponent: "sync", parameters: parameters)) { (result: Result<SyncSpace>) in

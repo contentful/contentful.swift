@@ -12,6 +12,11 @@ import Interstellar
 /// A container for the synchronized state of a Space
 public final class SyncSpace: Decodable {
 
+    public enum State {
+        case initial
+        case next(syncToken: String)
+    }
+    
     public enum SyncType {
         case all
         case entries

@@ -32,8 +32,8 @@ struct TestClientFactory {
             client = Client(spaceId: testSpaceId, accessToken: testAccessToken, clientConfiguration: apiCoverageConfiguration, contentTypeClasses: contentTypeClasses)
         #else
             client = Client(spaceId: testSpaceId, accessToken: testAccessToken, clientConfiguration: clientConfiguration, contentTypeClasses: contentTypeClasses)
-//            let dvrSession = DVR.Session(cassetteName: cassetteName, backingSession: client.urlSession)
-//            client.urlSession = dvrSession
+            let dvrSession = DVR.Session(cassetteName: cassetteName, backingSession: client.urlSession)
+            client.urlSession = dvrSession
         #endif
         return client
     }
