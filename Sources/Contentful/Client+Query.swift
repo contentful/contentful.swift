@@ -42,7 +42,7 @@ extension Client {
     /**
      Fetch a collection of Assets from Contentful matching the specified query.
 
-     - Parameter query: The Query object to match results againts.
+     - Parameter query: The AssetQuery object to match results againts.
      - Parameter completion: A handler being called on completion of the request.
 
      - Returns: The data task being used, enables cancellation of requests.
@@ -56,7 +56,7 @@ extension Client {
     /**
      Fetch a collection of Assets from Contentful matching the specified query.
 
-     - Parameter query: The Query object to match results againts.
+     - Parameter query: The AssetQuery object to match results againts.
      - Returns: A tuple of data task and an observable for the resulting array of Assets.
      */
     @discardableResult public func fetchAssets(matching query: AssetQuery? = nil) -> Observable<Result<ArrayResponse<Asset>>> {

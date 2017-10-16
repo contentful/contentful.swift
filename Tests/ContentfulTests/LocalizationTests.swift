@@ -66,7 +66,7 @@ class LocalizationTests: XCTestCase {
 
         let expecatation = self.expectation(description: "Entries matching query network expectation")
 
-        LocalizationTests.client.fetchEntries(matching: Query.where(sys: .id, .equals("nyancat"), locale: "*")).then { entriesArrayResponse in
+        LocalizationTests.client.fetchEntries(matching: Query.where(sys: .id, .equals("nyancat")).localizeResults(withLocaleCode: "*")).then { entriesArrayResponse in
             let entry = entriesArrayResponse.items.first!
 
             expect(entry.currentlySelectedLocale.code).to(equal("en-US"))

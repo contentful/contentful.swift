@@ -159,30 +159,19 @@ public extension AbstractQuery {
      - Parameter name: The name of the property you are performing the Query.Operation against. For instance,
                        `"sys.id"` or `"fields.yourFieldName"`
      - Parameter operation: the Query.Operation
-     - Parameter locale: An optional locale argument to return localized results. If unspecified, the locale originally
-                         set on the `Client` instance is used.
-
-
      */
-    public static func `where`(valueAtKeyPath keyPath: String, _ operation: Query.Operation, locale: LocaleCode? = nil) -> Self {
+    public static func `where`(valueAtKeyPath keyPath: String, _ operation: Query.Operation) -> Self {
         let parameter = keyPath + operation.string
 
         let query = Self()
         query.parameters[parameter] = operation.values
-        query.setLocaleWithCode(locale)
 
         return query
     }
 
-    internal func setLocaleWithCode(_ localeCode: LocaleCode?) {
-        guard let localeCode = localeCode else { return }
-        parameters[QueryParameter.locale] = localeCode
-    }
-
-    fileprivate init(parameters: [String: String], locale: String?) {
+    fileprivate init(parameters: [String: String]) {
         self.init()
         self.parameters = parameters
-        self.setLocaleWithCode(locale)
     }
 }
 
@@ -205,16 +194,13 @@ public extension ChainableQuery {
      - Parameter name: The name of the property you are performing the Query.Operation against. For instance,
      `"sys.id" or `"fields.yourFieldName"`
      - Parameter operation: the Query.Operation
-     - Parameter locale: An optional locale argument to return localized results. If unspecified, the locale originally
-     set on the `Client` instance is used.
      - Returns: A reference to the receiving query to enable chaining.
      */
-    @discardableResult public func `where`(valueAtKeyPath keyPath: String, _ operation: Query.Operation, locale: LocaleCode? = nil) -> Self {
+    @discardableResult public func `where`(valueAtKeyPath keyPath: String, _ operation: Query.Operation) -> Self {
 
         // Create parameter for this query operation.
         let parameter = keyPath + operation.string
         self.parameters[parameter] = operation.values
-        self.setLocaleWithCode(locale)
         return self
     }
 
@@ -244,61 +230,10 @@ public extension ChainableQuery {
      - Parameter includesLevel: An unsigned integer specifying the level of includes to be resolved.
 
      */
-    // TODO: Document that kept at ceiling
     @discardableResult public func include(_ includesLevel: UInt) -> Self {
         let includes = min(includesLevel, QueryConstants.maxIncludes)
         self.parameters[QueryParameter.include] = String(includes)
         return self
-    }
-
-    /**
-     Convenience initializer for a ordering responses by the values at the specified field. Field types that can be
-     specified are Strings, Numbers, or Booleans.
-
-     Example usage:
-
-     ```
-     let query = try! Query(orderBy: OrderParameter("sys.createdAt"))
-
-     client.fetchEntries(with: query).observable.then { entriesResponse in
-        let entries = entriesResponse.items
-        // Do stuff with entries.
-     }
-     ```
-
-     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/order>
-     and: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/order-with-multiple-parameters>
-     - Parameter propertyName: One or more properties on the Resource by which the results will be ordered.
-     - Parameter reverse: An Bool specifying if the returned order should be reversed or not. Defaults to `false`.
-     - Throws: Will throw an error if property names are not prefixed with either `"sys."` or `"fields."`.
-     */
-    public static func order(by order: Ordering...) throws -> Self {
-        let query = Self()
-        try query.order(by: order)
-        return query
-    }
-
-    /**
-     Convenience initializer for a limiting responses to a certain number of values. Use in conjunction with the `skip` method
-     to paginate responses.
-
-     Example usage:
-
-     ```
-     let query = try! Query(limitResultsTo: 10)
-
-     client.fetchEntries(with: query).observable.then { entriesResponse in
-        let entries = entriesResponse.items
-        // Do stuff with entries.
-     }
-     ```
-
-     - Parameter numberOfResults: The number of results the response will be limited to.
-     */
-    public static func limit(to numberOfResults: UInt) -> Self {
-        let query = Self()
-        query.limit(to: numberOfResults)
-        return query
     }
 
     /**
@@ -308,12 +243,7 @@ public extension ChainableQuery {
      Example usage:
 
      ```
-     let query = try! Query(skipTheFirst: 9)
-
-     client.fetchEntries(with: query).observable.then { entriesResponse in
-        let entries = entriesResponse.items
-        // Do stuff with entries.
-     }
+     let query = Query.skip(theFirst: 9)
      ```
 
      - Parameter numberOfResults: The number of results that will be skipped in the query.
@@ -325,58 +255,6 @@ public extension ChainableQuery {
     }
 
     /**
-     Instance method for ordering responses by the values at the specified field. Field types that can be
-     specified are Strings, Numbers, or Booleans.
-
-     Example usage:
-
-     ```
-     let query = try! Query().order(by: OrderParameter("sys.createdAt"))
-
-     client.fetchEntries(with: query).observable.then { entriesResponse in
-        let entries = entriesResponse.items
-        // Do stuff with entries.
-     }
-     ```
-
-     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/order>
-     and: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/order-with-multiple-parameters>
-     - Parameter propertyName: One or more properties on the Resource by which the results will be ordered.
-     - Parameter reverse: An Bool specifying if the returned order should be reversed or not. Defaults to `false`.
-     - Throws: Will throw an error if property names are not prefixed with either `"sys."` or `"fields."`.
-     - Returns: A reference to the receiving query to enable chaining.
-     */
-    @discardableResult public func order(by order: Ordering...) throws -> Self {
-        return try self.order(by: order)
-    }
-
-    /**
-     Instance method for further mutating a query to limit responses to a certain number of values. Use in conjunction with the `skip` method
-     to paginate responses.
-
-     Example usage:
-
-     ```
-     let query = try! Query().limitResults(to: 10)
-
-     client.fetchEntries(with: query).observable.then { entriesResponse in
-        let entries = entriesResponse.items
-        // Do stuff with entries.
-     }
-     ```
-
-     - Parameter numberOfResults: The number of results the response will be limited to.
-     - Throws: A QueryError if the number of results specified is greater than 1000.
-     - Returns: A reference to the receiving query to enable chaining.
-     */
-    @discardableResult public func limit(to numberOfResults: UInt) -> Self {
-        let limit = min(numberOfResults, QueryConstants.maxLimit)
-
-        self.parameters[QueryParameter.limit] = String(limit)
-        return self
-    }
-
-    /**
      Intance method for further mutating a query to skip the first `n` items in a response.
      Use in conjunction with the `limit` method to paginate responses.
 
@@ -384,11 +262,6 @@ public extension ChainableQuery {
 
      ```
      let query = try! Query().skip(theFirst: 10)
-
-     client.fetchEntries(with: query).observable.then { entriesResponse in
-        let entries = entriesResponse.items
-        // Do stuff with entries.
-     }
      ```
      - Parameter numberOfResults: The number of results that will be skipped in the query.
      - Returns: A reference to the receiving query to enable chaining.
@@ -398,44 +271,47 @@ public extension ChainableQuery {
         return self
     }
 
-
-    // MARK: Full-text search
-
     /**
-     Convenience initializer for querying entries or assets in which all text and symbol fields contain
-     the specified, case-insensitive text parameter.
+     Convenience initializer for a ordering responses by the values at the specified field. Field types that can be
+     specified are Strings, Numbers, or Booleans.
 
-     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/full-text-search>
-     - Parameter text: The text string to match against.
-     - Parameter locale: An optional locale argument to return localized results. If unspecified, the locale originally
-                         set on the `Client` instance is used.
-     - Throws: A QueryError if the text being searched for is 1 character in length or less.
+     Example usage:
+
+     ```
+     let query = try! Query(orderBy: OrderParameter("sys.createdAt"))
+     ```
+
+     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/order>
+     and: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/order-with-multiple-parameters>
+     - Parameter order: The specified Ordering.
+     - Throws: Will throw an error if the keypaths specified in the ordering are not valid, i.e. names are not prefixed with either `"sys."` or `"fields."`.
+     - Returns: A newly constructed query object.
      */
-    public static func searching(for text: String, locale: LocaleCode? = nil) throws -> Self {
+    public static func order(by order: Ordering...) throws -> Self {
         let query = Self()
-        try query.searching(for: text, locale: locale)
+        try query.order(by: order)
         return query
     }
 
     /**
-     Instance method for appending a full-text search query to an existing query. Returned results will contain
-     either entries or assets in which all text and symbol fields contain the specified, case-insensitive text parameter.
+     Instance method for ordering responses by the values at the specified field. Field types that can be
+     specified are Strings, Numbers, or Booleans.
 
-     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/full-text-search>
-     - Parameter text: The text string to match against.
-     - Parameter locale: An optional locale argument to return localized results. If unspecified, the locale originally
-     set on the `Client` instance is used.
-     - Throws: A QueryError if the text being searched for is 1 character in length or less.
+     Example usage:
+
+     ```
+     let query = try! Query().order(by: Ordering(sys: .createdAt))
+     ```
+
+     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/order>
+     and: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/order-with-multiple-parameters>
+     - Parameter order: The specified Ordering.
+     - Throws: Will throw an error if the keypaths specified in the ordering are not valid, i.e. names are not prefixed with either `"sys."` or `"fields."`.
      - Returns: A reference to the receiving query to enable chaining.
      */
-    @discardableResult public func searching(for text: String, locale: LocaleCode? = nil) throws -> Self {
-        guard text.characters.count > 1 else { throw QueryError.textSearchTooShort }
-        self.parameters[QueryParameter.fullTextSearch] = text
-        self.setLocaleWithCode(locale)
-        return self
+    @discardableResult public func order(by order: Ordering...) throws -> Self {
+        return try self.order(by: order)
     }
-
-    // MARK: ChainableQuery.Private
 
     // Helper to workaround Swift bug/issue: Despite the fact that Variadic's can be passed into
     // to functions expecting an `Array`, instances of `Array`
@@ -456,10 +332,93 @@ public extension ChainableQuery {
         self.parameters[QueryParameter.order] = joinedPropertyNames
         return self
     }
+
+    /**
+     Factory method for creating a query that limiting responses to a certain number of values. Use in conjunction with the `skip` method
+     to paginate responses. The maximum number of items that can be returned by the API on one page is 1000. The SDK will truncate your value
+     to 1000 if you pass in something larger in order to avoid getting an error returned from the delivery API.
+
+     Example usage:
+
+     ```
+     let query = Query.limit(to: 10)
+     ```
+
+     - Parameter numberOfResults: The number of results the response will be limited to.
+     */
+    public static func limit(to numberOfResults: UInt) -> Self {
+        let query = Self()
+        query.limit(to: numberOfResults)
+        return query
+    }
+
+    /**
+     Instance method for further mutating a query to limit responses to a certain number of values. Use in conjunction with the `skip` method
+     to paginate responses. The maximum number of items that can be returned by the API on one page is 1000. The SDK will truncate your value
+     to 1000 if you pass in something larger in order to avoid getting an error returned from the delivery API.
+
+     Example usage:
+
+     ```
+     let query = try! Query().limit(to: 10)
+     ```
+
+     - Parameter numberOfResults: The number of results the response will be limited to.
+     - Returns: A reference to the receiving query to enable chaining.
+     */
+    @discardableResult public func limit(to numberOfResults: UInt) -> Self {
+        let limit = min(numberOfResults, QueryConstants.maxLimit)
+
+        self.parameters[QueryParameter.limit] = String(limit)
+        return self
+    }
+
+    // MARK: Full-text search
+
+    /**
+     Convenience initializer for querying entries or assets in which all text and symbol fields contain
+     the specified, case-insensitive text parameter.
+
+     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/full-text-search>
+     - Parameter text: The text string to match against.
+     - Throws: A QueryError if the text being searched for is 1 character in length or less.
+     */
+    public static func searching(for text: String) throws -> Self {
+        let query = Self()
+        try query.searching(for: text)
+        return query
+    }
+
+    /**
+     Instance method for appending a full-text search query to an existing query. Returned results will contain
+     either entries or assets in which all text and symbol fields contain the specified, case-insensitive text parameter.
+
+     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/full-text-search>
+     - Parameter text: The text string to match against.
+     - Throws: A QueryError if the text being searched for is 1 character in length or less.
+     - Returns: A reference to the receiving query to enable chaining.
+     */
+    @discardableResult public func searching(for text: String) throws -> Self {
+        guard text.characters.count > 1 else { throw QueryError.textSearchTooShort }
+        self.parameters[QueryParameter.fullTextSearch] = text
+        return self
+    }
 }
 
 public protocol ResourceQuery: ChainableQuery {}
 public extension ResourceQuery {
+
+    public static func localizeResults(withLocaleCode localeCode: LocaleCode) -> Self {
+        let query = Self()
+        query.localizeResults(withLocaleCode: localeCode)
+        return query
+    }
+
+    @discardableResult public func localizeResults(withLocaleCode localeCode: LocaleCode) -> Self {
+        self.parameters[QueryParameter.locale] = localeCode
+        return self
+    }
+
     /**
      Convenience initializer for a select operation query in which only the fields specified
      in the fieldNames property will be returned in the JSON response.
@@ -470,7 +429,7 @@ public extension ResourceQuery {
      Example usage:
 
      ```
-     let query = try! Query(selectFieldsNamed: ["fields.bestFriend", "fields.color", "fields.name"]).on(contentTypeWith: "cat")
+     let query = try! Query.select(fieldsNamed: ["bestFriend", "color", "name"]).where(contentTypeId: "cat")
      client.fetchMappedEntries(with: query).observable.then { catsResponse in
      let cats = catsResponse.items
      // Do stuff with cats.
@@ -479,14 +438,12 @@ public extension ResourceQuery {
 
      See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/select-operator>
      - Parameter fieldNames: An array of field names to include in the JSON response.
-     - Parameter locale: An optional locale argument to return localized results. If unspecified, the locale originally
-     set on the `Client` instance is used.
      - Throws: Will throw an error if property names are not prefixed with `"fields."`, if selections go more than 2 levels deep
      ("fields.bestFriend.sys" is not valid), or if more than 99 properties are selected.
      */
-    public static func select(fieldsNamed fieldNames: [FieldName], locale: LocaleCode? = nil) throws -> Self {
+    public static func select(fieldsNamed fieldNames: [FieldName]) throws -> Self {
         let query = Self()
-        try query.select(fieldsNamed: fieldNames, locale: locale)
+        try query.select(fieldsNamed: fieldNames)
         return query
     }
 
@@ -507,13 +464,11 @@ public extension ResourceQuery {
 
      See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/select-operator>
      - Parameter fieldNames: An array of field names to include in the JSON response.
-     - Parameter locale: An optional locale argument to return localized results. If unspecified, the locale originally
-     set on the `Client` instance is used.
      - Throws: Will throw an error if property names are not prefixed with `"fields."`, if selections go more than 2 levels deep
      ("fields.bestFriend.sys" is not valid), or if more than 99 properties are selected.
      - Returns: A reference to the receiving query to enable chaining.
      */
-    @discardableResult public func select(fieldsNamed fieldNames: [FieldName], locale: LocaleCode? = nil) throws -> Self {
+    @discardableResult public func select(fieldsNamed fieldNames: [FieldName]) throws -> Self {
 
         guard fieldNames.count <= Int(QueryConstants.maxSelectedProperties) else { throw QueryError.maxSelectionLimitExceeded }
 
@@ -524,7 +479,6 @@ public extension ResourceQuery {
 
         let parameters = self.parameters + [QueryParameter.select: validSelections]
         self.parameters = parameters
-        self.setLocaleWithCode(locale)
         return self
     }
 }
@@ -620,12 +574,10 @@ public class Query: EntryQuery {
         self.parameters = [String: String]()
     }
 
-
     // MARK: Query.Private
 
-    fileprivate init(parameters: [String: String] = [:], locale: String? = nil) {
+    fileprivate init(parameters: [String: String] = [:]) {
         self.parameters = parameters
-        self.setLocaleWithCode(locale)
     }
 
     fileprivate static func validate(selectedKeyPaths: [String]) throws {

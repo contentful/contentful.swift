@@ -16,7 +16,7 @@ public final class SyncSpace: Decodable {
         case initial
         case next(syncToken: String)
     }
-    
+
     public enum SyncType {
         case all
         case entries

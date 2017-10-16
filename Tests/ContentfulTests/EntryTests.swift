@@ -162,7 +162,7 @@ class EntryTests: XCTestCase {
     }
 
     func testFetchEntriesForSpecificLocale() {
-        let query = Query.where(sys: .id, .equals("nyancat"), locale: "tlh")
+        let query = Query.where(sys: .id, .equals("nyancat")).localizeResults(withLocaleCode: "tlh")
         waitUntilMatchingEntries(query) {
             let entry = $0.items.first
 
@@ -173,7 +173,7 @@ class EntryTests: XCTestCase {
     }
 
     func testFetchEntriesForAllLocales() {
-        let query = Query.where(sys: .id, .equals("nyancat"), locale: "*")
+        let query = Query.where(sys: .id, .equals("nyancat")).localizeResults(withLocaleCode: "*")
         waitUntilMatchingEntries(query) {
             let entry = $0.items.first
 
