@@ -110,7 +110,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
      ```
 
      See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters>
-     - Parameter fieldsKey: The member of your Fields stucture for your type conforming to EntryDecodable & ResourceQueryable
+     - Parameter fieldsKey: The member of the Fields type associated with your type conforming to EntryDecodable & ResourceQueryable
      that you are performing your select operation against.
      - Returns: A newly initialized QueryOn query.
      */
