@@ -142,14 +142,22 @@ internal class LinkResolver {
         }
     }
 
+    // After the user has added their callbacks to the cache, we must iterate through uncachable
+    internal func cache(unresolvableLinks: [ArrayResponseError]?) {
+        guard let unresolvableLinks = unresolvableLinks else { return }
+        for unresolvableLink in unresolvableLinks {
+            dataCache.cache(unresolvableLink: unresolvableLink)
+        }
+    }
+
     // Caches the callback to resolve the relationship represented by a Link at a later time.
     internal func resolve(_ link: Link, inLocale localeCode: LocaleCode, callback: @escaping (Any) -> Void) {
-        callbacks[DataCache.cacheKey(for: link, with: localeCode)] = callback
+        callbacks[DataCache.cacheKey(for: link, withSourceLocaleCode: localeCode)] = callback
     }
 
     internal func resolve(_ links: [Link], inLocale localeCode: LocaleCode, callback: @escaping (Any) -> Void) {
         let linksIdentifier: String = links.reduce(into: LinkResolver.linksArrayPrefix) { (id, link) in
-            id += "," + DataCache.cacheKey(for: link, with: localeCode)
+            id += "," + DataCache.cacheKey(for: link, withSourceLocaleCode: localeCode)
         }
         callbacks[linksIdentifier] = callback
     }
