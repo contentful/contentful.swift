@@ -41,7 +41,7 @@ public final class LinkQuery<EntryType>: AbstractQuery where EntryType: EntryDec
 
     /**
      Static method for creating a new LinkQuery with an operation. This variation for initializing guarantees
-     correct query contruction by utilizing the Fields CodingKeys required by ResourceQueryable on the type you are linking to.
+     correct query contruction by utilizing the associated Fields CodingKeys type required by ResourceQueryable on the type you are linking to.
 
      Example usage:
 
@@ -55,7 +55,7 @@ public final class LinkQuery<EntryType>: AbstractQuery where EntryType: EntryDec
      ```
 
      See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references>
-     - Parameter fieldsKey: The member of your Fields stucture for your type conforming to EntryDecodable & ResourceQueryable
+     - Parameter fieldsKey: The member of the Fields type associated with your type conforming to EntryDecodable & ResourceQueryable
      that you are performing your search on reference against.
      - Returns: A newly initialized QueryOn query.
      */
@@ -97,7 +97,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
 
     /**
      Static method for creating a new QueryOn with an operation. This variation for initializing guarantees correct query contruction
-     by utilizing the Fields CodingKeys required by ResourceQueryable.
+     by utilizing the associated Fields CodingKeys type required by ResourceQueryable.
 
      Example usage:
 
@@ -121,8 +121,8 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
 
     /**
      Instance method for appending a query opeartion to the receiving QueryOn.
-     This variation for initializing guarantees correct query contruction by utilizing the Fields CodingKeys
-     required by ResourceQueryable.
+     This variation for initializing guarantees correct query contruction by utilizing the associated
+     Fields CodingKeys type required by ResourceQueryable.
 
      Example usage:
 
@@ -135,7 +135,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
      ```
 
      See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters>
-     - Parameter fieldsKey: The member of your Fields stucture for your type conforming to EntryDecodable & ResourceQueryable
+     - Parameter fieldsKey: The member of your Fields type associated with your type conforming to EntryDecodable & ResourceQueryable
      that you are performing your select operation against.
      - Returns: A reference to the receiving query to enable chaining.
      */
@@ -163,7 +163,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
      ```
 
      See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/select-operator>
-     - Parameter fieldNamed: An array of EntryType.Fields for your type conforming to EntryDecodable & ResourceQueryable
+     - Parameter fieldNamed: An array of Fields types associated with your type conforming to EntryDecodable & ResourceQueryable
                              that you are performing your select operation against.
      - Returns: A newly initialized QueryOn query.
      */
@@ -176,11 +176,12 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
     /**
      Static method for creating a new QueryOn with a select operation: an operation in which only
      the fields specified in the fieldNames property will be returned in the JSON response. This variation for initializing guarantees correct query contruction
-     by utilizing the Fields CodingKeys required by ResourceQueryable.
+     by utilizing the Fields type associated with your type conforming to ResourceQueryable.
      The "sys" dictionary is always requested by the SDK.
      Note that if you are using the select operator with an instance `QueryOn<EntryType>`
      that your model types must have optional types for properties that you are omitting in the response (by not including them in your selections array).
      If you are not using the `QueryOn` type while querying entries, make sure to specify the content type id.
+
      Example usage:
 
      ```
@@ -192,7 +193,8 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
      ```
 
      See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/select-operator>
-     - Parameter fieldNamed: An array of EntryType.Fields for your type conforming to EntryDecodable & ResourceQueryable
+     - Parameter fieldNamed: An array of EntryType.
+     for your type conforming to EntryDecodable & ResourceQueryable
      that you are performing your select operation against.
      - Returns: A reference to the receiving query to enable chaining.
      */
@@ -239,7 +241,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
 public final class AssetQuery: ResourceQuery {
 
     /**
-     Convenience intializer for creating an AssetQuery with the "mimetype_group" parameter specified. Example usage:
+     Convenience initializer for creating an AssetQuery with the "mimetype_group" parameter specified. Example usage:
 
      ```
      let query = AssetQuery.where(mimetypeGroup: .image)
@@ -290,7 +292,7 @@ public final class AssetQuery: ResourceQuery {
     /**
      Instance method for creating a new AssetQuery with a select operation: an operation in which only
      the fields specified in the fieldNames property will be returned in the JSON response.
-     This variation for initializing guarantees correct query contruction by utilizing the Asset.Fields CodingKeys required by ResourceQueryable.
+     This variation for initializing guarantees correct query construction by utilizing the Asset.Fields CodingKeys required by ResourceQueryable.
      The "sys" dictionary is always requested by the SDK.
      Example usage:
 
@@ -350,8 +352,8 @@ public final class ContentTypeQuery: ChainableQuery {
     }
 
     /**
-     Instance method for appending a query opeartion to the receiving ContentTypeQuery.
-     This variation for initializing guarantees correct query contruction by utilizing the ContentType.QueryableCodingKey CodingKeys.
+     Instance method for appending a query operation to the receiving ContentTypeQuery.
+     This variation for initializing guarantees correct query construction by utilizing the ContentType.QueryableCodingKey CodingKeys.
 
      Example usage:
 

@@ -332,7 +332,7 @@ extension Client {
     /**
      Fetch a collection of Assets from Contentful matching the specified query.
 
-     - Parameter query: The AssetQuery object to match results againts.
+     - Parameter query: The AssetQuery object to match results against.
      - Parameter completion: A handler being called on completion of the request.
 
      - Returns: The data task being used, enables cancellation of requests.
@@ -346,8 +346,8 @@ extension Client {
     /**
      Fetch a collection of Assets from Contentful matching the specified query.
 
-     - Parameter query: The AssetQuery object to match results againts.
-     - Returns: A tuple of data task and an observable for the resulting array of Assets.
+     - Parameter query: The AssetQuery object to match results against.
+     - Returns: The `Observable` for the resulting array of Assets.
      */
     @discardableResult public func fetchAssets(matching query: AssetQuery? = nil) -> Observable<Result<ArrayResponse<Asset>>> {
         let asyncDataTask: AsyncDataTask<AssetQuery?, ArrayResponse<Asset>> = fetchAssets(matching:then:)
@@ -359,7 +359,7 @@ extension Client {
 
      - Parameter asset: The `Asset` which contains the relevant media file.
      - Parameter imageOptions: An optional array of options for server side manipulations.
-     - Returns: Tuple of the data task and a signal for the `Data` result.
+     - Returns: The `Observable` for the `Data` result.
 
      */
     @discardableResult public func fetchData(for asset: Asset, with imageOptions: [ImageOption] = []) -> Observable<Result<Data>> {
@@ -464,11 +464,11 @@ extension Client {
     }
 
     /**
-     Fetch a collection of Entries from Contentful matching the specified query. This method does not
+     Fetch a collection of entries from Contentful matching the specified query. This method does not
      specify the content_type in the query parameters, so the entries returned in the results can be
      of any type.
 
-     - Parameter query: The Query object to match results againts.
+     - Parameter query: The query object to match results againts.
      - Parameter completion: A handler being called on completion of the request.
 
      - Returns: The data task being used, enables cancellation of requests.
@@ -480,10 +480,10 @@ extension Client {
     }
 
     /**
-     Fetch a collection of Entries from Contentful matching the specified query. This method does not
+     Fetch a collection of entries from Contentful matching the specified query. This method does not
      specify the content_type in the query parameters, so the entries returned in the results can be
      of any type.
-     - Parameter query: The Query object to match results againts.
+     - Parameter query: The query object to match results againts.
 
      - Returns: A tuple of data task and an observable for the resulting array of Entry's.
      */
@@ -500,7 +500,7 @@ extension Client {
     /**
      Perform an initial synchronization of the Space this client is constrained to.
 
-     - Parameter matching:   Additional options for the synchronization.
+     - Parameter syncableTypes: The types that can be synchronized.
      - Parameter completion: A handler being called on completion of the request.
 
      - Returns: The data task being used, enables cancellation of requests.
@@ -520,8 +520,7 @@ extension Client {
      Perform an initial synchronization of the Space this client is constrained to.
 
      - Parameter matching: Additional options for the synchronization.
-
-     - Returns: A tuple of data task and a signal for the resulting SyncSpace.
+     - Returns: An `Observable` for the resulting SyncSpace.
      */
 
     @discardableResult public func initialSync(syncableTypes: SyncSpace.SyncableTypes = .all) -> Observable<Result<SyncSpace>> {
@@ -537,7 +536,7 @@ extension Client {
      handler in order to allow chaining of operations.
 
      - Parameter syncSpace: the relevant `SyncSpace` to perform the subsequent sync on.
-     - Parameter matching: Additional options for the synchronization
+     - Parameter syncableTypes: The types that can be synchronized.
 
      - Returns: An `Observable` which will be fired when the `SyncSpace` is fully synchronized with Contentful.
      */
@@ -559,10 +558,10 @@ extension Client {
      handler in order to allow chaining of operations.
 
      - Parameter syncSpace: the relevant `SyncSpace` to perform the subsequent sync on.
-     - Parameter matching:   Additional options for the synchronization
+     - Parameter syncableTypes: The types that can be synchronized.
      - Parameter completion: A handler which will be called on completion of the operation
 
-     - Returns: The data task being used, enables cancellation of requests
+     - Returns: The data task being used, enables cancellation of requests.
      */
 
     @discardableResult public func nextSync(for syncSpace: SyncSpace,

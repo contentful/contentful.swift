@@ -102,7 +102,8 @@ class EntryTests: XCTestCase {
     }
 
     func testFetchEntriesInReverseOrder() {
-        let query = try! Query.order(by: Ordering(sys: .createdAt, inReverse: true))
+        let order = try! Ordering(sys: .createdAt, inReverse: true)
+        let query = Query.order(by: order)
         waitUntilMatchingEntries(query) {
             let ids = $0.items.map { $0.sys.id }
             expect(ids).to(equal(EntryTests.orderedEntries.reversed()))
