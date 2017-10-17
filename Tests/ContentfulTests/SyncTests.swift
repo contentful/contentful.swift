@@ -26,10 +26,10 @@ class SyncTests: XCTestCase {
         (client.urlSession as? DVR.Session)?.endRecording()
     }
     
-    func waitUntilSync(matching: [String : Any], action: @escaping (_ space: SyncSpace) -> ()) {
+    func waitUntilSync(syncableTypes: SyncSpace.SyncableTypes, action: @escaping (_ space: SyncSpace) -> ()) {
         let expectation = self.expectation(description: "Sync test expecation")
 
-        SyncTests.client.initialSync(matching: matching).then {
+        SyncTests.client.initialSync(syncableTypes: syncableTypes).then {
             action($0)
             expectation.fulfill()
         }.error {
@@ -41,7 +41,7 @@ class SyncTests: XCTestCase {
     }
 
     func testPerformInitialSync() {
-        self.waitUntilSync(matching: [String: Any]()) {
+        self.waitUntilSync(syncableTypes: .all) {
             expect($0.assets.count).to(equal(4))
             expect($0.entries.count).to(equal(10))
         }
@@ -73,14 +73,14 @@ class SyncTests: XCTestCase {
     }
 
     func testSyncDataOfSpecificType() {
-        waitUntilSync(matching: ["type": "Asset"]) {
+        waitUntilSync(syncableTypes: .assets) {
             expect($0.assets.count).to(equal(4))
             expect($0.entries.count).to(equal(0))
         }
     }
 
     func testSyncEntriesOfContentType() {
-        waitUntilSync(matching: ["type": "Entry", "content_type": "cat"]) {
+        waitUntilSync(syncableTypes: .entriesOfContentType(withId: "cat")) {
             expect($0.assets.count).to(equal(0))
             expect($0.entries.count).to(equal(3))
         }

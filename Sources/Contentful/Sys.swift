@@ -51,7 +51,7 @@ extension Sys: Decodable {
         contentTypeInfo = try container.decodeIfPresent(Link.self, forKey: .contentType)
     }
 
-    private enum CodingKeys: String, CodingKey {
+    public enum CodingKeys: String, CodingKey {
         case id, type, createdAt, updatedAt, locale, revision, contentType
     }
 }

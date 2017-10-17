@@ -39,10 +39,10 @@ class EntryTests: XCTestCase {
         (client.urlSession as? DVR.Session)?.endRecording()
     }
 
-    func waitUntilMatchingEntries(_ matching: [String: Any], action: @escaping (_ entries: ArrayResponse<Entry>) -> ()) {
+    func waitUntilMatchingEntries(_ query: Query, action: @escaping (_ entries: ArrayResponse<Entry>) -> ()) {
         let expecatation = self.expectation(description: "Entries matching query network expectation")
 
-        EntryTests.client.fetchEntries(matching: matching).then {
+        EntryTests.client.fetchEntries(matching: query).then {
             action($0)
             expecatation.fulfill()
         }.error {
@@ -56,22 +56,23 @@ class EntryTests: XCTestCase {
     // MARK: Array related queries
 
     func testLimitNumberOfEntriesBeingFetched() {
-        waitUntilMatchingEntries(["limit": 5]) {
+        waitUntilMatchingEntries(Query.limit(to: 5)) {
             expect($0.limit).to(equal(5))
             expect($0.items.count).to(equal(5))
         }
     }
 
     func testSkipEntriesInAQuery() {
-
-        waitUntilMatchingEntries(["order": "sys.createdAt", "skip": 9]) {
+        let query = try! Query.order(by: Ordering(sys: .createdAt)).skip(theFirst: 9)
+        waitUntilMatchingEntries(query) {
             expect($0.items.count).to(equal(1))
             expect($0.items.first?.sys.id).to(equal("7qVBlCjpWE86Oseo40gAEY"))
         }
     }
 
     func testMultiLevelIncludesAreResolved() {
-        waitUntilMatchingEntries(["sys.id": "nyancat", "include": 2]) {
+        let query = Query.where(sys: .id, .equals("nyancat")).include(2)
+        waitUntilMatchingEntries(query) {
             if let entryLink = $0.items.first?.fields["bestFriend"] as? Link, let entry = entryLink.entry {
                 if let assetLink = entry.fields["image"] as? Link, let asset = assetLink.asset {
                     expect(url(asset).absoluteString).to(equal("https://images.contentful.com/cfexampleapi/3MZPnjZTIskAIIkuuosCss/382a48dfa2cb16c47aa2c72f7b23bf09/happycatw.jpg"))
@@ -93,21 +94,25 @@ class EntryTests: XCTestCase {
         "garfield", "5ETMRzkl9KM4omyMwKAOki", "jake", "nyancat", "finn", "happycat"]
 
     func testFetchEntriesInSpecifiedOrder() {
-        waitUntilMatchingEntries(["order": "sys.createdAt"]) {
+        let query = try! Query.order(by: Ordering(sys: .createdAt))
+        waitUntilMatchingEntries(query) {
             let ids = $0.items.map { $0.sys.id }
             expect(ids).to(equal(EntryTests.orderedEntries))
         }
     }
 
     func testFetchEntriesInReverseOrder() {
-        waitUntilMatchingEntries(["order": "-sys.createdAt"]) {
+        let order = try! Ordering(sys: .createdAt, inReverse: true)
+        let query = Query.order(by: order)
+        waitUntilMatchingEntries(query) {
             let ids = $0.items.map { $0.sys.id }
             expect(ids).to(equal(EntryTests.orderedEntries.reversed()))
         }
     }
 
     func testFetchEntriesOrderedByMultipleAttributes() {
-        self.waitUntilMatchingEntries(["order": ["sys.revision", "sys.id"]]) {
+        let query = try! Query.order(by: Ordering(sys: .revision), Ordering(sys: .id))
+        self.waitUntilMatchingEntries(query) {
             let ids = $0.items.map { $0.sys.id }
             expect(ids).to(equal(EntryTests.orderedEntriesByMultiple))
         }
@@ -158,7 +163,8 @@ class EntryTests: XCTestCase {
     }
 
     func testFetchEntriesForSpecificLocale() {
-        waitUntilMatchingEntries([ "locale": "tlh", "sys.id": "nyancat" ]) {
+        let query = Query.where(sys: .id, .equals("nyancat")).localizeResults(withLocaleCode: "tlh")
+        waitUntilMatchingEntries(query) {
             let entry = $0.items.first
 
             expect(entry?.sys.id).to(equal("nyancat"))
@@ -168,7 +174,8 @@ class EntryTests: XCTestCase {
     }
 
     func testFetchEntriesForAllLocales() {
-        waitUntilMatchingEntries([ "locale": "*", "sys.id": "nyancat" ]) {
+        let query = Query.where(sys: .id, .equals("nyancat")).localizeResults(withLocaleCode: "*")
+        waitUntilMatchingEntries(query) {
             let entry = $0.items.first
 
             expect(entry?.sys.id).to(equal("nyancat"))
@@ -203,7 +210,7 @@ class EntryTests: XCTestCase {
 
     func testFetchEntriesOfContentType() {
         let expectation = self.expectation(description: "Fetch entires of content type expectation")
-        EntryTests.client.fetchEntries(matching: ["content_type": "cat"]).then {
+        EntryTests.client.fetchEntries(matching: Query.where(contentTypeId: "cat")).then {
             let cats = $0.items.filter { $0.sys.contentTypeId == "cat" }
             expect(cats.count).to(equal($0.items.count))
             expectation.fulfill()
@@ -217,7 +224,7 @@ class EntryTests: XCTestCase {
     func testFetchSpecificEntryMatchingSysId() {
 
         let expectation = self.expectation(description: "Fetch specific entry with id expectation")
-        EntryTests.client.fetchEntries(matching: ["sys.id": "nyancat"]) { result in
+        EntryTests.client.fetchEntries(matching: Query.where(valueAtKeyPath: "sys.id", .equals("nyancat"))) { result in
 
             switch result {
             case let .success(array):
@@ -244,7 +251,7 @@ class EntryTests: XCTestCase {
     // MARK: Search query tests
 
     func testFetchEntriesWithInequalitySearch() {
-        waitUntilMatchingEntries(["sys.id[ne]": "nyancat"]) {
+        waitUntilMatchingEntries(Query.where(sys: .id, .doesNotEqual("nyancat"))) {
             expect($0.items.count).to(equal(9))
             let nyancat = $0.items.filter { $0.sys.id == "nyancat" }
             expect(nyancat.count).to(equal(0))
@@ -252,7 +259,7 @@ class EntryTests: XCTestCase {
     }
 
     func testFetchEntriesWithEqualitySearchForArrays() {
-        waitUntilMatchingEntries(["content_type": "cat", "fields.likes": "lasagna"]) {
+        waitUntilMatchingEntries(Query.where(contentTypeId: "cat").where(valueAtKeyPath: "fields.likes", .equals("lasagna"))) {
             expect($0.items.count).to(equal(1))
             expect($0.items.first?.sys.id).to(equal("garfield"))
         }
@@ -265,12 +272,13 @@ class EntryTests: XCTestCase {
             expect(ids).to(equal(["finn", "jake"]))
         }
 
-        waitUntilMatchingEntries(["sys.id[in]": ["finn", "jake"]], action: action)
-        waitUntilMatchingEntries(["sys.id[in]": "finn,jake"], action: action)
+        waitUntilMatchingEntries(Query.where(sys: .id, .includes(["finn", "jake"])), action: action)
+        waitUntilMatchingEntries(Query.where(sys: .id, .includes(["finn,jake"])), action: action)
     }
 
     func testFetchEntriesWithExclusionSearch() {
-        waitUntilMatchingEntries(["content_type": "cat", "fields.likes[nin]": ["rainbows", "lasagna"]]) {
+        let query = Query.where(valueAtKeyPath: "fields.likes", .excludes(["rainbows", "lasagna"])).where(contentTypeId: "cat")
+        waitUntilMatchingEntries(query) {
             expect($0.items.count).to(equal(1))
             let ids = $0.items.map { $0.sys.id }
             expect(ids).to(equal(["happycat"]))
@@ -278,49 +286,60 @@ class EntryTests: XCTestCase {
     }
 
     func testFetchEntriesWithExistenceSearch() {
-        waitUntilMatchingEntries(["sys.archivedVersion[exists]": false]) {
-            expect($0.items.count).to(equal(10))
+        let query = Query.where(contentTypeId: "cat").where(valueAtKeyPath: "fields.bestFriend", .exists(true))
+        waitUntilMatchingEntries(query) {
+            expect($0.items.count).to(equal(2))
         }
     }
 
     func testFetchEntriesWithRangeSearch() {
         let date = Date.fromComponents(year: 2015, month: 1, day: 1, hour: 0, minute: 0, second: 0)
-        waitUntilMatchingEntries(["sys.updatedAt[lte]": date]) {
+        waitUntilMatchingEntries(Query.where(sys: .updatedAt, .isBefore(date))) {
             expect($0.items.count).to(equal(10))
         }
 
-        waitUntilMatchingEntries(["sys.updatedAt[lte]": "2015-01-01T00:00:00Z"]) {
+        waitUntilMatchingEntries(Query.where(sys: .updatedAt, .isBefore("2015-01-01T00:00:00Z"))) {
             expect($0.items.count).to(equal(10))
         }
     }
 
     func testFetchEntriesWithFullTextSearch() {
-        waitUntilMatchingEntries(["query": "bacon"]) {
+        let query = try! Query.searching(for: "bacon")
+        waitUntilMatchingEntries(query) {
             expect($0.items.count).to(equal(1))
         }
 
     }
 
     func testFetchEntriesWithFullTextSearchOnSpecificField() {
-        waitUntilMatchingEntries(["content_type": "dog", "fields.description[match]": "bacon pancakes"]) {
+        let query = Query.where(contentTypeId: "dog").where(valueAtKeyPath: "fields.description", .matches("bacon pancakes"))
+        waitUntilMatchingEntries(query) {
             expect($0.items.count).to(equal(1))
         }
     }
 
     func testFetchEntriesWithLocationProximitySearch() {
-        waitUntilMatchingEntries(["fields.center[near]": [38, -122], "content_type": "1t9IbcfdCk6m04uISSsaIK"]) {
+        let query = Query.where(valueAtKeyPath: "fields.center", .isNear(Location(latitude: 38, longitude: -122))).where(contentTypeId: "1t9IbcfdCk6m04uISSsaIK")
+        waitUntilMatchingEntries(query) {
             expect($0.items.count).to(equal(4))
         }
     }
 
     func testFetchEntriesWithBoundingBoxLocationsSearch() {
-        waitUntilMatchingEntries(["fields.center[within]": [36, -124, 40, -120], "content_type": "1t9IbcfdCk6m04uISSsaIK"]) {
+        let bounds = Bounds.box(bottomLeft: Location(latitude: 36, longitude: -124), topRight: Location(latitude: 40, longitude: -120))
+        let query = Query.where(valueAtKeyPath: "fields.center", .isWithin(bounds)).where(contentTypeId: "1t9IbcfdCk6m04uISSsaIK")
+        waitUntilMatchingEntries(query) {
             expect($0.items.count).to(equal(1))
         }
     }
 
     func testFilterEntriesByLinkedEntriesSearch() {
-        waitUntilMatchingEntries(["content_type": "cat", "fields.bestFriend.sys.id": "nyancat"]) {
+        let query = Query.where(linkAtFieldNamed: "bestFriend",
+                                onSourceContentTypeWithId: "cat",
+                                hasValueAtKeyPath: "sys.id",
+                                withTargetContentTypeId: "cat",
+                                that: .equals("nyancat"))
+        waitUntilMatchingEntries(query) {
             expect($0.items.count).to(equal(1))
             expect($0.items.first?.sys.id).to(equal("happycat"))
         }
@@ -328,13 +347,13 @@ class EntryTests: XCTestCase {
 
     func testSearchOnReferences() {
 
-        let queryParameters = [
-            "content_type": "cat",
-            "fields.bestFriend.sys.contentType.sys.id": "cat",
-            "fields.bestFriend.fields.name[match]": "Happy Cat"
-        ]
+        let query = Query.where(linkAtFieldNamed: "bestFriend",
+                                onSourceContentTypeWithId: "cat",
+                                hasValueAtKeyPath: "fields.name",
+                                withTargetContentTypeId: "cat",
+                                that: .matches("Happy Cat"))
 
-        waitUntilMatchingEntries(queryParameters) {
+        waitUntilMatchingEntries(query) {
             expect($0.items.count).to(equal(1))
             expect($0.items.first?.fields["name"] as? String).to(equal("Nyan Cat"))
             expect(($0.items.first?.fields["bestFriend"] as? Link)?.entry?.fields["name"] as? String).to(equal("Happy Cat"))

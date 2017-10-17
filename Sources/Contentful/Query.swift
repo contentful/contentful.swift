@@ -25,24 +25,80 @@ public struct QueryParameter {
 }
 
 /**
- A small structure to create parametes used for ordering the responses when querying and endpoint
+ A small class to create parameters used for ordering the responses when querying an endpoint
  that returns a colleciton of resources. 
- See: `ChainableQuery(orderedUsing orderParameters: OrderParameter...)`
+ See: `ChainableQuery.order(by order: Ordering...)`
  */
-public struct OrderParameter {
+public class Ordering {
 
-    public init(_ propertyName: String, inReverse: Bool = false) {
+    /**
+     Initializer for creating a new Ordering operator.
+     - Parameter propertyKeyPath: The key path of the property you are performing the Query.Operation against. For instance,
+     `"sys.id"`
+     - Parameter inReverse: Specifies if the ordering by the sys parameter should be reversed or not. Defaults to `false`.
+     - Throws: Will throw an error if the keypaths specified in the ordering are not valid, i.e. names are not prefixed with either `"sys."` or `"fields."`.
+     */
+    public init(_ propertyKeyPath: String, inReverse: Bool = false) throws {
+        try Ordering.validateKeyPath(propertyKeyPath)
+        // If validation fails, control flow will not reach here.
         self.reverse = inReverse
-        self.propertyName = propertyName
+        self.propertyKeyPath = propertyKeyPath
     }
 
-    internal let propertyName: String
+    /**
+     Initializer for creating a new Ordering operator. 
+     - Parameter sys: The Sys.CodingKey of the system property you are performing the Query.Operation against. For instance,
+     `"sys.id"`
+     - Parameter inReverse: Specifies if the ordering by the sys parameter should be reversed or not. Defaults to `false`.
+     - Throws: Will throw an error if the keypaths specified in the ordering are not valid.
+     */
+    public convenience init(sys: Sys.CodingKeys, inReverse: Bool = false) throws {
+        try self.init("sys.\(sys.stringValue)", inReverse: inReverse)
+    }
+
+    private static func validateKeyPath(_ propertyKeyPath: String) throws {
+        if propertyKeyPath.hasPrefix("fields.") == false && propertyKeyPath.hasPrefix("sys.") == false {
+            throw QueryError.invalidOrderProperty
+        }
+    }
+
+    internal var parameterValue: String {
+        if reverse {
+            return "-\(propertyKeyPath)"
+        } else {
+            return propertyKeyPath
+        }
+    }
+
+    internal let propertyKeyPath: String
     internal let reverse: Bool
+}
+
+
+/**
+ A small class to create parameters used for ordering the responses when querying an endpoint
+ that returns a colleciton of resources. This variation of an ordering takes a generic type parameter that
+ conforms to ResourceQueryable in order to take advantage of the CodingKey fields available on your type.
+ See: `ChainableQuery.order(by order: Ordering...)`
+ */
+public class Ordered<EntryType>: Ordering where EntryType: ResourceQueryable {
+
+    /**
+     Initializer for creating a new Ordering operator.
+     - Parameter fields: The member of your Fields stucture for your type conforming to EntryDecodable & ResourceQueryable
+                         that you are using to order your results.
+     - Parameter inReverse: Specifies if the ordering by the sys parameter should be reversed or not. Defaults to `false`.
+     - Throws: Will throw an error if the keypaths specified in the ordering are not valid.
+     */
+    public init(field: EntryType.Fields, inReverse: Bool = false) throws {
+        try super.init("fields.\(field.stringValue)", inReverse: inReverse)
+    }
 }
 
 private struct QueryConstants {
     fileprivate static let maxLimit: UInt               = 1000
     fileprivate static let maxSelectedProperties: UInt  = 99
+    fileprivate static let maxIncludes: UInt            = 10
 }
 
 /// Use types that conform to QueryableRange to perform queries with the four Range operators
@@ -123,97 +179,6 @@ public enum MimetypeGroup: String {
     case markup
 }
 
-/** 
- Property-value query operations used for matching patterns on either "sys" or "fields" properties of `Asset`s and `Entry`s.
- Each operation specifies a property name on the left-hand side, with a value to match on the right.
- For instance, using the doesNotEqual operation in an a concrete Query like:
- 
-    ```
-    Query(where:"fields.name", .doesNotEqual("Happy Cat"))
-    ```
- 
- would append the following to the http URL:
-
-    ```
-    "fields.name[ne]=Happy%20Cat"
-    ```
- 
- Refer to the documentation for the various Query classes for more information.
-*/
-public enum QueryOperation {
-
-    case equals(String)
-    case doesNotEqual(String)
-    case hasAll([String])
-    case includes([String])
-    case excludes([String])
-    case exists(Bool)
-
-    /// Full text search on a field.
-    case matches(String)
-
-    /// MARK: Ranges
-    case isLessThan(QueryableRange)
-    case isLessThanOrEqualTo(QueryableRange)
-    case isGreaterThan(QueryableRange)
-    case isGreaterThanOrEqualTo(QueryableRange)
-
-    /// Proximity searches.
-    case isNear(Location)
-    case isWithin(Bounds)
-
-    fileprivate var string: String {
-        switch self {
-        case .equals:                                       return ""
-        case .doesNotEqual:                                 return "[ne]"
-        case .hasAll:                                       return "[all]"
-        case .includes:                                     return "[in]"
-        case .excludes:                                     return "[nin]"
-        case .exists:                                       return "[exists]"
-        case .matches:                                      return "[match]"
-
-        case .isLessThan:                                   return "[lt]"
-        case .isLessThanOrEqualTo:                          return "[lte]"
-        case .isGreaterThan:                                return "[gt]"
-        case .isGreaterThanOrEqualTo:                       return "[gte]"
-
-        case .isNear:                                       return "[near]"
-        case .isWithin:                                     return "[within]"
-        }
-    }
-
-    fileprivate var values: String {
-        switch self {
-        case .equals(let value):                            return value
-        case .doesNotEqual(let value):                      return value
-        case .hasAll(let values):                           return values.joined(separator: ",")
-        case .includes(let values):                         return values.joined(separator: ",")
-        case .excludes(let values):                         return values.joined(separator: ",")
-        case .exists(let value):                            return value ? "true" : "false"
-        case .matches(let value):                           return value
-
-        case .isLessThan(let queryableRange):               return queryableRange.stringValue
-        case .isLessThanOrEqualTo(let queryableRange):      return queryableRange.stringValue
-        case .isGreaterThan(let queryableRange):            return queryableRange.stringValue
-        case .isGreaterThanOrEqualTo(let queryableRange):   return queryableRange.stringValue
-
-        case .isNear(let coordinates):                      return "\(coordinates.latitude),\(coordinates.longitude)"
-        case .isWithin(let bounds):                         return string(for: bounds)
-        }
-    }
-
-    private func string(for bounds: Bounds) -> String {
-        switch bounds {
-        case .box(let bottomLeft, let topRight):
-            return "\(bottomLeft.latitude),\(bottomLeft.longitude),\(topRight.latitude),\(topRight.longitude)"
-
-        case .circle(let center, let radius):
-            return "\(center.latitude),\(center.longitude),\(radius)"
-        }
-    }
-}
-
-
 public protocol AbstractQuery: class {
 
     // Unfortunately (compiler forced) required designated initializer so that default implementation of AbstractQuery
@@ -224,134 +189,221 @@ public protocol AbstractQuery: class {
     var parameters: [String: String] { get set }
 }
 
+// MARK: - KeyPath/Value operations.
 public extension AbstractQuery {
 
     /**
-     Convenience intializer for creating a Query with a QueryOperation. See concrete types Query, FilterQuery, AssetQuery, and QueryOn
+     Static method for creating a Query with a Query.Operation. This variation for initialization guarantees correct query construction
+     when performing operations on "sys" members. See concrete types Query, FilterQuery, AssetQuery, and QueryOn
      for more information and example usage.
 
-     - Parameter name: The name of the property you are performing the QueryOperation against. For instance,
-                       `"sys.id"` or `"fields.yourFieldName"`
-     - Parameter operation: the QueryOperation
-     - Parameter locale: An optional locale argument to return localized results. If unspecified, the locale originally
-                         set on the `Client` instance is used.
-
-     
+     - Parameter key: The Sys.Coding of the system property you are performing the Query.Operation against. For instance,
+     `"sys.id"`
+     - Parameter operation: the Query.Operation
      */
-    public init(where name: String, _ operation: QueryOperation, for locale: String? = nil) {
-        self.init()
-        self.parameters = [String: String]()
-        self.addFilter(where: name, operation, for: locale)
+    public static func `where`(sys key: Sys.CodingKeys, _ operation: Query.Operation) -> Self {
+        return Self.where(valueAtKeyPath: "sys.\(key.stringValue)", operation)
     }
 
-    fileprivate func addFilter(where name: String, _ operation: QueryOperation, for locale: String? = nil) {
+    /**
+     Static method for creating a Query with a Query.Operation. See concrete types Query, FilterQuery, AssetQuery, and QueryOn
+     for more information and example usage.
 
-        // Create parameter for this query operation.
-        let parameter = name + operation.string
-        parameters[parameter] = operation.values
-        set(locale: locale)
+     - Parameter keyPath: The key path of the property you are performing the Query.Operation against. For instance,
+                          `"sys.id"` or `"fields.yourFieldName"`
+     - Parameter operation: the Query.Operation
+     */
+    public static func `where`(valueAtKeyPath keyPath: String, _ operation: Query.Operation) -> Self {
+        let parameter = keyPath + operation.string
+
+        let query = Self()
+        query.parameters[parameter] = operation.values
+
+        return query
     }
 
-    fileprivate func set(locale: String?) {
-        guard let locale = locale else { return }
-        parameters[QueryParameter.locale] = locale
-    }
-
-    fileprivate init(parameters: [String: String], locale: String?) {
+    internal init(parameters: [String: String]) {
         self.init()
         self.parameters = parameters
-
-        if let locale = locale {
-            self.parameters[QueryParameter.locale] = locale
-        }
     }
 }
 
-/// Protocol which enables concrete query implementations to be 'chained' together so that results
-/// can be filtered by more than one QueryOperation or other query. Protocol extensions give default implementation
-/// so that all concrete types, `Query`, `AssetQuery`, `FilterQuery`, and `QueryOn<EntryType>`, can use the same implementation.
+/**
+ Protocol which enables concrete query implementations to be 'chained' together so that results
+ can be filtered by more than one Query.Operation or other query. Protocol extensions give default implementation
+ so that all concrete types, `Query`, `AssetQuery`, `FilterQuery`, and `QueryOn<EntryType>`, can use the same implementation.
+ */
 public protocol ChainableQuery: AbstractQuery {}
 public extension ChainableQuery {
 
     /**
-     Convenience intializer for creating a Query with a QueryOperation. Example usage:
+     Instance method for appending a Query.Operation to a Query. This variation for creating a query guarantees correct query construction
+     when performing operations on "sys" members. See concrete types Query, FilterQuery, AssetQuery, and QueryOn
+     for more information and example usage.
 
-     ```
-     let query = QueryOn<Cat>(where: "fields.color", .doesNotEqual("gray"))
-     ```
-
-     - Parameter name: The name of the property you are performing the QueryOperation against. For instance,
-     `"sys.id"` or `"fields.yourFieldName"`
-     - Parameter operation: The QueryOperation.
-     - Parameter locale: An optional locale argument to return localized results. If unspecified, the locale originally
-     set on the `Client` instance is used.
-
-
+     - Parameter key: The Sys.CodingKey of the system property you are performing the Query.Operation against. For instance, "sys.id"
+     - Parameter operation: the Query.Operation
+     - Returns: A newly constructed query object specifying the operation to match sys against.
      */
-    public init(where name: String, _ operation: QueryOperation, for locale: String? = nil) {
-        self.init()
-        self.addFilter(where: name, operation, for: locale)
+    public func `where`(sys key: Sys.CodingKeys, _ operation: Query.Operation) -> Self {
+        self.where(valueAtKeyPath: "sys.\(key.stringValue)", operation)
+        return self
     }
 
     /**
-     Convenience initializer for a select operation query in which only the fields specified
-     in the fieldNames property will be returned in the JSON response.
-     The `"sys"` dictionary is always requested by the SDK. 
-     Note that if you are using the select operator with an instance `QueryOn<EntryType>`
-     that your model types must have optional types for properties that you are omitting in the response (by not including them in your selections array).
-     If you are not using the `QueryOn` type while querying entries, make sure to specify the content type id.
+     Static method for creating a Query with a Query.Operation. This variation for creating a query guarantees correct query contruction
+     when performing operations on "sys" members. See concrete types Query, FilterQuery, AssetQuery, and QueryOn
+     for more information and example usage.
+
+     - Parameter fieldName: The string name of the field that the Query.Operation is matching against. For instance, "name"
+     - Parameter operation: The Query.Operation
+     - Returns: A reference to the receiving query to enable chaining.
+     */
+    public static func `where`(field fieldName: FieldName, _ operation: Query.Operation) -> Self {
+        return Self.where(valueAtKeyPath: "fields.\(fieldName)", operation)
+    }
+
+    /**
+     Instance method for appending a Query.Operation to a Query. This variation for creating a query guarantees correct query contruction
+     when performing operations on "field" members. See concrete types Query, FilterQuery, AssetQuery, and QueryOn
+     for more information and example usage.
+
+     - Parameter fieldName: The string name of the field that the Query.Operation is matching against. For instance, "name"
+     - Parameter operation: The Query.Operation
+     - Returns: A reference to the receiving query to enable chaining.
+     */
+    public func `where`(field fieldName: FieldName, _ operation: Query.Operation) -> Self {
+        self.where(valueAtKeyPath: "fields.\(fieldName)", operation)
+        return self
+    }
+
+
+    /**
+     Instance method for appending more Query.Operation's to further filter results on the API. Example usage:
+
+     ```
+     let query = Query.where(contentTypeId: "cat").where("fields.color", .doesNotEqual("gray"))
+
+     // Mutate the query further.
+     query.where(valueAtKeyPath: "fields.lives", .equals("9"))
+     ```
+
+     - Parameter keyPath: The key path for the property you are performing the Query.Operation against. For instance,
+     `"sys.id" or `"fields.yourFieldName"`
+     - Parameter operation: The Query.Operation
+     - Returns: A reference to the receiving query to enable chaining.
+     */
+    @discardableResult public func `where`(valueAtKeyPath keyPath: String, _ operation: Query.Operation) -> Self {
+
+        // Create parameter for this query operation.
+        let parameter = keyPath + operation.string
+        self.parameters[parameter] = operation.values
+        return self
+    }
+
+    // MARK: - Full-text search
+
+    /**
+     Convenience initializer for querying entries or assets in which all text and symbol fields contain
+     the specified, case-insensitive text parameter.
+
+     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/full-text-search>
+     - Parameter text: The text string to match against.
+     - Throws: A QueryError if the text being searched for is 1 character in length or less.
+     */
+    public static func searching(for text: String) throws -> Self {
+        let query = Self()
+        try query.searching(for: text)
+        return query
+    }
+
+    /**
+     Instance method for appending a full-text search query to an existing query. Returned results will contain
+     either entries or assets in which all text and symbol fields contain the specified, case-insensitive text parameter.
+
+     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/full-text-search>
+     - Parameter text: The text string to match against.
+     - Throws: A QueryError if the text being searched for is 1 character in length or less.
+     - Returns: A reference to the receiving query to enable chaining.
+     */
+    @discardableResult public func searching(for text: String) throws -> Self {
+        guard text.characters.count > 1 else { throw QueryError.textSearchTooShort }
+        self.parameters[QueryParameter.fullTextSearch] = text
+        return self
+    }
+
+    // MARK: - Response Manipulations.
+
+    /**
+     Factory method for specifiying the level of includes to be resolved in the JSON response.
+     The maximum permitted level of includes at the API level is 10; the SDK will limit the includes level at 10
+     before the network request is made if the passed in value is too high in order to avoid
+     hitting an error from the API.
+     To omit all linked items, specify an include level of 0.
+     
+     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/links/retrieval-of-linked-items>
+
+     - Parameter includesLevel: An unsigned integer specifying the level of includes to be resolved.
+     - Returns: A newly constructed query object specifying the level of includes to be linked.
+     */
+    public static func include(_ includesLevel: UInt) -> Self {
+        let query = Self()
+        query.include(includesLevel)
+        return query
+    }
+
+    /**
+     Specify the level of includes to be resolved in the JSON response.
+     The maximum permitted level of includes at the API level is 10; the SDK will round down to the 10
+     before the network request is made if the passed in value is too high in order to avoid
+     hitting an error from the API.
+     To omit all linked items, specify an include level of 0.
+
+     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/links/retrieval-of-linked-items>
+     
+     - Parameter includesLevel: An unsigned integer specifying the level of includes to be resolved.
+     - Returns: A reference to the receiving query to enable chaining.
+     */
+    @discardableResult public func include(_ includesLevel: UInt) -> Self {
+        let includes = min(includesLevel, QueryConstants.maxIncludes)
+        self.parameters[QueryParameter.include] = String(includes)
+        return self
+    }
+
+    /**
+     Factory method for creating a query that specifies that the first `n` items in a collection should be skipped
+     before returning the results.
+     Use in conjunction with the `limit(to:)` and `order(by:)` methods to paginate responses.
+
      Example usage:
-     
+
      ```
-     let query = try! Query(selectingFieldsNamed: ["fields.bestFriend", "fields.color", "fields.name"]).on(contentTypeWith: "cat")
-     client.fetchMappedEntries(with: query).observable.then { catsResponse in
-        let cats = catsResponse.items
-        // Do stuff with cats.
-     }
+     let query = Query.skip(theFirst: 9)
      ```
 
-     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/select-operator>
-     - Parameter fieldNames: An array of field names to include in the JSON response.
-     - Parameter locale: An optional locale argument to return localized results. If unspecified, the locale originally
-     set on the `Client` instance is used.
-     - Throws: Will throw an error if property names are not prefixed with `"fields."`, if selections go more than 2 levels deep
-               ("fields.bestFriend.sys" is not valid), or if more than 99 properties are selected.
-    */
-    public init(selectingFieldsNamed fieldNames: [String], for locale: String? = nil) throws {
-        self.init()
-        try self.select(fieldsNamed: fieldNames, locale: locale)
+     - Parameter numberOfResults: The number of results that will be skipped in the query.
+     - Returns: A newly constructed query object specifying the number of items to skip.
+     */
+    public static func skip(theFirst numberOfResults: UInt) -> Self {
+        let query = Self()
+        query.skip(theFirst: numberOfResults)
+        return query
     }
 
     /**
-     Convenience initializer to specify the level of includes to be resolved in the JSON response. The maximum permitted
-     level of includes at the API level is 10, so the SDK will throw an error before the network request is made if the value is too high.
-     To omit all linked items, specify an include level of 0.
-     
-     - Parameter includesLevel: An unsigned integer specifying the level of includes to be resolved.
-     - Throws: A `QueryError` if the level of includes specified is greater than 10.
-     
-     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/links/retrieval-of-linked-items>
-     */
-    public init(includesLevel: UInt) throws {
-        self.init()
-        try self.includesLevel(includesLevel)
-    }
+     Intance method for further mutating a query to skip the first `n` items in a response.
+     Use in conjunction with the `limit(to:)` and `order(by:)` methods to paginate responses.
 
-    /**
-     Specify the level of includes to be resolved in the JSON response. The maximum permitted
-     level of includes at the API level is 10, so the SDK will throw an error before the network request is made if the value is too high.
-     To omit all linked items, specify an include level of 0.
+     Example usage:
 
-     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/links/retrieval-of-linked-items>
-     
-     - Parameter includesLevel: An unsigned integer specifying the level of includes to be resolved.
-     - Throws: A `QueryError` if the level of includes specified is greater than 10.
+     ```
+     let query = Query().skip(theFirst: 10)
+     ```
+     - Parameter numberOfResults: The number of results that will be skipped in the query.
+     - Returns: A reference to the receiving query to enable chaining.
      */
-    @discardableResult public func includesLevel(_ includesLevel: UInt) throws -> Self {
-        guard includesLevel <= 10 else {
-            throw QueryError.maximumIncludesLevelExceeded
-        }
-        self.parameters[QueryParameter.include] = String(includesLevel)
+    @discardableResult public func skip(theFirst numberOfResults: UInt) -> Self {
+        self.parameters[QueryParameter.skip] = String(numberOfResults)
         return self
     }
 
@@ -362,91 +414,154 @@ public extension ChainableQuery {
      Example usage:
 
      ```
-     let query = try! Query(orderedUsing: OrderParameter("sys.createdAt"))
-
-     client.fetchEntries(with: query).observable.then { entriesResponse in
-        let entries = entriesResponse.items
-        // Do stuff with entries.
-     }
+     let query = try! Query(orderBy: OrderParameter("sys.createdAt"))
      ```
 
      See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/order>
      and: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/order-with-multiple-parameters>
-     - Parameter propertyName: One or more properties on the Resource by which the results will be ordered.
-     - Parameter reverse: An Bool specifying if the returned order should be reversed or not. Defaults to `false`.
-     - Throws: Will throw an error if property names are not prefixed with either `"sys."` or `"fields."`.
+     - Parameter order: The specified Ordering.
+     - Returns: A newly constructed query object specifying the order of the results.
      */
-    public init(orderedUsing orderParameters: OrderParameter...) throws {
-        self.init()
-        try self.order(using: orderParameters)
+    public static func order(by order: Ordering...) -> Self {
+        let query = Self()
+        query.order(by: order)
+        return query
     }
 
     /**
-     Convenience initializer for a limiting responses to a certain number of values. Use in conjunction with the `skip` method
-     to paginate responses.
+     Instance method for ordering responses by the values at the specified field. Field types that can be
+     specified are Strings, Numbers, or Booleans.
 
      Example usage:
 
      ```
-     let query = try! Query(orderedBy: "sys.createdAt")
+     let query = try! Query().order(by: Ordering(sys: .createdAt))
+     ```
 
-     client.fetchEntries(with: query).observable.then { entriesResponse in
-        let entries = entriesResponse.items
-        // Do stuff with entries.
-     }
+     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/order>
+     and: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/order-with-multiple-parameters>
+     - Parameter order: The specified Ordering.
+     - Returns: A reference to the receiving query to enable chaining.
+     */
+    @discardableResult public func order(by order: Ordering...) -> Self {
+        return self.order(by: order)
+    }
+
+    // Helper to workaround Swift bug/issue: Despite the fact that Variadic's can be passed into
+    // to functions expecting an `Array`, instances of `Array`
+    // cannot be passed into a function expecting a variadic parameter.
+    @discardableResult private func order(by order: [Ordering]) -> Self {
+        let propertyPathsWithReversals = order.map { return $0.parameterValue }
+        let joinedPropertyNames = propertyPathsWithReversals.joined(separator: ",")
+        
+        self.parameters[QueryParameter.order] = joinedPropertyNames
+        return self
+    }
+
+    /**
+     Factory method for creating a query that limits responses to a certain number of values. Use in conjunction with the `skip` method
+     to paginate responses. The maximum number of items that can be returned by the API on one page is 1000. The SDK will limit your value
+     to 1000 if you pass in something larger in order to avoid getting an error returned from the delivery API.
+
+     Example usage:
+
+     ```
+     let query = Query.limit(to: 10)
      ```
 
      - Parameter numberOfResults: The number of results the response will be limited to.
      */
-    public init(limitingResultsTo numberOfResults: UInt) throws {
-        guard numberOfResults <= QueryConstants.maxLimit else { throw QueryError.maximumLimitExceeded }
-
-        let parameters = [QueryParameter.limit: String(numberOfResults)]
-        self.init(parameters: parameters, locale: nil)
+    public static func limit(to numberOfResults: UInt) -> Self {
+        let query = Self()
+        query.limit(to: numberOfResults)
+        return query
     }
 
     /**
-     Convenience initializer for a skipping the first `n` items in a response.
-     Use in conjunction with the `limit` method to paginate responses.
-
+     Instance method for further mutating a query to limit responses to a certain number of values. Use in conjunction with the `skip` method
+     to paginate responses. The maximum number of items that can be returned by the API on one page is 1000. The SDK will truncate your value
+     to 1000 if you pass in something larger in order to avoid getting an error returned from the delivery API.
+     Use in conjunction with the `skip(theFirst:)` and `order(by:)` methods to paginate responses.
      Example usage:
 
      ```
-     let query = try! Query(skippingTheFirst: 9)
-
-     client.fetchEntries(with: query).observable.then { entriesResponse in
-        let entries = entriesResponse.items
-        // Do stuff with entries.
-     }
+     let query = try! Query().limit(to: 10)
      ```
 
-     - Parameter numberOfResults: The number of results that will be skipped in the query.
+     - Parameter numberOfResults: The number of results the response will be limited to.
+     - Returns: A reference to the receiving query to enable chaining.
      */
-    public init(skippingTheFirst numberOfResults: UInt) {
-        let parameters = [QueryParameter.skip: String(numberOfResults)]
-        self.init(parameters: parameters, locale: nil)
+    @discardableResult public func limit(to numberOfResults: UInt) -> Self {
+        let limit = min(numberOfResults, QueryConstants.maxLimit)
+
+        self.parameters[QueryParameter.limit] = String(limit)
+        return self
+    }
+}
+
+
+// Using a protocol rather than a base class enables us to implement factory methods that return Self
+// and are therefore instances of the subclass.
+public protocol AbstractResourceQuery: ChainableQuery {}
+public extension AbstractResourceQuery {
+
+    /**
+     Static method to create a query which specifies the locale of the entries that should be returned.
+
+     If there's no content available for the requested locale the API will try the fallback locale of the requested locale.
+
+     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/localization/retrieve-localized-entries>
+
+     - Paramater localeCode: The code for the locale you would like to specify.
+     - Returns: A newly created query with the results restricted to the specified locale.
+     */
+    public static func localizeResults(withLocaleCode localeCode: LocaleCode) -> Self {
+        let query = Self()
+        query.localizeResults(withLocaleCode: localeCode)
+        return query
     }
 
     /**
-     Instance method for appending more QueryOperation's to further filter results on the API. Example usage:
+     Static method to create a query which specifies the locale of the entries that should be returned
 
-     ```
-     let query = Query(onContentTypeFor: "cat").(where: "fields.color", .doesNotEqual("gray"))
+     If there's no content available for the requested locale the API will try the fallback locale of the requested locale.
 
-     // Mutate the query further.
-     query.where("fields.lives", .equals("9"))
-     ```
+     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/localization/retrieve-localized-entries>
 
-     - Parameter name: The name of the property you are performing the QueryOperation against. For instance,
-     `"sys.id" or `"fields.yourFieldName"`
-     - Parameter operation: the QueryOperation
-     - Parameter locale: An optional locale argument to return localized results. If unspecified, the locale originally
-     set on the `Client` instance is used.
+     - Paramater localeCode: The code for the locale you would like to specify.
      - Returns: A reference to the receiving query to enable chaining.
      */
-    @discardableResult public func `where`(_ name: String, _ operation: QueryOperation, for locale: String? = nil) -> Self {
-        self.addFilter(where: name, operation, for: locale)
+    @discardableResult public func localizeResults(withLocaleCode localeCode: LocaleCode) -> Self {
+        self.parameters[QueryParameter.locale] = localeCode
         return self
+    }
+
+    /**
+     Convenience initializer for a select operation query in which only the fields specified
+     in the fieldNames property will be returned in the JSON response.
+     The `"sys"` dictionary is always requested by the SDK.
+     Note that if you are using the select operator with an instance `QueryOn<EntryType>`
+     that your model types must have optional types for properties that you are omitting in the response (by not including them in your selections array).
+     If you are not using the `QueryOn` type while querying entries, make sure to specify the content type id.
+     Example usage:
+
+     ```
+     let query = try! Query.select(fieldsNamed: ["bestFriend", "color", "name"]).where(contentTypeId: "cat")
+     client.fetchMappedEntries(with: query).observable.then { catsResponse in
+         let cats = catsResponse.items
+         // Do stuff with cats.
+     }
+     ```
+
+     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/select-operator>
+     - Parameter fieldNames: An array of field names to include in the JSON response.
+     - Throws: Will throw an error if selections go more than 2 levels deep
+     ("fields.bestFriend.sys" is not valid), or if more than 99 properties are selected.
+     */
+    public static func select(fieldsNamed fieldNames: [FieldName]) throws -> Self {
+        let query = Self()
+        try query.select(fieldsNamed: fieldNames)
+        return query
     }
 
     /**
@@ -457,166 +572,58 @@ public extension ChainableQuery {
      Example usage:
 
      ```
-     let query = try! QueryOn<Cat>()
-     query.select(fieldsNamed: ["fields.bestFriend", "fields.color", "fields.name"])
+     let query = try! Query().select(fieldsNamed: ["fields.bestFriend", "fields.color", "fields.name"])
      client.fetchEntries(with: query).observable.then { catsResponse in
-        let cats = catsResponse.items
-        // Do stuff with cats.
+         let cats = catsResponse.items
+         // Do stuff with cats.
      }
      ```
 
      See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/select-operator>
      - Parameter fieldNames: An array of field names to include in the JSON response.
-     - Parameter locale: An optional locale argument to return localized results. If unspecified, the locale originally
-     set on the `Client` instance is used.
      - Throws: Will throw an error if property names are not prefixed with `"fields."`, if selections go more than 2 levels deep
-               ("fields.bestFriend.sys" is not valid), or if more than 99 properties are selected.
+     ("fields.bestFriend.sys" is not valid), or if more than 99 properties are selected.
      - Returns: A reference to the receiving query to enable chaining.
      */
-    @discardableResult public func select(fieldsNamed fieldNames: [String], locale: String? = nil) throws -> Self {
+    @discardableResult public func select(fieldsNamed fieldNames: [FieldName]) throws -> Self {
 
         guard fieldNames.count <= Int(QueryConstants.maxSelectedProperties) else { throw QueryError.maxSelectionLimitExceeded }
 
-        try Query.validate(selectedKeyPaths: fieldNames)
+        let keyPaths = fieldNames.map { "fields.\($0)" }
+        try ResourceQuery.validate(selectedKeyPaths: keyPaths)
 
-        let validSelections = Query.addSysIfNeeded(to: fieldNames).joined(separator: ",")
+        let validSelections = Query.addSysIfNeeded(to: keyPaths).joined(separator: ",")
 
         let parameters = self.parameters + [QueryParameter.select: validSelections]
         self.parameters = parameters
         return self
     }
+}
+
+
+public protocol EntryQuery: AbstractResourceQuery {}
+public extension EntryQuery {
+    /**
+     Initialize a new query specifying the `content_type` parameter to narrow the results to
+     entries that have that content type identifier.
+     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters>
+     - Parameter contentTypeId: the identifier of the content type which the query will be performed on.
+     - Returns: A new initialized Query narrowing the results to a specific content type.
+     */
+    public static func `where`(contentTypeId: ContentTypeId) -> Self {
+        let query = Self()
+        query.where(contentTypeId: contentTypeId)
+        return query
+    }
 
     /**
-     Instance method for ordering responses by the values at the specified field. Field types that can be
-     specified are Strings, Numbers, or Booleans.
-
-     Example usage:
-
-     ```
-     let query = try! Query(orderedUsing: OrderParameter("sys.createdAt"))
-
-     client.fetchEntries(with: query).observable.then { entriesResponse in
-        let entries = entriesResponse.items
-        // Do stuff with entries.
-     }
-     ```
-
-     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/order>
-     and: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/order-with-multiple-parameters>
-     - Parameter propertyName: One or more properties on the Resource by which the results will be ordered.
-     - Parameter reverse: An Bool specifying if the returned order should be reversed or not. Defaults to `false`.
-     - Throws: Will throw an error if property names are not prefixed with either `"sys."` or `"fields."`.
+     Append the `content_type` parameter to narrow the results to entries that have that content type identifier.
+     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters>
+     - Parameter contentTypeId: the identifier of the content type which the query will be performed on.
      - Returns: A reference to the receiving query to enable chaining.
      */
-    @discardableResult public func order(using orderParameters: OrderParameter...) throws -> Self {
-        return try order(using: orderParameters)
-    }
-
-    /**
-     Instance method for further mutating a query to limit responses to a certain number of values. Use in conjunction with the `skip` method
-     to paginate responses.
-
-     Example usage:
-
-     ```
-     let query = try! Query(orderedBy: "sys.createdAt")
-
-     client.fetchEntries(with: query).observable.then { entriesResponse in
-        let entries = entriesResponse.items
-        // Do stuff with entries.
-     }
-     ```
-
-     - Parameter numberOfResults: The number of results the response will be limited to.
-     - Throws: A QueryError if the number of results specified is greater than 1000.
-     - Returns: A reference to the receiving query to enable chaining.
-     */
-    @discardableResult public func limit(to numberOfResults: UInt) throws -> Self {
-        guard numberOfResults <= QueryConstants.maxLimit else { throw QueryError.maximumLimitExceeded }
-
-        self.parameters[QueryParameter.limit] = String(numberOfResults)
-        return self
-    }
-
-    /**
-     Intance method for further mutating a query to skip the first `n` items in a response.
-     Use in conjunction with the `limit` method to paginate responses.
-
-     Example usage:
-
-     ```
-     let query = try! Query(skippingTheFirst: 9)
-
-     client.fetchEntries(with: query).observable.then { entriesResponse in
-        let entries = entriesResponse.items
-        // Do stuff with entries.
-     }
-     ```
-     - Parameter numberOfResults: The number of results that will be skipped in the query.
-     - Returns: A reference to the receiving query to enable chaining.
-     */
-    @discardableResult public func skip(theFirst numberOfResults: UInt) -> Self {
-        self.parameters[QueryParameter.skip] = String(numberOfResults)
-        return self
-    }
-
-
-    // MARK: Full-text search
-
-    /**
-     Convenience initializer for querying entries or assets in which all text and symbol fields contain
-     the specified, case-insensitive text parameter.
-
-     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/full-text-search>
-     - Parameter text: The text string to match against.
-     - Parameter locale: An optional locale argument to return localized results. If unspecified, the locale originally
-                         set on the `Client` instance is used.
-     - Throws: A QueryError if the text being searched for is 1 character in length or less.
-     */
-    public init(searchingFor text: String, for locale: String? = nil) throws {
-        self.init()
-        try self.search(for: text, for: locale)
-    }
-
-    /**
-     Instance method for appending a full-text search query to an existing query. Returned results will contain
-     either entries or assets in which all text and symbol fields contain the specified, case-insensitive text parameter.
-
-     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/full-text-search>
-     - Parameter text: The text string to match against.
-     - Parameter locale: An optional locale argument to return localized results. If unspecified, the locale originally
-     set on the `Client` instance is used.
-     - Throws: A QueryError if the text being searched for is 1 character in length or less.
-     - Returns: A reference to the receiving query to enable chaining.
-     */
-    @discardableResult public func search(for text: String, for locale: String? = nil) throws -> Self {
-        guard text.characters.count > 1 else { throw QueryError.textSearchTooShort }
-        self.parameters[QueryParameter.fullTextSearch] = text
-        if let locale = locale {
-            parameters[QueryParameter.locale] = locale
-        }
-        return self
-    }
-
-    // MARK: ChainableQuery.Private
-
-    // Helper to workaround Swift bug/issue: Despite the fact that Variadic's can be passed into
-    // to functions expecting an `Array`, instances of `Array`
-    // cannot be passed into a function expecting a variadic parameter.
-    @discardableResult private func order(using orderParameters: [OrderParameter]) throws -> Self {
-        let propertyNames = orderParameters.map { return $0.propertyName }
-
-        // Validate
-        for name in propertyNames {
-            if name.hasPrefix("fields.") == false && name.hasPrefix("sys.") == false {
-                throw QueryError.invalidOrderProperty
-            }
-        }
-
-        let namesWithReverseParameter = orderParameters.map { $0.reverse ? "-\($0.propertyName)" : $0.propertyName }
-        let joinedPropertyNames = namesWithReverseParameter.joined(separator: ",")
-
-        self.parameters[QueryParameter.order] = joinedPropertyNames
+    @discardableResult public func `where`(contentTypeId: ContentTypeId) -> Self {
+        self.parameters[QueryParameter.contentType] = contentTypeId
         return self
     }
 
@@ -625,29 +632,31 @@ public extension ChainableQuery {
      which enables searching for entries based on value's for members of referenced entries.
      Example usage:
      ```
-     let query = Query(whereLinkAtFieldNamed: "bestFriend",
-     forType: "cat",
-     hasValueAt: "fields.name",
-     ofType: "cat",
-     that: .matches("Happy Cat"))
+     let query = Query.where(linkAtFieldNamed: "bestFriend",
+                             onSourceContentTypeWithId: "cat",
+                             hasValueAtKeyPath: "fields.name",
+                             withTargetContentTypeId: "cat",
+                             that: .matches("Happy Cat"))
      ```
      - Parameter linkingFieldName: The field name which holds a reference to a link.
      - Parameter sourceContentTypeId: The content type identifier of the link source.
      - Parameter targetKeyPath: The member path for the value you would like to search on for the link destination resource.
      - Parameter targetContentTypeId: The content type idenifier of the item(s) being linked to at the specified linking field name.
-     - Parameter operation: The `QueryOperation` used to match the value of at the target key path.
+     - Parameter operation: The `Query.Operation` used to match the value of at the target key path.
+     - Returns: A newly initialized Query for searching on references.
      */
-    public init(whereLinkAtFieldNamed linkingFieldName: String,
-                forType sourceContentTypeId: ContentTypeId,
-                hasValueAt targetKeyPath: FieldName,
-                ofType targetContentTypeId: ContentTypeId,
-                that operation: QueryOperation) {
-        self.init()
-        self.whereLinkAtFieldNamed(linkingFieldName,
-                                   forType: sourceContentTypeId,
-                                   hasValueAt: targetKeyPath,
-                                   ofType: targetContentTypeId,
-                                   that: operation)
+    public static func `where`(linkAtFieldNamed linkingFieldName: String,
+                               onSourceContentTypeWithId sourceContentTypeId: ContentTypeId,
+                               hasValueAtKeyPath targetKeyPath: String,
+                               withTargetContentTypeId targetContentTypeId: ContentTypeId,
+                               that operation: Query.Operation) -> Self {
+        let query = Self()
+        query.where(linkAtFieldNamed: linkingFieldName,
+                    onSourceContentTypeWithId: sourceContentTypeId,
+                    hasValueAtKeyPath: targetKeyPath,
+                    withTargetContentTypeId: targetContentTypeId,
+                    that: operation)
+        return query
     }
 
     /**
@@ -659,14 +668,14 @@ public extension ChainableQuery {
      - Parameter sourceContentTypeId: The content type identifier of the link source.
      - Parameter targetKeyPath: The member path for the value you would like to search on for the link destination resource.
      - Parameter targetContentTypeId: The content type idenifier of the item(s) being linked to at the specified linking field name.
-     - Parameter operation: The `QueryOperation` used to match the value of at the target key path.
+     - Parameter operation: The `Query.Operation` used to match the value of at the target key path.
      - Returns: A reference to the receiving query to enable chaining.
      */
-    @discardableResult public func whereLinkAtFieldNamed(_ linkingFieldName: String,
-                                                         forType sourceContentTypeId: ContentTypeId,
-                                                         hasValueAt targetKeyPath: FieldName,
-                                                         ofType targetContentTypeId: ContentTypeId,
-                                                         that operation: QueryOperation) -> Self {
+    @discardableResult public func `where`(linkAtFieldNamed linkingFieldName: String,
+                                           onSourceContentTypeWithId sourceContentTypeId: ContentTypeId,
+                                           hasValueAtKeyPath targetKeyPath: String,
+                                           withTargetContentTypeId targetContentTypeId: ContentTypeId,
+                                           that operation: Query.Operation) -> Self {
         self.parameters[QueryParameter.contentType] = sourceContentTypeId
         self.parameters["fields.\(linkingFieldName).sys.contentType.sys.id"] = targetContentTypeId
 
@@ -677,9 +686,7 @@ public extension ChainableQuery {
 }
 
 
-/// A concrete implementation of ChainableQuery which can be used to make queries on either `/assets/`
-/// or `/entries`. All methods from ChainableQuery are available.
-public class Query: ChainableQuery {
+public class ResourceQuery: AbstractResourceQuery {
 
     /// The parameters dictionary that are converted to `URLComponents` (HTTP parameters/arguments) on the HTTP URL. Useful for debugging.
     public var parameters: [String: String] = [String: String]()
@@ -689,36 +696,14 @@ public class Query: ChainableQuery {
         self.parameters = [String: String]()
     }
 
-    /// Initialize a new query specifying the `content_type` parameter to narrow the results to 
-    /// entries that have that content type identifier. 
-    /// See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters>
-    public convenience init(onContentTypeFor id: ContentTypeId) {
-        self.init()
-        self.on(contentTypeFor: id)
-    }
-
-    /** 
-     Append the `content_type` parameter to narrow the results to entries that have that content type identifier.
-     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters>
-     - Parameter id: the identifier of the content type which the query will be performed on.
-     - Returns: A reference to the receiving query to enable chaining.
-     */
-    @discardableResult public func on(contentTypeFor id: ContentTypeId) -> Query {
-        self.parameters[QueryParameter.contentType] = id
-        return self
-    }
-
     // MARK: Query.Private
 
-    fileprivate init(parameters: [String: String] = [:], locale: String? = nil) {
+    internal init(parameters: [String: String] = [:]) {
         self.parameters = parameters
-
-        if let locale = locale {
-            self.parameters[QueryParameter.locale] = locale
-        }
     }
 
-    fileprivate class func validate(selectedKeyPaths: [String]) throws {
+
+    fileprivate static func validate(selectedKeyPaths: [String]) throws {
         for fieldKeyPath in selectedKeyPaths {
             guard fieldKeyPath.isValidSelection() else {
                 throw QueryError.invalidSelection(fieldKeyPath: fieldKeyPath)
@@ -726,140 +711,13 @@ public class Query: ChainableQuery {
         }
     }
 
-    fileprivate class func addSysIfNeeded(to selectedFieldNames: [String]) -> [String] {
+    fileprivate static func addSysIfNeeded(to selectedFieldNames: [String]) -> [String] {
+        // Mutable copy.
         var completeSelections = selectedFieldNames
         if !completeSelections.contains("sys") {
             completeSelections.append("sys")
         }
         return completeSelections
-    }
-}
-
-/// Queries on Asset types. All methods from Query, and therefore ChainableQuery, are inherited and available.
-public final class AssetQuery: Query {
-    /**
-     Convenience intializer for creating an AssetQuery with the "mimetype_group" parameter specified. Example usage:
-
-     ```
-     let query = AssetQuery(whereMimetypeGroupIs: .image)
-     client.fetchAssets(with: query).observable.then { assetsResponse in
-        let assets = assetsResponse.items
-        // Do stuff with assets.
-     }
-     ```
-
-     - Parameter mimetypeGroup: The `mimetype_group` which all returned Assets will match.
-     */
-    public convenience init(whereMimetypeGroupIs mimetypeGroup: MimetypeGroup) {
-        self.init()
-        self.mimetypeGroup(is: mimetypeGroup)
-    }
-
-    /**
-     Instance method for mutating the query further to specify the mimetype group when querying assets.
-
-     - Parameter mimetypeGroup: The `mimetype_group` which all returned Assets will match.
-     */
-    public func mimetypeGroup(is mimetypeGroup: MimetypeGroup) {
-        self.parameters[QueryParameter.mimetypeGroup] = mimetypeGroup.rawValue
-    }
-}
-
-/** 
- An additional query to filter by the properties of linked objects when searching on references.
- See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references>
- and see the init<LinkType: EntryDecodable>(whereLinkAt fieldNameForLink: String, matches filterQuery: FilterQuery<LinkType>? = nil) methods
- on QueryOn for example usage.
-*/
-public final class FilterQuery<EntryType>: AbstractQuery where EntryType: EntryDecodable {
-
-    /// The parameters dictionary that are converted to `URLComponents` (HTTP parameters/arguments) on the HTTP URL. Useful for debugging.
-    public var parameters: [String: String] = [String: String]()
-
-    /**
-     Convenience intializer for creating a QueryOn with a QueryOperation. Example usage:
-
-     ```
-     let filterQuery = FilterQuery<Cat>(where: "fields.name", .matches("Happy Cat"))
-     let query = QueryOn<Cat>(whereLinkAt: "bestFriend", matches: filterQuery)
-     ```
-
-     - Parameter name: The name of the property you are performing the QueryOperation against. For instance,
-                       `"sys.id"` or `"fields.yourFieldName"`
-     - Parameter operation: the QueryOperation
-     - Parameter locale: An optional locale argument to return localized results. If unspecified, the locale originally
-                         set on the `Client` instance is used.
-     */
-    public convenience init(where name: String, _ operation: QueryOperation, for locale: String? = nil) {
-        self.init()
-
-        self.propertyName = name
-        self.operation = operation
-        self.addFilter(where: name, operation, for: locale)
-    }
-
-    /// Designated initializer for FilterQuery.
-    public init() {
-        self.parameters = [String: String]()
-    }
-
-    // MARK: FilterQuery<EntryType>.Private
-
-    fileprivate var operation: QueryOperation!
-    fileprivate var propertyName: String!
-}
-
-/**
- A concrete implementation of AbstractQuery which requires that a model class conforming to `EntryType`
- be passed in as a generic parameter. 
- 
- The "content_type" parameter of the query will be set to the `contentTypeID`
- of your `EntryType` conforming model class. `QueryOn<EntryType>` are chainable so complex queries can be constructed.
- Operations that are only available when querying `Entry`s on specific content types (i.e. content_type must be set) 
- are available through this class.
- */
-public final class QueryOn<EntryType>: ChainableQuery where EntryType: EntryDecodable {
-
-    /// The parameters dictionary that are converted to `URLComponents` (HTTP parameters/arguments) on the HTTP URL. Useful for debugging.
-    public var parameters: [String: String] = [String: String]()
-
-    /// Designated initializer for `QueryOn<EntryType>`.
-    public init() {
-        self.parameters = [QueryParameter.contentType: EntryType.contentTypeId]
-    }
-
-    /**
-     Convenience initalizer for performing searches where Linked objects at the specified linking field match the filtering query. 
-     For instance, if you want to query all Entry's of type "cat" where cat's linked via the "bestFriend" field have names that match "Happy Cat"
-     the code would look like the following:
-
-     ```
-     let filterQuery = FilterQuery<Cat>(where: "fields.name", .matches("Happy Cat"))
-     let query = QueryOn<Cat>(whereLinkAt: "bestFriend", matches: filterQuery)
-     client.fetchMappedEntries(with: query).observable.then { catsWithHappyCatAsBestFriendResponse in
-        let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
-        // Do stuff with catsWithHappyCatAsBestFriend
-     }
-     ```
-
-     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references>
-     - Parameter fieldNameForLink: The name of the property which contains a link to another Entry.
-     - Parameter filterQuery: The optional filter query applied to the linked objects which are being searched.
-     - Parameter locale: An optional locale argument to return localized results. If unspecified, the locale originally
-                         set on the `Client` instance is used.
-     */
-    public convenience init<LinkType>(whereLinkAt fieldNameForLink: String, matches filterQuery: FilterQuery<LinkType>? = nil,
-                            for locale: String? = nil) {
-        self.init()
-
-        self.parameters["fields.\(fieldNameForLink).sys.contentType.sys.id"] = LinkType.contentTypeId
-
-        // If propertyName isn't unrwrapped, the string isn't constructed correctly for some reason.
-        if let filterQuery = filterQuery, let propertyName = filterQuery.propertyName {
-            let filterParameterName = "fields.\(fieldNameForLink).\(propertyName)\(filterQuery.operation.string)"
-            self.parameters[filterParameterName] = filterQuery.operation.values
-        }
-        self.set(locale: locale)
     }
 }
 

@@ -5,6 +5,19 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 
 ### Merged, but not yet released
 > All recent changes are published
+> #### Added
+> - `ResourceQueryable` protocol to enable safer queries via the `QueryOn` query type.
+> - `SyncSpace.SyncableType` enum for specifying which Contentful types should be synced.
+> - A description property to `ContentType`
+> - A `ContentTypeQuery` for syncing content types.
+> #### Changed
+> - **BREAKING:** The parameter names have been made consistent accross all fetch method names. The parameter signatures for all fetch methods are now: `(matching:then:)`.
+> - **BREAKING:** All query initializers have been changed to static methods so that the syntax exactly matches the syntax of the instance methods.
+> - **BREAKING:** Various methods for creating and mutating queries no longer `throw` errors and so the need to call them in a `do` `catch` block has been obviated.
+> - **BRAKING:** `QueryOperation` is now called `Query.Operation`.
+> #### Removed
+> - **BREAKING:** All fetch methods that previously took dictionary arguments have been removed. Use fetch methods that take query types instead.
+> - **BREAKING:** Now unnecessary `QueryError`s.
 
 ---
 

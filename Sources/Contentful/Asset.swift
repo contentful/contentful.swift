@@ -20,7 +20,12 @@ public extension String {
 }
 
 /// An asset represents a media file in Contentful.
-public class Asset: LocalizableResource {
+public class Asset: LocalizableResource, ResourceQueryable {
+
+    /// The key paths for member fields of an Asset
+    public enum Fields: String, CodingKey {
+        case title, description, file
+    }
 
     /// The URL for the underlying media file. Returns nil if the url was omitted from the response (i.e. `select` operation in query)
     /// or if the underlying media file is still processing with Contentful.
