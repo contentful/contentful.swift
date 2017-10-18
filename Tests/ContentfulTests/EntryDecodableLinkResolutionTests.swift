@@ -49,12 +49,12 @@ class SingleRecord: EntryDecodable, ResourceQueryable {
         textBody        = try fields.decodeIfPresent(String.self, forKey: .textBody)
 
 
-        try fields.resolveLink(forKey: .linkField, inLocale: sys.locale!, decoder: decoder) { [weak self] link in
+        try fields.resolveLink(forKey: .linkField, decoder: decoder) { [weak self] link in
             self?.linkField = link as? LinkClass
             self?.unresolvedLink = link as? ArrayResponseError
         }
 
-        try fields.resolveLinksArray(forKey: .arrayLinkField, inLocale: sys.locale!, decoder: decoder) { [weak self] arrayOfLinks in
+        try fields.resolveLinksArray(forKey: .arrayLinkField, decoder: decoder) { [weak self] arrayOfLinks in
             self?.arrayLinkField = arrayOfLinks as? [LinkClass]
         }
     }

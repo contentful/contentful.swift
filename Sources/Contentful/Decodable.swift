@@ -91,13 +91,12 @@ public extension KeyedDecodingContainer {
      - Throws: Forwards the error if no link object is in the JSON at the specified key.
      */
     public func resolveLink(forKey key: KeyedDecodingContainer.Key,
-                            inLocale localeCode: LocaleCode,
                             decoder: Decoder,
                             callback: @escaping (Any) -> Void) throws {
 
         let linkResolver = decoder.linkResolver
         if let link = try decodeIfPresent(Link.self, forKey: key) {
-            linkResolver.resolve(link, inLocale: localeCode, callback: callback)
+            linkResolver.resolve(link, callback: callback)
         }
     }
 
@@ -111,13 +110,12 @@ public extension KeyedDecodingContainer {
      - Throws: Forwards the error if no link object is in the JSON at the specified key.
      */
     public func resolveLinksArray(forKey key: KeyedDecodingContainer.Key,
-                                  inLocale localeCode: LocaleCode,
                                   decoder: Decoder,
                                   callback: @escaping (Any) -> Void) throws {
 
         let linkResolver = decoder.linkResolver
         if let links = try decodeIfPresent(Array<Link>.self, forKey: key) {
-            linkResolver.resolve(links, inLocale: localeCode, callback: callback)
+            linkResolver.resolve(links, callback: callback)
         }
     }
 }
@@ -151,13 +149,13 @@ internal class LinkResolver {
     }
 
     // Caches the callback to resolve the relationship represented by a Link at a later time.
-    internal func resolve(_ link: Link, inLocale localeCode: LocaleCode, callback: @escaping (Any) -> Void) {
-        callbacks[DataCache.cacheKey(for: link, withSourceLocaleCode: localeCode)] = callback
+    internal func resolve(_ link: Link, callback: @escaping (Any) -> Void) {
+        callbacks[DataCache.cacheKey(for: link)] = callback
     }
 
-    internal func resolve(_ links: [Link], inLocale localeCode: LocaleCode, callback: @escaping (Any) -> Void) {
+    internal func resolve(_ links: [Link], callback: @escaping (Any) -> Void) {
         let linksIdentifier: String = links.reduce(into: LinkResolver.linksArrayPrefix) { (id, link) in
-            id += "," + DataCache.cacheKey(for: link, withSourceLocaleCode: localeCode)
+            id += "," + DataCache.cacheKey(for: link)
         }
         callbacks[linksIdentifier] = callback
     }

@@ -34,7 +34,7 @@ final class Cat: EntryDecodable, ResourceQueryable {
         self.likes      = try fields.decodeIfPresent(Array<String>.self, forKey: .likes)
         self.lives      = try fields.decodeIfPresent(Int.self, forKey: .lives)
 
-        try fields.resolveLink(forKey: .bestFriend, inLocale: sys.locale!, decoder: decoder) { [weak self] linkedCat in
+        try fields.resolveLink(forKey: .bestFriend, decoder: decoder) { [weak self] linkedCat in
             self?.bestFriend = linkedCat as? Cat
         }
     }
@@ -79,7 +79,7 @@ final class Dog: EntryDecodable, ResourceQueryable {
         name            = try fields.decode(String.self, forKey: .name)
         description     = try fields.decodeIfPresent(String.self, forKey: .description)
 
-        try fields.resolveLink(forKey: .image, inLocale: sys.locale!, decoder: decoder) { [weak self] linkedImage in
+        try fields.resolveLink(forKey: .image, decoder: decoder) { [weak self] linkedImage in
             self?.image = linkedImage as? Asset
         }
     }
@@ -107,7 +107,7 @@ class Human: EntryDecodable, ResourceQueryable {
         description     = try fields.decode(String.self, forKey: .description)
         likes           = try fields.decode(Array<String>.self, forKey: .likes)
 
-        try fields.resolveLink(forKey: .image, inLocale: sys.locale!, decoder: decoder) { [weak self] linkedImage in
+        try fields.resolveLink(forKey: .image, decoder: decoder) { [weak self] linkedImage in
             self?.image = linkedImage as? Asset
         }
     }

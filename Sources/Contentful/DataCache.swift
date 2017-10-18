@@ -13,11 +13,11 @@ internal class DataCache {
     static let cacheKeyDelimiter = "_"
 
     internal static func cacheKey(for resource: Resource) -> String {
-        let cacheKey = DataCache.cacheKey(id: resource.sys.id, linkType: resource.sys.type, localeCode: resource.sys.locale!)
+        let cacheKey = DataCache.cacheKey(id: resource.sys.id, linkType: resource.sys.type)
         return cacheKey
     }
 
-    internal static func cacheKey(for link: Link, withSourceLocaleCode sourceLocaleCode: LocaleCode) -> String {
+    internal static func cacheKey(for link: Link) -> String {
         let linkType: String
         switch link {
         case .asset:                linkType = "asset"
@@ -25,20 +25,20 @@ internal class DataCache {
         case .unresolved(let sys):  linkType = sys.linkType
         }
 
-        let cacheKey = DataCache.cacheKey(id: link.id, linkType: linkType, localeCode: sourceLocaleCode)
+        let cacheKey = DataCache.cacheKey(id: link.id, linkType: linkType)
         return cacheKey
     }
 
-    internal static func cacheKey(for arrayResponseError: ArrayResponseError, withSourceLocaleCode sourceLocaleCode: LocaleCode) -> String {
+    internal static func cacheKey(for arrayResponseError: ArrayResponseError) -> String {
         let resourceId = arrayResponseError.details.id
         let linkType = arrayResponseError.details.linkType
-        let cacheKey = DataCache.cacheKey(id: resourceId, linkType: linkType, localeCode: sourceLocaleCode)
+        let cacheKey = DataCache.cacheKey(id: resourceId, linkType: linkType)
         return cacheKey
     }
 
-    private static func cacheKey(id: String, linkType: String, localeCode: LocaleCode) -> String {
+    private static func cacheKey(id: String, linkType: String) -> String {
         let delimeter = DataCache.cacheKeyDelimiter
-        let cacheKey = id + delimeter + linkType.lowercased() + delimeter + localeCode
+        let cacheKey = id + delimeter + linkType.lowercased() + delimeter
         return cacheKey
     }
 
@@ -83,7 +83,6 @@ internal class DataCache {
     }
 
     internal func cache(unresolvableLink: ArrayResponseError) {
-        // The link is unresolvable, so we can provide a sentinel value for the sourcelocale code
-        unresolvableLinksErrorCache[DataCache.cacheKey(for: unresolvableLink, withSourceLocaleCode: "en-US")] = unresolvableLink
+        unresolvableLinksErrorCache[DataCache.cacheKey(for: unresolvableLink)] = unresolvableLink
     }
 }
