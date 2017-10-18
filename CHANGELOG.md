@@ -10,7 +10,11 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 > - `SyncSpace.SyncableType` enum for specifying which Contentful types should be synced.
 > - A description property to `ContentType`
 > - A `ContentTypeQuery` for syncing content types.
+> - `ArrayResponseError` type as a member of all array responses to inform you when your links are not resolvable because the target resources are unpubished.
+> #### Improved
+> – All Error types now have better debug descriptions so that the most relevant info is given to you while debugging.
 > #### Changed
+> - **BREAKING:** The helper methods for resolving links on the fields JSON container no longer requires passing in the current locale.
 > - **BREAKING:** The parameter names have been made consistent accross all fetch method names. The parameter signatures for all fetch methods are now: `(matching:then:)`.
 > - **BREAKING:** All query initializers have been changed to static methods so that the syntax exactly matches the syntax of the instance methods.
 > - **BREAKING:** Various methods for creating and mutating queries no longer `throw` errors and so the need to call them in a `do` `catch` block has been obviated.
