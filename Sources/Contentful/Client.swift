@@ -181,7 +181,7 @@ open class Client {
                     return // Exit if there was a RateLimitError.
                 }
 
-                // Use failable initialzer to optional rather than initializer that throws,
+                // Use failable initializer to optional rather than initializer that throws,
                 // because failure to find an error in the JSON should error should not throw an error that JSON is not parseable.
                 if let response = response as? HTTPURLResponse, let apiError = APIError.error(with: self.jsonDecoder,
                                                                                               data: data,
@@ -226,7 +226,7 @@ open class Client {
     // Returns true if a rate limit error was returned by the API.
     fileprivate func didHandleRateLimitError(data: Data, response: URLResponse?, completion: ResultsHandler<Data>) -> Bool {
         if let timeUntilLimitReset = self.readRateLimitHeaderIfPresent(response: response) {
-            // At this point, We know for sure that the type returned by the API can be mapped to a `APIError` instance.
+            // At this point, We know for sure that the type returned by the API can be mapped to an `APIError` instance.
             // Directly handle JSON and exit.
             self.handleRateLimitJSON(data, timeUntilLimitReset: timeUntilLimitReset) { (_ result: Result<RateLimitError>) in
                 switch result {
