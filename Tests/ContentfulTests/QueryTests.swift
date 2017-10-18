@@ -34,7 +34,7 @@ final class Cat: EntryDecodable, ResourceQueryable {
         self.likes      = try fields.decodeIfPresent(Array<String>.self, forKey: .likes)
         self.lives      = try fields.decodeIfPresent(Int.self, forKey: .lives)
 
-        try fields.resolveLink(forKey: .bestFriend, inLocale: sys.locale!, decoder: decoder) { [weak self] linkedCat in
+        try fields.resolveLink(forKey: .bestFriend, decoder: decoder) { [weak self] linkedCat in
             self?.bestFriend = linkedCat as? Cat
         }
     }
@@ -79,7 +79,7 @@ final class Dog: EntryDecodable, ResourceQueryable {
         name            = try fields.decode(String.self, forKey: .name)
         description     = try fields.decodeIfPresent(String.self, forKey: .description)
 
-        try fields.resolveLink(forKey: .image, inLocale: sys.locale!, decoder: decoder) { [weak self] linkedImage in
+        try fields.resolveLink(forKey: .image, decoder: decoder) { [weak self] linkedImage in
             self?.image = linkedImage as? Asset
         }
     }
@@ -107,7 +107,7 @@ class Human: EntryDecodable, ResourceQueryable {
         description     = try fields.decode(String.self, forKey: .description)
         likes           = try fields.decode(Array<String>.self, forKey: .likes)
 
-        try fields.resolveLink(forKey: .image, inLocale: sys.locale!, decoder: decoder) { [weak self] linkedImage in
+        try fields.resolveLink(forKey: .image, decoder: decoder) { [weak self] linkedImage in
             self?.image = linkedImage as? Asset
         }
     }
@@ -796,96 +796,3 @@ class QueryTests: XCTestCase {
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 }
-
-// From Complex-Sync-Test-Space
-class LinkClass: EntryDecodable, ResourceQueryable {
-
-    static let contentTypeId = "link"
-
-    let sys: Sys
-    let awesomeLinkTitle: String?
-
-    public required init(from decoder: Decoder) throws {
-        sys             = try decoder.sys()
-        let fields      = try decoder.contentfulFieldsContainer(keyedBy: Fields.self)
-        awesomeLinkTitle = try fields.decodeIfPresent(String.self, forKey: .awesomeLinkTitle)
-    }
-
-    enum Fields: String, CodingKey {
-        case awesomeLinkTitle
-    }
-}
-
-
-class SingleRecord: EntryDecodable, ResourceQueryable {
-
-    static let contentTypeId = "singleRecord"
-
-    let sys: Sys
-    let textBody: String?
-    var arrayLinkField: [LinkClass]?
-
-    public required init(from decoder: Decoder) throws {
-        sys             = try decoder.sys()
-        let fields      = try decoder.contentfulFieldsContainer(keyedBy: Fields.self)
-        textBody        = try fields.decodeIfPresent(String.self, forKey: .textBody)
-        try fields.resolveLinksArray(forKey: .arrayLinkField, inLocale: sys.locale!, decoder: decoder) { [weak self] arrayOfLinks in
-            self?.arrayLinkField = arrayOfLinks as? [LinkClass]
-        }
-    }
-
-    enum Fields: String, CodingKey {
-        case textBody, arrayLinkField
-    }
-}
-
-class LinkResolverTests: XCTestCase {
-    static let client: Client = {
-        let contentTypeClasses: [EntryDecodable.Type] = [SingleRecord.self, LinkClass.self]
-        return TestClientFactory.testClient(withCassetteNamed: "LinkResolverTests",
-                                            spaceId: "smf0sqiu0c5s",
-                                            accessToken: "14d305ad526d4487e21a99b5b9313a8877ce6fbf540f02b12189eea61550ef34",
-                                            contentTypeClasses: contentTypeClasses)
-    }()
-
-    override class func setUp() {
-        super.setUp()
-        (client.urlSession as? DVR.Session)?.beginRecording()
-    }
-
-    override class func tearDown() {
-        super.tearDown()
-        (client.urlSession as? DVR.Session)?.endRecording()
-    }
-
-    // FIXME: Test link query with array of lijnks.
-    func testDecoderCanResolveArrayOfLinks() {
-
-        let expectation = self.expectation(description: "CanResolveArrayOfLinksTests")
-
-        let query = QueryOn<SingleRecord>.where(sys: .id, .equals("7BwFiM0nxCS4EGYaIAIkyU"))
-        LinkResolverTests.client.fetchMappedEntries(matching: query) { result in
-
-
-            switch result {
-            case .success(let arrayResponse):
-                let records = arrayResponse.items
-                expect(records.count).to(equal(1))
-                if let singleRecord = records.first {
-                    expect(singleRecord.arrayLinkField).toNot(beNil())
-                    expect(singleRecord.arrayLinkField?.count).to(equal(2))
-                    expect(singleRecord.arrayLinkField?.first?.awesomeLinkTitle).to(equal("AWESOMELINK!!!"))
-                    expect(singleRecord.arrayLinkField?[1].awesomeLinkTitle).to(equal("The second link"))
-                } else {
-                    fail("There shoudl be at least one entry in the array of records")
-                }
-            case .error(let error):
-                fail("Should not throw an error \(error)")
-            }
-
-            expectation.fulfill()
-        }
-        self.waitForExpectations(timeout: 10.0, handler: nil)
-    }
-}
-

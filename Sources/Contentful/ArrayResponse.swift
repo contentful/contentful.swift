@@ -13,6 +13,12 @@ private protocol Array {
     var skip: UInt { get }
 
     var total: UInt { get }
+
+    var errors: [ArrayResponseError]? { get }
+}
+
+internal enum ArrayCodingKeys: String, CodingKey {
+    case items, includes, skip, limit, total, errors
 }
 
 private protocol HomogeneousArray: Array {
@@ -21,6 +27,17 @@ private protocol HomogeneousArray: Array {
 
     var items: [ItemType] { get }
 }
+
+
+public struct ArrayResponseError: Decodable {
+    public struct Sys: Decodable {
+        let id: String
+        let type: String
+    }
+    let details: Link.Sys
+    let sys: ArrayResponseError.Sys
+}
+
 
 /**
  A list of resources in Contentful
@@ -41,6 +58,8 @@ public struct ArrayResponse<ItemType>: HomogeneousArray where ItemType: Resource
 
     /// The total number of resources which matched the original request
     public let total: UInt
+
+    public let errors: [ArrayResponseError]?
 
     internal let includes: Includes?
 
@@ -71,12 +90,13 @@ public struct ArrayResponse<ItemType>: HomogeneousArray where ItemType: Resource
 
 extension ArrayResponse: Decodable {
     public init(from decoder: Decoder) throws {
-        let container   = try decoder.container(keyedBy: CodingKeys.self)
+        let container   = try decoder.container(keyedBy: ArrayCodingKeys.self)
         items           = try container.decode([ItemType].self, forKey: .items)
         includes        = try container.decodeIfPresent(ArrayResponse.Includes.self, forKey: .includes)
         skip            = try container.decode(UInt.self, forKey: .skip)
         total           = try container.decode(UInt.self, forKey: .total)
         limit           = try container.decode(UInt.self, forKey: .limit)
+        errors          = try container.decodeIfPresent([ArrayResponseError].self, forKey: .errors)
 
         // Workaround for type system not allowing cast of items to [Entry]
         let entries: [Entry] = items.flatMap { $0 as? Entry }
@@ -88,8 +108,8 @@ extension ArrayResponse: Decodable {
             entry.resolveLinks(against: allIncludedEntries, and: (includedAssets ?? []))
         }
     }
-    private enum CodingKeys: String, CodingKey {
-        case items, includes, skip, limit, total
+    fileprivate enum CodingKeys: String, CodingKey {
+        case items, includes, skip, limit, total, errors
     }
 }
 
@@ -111,6 +131,8 @@ public struct MappedArrayResponse<ItemType>: HomogeneousArray where ItemType: En
 
     /// The total number of resources which matched the original request
     public let total: UInt
+
+    public let errors: [ArrayResponseError]?
 
     internal let includes: MappedIncludes?
 
@@ -170,10 +192,11 @@ internal struct MappedIncludes: Decodable {
 extension MappedArrayResponse: Decodable {
 
     public init(from decoder: Decoder) throws {
-        let container   = try decoder.container(keyedBy: CodingKeys.self)
+        let container   = try decoder.container(keyedBy: ArrayCodingKeys.self)
         skip            = try container.decode(UInt.self, forKey: .skip)
         total           = try container.decode(UInt.self, forKey: .total)
         limit           = try container.decode(UInt.self, forKey: .limit)
+        errors          = try container.decodeIfPresent([ArrayResponseError].self, forKey: .errors)
 
         // All items and includes.
         includes        = try container.decodeIfPresent(MappedIncludes.self, forKey: .includes)
@@ -207,12 +230,9 @@ extension MappedArrayResponse: Decodable {
 
         // Cache to enable link resolution.
         decoder.linkResolver.cache(entryDecodables: self.items)
+        decoder.linkResolver.cache(unresolvableLinks: errors)
         // Resolve links.
         decoder.linkResolver.churnLinks()
-    }
-
-    private enum CodingKeys: String, CodingKey {
-        case items, includes, skip, limit, total
     }
 }
 
@@ -239,6 +259,8 @@ public struct MixedMappedArrayResponse: Array {
     /// The total number of resources which matched the original request
     public let total: UInt
 
+    public let errors: [ArrayResponseError]?
+
     internal let includes: MappedIncludes?
 
     internal var includedAssets: [Asset]? {
@@ -252,10 +274,11 @@ public struct MixedMappedArrayResponse: Array {
 extension MixedMappedArrayResponse: Decodable {
 
     public init(from decoder: Decoder) throws {
-        let container   = try decoder.container(keyedBy: CodingKeys.self)
+        let container   = try decoder.container(keyedBy: ArrayCodingKeys.self)
         skip            = try container.decode(UInt.self, forKey: .skip)
         total           = try container.decode(UInt.self, forKey: .total)
         limit           = try container.decode(UInt.self, forKey: .limit)
+        errors          = try container.decodeIfPresent([ArrayResponseError].self, forKey: .errors)
 
         // All items and includes.
         includes        = try container.decodeIfPresent(MappedIncludes.self, forKey: .includes)
@@ -281,12 +304,9 @@ extension MixedMappedArrayResponse: Decodable {
 
         // Cache to enable link resolution.
         decoder.linkResolver.cache(entryDecodables: self.items)
+        decoder.linkResolver.cache(unresolvableLinks: errors)
         // Resolve links.
         decoder.linkResolver.churnLinks()
-    }
-
-    private enum CodingKeys: String, CodingKey {
-        case items, includes, skip, limit, total
     }
 }
 
