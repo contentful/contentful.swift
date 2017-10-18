@@ -148,7 +148,7 @@ internal class LinkResolver {
         if callbacks[key] == nil {
             callbacks[key] = [callback]
         } else {
-            callbacks[key]!.append(callback)
+            callbacks[key]?.append(callback)
         }
     }
 
@@ -159,7 +159,7 @@ internal class LinkResolver {
         if callbacks[linksIdentifier] == nil {
             callbacks[linksIdentifier] = [callback]
         } else {
-            callbacks[linksIdentifier]!.append(callback)
+            callbacks[linksIdentifier]?.append(callback)
         }
     }
 
