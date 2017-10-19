@@ -230,7 +230,7 @@ extension MappedArrayResponse: Decodable {
 
         // Cache to enable link resolution.
         decoder.linkResolver.cache(entryDecodables: self.items)
-        decoder.linkResolver.cache(unresolvableLinks: errors)
+
         // Resolve links.
         decoder.linkResolver.churnLinks()
     }
@@ -304,7 +304,7 @@ extension MixedMappedArrayResponse: Decodable {
 
         // Cache to enable link resolution.
         decoder.linkResolver.cache(entryDecodables: self.items)
-        decoder.linkResolver.cache(unresolvableLinks: errors)
+
         // Resolve links.
         decoder.linkResolver.churnLinks()
     }

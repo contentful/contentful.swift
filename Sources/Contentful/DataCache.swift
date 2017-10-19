@@ -29,13 +29,6 @@ internal class DataCache {
         return cacheKey
     }
 
-    internal static func cacheKey(for arrayResponseError: ArrayResponseError) -> String {
-        let resourceId = arrayResponseError.details.id
-        let linkType = arrayResponseError.details.linkType
-        let cacheKey = DataCache.cacheKey(id: resourceId, linkType: linkType)
-        return cacheKey
-    }
-
     private static func cacheKey(id: String, linkType: String) -> String {
         let delimeter = DataCache.cacheKeyDelimiter
         let cacheKey = id + delimeter + linkType.lowercased() + delimeter
@@ -44,7 +37,6 @@ internal class DataCache {
 
     var assetCache = Dictionary<String, Asset>()
     var entryCache = Dictionary<String, Any>()
-    var unresolvableLinksErrorCache = Dictionary<String, ArrayResponseError>()
 
     internal func add(asset: Asset) {
         assetCache[DataCache.cacheKey(for: asset)] = asset
@@ -62,10 +54,6 @@ internal class DataCache {
         return entryCache[identifier] as? EntryDecodable
     }
 
-    internal func unresolvableLink(for identifier: String) -> ArrayResponseError? {
-        return unresolvableLinksErrorCache[identifier]
-    }
-
     internal func item<T>(for identifier: String) -> T? {
         return item(for: identifier) as? T
     }
@@ -76,13 +64,7 @@ internal class DataCache {
         if target == nil {
             target = self.entry(for: identifier)
         }
-        if target == nil {
-            target = self.unresolvableLink(for: identifier)
-        }
-        return target
-    }
 
-    internal func cache(unresolvableLink: ArrayResponseError) {
-        unresolvableLinksErrorCache[DataCache.cacheKey(for: unresolvableLink)] = unresolvableLink
+        return target
     }
 }

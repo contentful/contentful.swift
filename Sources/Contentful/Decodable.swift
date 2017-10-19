@@ -140,14 +140,6 @@ internal class LinkResolver {
         }
     }
 
-    // After the user has added their callbacks to the cache, we must iterate through uncachable
-    internal func cache(unresolvableLinks: [ArrayResponseError]?) {
-        guard let unresolvableLinks = unresolvableLinks else { return }
-        for unresolvableLink in unresolvableLinks {
-            dataCache.cache(unresolvableLink: unresolvableLink)
-        }
-    }
-
     // Caches the callback to resolve the relationship represented by a Link at a later time.
 
     internal func resolve(_ link: Link, callback: @escaping (Any) -> Void) {

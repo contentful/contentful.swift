@@ -39,8 +39,7 @@ class SingleRecord: EntryDecodable, ResourceQueryable {
     let sys: Sys
     let textBody: String?
     var linkField: LinkClass?
-    // Not on the content model, but for testing.
-    var unresolvedLink: ArrayResponseError?
+
     var arrayLinkField: [LinkClass]?
 
     public required init(from decoder: Decoder) throws {
@@ -48,10 +47,8 @@ class SingleRecord: EntryDecodable, ResourceQueryable {
         let fields      = try decoder.contentfulFieldsContainer(keyedBy: Fields.self)
         textBody        = try fields.decodeIfPresent(String.self, forKey: .textBody)
 
-
         try fields.resolveLink(forKey: .linkField, decoder: decoder) { [weak self] link in
             self?.linkField = link as? LinkClass
-            self?.unresolvedLink = link as? ArrayResponseError
         }
 
         try fields.resolveLinksArray(forKey: .arrayLinkField, decoder: decoder) { [weak self] arrayOfLinks in
@@ -125,7 +122,7 @@ class LinkResolverTests: XCTestCase {
                 if let singleRecord = records.first {
                     expect(singleRecord.textBody).to(equal("Record with unresolvable link"))
                     expect(singleRecord.linkField).to(beNil())
-                    if let unresolvableLink = singleRecord.unresolvedLink {
+                    if let unresolvableLink = arrayResponse.errors?.first {
                         expect(unresolvableLink.details.id).to(equal("2bQUUwIT3mk6GaKqgo40cu"))
                     } else {
                         fail("There should be a Link.unresolvable in place of the regular link")
