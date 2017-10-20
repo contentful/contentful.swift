@@ -124,7 +124,7 @@ internal class LinkResolver {
 
     private var dataCache: DataCache = DataCache()
 
-    private var callbacks: [String: (Any) -> Void] = [:]
+    private var callbacks: [String: [(Any) -> Void]] = [:]
 
     private static let linksArrayPrefix = "linksArrayPrefix"
 
@@ -140,40 +140,46 @@ internal class LinkResolver {
         }
     }
 
-    // After the user has added their callbacks to the cache, we must iterate through uncachable
-    internal func cache(unresolvableLinks: [ArrayResponseError]?) {
-        guard let unresolvableLinks = unresolvableLinks else { return }
-        for unresolvableLink in unresolvableLinks {
-            dataCache.cache(unresolvableLink: unresolvableLink)
-        }
-    }
-
     // Caches the callback to resolve the relationship represented by a Link at a later time.
+
     internal func resolve(_ link: Link, callback: @escaping (Any) -> Void) {
-        callbacks[DataCache.cacheKey(for: link)] = callback
+        let key = DataCache.cacheKey(for: link)
+        if callbacks[key] == nil {
+            callbacks[key] = [callback]
+        } else {
+            callbacks[key]?.append(callback)
+        }
     }
 
     internal func resolve(_ links: [Link], callback: @escaping (Any) -> Void) {
         let linksIdentifier: String = links.reduce(into: LinkResolver.linksArrayPrefix) { (id, link) in
             id += "," + DataCache.cacheKey(for: link)
         }
-        callbacks[linksIdentifier] = callback
+        if callbacks[linksIdentifier] == nil {
+            callbacks[linksIdentifier] = [callback]
+        } else {
+            callbacks[linksIdentifier]?.append(callback)
+        }
     }
 
     // Executes all cached callbacks to resolve links and then clears the callback cache and the data cache
     // where resources are cached before being resolved.
     internal func churnLinks() {
-        for (linkKey, callback) in callbacks {
+        for (linkKey, callbacksList) in callbacks {
             if linkKey.hasPrefix(LinkResolver.linksArrayPrefix) {
                 let firstKeyIndex = linkKey.index(linkKey.startIndex, offsetBy: LinkResolver.linksArrayPrefix.count)
                 let onlyKeysString = linkKey[firstKeyIndex ..< linkKey.endIndex]
                 // Split creates a [Substring] array, but we need [String] to index the cache
                 let keys = onlyKeysString.split(separator: ",").map { String($0) }
                 let items: [Any] = keys.map { dataCache.item(for: $0) as Any }
-                callback(items as Any)
+                for callback in callbacksList {
+                    callback(items as Any)
+                }
             } else {
                 let item = dataCache.item(for: linkKey)
-                callback(item as Any)
+                for callback in callbacksList {
+                    callback(item as Any)
+                }
             }
         }
         self.callbacks = [:]

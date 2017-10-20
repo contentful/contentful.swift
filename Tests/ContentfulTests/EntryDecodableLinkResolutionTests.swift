@@ -39,8 +39,7 @@ class SingleRecord: EntryDecodable, ResourceQueryable {
     let sys: Sys
     let textBody: String?
     var linkField: LinkClass?
-    // Not on the content model, but for testing.
-    var unresolvedLink: ArrayResponseError?
+
     var arrayLinkField: [LinkClass]?
 
     public required init(from decoder: Decoder) throws {
@@ -48,10 +47,8 @@ class SingleRecord: EntryDecodable, ResourceQueryable {
         let fields      = try decoder.contentfulFieldsContainer(keyedBy: Fields.self)
         textBody        = try fields.decodeIfPresent(String.self, forKey: .textBody)
 
-
         try fields.resolveLink(forKey: .linkField, decoder: decoder) { [weak self] link in
             self?.linkField = link as? LinkClass
-            self?.unresolvedLink = link as? ArrayResponseError
         }
 
         try fields.resolveLinksArray(forKey: .arrayLinkField, decoder: decoder) { [weak self] arrayOfLinks in
@@ -125,13 +122,37 @@ class LinkResolverTests: XCTestCase {
                 if let singleRecord = records.first {
                     expect(singleRecord.textBody).to(equal("Record with unresolvable link"))
                     expect(singleRecord.linkField).to(beNil())
-                    if let unresolvableLink = singleRecord.unresolvedLink {
+                    if let unresolvableLink = arrayResponse.errors?.first {
                         expect(unresolvableLink.details.id).to(equal("2bQUUwIT3mk6GaKqgo40cu"))
                     } else {
-                        fail("There should be a Link.unresolvable in place of the regular link")
+                        fail("There should be an unresolveable link error in the array response")
                     }
                 } else {
                     fail("There should be at least one entry in the array of records")
+                }
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+        self.waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testEntriesLinkingToSameLinkCanResolveLinks() {
+        let expectation = self.expectation(description: "Two entries can resolve links to the same link")
+
+        let query = QueryOn<SingleRecord>.where(sys: .id, .includes(["1wFgajHSpWOoIgS8UAk2ow", "7rUM7Pr16M2gEwiI02WAoI"]))
+        LinkResolverTests.client.fetchMappedEntries(matching: query) { result in
+            switch result {
+            case .success(let arrayResponse):
+                let records = arrayResponse.items
+                expect(records.count).to(equal(2))
+                for record in records {
+                    if let link = record.linkField {
+                        expect(link.sys.id).to(equal("6QAxlZlsXY8kmMKG08qaia"))
+                    } else {
+                        fail("There should be a link")
+                    }
                 }
             case .error(let error):
                 fail("Should not throw an error \(error)")
