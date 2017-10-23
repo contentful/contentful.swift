@@ -49,7 +49,12 @@ open class Client {
             }
             assert(headers["Authorization"] != nil)
             headers["X-Contentful-User-Agent"] = clientConfiguration.userAgentString(with: persistenceIntegration)
-            self.urlSession.configuration.httpAdditionalHeaders = headers
+
+            // There is a bug in foundation with directly setting the headers like so self.urlSession.configuration.header = ...
+            // so we must recreate the URLSession in order to set the headers.
+            let configuration = self.urlSession.configuration
+            configuration.httpAdditionalHeaders = headers
+            self.urlSession = URLSession(configuration: configuration)
         }
     }
 
