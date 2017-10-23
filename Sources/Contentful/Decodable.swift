@@ -63,17 +63,24 @@ internal struct DecoderContext {
     static let localizationContextKey = CodingUserInfoKey(rawValue: "localizationContext")!
 }
 
-internal extension Client {
+public extension Client {
 
-    // Returns the JSONDecoder owned by the Client. Until the first request to the CDA is made, this
-    // decoder won't have the necessary localization content required to
-    internal static var jsonDecoderWithoutLocalizationContext: JSONDecoder = {
+    /**
+     Returns the JSONDecoder owned by the Client. Until the first request to the CDA is made, this
+     decoder won't have the necessary localization content required to properly deserialize resources
+     returned in the multi-locale format.
+     */
+    public static var jsonDecoderWithoutLocalizationContext: JSONDecoder = {
         let jsonDecoder = JSONDecoder()
         jsonDecoder.dateDecodingStrategy = .formatted(Date.Formatter.iso8601)
         return jsonDecoder
     }()
 
-    internal static func update(_ jsonDecoder: JSONDecoder, withLocalizationContextFrom space: Space?) {
+    /**
+     Updates the JSONDecoder provided by the client with the localization context necessary to deserialize
+     resources returned in the multi-locale format with the locale information provided by the space.
+     */
+    public static func update(_ jsonDecoder: JSONDecoder, withLocalizationContextFrom space: Space?) {
         jsonDecoder.userInfo[DecoderContext.localizationContextKey] = space?.localizationContext
     }
 }
