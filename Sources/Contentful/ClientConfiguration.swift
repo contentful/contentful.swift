@@ -75,7 +75,7 @@ public struct ClientConfiguration {
         }
         // Integration
         if let integration = integration {
-            userAgentString += " integration \(integration.name)/\(integration.version)"
+            userAgentString += " integration \(integration.name)/\(integration.version);"
         }
 
         return userAgentString
@@ -94,6 +94,10 @@ public struct ClientConfiguration {
 
         #if swift(>=3.1)
             swiftVersionString = "3.1"
+        #endif
+
+        #if swift(>=4.0)
+            swiftVersionString = "4.0"
         #endif
 
         guard let swiftVersion = swiftVersionString else { return nil }
