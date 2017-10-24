@@ -37,8 +37,8 @@ let urlTask = client.fetchEntries { result in
 /*: You can also fetch more specific content, using search parameters by defining a `Query`.
  In this case we'll limit our query results to only entries of type 'cat' and sort the results in reverse chronological order.
  */
-let query = try! Query(onContentTypeFor: "cat").order(using: OrderParameter("sys.createdAt", inReverse: true))
-client.fetchEntries(with: query).next { catsArrayResponse in
+let query = try! Query.where(contentTypeId: "cat").order(by: Ordering(sys: .createdAt, inReverse: true))
+client.fetchEntries(matching: query).next { catsArrayResponse in
     let catNames = catsArrayResponse.items.flatMap { $0.fields["name"] }
     print("All cat names as an array: '\(catNames)'")
 
@@ -63,15 +63,15 @@ client.fetchEntries(with: query).next { catsArrayResponse in
     print("\(name)'s friend likes '\(friendsLikes)'")
 }
 //: Contentful also supports localization of entries, you can fetch a specific locale using the `Query` type.
-let localeSpecificQuery = Query(where: "sys.id", .equals("nyancat"), for: "tlh")
-client.fetchEntries(with: localeSpecificQuery).next { catsArrayResponse in
+let localeSpecificQuery = Query.where(sys: .id, .equals("nyancat")).localizeResults(withLocaleCode: "tlh")
+client.fetchEntries(matching: localeSpecificQuery).next { catsArrayResponse in
     let name = catsArrayResponse.items.first?.fields.string(at: "name") ?? ""
 
     print("The name of the first cat in the 'tlh' locale is '\(name)'")
 }
 //: It is also possible to fetch content for all locales, by specific the "*" locale.
-let wildcardLocaleQuery = Query(where: "sys.id", .equals("nyancat"), for: "*")
-client.fetchEntries(with: wildcardLocaleQuery).next { catsArrayResponse in
+let wildcardLocaleQuery = Query.where(sys: .id, .equals("nyancat")).localizeResults(withLocaleCode: "*")
+client.fetchEntries(matching: wildcardLocaleQuery).next { catsArrayResponse in
     var cat = catsArrayResponse.items.first
 
 //: In that case, the fields property will point to values of the currently selected locale.

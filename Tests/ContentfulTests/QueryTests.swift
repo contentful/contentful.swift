@@ -24,6 +24,7 @@ final class Cat: EntryDecodable, ResourceQueryable {
 
     // Relationship fields.
     var bestFriend: Cat?
+    var image: Asset?
 
     public required init(from decoder: Decoder) throws {
         sys             = try decoder.sys()
@@ -37,10 +38,13 @@ final class Cat: EntryDecodable, ResourceQueryable {
         try fields.resolveLink(forKey: .bestFriend, decoder: decoder) { [weak self] linkedCat in
             self?.bestFriend = linkedCat as? Cat
         }
+        try fields.resolveLink(forKey: .image, decoder: decoder) { [weak self ] image in
+            self?.image = image as? Asset
+        }
     }
     
     enum Fields: String, CodingKey {
-        case bestFriend
+        case bestFriend, image
         case name, color, likes, lives
     }
 }
