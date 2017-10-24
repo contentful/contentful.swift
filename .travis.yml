@@ -2,6 +2,11 @@ language: objective-c
 rvm:
   - 2.4.1
 cache: bundler
+
+# Whitelist `master` branch as the only branch to build pushes for.
+branches:
+  only:
+    - master
 matrix:
   include:
       # Xcode9
