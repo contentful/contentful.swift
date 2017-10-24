@@ -75,7 +75,7 @@ public struct ClientConfiguration {
         }
         // Integration
         if let integration = integration {
-            userAgentString += " integration \(integration.name)/\(integration.version)"
+            userAgentString += " integration \(integration.name)/\(integration.version);"
         }
 
         return userAgentString
@@ -84,16 +84,9 @@ public struct ClientConfiguration {
     private func platformVersionString() -> String? {
         var swiftVersionString: String? = nil
 
-        /** Unfortunately, the swift build config macros don't have an equality `=` operator.
-            Note that the current version of the SDK is ONLY buildable using the Swift 3 compiler, so
-            versions of swift that are < 3.0 are ignored.
-         */
-        #if swift(>=3.0)
-            swiftVersionString = "3.0"
-        #endif
-
-        #if swift(>=3.1)
-            swiftVersionString = "3.1"
+        // The project is only compatible with swift >=4.0
+        #if swift(>=4.0)
+            swiftVersionString = "4.0"
         #endif
 
         guard let swiftVersion = swiftVersionString else { return nil }
