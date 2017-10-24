@@ -4,47 +4,50 @@ PlaygroundPage.current.needsIndefiniteExecution = true
 import Contentful
 import Interstellar
 //: In order to execute this playground, please build the "Contentful_macOS" scheme to build the SDK.
-//: Sometimes, it is more convenient to work directly with native Swift classes which define the model in our application and use methods which give us back our own types as opposed to `Entry`s. In order to do this, we will define our types to conform to the `EntryModellable` protocol. */
-class Cat: EntryModellable {
+//: Sometimes, it is more convenient to work directly with native Swift classes which define the model in our application and use methods which give us back our own types as opposed to `Entry`s. In order to do this, we will define our types to conform to the `EntryDecodable` protocol which extends Swift 4's `Decodable`*/
+class Cat: EntryDecodable, ResourceQueryable {
 
-    let name: String?
-    let likes: [String]?
+    static let contentTypeId: String = "cat"
+
+    let sys: Sys
     let color: String?
-
+    let name: String?
     let lives: Int?
+    let likes: [String]?
 
+    // Relationship fields.
     var bestFriend: Cat?
     var image: Asset?
-//: EntryModellable conformance
-    static let contentTypeId = "cat"
 
-    let id: String
-    let localeCode: String
+    public required init(from decoder: Decoder) throws {
+        sys             = try decoder.sys()
+        let fields      = try decoder.contentfulFieldsContainer(keyedBy: Cat.Fields.self)
 
-    // Regular (non-relationship fields)
-    required init(entry: Entry) {
-        self.id = entry.id
-        self.localeCode = entry.localeCode
-        self.name = entry.fields.string(at: "name")
-        self.likes = entry.fields.strings(at: "likes")
-        self.color = entry.fields.string(at: "color")
-        self.lives = entry.fields.int(at: "lives")
+        self.name       = try fields.decodeIfPresent(String.self, forKey: .name)
+        self.color      = try fields.decodeIfPresent(String.self, forKey: .color)
+        self.likes      = try fields.decodeIfPresent(Array<String>.self, forKey: .likes)
+        self.lives      = try fields.decodeIfPresent(Int.self, forKey: .lives)
+
+        try fields.resolveLink(forKey: .bestFriend, decoder: decoder) { [weak self] linkedCat in
+            self?.bestFriend = linkedCat as? Cat
+        }
+        try fields.resolveLink(forKey: .image, decoder: decoder) { [weak self] image in
+            self?.image = image as? Asset
+        }
     }
 
-    // Link/relationship fields
-    func populateLinks(from cache: [FieldName: Any]) {
-        self.bestFriend = cache.linkedValue(at: "bestFriend")
-        self.image = cache.linkedAsset(at: "image")
+    enum Fields: String, CodingKey {
+        case bestFriend, image
+        case name, color, likes, lives
     }
 }
-//: Now that we have one of our model classes, we'll tell the system about it by passing it in via the `ContentModel` type so that the Client can do the mapping.
-let contentModel = ContentModel(entryTypes: [Cat.self])
+//: Now that we have one of our model classes, we'll tell the system about it by passing it into the Client so it can do the mapping.
 let client = Client(spaceId: "cfexampleapi",
                     accessToken: "b4c0n73n7fu1",
-                    contentModel: contentModel)
+                    contentTypeClasses: [Cat.self])
 //: Now dealing with the same entry as before becomes a lot more natural.
-let query = QueryOn<Cat>(where: "sys.id", .equals("nyancat"))
-client.fetchMappedEntries(with: query).next { (mappedCatsArrayResponse: MappedArrayResponse<Cat>) in
+let query = QueryOn<Cat>.where(sys: .id, .equals("nyancat"))
+client.fetchMappedEntries(matching: query).next { (mappedCatsArrayResponse: MappedArrayResponse<Cat>) in
     guard let nyanCat = mappedCatsArrayResponse.items.first else { return }
 //: We can see that we have directly received a `Cat` via the SDK and we can access properties directly without the indirection of the `fields` dictionary that we would normally access data through on `Entry`. */
     guard let name = nyanCat.name else { return }

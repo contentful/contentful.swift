@@ -4,30 +4,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) starting from 1.x releases.
 
 ### Merged, but not yet released
-> ~~All recent changes are published~~
-> #### Added
-> - `ResourceQueryable` protocol to enable safer queries via the `QueryOn` query type.
-> - `SyncSpace.SyncableType` enum for specifying which Contentful types should be synced.
-> - A description property to `ContentType`
-> - A `ContentTypeQuery` for syncing content types.
-> - `ArrayResponseError` type as a member of all array responses to inform you when your links are not resolvable because the target resources are unpubished.
-> #### Improved
-> – All Error types now have better debug descriptions so that the most relevant info is given to you while debugging.
-> #### Fixed
-> - Multiple link resolution callbacks can now be stored for one link in case multiple entries are linking to the same resource.
-> #### Changed
-> - **BREAKING:** The helper methods for resolving links on the fields JSON container no longer requires passing in the current locale.
-> - **BREAKING:** The parameter names have been made consistent accross all fetch method names. The parameter signatures for all fetch methods are now: `(matching:then:)`.
-> - **BREAKING:** All query initializers have been changed to static methods so that the syntax exactly matches the syntax of the instance methods.
-> - **BREAKING:** Various methods for creating and mutating queries no longer `throw` errors and so the need to call them in a `do` `catch` block has been obviated.
-> - **BREAKING:** `QueryOperation` is now called `Query.Operation`.
-> #### Removed
-> - **BREAKING:** All fetch methods that previously took dictionary arguments have been removed. Use fetch methods that take query types instead.
-> - **BREAKING:** Now unnecessary `QueryError`s.
-
+> All recent changes are published
 ---
 
 ## Table of contents
+
+#### 1.x Releases
+- `1.0.0-beta` Releases - [1.0.0-beta1](#100-beta1)
 
 #### 0.x Releases
 - `0.10.x` Releases - [0.11.0](#0110)
@@ -39,6 +22,37 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 - `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041)
 - `0.3.x` Releases - [0.3.0](#030) | [0.3.1](#031)
+
+---
+
+## [`1.0.0-beta1`](https://github.com/contentful/contentful.swift/releases/tag/1.0.0-beta1)
+Released on 2017-10-24
+
+No more breaking changes will be made before 1.0.0 release. Following this point, the project will strictly adhere to [Semantic Versioning](http://semver.org/).
+
+#### Added
+- `ResourceQueryable` protocol to enable safer queries via the `QueryOn` query type.
+- `SyncSpace.SyncableType` enum for specifying which Contentful types should be synced.
+- A description property to `ContentType`
+- A `ContentTypeQuery` for syncing content types.
+- `ArrayResponseError` type as a member of all array responses to inform you when your links are not resolvable because the target resources are unpubished.
+
+#### Improved
+- All Error types now have better debug descriptions so that the most relevant info is given to you while debugging.
+
+#### Fixed
+- Multiple link resolution callbacks can now be stored for one link in case multiple entries are linking to the same resource.
+
+#### Changed
+- **BREAKING:** The helper methods for resolving links on the fields JSON container no longer requires passing in the current locale.
+- **BREAKING:** The parameter names have been made consistent accross all fetch method names. The parameter signatures for all fetch methods are now: `(matching:then:)`.
+- **BREAKING:** All query initializers have been changed to static methods so that the syntax exactly matches the syntax of the instance methods.
+- **BREAKING:** Various methods for creating and mutating queries no longer `throw` errors and so the need to call them in a `do` `catch` block has been obviated.
+- **BREAKING:** `QueryOperation` is now called `Query.Operation`.
+
+#### Removed
+- **BREAKING:** All fetch methods that previously took dictionary arguments have been removed. Use fetch methods that take query types instead.
+- **BREAKING:** Now unnecessary `QueryError`s.
 
 ---
 
