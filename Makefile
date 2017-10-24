@@ -24,8 +24,7 @@ kill_simulator:
 
 test: clean clean_simulators
 	set -x -o pipefail && xcodebuild test -workspace $(WORKSPACE) \
-		-scheme Contentful_iOS -destination 'id=$(SIM_ID)' \
-		OTHER_SWIFT_FLAGS="-warnings-as-errors" | xcpretty -c
+		-scheme Contentful_iOS -destination 'id=$(SIM_ID)' | bundle exec xcpretty -c
 
 integration_test: clean clean_simulators
 	set -x -o pipefail && xcodebuild test -workspace $(WORKSPACE) \
