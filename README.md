@@ -15,7 +15,7 @@ Swift SDK for [Contentful's][1] Content Delivery API.
 
 [Contentful][1] is a content management platform for web applications, mobile apps and connected devices. It allows you to create, edit & manage content in the cloud and publish it anywhere via powerful API. Contentful offers tools for managing editorial teams and enabling cooperation between organizations.
 
-The Contentful Swift SDK hasn't reached 1.0.0 and is therefore subject to API changes. However, it provides a more usable API than the [Objective-C SDK][4] and has support for more API features. It is recommended to use contentful.swift over contentful.objc as future development at Contentful will focus on Swift rather than Objective-C. However, if your project must utilize Contentful's [Content Managamement API][11], Objective-C is the only  language supported at the moment. See [ContentfulManagementAPI at Cocoapods.org][12] for more information.
+However, it provides a more usable API than the [Objective-C SDK][4] and has support for more API features. It is recommended to use contentful.swift over contentful.objc as future development at Contentful will focus on Swift rather than Objective-C. However, if your project must utilize Contentful's [Content Managamement API][11], Objective-C is the only  language supported at the moment. See [ContentfulManagementAPI at Cocoapods.org][12] for more information.
 
 #### Full feature comparison of [contentful.swift][10] & [contentful.objc][4]
 
@@ -48,10 +48,50 @@ client.fetchEntry("nyancat") { (result: Result<Entry>) in
 The `EntryDecodable` protocol allows you to define types that will be mapped from `Entry`s of the various content types in your Contentful space. When using methods such as:
 
 ```swift
-func fetchMappedEntries(with query: Query) -> Observable<Result<MappedArrayResponse<EntryDecodable>>>
+func fetchMappedEntries(with query: QueryOn<Cat>) { (result: Result<MappedArrayResponse<Cat>>) in
+    guard let cats = result.value?.items else { return }
+    print(cats)
+}
 ```
 
 the asynchronously returned result will be an instance of `MappedArrayResponse` in which the generic type parameter is the class you've defined for your content type. If you are using a `Query` that does not restrict the response to contain entries of one content type, you will use methods that return `MixedMappedArrayResponse` instead of `MappedArrayResponse`. The `EntryDecodable` protocol extends the `Decodable` protocol in Swift 4's Foundation standard library. The SDK provides helper methods for resolving relationships between `EntryDecodable`s and also for grabbing values from the fields container in the JSON for each resource.
+
+In the above example, `Cat` is a type of our own definition conforming to `EntryDecodable` and `ResourceQueryable`. The source for this model class is below; note the helper methods the SDK adds to Swift 4's `Decoder` type to simplify for parsing Contentfuls JSON.
+
+```swift
+final class Cat: EntryDecodable, ResourceQueryable {
+
+    static let contentTypeId: String = "cat"
+
+    let sys: Sys
+    let color: String?
+    let name: String?
+    let lives: Int?
+    let likes: [String]?
+
+    // Relationship fields.
+    var bestFriend: Cat?
+
+    public required init(from decoder: Decoder) throws {
+        sys             = try decoder.sys()
+        let fields      = try decoder.contentfulFieldsContainer(keyedBy: Cat.Fields.self)
+
+        self.name       = try fields.decodeIfPresent(String.self, forKey: .name)
+        self.color      = try fields.decodeIfPresent(String.self, forKey: .color)
+        self.likes      = try fields.decodeIfPresent(Array<String>.self, forKey: .likes)
+        self.lives      = try fields.decodeIfPresent(Int.self, forKey: .lives)
+
+        try fields.resolveLink(forKey: .bestFriend, decoder: decoder) { [weak self] linkedCat in
+            self?.bestFriend = linkedCat as? Cat
+        }
+    }
+    
+    enum Fields: String, CodingKey {
+        case bestFriend
+        case name, color, likes, lives
+    }
+}
+```
 
 ## Swift playground
 
@@ -68,10 +108,6 @@ Then build the "Contentful_macOS" scheme, open the playground file and go! Note:
 ## Reference Documentation
 
 For further information about the API, check out the [Content Delivery API Reference Documentation][3].
-
-## Xcode versioning
-
-Unless you're using Swift 2.x, the project is built and unit tested in Travis CI on both Xcode 8.3 and Xcode 9. You should be able to integrate the SDK with either version of Xcode.
 
 ## Swift Versioning
 
@@ -97,7 +133,7 @@ pod 'Contentful'
 You can specify a specific version of Contentful depending on your needs. To learn more about operators for dependency versioning within a Podfile, see the [CocoaPods doc on the Podfile][7].
 
 ```ruby
-pod 'Contentful', '~> 0.10.2' 
+pod 'Contentful', '~> 1.0.0-beta1' 
 ```
 
 Note that for Swift 3 support (contentful.swift versions [`0.3.0` - `0.9.3`]) you will need to add a post-install script to your Podfile if installing with Cocoapods:
@@ -117,7 +153,7 @@ end
 You can also use [Carthage][8] for integration by adding the following to your `Cartfile`:
 
 ```
-github "contentful/contentful.swift" ~> 0.10.2`
+github "contentful/contentful.swift" ~> 1.0.0-beta1
 ```
 
 ## License
