@@ -26,16 +26,16 @@ after_success:
   - bundle exec slather coverage -s --coveralls
   - bundle exec pod lib lint Contentful.podspec
   # Build the docs only for one of the jobs
-  - if [[ $TRAVIS_PULL_REQUEST == false && [ -z $TRAVIS_TAG ]  && SWIFT_BUILD == true ]]; then ./Scripts/reference-docs.sh; fi
+  - if [[ $TRAVIS_PULL_REQUEST == false && -n $TRAVIS_TAG  && $SWIFT_BUILD == true ]]; then ./Scripts/reference-docs.sh; fi
 
 # Deploy the docs to GH pages if we are pushing a tag
 deploy:
   provider: pages
   skip_cleanup: true
-  github_token: $GITHUB_ACCESS_TOKEN # Set in travis-ci.org dashboard
+  github_token: $GITHUB_ACCESS_TOKEN
   local_dir: docs
   on:
-    condition: $TRAVIS_PULL_REQUEST == false && [ -z $TRAVIS_TAG ] && SWIFT_BUILD == true
+    condition: $TRAVIS_PULL_REQUEST == false && -n $TRAVIS_TAG && $SWIFT_BUILD == true
 
 env:
   global:
