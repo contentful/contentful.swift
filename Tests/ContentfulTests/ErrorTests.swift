@@ -42,7 +42,7 @@ class ErrorTests: XCTestCase {
                 Contentful Request ID: 22939727cc356fd5c37ef5e8e36b1810
                 """ 
                 let regex = try! NSRegularExpression(pattern: expectedRegexString, options: [])
-                let matches = regex.matches(in: error.debugDescription, options: [], range: NSRange(location: 0, length: error.debugDescription.characters.count))
+                let matches = regex.matches(in: error.debugDescription, options: [], range: NSRange(location: 0, length: error.debugDescription.count))
                 expect(matches.count).to(equal(1))
             case .error:
                 fail("Error returned should be an APIError")
