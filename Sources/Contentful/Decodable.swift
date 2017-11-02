@@ -32,6 +32,10 @@ public extension Decoder {
         return userInfo[DecoderContext.linkResolverContextKey] as! LinkResolver
     }
 
+    internal var contentTypes: [ContentTypeId: EntryDecodable.Type] {
+        return userInfo[DecoderContext.contentTypesContextKey] as! [ContentTypeId: EntryDecodable.Type]
+    }
+
     /// Helper method to extract the sys property of a Contentful resource.
     public func sys() throws -> Sys {
         let container = try self.container(keyedBy: LocalizableResource.CodingKeys.self)
@@ -178,7 +182,7 @@ internal class LinkResolver {
                 let onlyKeysString = linkKey[firstKeyIndex ..< linkKey.endIndex]
                 // Split creates a [Substring] array, but we need [String] to index the cache
                 let keys = onlyKeysString.split(separator: ",").map { String($0) }
-                let items: [Any] = keys.map { dataCache.item(for: $0) as Any }
+                let items: [Any] = keys.flatMap { dataCache.item(for: $0) }
                 for callback in callbacksList {
                     callback(items as Any)
                 }
