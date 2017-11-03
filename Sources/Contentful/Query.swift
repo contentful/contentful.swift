@@ -327,7 +327,7 @@ public extension ChainableQuery {
      - Returns: A reference to the receiving query to enable chaining.
      */
     @discardableResult public func searching(for text: String) throws -> Self {
-        guard text.characters.count > 1 else { throw QueryError.textSearchTooShort }
+        guard text.count > 1 else { throw QueryError.textSearchTooShort }
         self.parameters[QueryParameter.fullTextSearch] = text
         return self
     }
@@ -724,7 +724,7 @@ public class ResourceQuery: AbstractResourceQuery {
 internal extension String {
 
     func isValidSelection() -> Bool {
-        if characters.split(separator: ".", maxSplits: 3, omittingEmptySubsequences: false).count > 2 {
+        if split(separator: ".", maxSplits: 3, omittingEmptySubsequences: false).count > 2 {
             return false
         }
         return true

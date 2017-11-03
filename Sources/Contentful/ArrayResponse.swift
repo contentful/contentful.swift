@@ -154,40 +154,24 @@ internal struct MappedIncludes: Decodable {
     }
 
     init(from decoder: Decoder) throws {
-        let container   = try decoder.container(keyedBy: CodingKeys.self)
-
-        assets          = try container.decodeIfPresent([Asset].self, forKey: CodingKeys.assets)
+        let container       = try decoder.container(keyedBy: CodingKeys.self)
+        assets              = try container.decodeIfPresent([Asset].self, forKey: .assets)
+        entries             = try container.decodeHeterogeneousEntries(forKey: .entries,
+                                                                       contentTypes: decoder.contentTypes,
+                                                                       throwIfNotPresent: false)
         // Cache to enable link resolution.
         if let assets = assets {
             decoder.linkResolver.cache(assets: assets)
         }
-
-        // A copy as an array of dictionaries just to extract "sys.type" field.
-        guard let jsonItems = try container.decodeIfPresent(Swift.Array<Any>.self, forKey: .entries) as? [[String: Any]] else {
-            self.entries = nil
-            return
-        }
-        var entriesJSONContainer = try container.nestedUnkeyedContainer(forKey: .entries)
-        var entries: [EntryDecodable] = []
-        let contentTypes = decoder.userInfo[DecoderContext.contentTypesContextKey] as! [ContentTypeId: EntryDecodable.Type]
-
-        while entriesJSONContainer.isAtEnd == false {
-            let contentTypeInfo = try jsonItems.contentTypeInfo(at: entriesJSONContainer.currentIndex)
-
-            // For includes, if the type of this entry isn't defined by the user, we skip serialization.
-            if let type = contentTypes[contentTypeInfo.id] {
-                let entryModellable = try type.popEntryDecodable(from: &entriesJSONContainer)
-                entries.append(entryModellable)
-            }
-        }
-        self.entries = entries
-
         // Cache to enable link resolution.
-        if let entries = self.entries {
+        if let entries = entries {
             decoder.linkResolver.cache(entryDecodables: entries)
         }
     }
 }
+
+// Empty type so that we can continue to the end of a UnkeyedContainer
+internal struct EmptyDecodable: Decodable {}
 
 extension MappedArrayResponse: Decodable {
 
@@ -282,25 +266,9 @@ extension MixedMappedArrayResponse: Decodable {
 
         // All items and includes.
         includes        = try container.decodeIfPresent(MappedIncludes.self, forKey: .includes)
-
-        // A copy as an array of dictionaries just to extract "sys.type" field.
-        guard let jsonItems = try container.decode(Swift.Array<Any>.self, forKey: .items) as? [[String: Any]] else {
-            throw SDKError.unparseableJSON(data: nil, errorMessage: "SDK was unable to serialize returned resources")
-        }
-        var entriesJSONContainer = try container.nestedUnkeyedContainer(forKey: .items)
-        var entries: [EntryDecodable] = []
-        let contentTypes = decoder.userInfo[DecoderContext.contentTypesContextKey] as! [ContentTypeId: EntryDecodable.Type]
-
-        while entriesJSONContainer.isAtEnd == false {
-            let contentTypeInfo = try jsonItems.contentTypeInfo(at: entriesJSONContainer.currentIndex)
-
-            // After implementing handling of the errors array, we can append an SDKError when the type isn't found.
-            if let entryDecodableType = contentTypes[contentTypeInfo.id] {
-                let entryDecodable = try entryDecodableType.popEntryDecodable(from: &entriesJSONContainer)
-                entries.append(entryDecodable)
-            }
-        }
-        self.items = entries
+        items           = try container.decodeHeterogeneousEntries(forKey: .items,
+                                                                   contentTypes: decoder.contentTypes,
+                                                                   throwIfNotPresent: true) ?? []
 
         // Cache to enable link resolution.
         decoder.linkResolver.cache(entryDecodables: self.items)
@@ -319,5 +287,39 @@ internal extension Swift.Array where Element == Dictionary<String, Any> {
             throw SDKError.unparseableJSON(data: nil, errorMessage: errorMessage)
         }
         return contentTypeInfo
+    }
+}
+
+extension KeyedDecodingContainer {
+
+    internal func decodeHeterogeneousEntries(forKey key: K,
+                                             contentTypes: [ContentTypeId: EntryDecodable.Type],
+                                             throwIfNotPresent: Bool) throws -> [EntryDecodable]? {
+
+
+        guard let itemsAsDictionaries = try self.decodeIfPresent(Swift.Array<Any>.self, forKey: key) as? [[String: Any]] else {
+            if throwIfNotPresent {
+                throw SDKError.unparseableJSON(data: nil, errorMessage: "SDK was unable to serialize returned resources")
+            } else {
+                return nil
+            }
+        }
+        var entriesJSONContainer = try self.nestedUnkeyedContainer(forKey: key)
+
+        var entries: [EntryDecodable] = []
+        while entriesJSONContainer.isAtEnd == false {
+            let contentTypeInfo = try itemsAsDictionaries.contentTypeInfo(at: entriesJSONContainer.currentIndex)
+
+            // For includes, if the type of this entry isn't defined by the user, we skip serialization.
+            if let type = contentTypes[contentTypeInfo.id] {
+                let entryModellable = try type.popEntryDecodable(from: &entriesJSONContainer)
+                entries.append(entryModellable)
+            } else {
+                // Another annoying workaround: there is no mechanism for incrementing the `currentIndex` of an
+                // UnkeyedCodingContainer other than actually decoding an item
+                _ = try? entriesJSONContainer.decode(EmptyDecodable.self)
+            }
+        }
+        return entries
     }
 }

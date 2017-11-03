@@ -49,7 +49,6 @@ public class Entry: LocalizableResource {
 
                     // The conversion from dictionary representation should only ever happen once
                     let alreadyResolvedLinks = mixedLinks.filter { $0.isResolved == true }
-                    assert(alreadyResolvedLinks.count == 0)
 
                     let unresolvedLinks = mixedLinks.filter { $0.isResolved == false }
                     let newlyResolvedLinks = unresolvedLinks.map { $0.resolve(against: includedEntries, and: includedAssets) }

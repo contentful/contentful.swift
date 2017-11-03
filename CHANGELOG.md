@@ -10,7 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 ## Table of contents
 
 #### 1.x Releases
-- `1.0.0-beta` Releases - [1.0.0-beta1](#100-beta1)
+- `1.0.0-betax` Releases - [1.0.0-beta1](#100-beta1) | [1.0.0-beta2](#100-beta2)
 
 #### 0.x Releases
 - `0.10.x` Releases - [0.11.0](#0110)
@@ -22,6 +22,16 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 - `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041)
 - `0.3.x` Releases - [0.3.0](#030) | [0.3.1](#031)
+
+---
+
+## [`1.0.0-beta2`](https://github.com/contentful/contentful.swift/releases/tag/1.0.0-beta2)
+Released on 2017-11-03
+
+#### Fixed
+- Deprecation warnings that appeared starting with Xcode9.1
+- Incorrect assertion that asserted that all link were resolved since it is possible for unresolvable links to retured from CDA
+- If an entry was of a content type not known to the `Client`, the SDK would enter an infinite loop.
 
 ---
 

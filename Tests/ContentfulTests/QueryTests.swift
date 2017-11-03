@@ -93,42 +93,13 @@ final class Dog: EntryDecodable, ResourceQueryable {
     }
 }
 
-class Human: EntryDecodable, ResourceQueryable {
-
-    static let contentTypeId = "human"
-
-    let sys: Sys
-    let name: String?
-    let description: String?
-    let likes: [String]?
-
-    var image: Asset?
-
-    public required init(from decoder: Decoder) throws {
-        sys             = try decoder.sys()
-        let fields      = try decoder.contentfulFieldsContainer(keyedBy: Human.Fields.self)
-        name            = try fields.decode(String.self, forKey: .name)
-        description     = try fields.decode(String.self, forKey: .description)
-        likes           = try fields.decode(Array<String>.self, forKey: .likes)
-
-        try fields.resolveLink(forKey: .image, decoder: decoder) { [weak self] linkedImage in
-            self?.image = linkedImage as? Asset
-        }
-    }
-
-    enum Fields: String, CodingKey {
-        case name, description, likes, image
-    }
-}
-
 class QueryTests: XCTestCase {
 
     static let client: Client = {
         let contentTypeClasses: [EntryDecodable.Type] = [
             Cat.self,
             Dog.self,
-            City.self,
-            Human.self
+            City.self
         ]
         return TestClientFactory.testClient(withCassetteNamed: "QueryTests", contentTypeClasses: contentTypeClasses)
     }()
@@ -193,7 +164,8 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let response):
                 let entries = response.items
-                expect(entries.count).to(equal(10))
+                // We didn't decode the "human" content type so only 9 decoded entries should be returned instead of 10
+                expect(entries.count).to(equal(9))
 
                 if let cat = entries.first as? Cat, let bestFriend = cat.bestFriend {
                     expect(bestFriend.name).to(equal("Nyan Cat"))

@@ -44,13 +44,13 @@ class ClientConfigurationTests: XCTestCase {
         // First test the regex itself
         for validVersionString in ["0.10.0", "10.3.2-RC", "10.2.0-beta1", "0.4.79-alpha"] {
             // expect 1 matc
-            let matches = versionMatchingRegex.matches(in: validVersionString, options: [], range: NSRange(location: 0, length: validVersionString.characters.count))
+            let matches = versionMatchingRegex.matches(in: validVersionString, options: [], range: NSRange(location: 0, length: validVersionString.count))
             expect(matches.count).to(equal(1))
         }
 
         for invalidVersionString in ["0..9","0.a.9", "9.1", "0.10.9-", "0.10.9-ri", "0.10.9-RCHU"] {
             // expect 0 matches
-            let matches = versionMatchingRegex.matches(in: invalidVersionString, options: [], range: NSRange(location: 0, length: invalidVersionString.characters.count))
+            let matches = versionMatchingRegex.matches(in: invalidVersionString, options: [], range: NSRange(location: 0, length: invalidVersionString.count))
             expect(matches.count).to(equal(0))
         }
 
@@ -63,14 +63,14 @@ class ClientConfigurationTests: XCTestCase {
         #endif
 
         let regex = try! NSRegularExpression(pattern: "sdk contentful.swift/\(onlyVersionNumberRegexString); platform Swift/4.0; os \(platform)/\(osVersionString);" , options: [])
-        let matches = regex.matches(in: userAgentString, options: [], range: NSRange(location: 0, length: userAgentString.characters.count))
+        let matches = regex.matches(in: userAgentString, options: [], range: NSRange(location: 0, length: userAgentString.count))
         expect(matches.count).to(equal(1))
 
         let client = Client(spaceId: "", accessToken: "", clientConfiguration: clientConfiguration)
 
         if let userAgent = client.urlSession.configuration.httpAdditionalHeaders?["X-Contentful-User-Agent"] as? String {
             let regex = try! NSRegularExpression(pattern: "sdk contentful.swift/\(onlyVersionNumberRegexString); platform Swift/4.0; os \(platform)/\(osVersionString);" , options: [])
-            let matches = regex.matches(in: userAgent, options: [], range: NSRange(location: 0, length: userAgent.characters.count))
+            let matches = regex.matches(in: userAgent, options: [], range: NSRange(location: 0, length: userAgent.count))
             expect(matches.count).to(equal(1))
         } else {
             fail("User agent should be set")
@@ -79,7 +79,7 @@ class ClientConfigurationTests: XCTestCase {
         client.persistenceIntegration = FakePersistenceIntegration()
         if let userAgent = client.urlSession.configuration.httpAdditionalHeaders?["X-Contentful-User-Agent"] as? String {
             let regex = try! NSRegularExpression(pattern: "sdk contentful.swift/\(onlyVersionNumberRegexString); platform Swift/4.0; os \(platform)/\(osVersionString); integration fake-integration/1.0.0;" , options: [])
-            let matches = regex.matches(in: userAgent, options: [], range: NSRange(location: 0, length: userAgent.characters.count))
+            let matches = regex.matches(in: userAgent, options: [], range: NSRange(location: 0, length: userAgent.count))
             expect(matches.count).to(equal(1))
         } else {
             fail("User agent should be set")
