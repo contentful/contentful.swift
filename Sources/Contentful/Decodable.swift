@@ -245,12 +245,12 @@ internal extension KeyedDecodingContainer {
         var dictionary = Dictionary<String, Any>()
 
         for key in allKeys {
-            if let intValue = try? decode(Int.self, forKey: key) {
-                dictionary[key.stringValue] = intValue
+            if let boolValue = try? decode(Bool.self, forKey: key) {
+                dictionary[key.stringValue] = boolValue
             } else if let stringValue = try? decode(String.self, forKey: key) {
                 dictionary[key.stringValue] = stringValue
-            } else if let boolValue = try? decode(Bool.self, forKey: key) {
-                dictionary[key.stringValue] = boolValue
+            } else if let intValue = try? decode(Int.self, forKey: key) {
+                dictionary[key.stringValue] = intValue
             } else if let doubleValue = try? decode(Double.self, forKey: key) {
                 dictionary[key.stringValue] = doubleValue
             }
