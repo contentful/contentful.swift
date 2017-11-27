@@ -133,7 +133,7 @@ pod 'Contentful'
 You can specify a specific version of Contentful depending on your needs. To learn more about operators for dependency versioning within a Podfile, see the [CocoaPods doc on the Podfile][7].
 
 ```ruby
-pod 'Contentful', '~> 1.0.0-beta1' 
+pod 'Contentful', '~> 1.0.0-beta3' 
 ```
 
 Note that for Swift 3 support (contentful.swift versions [`0.3.0` - `0.9.3`]) you will need to add a post-install script to your Podfile if installing with Cocoapods:
@@ -153,7 +153,7 @@ end
 You can also use [Carthage][8] for integration by adding the following to your `Cartfile`:
 
 ```
-github "contentful/contentful.swift" ~> 1.0.0-beta1
+github "contentful/contentful.swift" ~> 1.0.0-beta3
 ```
 
 ## License
