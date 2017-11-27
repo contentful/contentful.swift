@@ -41,6 +41,7 @@ class SingleRecord: EntryDecodable, ResourceQueryable {
     var linkField: LinkClass?
 
     var arrayLinkField: [LinkClass]?
+    var assetsArrayLinkField: [Asset]?
 
     public required init(from decoder: Decoder) throws {
         sys             = try decoder.sys()
@@ -54,10 +55,14 @@ class SingleRecord: EntryDecodable, ResourceQueryable {
         try fields.resolveLinksArray(forKey: .arrayLinkField, decoder: decoder) { [weak self] arrayOfLinks in
             self?.arrayLinkField = arrayOfLinks as? [LinkClass]
         }
+
+        try fields.resolveLinksArray(forKey: .assetsArrayLinkField, decoder: decoder) { [weak self] assetsArray in
+            self?.assetsArrayLinkField = assetsArray as? [Asset]
+        }
     }
 
     enum Fields: String, CodingKey {
-        case textBody, arrayLinkField, linkField
+        case textBody, arrayLinkField, linkField, assetsArrayLinkField
     }
 }
 
@@ -161,5 +166,30 @@ class LinkResolverTests: XCTestCase {
         }
         self.waitForExpectations(timeout: 10.0, handler: nil)
     }
-}
 
+    func testEntryLinkingToAssetsArrayDoesResolveLinks() {
+        let expectation = self.expectation(description: "Entry linking to assets array can resolve link")
+
+
+        let query = QueryOn<SingleRecord>.where(sys: .id, .equals("2JFSeiPTZYm4goMSUeYSCU"))
+
+        LinkResolverTests.client.fetchMappedEntries(matching: query) { result in
+            switch result {
+            case .success(let arrayResponse):
+                let records = arrayResponse.items
+                expect(records.count).to(equal(1))
+                if let record = records.first, record.id == "2JFSeiPTZYm4goMSUeYSCU" {
+                    expect(record.assetsArrayLinkField).toNot(beNil())
+                    expect(record.assetsArrayLinkField?.count).to(equal(2))
+                    expect(record.assetsArrayLinkField?.first?.id).to(equal("6Wsz8owhtCGSICg44IUYAm"))
+                } else {
+                    fail("Expected an array of length 1 with a an entry with id '2JFSeiPTZYm4goMSUeYSCU'")
+                }
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+        self.waitForExpectations(timeout: 10.0, handler: nil)
+    }
+}
