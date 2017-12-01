@@ -11,9 +11,10 @@
 [![Coverage Status](https://img.shields.io/coveralls/contentful/contentful.swift.svg)](https://coveralls.io/github/contentful/contentful.swift)
 [![codebeat badge](https://codebeat.co/badges/6ebc67e8-29ca-459f-a4b7-b32a84fa9074)](https://codebeat.co/projects/github-com-contentful-contentful-swift)
 
-Swift SDK for [Contentful's][1] Content Delivery API.
+Swift SDK for the [Contentful][1] Content Delivery API.
 
-[Contentful][1] is a content management platform for web applications, mobile apps and connected devices. It allows you to create, edit & manage content in the cloud and publish it anywhere via powerful API. Contentful offers tools for managing editorial teams and enabling cooperation between organizations.
+[Contentful][1] provides a content infrastructure for digital teams to power content in websites, apps, and devices. Unlike a CMS, Contentful was built to integrate with the modern software stack. It offers a central hub for structured content, powerful management and delivery APIs, and a customizable web app that enable developers and content creators to ship digital products faster.
+
 
 However, it provides a more usable API than the [Objective-C SDK][4] and has support for more API features. It is recommended to use contentful.swift over contentful.objc as future development at Contentful will focus on Swift rather than Objective-C. However, if your project must utilize Contentful's [Content Managamement API][11], Objective-C is the only  language supported at the moment. See [ContentfulManagementAPI at Cocoapods.org][12] for more information.
 
