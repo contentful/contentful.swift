@@ -63,6 +63,10 @@ public extension String {
             throw SDKError.invalidURL(string: urlString)
         }
 
+        if urlComponents.scheme == nil {
+            urlComponents.scheme = "https"
+        }
+
         urlComponents.queryItems = try imageOptions.flatMap { option in
             try option.urlQueryItems()
         }
