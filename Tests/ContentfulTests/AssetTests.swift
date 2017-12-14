@@ -42,8 +42,6 @@ class AssetTests: XCTestCase {
             case let .success(asset):
                 expect(asset.sys.id).to(equal("nyancat"))
                 expect(asset.sys.type).to(equal("Asset"))
-                expect(asset.file?.details?.imageInfo?.width).to(equal(250.0))
-                expect(asset.file?.details?.imageInfo?.height).to(equal(250.0))
                 expect(url(asset).absoluteString).to(equal("https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png"))
             case let .error(error):
                 fail("\(error)")
