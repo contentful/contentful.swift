@@ -81,8 +81,28 @@ public class Asset: LocalizableResource, ResourceQueryable {
             public let imageInfo: ImageInfo?
 
             public struct ImageInfo: Decodable {
-                let width: Double
-                let height: Double
+                public let width: Double
+                public let height: Double
+                
+                public init(from decoder: Decoder) throws {
+                    let container = try decoder.container(keyedBy: CodingKeys.self)
+                    width         = try container.decode(Double.self, forKey: .width)
+                    height        = try container.decode(Double.self, forKey: .height)
+                }
+                
+                private enum CodingKeys: String, CodingKey {
+                    case width, height
+                }
+            }
+            
+            public init(from decoder: Decoder) throws {
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                size          = try container.decode(Int.self, forKey: .size)
+                imageInfo     = try container.decode(ImageInfo.self, forKey: .image)
+            }
+            
+            private enum CodingKeys: String, CodingKey {
+                case size, image
             }
         }
 
