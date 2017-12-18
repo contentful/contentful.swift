@@ -132,7 +132,7 @@ extension Date: QueryableRange {
  Small struct to store location coordinates. This is used in preferences over CoreLocation types to avoid
  extra linking requirements for the SDK.
  */
-public struct Location: Decodable {
+@objc public class Location: NSObject, Decodable {
 
     public let latitude: Double
     public let longitude: Double
@@ -142,7 +142,7 @@ public struct Location: Decodable {
         self.longitude = longitude
     }
 
-    public init(from decoder: Decoder) throws {
+    public required init(from decoder: Decoder) throws {
         let container   = try decoder.container(keyedBy: CodingKeys.self)
         latitude        = try container.decode(Double.self, forKey: .latitude)
         longitude       = try container.decode(Double.self, forKey: .longitude)
