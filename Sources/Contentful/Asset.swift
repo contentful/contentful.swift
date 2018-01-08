@@ -58,6 +58,7 @@ public class Asset: LocalizableResource, ResourceQueryable {
         return value
     }
 
+    /// Metadata describing underlying media file.
     public struct FileMetadata: Decodable {
 
         /// Original filename of the file.
@@ -73,6 +74,7 @@ public class Asset: LocalizableResource, ResourceQueryable {
         /// If the media file is still being processed, as the final stage of uploading to your space, this property will be nil.
         public let url: URL?
 
+        /// The size and dimensions of the underlying media file if it is an image.
         public struct Details: Decodable {
             /// The size of the file in bytes.
             public let size: Int
@@ -83,24 +85,24 @@ public class Asset: LocalizableResource, ResourceQueryable {
             public struct ImageInfo: Decodable {
                 public let width: Double
                 public let height: Double
-                
+
                 public init(from decoder: Decoder) throws {
                     let container = try decoder.container(keyedBy: CodingKeys.self)
                     width         = try container.decode(Double.self, forKey: .width)
                     height        = try container.decode(Double.self, forKey: .height)
                 }
-                
+
                 private enum CodingKeys: String, CodingKey {
                     case width, height
                 }
             }
-            
+
             public init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
                 size          = try container.decode(Int.self, forKey: .size)
                 imageInfo     = try container.decode(ImageInfo.self, forKey: .image)
             }
-            
+
             private enum CodingKeys: String, CodingKey {
                 case size, image
             }

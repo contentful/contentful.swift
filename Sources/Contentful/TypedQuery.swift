@@ -255,7 +255,8 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
      - Parameter filterQuery: The optional filter query applied to the linked objects which are being searched.
      set on the `Client` instance is used.
      */
-    @discardableResult public func `where`<LinkType>(linkAtField fieldsKey: EntryType.Fields, matches linkQuery: LinkQuery<LinkType>) -> QueryOn<EntryType> {
+    @discardableResult public func `where`<LinkType>(linkAtField fieldsKey: EntryType.Fields,
+                                                     matches linkQuery: LinkQuery<LinkType>) -> QueryOn<EntryType> {
 
         parameters["fields.\(fieldsKey.stringValue).sys.contentType.sys.id"] = LinkType.contentTypeId
 
