@@ -14,6 +14,8 @@ import Foundation
 public struct QueryParameter {
 
     public static let contentType      = "content_type"
+    public static let linksToEntry     = "links_to_entry"
+    public static let linksToAsset     = "links_to_asset"
     public static let select           = "select"
     public static let order            = "order"
     public static let limit            = "limit"
@@ -695,6 +697,56 @@ public extension EntryQuery {
 
         let filterParameterName = "fields.\(linkingFieldName).\(targetKeyPath)\(operation.string)"
         self.parameters[filterParameterName] = operation.values
+        return self
+    }
+
+    /**
+     Static method for creating a query that will search for entries that have a field linking to
+     another entry with a specific id.
+
+     - Parameter entryId: The identifier of the entry which you want to find incoming links entries for.
+     - Returns: A newly initialized Query which will search for incoming links on a specific entry.
+     */
+    public static func `where`(linksToEntryWithId entryId: String) -> Self {
+        let query = Self()
+        query.where(linksToEntryWithId: entryId)
+        return query
+    }
+
+    /**
+     Instance method for creating a query that will search for entries that have a field linking to
+     another entry with a specific id.
+
+     - Parameter entryId: The identifier of the entry which you want to find incoming links for.
+     - Returns: A reference to the receiving query to enable chaining.
+     */
+    @discardableResult public func `where`(linksToEntryWithId entryId: String) -> Self {
+        self.parameters[QueryParameter.linksToEntry] = entryId
+        return self
+    }
+
+    /**
+     Static method for creating a query that will search for entries that have a field linking to
+     an asset with a specific id.
+
+     - Parameter assetId: The identifier of the asset which you want to find incoming links for.
+     - Returns: A newly initialized Query which will search for incoming links on a specific asset.
+     */
+    public static func `where`(linksToAssetWithId assetId: String) -> Self {
+        let query = Self()
+        query.where(linksToAssetWithId: assetId)
+        return query
+    }
+
+    /**
+     Static method for creating a query that will search for entries that have a field linking to
+     an asset with a specific id.
+
+     - Parameter assetId: The identifier of the asset which you want to find incoming links for.
+     - Returns: A reference to the receiving query to enable chaining.
+     */
+    @discardableResult public func `where`(linksToAssetWithId assetId: String) -> Self {
+        self.parameters[QueryParameter.linksToAsset] = assetId
         return self
     }
 }
