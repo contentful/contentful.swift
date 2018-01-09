@@ -118,19 +118,19 @@ public class APIError: Decodable, Error, CustomDebugStringConvertible {
     /// The identifier of the request, can be useful when making support requests.
     public let requestId: String!
 
-    // The HTTP status code.
-    internal var statusCode: Int!
+    /// The HTTP status code.
+    public var statusCode: Int!
 
-    internal let details: Details?
+    public let details: Details?
 
-    internal struct Details: Decodable {
+    public struct Details: Decodable {
 
-        internal let errors: [Details.Error]
+        public let errors: [Details.Error]
 
-        internal struct Error: Decodable {
-            internal let name: String
-            internal let path: [String]
-            internal let details: String
+        public struct Error: Decodable {
+            public let name: String
+            public let path: [String]
+            public let details: String
         }
     }
 
