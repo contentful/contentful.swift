@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D001E60200423C700AC5A4C /* PersistenceIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D001E5F200423C700AC5A4C /* PersistenceIntegrationTests.swift */; };
+		5D001E61200423C700AC5A4C /* PersistenceIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D001E5F200423C700AC5A4C /* PersistenceIntegrationTests.swift */; };
+		5D001E62200423C700AC5A4C /* PersistenceIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D001E5F200423C700AC5A4C /* PersistenceIntegrationTests.swift */; };
 		A10FF9D21BBB2E5F001AA4E9 /* JSONDecodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2E3661BBAD06000814D63 /* JSONDecodingTests.swift */; };
 		A10FF9D31BBB32FD001AA4E9 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15193AD1BB9236300FB83CD /* Asset.swift */; };
 		A10FF9D51BBB3676001AA4E9 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10FF9D41BBB3676001AA4E9 /* Error.swift */; };
@@ -236,6 +239,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5D001E5F200423C700AC5A4C /* PersistenceIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceIntegrationTests.swift; sourceTree = "<group>"; };
 		A10FF9D41BBB3676001AA4E9 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Error.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A10FF9D61BBB3753001AA4E9 /* Data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Data; sourceTree = "<group>"; };
 		A10FF9DB1BBB4692001AA4E9 /* Field.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Field.swift; sourceTree = "<group>"; };
@@ -474,6 +478,7 @@
 				ED9102671E65AE880076FDBD /* DVRRecordings */,
 				A10FF9D61BBB3753001AA4E9 /* Data */,
 				A19C74421C47A812005334AD /* AssetTests.swift */,
+				5D001E5F200423C700AC5A4C /* PersistenceIntegrationTests.swift */,
 				ED5F8F951F94B8C300C86411 /* EntryTests.swift */,
 				ED52DB3F1EE94C8E00225140 /* RateLimitTests.swift */,
 				ED1638C41ED5CA6D009BAA9F /* ImageTests.swift */,
@@ -999,6 +1004,7 @@
 				ED1638C51ED5CA6D009BAA9F /* ImageTests.swift in Sources */,
 				ED52DB401EE94C8E00225140 /* RateLimitTests.swift in Sources */,
 				A114BBC31C50EA3200DE6679 /* SyncTests.swift in Sources */,
+				5D001E60200423C700AC5A4C /* PersistenceIntegrationTests.swift in Sources */,
 				A19C743F1C47A7F5005334AD /* ContentTypeTests.swift in Sources */,
 				ED02BC611E7047B900BAB2CA /* QueryTests.swift in Sources */,
 				ED2E03E71F97608A006422A6 /* EntryDecodableLinkResolutionTests.swift in Sources */,
@@ -1020,6 +1026,7 @@
 				EDA690901F43187B00581FC6 /* AssetTests.swift in Sources */,
 				EDA690941F43187B00581FC6 /* ClientConfigurationTests.swift in Sources */,
 				EDA6909A1F43187B00581FC6 /* SyncTests.swift in Sources */,
+				5D001E61200423C700AC5A4C /* PersistenceIntegrationTests.swift in Sources */,
 				EDA690921F43187B00581FC6 /* ImageTests.swift in Sources */,
 				EDA690971F43187B00581FC6 /* JSONDecodingTests.swift in Sources */,
 				ED2E03E81F97608A006422A6 /* EntryDecodableLinkResolutionTests.swift in Sources */,
@@ -1041,6 +1048,7 @@
 				EDA6909C1F43187C00581FC6 /* AssetTests.swift in Sources */,
 				EDA690A01F43187C00581FC6 /* ClientConfigurationTests.swift in Sources */,
 				EDA690A61F43187C00581FC6 /* SyncTests.swift in Sources */,
+				5D001E62200423C700AC5A4C /* PersistenceIntegrationTests.swift in Sources */,
 				EDA6909E1F43187C00581FC6 /* ImageTests.swift in Sources */,
 				EDA690A31F43187C00581FC6 /* JSONDecodingTests.swift in Sources */,
 				ED2E03E91F97608A006422A6 /* EntryDecodableLinkResolutionTests.swift in Sources */,

@@ -10,7 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 ## Table of contents
 
 #### 1.x Releases
-- `1.0.0-betax` Releases - [1.0.0-beta1](#100-beta1) | [1.0.0-beta2](#100-beta2) | [1.0.0-beta3](#100-beta3) | [1.0.0-beta4](#100-beta4)
+- `1.0.0-betax` Releases - [1.0.0-beta1](#100-beta1) | [1.0.0-beta2](#100-beta2) | [1.0.0-beta3](#100-beta3) | [1.0.0-beta4](#100-beta4) | [1.0.0-beta5](#100-beta5)
 
 #### 0.x Releases
 - `0.10.x` Releases - [0.11.0](#0110)
@@ -25,12 +25,23 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 
 ---
 
+## [`1.0.0-beta5`](https://github.com/contentful/contentful.swift/releases/tag/1.0.0-beta5)
+Released on 2017-01-09
+
+#### Added
+- Instance method for mutating a query by appending a `LinkQuery`
+
+#### Fixed
+- When generating a url from the helper methods that append `ImageOptions`, the 'https' scheme will always be applied.
+- The `Location` type is now an Objective-C that conforms to NSCoding class so that it may be stored in CoreData as an attribute on an `NSManagedObject`
+  
+---
+
 ## [`1.0.0-beta4`](https://github.com/contentful/contentful.swift/releases/tag/1.0.0-beta4)
 Released on 2017-12-19
 
 #### Fixed
 - Accessibility identifiers for the `width` and `height` properties of the `ImageInfo` for an `Asset` are now public so they can be used. Thanks to [@ErikLuimes](https://github.com/ErikLuimes) for the pull request: [#157](https://github.com/contentful/contentful.swift/pull/157)
-- The `Location` type is now an Objective-C class so that it may be stored in CoreData as an attribute on an `NSManagedObject`
 
 ---
 
