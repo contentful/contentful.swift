@@ -1,0 +1,31 @@
+{
+  "sys": {
+    "space": {
+      "sys": {
+        "type": "Link",
+        "linkType": "Space",
+        "id": "cfexampleapi"
+      }
+    },
+    "id": "ge1xHyH3QOWucKWCCAgIG",
+    "type": "Entry",
+    "createdAt": "2014-02-21T13:43:23.210Z",
+    "updatedAt": "2014-02-21T13:43:23.210Z",
+    "revision": 1,
+    "contentType": {
+      "sys": {
+        "type": "Link",
+        "linkType": "ContentType",
+        "id": "1t9IbcfdCk6m04uISSsaIK"
+      }
+    },
+    "locale": "en-US"
+  },
+  "fields": {
+    "name": "Paris",
+    "center": {
+      "lon": 2.3522219000000177,
+      "lat": 48.856614
+    }
+  }
+}

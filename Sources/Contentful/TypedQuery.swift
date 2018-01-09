@@ -174,7 +174,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
     }
 
     /**
-     Static method for creating a new QueryOn with a select operation: an operation in which only
+     Instance method for creating a new QueryOn with a select operation: an operation in which only
      the fields specified in the fieldNames property will be returned in the JSON response. This variation for initializing guarantees correct query contruction
      by utilizing the Fields type associated with your type conforming to ResourceQueryable.
      The "sys" dictionary is always requested by the SDK.
@@ -234,6 +234,38 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
             query.parameters[filterParameterName] = linkQuery.operation.values
         }
         return query
+    }
+
+    /**
+     Instance method for for performing searches where Linked objects at the specified linking field match the filtering query.
+     For instance, if you want to query all Entry's of type "cat" where cat's linked via the "bestFriend" field have names that match "Happy Cat"
+     the code would look like the following:
+
+     ```
+     let linkQuery = LinkQuery<Cat>.where(field: .name, .matches("Happy Cat"))
+     let query = QueryOn<Cat>(whereLinkAtField: .bestFriend, matches: linkQuery)
+     client.fetchMappedEntries(with: query).observable.then { catsWithHappyCatAsBestFriendResponse in
+     let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
+     // Do stuff with catsWithHappyCatAsBestFriend
+     }
+     ```
+
+     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references>
+     - Parameter fieldNameForLink: The name of the property which contains a link to another Entry.
+     - Parameter filterQuery: The optional filter query applied to the linked objects which are being searched.
+     set on the `Client` instance is used.
+     */
+    @discardableResult public func `where`<LinkType>(linkAtField fieldsKey: EntryType.Fields,
+                                                     matches linkQuery: LinkQuery<LinkType>) -> QueryOn<EntryType> {
+
+        parameters["fields.\(fieldsKey.stringValue).sys.contentType.sys.id"] = LinkType.contentTypeId
+
+        // If propertyName isn't unrwrapped, the string isn't constructed correctly for some reason.
+        if let propertyName = linkQuery.propertyName {
+            let filterParameterName = "fields.\(fieldsKey.stringValue).\(propertyName)\(linkQuery.operation.string)"
+            parameters[filterParameterName] = linkQuery.operation.values
+        }
+        return self
     }
 }
 
