@@ -359,4 +359,42 @@ class EntryTests: XCTestCase {
             expect(($0.items.first?.fields["bestFriend"] as? Link)?.entry?.fields["name"] as? String).to(equal("Happy Cat"))
         }
     }
+
+    func testIncomingLinksToAsset() {
+        let query = Query.where(linksToAssetWithId: "happycat")
+        let expectation = self.expectation(description: "Will return entries pointing to the happy cat image")
+
+        EntryTests.client.fetchEntries(matching: query) { result in
+            switch result {
+            case .success(let entriesArrayResponse):
+                expect(entriesArrayResponse.items.count).to(equal(1))
+                expect(entriesArrayResponse.items.first?.fields["name"] as? String).to(equal("Happy Cat"))
+                expect((entriesArrayResponse.items.first?.fields["image"] as? Link)?.asset?.id).to(equal("happycat"))
+            case .error(let error):
+                fail("Should not return an error \(error)")
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testIncomingLinksToEntry() {
+        let query = Query.where(linksToEntryWithId: "happycat")
+
+        let expectation = self.expectation(description: "Will return entries likning to happy cat ")
+
+        EntryTests.client.fetchEntries(matching: query) { result in
+            switch result {
+            case .success(let entriesArrayResponse):
+                expect(entriesArrayResponse.items.count).to(equal(1))
+                expect(entriesArrayResponse.items.first?.fields["name"] as? String).to(equal("Nyan Cat"))
+                expect((entriesArrayResponse.items.first?.fields["bestFriend"] as? Link)?.entry?.id).to(equal("happycat"))
+            case .error(let error):
+                fail("Should not return an error \(error)")
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+
+    }
 }
