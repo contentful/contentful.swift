@@ -139,7 +139,9 @@ class EntryTests: XCTestCase {
 
     func testFetchEntryWithArrayOfLinkedEntries() {
         // JPs_product space
-        let client = Client(spaceId: "p35j0pp5t9t8", accessToken: "6a1664bde31fa797778838ded3e755ab5e4834af1abdf2007c816086caf172c4")
+        let client = Client(spaceId: "p35j0pp5t9t8",
+                            accessToken: "6a1664bde31fa797778838ded3e755ab5e4834af1abdf2007c816086caf172c4")
+
         let expectation = self.expectation(description: "Fetch single entry expectation")
 
         client.fetchEntry(id: "5KsDBWseXY6QegucYAoacS") { result in

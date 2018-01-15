@@ -16,7 +16,7 @@ class PersistenceIntegrationTests: XCTestCase {
 
     func testSerializingLocationWithNSCdoing() {
         do {
-            let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext
+            let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext()
             let spaceJSONData = JSONDecodingTests.jsonData("space")
             let space = try! jsonDecoder.decode(Space.self, from: spaceJSONData)
             Client.update(jsonDecoder, withLocalizationContextFrom: space)

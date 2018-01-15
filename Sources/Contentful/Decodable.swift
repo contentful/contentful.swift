@@ -74,11 +74,11 @@ public extension Client {
      decoder won't have the necessary localization content required to properly deserialize resources
      returned in the multi-locale format.
      */
-    public static var jsonDecoderWithoutLocalizationContext: JSONDecoder = {
+    public static func jsonDecoderWithoutLocalizationContext() -> JSONDecoder {
         let jsonDecoder = JSONDecoder()
         jsonDecoder.dateDecodingStrategy = .formatted(Date.Formatter.iso8601)
         return jsonDecoder
-    }()
+    }
 
     /**
      Updates the JSONDecoder provided by the client with the localization context necessary to deserialize

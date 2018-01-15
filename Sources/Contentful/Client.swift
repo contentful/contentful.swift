@@ -91,7 +91,7 @@ open class Client {
         self.spaceId = spaceId
         self.clientConfiguration = clientConfiguration
 
-        self.jsonDecoder = Client.jsonDecoderWithoutLocalizationContext
+        self.jsonDecoder = Client.jsonDecoderWithoutLocalizationContext()
         if let contentTypeClasses = contentTypeClasses {
             var contentTypes = [ContentTypeId: EntryDecodable.Type]()
             for type in contentTypeClasses {
