@@ -32,9 +32,26 @@ However, it provides a more usable API than the [Objective-C SDK][4] and has sup
 
 ## Usage
 
+First, grab credentials for your Contentful space by navigating to the "APIs" section of the Contentful Web App and create a new set of access tokens for the Delivery and Preview APIs. Pass your space's id and delivery access token into the initializer like so:
+
 ```swift
-let client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1")
-client.fetchEntry("nyancat") { (result: Result<Entry>) in
+let client = Client(spaceId: "cfexampleapi", 
+                    accessToken: "b4c0n73n7fu1")
+```
+
+to access the Content Preview API, use your preview access token and set your client configuration to use preview:
+
+```swift
+var clientConfiguration = ClientConfiguration()
+clientConfiguration.previewMode = true
+
+let client = Client(spaceId: "cfexampleapi", 
+                    accessToken: "e5e8d4c5c122cf28fc1af3ff77d28bef78a3952957f15067bbc29f2f0dde0b50",
+                    clientConfiguration: clientConfiguration)
+
+```
+
+client.fetchEntry(id: "nyancat") { (result: Result<Entry>) in
     switch result {
         case .success(entry):
             print(entry)
@@ -49,7 +66,8 @@ client.fetchEntry("nyancat") { (result: Result<Entry>) in
 The `EntryDecodable` protocol allows you to define types that will be mapped from `Entry`s of the various content types in your Contentful space. When using methods such as:
 
 ```swift
-func fetchMappedEntries(with query: QueryOn<Cat>) { (result: Result<MappedArrayResponse<Cat>>) in
+let query = QueryOn<Cat>.where(field: .color, .equals("gray"))
+func fetchMappedEntries(matching: query) { (result: Result<MappedArrayResponse<Cat>>) in
     guard let cats = result.value?.items else { return }
     print(cats)
 }
