@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 ## Table of contents
 
 #### 1.x Releases
+- `1.0.0` Releases - [1.0.0](#100)
 - `1.0.0-betax` Releases - [1.0.0-beta1](#100-beta1) | [1.0.0-beta2](#100-beta2) | [1.0.0-beta3](#100-beta3) | [1.0.0-beta4](#100-beta4) | [1.0.0-beta5](#100-beta5)
 
 #### 0.x Releases
@@ -22,6 +23,18 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 - `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041)
 - `0.3.x` Releases - [0.3.0](#030) | [0.3.1](#031)
+
+---
+
+## [`1.0.0`](https://github.com/contentful/contentful.swift/releases/tag/1.0.0)
+Released on 2017-01-25
+
+#### Added
+- Support for the new query parameters to find incoming links [to a specific entry](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/links-to-entry) or [to a specific asset](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/links-to-asset) in a space.
+
+#### Fixed
+- Shared `static` localization context on the `Client` which caused issues if a new client connected to a different space was instantiated.
+- HTTP status codes not being exposed.
 
 ---
 
