@@ -1,7 +1,7 @@
 <a href="https://www.contentful.com" target="_blank"><img src="./Resources/contentful-logo.png" alt="Contentful" width="680"/></a>
 
 # contentful.swift
-  
+
 [![Version](https://img.shields.io/cocoapods/v/Contentful.svg?style=flat)](https://cocoapods.org/pods/Contentful)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Swift Package Manager](https://rawgit.com/jlyonsmith/artwork/master/SwiftPackageManager/swiftpackagemanager-compatible.svg)](https://swift.org/package-manager/)
@@ -31,25 +31,29 @@ However, it provides a more usable API than the [Objective-C SDK][4] and has sup
 
 ## Usage
 
-First, grab credentials for your Contentful space by navigating to the "APIs" section of the Contentful Web App and create a new set of access tokens for the Delivery and Preview APIs. Pass your space's id and delivery access token into the initializer like so:
+First, grab credentials for your Contentful space by [navigating to the "APIs" section of the Contentful Web App](https://app.contentful.com/deeplink?link=api).
+If you don't have access tokens for your app, create a new set for the Delivery and Preview APIs.
+Next, pass the id of your space and delivery access token into the initializer like so:
 
 ```swift
-let client = Client(spaceId: "cfexampleapi", 
+let client = Client(spaceId: "cfexampleapi",
                     accessToken: "b4c0n73n7fu1")
 ```
 
-to access the Content Preview API, use your preview access token and set your client configuration to use preview:
+To access the Content Preview API, use your preview access token and set your client configuration to use preview as shown below.
 
 ```swift
 var clientConfiguration = ClientConfiguration()
 clientConfiguration.previewMode = true
 
-let client = Client(spaceId: "cfexampleapi", 
+let client = Client(spaceId: "cfexampleapi",
                     accessToken: "e5e8d4c5c122cf28fc1af3ff77d28bef78a3952957f15067bbc29f2f0dde0b50",
                     clientConfiguration: clientConfiguration)
-
 ```
 
+The `client` should be configured. Let's use it to fetch an entry.
+
+```swift
 client.fetchEntry(id: "nyancat") { (result: Result<Entry>) in
     switch result {
         case .success(entry):
@@ -66,15 +70,16 @@ The `EntryDecodable` protocol allows you to define types that will be mapped fro
 
 ```swift
 let query = QueryOn<Cat>.where(field: .color, .equals("gray"))
+
 func fetchMappedEntries(matching: query) { (result: Result<MappedArrayResponse<Cat>>) in
     guard let cats = result.value?.items else { return }
     print(cats)
 }
 ```
 
-the asynchronously returned result will be an instance of `MappedArrayResponse` in which the generic type parameter is the class you've defined for your content type. If you are using a `Query` that does not restrict the response to contain entries of one content type, you will use methods that return `MixedMappedArrayResponse` instead of `MappedArrayResponse`. The `EntryDecodable` protocol extends the `Decodable` protocol in Swift 4's Foundation standard library. The SDK provides helper methods for resolving relationships between `EntryDecodable`s and also for grabbing values from the fields container in the JSON for each resource.
+The asynchronously returned result will be an instance of `MappedArrayResponse` in which the generic type parameter is the class you've defined for your content type. If you are using a `Query` that does not restrict the response to contain entries of one content type, you will use methods that return `MixedMappedArrayResponse` instead of `MappedArrayResponse`. The `EntryDecodable` protocol extends the `Decodable` protocol in Swift 4's Foundation standard library. The SDK provides helper methods for resolving relationships between `EntryDecodable`s and also for grabbing values from the fields container in the JSON for each resource.
 
-In the above example, `Cat` is a type of our own definition conforming to `EntryDecodable` and `ResourceQueryable`. The source for this model class is below; note the helper methods the SDK adds to Swift 4's `Decoder` type to simplify for parsing Contentfuls JSON.
+In the example above, `Cat` is a type of our own definition conforming to `EntryDecodable` and `ResourceQueryable`. The source for this model class is below; note the helper methods the SDK adds to Swift 4's `Decoder` type to simplify for parsing JSON returned by Contentful.
 
 ```swift
 final class Cat: EntryDecodable, ResourceQueryable {
@@ -103,7 +108,7 @@ final class Cat: EntryDecodable, ResourceQueryable {
             self?.bestFriend = linkedCat as? Cat
         }
     }
-    
+
     enum Fields: String, CodingKey {
         case bestFriend
         case name, color, likes, lives
@@ -151,7 +156,7 @@ pod 'Contentful'
 You can specify a specific version of Contentful depending on your needs. To learn more about operators for dependency versioning within a Podfile, see the [CocoaPods doc on the Podfile][7].
 
 ```ruby
-pod 'Contentful', '~> 1.0.0' 
+pod 'Contentful', '~> 1.0.0'
 ```
 
 Note that for Swift 3 support (contentful.swift versions [`0.3.0` - `0.9.3`]) you will need to add a post-install script to your Podfile if installing with Cocoapods:
@@ -189,4 +194,3 @@ Copyright (c) 2016 Contentful GmbH. See LICENSE for further details.
 [10]: https://github.com/contentful/contentful.swift
 [11]: https://www.contentful.com/developers/docs/references/content-management-api/
 [12]: https://cocoapods.org/pods/ContentfulManagementAPI
-
