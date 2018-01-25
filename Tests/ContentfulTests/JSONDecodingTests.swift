@@ -25,7 +25,7 @@ class JSONDecodingTests: XCTestCase {
     func testDecodingWithoutLocalizationContextThrows() {
         do {
             let assetData = JSONDecodingTests.jsonData("asset")
-            let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext
+            let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext()
             // Reset userInfo state since it's a static var that exists through the test cycle.
             jsonDecoder.userInfo = [CodingUserInfoKey: Any]()
             let _ = try jsonDecoder.decode(Asset.self, from: assetData)
@@ -43,7 +43,7 @@ class JSONDecodingTests: XCTestCase {
 
     func testDecodeAsset() {
         do {
-            let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext
+            let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext()
             let spaceJSONData = JSONDecodingTests.jsonData("space")
             let space = try! jsonDecoder.decode(Space.self, from: spaceJSONData)
             Client.update(jsonDecoder, withLocalizationContextFrom: space)
@@ -64,7 +64,7 @@ class JSONDecodingTests: XCTestCase {
 
     func testDecodeSpaces() {
         do {
-            let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext
+            let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext()
             let spaceJSONData = JSONDecodingTests.jsonData("space")
             let space = try jsonDecoder.decode(Space.self, from: spaceJSONData)
 
@@ -83,7 +83,7 @@ class JSONDecodingTests: XCTestCase {
         do {
             // We must have a space first to pass in locale information.
 
-            let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext
+            let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext()
             let spaceJSONData = JSONDecodingTests.jsonData("space")
             let space = try! jsonDecoder.decode(Space.self, from: spaceJSONData)
             Client.update(jsonDecoder, withLocalizationContextFrom: space)
@@ -105,7 +105,7 @@ class JSONDecodingTests: XCTestCase {
     func testDecodeSyncResponses() {
         do {
 
-            let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext
+            let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext()
             let spaceJSONData = JSONDecodingTests.jsonData("space")
             let space = try! jsonDecoder.decode(Space.self, from: spaceJSONData)
             Client.update(jsonDecoder, withLocalizationContextFrom: space)
@@ -123,7 +123,7 @@ class JSONDecodingTests: XCTestCase {
 
     func testDecodeSyncResponsesWithDeletedAssetIds() {
         do {
-            let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext
+            let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext()
             let syncDeletedAssetData = JSONDecodingTests.jsonData("deleted-asset")
             let syncSpace = try jsonDecoder.decode(SyncSpace.self, from: syncDeletedAssetData)
 
@@ -139,7 +139,7 @@ class JSONDecodingTests: XCTestCase {
     func testDecodeSyncResponsesWithdeletedEntryIds() {
         do {
 
-            let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext
+            let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext()
             let syncDeletedEntryData = JSONDecodingTests.jsonData("deleted")
             let syncSpace = try jsonDecoder.decode(SyncSpace.self, from: syncDeletedEntryData)
 

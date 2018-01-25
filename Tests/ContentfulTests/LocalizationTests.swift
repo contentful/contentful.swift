@@ -14,13 +14,13 @@ import DVR
 struct LocaleFactory {
     static func enUSDefault() -> Contentful.Locale {
         let usLocaleJSONData = JSONDecodingTests.jsonData("en-US-locale")
-        let locale = try! Client.jsonDecoderWithoutLocalizationContext.decode(Contentful.Locale.self, from: usLocaleJSONData)
+        let locale = try! Client.jsonDecoderWithoutLocalizationContext().decode(Contentful.Locale.self, from: usLocaleJSONData)
         return locale
     }
 
     static func klingonWithUSFallback() -> Contentful.Locale {
         let tlhLocaleJSONData = JSONDecodingTests.jsonData("tlh-locale")
-        let locale = try! Client.jsonDecoderWithoutLocalizationContext.decode(Contentful.Locale.self, from: tlhLocaleJSONData)
+        let locale = try! Client.jsonDecoderWithoutLocalizationContext().decode(Contentful.Locale.self, from: tlhLocaleJSONData)
         return locale
     }
 }
