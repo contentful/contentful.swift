@@ -8,13 +8,24 @@
 
 import Foundation
 
-public extension String {
+internal extension String {
 
     /**
      Will make a `URL` from the current `String` instance if possible.
      */
-    public func url() throws -> URL {
-        guard let url = URL(string: self) else { throw SDKError.invalidURL(string: self) }
+    internal func url() throws -> URL {
+        guard var urlComponents = URLComponents(string: self) else {
+            throw SDKError.invalidURL(string: self)
+        }
+
+        // Append https scheme if not present.
+        if urlComponents.scheme == nil {
+            urlComponents.scheme = "https"
+        }
+
+        guard let url = urlComponents.url else {
+            throw SDKError.invalidURL(string: self)
+        }
         return url
     }
 }
