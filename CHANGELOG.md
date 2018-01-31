@@ -10,7 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 ## Table of contents
 
 #### 1.x Releases
-- `1.0.0` Releases - [1.0.0](#100)
+- `1.0.0` Releases - [1.0.0](#100) | [1.0.1](#101)
 - `1.0.0-betax` Releases - [1.0.0-beta1](#100-beta1) | [1.0.0-beta2](#100-beta2) | [1.0.0-beta3](#100-beta3) | [1.0.0-beta4](#100-beta4) | [1.0.0-beta5](#100-beta5)
 
 #### 0.x Releases
@@ -23,6 +23,14 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 - `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041)
 - `0.3.x` Releases - [0.3.0](#030) | [0.3.1](#031)
+
+---
+
+## [`1.0.1`](https://github.com/contentful/contentful.swift/releases/tag/1.0.1)
+Released on 2017-01-31
+
+#### Fixed
+- `String` extension to generate an image url that didn't always prepend the "https" scheme to the url.
 
 ---
 
