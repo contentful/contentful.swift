@@ -154,6 +154,35 @@ class QueryTests: XCTestCase {
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
+    func testQueryReturningClientDefinedModelUsingFields() {
+        let expectation = self.expectation(description: "Select operator expectation")
+        let query = QueryOn<Cat>.select(fieldsNamed: [
+            .bestFriend,
+            .color,
+            .name,
+        ])
+
+        QueryTests.client.fetchMappedEntries(matching: query) { result in
+            switch result {
+            case .success(let catsResponse):
+                let cats = catsResponse.items
+                let nyanCat = cats.first!
+                expect(nyanCat.color).toNot(beNil())
+                expect(nyanCat.name).to(equal("Nyan Cat"))
+                // Test links
+                expect(nyanCat.bestFriend?.name).to(equal("Happy Cat"))
+
+                // Test uniqueness in memory.
+                expect(nyanCat).to(be(nyanCat.bestFriend?.bestFriend))
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
     func testQueryReturningHeterogeneousArray() {
 
         let expectation = self.expectation(description: "Fetch all entries expectation")

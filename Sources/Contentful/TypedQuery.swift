@@ -199,7 +199,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
      - Returns: A reference to the receiving query to enable chaining.
      */
     @discardableResult public func select(fieldsNamed fieldsKeys: [EntryType.Fields]) -> QueryOn<EntryType> {
-        let fieldPaths = fieldsKeys.map { "fields.\($0.stringValue)" }
+        let fieldPaths = fieldsKeys.map { $0.stringValue }
         try! self.select(fieldsNamed: fieldPaths)
         return self
     }
