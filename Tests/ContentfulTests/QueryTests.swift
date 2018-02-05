@@ -468,6 +468,27 @@ class QueryTests: XCTestCase {
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
+    func testQueryAssetsWithSelectUsingFields() {
+        let expectation = self.expectation(description: "Equality operator expectation")
+
+        let query = AssetQuery.where(sys: .id, .equals("1x0xpXu4pSGS4OukSyWGUK"))
+        query.select(fields: [.title])
+
+        QueryTests.client.fetchAssets(matching: query) { result in
+            switch result {
+            case .success(let assetsResponse):
+                let assets = assetsResponse.items
+                expect(assets.count).to(equal(1))
+                expect(assets.first?.sys.id).to(equal("1x0xpXu4pSGS4OukSyWGUK"))
+                expect(assets.first?.fields["title"] as? String).to(equal("Doge"))
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
     func testQueryValidation() {
         let fieldNames = ["sys.contentType.sys.id"]
 

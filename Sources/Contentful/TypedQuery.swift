@@ -341,7 +341,7 @@ public final class AssetQuery: ResourceQuery {
      - Returns: A reference to the receiving query to enable chaining.
      */
     @discardableResult public func select(fields fieldsKeys: [Asset.Fields]) -> AssetQuery {
-        let fieldPaths = fieldsKeys.map { "fields.\($0.stringValue)" }
+        let fieldPaths = fieldsKeys.map { $0.stringValue }
         // Because we're guaranteed the keyPath doesn't have a "." in it, we can force try
         try! self.select(fieldsNamed: fieldPaths)
         return self
