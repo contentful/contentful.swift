@@ -4,7 +4,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) starting from 1.x releases.
 
 ### Merged, but not yet released
-> All recent changes are published
+~~> All recent changes are published~~
+> #### Fixed
+> - Typed queries prepending "fields" two times when using the select operator. Thanks to [@cysp](https://github.com/cysp) for submitting the fix in [#169](https://github.com/contentful/contentful.swift/pull/169).
 ---
 
 ## Table of contents
