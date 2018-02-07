@@ -571,8 +571,8 @@ public extension AbstractResourceQuery {
 
      See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/select-operator>
      - Parameter fieldNames: An array of field names to include in the JSON response.
-     - Throws: Will throw an error if selections go more than 2 levels deep
-     ("fields.bestFriend.sys" is not valid), or if more than 99 properties are selected.
+     - Throws: Will throw an error if selections go more than 1 level deep within the fields container ("bestFriend.sys" is not
+     valid), or if more than 99 properties are selected.
      */
     public static func select(fieldsNamed fieldNames: [FieldName]) throws -> Self {
         let query = Self()
@@ -588,7 +588,7 @@ public extension AbstractResourceQuery {
      Example usage:
 
      ```
-     let query = try! Query().select(fieldsNamed: ["fields.bestFriend", "fields.color", "fields.name"])
+     let query = try! Query().select(fieldsNamed: ["bestFriend", "color", "name"])
      client.fetchEntries(with: query).observable.then { catsResponse in
          let cats = catsResponse.items
          // Do stuff with cats.
@@ -597,8 +597,8 @@ public extension AbstractResourceQuery {
 
      See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/select-operator>
      - Parameter fieldNames: An array of field names to include in the JSON response.
-     - Throws: Will throw an error if property names are not prefixed with `"fields."`, if selections go more than 2 levels deep
-     ("fields.bestFriend.sys" is not valid), or if more than 99 properties are selected.
+     - Throws: Will throw an error if selections go more than 1 level deep within the fields container ("bestFriend.sys" is not
+     valid), or if more than 99 properties are selected.
      - Returns: A reference to the receiving query to enable chaining.
      */
     @discardableResult public func select(fieldsNamed fieldNames: [FieldName]) throws -> Self {
