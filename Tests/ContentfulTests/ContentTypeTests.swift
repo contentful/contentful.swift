@@ -69,7 +69,8 @@ class ContentTypeTests: XCTestCase {
 
         let expectation = self.expectation(description: "can fetch all content types of a space")
 
-        ContentTypeTests.client.fetchContentTypes { result in
+        let query = try! ContentTypeQuery.order(by: Ordering(sys: .id))
+        ContentTypeTests.client.fetchContentTypes(matching: query) { result in
             switch result {
             case let .success(array):
                 expect(array.total).to(equal(4))

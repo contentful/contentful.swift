@@ -16,10 +16,11 @@ class PersistenceIntegrationTests: XCTestCase {
 
     func testSerializingLocationWithNSCdoing() {
         do {
-            let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext()
-            let spaceJSONData = JSONDecodingTests.jsonData("space")
-            let space = try! jsonDecoder.decode(Space.self, from: spaceJSONData)
-            Client.update(jsonDecoder, withLocalizationContextFrom: space)
+            let jsonDecoder = JSONDecoder.withoutLocalizationContext()
+            let localesJSONData = JSONDecodingTests.jsonData("all-locales")
+            let localesResponse = try! jsonDecoder.decode(ArrayResponse<Contentful.Locale>.self, from: localesJSONData)
+            jsonDecoder.update(with: LocalizationContext(locales: localesResponse.items)!)
+
 
             let entryJSONData = JSONDecodingTests.jsonData("entry-with-location")
             let entry = try jsonDecoder.decode(Entry.self, from: entryJSONData)

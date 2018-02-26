@@ -66,3 +66,10 @@ public class Entry: LocalizableResource {
         self.localizableFields = localizableFields
     }
 }
+
+extension Entry: QueryableResource, EndpointAccessible {
+
+    public static let endpoint = Endpoint.entries
+
+    public typealias QueryType = Query
+}

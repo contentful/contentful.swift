@@ -1,0 +1,32 @@
+{
+  "sys": {
+    "type": "Array"
+  },
+  "total": 2,
+  "skip": 0,
+  "limit": 1000,
+  "items": [
+    {
+      "code": "en-US",
+      "name": "English",
+      "default": true,
+      "fallbackCode": null,
+      "sys": {
+        "id": "2oQPjMCL9bQkylziydLh57",
+        "type": "Locale",
+        "version": 1
+      }
+    },
+    {
+      "code": "tlh",
+      "name": "Klingon",
+      "default": false,
+      "fallbackCode": "en-US",
+      "sys": {
+          "id": "3zpZmkZrHTIekHmXgflXaV",
+          "type": "Locale",
+          "version": 0
+      }
+    }
+  ]
+}

@@ -32,8 +32,8 @@ struct TestClientFactory {
             client = Client(spaceId: testSpaceId, accessToken: testAccessToken, clientConfiguration: apiCoverageConfiguration, contentTypeClasses: contentTypeClasses)
         #else
             client = Client(spaceId: testSpaceId, accessToken: testAccessToken, clientConfiguration: clientConfiguration, contentTypeClasses: contentTypeClasses)
-            let dvrSession = DVR.Session(cassetteName: cassetteName, backingSession: client.urlSession)
-            client.urlSession = dvrSession
+//            let dvrSession = DVR.Session(cassetteName: cassetteName, backingSession: client.urlSession)
+//            client.urlSession = dvrSession
         #endif
         return client
     }
@@ -77,59 +77,61 @@ class SpaceTests: XCTestCase {
     }
 }
 
-class PreviewAPITests: XCTestCase {
+//class PreviewAPITests: XCTestCase {
+//
+//    // https://preview.contentful.com/spaces/cfexampleapi?access_token=e5e8d4c5c122cf28fc1af3ff77d28bef78a3952957f15067bbc29f2f0dde0b50 > testClientCanAccessPreviewAPI.response
+//    func testClientCanAccessPreviewAPI() {
+//        var clientConfiguration = Contentful.ClientConfiguration()
+//        clientConfiguration.previewMode = true
+//
+//        let client = Client(spaceId: "cfexampleapi",
+//                            accessToken: "e5e8d4c5c122cf28fc1af3ff77d28bef78a3952957f15067bbc29f2f0dde0b50",
+//                            clientConfiguration: clientConfiguration)
+//
+//        // FIXME:
+////        client.urlSession = DVR.Session(cassetteName: "testClientCanAccessPreviewAPI", backingSession: client.urlSession)
+//
+//        let networkExpectation = expectation(description: "Client can fetch space with preview API")
+//
+//        client.fetchSpace().then {
+//            expect($0.id).to(equal("cfexampleapi"))
+//            networkExpectation.fulfill()
+//            }.error {
+//                fail("\($0)")
+//                networkExpectation.fulfill()
+//        }
+//        waitForExpectations(timeout: 10, handler: nil)
+//    }
+//
+//    // https://preview.contentful.com/spaces/cfexampleapi?access_token=b4c0n73n7fu1 > testClientCantAccessPreviewAPIWithProductionToken.response
+//    func testClientCantAccessPreviewAPIWithProductionToken() {
+//
+//        var clientConfiguration = Contentful.ClientConfiguration()
+//        clientConfiguration.previewMode = true
+//
+//
+//        let client = TestClientFactory.testClient(withCassetteNamed: "testClientCantAccessPreviewAPIWithProductionToken",
+//                                                  accessToken: "b4c0n73n7fu1",
+//                                                  clientConfiguration: clientConfiguration)
+//
+//
+//        let networkExpectation = expectation(description: "Client can't fetch space with wrong token")
+//
+//        client.fetchSpace().then { _ in
+//            fail("expected error not received")
+//            networkExpectation.fulfill()
+//        }.error { error in
+//            if let error = error as? APIError {
+//                expect(error.id).to(equal("AccessTokenInvalid"))
+//            } else {
+//                fail("expected error not received")
+//            }
+//
+//            networkExpectation.fulfill()
+//        }
+//
+//        waitForExpectations(timeout: 19, handler: nil)
+//    }
+//
+//}
 
-    // https://preview.contentful.com/spaces/cfexampleapi?access_token=e5e8d4c5c122cf28fc1af3ff77d28bef78a3952957f15067bbc29f2f0dde0b50 > testClientCanAccessPreviewAPI.response
-    func testClientCanAccessPreviewAPI() {
-        var clientConfiguration = Contentful.ClientConfiguration()
-        clientConfiguration.previewMode = true
-
-        let client = Client(spaceId: "cfexampleapi",
-                            accessToken: "e5e8d4c5c122cf28fc1af3ff77d28bef78a3952957f15067bbc29f2f0dde0b50",
-                            clientConfiguration: clientConfiguration)
-
-        client.urlSession = DVR.Session(cassetteName: "testClientCanAccessPreviewAPI", backingSession: client.urlSession)
-
-        let networkExpectation = expectation(description: "Client can fetch space with preview API")
-
-        client.fetchSpace().then {
-            expect($0.id).to(equal("cfexampleapi"))
-            networkExpectation.fulfill()
-            }.error {
-                fail("\($0)")
-                networkExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 10, handler: nil)
-    }
-
-    // https://preview.contentful.com/spaces/cfexampleapi?access_token=b4c0n73n7fu1 > testClientCantAccessPreviewAPIWithProductionToken.response
-    func testClientCantAccessPreviewAPIWithProductionToken() {
-
-        var clientConfiguration = Contentful.ClientConfiguration()
-        clientConfiguration.previewMode = true
-
-
-        let client = TestClientFactory.testClient(withCassetteNamed: "testClientCantAccessPreviewAPIWithProductionToken",
-                                                  accessToken: "b4c0n73n7fu1",
-                                                  clientConfiguration: clientConfiguration)
-
-
-        let networkExpectation = expectation(description: "Client can't fetch space with wrong token")
-
-        client.fetchSpace().then { _ in
-            fail("expected error not received")
-            networkExpectation.fulfill()
-        }.error { error in
-            if let error = error as? APIError {
-                expect(error.id).to(equal("AccessTokenInvalid"))
-            } else {
-                fail("expected error not received")
-            }
-
-            networkExpectation.fulfill()
-        }
-
-        waitForExpectations(timeout: 19, handler: nil)
-    }
-
-}

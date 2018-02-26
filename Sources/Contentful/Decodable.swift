@@ -24,16 +24,17 @@ import Foundation
  */
 public typealias EntryDecodable = Resource & EntryModellable
 
+
 /// Helper methods for decoding instances of the various types in your content model.
 public extension Decoder {
 
     // The LinkResolver used by the SDK to cache and resolve links.
     internal var linkResolver: LinkResolver {
-        return userInfo[DecoderContext.linkResolverContextKey] as! LinkResolver
+        return userInfo[.linkResolverContextKey] as! LinkResolver
     }
 
     internal var contentTypes: [ContentTypeId: EntryDecodable.Type] {
-        return userInfo[DecoderContext.contentTypesContextKey] as! [ContentTypeId: EntryDecodable.Type]
+        return userInfo[.contentTypesContextKey] as! [ContentTypeId: EntryDecodable.Type]
     }
 
     /// Helper method to extract the sys property of a Contentful resource.
@@ -61,20 +62,20 @@ internal extension EntryModellable where Self: EntryDecodable {
     }
 }
 
-internal struct DecoderContext {
+internal extension CodingUserInfoKey {
     static let linkResolverContextKey = CodingUserInfoKey(rawValue: "linkResolverContext")!
     static let contentTypesContextKey = CodingUserInfoKey(rawValue: "contentTypesContext")!
     static let localizationContextKey = CodingUserInfoKey(rawValue: "localizationContext")!
 }
 
-public extension Client {
+extension JSONDecoder {
 
     /**
      Returns the JSONDecoder owned by the Client. Until the first request to the CDA is made, this
      decoder won't have the necessary localization content required to properly deserialize resources
      returned in the multi-locale format.
      */
-    public static func jsonDecoderWithoutLocalizationContext() -> JSONDecoder {
+    public static func withoutLocalizationContext() -> JSONDecoder {
         let jsonDecoder = JSONDecoder()
         jsonDecoder.dateDecodingStrategy = .formatted(Date.Formatter.iso8601)
         return jsonDecoder
@@ -84,8 +85,8 @@ public extension Client {
      Updates the JSONDecoder provided by the client with the localization context necessary to deserialize
      resources returned in the multi-locale format with the locale information provided by the space.
      */
-    public static func update(_ jsonDecoder: JSONDecoder, withLocalizationContextFrom space: Space?) {
-        jsonDecoder.userInfo[DecoderContext.localizationContextKey] = space?.localizationContext
+    public func update(with localizationContext: LocalizationContext) {
+        userInfo[.localizationContextKey] = localizationContext
     }
 }
 

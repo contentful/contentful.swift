@@ -12,7 +12,7 @@ import Nimble
 import DVR
 import Interstellar
 
-final class Cat: EntryDecodable, ResourceQueryable {
+final class Cat: EntryDecodable, QueryableEntry {
 
     static let contentTypeId: String = "cat"
 
@@ -49,7 +49,7 @@ final class Cat: EntryDecodable, ResourceQueryable {
     }
 }
 
-final class City: EntryDecodable, ResourceQueryable {
+final class City: EntryDecodable, QueryableEntry {
 
     static let contentTypeId: String = "1t9IbcfdCk6m04uISSsaIK"
 
@@ -68,7 +68,7 @@ final class City: EntryDecodable, ResourceQueryable {
     }
 }
 
-final class Dog: EntryDecodable, ResourceQueryable {
+final class Dog: EntryDecodable, QueryableEntry {
 
     static let contentTypeId: String = "dog"
 
@@ -223,6 +223,7 @@ class QueryTests: XCTestCase {
         let expectation = self.expectation(description: "Select operator expectation")
 
         let query = try! QueryOn<Dog>.select(fieldsNamed: selections)
+        try! query.order(by: Ordering(sys: .id))
 
         QueryTests.client.fetchMappedEntries(matching: query) { (result: Result<MappedArrayResponse<Dog>>) in
 
@@ -336,6 +337,7 @@ class QueryTests: XCTestCase {
         let expectation = self.expectation(description: "Exclusion query operator expectation")
 
         let query = QueryOn<Cat>.where(valueAtKeyPath: "fields.likes", .excludes(["rainbows"]))
+        try! query.order(by: Ordering(sys: .createdAt))
 
         QueryTests.client.fetchMappedEntries(matching: query) { result in
             switch result {

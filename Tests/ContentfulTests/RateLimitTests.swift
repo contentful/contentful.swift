@@ -13,7 +13,9 @@ import Nimble
 
 class RateLimitTests: XCTestCase {
 
-    static let client = TestClientFactory.testClient(withCassetteNamed: "RateLimitTests", spaceId: "bc32cj3kyfet", accessToken: "264dcca6ce14912f4940ac9d7de5425236b5658ed678da25718aa98438687a6f")
+    static let client = TestClientFactory.testClient(withCassetteNamed: "RateLimitTests",
+                                                     spaceId: "bc32cj3kyfet",
+                                                     accessToken: "264dcca6ce14912f4940ac9d7de5425236b5658ed678da25718aa98438687a6f")
 
     override class func setUp() {
         super.setUp()

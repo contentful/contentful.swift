@@ -21,10 +21,10 @@ import Nimble
 class ImageTests: XCTestCase {
 
     let nyanCatAsset: Asset = {
-        let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext()
-        let spaceJSONData = JSONDecodingTests.jsonData("space")
-        let space = try! jsonDecoder.decode(Space.self, from: spaceJSONData)
-        Client.update(jsonDecoder, withLocalizationContextFrom: space)
+        let jsonDecoder = JSONDecoder.withoutLocalizationContext()
+        let localesJSONData = JSONDecodingTests.jsonData("all-locales")
+        let localesResponse = try! jsonDecoder.decode(ArrayResponse<Contentful.Locale>.self, from: localesJSONData)
+        jsonDecoder.update(with: LocalizationContext(locales: localesResponse.items)!)
 
         // Load nyan cat from "asset.json" file.
         let nyanCatJSONData = JSONDecodingTests.jsonData("asset")

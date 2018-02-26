@@ -28,7 +28,7 @@ public struct QueryParameter {
     /// The [order parameter](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/order)
     public static let order            = "order"
 
-    /// The maximum number of items allowed in a response. See [limit](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/limit).
+    /// Limit the number of items allowed in a response. See [limit](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/limit).
     public static let limit            = "limit"
 
     /// The offset to be used with `limit` for pagination. See [Skip](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/skip).
@@ -105,7 +105,7 @@ public class Ordering {
  conforms to ResourceQueryable in order to take advantage of the CodingKey fields available on your type.
  See: `ChainableQuery.order(by order: Ordering...)`
  */
-public class Ordered<EntryType>: Ordering where EntryType: ResourceQueryable {
+public class Ordered<EntryType>: Ordering where EntryType: QueryableEntry {
 
     /**
      Initializer for creating a new Ordering operator.
@@ -119,10 +119,10 @@ public class Ordered<EntryType>: Ordering where EntryType: ResourceQueryable {
     }
 }
 
-private struct QueryConstants {
-    fileprivate static let maxLimit: UInt               = 1000
-    fileprivate static let maxSelectedProperties: UInt  = 99
-    fileprivate static let maxIncludes: UInt            = 10
+internal struct QueryConstants {
+    internal static let maxLimit: UInt               = 1000
+    internal static let maxSelectedProperties: UInt  = 99
+    internal static let maxIncludes: UInt            = 10
 }
 
 /// Use types that conform to QueryableRange to perform queries with the four Range operators

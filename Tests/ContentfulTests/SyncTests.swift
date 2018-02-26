@@ -87,6 +87,7 @@ class SyncTests: XCTestCase {
     }
 
 }
+
 class PreviewSyncTests: XCTestCase {
 
     static let client: Client = {

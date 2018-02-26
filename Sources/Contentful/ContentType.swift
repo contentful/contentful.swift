@@ -9,7 +9,11 @@
 import Foundation
 
 /// A Content Type represents your data model for Entries in a Contentful Space
-public class ContentType: Resource, Decodable {
+public class ContentType: Resource, Decodable, EndpointAccessible, QueryableResource {
+
+    public static let endpoint = Endpoint.contentTypes
+
+    public typealias QueryType = ContentTypeQuery
 
     ///  System fields.
     public let sys: Sys
@@ -42,6 +46,7 @@ public class ContentType: Resource, Decodable {
 
     /// The keys used when representing a resource in JSON. These can be used when constructing
     /// ContentTypeQuery instance to query against content types.
+    // FIXME: Rename
     public enum QueryableCodingKey: String, CodingKey {
         /// The name and description keys.
         case name, description

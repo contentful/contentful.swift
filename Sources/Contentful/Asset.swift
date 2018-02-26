@@ -31,7 +31,7 @@ internal extension String {
 }
 
 /// An asset represents a media file in Contentful.
-public class Asset: LocalizableResource, ResourceQueryable {
+public class Asset: LocalizableResource {
 
     /// The key paths for member fields of an Asset
     public enum Fields: String, CodingKey {
@@ -148,4 +148,11 @@ public class Asset: LocalizableResource, ResourceQueryable {
         let value = localizableValue?[currentlySelectedLocale.code] as? String
         return value
     }
+}
+
+extension Asset: QueryableResource, EndpointAccessible {
+
+    public static let endpoint = Endpoint.assets
+
+    public typealias QueryType = AssetQuery
 }
