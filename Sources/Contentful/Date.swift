@@ -11,8 +11,10 @@ import Foundation
 // Formatter and extensions pulled from: https://stackoverflow.com/a/28016692/4068264
 public extension Date {
 
+    /// A container for the iso8601 DateFormatter.
     public struct Formatter {
 
+        /// A formatter ready to handle iso8601 dates.
         public static let iso8601: DateFormatter = {
             let formatter = DateFormatter()
             formatter.calendar = Calendar(identifier: .iso8601)

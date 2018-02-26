@@ -12,6 +12,7 @@ import Foundation
 /// A Space represents a collection of Content Types, Assets and Entries in Contentful
 public class Space: Resource, Decodable {
 
+    ///  System fields.
     public let sys: Sys
 
     /// Available Locales for this Space
@@ -20,7 +21,7 @@ public class Space: Resource, Decodable {
     /// The name of this Space
     public let name: String
 
-    /// Resource type ("Space")
+    /// Resource type ("Space").
     public var type: String {
         return sys.type
     }

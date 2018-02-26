@@ -35,6 +35,7 @@ public class Asset: LocalizableResource, ResourceQueryable {
 
     /// The key paths for member fields of an Asset
     public enum Fields: String, CodingKey {
+        /// Title description and file keys.
         case title, description, file
     }
 
@@ -93,8 +94,11 @@ public class Asset: LocalizableResource, ResourceQueryable {
             /// Additional information describing the image the asset references.
             public let imageInfo: ImageInfo?
 
+            /// A lightweight struct to hold the dimensions information for the this file, if it is an image type.
             public struct ImageInfo: Decodable {
+                /// The width of the image.
                 public let width: Double
+                /// The height of the image.
                 public let height: Double
 
                 public init(from decoder: Decoder) throws {

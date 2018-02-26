@@ -73,8 +73,11 @@ public extension String {
         return url
     }
 }
+/**
+ An enum-based API for specifying retrieval and server-side manipulation of images referenced by Contentful assets.
 
-
+ See [Images API Reference](https://www.contentful.com/developers/docs/references/images-api/)
+ */
 public enum ImageOption: Equatable, Hashable {
 
     /// Specify the height of the image in pixels to be returned from the API. Valid ranges for height are between 0 and 4000.
@@ -128,9 +131,8 @@ public enum ImageOption: Equatable, Hashable {
     }
 }
 
-// MARK: <Equatable>
-
-public func == (lhs: ImageOption, rhs: ImageOption) -> Bool {
+/// Equatable implementation for `ImageOption`
+public func ==(lhs: ImageOption, rhs: ImageOption) -> Bool {
     // We don't need to check associated values, we only implement equatable to validate that
     // two ImageOptions of the same case can't be used in one request.
     switch (lhs, rhs) {
@@ -230,15 +232,25 @@ public enum Format: URLImageQueryExtendable {
  for more information.
  */
 public enum Focus: String {
+    /// Focus on the top of the image.
     case top
+    /// Focus on the bottom of the image.
     case bottom
+    /// Focus on the left of the image.
     case left
+    /// Focus on the right of the image.
     case right
+    /// Focus on the top left of the image.
     case topLeft            = "top_left"
+    /// Focus on the top right of the image.
     case topRight           = "top_right"
+    /// Focus on the bottom left of the image.
     case bottomLeft         = "bottom_left"
+    /// Focus on the bottom right of the image.
     case bottomRight        = "bottom_right"
+    /// Focus on a face in the image, if detected.
     case face
+    /// Focus on a collection of faces in the image, if detected.
     case faces
 }
 
@@ -262,9 +274,13 @@ public enum Fit: URLImageQueryExtendable {
      an error will be thrown.
      */
     case pad(withBackgroundColor: Color?)
+    /// Specify that the image should be cropped, with an optional focus parameter.
     case crop(focusingOn: Focus?)
+    /// Crop to the specified dimensions; if the original image is smaller than those specified, the image will be upscaled.
     case fill(focusingOn: Focus?)
+    /// Creates a thumbnail with the specified focus.
     case thumb(focusingOn: Focus?)
+    /// Scale the image regardless of the original aspect ratio.
     case scale
 
     // Enums that have cases with associated values in swift can't be backed by

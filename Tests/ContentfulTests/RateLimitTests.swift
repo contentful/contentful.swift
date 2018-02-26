@@ -46,7 +46,7 @@ class RateLimitTests: XCTestCase {
                                                     return
                                                 }
                                                 expect(error).to(beAKindOf(RateLimitError.self))
-                                                expect(error.id!).to(equal("RateLimitExceeded"))
+                                                expect(error.id).to(equal("RateLimitExceeded"))
                                                 expect(error.timeBeforeLimitReset).toNot(beNil())
                                                 expect(error.timeBeforeLimitReset!).to(beGreaterThan(0))
                                                 networkExpectation.fulfill()

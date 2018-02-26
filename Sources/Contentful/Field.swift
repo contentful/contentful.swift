@@ -38,9 +38,7 @@ public enum FieldType: String, Decodable {
     case none                           = "None"
 }
 
-/// A Field describes a single value inside an Entry
-// Hitting the /content_types endpoint will return a JSON field "fields" that
-// maps to an array where each element has the following structure.
+/// A Field describes a single value inside an Entry.
 public struct Field: Decodable {
     /// The unique identifier of this Field
     public let id: String
@@ -57,9 +55,12 @@ public struct Field: Decodable {
     /// The type of this Field
     public let type: FieldType
 
-    /// The item type of this Field (a subtype if `type` is `Array` or `Link`)
-    // For `Array`s, itemType is inferred via items.type. 
-    // For `Link`s, itemType is inferred via "linkType"
+
+    /**
+     The item type of this Field (a subtype if `type` is `Array` or `Link`)
+     For `Array`s, itemType is inferred via items.type.
+     For `Link`s, itemType is inferred via "linkType".
+     */
     public let itemType: FieldType?
 
     public init(from decoder: Decoder) throws {

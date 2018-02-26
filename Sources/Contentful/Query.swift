@@ -13,16 +13,38 @@ import Foundation
 /// advantage of `Client` "fetch" methods that take `Query` types instead of constructing query dictionaries on your own.
 public struct QueryParameter {
 
+    /// The parameter for specifying the content type of returned entries.
     public static let contentType      = "content_type"
+
+    /// The parameter name for incoming links to an entry: See <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/links-to-entry>
     public static let linksToEntry     = "links_to_entry"
+
+    /// The parameter name for incoming links to an asset: See <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/links-to-asset>
     public static let linksToAsset     = "links_to_asset"
+
+    /// The [select operator](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/select-operator)
     public static let select           = "select"
+
+    /// The [order parameter](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/order)
     public static let order            = "order"
+
+    /// The maximum number of items allowed in a response. See [limit](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/limit).
     public static let limit            = "limit"
+
+    /// The offset to be used with `limit` for pagination. See [Skip](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/skip).
     public static let skip             = "skip"
+
+    /// The level depth of including resources to resolve. See [Links](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/links)
     public static let include          = "include"
+
+    /// The locale that you want to localize your responses to. See [Localization](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/localization)
     public static let locale           = "locale"
+
+    /// A query parameter to [filter assets by the mimetype](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/filtering-assets-by-mime-type)
+    /// of the referenced binary file
     public static let mimetypeGroup    = "mimetype_group"
+
+    /// Use this to pass in a query to search accross all text and symbol fields in your space. See [Full-text search](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/full-text-search)
     public static let fullTextSearch   = "query"
 }
 
@@ -107,6 +129,7 @@ private struct QueryConstants {
 /// See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/ranges>
 public protocol QueryableRange {
 
+    /// A string representation of a query value that can be used in an API query.
     var stringValue: String { get }
 }
 
@@ -118,6 +141,8 @@ extension Int: QueryableRange {
 }
 
 extension String: QueryableRange {
+
+
     public var stringValue: String {
         return self
     }
@@ -125,6 +150,7 @@ extension String: QueryableRange {
 
 extension Date: QueryableRange {
 
+    /// The ISO8601 string representation of the receiving Date object.
     public var stringValue: String {
         return self.iso8601String
     }
@@ -136,9 +162,13 @@ extension Date: QueryableRange {
  */
 @objc public class Location: NSObject, Decodable, NSCoding {
 
+    /// The latitude of this location coordinate.
     public let latitude: Double
+    
+    /// The longitude of this location coordinate.
     public let longitude: Double
 
+    /// Initializer for a location object.
     public init(latitude: Double, longitude: Double) {
         self.latitude = latitude
         self.longitude = longitude
@@ -159,11 +189,13 @@ extension Date: QueryableRange {
 
     // MARK: NSCoding
 
+    /// Regquired initializer for NSCoding conformance.
     @objc public required init?(coder aDecoder: NSCoder) {
         self.latitude = aDecoder.decodeDouble(forKey: CodingKeys.latitude.rawValue)
         self.longitude = aDecoder.decodeDouble(forKey: CodingKeys.longitude.rawValue)
     }
 
+    /// Regquired encoding function for NSCoding conformance.
     @objc public func encode(with aCoder: NSCoder) {
         aCoder.encode(latitude, forKey: CodingKeys.latitude.rawValue)
         aCoder.encode(longitude, forKey: CodingKeys.longitude.rawValue)
@@ -173,32 +205,50 @@ extension Date: QueryableRange {
 /// Use bounding boxes or bounding circles to perform queries on location-enabled content.
 /// See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/locations-in-a-bounding-object>
 public enum Bounds {
+    /// A bounding box, defined by bottom left and top right corners.
     case box(bottomLeft: Location, topRight: Location)
+    /// A circle defined by its center and radius.
     case circle(center: Location, radius: Double)
 }
 
-/// All the possible MIME types that are supported by Contentful. \
 //  Developer note: Cases in String backed Swift enums have a raw value equal to the case name.
 //  i.e. MimetypeGroup.attachement.rawValue = "attachment"
+/// All the possible MIME types that are supported by Contentful. \
 public enum MimetypeGroup: String {
+    /// The attachment mimetype.
     case attachment
+    /// The plaintext mimetype.
     case plaintext
+    /// The image mimetype.
     case image
+    /// The audio mimetype.
     case audio
+    /// The video mimetype.
     case video
+    /// The richtext mimetype.
     case richtext
+    /// The presentation mimetype.
     case presentation
+    /// The spreadsheet mimetype.
     case spreadsheet
+    /// The pdf document mimetype.
     case pdfdocument
+    /// The archive mimetype.
     case archive
+    /// The code mimetype.
     case code
+    /// The markup mimetype.
     case markup
 }
 
+/**
+ A base abtract type which holds the bare essentials shared by all query types in the SDK which enable
+ querying against content types, entries and assets.
+ */
 public protocol AbstractQuery: class {
 
-    // Unfortunately (compiler forced) required designated initializer so that default implementation of AbstractQuery
-    // can guarantee that an object is constructed before doing additional mutations in convenience initializers.
+    /// A compiler-forced, required, and designated initializer. Creates affordance that the default implementation
+    /// of AbstractQuery guarantees an object is constructed before doing additional mutations in convenience initializers.
     init()
 
     /// The parameters dictionary that are converted to `URLComponents` on the HTTP URL. Useful for debugging.
@@ -516,8 +566,9 @@ public extension ChainableQuery {
 }
 
 
-// Using a protocol rather than a base class enables us to implement factory methods that return Self
-// and are therefore instances of the subclass.
+/**
+ A base abtract type which holds methods and constructors for all valid queries against resource: i.e. Contentful entries and assets.
+ */
 public protocol AbstractResourceQuery: ChainableQuery {}
 public extension AbstractResourceQuery {
 
@@ -616,7 +667,11 @@ public extension AbstractResourceQuery {
     }
 }
 
-
+/**
+ The base abstract type for querying Contentful entries. The contained operations in the default implementation
+ of this protocol can only be used when querying against the `/entries/ endpoint of the Content Delivery and Content Preview APIs.
+ See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters>
+ */
 public protocol EntryQuery: AbstractResourceQuery {}
 public extension EntryQuery {
     /**
@@ -750,8 +805,9 @@ public extension EntryQuery {
         return self
     }
 }
-
-
+/**
+ A concrete implementation of AbstractResourceQuery which serves as the base class for both EntryQuery and AssetQuery.
+ */
 public class ResourceQuery: AbstractResourceQuery {
 
     /// The parameters dictionary that are converted to `URLComponents` (HTTP parameters/arguments) on the HTTP URL. Useful for debugging.
@@ -767,7 +823,6 @@ public class ResourceQuery: AbstractResourceQuery {
     internal init(parameters: [String: String] = [:]) {
         self.parameters = parameters
     }
-
 
     fileprivate static func validate(selectedKeyPaths: [String]) throws {
         for fieldKeyPath in selectedKeyPaths {
