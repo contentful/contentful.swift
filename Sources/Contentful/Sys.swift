@@ -8,6 +8,10 @@
 
 import Foundation
 
+/**
+ The system fields available on all resources in Contentful. At minimum,
+ all resources have an `id` and a `type` available. Entries and assets provide more information than
+ */
 public struct Sys {
 
     /// The unique id.
@@ -33,8 +37,8 @@ public struct Sys {
     /// The number denoting what published version of the resource is.
     public let revision: Int?
 
-    // The link describing the content type.
-    fileprivate let contentTypeInfo: Link? // Not present on `Asset` or `ContentType`
+    // The link describing the content type. Not present on `Asset` or `ContentType`
+    fileprivate let contentTypeInfo: Link?
 }
 
 extension Sys: Decodable {
@@ -51,7 +55,9 @@ extension Sys: Decodable {
         contentTypeInfo = try container.decodeIfPresent(Link.self, forKey: .contentType)
     }
 
+    /// The keys used when representing a resource in JSON.
     public enum CodingKeys: String, CodingKey {
+        /// The JSON keys for a Sys object.
         case id, type, createdAt, updatedAt, locale, revision, contentType
     }
 }

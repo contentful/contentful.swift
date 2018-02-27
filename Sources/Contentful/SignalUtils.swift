@@ -10,9 +10,10 @@ import Foundation
 import Interstellar
 
 
+/// Takes closure that takes a Result of type U and returns a URLSessionData task.
 public typealias SignalBang<U> = (@escaping (Result<U>) -> Void) -> URLSessionDataTask?
 
-// Take a QueryPattern to query on and closure that takes a Result of type U and reutrns a URLSessionData task...
+/// Takes a query pattern generic and a closure that takes a Result of type U and returns a URLSessionData task.
 public typealias AsyncDataTask<QueryPattern, U> = (QueryPattern, @escaping (Result<U>) -> Void) -> URLSessionDataTask?
 
 internal func toObservable<QueryPattern, ResultType>(parameter: QueryPattern,

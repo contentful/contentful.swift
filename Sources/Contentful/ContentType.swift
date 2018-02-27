@@ -40,7 +40,10 @@ public class ContentType: Resource, Decodable {
         case sys, fields, name, description
     }
 
+    /// The keys used when representing a resource in JSON. These can be used when constructing
+    /// ContentTypeQuery instance to query against content types.
     public enum QueryableCodingKey: String, CodingKey {
+        /// The name and description keys.
         case name, description
     }
 }

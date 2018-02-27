@@ -23,7 +23,8 @@ open class Client {
 
     fileprivate let clientConfiguration: ClientConfiguration
 
-    fileprivate let spaceId: String
+    /// The identifier of the space this Client is set to interface with.
+    public let spaceId: String
 
     fileprivate var server: String {
 
@@ -33,6 +34,9 @@ open class Client {
         return clientConfiguration.server
     }
 
+    /// The JSONDecoder that the receiving client instance uses to deserialize JSON. The SDK will
+    /// inject information about the locales to this decoder and use this information to normalize
+    /// the fields dictionary of entries and assets.
     public var jsonDecoder: JSONDecoder
 
     /**

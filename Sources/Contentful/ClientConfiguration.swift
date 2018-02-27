@@ -8,8 +8,11 @@
 
 import Foundation
 
+/// Some default values that the SDK uses.
 public enum Defaults {
+    /// The path for the Contentful Delivery API.
     public static let cdaHost = "cdn.contentful.com"
+    /// The path for the Contentful Preview API.
     public static let previewHost = "preview.contentful.com"
 }
 
@@ -38,8 +41,8 @@ public protocol DataDelegate {
 /// ClientConfiguration parameters for a client instance
 public struct ClientConfiguration {
 
+    /// The default instance of ClientConfiguration which interfaces with the Content Delivery API.
     public static let `default` = ClientConfiguration()
-
     /// Whether or not to use the preview mode when accessing Contentful, requires a preview token
     public var previewMode = false
     /// Whether or not to automatically rate limit requests, defaults to `false`
@@ -129,7 +132,6 @@ public struct ClientConfiguration {
         }()
         return osName
     }
-
 
     private func sdkVersionString() -> String {
         guard

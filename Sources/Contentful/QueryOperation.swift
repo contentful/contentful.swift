@@ -28,26 +28,40 @@ public extension Query {
      */
     public enum Operation {
 
+        /// The equality operator: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/equality-operator>
         case equals(String)
+        /// The inequality operator: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/inequality-operator>
         case doesNotEqual(String)
+        /// Query by matching all of the values in the set: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/array-with-multiple-values>
         case hasAll([String])
+        /// The inclusion operator: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/inclusion>
         case includes([String])
+        /// The exclusion operator: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/exclusion>
         case excludes([String])
+        /// The existence operator: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/existence>
         case exists(Bool)
 
         /// Full text search on a field.
         case matches(String)
 
         /// MARK: Ranges
+
+        /// Less-than operator: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/ranges>
         case isLessThan(QueryableRange)
+        /// Less-than-or-equal-to operator: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/ranges>
         case isLessThanOrEqualTo(QueryableRange)
+        /// Greater-than operator: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/ranges>
         case isGreaterThan(QueryableRange)
+        /// Greater-than-or-equal-to operator: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/ranges>
         case isGreaterThanOrEqualTo(QueryableRange)
+        /// Equivalent to the less-than operator: https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/ranges
         case isBefore(QueryableRange)
+        /// Equivalent to the greater-than operator: https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/ranges
         case isAfter(QueryableRange)
 
-        /// Proximity searches.
+        /// Location proximity search: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/location-proximity-search
         case isNear(Location)
+        /// Location within bounding box operator: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/locations-in-a-bounding-object>
         case isWithin(Bounds)
 
         internal var string: String {

@@ -28,14 +28,21 @@ private protocol HomogeneousArray: Array {
     var items: [ItemType] { get }
 }
 
-
+/**
+ Sometimes, when links are unresolvable (for instance, when a linked entry is not published), the API
+ will return an array of errors, one for each unresolvable link.
+*/
 public struct ArrayResponseError: Decodable {
+    /// The system fields of the error.
     public struct Sys: Decodable {
         let id: String
         let type: String
     }
-    let details: Link.Sys
-    let sys: ArrayResponseError.Sys
+
+    /// System fields for the unresolvable link.
+    public let details: Link.Sys
+    /// System fields describing the type of this object ("error") and the error message: generally "notResolvable".
+    public let sys: ArrayResponseError.Sys
 }
 
 
@@ -44,7 +51,7 @@ public struct ArrayResponseError: Decodable {
 
  This is the result type for any request of a collection of resources.
  See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/collection-resources-and-pagination>
- **/
+ */
 public struct ArrayResponse<ItemType>: HomogeneousArray where ItemType: Resource & Decodable {
 
     /// The resources which are part of the given array
@@ -59,6 +66,8 @@ public struct ArrayResponse<ItemType>: HomogeneousArray where ItemType: Resource
     /// The total number of resources which matched the original request
     public let total: UInt
 
+    /// An array of errors, or partial errors, which describe links which were returned in the response that
+    /// cannot be resolved.
     public let errors: [ArrayResponseError]?
 
     internal let includes: Includes?
@@ -132,6 +141,8 @@ public struct MappedArrayResponse<ItemType>: HomogeneousArray where ItemType: En
     /// The total number of resources which matched the original request
     public let total: UInt
 
+    /// An array of errors, or partial errors, which describe links which were returned in the response that
+    /// cannot be resolved.
     public let errors: [ArrayResponseError]?
 
     internal let includes: MappedIncludes?
@@ -172,7 +183,6 @@ internal struct MappedIncludes: Decodable {
 
 // Empty type so that we can continue to the end of a UnkeyedContainer
 internal struct EmptyDecodable: Decodable {}
-
 extension MappedArrayResponse: Decodable {
 
     public init(from decoder: Decoder) throws {
@@ -243,6 +253,8 @@ public struct MixedMappedArrayResponse: Array {
     /// The total number of resources which matched the original request
     public let total: UInt
 
+    /// An array of errors, or partial errors, which describe links which were returned in the response that
+    /// cannot be resolved.
     public let errors: [ArrayResponseError]?
 
     internal let includes: MappedIncludes?

@@ -26,14 +26,21 @@ public final class SyncSpace: Decodable {
         }
     }
 
-    /// The types in Contentful that a sync can be restricted to.
+    /// The entity types in Contentful that a sync can be restricted to.
     public enum SyncableTypes {
+        /// Sync all assets and all entries of all content types.
         case all
+        /// Sync only entities which are entries (i.e. instances of your content types(s)).
         case entries
+        /// Sync only assets.
         case assets
+        /// Sync only entities of a specific content type.
         case entriesOfContentType(withId: String)
+        /// Sync only deleted entries or assets.
         case allDeletions
+        /// Sync only deleted entries.
         case deletedEntries
+        /// Sync only deleted assets.
         case deletedAssets
 
         // Query parameters.
@@ -62,7 +69,9 @@ public final class SyncSpace: Decodable {
     internal var assetsMap = [String: Asset]()
     internal var entriesMap = [String: Entry]()
 
+    /// An array of identifiers for assets that were deleted after the last sync operations.
     public var deletedAssetIds = [String]()
+    /// An array of identifiers for entries that were deleted after the last sync operations.
     public var deletedEntryIds = [String]()
 
     internal var hasMorePages: Bool
@@ -86,7 +95,7 @@ public final class SyncSpace: Decodable {
      - parameter syncToken: The sync token from a previous synchronization
 
      - returns: An initialized synchronized space instance
-     **/
+     */
     public init(syncToken: String) {
         self.hasMorePages = false
         self.syncToken = syncToken

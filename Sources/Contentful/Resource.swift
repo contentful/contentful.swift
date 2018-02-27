@@ -16,11 +16,12 @@ public protocol Resource {
 }
 
 extension Resource {
-    /// The unique identifier of this Resource
+    /// The unique identifier of this Resource.
     public var id: String {
         return sys.id
     }
 
+    /// The language identifier. Generally in the format language-region or language-dialect e.g: en-US, de-DE.
     public var localeCode: String? {
         return sys.locale
     }
@@ -79,7 +80,6 @@ public class LocalizableResource: Resource, Decodable {
     // Context used for handling locales during decoding of `Asset` and `Entry` instances.
     internal let localizationContext: LocalizationContext
 
-
     public required init(from decoder: Decoder) throws {
 
         let container       = try decoder.container(keyedBy: CodingKeys.self)
@@ -108,8 +108,11 @@ public class LocalizableResource: Resource, Decodable {
                                                                        wasSelectedOnAPILevel: sys.locale != nil)
     }
 
+    /// The keys used when representing a resource in JSON.
     public enum CodingKeys: String, CodingKey {
+        /// The JSON key for the sys object.
         case sys
+        /// The JSON key for the fields object.
         case fields
     }
 }
@@ -237,13 +240,15 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
 // MARK: Internal
 
 extension LocalizableResource: Hashable {
+
     public var hashValue: Int {
         return id.hashValue
     }
 }
 
 extension LocalizableResource: Equatable {}
-public func == (lhs: LocalizableResource, rhs: LocalizableResource) -> Bool {
+/// Equatable implementation for `LocalizableResource`
+public func ==(lhs: LocalizableResource, rhs: LocalizableResource) -> Bool {
     return lhs.id == rhs.id && lhs.sys.updatedAt == rhs.sys.updatedAt
 }
 
