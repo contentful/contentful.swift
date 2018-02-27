@@ -79,7 +79,21 @@ func fetchMappedEntries(matching: query) { (result: Result<MappedArrayResponse<C
 
 The asynchronously returned result will be an instance of `MappedArrayResponse` in which the generic type parameter is the class you've defined for your content type. If you are using a `Query` that does not restrict the response to contain entries of one content type, you will use methods that return `MixedMappedArrayResponse` instead of `MappedArrayResponse`. The `EntryDecodable` protocol extends the `Decodable` protocol in Swift 4's Foundation standard library. The SDK provides helper methods for resolving relationships between `EntryDecodable`s and also for grabbing values from the fields container in the JSON for each resource.
 
-In the example above, `Cat` is a type of our own definition conforming to `EntryDecodable` and `ResourceQueryable`. The source for this model class is below; note the helper methods the SDK adds to Swift 4's `Decoder` type to simplify for parsing JSON returned by Contentful.
+In the example above, `Cat` is a type of our own definition conforming to `EntryDecodable` and `ResourceQueryable`. In order for the SDK to properly create your model types when receiving JSON, you must pass in these types to your `Client` instance:
+
+```swift
+let contentTypeClasses: [EntryDecodable.Type] = [
+    Cat.self
+    Dog.self,
+    Human.self
+]
+
+let client = Client(spaceId: spaceId,
+                    accessToken: deliveryAPIAccessToken,
+                    contentTypeClasses: contentTypeClasses)
+```
+
+The source for the `Cat` model class is below; note the helper methods the SDK adds to Swift 4's `Decoder` type to simplify for parsing JSON returned by Contentful. You also need to pass in these types to your `Client` instance in order to use the fetch methods which take `EntryDecodable` type references:
 
 ```swift
 final class Cat: EntryDecodable, ResourceQueryable {
