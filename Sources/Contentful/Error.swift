@@ -28,6 +28,10 @@ public enum SDKError: Error {
     /// Thrown if the subsequent sync operations are executed in preview mode.
     case previewAPIDoesNotSupportSync()
 
+    /// Thrown if a resource returned in the multi-locale format does not have any value for the given
+    /// fallback chain.
+    case noValuePresent(fieldKey: CodingKey)
+
     /**
      Thrown when receiving unparseable JSON responses.
      - Parameter data: The data being parsed.

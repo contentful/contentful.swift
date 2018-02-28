@@ -1,6 +1,3 @@
-[submodule "Carthage/Checkouts/Interstellar"]
-	path = Carthage/Checkouts/Interstellar
-	url = https://github.com/JensRavens/Interstellar.git
 [submodule "Carthage/Checkouts/DVR"]
 	path = Carthage/Checkouts/DVR
 	url = https://github.com/venmo/DVR.git

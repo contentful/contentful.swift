@@ -2,7 +2,6 @@
 import PlaygroundSupport
 PlaygroundPage.current.needsIndefiniteExecution = true
 import Contentful
-import Interstellar
 //: In order to execute this playground, please build the "Contentful_macOS" scheme to build the SDK.
 //: Sometimes, it is more convenient to work directly with native Swift classes which define the model in our application and use methods which give us back our own types as opposed to `Entry`s. In order to do this, we will define our types to conform to the `EntryDecodable` protocol which extends Swift 4's `Decodable`*/
 class Cat: EntryDecodable, EntryQueryable {

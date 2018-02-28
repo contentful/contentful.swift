@@ -27,7 +27,7 @@ struct LocaleFactory {
 
 class LocalizationTests: XCTestCase {
 
-    static let client = TestClientFactory.testClient(withCassetteNamed:  "EntryTests")
+    static let client = TestClientFactory.testClient(withCassetteNamed:  "LocalizationTests", contentTypeClasses: [Cat.self])
 
     override class func setUp() {
         super.setUp()
@@ -66,25 +66,27 @@ class LocalizationTests: XCTestCase {
 
         let expecatation = self.expectation(description: "Entries matching query network expectation")
 
-        LocalizationTests.client.fetchEntries(matching: Query.where(sys: .id, .equals("nyancat")).localizeResults(withLocaleCode: "*")).then { entriesArrayResponse in
-            let entry = entriesArrayResponse.items.first!
+        LocalizationTests.client.fetchArray(of: Entry.self, matching: Query.where(sys: .id, .equals("nyancat")).localizeResults(withLocaleCode: "*")) { result in
+            switch result {
+            case .success(let entriesCollection):
+                let entry = entriesCollection.items.first!
 
-            expect(entry.currentlySelectedLocale.code).to(equal("en-US"))
-            expect(entry.sys.id).to(equal("nyancat"))
-            expect(entry.fields["name"] as? String).to(equal("Nyan Cat"))
-            expect(entry.fields["likes"] as? [String]).to(equal(["rainbows", "fish"]))
+                expect(entry.currentlySelectedLocale.code).to(equal("en-US"))
+                expect(entry.sys.id).to(equal("nyancat"))
+                expect(entry.fields["name"] as? String).to(equal("Nyan Cat"))
+                expect(entry.fields["likes"] as? [String]).to(equal(["rainbows", "fish"]))
 
-            // Set new locale.
-            entry.setLocale(withCode: "tlh")
-            expect(entry.currentlySelectedLocale.code).to(equal("tlh"))
+                // Set new locale.
+                entry.setLocale(withCode: "tlh")
+                expect(entry.currentlySelectedLocale.code).to(equal("tlh"))
 
-            expect(entry.fields["name"] as? String).to(equal("Nyan vIghro'"))
-            // fields with no value for "tlh" should fallback.
-            expect(entry.fields["likes"] as? [String]).to(equal(["rainbows", "fish"]))
+                expect(entry.fields["name"] as? String).to(equal("Nyan vIghro'"))
+                // fields with no value for "tlh" should fallback.
+                expect(entry.fields["likes"] as? [String]).to(equal(["rainbows", "fish"]))
 
-            expecatation.fulfill()
-        }.error {
-            fail("\($0)")
+            case .error(let error):
+                fail("\(error)")
+            }
             expecatation.fulfill()
         }
 
@@ -106,8 +108,29 @@ class LocalizationTests: XCTestCase {
 
         asset.setLocale(withCode: "tlh")
         expect(asset.urlString).to(equal("https://images.ctfassets.net/cfexampleapi/1x0xpXu4pSGS4OukSyWGUK/cc1239c6385428ef26f4180190532818/doge.jpg"))
-
-
     }
+
+        func testLocalizationForEntryDecodableWorks() {
+            let expecatation = self.expectation(description: "")
+
+            let query = QueryOn<Cat>.where(sys: .id, .equals("nyancat")).localizeResults(withLocaleCode: "tlh")
+            LocalizationTests.client.fetchArray(of: Cat.self, matching: query) { result in
+                switch result {
+                case .success(let entriesCollection):
+                    let cat = entriesCollection.items.first!
+
+                    expect(cat.localeCode).to(equal("tlh"))
+                    expect(cat.sys.id).to(equal("nyancat"))
+                    expect(cat.name).to(equal("Nyan vIghro'"))
+                    expect(cat.likes).to(equal(["rainbows", "fish"]))
+
+                case .error(let error):
+                    fail("\(error)")
+                }
+                expecatation.fulfill()
+            }
+
+            waitForExpectations(timeout: 10.0, handler: nil)
+        }
 }
 

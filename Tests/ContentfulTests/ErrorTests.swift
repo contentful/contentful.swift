@@ -29,7 +29,7 @@ class ErrorTests: XCTestCase {
     func testErrorMessageForInvalidPath() {
         let expectation = self.expectation(description: "Invalid path")
         
-        ErrorTests.client.fetchEntries(matching: Query.where(valueAtKeyPath: "sys.888", .equals("GO"))) { result in
+        ErrorTests.client.fetchArray(of: Entry.self, matching: .where(valueAtKeyPath: "sys.888", .equals("GO"))) { result in
             switch result {
             case .success:
                 fail("Request should not succeed")
@@ -66,7 +66,7 @@ class UnparsableErrorTests: XCTestCase {
         }.name = "UnparsableError stub"
 
         let client = Client(spaceId: "cfexampleapi", accessToken: "")
-        client.fetchSpace() { result in
+        client.fetchSpace { result in
             switch result {
             case .success:
                 fail("Error should have been returned")

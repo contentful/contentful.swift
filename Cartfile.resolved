@@ -1,4 +1,3 @@
 github "AliSoftware/OHHTTPStubs" "6.1.0"
-github "JensRavens/Interstellar" "2.2.0"
 github "Quick/Nimble" "v7.1.3"
 github "venmo/DVR" "v1.2.0"

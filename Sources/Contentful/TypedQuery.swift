@@ -8,24 +8,15 @@
 
 import Foundation
 
-/// A protocol enabling strongly typed queries to the Contentful Delivery API via the SDK.
-public protocol EntryQueryable {
-
-    /// The CodingKey representing the names of each of the fields for the corresponding content type.
-    /// These coding keys should be the same as those used when implementing Decodable.
-    associatedtype Fields: CodingKey
-}
-
-
-// To be made available in the next public release.
-internal protocol ResourceQueryable {
-
-    associatedtype QueryType: AbstractQuery
-}
 
 /// A concrete implementation of ChainableQuery which can be used to make queries on `/entries/`
 /// or `/entries`. All methods from ChainableQuery are available.
-public class Query: ResourceQuery, EntryQuery {}
+public class Query: ResourceQuery, EntryQuery {
+
+    public static var any: Query {
+        return Query()
+    }
+}
 
 /**
  An additional query to filter by the properties of linked objects when searching on references.
@@ -33,7 +24,7 @@ public class Query: ResourceQuery, EntryQuery {}
  and see the init<LinkType: EntryDecodable>(whereLinkAt fieldNameForLink: String, matches filterQuery: FilterQuery<LinkType>? = nil) methods
  on QueryOn for example usage.
  */
-public final class LinkQuery<EntryType>: AbstractQuery where EntryType: EntryDecodable & EntryQueryable {
+public final class LinkQuery<EntryType>: AbstractQuery where EntryType: EntryDecodable & FieldKeysQueryable {
 
     /// The parameters dictionary that are converted to `URLComponents` (HTTP parameters/arguments) on the HTTP URL. Useful for debugging.
     public var parameters: [String: String] = [String: String]()
@@ -66,7 +57,7 @@ public final class LinkQuery<EntryType>: AbstractQuery where EntryType: EntryDec
      that you are performing your search on reference against.
      - Returns: A newly initialized QueryOn query.
      */
-    public static func `where`(field: EntryType.Fields, _ operation: Query.Operation) -> LinkQuery<EntryType> {
+    public static func `where`(field: EntryType.FieldKeys, _ operation: Query.Operation) -> LinkQuery<EntryType> {
         return LinkQuery<EntryType>.with(valueAtKeyPath: "fields.\(field.stringValue)", operation)
     }
 
@@ -92,7 +83,7 @@ public final class LinkQuery<EntryType>: AbstractQuery where EntryType: EntryDec
  Operations that are only available when querying `Entry`s on specific content types (i.e. content_type must be set)
  are available through this class.
  */
-public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodable & EntryQueryable {
+public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodable & FieldKeysQueryable {
 
     /// The parameters dictionary that are converted to `URLComponents` (HTTP parameters/arguments) on the HTTP URL. Useful for debugging.
     public var parameters: [String: String] = [String: String]()
@@ -121,7 +112,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
      that you are performing your select operation against.
      - Returns: A newly initialized QueryOn query.
      */
-    public static func `where`(field fieldsKey: EntryType.Fields, _ operation: Query.Operation) -> QueryOn<EntryType> {
+    public static func `where`(field fieldsKey: EntryType.FieldKeys, _ operation: Query.Operation) -> QueryOn<EntryType> {
         let query = QueryOn<EntryType>.where(valueAtKeyPath: "fields.\(fieldsKey.stringValue)", operation)
         return query
     }
@@ -146,7 +137,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
      that you are performing your select operation against.
      - Returns: A reference to the receiving query to enable chaining.
      */
-    public func `where`(field fieldsKey: EntryType.Fields, _ operation: Query.Operation) -> QueryOn<EntryType> {
+    public func `where`(field fieldsKey: EntryType.FieldKeys, _ operation: Query.Operation) -> QueryOn<EntryType> {
         self.where(valueAtKeyPath: "fields.\(fieldsKey.stringValue)", operation)
         return self
     }
@@ -174,7 +165,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
                              that you are performing your select operation against.
      - Returns: A newly initialized QueryOn query.
      */
-    public static func select(fieldsNamed fieldsKeys: [EntryType.Fields]) -> QueryOn<EntryType> {
+    public static func select(fieldsNamed fieldsKeys: [EntryType.FieldKeys]) -> QueryOn<EntryType> {
         let query = QueryOn<EntryType>()
         query.select(fieldsNamed: fieldsKeys)
         return query
@@ -205,7 +196,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
      that you are performing your select operation against.
      - Returns: A reference to the receiving query to enable chaining.
      */
-    @discardableResult public func select(fieldsNamed fieldsKeys: [EntryType.Fields]) -> QueryOn<EntryType> {
+    @discardableResult public func select(fieldsNamed fieldsKeys: [EntryType.FieldKeys]) -> QueryOn<EntryType> {
         let fieldPaths = fieldsKeys.map { $0.stringValue }
         try! self.select(fieldsNamed: fieldPaths)
         return self
@@ -230,7 +221,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
      - Parameter filterQuery: The optional filter query applied to the linked objects which are being searched.
      - Returns: A newly initialized QueryOn query.
      */
-    public static func `where`<LinkType>(linkAtField fieldsKey: EntryType.Fields,
+    public static func `where`<LinkType>(linkAtField fieldsKey: EntryType.FieldKeys,
                                          matches linkQuery: LinkQuery<LinkType>) -> QueryOn<EntryType> {
         let query = QueryOn<EntryType>()
         query.where(linkAtField: fieldsKey, matches: linkQuery)
@@ -257,7 +248,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
      - Parameter filterQuery: The optional filter query applied to the linked objects which are being searched.
      - Returns: A reference to the receiving query to enable chaining.
      */
-    @discardableResult public func `where`<LinkType>(linkAtField fieldsKey: EntryType.Fields,
+    @discardableResult public func `where`<LinkType>(linkAtField fieldsKey: EntryType.FieldKeys,
                                                      matches linkQuery: LinkQuery<LinkType>) -> QueryOn<EntryType> {
 
         parameters["fields.\(fieldsKey.stringValue).sys.contentType.sys.id"] = LinkType.contentTypeId
@@ -288,7 +279,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
      - Parameter targetId: The identifier of the entry or asset being linked to at the specified linking field.
      - Returns: A newly initialized QueryOn query.
      */
-    public static func `where`(linkAtField fieldsKey: EntryType.Fields,
+    public static func `where`(linkAtField fieldsKey: EntryType.FieldKeys,
                                hasTargetId targetId: String) -> QueryOn<EntryType> {
         let query = QueryOn<EntryType>()
         query.where(linkAtField: fieldsKey, hasTargetId: targetId)
@@ -313,7 +304,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
      - Parameter filterQuery: The optional filter query applied to the linked objects which are being searched.
      - Returns: A reference to the receiving query to enable chaining.
      */
-    @discardableResult public func `where`(linkAtField fieldsKey: EntryType.Fields,
+    @discardableResult public func `where`(linkAtField fieldsKey: EntryType.FieldKeys,
                                            hasTargetId targetId: String) -> QueryOn<EntryType> {
 
         let filterParameterName = "fields.\(fieldsKey.stringValue).sys.id"

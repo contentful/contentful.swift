@@ -8,10 +8,11 @@
 
 import Foundation
 
-/// A Space represents a collection of Content Types, Assets and Entries in Contentful
-public class Space: Resource, Decodable {
 
-    ///  System fields.
+/// A Space represents a collection of Content Types, Assets and Entries in Contentful
+public class Space: Resource, FlatResource, Decodable {
+
+    /// System fields.
     public let sys: Sys
 
     /// Available Locales for this Space
@@ -25,7 +26,7 @@ public class Space: Resource, Decodable {
         return sys.type
     }
 
-    // MARK: <ImmutableMappable>
+    // MARK: <Decodable>
 
     public required init(from decoder: Decoder) throws {
         let container       = try decoder.container(keyedBy: CodingKeys.self)
@@ -43,5 +44,5 @@ public class Space: Resource, Decodable {
 
 extension Space: EndpointAccessible {
 
-    static let endpoint = Endpoint.spaces
+    public static let endpoint = Endpoint.spaces
 }

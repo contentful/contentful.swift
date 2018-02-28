@@ -29,15 +29,6 @@ public protocol Integration {
     var version: String { get }
 }
 
-/**
- Conform to this protocol to directly receive raw JSON `Data` from the Contentful API via delegate methods.
- */
-public protocol DataDelegate {
-
-    /// Implement this method to directly handle data from the server and bypass the SDK's object mapping system.
-    func handleDataFetchedAtURL(_ data: Data, url: URL)
-}
-
 /// ClientConfiguration parameters for a client instance
 public struct ClientConfiguration {
 
@@ -47,8 +38,6 @@ public struct ClientConfiguration {
     /// Whether or not to use HTTPS connections, defaults to `true`
     public var secure = true
 
-    /// The delegate which will receive messages containing the raw JSON data fetched at a specified URL.
-    public var dataDelegate: DataDelegate?
     /// An optional configuration to override the date decoding strategy that is provided by the the SDK.
     public var dateDecodingStrategy: JSONDecoder.DateDecodingStrategy?
 

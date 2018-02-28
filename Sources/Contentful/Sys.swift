@@ -37,8 +37,8 @@ public struct Sys {
     /// The number denoting what published version of the resource is.
     public let revision: Int?
 
-    // The link describing the content type. Not present on `Asset` or `ContentType`
-    internal let contentTypeInfo: Link?
+    /// The link describing the resource type. Not present on `Asset` or `ContentType` resources.
+    public let contentTypeInfo: Link?
 }
 
 extension Sys: Decodable {

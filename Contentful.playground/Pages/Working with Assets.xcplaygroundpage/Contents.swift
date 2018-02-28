@@ -2,7 +2,6 @@
 import PlaygroundSupport
 PlaygroundPage.current.needsIndefiniteExecution = true
 import Contentful
-import Interstellar
 import AppKit
 
 //: In order to execute this playground, please build the "Contentful_macOS" scheme to build the SDK.

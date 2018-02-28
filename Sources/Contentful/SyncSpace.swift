@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Interstellar
 
 /// A container for the synchronized state of a Space
 public final class SyncSpace: Decodable {
@@ -40,7 +39,8 @@ public final class SyncSpace: Decodable {
         case deletedAssets
 
         // Query parameters.
-        internal var parameters: [String: String] {
+        public var parameters: [String: String] {
+
             let typeParameter = "type"
             switch self {
             case .all:

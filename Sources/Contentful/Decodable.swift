@@ -8,29 +8,18 @@
 
 import Foundation
 
-/**
- Classes conforming to this protocol can be passed into your Client instance so that fetch methods
- asynchronously returning MappedArrayResponse can be used and classes of your own definition can be returned.
-
- It's important to note that there is no special handling of locales so if using the locale=* query parameter,
- you will need to implement the special handing in your `init(from decoder: Decoder) throws` initializer for your class.
-
- Example:
-
- ```
- func fetchMappedEntries(with query: Query<Cat>,
- then completion: @escaping ResultsHandler<MappedArrayResponse<Cat>>) -> URLSessionDataTask?
- ```
- */
-public typealias EntryDecodable = Resource & EntryModellable
-
 
 /// Helper methods for decoding instances of the various types in your content model.
 public extension Decoder {
 
-    // The LinkResolver used by the SDK to cache and resolve links.
     internal var linkResolver: LinkResolver {
         return userInfo[.linkResolverContextKey] as! LinkResolver
+    }
+
+    /// The `TimeZone` the Decoder is using to offset dates by.
+    /// Set through `ClientConfiguration`.
+    public var timeZone: TimeZone? {
+        return userInfo[.timeZoneContextKey] as? TimeZone
     }
 
     internal var contentTypes: [ContentTypeId: EntryDecodable.Type] {
@@ -42,6 +31,12 @@ public extension Decoder {
             """)
         }
         return contentTypes
+    }
+
+    /// The localization context of the connected Contentful space necessary to properly serialize
+    /// entries and assets to Swift models from Contentful API responses.
+    public var localizationContext: LocalizationContext {
+        return userInfo[.localizationContextKey] as! LocalizationContext
     }
 
     /// Helper method to extract the sys property of a Contentful resource.
@@ -57,23 +52,6 @@ public extension Decoder {
         let fieldsContainer = try container.nestedContainer(keyedBy: keyType, forKey: .fields)
         return fieldsContainer
     }
-}
-
-internal extension EntryModellable where Self: EntryDecodable {
-    // This is a magic workaround for the fact that dynamic metatypes cannot be passed into
-    // initializers such as UnkeyedDecodingContainer.decode(Decodable.Type), yet static methods CAN
-    // be called on metatypes.
-    static func popEntryDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
-        let entryDecodable = try container.decode(self)
-        return entryDecodable
-    }
-}
-
-internal extension CodingUserInfoKey {
-    static let linkResolverContextKey = CodingUserInfoKey(rawValue: "linkResolverContext")!
-    static let timeZoneContextKey = CodingUserInfoKey(rawValue: "timeZoneContext")!
-    static let contentTypesContextKey = CodingUserInfoKey(rawValue: "contentTypesContext")!
-    static let localizationContextKey = CodingUserInfoKey(rawValue: "localizationContext")!
 }
 
 extension JSONDecoder {
@@ -96,6 +74,30 @@ extension JSONDecoder {
     public func update(with localizationContext: LocalizationContext) {
         userInfo[.localizationContextKey] = localizationContext
     }
+}
+
+internal extension Decodable where Self: EntryDecodable {
+    // This is a magic workaround for the fact that dynamic metatypes cannot be passed into
+    // initializers such as UnkeyedDecodingContainer.decode(Decodable.Type), yet static methods CAN
+    // be called on metatypes.
+    static func popEntryDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
+        let entryDecodable = try container.decode(self)
+        return entryDecodable
+    }
+}
+
+internal extension Decodable where Self: AssetDecodable {
+    static func popAssetDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
+        let assetDecodable = try container.decode(self)
+        return assetDecodable
+    }
+}
+
+internal extension CodingUserInfoKey {
+    internal static let linkResolverContextKey = CodingUserInfoKey(rawValue: "linkResolverContext")!
+    internal static let timeZoneContextKey = CodingUserInfoKey(rawValue: "timeZoneContext")!
+    internal static let contentTypesContextKey = CodingUserInfoKey(rawValue: "contentTypesContext")!
+    internal static let localizationContextKey = CodingUserInfoKey(rawValue: "localizationContext")!
 }
 
 // Fields JSON container.
@@ -160,26 +162,28 @@ internal class LinkResolver {
         }
     }
 
-    // Caches the callback to resolve the relationship represented by a Link at a later time.
+    internal func cache(resources: [FlatResource & Decodable]) {
+        for resource in resources {
+            if let asset = resource as? Asset {
+                dataCache.add(asset: asset)
+            } else if let entryDecodable = resource as? EntryDecodable {
+                dataCache.add(entry: entryDecodable)
+            }
+        }
+    }
 
+    // Caches the callback to resolve the relationship represented by a Link at a later time.
     internal func resolve(_ link: Link, callback: @escaping (Any) -> Void) {
         let key = DataCache.cacheKey(for: link)
-        if callbacks[key] == nil {
-            callbacks[key] = [callback]
-        } else {
-            callbacks[key]?.append(callback)
-        }
+        // Swift 4 API enables setting a default value, if none exists for the given key.
+        callbacks[key, default: []] += [callback]
     }
 
     internal func resolve(_ links: [Link], callback: @escaping (Any) -> Void) {
         let linksIdentifier: String = links.reduce(into: LinkResolver.linksArrayPrefix) { (id, link) in
             id += "," + DataCache.cacheKey(for: link)
         }
-        if callbacks[linksIdentifier] == nil {
-            callbacks[linksIdentifier] = [callback]
-        } else {
-            callbacks[linksIdentifier]?.append(callback)
-        }
+        callbacks[linksIdentifier, default: []] += [callback]
     }
 
     // Executes all cached callbacks to resolve links and then clears the callback cache and the data cache

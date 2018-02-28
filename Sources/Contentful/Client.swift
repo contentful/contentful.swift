@@ -7,12 +7,6 @@
 //
 
 import Foundation
-import Interstellar
-
-
-/// A tuple of data task, enabling the cancellation of http requests, and an `Observable` for the resulting
-/// items that were fetched from the Contentful Content Delivery API.
-public typealias TaskObservable<T> = (task: URLSessionDataTask?, observable: Observable<Result<T>>)
 
 /// The completion callback for an API request with a `Result<T>` containing the requested object of
 /// type `T` on success, or an error if the request was unsuccessful.
@@ -21,7 +15,7 @@ public typealias ResultsHandler<T> = (_ result: Result<T>) -> Void
 /// Client object for performing requests against the Contentful API.
 open class Client {
 
-    fileprivate let clientConfiguration: ClientConfiguration
+    public let clientConfiguration: ClientConfiguration
 
     /// The identifier of the space this Client is set to interface with.
     public let spaceId: String
@@ -46,7 +40,7 @@ open class Client {
     /// The JSONDecoder that the receiving client instance uses to deserialize JSON. The SDK will
     /// inject information about the locales to this decoder and use this information to normalize
     /// the fields dictionary of entries and assets.
-    public var jsonDecoder: JSONDecoder
+    public private(set) var jsonDecoder: JSONDecoder
 
     /**
      The persistence integration which will receive delegate messages from the `Client` when new
@@ -70,9 +64,6 @@ open class Client {
             self.urlSession = URLSession(configuration: configuration)
         }
     }
-
-    // The delegate which will receive messages containing the raw data fetched at a specified URL.
-    private var dataDelegate: DataDelegate?
 
     internal var urlSession: URLSession
 
@@ -127,7 +118,6 @@ open class Client {
         }
 
         self.persistenceIntegration = persistenceIntegration
-        self.dataDelegate = clientConfiguration.dataDelegate
         let contentfulHTTPHeaders = [
             "Authorization": "Bearer \(accessToken)",
             "X-Contentful-User-Agent": clientConfiguration.userAgentString(with: persistenceIntegration)
@@ -136,39 +126,50 @@ open class Client {
         self.urlSession = URLSession(configuration: sessionConfiguration)
     }
 
-    internal func url(endpoint: Endpoint, parameters: [String: String]? = nil) -> URL? {
-        let pathComponent = endpoint.rawValue
-        var components: URLComponents?
+    deinit {
+        urlSession.invalidateAndCancel()
+    }
+
+    /// Returns an optional URL for the specified endpoint with it's query paramaters.
+    ///
+    /// - Parameters:
+    ///   - endpoint: The delivery/preview API endpoint
+    ///   - parameters: A dictionary of query parameters which be appended at the end of the URL in a URL safe format.
+    /// - Returns: A valid URL for the Content delivery or preview API, or nil if the URL could not be constructed.
+    public func url(endpoint: Endpoint, parameters: [String: String]? = nil) -> URL {
+        var components: URLComponents
 
         switch endpoint {
         case .spaces:
-            components = URLComponents(string: "\(scheme)://\(host)/spaces/\(spaceId)/\(pathComponent)")
+            components = URLComponents(string: "\(scheme)://\(host)/spaces/\(spaceId)/\(endpoint.pathComponent)")!
         case .assets, .contentTypes, .locales, .entries, .sync:
-            components = URLComponents(string: "\(scheme)://\(host)/spaces/\(spaceId)/environments/\(environmentId)/\(pathComponent)")
+            components = URLComponents(string: "\(scheme)://\(host)/spaces/\(spaceId)/environments/\(environmentId)/\(endpoint.pathComponent)")!
         }
-        assert(components != nil)
 
         let queryItems: [URLQueryItem]? = parameters?.map { (key, value) in
             return URLQueryItem(name: key, value: value)
         }
-        components?.queryItems = queryItems
+        components.queryItems = queryItems
 
-        guard let url = components?.url else { return nil }
+        let url = components.url!
         return url
     }
 
-    internal func fetch<DecodableType: Decodable>(url: URL?,
-                        then completion: @escaping ResultsHandler<DecodableType>) -> URLSessionDataTask? {
 
-        guard let url = url else {
-            completion(Result.error(SDKError.invalidURL(string: "")))
-            return nil
-        }
+    /// This is a generic fetch method which will decode the returned JSON from any URL and pass the
+    /// decoded result back in a completion handler wrapped in a `Result` instance. Use this method if you prefer
+    /// to specify your `Decodable` types and interfaces yourself rather than using the semantics provided by the SDK.
+    ///
+    /// - Parameters:
+    ///   - url: The optional URL representing the endpoint & query parameters for returning JSON.
+    ///   - completion: The completion handler which takes in a result wrapping your decoded type.
+    /// - Returns: Returns the URLSessionDataTask of the request which can be used for request cancellation.
+    public func fetch<DecodableType: Decodable>(url: URL,
+                                                then completion: @escaping ResultsHandler<DecodableType>) -> URLSessionDataTask {
 
         let finishDataFetch: (ResultsHandler<Data>) = { result in
             switch result {
             case .success(let mappableData):
-                self.dataDelegate?.handleDataFetchedAtURL(mappableData, url: url)
                 self.handleJSON(mappableData, completion)
             case .error(let error):
                 completion(Result.error(error))
@@ -180,7 +181,7 @@ open class Client {
                 // Now that we have all the locale information, start callback chain.
                 finishDataFetch(dataResult)
             } else {
-                self.fetchLocales { localesResult in
+                self.fetchLocalesIfNecessary { localesResult in
                     switch localesResult {
                     case .success:
                         // Trigger chain with data we're currently interested in.
@@ -195,7 +196,15 @@ open class Client {
         return task
     }
 
-    internal func fetch(url: URL, completion: @escaping ResultsHandler<Data>) -> URLSessionDataTask {
+
+    /// This is the base fetch method which all other fetch methods delegate to. Use it if you want to
+    /// get back raw `Data` objects and handle JSON parsing completely on your own.
+    ///
+    /// - Parameters:
+    ///   - url: The URL representing the endpoint & query parameters for returning JSON.
+    ///   - completion: The completion handler which takes in a Result wrapping the Data returned by the API.
+    /// - Returns: Returns the URLSessionDataTask of the request which can be used for request cancellation.
+    public func fetch(url: URL, then completion: @escaping ResultsHandler<Data>) -> URLSessionDataTask {
         let task = urlSession.dataTask(with: url) { data, response, error in
             if let data = data {
                 if self.didHandleRateLimitError(data: data, response: response, completion: completion) == true {
@@ -235,11 +244,6 @@ open class Client {
 
         task.resume()
         return task
-    }
-
-    internal func fetch(url: URL) ->  (task: URLSessionDataTask?, observable: Observable<Result<Data>>) {
-        let asyncDataTask: AsyncDataTask<URL, Data> = fetch
-        return toObservable(parameter: url, asyncDataTask: asyncDataTask)
     }
 
     // Returns the rate limit reset.
@@ -298,13 +302,10 @@ open class Client {
             completion(Result.error(SDKError.unparseableJSON(data: data, errorMessage: "The SDK was unable to parse the JSON: \(error)")))
         }
     }
-    
-    deinit {
-        urlSession.invalidateAndCancel()
-    }
 }
 
 extension Client {
+
 
     /**
      Fetch all the locales belonging to the environment that was configured with the client.
@@ -312,13 +313,7 @@ extension Client {
      - Parameter completion: A handler being called on completion of the request.
      - Returns: The data task being used, enables cancellation of requests.
      */
-    @discardableResult public func fetchLocales(then completion: @escaping ResultsHandler<Array<Contentful.Locale>>) -> URLSessionDataTask? {
-        if let locales = self.locales {
-            let localeCodes = locales.map { $0.code }
-            persistenceIntegration?.update(localeCodes: localeCodes)
-            completion(Result.success(locales))
-            return nil
-        }
+    @discardableResult public func fetchLocales(then completion: @escaping ResultsHandler<ArrayResponse<Contentful.Locale>>) -> URLSessionDataTask {
 
         // The robust thing to do would be to fetch all pages of the `/locales` endpoint, however, pagination is not supported
         // at the moment. We also are not expecting any consumers to have > 1000 locales as Contentful subscriptions do not allow that.
@@ -346,20 +341,25 @@ extension Client {
                 return
             }
             self.localizationContext = localizationContext
-            completion(Result.success(locales))
+            completion(result)
         }
     }
 
-    /**
-     Fetch all the locales belonging to the environment that was configured with the client.
-
-     - Parameter completion: A handler being called on completion of the request.
-
-     - Returns: The `Observable` for the resulting array of locales.
-     */
-    @discardableResult public func fetchLocales() -> Observable<Result<Array<Contentful.Locale>>> {
-        let asyncDataTask: SignalBang<Array<Contentful.Locale>> = fetchLocales(then:)
-        return toObservable(closure: asyncDataTask).observable
+    @discardableResult internal func fetchLocalesIfNecessary(then completion: @escaping ResultsHandler<Array<Contentful.Locale>>) -> URLSessionDataTask? {
+        if let locales = self.locales {
+            let localeCodes = locales.map { $0.code }
+            persistenceIntegration?.update(localeCodes: localeCodes)
+            completion(Result.success(locales))
+            return nil
+        }
+        return fetchLocales { result in
+            switch result {
+            case .success(let localesResponse):
+                completion(Result.success(localesResponse.items))
+            case .error(let error):
+                completion(Result.error(error))
+            }
+        }
     }
 }
 
@@ -383,68 +383,9 @@ extension Client {
             completion(result)
         }
     }
-
-    /**
-     Fetch the space this client is constrained to.
-
-     - Returns: A tuple of data task and a signal for the resulting Space.
-     */
-
-    @discardableResult public func fetchSpace() -> Observable<Result<Space>> {
-        let asyncDataTask: SignalBang<Space> = fetchSpace(then:)
-        return toObservable(closure: asyncDataTask).observable
-    }
 }
 
 extension Client {
-    /**
-     Fetch a single Asset from Contentful.
-
-     - Parameter id: The identifier of the Asset to be fetched.
-     - Parameter completion: A handler being called on completion of the request.
-
-     - Returns: The data task being used, enables cancellation of requests.
-     */
-    @discardableResult public func fetchAsset(id: String, then completion: @escaping ResultsHandler<Asset>) -> URLSessionDataTask? {
-        return fetch(Asset.self, id: id, then: completion)
-    }
-
-    /**
-     Fetch a single Asset from Contentful.
-
-     - Parameter id: The identifier of the Asset to be fetched.
-
-     - Returns: The `Observable` for the resulting Asset.
-     */
-    @discardableResult public func fetchAsset(id: String) -> Observable<Result<Asset>> {
-        let asyncDataTask: AsyncDataTask<String, Asset> = fetchAsset(id:then:)
-        return toObservable(parameter: id, asyncDataTask: asyncDataTask).observable
-    }
-
-    /**
-     Fetch a collection of Assets from Contentful matching the specified query.
-
-     - Parameter query: The AssetQuery object to match results against.
-     - Parameter completion: A handler being called on completion of the request.
-
-     - Returns: The data task being used, enables cancellation of requests.
-     */
-    @discardableResult public func fetchAssets(matching query: AssetQuery? = nil,
-                                               then completion: @escaping ResultsHandler<ArrayResponse<Asset>>) -> URLSessionDataTask? {
-        return fetch(url: url(endpoint: .assets, parameters: query?.parameters), then: completion)
-    }
-
-    /**
-     Fetch a collection of Assets from Contentful matching the specified query.
-
-     - Parameter query: The AssetQuery object to match results against.
-     - Returns: The `Observable` for the resulting array of Assets.
-     */
-    @discardableResult public func fetchAssets(matching query: AssetQuery? = nil) -> Observable<Result<ArrayResponse<Asset>>> {
-        let asyncDataTask: AsyncDataTask<AssetQuery?, ArrayResponse<Asset>> = fetchAssets(matching:then:)
-        return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
-    }
-
     /**
      Fetch the underlying media file as `Data`.
 
@@ -453,36 +394,38 @@ extension Client {
      - Returns: The `Observable` for the `Data` result.
 
      */
-    @discardableResult public func fetchData(for asset: AssetProtocol, with imageOptions: [ImageOption] = []) -> Observable<Result<Data>> {
+    @discardableResult public func fetchData(for asset: AssetProtocol,
+                                             with imageOptions: [ImageOption] = [],
+                                             then completion: @escaping ResultsHandler<Data>) -> URLSessionDataTask? {
         do {
-            return fetch(url: try asset.url(with: imageOptions)).observable
+            let url = try asset.url(with: imageOptions)
+            return fetch(url: url, then: completion)
         } catch let error {
-            let observable = Observable<Result<Data>>()
-            observable.update(Result.error(error))
-            return observable
+            completion(Result.error(error))
+            return nil
         }
     }
 }
 
-
-// New way of interacting to be made public in future pull requests.
 extension Client {
 
-    @discardableResult internal func fetch<ResourceType, QueryType>(_ resourceType: ResourceType.Type, matching query: QueryType,
-        then completion: @escaping ResultsHandler<ArrayResponse<ResourceType>>) -> URLSessionDataTask?
-        where ResourceType: EndpointAccessible & ResourceQueryable, QueryType == ResourceType.QueryType {
-            return fetch(url: url(endpoint: ResourceType.endpoint, parameters: query.parameters), then: completion)
-    }
-
-    @discardableResult internal func fetch<ResourceType>(_ resourceType: ResourceType.Type,
-                                                         id: String,
-                                                         then completion: @escaping ResultsHandler<ResourceType>) -> URLSessionDataTask?
-        where ResourceType: Resource & Decodable & EndpointAccessible {
+    /// Fetch a resource by id: available resource types that match this functions constraints are:
+    /// `Space`, `Asset`, `ContentType`, `Entry`, or any of your own types conforming to `EntryDecodable` or `AssetDecodable`.
+    ///
+    /// - Parameters:
+    ///   - resourceType: A reference to the Swift type which conforms to `Decodable & EndpointAccessible`
+    ///   - id: The identifier of the resource which should be fetched.
+    ///   - completion: The handler being called on completion of the request with a Result wrapping your decoded type or an error.
+    /// - Returns: A reference to the URLSessionDataTask to enable cancelling the request.
+    @discardableResult public func fetch<ResourceType>(_ resourceType: ResourceType.Type,
+                                                       id: String,
+                                                       then completion: @escaping ResultsHandler<ResourceType>) -> URLSessionDataTask
+        where ResourceType: Decodable & EndpointAccessible {
 
             // If the resource is not an entry, then don't worry about fetching with includes.
             if resourceType != EntryDecodable.self && resourceType != Entry.self {
                 var url = self.url(endpoint: ResourceType.endpoint)
-                url?.appendPathComponent(id)
+                url.appendPathComponent(id)
                 return fetch(url: url, then: completion)
             }
 
@@ -501,167 +444,51 @@ extension Client {
             return fetch(url: url(endpoint: ResourceType.endpoint, parameters: query.parameters), then: fetchCompletion)
     }
 
-    @discardableResult internal func fetch<EntryType>(matching query: QueryOn<EntryType>,
-                                                      then completion: @escaping ResultsHandler<MappedArrayResponse<EntryType>>) -> URLSessionDataTask? {
+    /// This is a generic fetch method which can be used to fetch collections of `ContentType`, `Entry`, and `Asset` instances.
+    ///
+    /// - Parameters:
+    ///   - resourceType: A reference to the concrete resource class which conforms to `Decodable & EndpointAccessible & ResourceQueryable`
+    ///   - query: The query of type `ResourceType.QueryType` to be used to match results againtst.
+    ///   - completion: The handler being called on completion of the request with a Result wrapping an ArrayResponse of decoded type or an error.
+    /// - Returns: A reference to the URLSessionDataTask to enable cancelling the request.
+    @discardableResult public func fetchArray<ResourceType, QueryType>(of resourceType: ResourceType.Type,
+                                                                       matching query: QueryType? = nil,
+                                                                       then completion: @escaping ResultsHandler<ArrayResponse<ResourceType>>) -> URLSessionDataTask
+        where ResourceType: ResourceQueryable, QueryType == ResourceType.QueryType {
+            return fetch(url: url(endpoint: ResourceType.endpoint, parameters: query?.parameters ?? [:]), then: completion)
+    }
+
+    /// This is a generic fetch method which can be used to fetch collections of `EntryDecodable` instances of your own definition.
+    ///
+    /// - Parameters:
+    ///   - entryType: A reference to the concrete Swift class conforming to `EntryDecodable` to be returned in the ArrayResponse.
+    ///   - query: The `QueryOn<EntryType>` to be used to match results againtst.
+    ///   - completion: The handler being called on completion of the request with a Result wrapping an ArrayResponse of decoded type or an error.
+    /// - Returns: A reference to the URLSessionDataTask to enable cancelling the request.
+    @discardableResult public func fetchArray<EntryType>(of entryType: EntryType.Type,
+                                                         matching query: QueryOn<EntryType>,
+                                                         then completion: @escaping ResultsHandler<ArrayResponse<EntryType>>) -> URLSessionDataTask {
         let url = self.url(endpoint: .entries, parameters: query.parameters)
         return fetch(url: url, then: completion)
     }
 
-    @discardableResult internal func fetch(matching query: Query,
-                                           then completion: @escaping ResultsHandler<MixedMappedArrayResponse>) -> URLSessionDataTask? {
+    /// This is a fetch method that is capable of returning heterogenous collections in the callback. The result returned
+    /// the completion callback will be a `MixedArrayResponse` in which each element in the `items` array may be a different `EntryDecodable` type.
+    ///
+    /// - Parameters:
+    ///   - query: The `Query` with which to match the results against.
+    ///   - completion: The handler being called on completion of the request with a Result wrapping your decoded type or an error.
+    /// - Returns: A reference to the URLSessionDataTask to enable cancelling the request.
+    @discardableResult public func fetchArray(matching query: Query,
+                                              then completion: @escaping ResultsHandler<MixedArrayResponse>) -> URLSessionDataTask {
         let url = self.url(endpoint: .entries, parameters: query.parameters)
         return fetch(url: url, then: completion)
     }
 }
-
-extension Client {
-    /**
-     Fetch a single Content Type from Contentful.
-
-     - Parameter id: The identifier of the Content Type to be fetched.
-     - Parameter completion: A handler being called on completion of the request.
-
-     - Returns: The data task being used, enables cancellation of requests.
-     */
-    @discardableResult public func fetchContentType(id: String,
-                                                    then completion: @escaping ResultsHandler<ContentType>) -> URLSessionDataTask? {
-        return fetch(ContentType.self, id: id, then: completion)
-    }
-
-    /**
-     Fetch a single Content Type from Contentful.
-
-     - Parameter id: The identifier of the Content Type to be fetched.
-
-     - Returns: A tuple of data task and a signal for the resulting Content Type.
-     */
-    @discardableResult public func fetchContentType(id: String) -> Observable<Result<ContentType>> {
-        let asyncDataTask: AsyncDataTask<String, ContentType> = fetchContentType(id:then:)
-        return toObservable(parameter: id, asyncDataTask: asyncDataTask).observable
-    }
-
-    /**
-     Fetch a collection of Content Types from Contentful.
-
-     - Parameter matching:   Optional list of search parameters the Content Types must match.
-     - Parameter completion: A handler being called on completion of the request.
-
-     - Returns: The data task being used, enables cancellation of requests.
-     */
-    @discardableResult public func fetchContentTypes(matching query: ContentTypeQuery? = nil,
-                                                     then completion: @escaping ResultsHandler<ArrayResponse<ContentType>>) -> URLSessionDataTask? {
-        return fetch(url: url(endpoint: .contentTypes, parameters: query?.parameters), then: completion)
-    }
-
-    /**
-     Fetch a collection of Content Types from Contentful.
-
-     - Parameter matching: Optional list of search parameters the Content Types must match.
-
-     - Returns: A tuple of data task and a signal for the resulting array of Content Types.
-     */
-    @discardableResult public func fetchContentTypes(matching query: ContentTypeQuery? = nil) -> Observable<Result<ArrayResponse<ContentType>>> {
-        let asyncDataTask: AsyncDataTask<ContentTypeQuery?, ArrayResponse<ContentType>> = fetchContentTypes(matching:then:)
-        return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
-    }
-}
-
-extension Client {
-    /**
-     Fetch a single Entry from Contentful.
-
-     - Parameter id: The identifier of the Entry to be fetched.
-     - Parameter completion: A handler being called on completion of the request.
-
-     - Returns: The data task being used, enables cancellation of requests.
-     */
-    @discardableResult public func fetchEntry(id: String,
-                                              then completion: @escaping ResultsHandler<Entry>) -> URLSessionDataTask? {
-        let fetchEntriesCompletion: (Result<ArrayResponse<Entry>>) -> Void = { result in
-            switch result {
-            case .success(let entries) where entries.items.first != nil:
-                completion(Result.success(entries.items.first!))
-            case .error(let error):
-                completion(Result.error(error))
-            default:
-                completion(Result.error(SDKError.noEntryFoundFor(id: id)))
-            }
-        }
-
-        let query = Query.where(sys: .id, .equals(id))
-        return fetchEntries(matching: query, then: fetchEntriesCompletion)
-    }
-
-    /**
-     Fetch a single Entry from Contentful.
-
-     - Parameter id: The identifier of the Entry to be fetched.
-
-     - Returns: A tuple of data task and a signal for the resulting Entry.
-     */
-    @discardableResult public func fetchEntry(id: String) ->  Observable<Result<Entry>> {
-        let asyncDataTask: AsyncDataTask<String, Entry> = fetchEntry(id:then:)
-        return toObservable(parameter: id, asyncDataTask: asyncDataTask).observable
-    }
-
-    /**
-     Fetch a collection of entries from Contentful matching the specified query. This method does not
-     specify the content_type in the query parameters, so the entries returned in the results can be
-     of any type.
-
-     - Parameter query: The query object to match results againts.
-     - Parameter completion: A handler being called on completion of the request.
-
-     - Returns: The data task being used, enables cancellation of requests.
-     */
-    @discardableResult public func fetchEntries(matching query: Query? = nil,
-                                                then completion: @escaping ResultsHandler<ArrayResponse<Entry>>) -> URLSessionDataTask? {
-        let url = self.url(endpoint: .entries, parameters: query?.parameters)
-        return fetch(url: url, then: completion)
-    }
-
-    /**
-     Fetch a collection of entries from Contentful matching the specified query. This method does not
-     specify the content_type in the query parameters, so the entries returned in the results can be
-     of any type.
-     - Parameter query: The query object to match results againts.
-
-     - Returns: A tuple of data task and an observable for the resulting array of Entry's.
-     */
-    @discardableResult public func fetchEntries(matching query: Query? = nil) -> Observable<Result<ArrayResponse<Entry>>> {
-        let asyncDataTask: AsyncDataTask<Query?, ArrayResponse<Entry>> = fetchEntries(matching:then:)
-        return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
-    }
-}
-
 
 // MARK: Sync
 
 extension Client {
-
-    /**
-     Perform a synchronization operation, updating the passed in `SyncSpace` object with
-     latest content from Contentful. If the passed in `SyncSpace` is a new empty instance with an empty
-     sync token, a full synchronization will be done.
-
-     Calling this will mutate the instance and also return a reference to itself to the completion
-     handler in order to allow chaining of operations.
-
-     - Parameter syncSpace: the relevant `SyncSpace` to perform the subsequent sync on. Defaults to a new empty instance of sync space.
-     - Parameter syncableTypes: The types that can be synchronized.
-
-     - Returns: An `Observable` which will be fired when the `SyncSpace` is fully synchronized with Contentful.
-     */
-    @discardableResult public func sync(for syncSpace: SyncSpace = SyncSpace(),
-                                        syncableTypes: SyncSpace.SyncableTypes = .all) -> Observable<Result<SyncSpace>> {
-
-        let observable = Observable<Result<SyncSpace>>()
-        self.sync(for: syncSpace, syncableTypes: syncableTypes) { result in
-            observable.update(result)
-        }
-        return observable
-    }
-
 
     /**
      Perform a synchronization operation, updating the passed in `SyncSpace` object with

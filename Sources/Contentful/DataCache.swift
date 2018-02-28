@@ -12,11 +12,6 @@ internal class DataCache {
 
     static let cacheKeyDelimiter = "_"
 
-    internal static func cacheKey(for resource: Resource) -> String {
-        let cacheKey = DataCache.cacheKey(id: resource.sys.id, linkType: resource.sys.type)
-        return cacheKey
-    }
-
     internal static func cacheKey(for link: Link) -> String {
         let linkType: String
         switch link {
@@ -39,11 +34,11 @@ internal class DataCache {
     var entryCache = Dictionary<String, Any>()
 
     internal func add(asset: Asset) {
-        assetCache[DataCache.cacheKey(for: asset)] = asset
+        assetCache[DataCache.cacheKey(id: asset.id, linkType: "Asset")] = asset
     }
 
     internal func add(entry: EntryDecodable) {
-        entryCache[DataCache.cacheKey(for: entry)] = entry
+        entryCache[DataCache.cacheKey(id: entry.id, linkType: "Entry")] = entry
     }
 
     internal func asset(for identifier: String) -> Asset? {

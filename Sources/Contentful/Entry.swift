@@ -8,13 +8,33 @@
 
 import Foundation
 
+/**
+ Classes conforming to this protocol can be passed into your Client instance so that fetch methods
+ asynchronously returning MappedCollection can be used and classes of your own definition can be returned.
+
+ It's important to note that there is no special handling of locales so if using the locale=* query parameter,
+ you will need to implement the special handing in your `init(from decoder: Decoder) throws` initializer for your class.
+
+ Example:
+
+ ```
+ func fetchMappedEntries(with query: Query<Cat>,
+ then completion: @escaping ResultsHandler<MappedArrayResponse<Cat>>) -> URLSessionDataTask?
+ ```
+ */
+public protocol EntryDecodable: FlatResource, Decodable, EndpointAccessible {
+    /// The identifier of the Contentful content type that will map to this type of `EntryPersistable`
+    static var contentTypeId: ContentTypeId { get }
+}
+
+public extension EndpointAccessible where Self: EntryDecodable {
+    static var endpoint: Endpoint {
+        return Endpoint.entries
+    }
+}
+
 /// An Entry represents a typed collection of data in Contentful
 public class Entry: LocalizableResource {
-
-    /// The language identifier. Generally in the format language-region or language-dialect e.g: en-US, de-DE.
-    public var localeCode: String? {
-        return sys.locale
-    }
 
     /// A convenience subscript operator to access the fields dictionary directly and return a String?
     public subscript(key: String) -> String? {
@@ -69,7 +89,7 @@ public class Entry: LocalizableResource {
 
 extension Entry: EndpointAccessible {
 
-    static let endpoint = Endpoint.entries
+    public static let endpoint = Endpoint.entries
 }
 
 extension Entry: ResourceQueryable {

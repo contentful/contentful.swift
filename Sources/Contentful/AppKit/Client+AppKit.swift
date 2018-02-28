@@ -8,7 +8,6 @@
 
 #if os(macOS)
 import Foundation
-import Interstellar
 import AppKit
 
 extension Client {
@@ -17,16 +16,15 @@ extension Client {
 
      - returns: The signal for the `NSImage` result
      */
-    public func fetchImage(for asset: Asset, with imageOptions: [ImageOption] = []) -> Observable<Result<NSImage>> {
-        return self.fetchData(for: asset, with: imageOptions).flatMap { result -> Observable<Result<NSImage>> in
-
-            let imageResult = result.flatMap { data -> Result<NSImage> in
-                if let image = NSImage(data: data) {
-                    return Result.success(image)
-                }
-                return Result.error(SDKError.unableToDecodeImageData)
+    @discardableResult public func fetchImage(for asset: Asset,
+                                              with imageOptions: [ImageOption] = [],
+                                              then completion: @escaping ResultsHandler<NSImage>) -> URLSessionDataTask? {
+        return fetchData(for: asset, with: imageOptions) { result in
+            if let imageData = result.value, let image = NSImage(data: imageData) {
+                completion(Result.success(image))
+                return
             }
-            return Observable<Result<NSImage>>(imageResult)
+            completion(Result.error(SDKError.unableToDecodeImageData))
         }
     }
 }
