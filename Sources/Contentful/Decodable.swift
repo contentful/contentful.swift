@@ -22,7 +22,7 @@ import Foundation
  then completion: @escaping ResultsHandler<MappedArrayResponse<Cat>>) -> URLSessionDataTask?
  ```
  */
-public typealias EntryDecodable = Resource & EntryModellable
+public typealias EntryDecodable = Resource & EntryModel
 
 
 /// Helper methods for decoding instances of the various types in your content model.
@@ -44,6 +44,10 @@ public extension Decoder {
         return sys
     }
 
+    public func id() throws -> String {
+        return try sys().id
+    }
+
     /// Extract the nested JSON container for the "fields" dictionary present in Entry and Asset resources.
     public func contentfulFieldsContainer<NestedKey>(keyedBy keyType: NestedKey.Type) throws -> KeyedDecodingContainer<NestedKey> {
         let container = try self.container(keyedBy: LocalizableResource.CodingKeys.self)
@@ -52,7 +56,11 @@ public extension Decoder {
     }
 }
 
-internal extension EntryModellable where Self: EntryDecodable {
+internal class KeyedFieldsDecodingContainer {
+    // - methods would give you special KeyedFieldsContainer which owns the regular container and it will get value for key and walk down the fallback chain for you. preserve localization scheme.
+}
+
+internal extension EntryModel where Self: EntryDecodable {
     // This is a magic workaround for the fact that dynamic metatypes cannot be passed into
     // initializers such as UnkeyedDecodingContainer.decode(Decodable.Type), yet static methods CAN
     // be called on metatypes.
@@ -87,6 +95,10 @@ extension JSONDecoder {
      */
     public func update(with localizationContext: LocalizationContext) {
         userInfo[.localizationContextKey] = localizationContext
+    }
+
+    public func setContentTypes(_ types: [EntryDecodable.Type]) {
+        userInfo[.contentTypesContextKey] = types
     }
 }
 

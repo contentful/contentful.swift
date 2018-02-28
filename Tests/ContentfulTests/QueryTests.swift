@@ -156,13 +156,8 @@ class QueryTests: XCTestCase {
 
     func testQueryReturningClientDefinedModelUsingFields() {
         let expectation = self.expectation(description: "Select operator expectation")
-        let query = QueryOn<Cat>.select(fieldsNamed: [
-            .bestFriend,
-            .color,
-            .name,
-        ])
 
-        QueryTests.client.fetchMappedEntries(matching: query) { result in
+        QueryTests.client.fetch(Cat.self, .select(fieldsNamed: [.bestFriend, .color, .name])) { result in
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items

@@ -50,7 +50,7 @@ open class Client {
     /// The JSONDecoder that the receiving client instance uses to deserialize JSON. The SDK will
     /// inject information about the locales to this decoder and use this information to normalize
     /// the fields dictionary of entries and assets.
-    public var jsonDecoder: JSONDecoder
+    public private(set) var jsonDecoder: JSONDecoder
 
     /**
      The persistence integration which will receive delegate messages from the `Client` when new
@@ -165,6 +165,7 @@ open class Client {
         return url
     }
 
+    // TODO: make this function public
     internal func fetch<DecodableType: Decodable>(url: URL?,
                         then completion: @escaping ResultsHandler<DecodableType>) -> URLSessionDataTask? {
 
@@ -452,7 +453,7 @@ extension Client {
 // New way of interacting to be made public in future pull requests.
 extension Client {
 
-    @discardableResult internal func fetch<ResourceType, QueryType>(_ resourceType: ResourceType.Type, matching query: QueryType,
+    @discardableResult internal func fetch<ResourceType, QueryType>(_ resourceType: ResourceType.Type, _ query: QueryType,
         then completion: @escaping ResultsHandler<ArrayResponse<ResourceType>>) -> URLSessionDataTask?
         where ResourceType: EndpointAccessible & ResourceQueryable, QueryType == ResourceType.QueryType {
             return fetch(url: url(endpoint: ResourceType.endpoint, parameters: query.parameters), then: completion)
@@ -478,13 +479,19 @@ extension Client {
             return fetch(url: url(endpoint: ResourceType.endpoint, parameters: query.parameters), then: fetchCompletion)
     }
 
-    @discardableResult internal func fetch<EntryType>(matching query: QueryOn<EntryType>,
+//    @discardableResult internal func fetch<EntryType>(matching query: QueryOn<EntryType>,
+//                                                      then completion: @escaping ResultsHandler<MappedArrayResponse<EntryType>>) -> URLSessionDataTask? {
+//        let url = self.url(endpoint: .entries, parameters: query.parameters)
+//        return fetch(url: url, then: completion)
+//    }
+
+    @discardableResult internal func fetch<EntryType>(_ entryType: EntryType.Type, _ query: QueryOn<EntryType>,
                                                       then completion: @escaping ResultsHandler<MappedArrayResponse<EntryType>>) -> URLSessionDataTask? {
         let url = self.url(endpoint: .entries, parameters: query.parameters)
         return fetch(url: url, then: completion)
     }
 
-    @discardableResult internal func fetch(matching query: Query,
+    @discardableResult internal func fetch(_ query: Query,
                                            then completion: @escaping ResultsHandler<MixedMappedArrayResponse>) -> URLSessionDataTask? {
         let url = self.url(endpoint: .entries, parameters: query.parameters)
         return fetch(url: url, then: completion)
