@@ -105,7 +105,7 @@ public class Ordering {
  conforms to ResourceQueryable in order to take advantage of the CodingKey fields available on your type.
  See: `ChainableQuery.order(by order: Ordering...)`
  */
-public class Ordered<EntryType>: Ordering where EntryType: QueryableEntry {
+public class Ordered<EntryType>: Ordering where EntryType: EntryQueryable {
 
     /**
      Initializer for creating a new Ordering operator.

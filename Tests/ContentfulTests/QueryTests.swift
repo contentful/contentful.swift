@@ -12,7 +12,7 @@ import Nimble
 import DVR
 import Interstellar
 
-final class Cat: EntryDecodable, QueryableEntry {
+final class Cat: EntryDecodable, EntryQueryable {
 
     static let contentTypeId: String = "cat"
 
@@ -49,7 +49,7 @@ final class Cat: EntryDecodable, QueryableEntry {
     }
 }
 
-final class City: EntryDecodable, QueryableEntry {
+final class City: EntryDecodable, EntryQueryable {
 
     static let contentTypeId: String = "1t9IbcfdCk6m04uISSsaIK"
 
@@ -68,7 +68,7 @@ final class City: EntryDecodable, QueryableEntry {
     }
 }
 
-final class Dog: EntryDecodable, QueryableEntry {
+final class Dog: EntryDecodable, EntryQueryable {
 
     static let contentTypeId: String = "dog"
 

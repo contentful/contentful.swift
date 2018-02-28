@@ -72,7 +72,7 @@ extension Entry: EndpointAccessible {
     static let endpoint = Endpoint.entries
 }
 
-extension Entry: QueryableResource {
+extension Entry: ResourceQueryable {
 
     public typealias QueryType = Query
 }

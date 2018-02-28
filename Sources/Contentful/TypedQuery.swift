@@ -9,7 +9,7 @@
 import Foundation
 
 /// A protocol enabling strongly typed queries to the Contentful Delivery API via the SDK.
-public protocol QueryableEntry {
+public protocol EntryQueryable {
 
     /// The CodingKey representing the names of each of the fields for the corresponding content type.
     /// These coding keys should be the same as those used when implementing Decodable.
@@ -18,7 +18,7 @@ public protocol QueryableEntry {
 
 
 // To be made available in the next public release.
-internal protocol QueryableResource {
+internal protocol ResourceQueryable {
 
     associatedtype QueryType: AbstractQuery
 }
@@ -33,7 +33,7 @@ public class Query: ResourceQuery, EntryQuery {}
  and see the init<LinkType: EntryDecodable>(whereLinkAt fieldNameForLink: String, matches filterQuery: FilterQuery<LinkType>? = nil) methods
  on QueryOn for example usage.
  */
-public final class LinkQuery<EntryType>: AbstractQuery where EntryType: EntryDecodable & QueryableEntry {
+public final class LinkQuery<EntryType>: AbstractQuery where EntryType: EntryDecodable & EntryQueryable {
 
     /// The parameters dictionary that are converted to `URLComponents` (HTTP parameters/arguments) on the HTTP URL. Useful for debugging.
     public var parameters: [String: String] = [String: String]()
@@ -92,7 +92,7 @@ public final class LinkQuery<EntryType>: AbstractQuery where EntryType: EntryDec
  Operations that are only available when querying `Entry`s on specific content types (i.e. content_type must be set)
  are available through this class.
  */
-public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodable & QueryableEntry {
+public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodable & EntryQueryable {
 
     /// The parameters dictionary that are converted to `URLComponents` (HTTP parameters/arguments) on the HTTP URL. Useful for debugging.
     public var parameters: [String: String] = [String: String]()

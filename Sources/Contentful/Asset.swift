@@ -155,7 +155,7 @@ extension Asset: EndpointAccessible {
     static let endpoint = Endpoint.assets
 }
 
-extension Asset: QueryableResource {
+extension Asset: ResourceQueryable {
 
     public typealias QueryType = AssetQuery
 }

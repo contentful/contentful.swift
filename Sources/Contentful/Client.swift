@@ -454,7 +454,7 @@ extension Client {
 
     @discardableResult internal func fetch<ResourceType, QueryType>(_ resourceType: ResourceType.Type, matching query: QueryType,
         then completion: @escaping ResultsHandler<ArrayResponse<ResourceType>>) -> URLSessionDataTask?
-        where ResourceType: EndpointAccessible & QueryableResource, QueryType == ResourceType.QueryType {
+        where ResourceType: EndpointAccessible & ResourceQueryable, QueryType == ResourceType.QueryType {
             return fetch(url: url(endpoint: ResourceType.endpoint, parameters: query.parameters), then: completion)
     }
 
