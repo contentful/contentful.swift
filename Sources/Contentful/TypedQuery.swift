@@ -23,6 +23,10 @@ public enum Endpoint: String {
     case assets
     case locales
     case sync
+
+    var path: String {
+        return rawValue
+    }
 }
 
 public protocol EndpointAccessible {

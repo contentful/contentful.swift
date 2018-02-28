@@ -66,7 +66,7 @@ class EntryTests: XCTestCase {
         let query = try! Query.order(by: Ordering(sys: .createdAt)).skip(theFirst: 9)
         waitUntilMatchingEntries(query) {
             expect($0.items.count).to(equal(1))
-            expect($0.items.first?.sys.id).to(equal("7qVBlCjpWE86Oseo40gAEY"))
+            expect($0.items.first?.sys.id).to(equal("garfield"))
         }
     }
 
@@ -75,7 +75,7 @@ class EntryTests: XCTestCase {
         waitUntilMatchingEntries(query) {
             if let entryLink = $0.items.first?.fields["bestFriend"] as? Link, let entry = entryLink.entry {
                 if let assetLink = entry.fields["image"] as? Link, let asset = assetLink.asset {
-                    expect(url(asset).absoluteString).to(equal("https://images.contentful.com/cfexampleapi/3MZPnjZTIskAIIkuuosCss/382a48dfa2cb16c47aa2c72f7b23bf09/happycatw.jpg"))
+                    expect(url(asset).absoluteString).to(equal("https://images.contentful.com/dumri3ebknon/happycat/1cd8c934c9cd9e0ced81729843973f8d/happycatw.jpg"))
                     return
                 }
             }
@@ -86,12 +86,31 @@ class EntryTests: XCTestCase {
 
     // MARK: Order related queries
 
-    static let orderedEntries = ["nyancat", "happycat", "garfield",
-        "finn", "jake", "6KntaYXaHSyIw8M6eo26OK", "4MU1s3potiUEM2G4okYOqw",
-        "5ETMRzkl9KM4omyMwKAOki", "ge1xHyH3QOWucKWCCAgIG", "7qVBlCjpWE86Oseo40gAEY"]
-    static let orderedEntriesByMultiple = ["4MU1s3potiUEM2G4okYOqw",
-        "ge1xHyH3QOWucKWCCAgIG", "6KntaYXaHSyIw8M6eo26OK", "7qVBlCjpWE86Oseo40gAEY",
-        "garfield", "5ETMRzkl9KM4omyMwKAOki", "jake", "nyancat", "finn", "happycat"]
+    static let orderedEntries = [
+        "finn",
+        "happycat",
+        "ge1xHyH3QOWucKWCCAgIG",
+        "nyancat",
+        "7qVBlCjpWE86Oseo40gAEY",
+        "jake",
+        "5ETMRzkl9KM4omyMwKAOki",
+        "6KntaYXaHSyIw8M6eo26OK",
+        "4MU1s3potiUEM2G4okYOqw",
+        "garfield"
+    ]
+
+    static let orderedEntriesByMultiple = [
+        "4MU1s3potiUEM2G4okYOqw",
+        "5ETMRzkl9KM4omyMwKAOki",
+        "6KntaYXaHSyIw8M6eo26OK",
+        "7qVBlCjpWE86Oseo40gAEY",
+        "finn",
+        "garfield",
+        "ge1xHyH3QOWucKWCCAgIG",
+        "happycat",
+        "jake",
+        "nyancat",
+    ]
 
     func testFetchEntriesInSpecifiedOrder() {
         let query = try! Query.order(by: Ordering(sys: .createdAt))
@@ -236,7 +255,7 @@ class EntryTests: XCTestCase {
                 expect(entry.fields["name"] as? String).to(equal("Nyan Cat"))
 
                 if let imageAsset = entry.fields.linkedAsset(at: "image") {
-                    expect(url(imageAsset).absoluteString).to(equal("https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png"))
+                    expect(url(imageAsset).absoluteString).to(equal("https://images.contentful.com/dumri3ebknon/nyancat/c78aa97bf55b7de229ee5a5f88261aa4/Nyan_cat_250px_frame.png"))
                 } else {
                     fail("Linked asset should exist.")
                 }
@@ -295,12 +314,12 @@ class EntryTests: XCTestCase {
     }
 
     func testFetchEntriesWithRangeSearch() {
-        let date = Date.fromComponents(year: 2015, month: 1, day: 1, hour: 0, minute: 0, second: 0)
+        let date = Date.fromComponents(year: 2018, month: 3, day: 1, hour: 0, minute: 0, second: 0)
         waitUntilMatchingEntries(Query.where(sys: .updatedAt, .isBefore(date))) {
             expect($0.items.count).to(equal(10))
         }
 
-        waitUntilMatchingEntries(Query.where(sys: .updatedAt, .isBefore("2015-01-01T00:00:00Z"))) {
+        waitUntilMatchingEntries(Query.where(sys: .updatedAt, .isBefore("2018-03-01T00:00:00Z"))) {
             expect($0.items.count).to(equal(10))
         }
     }

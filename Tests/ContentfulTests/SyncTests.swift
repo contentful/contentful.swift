@@ -94,8 +94,8 @@ class PreviewSyncTests: XCTestCase {
         var clientConfiguration = Contentful.ClientConfiguration()
         clientConfiguration.previewMode = true
         let client = TestClientFactory.testClient(withCassetteNamed: "PreviewSyncTests",
-                                     accessToken: "e5e8d4c5c122cf28fc1af3ff77d28bef78a3952957f15067bbc29f2f0dde0b50",
-                                     clientConfiguration: clientConfiguration)
+                                                  accessToken: "fd53c0a7a0a9bdd930efe1ec9d1f1bcc9b29628d5d4a7a409b160d00b1b2910b",
+                                                  clientConfiguration: clientConfiguration)
         return client
     }()
 
@@ -144,3 +144,4 @@ class PreviewSyncTests: XCTestCase {
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 }
+

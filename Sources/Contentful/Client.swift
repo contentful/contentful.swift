@@ -184,7 +184,7 @@ open class Client {
         }
 
         let task = fetch(url: url) { dataResult in
-            if url.lastPathComponent == "locales" {
+            if url.lastPathComponent == "locales" || url.lastPathComponent == self.spaceId {
                 // Now that we have all the locale information, start callback chain.
                 finishDataFetch(dataResult)
             } else {
@@ -299,7 +299,6 @@ extension Client {
         if let locales = self.locales {
             let localeCodes = locales.map { $0.code }
             persistenceIntegration?.update(localeCodes: localeCodes)
-
             completion(Result.success(locales))
             return nil
         }
@@ -350,7 +349,7 @@ extension Client {
             completion(Result.success(space))
             return nil
         }
-        return fetch(url: self.url(endpoint: .spaces)) { (result: Result<Space>) in
+        return fetch(url: url(endpoint: .spaces)) { (result: Result<Space>) in
             self.space = result.value
             completion(result)
         }

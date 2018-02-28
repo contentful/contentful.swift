@@ -12,7 +12,7 @@ import Foundation
 public class Space: Resource, Decodable, EndpointAccessible {
 
     public static let endpoint = Endpoint.spaces
-    
+
     ///  System fields.
     public let sys: Sys
 
@@ -42,33 +42,3 @@ public class Space: Resource, Decodable, EndpointAccessible {
         case locales
     }
 }
-//
-//// FIXME: Document
-//public class Environment: Resource, Decodable {
-//
-////    public static var endpoint = Endpoint.environments
-//
-//    public let sys: Sys
-//
-//    /// The name of this Environment
-//    public let name: String
-//
-//    /// Resource type ("Environment")
-//    public var type: String {
-//        return sys.type
-//    }
-//
-//    // MARK: <ImmutableMappable>
-//
-//    public required init(from decoder: Decoder) throws {
-//        let container       = try decoder.container(keyedBy: CodingKeys.self)
-//        sys                 = try container.decode(Sys.self, forKey: .sys)
-//        name                = try container.decode(String.self, forKey: .name)
-//    }
-//
-//    private enum CodingKeys: String, CodingKey {
-//        case sys
-//        case name
-//    }
-//}
-

@@ -164,7 +164,7 @@ extension Date: QueryableRange {
 
     /// The latitude of this location coordinate.
     public let latitude: Double
-    
+
     /// The longitude of this location coordinate.
     public let longitude: Double
 
