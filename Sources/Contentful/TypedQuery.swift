@@ -16,25 +16,9 @@ public protocol QueryableEntry {
     associatedtype Fields: CodingKey
 }
 
-public enum Endpoint: String {
-    case spaces         = ""
-    case contentTypes   = "content_types"
-    case entries
-    case assets
-    case locales
-    case sync
 
-    var path: String {
-        return rawValue
-    }
-}
-
-public protocol EndpointAccessible {
-    static var endpoint: Endpoint { get }
-}
-
-// FIXME: Document
-public protocol QueryableResource {
+// To be made available in the next public release.
+internal protocol QueryableResource {
 
     associatedtype QueryType: AbstractQuery
 }

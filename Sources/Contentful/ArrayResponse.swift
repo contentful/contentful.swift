@@ -45,12 +45,6 @@ public struct ArrayResponseError: Decodable {
     public let sys: ArrayResponseError.Sys
 }
 
-
-public extension ArrayResponse where ItemType: QueryableResource {
-
-    public typealias QueryType = ItemType.QueryType
-}
-
 /**
  A list of resources in Contentful
 

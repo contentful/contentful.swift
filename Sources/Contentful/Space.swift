@@ -9,9 +9,7 @@
 import Foundation
 
 /// A Space represents a collection of Content Types, Assets and Entries in Contentful
-public class Space: Resource, Decodable, EndpointAccessible {
-
-    public static let endpoint = Endpoint.spaces
+public class Space: Resource, Decodable {
 
     ///  System fields.
     public let sys: Sys
@@ -41,4 +39,9 @@ public class Space: Resource, Decodable, EndpointAccessible {
         case name
         case locales
     }
+}
+
+extension Space: EndpointAccessible {
+
+    static let endpoint = Endpoint.spaces
 }

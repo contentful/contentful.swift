@@ -35,8 +35,11 @@ public enum SDKError: Error {
      */
     case unparseableJSON(data: Data?, errorMessage: String)
 
-    /// Thrown when no entry is found matching a specific Entry id
+    /// Thrown when no entry is found matching a specified Entry id
     case noEntryFoundFor(id: String)
+
+    /// Thrown when no resource is found matching a specified id
+    case noResourceFoundFor(id: String)
 
     /**
      Thrown when the construction of a URL pointing to an underlying media file for an Asset is invalid.

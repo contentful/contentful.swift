@@ -140,6 +140,10 @@
 		ED4986FA20470D590014DCFE /* PreviewSyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED4986F820470D550014DCFE /* PreviewSyncTests.json */; };
 		ED4986FB20470D5A0014DCFE /* PreviewSyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED4986F820470D550014DCFE /* PreviewSyncTests.json */; };
 		ED4986FC20470D5A0014DCFE /* PreviewSyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED4986F820470D550014DCFE /* PreviewSyncTests.json */; };
+		ED4986FE2047107D0014DCFE /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4986FD2047107D0014DCFE /* Endpoints.swift */; };
+		ED4986FF2047107D0014DCFE /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4986FD2047107D0014DCFE /* Endpoints.swift */; };
+		ED4987002047107D0014DCFE /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4986FD2047107D0014DCFE /* Endpoints.swift */; };
+		ED4987012047107D0014DCFE /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4986FD2047107D0014DCFE /* Endpoints.swift */; };
 		ED52DB401EE94C8E00225140 /* RateLimitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED52DB3F1EE94C8E00225140 /* RateLimitTests.swift */; };
 		ED535E641F5E8E1300886D93 /* Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED535E631F5E8E1300886D93 /* Decodable.swift */; };
 		ED535E651F5E8E1300886D93 /* Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED535E631F5E8E1300886D93 /* Decodable.swift */; };
@@ -289,6 +293,7 @@
 		ED4986EE204707D90014DCFE /* SyncTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SyncTests.json; sourceTree = "<group>"; };
 		ED4986F3204708D70014DCFE /* ErrorTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ErrorTests.json; sourceTree = "<group>"; };
 		ED4986F820470D550014DCFE /* PreviewSyncTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PreviewSyncTests.json; sourceTree = "<group>"; };
+		ED4986FD2047107D0014DCFE /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
 		ED52DB3F1EE94C8E00225140 /* RateLimitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateLimitTests.swift; sourceTree = "<group>"; };
 		ED535E631F5E8E1300886D93 /* Decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decodable.swift; sourceTree = "<group>"; };
 		ED5F8F901F8F9EA200C86411 /* TypedQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypedQuery.swift; sourceTree = "<group>"; };
@@ -443,6 +448,7 @@
 			children = (
 				A19CA3DF1B836F2500A0EFCD /* Client.swift */,
 				A19CA3E11B8386CC00A0EFCD /* ClientConfiguration.swift */,
+				ED4986FD2047107D0014DCFE /* Endpoints.swift */,
 				ED3CBF191E7AD57100E5B02E /* Sys.swift */,
 				A15193A91BB91DE700FB83CD /* Space.swift */,
 				A15193AB1BB91FED00FB83CD /* ContentType.swift */,
@@ -983,6 +989,7 @@
 				ED5F8F9F1F94D52200C86411 /* QueryOperation.swift in Sources */,
 				A1BF6BBC1C0D0FBD00049712 /* SignalUtils.swift in Sources */,
 				A114BBC01C4FD3C300DE6679 /* SyncSpace.swift in Sources */,
+				ED4986FE2047107D0014DCFE /* Endpoints.swift in Sources */,
 				A10FF9DC1BBB4692001AA4E9 /* Field.swift in Sources */,
 				ED5F8F911F8F9EA200C86411 /* TypedQuery.swift in Sources */,
 				A19CA3E81B83890D00A0EFCD /* Resource.swift in Sources */,
@@ -1082,6 +1089,7 @@
 				ED5F8FA01F94D52200C86411 /* QueryOperation.swift in Sources */,
 				ED91C1451EDCB14D00F0FC0A /* Client+UIKit.swift in Sources */,
 				ED36B6F51E3BD052005581FD /* ArrayResponse.swift in Sources */,
+				ED4986FF2047107D0014DCFE /* Endpoints.swift in Sources */,
 				ED36B6F81E3BD052005581FD /* Client.swift in Sources */,
 				ED5F8F921F8F9EA200C86411 /* TypedQuery.swift in Sources */,
 				ED36B6F61E3BD052005581FD /* Date.swift in Sources */,
@@ -1115,6 +1123,7 @@
 				ED5F8FA11F94D52200C86411 /* QueryOperation.swift in Sources */,
 				ED2C99BB1ED5AE820039056E /* Client+UIKit.swift in Sources */,
 				ED36B7051E3BD052005581FD /* ArrayResponse.swift in Sources */,
+				ED4987002047107D0014DCFE /* Endpoints.swift in Sources */,
 				ED36B7081E3BD052005581FD /* Client.swift in Sources */,
 				ED5F8F931F8F9EA200C86411 /* TypedQuery.swift in Sources */,
 				ED36B7061E3BD052005581FD /* Date.swift in Sources */,
@@ -1148,6 +1157,7 @@
 				ED5F8FA21F94D52200C86411 /* QueryOperation.swift in Sources */,
 				ED36B7191E3BD053005581FD /* ClientConfiguration.swift in Sources */,
 				ED36B7151E3BD053005581FD /* ArrayResponse.swift in Sources */,
+				ED4987012047107D0014DCFE /* Endpoints.swift in Sources */,
 				ED36B7181E3BD053005581FD /* Client.swift in Sources */,
 				ED5F8F941F8F9EA200C86411 /* TypedQuery.swift in Sources */,
 				ED36B7161E3BD053005581FD /* Date.swift in Sources */,

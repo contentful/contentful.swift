@@ -10,6 +10,11 @@ import Foundation
 
 public typealias LocaleCode = String
 
+extension Locale: EndpointAccessible {
+
+    static let endpoint = Endpoint.locales
+}
+
 /// A Locale represents possible translations for Entry Fields
 public class Locale: Resource, Decodable {
 
@@ -43,7 +48,8 @@ public class Locale: Resource, Decodable {
         isDefault           = try container.decode(Bool.self, forKey: .isDefault)
         fallbackLocaleCode  = try container.decodeIfPresent(LocaleCode.self, forKey: .fallbackLocaleCode)
 
-        // FIXME: Explain why
+        // If we get locales as an array within a space, the sys property will not be present.
+        // Check if present, and if not, then manually construct a Sys object.
         if let sys = try container.decodeIfPresent(Sys.self, forKey: .sys) {
             self.sys = sys
         } else {

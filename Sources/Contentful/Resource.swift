@@ -248,7 +248,7 @@ extension LocalizableResource: Hashable {
 
 extension LocalizableResource: Equatable {}
 /// Equatable implementation for `LocalizableResource`
-public func ==(lhs: LocalizableResource, rhs: LocalizableResource) -> Bool {
+public func == (lhs: LocalizableResource, rhs: LocalizableResource) -> Bool {
     return lhs.id == rhs.id && lhs.sys.updatedAt == rhs.sys.updatedAt
 }
 

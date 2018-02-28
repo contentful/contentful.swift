@@ -150,9 +150,12 @@ public class Asset: LocalizableResource {
     }
 }
 
-extension Asset: QueryableResource, EndpointAccessible {
+extension Asset: EndpointAccessible {
 
-    public static let endpoint = Endpoint.assets
+    static let endpoint = Endpoint.assets
+}
+
+extension Asset: QueryableResource {
 
     public typealias QueryType = AssetQuery
 }

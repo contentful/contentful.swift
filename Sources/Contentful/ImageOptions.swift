@@ -132,7 +132,7 @@ public enum ImageOption: Equatable, Hashable {
 }
 
 /// Equatable implementation for `ImageOption`
-public func ==(lhs: ImageOption, rhs: ImageOption) -> Bool {
+public func == (lhs: ImageOption, rhs: ImageOption) -> Bool {
     // We don't need to check associated values, we only implement equatable to validate that
     // two ImageOptions of the same case can't be used in one request.
     switch (lhs, rhs) {

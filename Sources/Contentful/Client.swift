@@ -294,7 +294,12 @@ open class Client {
 
 extension Client {
 
-    // TODO: Document
+    /**
+     Fetch all the locales belonging to the environment that was configured with the client.
+
+     - Parameter completion: A handler being called on completion of the request.
+     - Returns: The data task being used, enables cancellation of requests.
+     */
     @discardableResult public func fetchLocales(then completion: @escaping ResultsHandler<Array<Contentful.Locale>>) -> URLSessionDataTask? {
         if let locales = self.locales {
             let localeCodes = locales.map { $0.code }
@@ -303,7 +308,8 @@ extension Client {
             return nil
         }
 
-        // TODO: Fetch all pages.
+        // The robust thing to do would be to fetch all pages of the `/locales` endpoint, however, pagination is not supported
+        // at the moment. We also are not expecting any consumers to have > 1000 locales as Contentful subscriptions do not allow that.
         let query = ResourceQuery.limit(to: QueryConstants.maxLimit)
         let url = self.url(endpoint: .locales, parameters: query.parameters)
         return fetch(url: url) { (result: Result<ArrayResponse<Contentful.Locale>>) in
@@ -328,6 +334,13 @@ extension Client {
         }
     }
 
+    /**
+     Fetch all the locales belonging to the environment that was configured with the client.
+
+     - Parameter completion: A handler being called on completion of the request.
+
+     - Returns: The `Observable` for the resulting array of locales.
+     */
     @discardableResult public func fetchLocales() -> Observable<Result<Array<Contentful.Locale>>> {
         let asyncDataTask: SignalBang<Array<Contentful.Locale>> = fetchLocales(then:)
         return toObservable(closure: asyncDataTask).observable
@@ -385,7 +398,7 @@ extension Client {
 
      - Parameter id: The identifier of the Asset to be fetched.
 
-     - Returns: A tuple of data task and a signal for the resulting Asset.
+     - Returns: The `Observable` for the resulting Asset.
      */
     @discardableResult public func fetchAsset(id: String) -> Observable<Result<Asset>> {
         let asyncDataTask: AsyncDataTask<String, Asset> = fetchAsset(id:then:)
@@ -436,11 +449,11 @@ extension Client {
 }
 
 
+// New way of interacting to be made public in future pull requests.
 extension Client {
 
-    @discardableResult internal func fetch<ResourceType, QueryType>(_ resourceType: ResourceType.Type,
-                                                                    matching query: QueryType,
-                                                                    then completion: @escaping ResultsHandler<ArrayResponse<ResourceType>>) -> URLSessionDataTask?
+    @discardableResult internal func fetch<ResourceType, QueryType>(_ resourceType: ResourceType.Type, matching query: QueryType,
+        then completion: @escaping ResultsHandler<ArrayResponse<ResourceType>>) -> URLSessionDataTask?
         where ResourceType: EndpointAccessible & QueryableResource, QueryType == ResourceType.QueryType {
             return fetch(url: url(endpoint: ResourceType.endpoint, parameters: query.parameters), then: completion)
     }
@@ -457,13 +470,24 @@ extension Client {
                 case .error(let error):
                     completion(Result.error(error))
                 default:
-                    // FIXME:
-                    completion(Result.error(SDKError.noEntryFoundFor(id: id)))
+                    completion(Result.error(SDKError.noResourceFoundFor(id: id)))
                 }
             }
 
             let query = ResourceQuery.where(sys: .id, .equals(id))
             return fetch(url: url(endpoint: ResourceType.endpoint, parameters: query.parameters), then: fetchCompletion)
+    }
+
+    @discardableResult internal func fetch<EntryType>(matching query: QueryOn<EntryType>,
+                                                      then completion: @escaping ResultsHandler<MappedArrayResponse<EntryType>>) -> URLSessionDataTask? {
+        let url = self.url(endpoint: .entries, parameters: query.parameters)
+        return fetch(url: url, then: completion)
+    }
+
+    @discardableResult internal func fetch(matching query: Query,
+                                           then completion: @escaping ResultsHandler<MixedMappedArrayResponse>) -> URLSessionDataTask? {
+        let url = self.url(endpoint: .entries, parameters: query.parameters)
+        return fetch(url: url, then: completion)
     }
 }
 
