@@ -121,7 +121,10 @@ extension CCollection: Decodable {
             let contentTypes = decoder.userInfo[.contentTypesContextKey] as! [ContentTypeId: EntryDecodable.Type]
 
             while entriesJSONContainer.isAtEnd == false {
-                let contentTypeInfo = try jsonItems.contentTypeInfo(at: entriesJSONContainer.currentIndex)
+                guard let contentTypeInfo = jsonItems.contentTypeInfo(at: entriesJSONContainer.currentIndex) else {
+                    let errorMessage = "SDK was unable to parse sys.type property necessary to finish resource serialization."
+                    throw SDKError.unparseableJSON(data: nil, errorMessage: errorMessage)
+                }
 
                 // Throw an error in this case as if there is no matching content type for the current id, then
                 // we can't serialize any of the entries. The type must match ItemType as this is a homogenous array.
@@ -255,10 +258,9 @@ extension MixedCollection: Decodable {
 // Convenience method for grabbing the content type information of a json item in an array of resources.
 internal extension Swift.Array where Element == Dictionary<String, Any> {
 
-    func contentTypeInfo(at index: Int) throws -> Link {
-        let errorMessage = "SDK was unable to parse sys.type property necessary to finish resource serialization."
+    func contentTypeInfo(at index: Int) -> Link? {
         guard let sys = self[index]["sys"] as? [String: Any], let contentTypeInfo = sys["contentType"] as? Link else {
-            throw SDKError.unparseableJSON(data: nil, errorMessage: errorMessage)
+            return nil
         }
         return contentTypeInfo
     }
@@ -268,6 +270,44 @@ internal extension Swift.Array where Element == Dictionary<String, Any> {
 internal struct EmptyDecodable: Decodable {}
 
 extension KeyedDecodingContainer {
+
+    // Decodes collections that include both entries, assets, and deleted resources.
+    internal func decodeHeterogeneousCollection(forKey key: K,
+                                                contentTypes: [ContentTypeId: EntryDecodable.Type],
+                                                throwIfNotPresent: Bool) throws -> [Resource & Decodable]? {
+
+
+        guard let itemsAsDictionaries = try self.decodeIfPresent(Swift.Array<Any>.self, forKey: key) as? [[String: Any]] else {
+            if throwIfNotPresent {
+                throw SDKError.unparseableJSON(data: nil, errorMessage: "SDK was unable to serialize returned resources")
+            } else {
+                return nil
+            }
+        }
+        var entriesJSONContainer = try self.nestedUnkeyedContainer(forKey: key)
+
+        var entries: [Resource & Decodable] = []
+        while entriesJSONContainer.isAtEnd == false {
+            if let contentTypeInfo = itemsAsDictionaries.contentTypeInfo(at: entriesJSONContainer.currentIndex) {
+                // For includes, if the type of this entry isn't defined by the user, we skip serialization.
+                if let type = contentTypes[contentTypeInfo.id] {
+                    let entryModellable = try type.popEntryDecodable(from: &entriesJSONContainer)
+                    entries.append(entryModellable)
+                } else {
+                    // Another annoying workaround: there is no mechanism for incrementing the `currentIndex` of an
+                    // UnkeyedCodingContainer other than actually decoding an item
+                    _ = try? entriesJSONContainer.decode(EmptyDecodable.self)
+                }
+            } else if let asset = try? entriesJSONContainer.decode(Asset.self) {
+                entries.append(asset)
+            } else {
+                let errorMessage = "SDK was unable to parse sys.type property necessary to finish resource serialization."
+                throw SDKError.unparseableJSON(data: nil, errorMessage: errorMessage)
+            }
+        }
+        return entries
+    }
+
 
     internal func decodeHeterogeneousEntries(forKey key: K,
                                              contentTypes: [ContentTypeId: EntryDecodable.Type],
@@ -285,7 +325,11 @@ extension KeyedDecodingContainer {
 
         var entries: [EntryDecodable] = []
         while entriesJSONContainer.isAtEnd == false {
-            let contentTypeInfo = try itemsAsDictionaries.contentTypeInfo(at: entriesJSONContainer.currentIndex)
+
+            guard let contentTypeInfo = itemsAsDictionaries.contentTypeInfo(at: entriesJSONContainer.currentIndex) else {
+                let errorMessage = "SDK was unable to parse sys.type property necessary to finish resource serialization."
+                throw SDKError.unparseableJSON(data: nil, errorMessage: errorMessage)
+            }
 
             // For includes, if the type of this entry isn't defined by the user, we skip serialization.
             if let type = contentTypes[contentTypeInfo.id] {

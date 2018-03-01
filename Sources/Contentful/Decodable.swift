@@ -102,6 +102,10 @@ extension JSONDecoder {
     public func setContentTypes(_ types: [EntryDecodable.Type]) {
         userInfo[.contentTypesContextKey] = types
     }
+
+    internal var linkResolver: LinkResolver {
+        return userInfo[.linkResolverContextKey] as! LinkResolver
+    }
 }
 
 // Fields JSON container.
@@ -166,26 +170,29 @@ internal class LinkResolver {
         }
     }
 
+    internal func cache(resources: [Resource & Decodable]) {
+        for resource in resources {
+            if let asset = resource as? Asset {
+                dataCache.add(asset: asset)
+            } else if let entryDecodable = resource as? EntryDecodable {
+                dataCache.add(entry: entryDecodable)
+            }
+        }
+    }
     // Caches the callback to resolve the relationship represented by a Link at a later time.
 
     internal func resolve(_ link: Link, callback: @escaping (Any) -> Void) {
         let key = DataCache.cacheKey(for: link)
-        if callbacks[key] == nil {
-            callbacks[key] = [callback]
-        } else {
-            callbacks[key]?.append(callback)
-        }
+        // New swift 4 API!
+        callbacks[key, default: []] += [callback]
     }
 
+    // FIXME: Should we append the source item to the key so we can
     internal func resolve(_ links: [Link], callback: @escaping (Any) -> Void) {
         let linksIdentifier: String = links.reduce(into: LinkResolver.linksArrayPrefix) { (id, link) in
             id += "," + DataCache.cacheKey(for: link)
         }
-        if callbacks[linksIdentifier] == nil {
-            callbacks[linksIdentifier] = [callback]
-        } else {
-            callbacks[linksIdentifier]?.append(callback)
-        }
+        callbacks[linksIdentifier, default: []] += [callback]
     }
 
     // Executes all cached callbacks to resolve links and then clears the callback cache and the data cache

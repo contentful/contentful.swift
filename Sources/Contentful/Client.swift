@@ -21,7 +21,7 @@ public typealias ResultsHandler<T> = (_ result: Result<T>) -> Void
 /// Client object for performing requests against the Contentful API.
 open class Client {
 
-    fileprivate let clientConfiguration: ClientConfiguration
+    internal let clientConfiguration: ClientConfiguration
 
     /// The identifier of the space this Client is set to interface with.
     public let spaceId: String

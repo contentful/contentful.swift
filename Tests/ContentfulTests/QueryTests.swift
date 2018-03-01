@@ -262,26 +262,24 @@ class QueryTests: XCTestCase {
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
-//    func testEqualityQuery() {
-//
-//        let expectation = self.expectation(description: "Equality operator expectation")
-//
-//        let query = QueryOn<Cat>.where(field: .color, .equals("gray"))
-//
-//        QueryTests.client.fetch(CCollection<Cat>.self, matching: query) { (result: Result<CCollection<Cat>>) in
-//            switch result {
-//            case .success(let catsResponse):
-//                let cats = catsResponse.items
-//                expect(cats.count).to(equal(1))
-//                expect(cats.first?.color).to(equal("gray"))
-//            case .error:
-//                fail("Should not throw an error")
-//            }
-//            expectation.fulfill()
-//        }
-//
-//        waitForExpectations(timeout: 10.0, handler: nil)
-//    }
+    func testEqualityQuery() {
+
+        let expectation = self.expectation(description: "Equality operator expectation")
+
+        QueryTests.client.fetch(CCollection<Cat>.self, .where(field: .color, .equals("gray"))) { result in
+            switch result {
+            case .success(let catsResponse):
+                let cats = catsResponse.items
+                expect(cats.count).to(equal(1))
+                expect(cats.first?.color).to(equal("gray"))
+            case .error:
+                fail("Should not throw an error")
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
 
     func testInequalityQuery() {
 
