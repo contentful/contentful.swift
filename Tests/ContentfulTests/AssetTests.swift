@@ -55,7 +55,7 @@ class AssetTests: XCTestCase {
     func testFetchAllAssetsInSpace() {
         let expectation = self.expectation(description: "Fetch all assets network expectation")
         
-        AssetTests.client.fetch(CCollection<Asset>.self, AssetQuery()) { assets in
+        AssetTests.client.fetch(CCollection<Asset>.self, AssetQuery()).then { assets in
             expect(assets.items.count).to(equal(4))
 
             if let asset = (assets.items.filter { $0.sys.id == "nyancat" }).first {
@@ -76,7 +76,7 @@ class AssetTests: XCTestCase {
     func testFetchImageForAsset() {
         let expectation = self.expectation(description: "Fetch image from asset network expectation")
 
-        AssetTests.client.fetchAsset(id: "nyancat").then { asset in
+        AssetTests.client.fetch(Asset.self, id: "nyancat").then { asset in
             AssetTests.client.fetchImage(for: asset).then { image in
 
                 expect(image.size.width).to(equal(250.0))
@@ -101,6 +101,7 @@ class AssetTests: XCTestCase {
             case .error(let error):
                 fail("\(error)")
             }
+            expectation.fulfill()
         }
 
         waitForExpectations(timeout: 10.0, handler: nil)

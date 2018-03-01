@@ -295,13 +295,7 @@ open class Client {
 
 extension Client {
 
-    /**
-     Fetch all the locales belonging to the environment that was configured with the client.
-
-     - Parameter completion: A handler being called on completion of the request.
-     - Returns: The data task being used, enables cancellation of requests.
-     */
-    @discardableResult public func fetchLocales(then completion: @escaping ResultsHandler<Array<Contentful.Locale>>) -> URLSessionDataTask? {
+    @discardableResult internal func fetchLocales(then completion: @escaping ResultsHandler<Array<Contentful.Locale>>) -> URLSessionDataTask? {
         if let locales = self.locales {
             let localeCodes = locales.map { $0.code }
             persistenceIntegration?.update(localeCodes: localeCodes)
@@ -335,14 +329,7 @@ extension Client {
         }
     }
 
-    /**
-     Fetch all the locales belonging to the environment that was configured with the client.
-
-     - Parameter completion: A handler being called on completion of the request.
-
-     - Returns: The `Observable` for the resulting array of locales.
-     */
-    @discardableResult public func fetchLocales() -> Observable<Result<Array<Contentful.Locale>>> {
+    @discardableResult internal func fetchLocales() -> Observable<Result<Array<Contentful.Locale>>> {
         let asyncDataTask: SignalBang<Array<Contentful.Locale>> = fetchLocales(then:)
         return toObservable(closure: asyncDataTask).observable
     }
@@ -461,8 +448,7 @@ extension Client {
     }
 
     @discardableResult internal func fetch<ResourceType, QueryType>(_ resourceType: CCollection<ResourceType>.Type,
-                                                                    _ query: QueryType,
-                                                                    then completion: @escaping ResultsHandler<CCollection<ResourceType>>) -> Observable<Result<CCollection<ResourceType>>>
+                                                                    _ query: QueryType) -> Observable<Result<CCollection<ResourceType>>>
         where ResourceType: EndpointAccessible & ResourceQueryable, QueryType == ResourceType.QueryType {
 
             let asyncDataTask: TypeErasedAsyncDataTask<CCollection<ResourceType>, QueryType> = fetch(_:_:then:)
@@ -492,8 +478,7 @@ extension Client {
 
 
     @discardableResult internal func fetch<ResourceType>(_ resourceType: ResourceType.Type,
-                                                         id: String,
-                                                         then completion: @escaping ResultsHandler<ResourceType>) -> Observable<Result<ResourceType>>
+                                                         id: String) -> Observable<Result<ResourceType>>
             where ResourceType: Resource & Decodable & EndpointAccessible {
         let asyncDataTask: TypeErasedAsyncDataTask<ResourceType, String> = fetch(_:id:then:)
         return toObservable(resourceType, parameter: id, asyncDataTask: asyncDataTask).observable
@@ -507,10 +492,22 @@ extension Client {
         return fetch(url: url, then: completion)
     }
 
+    @discardableResult internal func fetch<EntryType>(_ entryType: CCollection<EntryType>.Type,
+                                                      _ query: QueryOn<EntryType>) -> Observable<Result<CCollection<EntryType>>> {
+        let asyncDataTask: TypeErasedAsyncDataTask<CCollection<EntryType>, QueryOn<EntryType>> = fetch(_:_:then:)
+        return toObservable(entryType, parameter: query, asyncDataTask: asyncDataTask).observable
+
+    }
+
     @discardableResult internal func fetch(_ query: Query,
                                            then completion: @escaping ResultsHandler<MixedCollection>) -> URLSessionDataTask? {
         let url = self.url(endpoint: .entries, parameters: query.parameters)
         return fetch(url: url, then: completion)
+    }
+
+    @discardableResult internal func fetch(_ query: Query) -> Observable<Result<MixedCollection>> {
+        let asyncDataTask: AsyncDataTask<Query, MixedCollection> = fetch(_:then:)
+        return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
     }
 }
 

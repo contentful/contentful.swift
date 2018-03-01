@@ -450,7 +450,7 @@ class QueryTests: XCTestCase {
         let query = AssetQuery.where(sys: .id, .equals("1x0xpXu4pSGS4OukSyWGUK"))
         try! query.select(fieldsNamed: ["title"])
 
-        QueryTests.client.fetchAssets(matching: query) { result in
+        QueryTests.client.fetch(CCollection<Asset>.self, query) { result in
             switch result {
             case .success(let assetsResponse):
                 let assets = assetsResponse.items
@@ -471,7 +471,7 @@ class QueryTests: XCTestCase {
         let query = AssetQuery.where(sys: .id, .equals("1x0xpXu4pSGS4OukSyWGUK"))
         query.select(fields: [.title])
 
-        QueryTests.client.fetchAssets(matching: query) { result in
+        QueryTests.client.fetch(CCollection<Asset>.self, query) { result in
             switch result {
             case .success(let assetsResponse):
                 let assets = assetsResponse.items
@@ -803,7 +803,7 @@ class QueryTests: XCTestCase {
 
         let query = AssetQuery.where(mimetypeGroup: .image)
 
-        QueryTests.client.fetchAssets(matching: query) { result in
+        QueryTests.client.fetch(CCollection<Asset>.self, query) { result in
             switch result {
             case .success(let assetsResponse):
                 let assets = assetsResponse.items
