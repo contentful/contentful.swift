@@ -39,7 +39,7 @@ class EntryTests: XCTestCase {
         (client.urlSession as? DVR.Session)?.endRecording()
     }
 
-    func waitUntilMatchingEntries(_ query: Query, action: @escaping (_ entries: ArrayResponse<Entry>) -> ()) {
+    func waitUntilMatchingEntries(_ query: Query, action: @escaping (_ entries: Contentful.Collection<Entry>) -> ()) {
         let expecatation = self.expectation(description: "Entries matching query network expectation")
 
         EntryTests.client.fetchEntries(matching: query).then {
@@ -287,7 +287,7 @@ class EntryTests: XCTestCase {
     }
 
     func testFetchEntriesWithInclusionSearch() {
-        let action: (ArrayResponse<Entry>) -> () = {
+        let action: (Contentful.Collection<Entry>) -> () = {
             expect($0.items.count).to(equal(2))
             let ids = $0.items.map { $0.sys.id }
             expect(ids).to(equal(["finn", "jake"]))
@@ -387,10 +387,10 @@ class EntryTests: XCTestCase {
 
         EntryTests.client.fetchEntries(matching: query) { result in
             switch result {
-            case .success(let entriesArrayResponse):
-                expect(entriesArrayResponse.items.count).to(equal(1))
-                expect(entriesArrayResponse.items.first?.fields["name"] as? String).to(equal("Happy Cat"))
-                expect((entriesArrayResponse.items.first?.fields["image"] as? Link)?.asset?.id).to(equal("happycat"))
+            case .success(let entriesCollection):
+                expect(entriesCollection.items.count).to(equal(1))
+                expect(entriesCollection.items.first?.fields["name"] as? String).to(equal("Happy Cat"))
+                expect((entriesCollection.items.first?.fields["image"] as? Link)?.asset?.id).to(equal("happycat"))
             case .error(let error):
                 fail("Should not return an error \(error)")
             }
@@ -406,10 +406,10 @@ class EntryTests: XCTestCase {
 
         EntryTests.client.fetchEntries(matching: query) { result in
             switch result {
-            case .success(let entriesArrayResponse):
-                expect(entriesArrayResponse.items.count).to(equal(1))
-                expect(entriesArrayResponse.items.first?.fields["name"] as? String).to(equal("Nyan Cat"))
-                expect((entriesArrayResponse.items.first?.fields["bestFriend"] as? Link)?.entry?.id).to(equal("happycat"))
+            case .success(let entriesCollection):
+                expect(entriesCollection.items.count).to(equal(1))
+                expect(entriesCollection.items.first?.fields["name"] as? String).to(equal("Nyan Cat"))
+                expect((entriesCollection.items.first?.fields["bestFriend"] as? Link)?.entry?.id).to(equal("happycat"))
             case .error(let error):
                 fail("Should not return an error \(error)")
             }

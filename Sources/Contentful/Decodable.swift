@@ -10,7 +10,7 @@ import Foundation
 
 /**
  Classes conforming to this protocol can be passed into your Client instance so that fetch methods
- asynchronously returning MappedArrayResponse can be used and classes of your own definition can be returned.
+ asynchronously returning MappedCollection can be used and classes of your own definition can be returned.
 
  It's important to note that there is no special handling of locales so if using the locale=* query parameter,
  you will need to implement the special handing in your `init(from decoder: Decoder) throws` initializer for your class.
@@ -19,7 +19,7 @@ import Foundation
 
  ```
  func fetchMappedEntries(with query: Query<Cat>,
- then completion: @escaping ResultsHandler<MappedArrayResponse<Cat>>) -> URLSessionDataTask?
+ then completion: @escaping ResultsHandler<MappedCollection<Cat>>) -> URLSessionDataTask?
  ```
  */
 public typealias EntryDecodable = Resource & EntryModel
@@ -44,6 +44,7 @@ public extension Decoder {
         return sys
     }
 
+    // TODO: finalize
     public func id() throws -> String {
         return try sys().id
     }
@@ -57,6 +58,7 @@ public extension Decoder {
 }
 
 internal class KeyedFieldsDecodingContainer {
+    // FIXME: Implement
     // - methods would give you special KeyedFieldsContainer which owns the regular container and it will get value for key and walk down the fallback chain for you. preserve localization scheme.
 }
 

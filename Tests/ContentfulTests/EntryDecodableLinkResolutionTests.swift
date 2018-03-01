@@ -95,8 +95,8 @@ class LinkResolverTests: XCTestCase {
 
 
             switch result {
-            case .success(let arrayResponse):
-                let records = arrayResponse.items
+            case .success(let Collection):
+                let records = Collection.items
                 expect(records.count).to(equal(1))
                 if let singleRecord = records.first {
                     expect(singleRecord.arrayLinkField).toNot(beNil())
@@ -121,13 +121,13 @@ class LinkResolverTests: XCTestCase {
         let query = QueryOn<SingleRecord>.where(sys: .id, .equals("1k7s1gNcQA8WoUWiqcYaMO"))
         LinkResolverTests.client.fetchMappedEntries(matching: query) { result in
             switch result {
-            case .success(let arrayResponse):
-                let records = arrayResponse.items
+            case .success(let Collection):
+                let records = Collection.items
                 expect(records.count).to(equal(1))
                 if let singleRecord = records.first {
                     expect(singleRecord.textBody).to(equal("Record with unresolvable link"))
                     expect(singleRecord.linkField).to(beNil())
-                    if let unresolvableLink = arrayResponse.errors?.first {
+                    if let unresolvableLink = Collection.errors?.first {
                         expect(unresolvableLink.details.id).to(equal("2bQUUwIT3mk6GaKqgo40cu"))
                     } else {
                         fail("There should be an unresolveable link error in the array response")
@@ -149,8 +149,8 @@ class LinkResolverTests: XCTestCase {
         let query = QueryOn<SingleRecord>.where(sys: .id, .includes(["1wFgajHSpWOoIgS8UAk2ow", "7rUM7Pr16M2gEwiI02WAoI"]))
         LinkResolverTests.client.fetchMappedEntries(matching: query) { result in
             switch result {
-            case .success(let arrayResponse):
-                let records = arrayResponse.items
+            case .success(let Collection):
+                let records = Collection.items
                 expect(records.count).to(equal(2))
                 for record in records {
                     if let link = record.linkField {
@@ -175,8 +175,8 @@ class LinkResolverTests: XCTestCase {
 
         LinkResolverTests.client.fetchMappedEntries(matching: query) { result in
             switch result {
-            case .success(let arrayResponse):
-                let records = arrayResponse.items
+            case .success(let Collection):
+                let records = Collection.items
                 expect(records.count).to(equal(1))
                 if let record = records.first, record.id == "2JFSeiPTZYm4goMSUeYSCU" {
                     expect(record.assetsArrayLinkField).toNot(beNil())

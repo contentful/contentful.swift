@@ -25,7 +25,12 @@ internal protocol ResourceQueryable {
 
 /// A concrete implementation of ChainableQuery which can be used to make queries on `/entries/`
 /// or `/entries`. All methods from ChainableQuery are available.
-public class Query: ResourceQuery, EntryQuery {}
+public class Query: ResourceQuery, EntryQuery {
+
+    public static var any: Query {
+        return Query()
+    }
+}
 
 /**
  An additional query to filter by the properties of linked objects when searching on references.

@@ -16,8 +16,8 @@ extension Client {
      - Parameter query: The Query object to match results againts.
      - Returns: An Observable for the resulting `MappedContent` container.
      */
-    @discardableResult public func fetchMappedEntries(matching query: Query) -> Observable<Result<MixedMappedArrayResponse>> {
-        let asyncDataTask: AsyncDataTask<Query, MixedMappedArrayResponse> = fetchMappedEntries(matching:then:)
+    @discardableResult public func fetchMappedEntries(matching query: Query) -> Observable<Result<MixedCollection>> {
+        let asyncDataTask: AsyncDataTask<Query, MixedCollection> = fetchMappedEntries(matching:then:)
         return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
     }
 
@@ -32,7 +32,7 @@ extension Client {
                 will return nil.
      */
     @discardableResult public func fetchMappedEntries(matching query: Query,
-                                                      then completion: @escaping ResultsHandler<MixedMappedArrayResponse>) -> URLSessionDataTask? {
+                                                      then completion: @escaping ResultsHandler<MixedCollection>) -> URLSessionDataTask? {
         let url = self.url(endpoint: .entries, parameters: query.parameters)
         return fetch(url: url, then: completion)
     }
@@ -49,7 +49,7 @@ extension Client {
 
      */
     @discardableResult public func fetchMappedEntries<EntryType>(matching query: QueryOn<EntryType>,
-        then completion: @escaping ResultsHandler<MappedArrayResponse<EntryType>>) -> URLSessionDataTask? {
+        then completion: @escaping ResultsHandler<Collection<EntryType>>) -> URLSessionDataTask? {
 
         let url = self.url(endpoint: .entries, parameters: query.parameters)
 
@@ -65,9 +65,9 @@ extension Client {
      - Returns: A tuple of data task and an observable for the resulting array of EntryDecodable types.
      */
     @discardableResult public func fetchMappedEntries<EntryType>(matching query: QueryOn<EntryType>)
-        -> Observable<Result<MappedArrayResponse<EntryType>>> {
+        -> Observable<Result<Collection<EntryType>>> {
 
-            let asyncDataTask: AsyncDataTask<QueryOn<EntryType>, MappedArrayResponse<EntryType>> = fetchMappedEntries(matching:then:)
+            let asyncDataTask: AsyncDataTask<QueryOn<EntryType>, Collection<EntryType>> = fetchMappedEntries(matching:then:)
             return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
     }
 }
