@@ -12,7 +12,7 @@ import Nimble
 import DVR
 import Interstellar
 
-final class Cat: EntryDecodable, ResourceQueryable {
+final class Cat: EntryDecodable, EntryQueryable {
 
     static let contentTypeId: String = "cat"
 
@@ -49,7 +49,7 @@ final class Cat: EntryDecodable, ResourceQueryable {
     }
 }
 
-final class City: EntryDecodable, ResourceQueryable {
+final class City: EntryDecodable, EntryQueryable {
 
     static let contentTypeId: String = "1t9IbcfdCk6m04uISSsaIK"
 
@@ -68,7 +68,7 @@ final class City: EntryDecodable, ResourceQueryable {
     }
 }
 
-final class Dog: EntryDecodable, ResourceQueryable {
+final class Dog: EntryDecodable, EntryQueryable {
 
     static let contentTypeId: String = "dog"
 
@@ -139,9 +139,9 @@ class QueryTests: XCTestCase {
                 let cats = catsResponse.items
                 let nyanCat = cats.first!
                 expect(nyanCat.color).toNot(beNil())
-                expect(nyanCat.name).to(equal("Nyan Cat"))
+                expect(nyanCat.name).to(equal("Happy Cat"))
                 // Test links
-                expect(nyanCat.bestFriend?.name).to(equal("Happy Cat"))
+                expect(nyanCat.bestFriend?.name).to(equal("Nyan Cat"))
 
                 // Test uniqueness in memory.
                 expect(nyanCat).to(be(nyanCat.bestFriend?.bestFriend))
@@ -168,9 +168,9 @@ class QueryTests: XCTestCase {
                 let cats = catsResponse.items
                 let nyanCat = cats.first!
                 expect(nyanCat.color).toNot(beNil())
-                expect(nyanCat.name).to(equal("Nyan Cat"))
+                expect(nyanCat.name).to(equal("Happy Cat"))
                 // Test links
-                expect(nyanCat.bestFriend?.name).to(equal("Happy Cat"))
+                expect(nyanCat.bestFriend?.name).to(equal("Nyan Cat"))
 
                 // Test uniqueness in memory.
                 expect(nyanCat).to(be(nyanCat.bestFriend?.bestFriend))
@@ -196,13 +196,13 @@ class QueryTests: XCTestCase {
                 // We didn't decode the "human" content type so only 9 decoded entries should be returned instead of 10
                 expect(entries.count).to(equal(9))
 
-                if let cat = entries.first as? Cat, let bestFriend = cat.bestFriend {
+                if let cat = entries[4] as? Cat, let bestFriend = cat.bestFriend {
                     expect(bestFriend.name).to(equal("Nyan Cat"))
                 } else {
                     fail("The first entry in the heterogenous array should be a cat wiht a best friend named 'Nyan Cat'")
                 }
 
-                if let dog = entries.last as? Dog, let image = dog.image {
+                if let dog = entries[7] as? Dog, let image = dog.image {
                     expect(dog.description).to(equal("Bacon pancakes, makin' bacon pancakes!"))
                     expect(image.id).to(equal("jake"))
                 } else {
@@ -223,6 +223,7 @@ class QueryTests: XCTestCase {
         let expectation = self.expectation(description: "Select operator expectation")
 
         let query = try! QueryOn<Dog>.select(fieldsNamed: selections)
+        try! query.order(by: Ordering(sys: .id))
 
         QueryTests.client.fetchMappedEntries(matching: query) { (result: Result<MappedArrayResponse<Dog>>) in
 
@@ -336,6 +337,7 @@ class QueryTests: XCTestCase {
         let expectation = self.expectation(description: "Exclusion query operator expectation")
 
         let query = QueryOn<Cat>.where(valueAtKeyPath: "fields.likes", .excludes(["rainbows"]))
+        try! query.order(by: Ordering(sys: .createdAt))
 
         QueryTests.client.fetchMappedEntries(matching: query) { result in
             switch result {
@@ -391,7 +393,7 @@ class QueryTests: XCTestCase {
             case .success(let catsResponse):
                 let cats = catsResponse.items
                 expect(cats.count).to(beGreaterThan(0))
-                expect(cats.first?.color).toNot(equal("gray"))
+                expect(cats.first?.color).to(equal("gray"))
             case .error(let error):
                 fail("Should not throw an error \(error)")
             }
@@ -459,7 +461,7 @@ class QueryTests: XCTestCase {
                 let assets = assetsResponse.items
                 expect(assets.count).to(equal(1))
                 expect(assets.first?.sys.id).to(equal("1x0xpXu4pSGS4OukSyWGUK"))
-                expect(assets.first?.fields["title"] as? String).to(equal("Doge"))
+                expect(assets.first?.fields["title"] as? String).to(equal("doge"))
             case .error(let error):
                 fail("Should not throw an error \(error)")
             }
@@ -480,7 +482,7 @@ class QueryTests: XCTestCase {
                 let assets = assetsResponse.items
                 expect(assets.count).to(equal(1))
                 expect(assets.first?.sys.id).to(equal("1x0xpXu4pSGS4OukSyWGUK"))
-                expect(assets.first?.fields["title"] as? String).to(equal("Doge"))
+                expect(assets.first?.fields["title"] as? String).to(equal("doge"))
             case .error(let error):
                 fail("Should not throw an error \(error)")
             }
@@ -506,7 +508,7 @@ class QueryTests: XCTestCase {
     func testFetchEntriesOfAnyTypeWithRangeSearch() {
 
         let expectation = self.expectation(description: "Range query")
-        let date = Date.fromComponents(year: 2015, month: 1, day: 1, hour: 0, minute: 0, second: 0)
+        let date = Date.fromComponents(year: 2019, month: 1, day: 1, hour: 0, minute: 0, second: 0)
 
         let query = Query.where(valueAtKeyPath: "sys.updatedAt", .isLessThanOrEqualTo(date))
 
@@ -531,7 +533,7 @@ class QueryTests: XCTestCase {
 
         let expectation = self.expectation(description: "Range query")
 
-        let query = QueryOn<Cat>.where(valueAtKeyPath: "sys.updatedAt", .isLessThanOrEqualTo("2015-01-01T00:00:00Z"))
+        let query = QueryOn<Cat>.where(valueAtKeyPath: "sys.updatedAt", .isLessThanOrEqualTo("2019-01-01T00:00:00Z"))
 
         QueryTests.client.fetchMappedEntries(matching: query) { result in
             switch result {
@@ -586,7 +588,7 @@ class QueryTests: XCTestCase {
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
-    static let orderedCatNames = ["nyancat", "happycat", "garfield"]
+    static let orderedCatNames = [ "happycat", "nyancat", "garfield"]
 
     func testFetchEntriesWithTypeInOrder() {
         let expectation = self.expectation(description: "Ordered search with content type specified.")
@@ -739,7 +741,7 @@ class QueryTests: XCTestCase {
             case .success(let entriesResponse):
                 let entries = entriesResponse.items
                 expect(entries.count).to(equal(1))
-                expect(entries.first?.sys.id).to(equal("7qVBlCjpWE86Oseo40gAEY"))
+                expect(entries.first?.sys.id).to(equal("garfield"))
             case .error(let error):
                 fail("Should not throw an error \(error)")
             }

@@ -39,7 +39,7 @@ class ErrorTests: XCTestCase {
                 """
                 HTTP status code \\d+: The query you sent was invalid. Probably a filter or ordering specification is not applicable to the type of a field.
                 The path \"sys.888\" is not recognized.
-                Contentful Request ID: 22939727cc356fd5c37ef5e8e36b1810
+                Contentful Request ID: \\w+$
                 """ 
                 let regex = try! NSRegularExpression(pattern: expectedRegexString, options: [])
                 let matches = regex.matches(in: error.debugDescription, options: [], range: NSRange(location: 0, length: error.debugDescription.count))

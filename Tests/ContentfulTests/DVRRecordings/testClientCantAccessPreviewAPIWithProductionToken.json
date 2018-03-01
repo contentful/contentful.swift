@@ -18,16 +18,16 @@
           "Date" : "Tue, 13 Jun 2017 11:53:52 GMT"
         },
         "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJFcnJvciIsCiAgICAiaWQiOiAiQWNjZXNzVG9rZW5JbnZhbGlkIgogIH0sCiAgIm1lc3NhZ2UiOiAiVGhlIGFjY2VzcyB0b2tlbiB5b3Ugc2VudCBjb3VsZCBub3QgYmUgZm91bmQgb3IgaXMgaW52YWxpZC4iLAogICJyZXF1ZXN0SWQiOiAiNWY2OWJmNTExMDk2Y2M1OGMwZWY0MTcyNThkYTM1NTgiCn0K",
-        "url" : "https:\/\/preview.contentful.com\/spaces\/cfexampleapi\/"
+        "url" : "https:\/\/preview.contentful.com\/spaces\/dumri3ebknon\/"
       },
       "recorded_at" : 1497354831.718028,
       "request" : {
         "headers" : {
-          "X-Contentful-User-Agent" : "sdk contentful.swift\/0.6.1; platform Swift\/3.1; os iOS\/10.3.1;",
-          "Authorization" : "Bearer b4c0n73n7fu1"
+          "X-Contentful-User-Agent" : "sdk contentful.swift\/1.0.1; platform Swift\/4.0; os iOS\/11.2.0;",
+          "Authorization" : "Bearer e566e6f1d0545862159b6c63fddd25bebe0aa5c1bb8cbf9418c8531feff0d564"
         },
         "method" : "GET",
-        "url" : "https:\/\/preview.contentful.com\/spaces\/cfexampleapi\/"
+        "url" : "https:\/\/preview.contentful.com\/spaces\/dumri3ebknon\/"
       }
     }
   ],

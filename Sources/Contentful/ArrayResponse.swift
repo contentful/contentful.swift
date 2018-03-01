@@ -45,7 +45,6 @@ public struct ArrayResponseError: Decodable {
     public let sys: ArrayResponseError.Sys
 }
 
-
 /**
  A list of resources in Contentful
 
@@ -201,7 +200,7 @@ extension MappedArrayResponse: Decodable {
         }
         var entriesJSONContainer = try container.nestedUnkeyedContainer(forKey: .items)
         var entries: [EntryDecodable] = []
-        let contentTypes = decoder.userInfo[DecoderContext.contentTypesContextKey] as! [ContentTypeId: EntryDecodable.Type]
+        let contentTypes = decoder.userInfo[.contentTypesContextKey] as! [ContentTypeId: EntryDecodable.Type]
 
         while entriesJSONContainer.isAtEnd == false {
             let contentTypeInfo = try jsonItems.contentTypeInfo(at: entriesJSONContainer.currentIndex)

@@ -13,7 +13,7 @@ import DVR
 import Interstellar
 
 // From Complex-Sync-Test-Space
-class LinkClass: EntryDecodable, ResourceQueryable {
+class LinkClass: EntryDecodable, EntryQueryable {
 
     static let contentTypeId = "link"
 
@@ -32,7 +32,7 @@ class LinkClass: EntryDecodable, ResourceQueryable {
 }
 
 
-class SingleRecord: EntryDecodable, ResourceQueryable {
+class SingleRecord: EntryDecodable, EntryQueryable {
 
     static let contentTypeId = "singleRecord"
 

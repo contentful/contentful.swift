@@ -9,7 +9,9 @@
 import Foundation
 
 /// A Content Type represents your data model for Entries in a Contentful Space
-public class ContentType: Resource, Decodable {
+public class ContentType: Resource, Decodable, ResourceQueryable {
+
+    public typealias QueryType = ContentTypeQuery
 
     ///  System fields.
     public let sys: Sys
@@ -46,4 +48,9 @@ public class ContentType: Resource, Decodable {
         /// The name and description keys.
         case name, description
     }
+}
+
+extension ContentType: EndpointAccessible {
+
+    static let endpoint = Endpoint.contentTypes
 }

@@ -27,17 +27,17 @@
           "Cache-Control" : "max-age=0",
           "Via" : "1.1 varnish"
         },
-        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJBcnJheSIKICB9LAogICJ0b3RhbCI6IDEsCiAgInNraXAiOiAwLAogICJsaW1pdCI6IDEwLAogICJpdGVtcyI6IFsKICAgIHsKICAgICAgInN5cyI6IHsKICAgICAgICAic3BhY2UiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIlNwYWNlIiwKICAgICAgICAgICAgImlkIjogImJjMzJjajNreWZldCIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJpZCI6ICI4aWdDUEhNUWZLS1dJNjZzNGtzRWsiLAogICAgICAgICJ0eXBlIjogIkFzc2V0IiwKICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTctMDQtMDRUMTQ6Mzk6MTEuNjU0WiIsCiAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDE3LTA0LTA0VDE0OjM5OjExLjY1NFoiLAogICAgICAgICJyZXZpc2lvbiI6IDEsCiAgICAgICAgImxvY2FsZSI6ICJlbi1VUyIKICAgICAgfSwKICAgICAgImZpZWxkcyI6IHsKICAgICAgICAidGl0bGUiOiAiaW1hZ2luYXRpb24iLAogICAgICAgICJmaWxlIjogewogICAgICAgICAgInVybCI6ICIvL2ltYWdlcy5jb250ZW50ZnVsLmNvbS9iYzMyY2oza3lmZXQvOGlnQ1BITVFmS0tXSTY2czRrc0VrL2E3ZTBhZGFlZTYzOTRkYmZjYjcxM2U2Mjg1MDNiNGY5L2ltYWdpbmF0aW9uLnBuZyIsCiAgICAgICAgICAiZGV0YWlscyI6IHsKICAgICAgICAgICAgInNpemUiOiA2NDE4NCwKICAgICAgICAgICAgImltYWdlIjogewogICAgICAgICAgICAgICJ3aWR0aCI6IDY0NCwKICAgICAgICAgICAgICAiaGVpZ2h0IjogNDY4CiAgICAgICAgICAgIH0KICAgICAgICAgIH0sCiAgICAgICAgICAiZmlsZU5hbWUiOiAiaW1hZ2luYXRpb24ucG5nIiwKICAgICAgICAgICJjb250ZW50VHlwZSI6ICJpbWFnZS9wbmciCiAgICAgICAgfQogICAgICB9CiAgICB9CiAgXQp9Cg==",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/assets?limit=10"
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJFcnJvciIsCiAgICAiaWQiOiAiUmF0ZUxpbWl0RXhjZWVkZWQiCiAgfSwKICAibWVzc2FnZSI6ICJZb3UgaGF2ZSBleGNlZWRlZCB0aGUgcmF0ZSBsaW1pdCBvZiB0aGUgT3JnYW5pemF0aW9uIHRoaXMgU3BhY2UgYmVsb25ncyB0byBieSBtYWtpbmcgdG9vIG1hbnkgQVBJIHJlcXVlc3RzIHdpdGhpbiBhIHNob3J0IHRpbWVzcGFuLiBQbGVhc2Ugd2FpdCBhIG1vbWVudCBiZWZvcmUgdHJ5aW5nIHRoZSByZXF1ZXN0IGFnYWluLiIsCiAgInJlcXVlc3RJZCI6ICIxYmYwNWU0ZDQzYzE3NDMwNDE2Mzk1OWViNzg0ZjA5ZiIKfQo=",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/environments\/master\/assets?limit=10"
       },
       "recorded_at" : 1497354876.677777,
       "request" : {
         "headers" : {
-          "X-Contentful-User-Agent" : "sdk contentful.swift\/0.6.1; platform Swift\/3.1; os iOS\/10.3.1;",
+          "X-Contentful-User-Agent" : "sdk contentful.swift\/1.0.1; platform Swift\/4.0; os iOS\/11.2.0;",
           "Authorization" : "Bearer 264dcca6ce14912f4940ac9d7de5425236b5658ed678da25718aa98438687a6f"
         },
         "method" : "GET",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/assets?limit=10"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/environments\/master\/assets?limit=10"
       }
     },
     {
@@ -67,17 +67,17 @@
           "Cache-Control" : "max-age=0",
           "Via" : "1.1 varnish"
         },
-        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJTcGFjZSIsCiAgICAiaWQiOiAiYmMzMmNqM2t5ZmV0IgogIH0sCiAgIm5hbWUiOiAiUmF0ZSBMaW1pdCBUZXN0IiwKICAibG9jYWxlcyI6IFsKICAgIHsKICAgICAgImNvZGUiOiAiZW4tVVMiLAogICAgICAiZGVmYXVsdCI6IHRydWUsCiAgICAgICJuYW1lIjogIlUuUy4gRW5nbGlzaCIsCiAgICAgICJmYWxsYmFja0NvZGUiOiBudWxsCiAgICB9CiAgXQp9Cg==",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/"
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJBcnJheSIKICB9LAogICJ0b3RhbCI6IDEsCiAgInNraXAiOiAwLAogICJsaW1pdCI6IDEwMDAsCiAgIml0ZW1zIjogWwogICAgewogICAgICAiY29kZSI6ICJlbi1VUyIsCiAgICAgICJuYW1lIjogIlUuUy4gRW5nbGlzaCIsCiAgICAgICJkZWZhdWx0IjogdHJ1ZSwKICAgICAgImZhbGxiYWNrQ29kZSI6IG51bGwsCiAgICAgICJzeXMiOiB7CiAgICAgICAgImlkIjogIjdlanVTeFZ5djhZZVFxeVhUbGQ5VG8iLAogICAgICAgICJ0eXBlIjogIkxvY2FsZSIsCiAgICAgICAgInZlcnNpb24iOiAwCiAgICAgIH0KICAgIH0KICBdCn0K",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/environments\/master\/locales?limit=1000"
       },
       "recorded_at" : 1497354876.759456,
       "request" : {
         "headers" : {
-          "X-Contentful-User-Agent" : "sdk contentful.swift\/0.6.1; platform Swift\/3.1; os iOS\/10.3.1;",
+          "X-Contentful-User-Agent" : "sdk contentful.swift\/1.0.1; platform Swift\/4.0; os iOS\/11.2.0;",
           "Authorization" : "Bearer 264dcca6ce14912f4940ac9d7de5425236b5658ed678da25718aa98438687a6f"
         },
         "method" : "GET",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/environments\/master\/locales?limit=1000"
       }
     },
     {
@@ -108,16 +108,16 @@
           "Via" : "1.1 varnish"
         },
         "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJBcnJheSIKICB9LAogICJ0b3RhbCI6IDEsCiAgInNraXAiOiAwLAogICJsaW1pdCI6IDExLAogICJpdGVtcyI6IFsKICAgIHsKICAgICAgInN5cyI6IHsKICAgICAgICAic3BhY2UiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIlNwYWNlIiwKICAgICAgICAgICAgImlkIjogImJjMzJjajNreWZldCIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJpZCI6ICI4aWdDUEhNUWZLS1dJNjZzNGtzRWsiLAogICAgICAgICJ0eXBlIjogIkFzc2V0IiwKICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTctMDQtMDRUMTQ6Mzk6MTEuNjU0WiIsCiAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDE3LTA0LTA0VDE0OjM5OjExLjY1NFoiLAogICAgICAgICJyZXZpc2lvbiI6IDEsCiAgICAgICAgImxvY2FsZSI6ICJlbi1VUyIKICAgICAgfSwKICAgICAgImZpZWxkcyI6IHsKICAgICAgICAidGl0bGUiOiAiaW1hZ2luYXRpb24iLAogICAgICAgICJmaWxlIjogewogICAgICAgICAgInVybCI6ICIvL2ltYWdlcy5jb250ZW50ZnVsLmNvbS9iYzMyY2oza3lmZXQvOGlnQ1BITVFmS0tXSTY2czRrc0VrL2E3ZTBhZGFlZTYzOTRkYmZjYjcxM2U2Mjg1MDNiNGY5L2ltYWdpbmF0aW9uLnBuZyIsCiAgICAgICAgICAiZGV0YWlscyI6IHsKICAgICAgICAgICAgInNpemUiOiA2NDE4NCwKICAgICAgICAgICAgImltYWdlIjogewogICAgICAgICAgICAgICJ3aWR0aCI6IDY0NCwKICAgICAgICAgICAgICAiaGVpZ2h0IjogNDY4CiAgICAgICAgICAgIH0KICAgICAgICAgIH0sCiAgICAgICAgICAiZmlsZU5hbWUiOiAiaW1hZ2luYXRpb24ucG5nIiwKICAgICAgICAgICJjb250ZW50VHlwZSI6ICJpbWFnZS9wbmciCiAgICAgICAgfQogICAgICB9CiAgICB9CiAgXQp9Cg==",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/assets?limit=11"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/environments\/master\/assets?limit=11"
       },
       "recorded_at" : 1497354876.783734,
       "request" : {
         "headers" : {
-          "X-Contentful-User-Agent" : "sdk contentful.swift\/0.6.1; platform Swift\/3.1; os iOS\/10.3.1;",
+          "X-Contentful-User-Agent" : "sdk contentful.swift\/1.0.1; platform Swift\/4.0; os iOS\/11.2.0;",
           "Authorization" : "Bearer 264dcca6ce14912f4940ac9d7de5425236b5658ed678da25718aa98438687a6f"
         },
         "method" : "GET",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/assets?limit=11"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/environments\/master\/assets?limit=11"
       }
     },
     {
@@ -148,16 +148,16 @@
           "Via" : "1.1 varnish"
         },
         "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJBcnJheSIKICB9LAogICJ0b3RhbCI6IDEsCiAgInNraXAiOiAwLAogICJsaW1pdCI6IDEyLAogICJpdGVtcyI6IFsKICAgIHsKICAgICAgInN5cyI6IHsKICAgICAgICAic3BhY2UiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIlNwYWNlIiwKICAgICAgICAgICAgImlkIjogImJjMzJjajNreWZldCIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJpZCI6ICI4aWdDUEhNUWZLS1dJNjZzNGtzRWsiLAogICAgICAgICJ0eXBlIjogIkFzc2V0IiwKICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTctMDQtMDRUMTQ6Mzk6MTEuNjU0WiIsCiAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDE3LTA0LTA0VDE0OjM5OjExLjY1NFoiLAogICAgICAgICJyZXZpc2lvbiI6IDEsCiAgICAgICAgImxvY2FsZSI6ICJlbi1VUyIKICAgICAgfSwKICAgICAgImZpZWxkcyI6IHsKICAgICAgICAidGl0bGUiOiAiaW1hZ2luYXRpb24iLAogICAgICAgICJmaWxlIjogewogICAgICAgICAgInVybCI6ICIvL2ltYWdlcy5jb250ZW50ZnVsLmNvbS9iYzMyY2oza3lmZXQvOGlnQ1BITVFmS0tXSTY2czRrc0VrL2E3ZTBhZGFlZTYzOTRkYmZjYjcxM2U2Mjg1MDNiNGY5L2ltYWdpbmF0aW9uLnBuZyIsCiAgICAgICAgICAiZGV0YWlscyI6IHsKICAgICAgICAgICAgInNpemUiOiA2NDE4NCwKICAgICAgICAgICAgImltYWdlIjogewogICAgICAgICAgICAgICJ3aWR0aCI6IDY0NCwKICAgICAgICAgICAgICAiaGVpZ2h0IjogNDY4CiAgICAgICAgICAgIH0KICAgICAgICAgIH0sCiAgICAgICAgICAiZmlsZU5hbWUiOiAiaW1hZ2luYXRpb24ucG5nIiwKICAgICAgICAgICJjb250ZW50VHlwZSI6ICJpbWFnZS9wbmciCiAgICAgICAgfQogICAgICB9CiAgICB9CiAgXQp9Cg==",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/assets?limit=12"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/environments\/master\/assets?limit=12"
       },
       "recorded_at" : 1497354876.80801,
       "request" : {
         "headers" : {
-          "X-Contentful-User-Agent" : "sdk contentful.swift\/0.6.1; platform Swift\/3.1; os iOS\/10.3.1;",
+          "X-Contentful-User-Agent" : "sdk contentful.swift\/1.0.1; platform Swift\/4.0; os iOS\/11.2.0;",
           "Authorization" : "Bearer 264dcca6ce14912f4940ac9d7de5425236b5658ed678da25718aa98438687a6f"
         },
         "method" : "GET",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/assets?limit=12"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/environments\/master\/assets?limit=12"
       }
     },
     {
@@ -188,16 +188,16 @@
           "Via" : "1.1 varnish"
         },
         "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJBcnJheSIKICB9LAogICJ0b3RhbCI6IDEsCiAgInNraXAiOiAwLAogICJsaW1pdCI6IDEzLAogICJpdGVtcyI6IFsKICAgIHsKICAgICAgInN5cyI6IHsKICAgICAgICAic3BhY2UiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIlNwYWNlIiwKICAgICAgICAgICAgImlkIjogImJjMzJjajNreWZldCIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJpZCI6ICI4aWdDUEhNUWZLS1dJNjZzNGtzRWsiLAogICAgICAgICJ0eXBlIjogIkFzc2V0IiwKICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTctMDQtMDRUMTQ6Mzk6MTEuNjU0WiIsCiAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDE3LTA0LTA0VDE0OjM5OjExLjY1NFoiLAogICAgICAgICJyZXZpc2lvbiI6IDEsCiAgICAgICAgImxvY2FsZSI6ICJlbi1VUyIKICAgICAgfSwKICAgICAgImZpZWxkcyI6IHsKICAgICAgICAidGl0bGUiOiAiaW1hZ2luYXRpb24iLAogICAgICAgICJmaWxlIjogewogICAgICAgICAgInVybCI6ICIvL2ltYWdlcy5jb250ZW50ZnVsLmNvbS9iYzMyY2oza3lmZXQvOGlnQ1BITVFmS0tXSTY2czRrc0VrL2E3ZTBhZGFlZTYzOTRkYmZjYjcxM2U2Mjg1MDNiNGY5L2ltYWdpbmF0aW9uLnBuZyIsCiAgICAgICAgICAiZGV0YWlscyI6IHsKICAgICAgICAgICAgInNpemUiOiA2NDE4NCwKICAgICAgICAgICAgImltYWdlIjogewogICAgICAgICAgICAgICJ3aWR0aCI6IDY0NCwKICAgICAgICAgICAgICAiaGVpZ2h0IjogNDY4CiAgICAgICAgICAgIH0KICAgICAgICAgIH0sCiAgICAgICAgICAiZmlsZU5hbWUiOiAiaW1hZ2luYXRpb24ucG5nIiwKICAgICAgICAgICJjb250ZW50VHlwZSI6ICJpbWFnZS9wbmciCiAgICAgICAgfQogICAgICB9CiAgICB9CiAgXQp9Cg==",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/assets?limit=13"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/environments\/master\/assets?limit=13"
       },
       "recorded_at" : 1497354876.830819,
       "request" : {
         "headers" : {
-          "X-Contentful-User-Agent" : "sdk contentful.swift\/0.6.1; platform Swift\/3.1; os iOS\/10.3.1;",
+          "X-Contentful-User-Agent" : "sdk contentful.swift\/1.0.1; platform Swift\/4.0; os iOS\/11.2.0;",
           "Authorization" : "Bearer 264dcca6ce14912f4940ac9d7de5425236b5658ed678da25718aa98438687a6f"
         },
         "method" : "GET",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/assets?limit=13"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/environments\/master\/assets?limit=13"
       }
     },
     {
@@ -225,17 +225,17 @@
           "Cache-Control" : "max-age=0",
           "Via" : "1.1 varnish"
         },
-        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJFcnJvciIsCiAgICAiaWQiOiAiUmF0ZUxpbWl0RXhjZWVkZWQiCiAgfSwKICAibWVzc2FnZSI6ICJZb3UgaGF2ZSBleGNlZWRlZCB0aGUgcmF0ZSBsaW1pdCBvZiB0aGUgT3JnYW5pemF0aW9uIHRoaXMgU3BhY2UgYmVsb25ncyB0byBieSBtYWtpbmcgdG9vIG1hbnkgQVBJIHJlcXVlc3RzIHdpdGhpbiBhIHNob3J0IHRpbWVzcGFuLiBQbGVhc2Ugd2FpdCBhIG1vbWVudCBiZWZvcmUgdHJ5aW5nIHRoZSByZXF1ZXN0IGFnYWluLiIsCiAgInJlcXVlc3RJZCI6ICJkZjA2NGZhOWFlZTFhMGU2ZmUxYjZhY2ZlYjk2MGIxNyIKfQo=",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/assets?limit=14"
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJBcnJheSIKICB9LAogICJ0b3RhbCI6IDEsCiAgInNraXAiOiAwLAogICJsaW1pdCI6IDE0LAogICJpdGVtcyI6IFsKICAgIHsKICAgICAgInN5cyI6IHsKICAgICAgICAic3BhY2UiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIlNwYWNlIiwKICAgICAgICAgICAgImlkIjogImJjMzJjajNreWZldCIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJpZCI6ICI4aWdDUEhNUWZLS1dJNjZzNGtzRWsiLAogICAgICAgICJ0eXBlIjogIkFzc2V0IiwKICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTctMDQtMDRUMTQ6Mzk6MTEuNjU0WiIsCiAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDE3LTA0LTA0VDE0OjM5OjExLjY1NFoiLAogICAgICAgICJyZXZpc2lvbiI6IDEsCiAgICAgICAgImxvY2FsZSI6ICJlbi1VUyIKICAgICAgfSwKICAgICAgImZpZWxkcyI6IHsKICAgICAgICAidGl0bGUiOiAiaW1hZ2luYXRpb24iLAogICAgICAgICJmaWxlIjogewogICAgICAgICAgInVybCI6ICIvL2ltYWdlcy5jb250ZW50ZnVsLmNvbS9iYzMyY2oza3lmZXQvOGlnQ1BITVFmS0tXSTY2czRrc0VrL2E3ZTBhZGFlZTYzOTRkYmZjYjcxM2U2Mjg1MDNiNGY5L2ltYWdpbmF0aW9uLnBuZyIsCiAgICAgICAgICAiZGV0YWlscyI6IHsKICAgICAgICAgICAgInNpemUiOiA2NDE4NCwKICAgICAgICAgICAgImltYWdlIjogewogICAgICAgICAgICAgICJ3aWR0aCI6IDY0NCwKICAgICAgICAgICAgICAiaGVpZ2h0IjogNDY4CiAgICAgICAgICAgIH0KICAgICAgICAgIH0sCiAgICAgICAgICAiZmlsZU5hbWUiOiAiaW1hZ2luYXRpb24ucG5nIiwKICAgICAgICAgICJjb250ZW50VHlwZSI6ICJpbWFnZS9wbmciCiAgICAgICAgfQogICAgICB9CiAgICB9CiAgXQp9Cg==",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/environments\/master\/assets?limit=14"
       },
       "recorded_at" : 1497354877.13367,
       "request" : {
         "headers" : {
-          "X-Contentful-User-Agent" : "sdk contentful.swift\/0.6.1; platform Swift\/3.1; os iOS\/10.3.1;",
+          "X-Contentful-User-Agent" : "sdk contentful.swift\/1.0.1; platform Swift\/4.0; os iOS\/11.2.0;",
           "Authorization" : "Bearer 264dcca6ce14912f4940ac9d7de5425236b5658ed678da25718aa98438687a6f"
         },
         "method" : "GET",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/assets?limit=14"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/environments\/master\/assets?limit=14"
       }
     },
     {
@@ -266,16 +266,16 @@
           "Via" : "1.1 varnish"
         },
         "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJBcnJheSIKICB9LAogICJ0b3RhbCI6IDEsCiAgInNraXAiOiAwLAogICJsaW1pdCI6IDE1LAogICJpdGVtcyI6IFsKICAgIHsKICAgICAgInN5cyI6IHsKICAgICAgICAic3BhY2UiOiB7CiAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgImxpbmtUeXBlIjogIlNwYWNlIiwKICAgICAgICAgICAgImlkIjogImJjMzJjajNreWZldCIKICAgICAgICAgIH0KICAgICAgICB9LAogICAgICAgICJpZCI6ICI4aWdDUEhNUWZLS1dJNjZzNGtzRWsiLAogICAgICAgICJ0eXBlIjogIkFzc2V0IiwKICAgICAgICAiY3JlYXRlZEF0IjogIjIwMTctMDQtMDRUMTQ6Mzk6MTEuNjU0WiIsCiAgICAgICAgInVwZGF0ZWRBdCI6ICIyMDE3LTA0LTA0VDE0OjM5OjExLjY1NFoiLAogICAgICAgICJyZXZpc2lvbiI6IDEsCiAgICAgICAgImxvY2FsZSI6ICJlbi1VUyIKICAgICAgfSwKICAgICAgImZpZWxkcyI6IHsKICAgICAgICAidGl0bGUiOiAiaW1hZ2luYXRpb24iLAogICAgICAgICJmaWxlIjogewogICAgICAgICAgInVybCI6ICIvL2ltYWdlcy5jb250ZW50ZnVsLmNvbS9iYzMyY2oza3lmZXQvOGlnQ1BITVFmS0tXSTY2czRrc0VrL2E3ZTBhZGFlZTYzOTRkYmZjYjcxM2U2Mjg1MDNiNGY5L2ltYWdpbmF0aW9uLnBuZyIsCiAgICAgICAgICAiZGV0YWlscyI6IHsKICAgICAgICAgICAgInNpemUiOiA2NDE4NCwKICAgICAgICAgICAgImltYWdlIjogewogICAgICAgICAgICAgICJ3aWR0aCI6IDY0NCwKICAgICAgICAgICAgICAiaGVpZ2h0IjogNDY4CiAgICAgICAgICAgIH0KICAgICAgICAgIH0sCiAgICAgICAgICAiZmlsZU5hbWUiOiAiaW1hZ2luYXRpb24ucG5nIiwKICAgICAgICAgICJjb250ZW50VHlwZSI6ICJpbWFnZS9wbmciCiAgICAgICAgfQogICAgICB9CiAgICB9CiAgXQp9Cg==",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/assets?limit=15"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/environments\/master\/assets?limit=15"
       },
       "recorded_at" : 1497354877.156739,
       "request" : {
         "headers" : {
-          "X-Contentful-User-Agent" : "sdk contentful.swift\/0.6.1; platform Swift\/3.1; os iOS\/10.3.1;",
+          "X-Contentful-User-Agent" : "sdk contentful.swift\/1.0.1; platform Swift\/4.0; os iOS\/11.2.0;",
           "Authorization" : "Bearer 264dcca6ce14912f4940ac9d7de5425236b5658ed678da25718aa98438687a6f"
         },
         "method" : "GET",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/assets?limit=15"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/environments\/master\/assets?limit=15"
       }
     },
     {
@@ -303,17 +303,17 @@
           "Cache-Control" : "max-age=0",
           "Via" : "1.1 varnish"
         },
-        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJFcnJvciIsCiAgICAiaWQiOiAiUmF0ZUxpbWl0RXhjZWVkZWQiCiAgfSwKICAibWVzc2FnZSI6ICJZb3UgaGF2ZSBleGNlZWRlZCB0aGUgcmF0ZSBsaW1pdCBvZiB0aGUgT3JnYW5pemF0aW9uIHRoaXMgU3BhY2UgYmVsb25ncyB0byBieSBtYWtpbmcgdG9vIG1hbnkgQVBJIHJlcXVlc3RzIHdpdGhpbiBhIHNob3J0IHRpbWVzcGFuLiBQbGVhc2Ugd2FpdCBhIG1vbWVudCBiZWZvcmUgdHJ5aW5nIHRoZSByZXF1ZXN0IGFnYWluLiIsCiAgInJlcXVlc3RJZCI6ICJmMDJiN2JkZTMwZWI5MzgzODUzMmZkOTQ0NDRiN2NhMyIKfQo=",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/assets?limit=16"
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJFcnJvciIsCiAgICAiaWQiOiAiUmF0ZUxpbWl0RXhjZWVkZWQiCiAgfSwKICAibWVzc2FnZSI6ICJZb3UgaGF2ZSBleGNlZWRlZCB0aGUgcmF0ZSBsaW1pdCBvZiB0aGUgT3JnYW5pemF0aW9uIHRoaXMgU3BhY2UgYmVsb25ncyB0byBieSBtYWtpbmcgdG9vIG1hbnkgQVBJIHJlcXVlc3RzIHdpdGhpbiBhIHNob3J0IHRpbWVzcGFuLiBQbGVhc2Ugd2FpdCBhIG1vbWVudCBiZWZvcmUgdHJ5aW5nIHRoZSByZXF1ZXN0IGFnYWluLiIsCiAgInJlcXVlc3RJZCI6ICJmNjYwZWE1ODg0YTU5ODc2OTVmMjM5YzUwYzcwNDYxNiIKfQo=",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/environments\/master\/assets?limit=16"
       },
       "recorded_at" : 1497354877.326043,
       "request" : {
         "headers" : {
-          "X-Contentful-User-Agent" : "sdk contentful.swift\/0.6.1; platform Swift\/3.1; os iOS\/10.3.1;",
+          "X-Contentful-User-Agent" : "sdk contentful.swift\/1.0.1; platform Swift\/4.0; os iOS\/11.2.0;",
           "Authorization" : "Bearer 264dcca6ce14912f4940ac9d7de5425236b5658ed678da25718aa98438687a6f"
         },
         "method" : "GET",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/assets?limit=16"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/environments\/master\/assets?limit=16"
       }
     },
     {
@@ -341,17 +341,17 @@
           "Cache-Control" : "max-age=0",
           "Via" : "1.1 varnish"
         },
-        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJFcnJvciIsCiAgICAiaWQiOiAiUmF0ZUxpbWl0RXhjZWVkZWQiCiAgfSwKICAibWVzc2FnZSI6ICJZb3UgaGF2ZSBleGNlZWRlZCB0aGUgcmF0ZSBsaW1pdCBvZiB0aGUgT3JnYW5pemF0aW9uIHRoaXMgU3BhY2UgYmVsb25ncyB0byBieSBtYWtpbmcgdG9vIG1hbnkgQVBJIHJlcXVlc3RzIHdpdGhpbiBhIHNob3J0IHRpbWVzcGFuLiBQbGVhc2Ugd2FpdCBhIG1vbWVudCBiZWZvcmUgdHJ5aW5nIHRoZSByZXF1ZXN0IGFnYWluLiIsCiAgInJlcXVlc3RJZCI6ICJjNjhlYzI1NDljNjBhYWFlZWJkNTQ2YWU4NDQ5ZDY0NCIKfQo=",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/assets?limit=17"
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJFcnJvciIsCiAgICAiaWQiOiAiUmF0ZUxpbWl0RXhjZWVkZWQiCiAgfSwKICAibWVzc2FnZSI6ICJZb3UgaGF2ZSBleGNlZWRlZCB0aGUgcmF0ZSBsaW1pdCBvZiB0aGUgT3JnYW5pemF0aW9uIHRoaXMgU3BhY2UgYmVsb25ncyB0byBieSBtYWtpbmcgdG9vIG1hbnkgQVBJIHJlcXVlc3RzIHdpdGhpbiBhIHNob3J0IHRpbWVzcGFuLiBQbGVhc2Ugd2FpdCBhIG1vbWVudCBiZWZvcmUgdHJ5aW5nIHRoZSByZXF1ZXN0IGFnYWluLiIsCiAgInJlcXVlc3RJZCI6ICIxNjI4YzAwNDllODBlYmI2MmE5NzMzZWVkN2U0MmZlZCIKfQo=",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/environments\/master\/assets?limit=17"
       },
       "recorded_at" : 1497354877.750023,
       "request" : {
         "headers" : {
-          "X-Contentful-User-Agent" : "sdk contentful.swift\/0.6.1; platform Swift\/3.1; os iOS\/10.3.1;",
+          "X-Contentful-User-Agent" : "sdk contentful.swift\/1.0.1; platform Swift\/4.0; os iOS\/11.2.0;",
           "Authorization" : "Bearer 264dcca6ce14912f4940ac9d7de5425236b5658ed678da25718aa98438687a6f"
         },
         "method" : "GET",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/assets?limit=17"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/environments\/master\/assets?limit=17"
       }
     },
     {
@@ -379,17 +379,17 @@
           "Cache-Control" : "max-age=0",
           "Via" : "1.1 varnish"
         },
-        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJFcnJvciIsCiAgICAiaWQiOiAiUmF0ZUxpbWl0RXhjZWVkZWQiCiAgfSwKICAibWVzc2FnZSI6ICJZb3UgaGF2ZSBleGNlZWRlZCB0aGUgcmF0ZSBsaW1pdCBvZiB0aGUgT3JnYW5pemF0aW9uIHRoaXMgU3BhY2UgYmVsb25ncyB0byBieSBtYWtpbmcgdG9vIG1hbnkgQVBJIHJlcXVlc3RzIHdpdGhpbiBhIHNob3J0IHRpbWVzcGFuLiBQbGVhc2Ugd2FpdCBhIG1vbWVudCBiZWZvcmUgdHJ5aW5nIHRoZSByZXF1ZXN0IGFnYWluLiIsCiAgInJlcXVlc3RJZCI6ICIxYzdkNWVhYjMwYzFmMjg0NTMwYzE1MzUzYzUxMWQwZiIKfQo=",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/assets?limit=18"
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJFcnJvciIsCiAgICAiaWQiOiAiUmF0ZUxpbWl0RXhjZWVkZWQiCiAgfSwKICAibWVzc2FnZSI6ICJZb3UgaGF2ZSBleGNlZWRlZCB0aGUgcmF0ZSBsaW1pdCBvZiB0aGUgT3JnYW5pemF0aW9uIHRoaXMgU3BhY2UgYmVsb25ncyB0byBieSBtYWtpbmcgdG9vIG1hbnkgQVBJIHJlcXVlc3RzIHdpdGhpbiBhIHNob3J0IHRpbWVzcGFuLiBQbGVhc2Ugd2FpdCBhIG1vbWVudCBiZWZvcmUgdHJ5aW5nIHRoZSByZXF1ZXN0IGFnYWluLiIsCiAgInJlcXVlc3RJZCI6ICJiYmY5MmZiODgyYzBiZjIwMDQyMDVkMWU0NzBjZDA5YiIKfQo=",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/environments\/master\/assets?limit=18"
       },
       "recorded_at" : 1497354877.998307,
       "request" : {
         "headers" : {
-          "X-Contentful-User-Agent" : "sdk contentful.swift\/0.6.1; platform Swift\/3.1; os iOS\/10.3.1;",
+          "X-Contentful-User-Agent" : "sdk contentful.swift\/1.0.1; platform Swift\/4.0; os iOS\/11.2.0;",
           "Authorization" : "Bearer 264dcca6ce14912f4940ac9d7de5425236b5658ed678da25718aa98438687a6f"
         },
         "method" : "GET",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/assets?limit=18"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/environments\/master\/assets?limit=18"
       }
     },
     {
@@ -417,17 +417,17 @@
           "Cache-Control" : "max-age=0",
           "Via" : "1.1 varnish"
         },
-        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJFcnJvciIsCiAgICAiaWQiOiAiUmF0ZUxpbWl0RXhjZWVkZWQiCiAgfSwKICAibWVzc2FnZSI6ICJZb3UgaGF2ZSBleGNlZWRlZCB0aGUgcmF0ZSBsaW1pdCBvZiB0aGUgT3JnYW5pemF0aW9uIHRoaXMgU3BhY2UgYmVsb25ncyB0byBieSBtYWtpbmcgdG9vIG1hbnkgQVBJIHJlcXVlc3RzIHdpdGhpbiBhIHNob3J0IHRpbWVzcGFuLiBQbGVhc2Ugd2FpdCBhIG1vbWVudCBiZWZvcmUgdHJ5aW5nIHRoZSByZXF1ZXN0IGFnYWluLiIsCiAgInJlcXVlc3RJZCI6ICJiNWFhNGNjZDEyODkyOGU0YTE0ZTYwZDkzYWQyZTU1NSIKfQo=",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/assets?limit=19"
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJFcnJvciIsCiAgICAiaWQiOiAiUmF0ZUxpbWl0RXhjZWVkZWQiCiAgfSwKICAibWVzc2FnZSI6ICJZb3UgaGF2ZSBleGNlZWRlZCB0aGUgcmF0ZSBsaW1pdCBvZiB0aGUgT3JnYW5pemF0aW9uIHRoaXMgU3BhY2UgYmVsb25ncyB0byBieSBtYWtpbmcgdG9vIG1hbnkgQVBJIHJlcXVlc3RzIHdpdGhpbiBhIHNob3J0IHRpbWVzcGFuLiBQbGVhc2Ugd2FpdCBhIG1vbWVudCBiZWZvcmUgdHJ5aW5nIHRoZSByZXF1ZXN0IGFnYWluLiIsCiAgInJlcXVlc3RJZCI6ICIxYmYwNWU0ZDQzYzE3NDMwNDE2Mzk1OWViNzg0ZjA5ZiIKfQo=",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/environments\/master\/assets?limit=19"
       },
       "recorded_at" : 1497354878.123219,
       "request" : {
         "headers" : {
-          "X-Contentful-User-Agent" : "sdk contentful.swift\/0.6.1; platform Swift\/3.1; os iOS\/10.3.1;",
+          "X-Contentful-User-Agent" : "sdk contentful.swift\/1.0.1; platform Swift\/4.0; os iOS\/11.2.0;",
           "Authorization" : "Bearer 264dcca6ce14912f4940ac9d7de5425236b5658ed678da25718aa98438687a6f"
         },
         "method" : "GET",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/assets?limit=19"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/bc32cj3kyfet\/environments\/master\/assets?limit=19"
       }
     }
   ],

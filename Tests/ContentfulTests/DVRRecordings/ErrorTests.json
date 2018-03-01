@@ -2,32 +2,32 @@
   "interactions" : [
     {
       "response" : {
-        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJFcnJvciIsCiAgICAiaWQiOiAiSW52YWxpZFF1ZXJ5IgogIH0sCiAgIm1lc3NhZ2UiOiAiVGhlIHF1ZXJ5IHlvdSBzZW50IHdhcyBpbnZhbGlkLiBQcm9iYWJseSBhIGZpbHRlciBvciBvcmRlcmluZyBzcGVjaWZpY2F0aW9uIGlzIG5vdCBhcHBsaWNhYmxlIHRvIHRoZSB0eXBlIG9mIGEgZmllbGQuIiwKICAiZGV0YWlscyI6IHsKICAgICJlcnJvcnMiOiBbCiAgICAgIHsKICAgICAgICAibmFtZSI6ICJ1bmtub3duIiwKICAgICAgICAicGF0aCI6IFsKICAgICAgICAgICJzeXMiLAogICAgICAgICAgIjg4OCIKICAgICAgICBdLAogICAgICAgICJkZXRhaWxzIjogIlRoZSBwYXRoIFwic3lzLjg4OFwiIGlzIG5vdCByZWNvZ25pemVkIgogICAgICB9CiAgICBdCiAgfSwKICAicmVxdWVzdElkIjogIjIyOTM5NzI3Y2MzNTZmZDVjMzdlZjVlOGUzNmIxODEwIgp9Cg==",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?sys.888=GO"
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJFcnJvciIsCiAgICAiaWQiOiAiSW52YWxpZFF1ZXJ5IgogIH0sCiAgIm1lc3NhZ2UiOiAiVGhlIHF1ZXJ5IHlvdSBzZW50IHdhcyBpbnZhbGlkLiBQcm9iYWJseSBhIGZpbHRlciBvciBvcmRlcmluZyBzcGVjaWZpY2F0aW9uIGlzIG5vdCBhcHBsaWNhYmxlIHRvIHRoZSB0eXBlIG9mIGEgZmllbGQuIiwKICAiZGV0YWlscyI6IHsKICAgICJlcnJvcnMiOiBbCiAgICAgIHsKICAgICAgICAibmFtZSI6ICJ1bmtub3duIiwKICAgICAgICAicGF0aCI6IFsKICAgICAgICAgICJzeXMiLAogICAgICAgICAgIjg4OCIKICAgICAgICBdLAogICAgICAgICJkZXRhaWxzIjogIlRoZSBwYXRoIFwic3lzLjg4OFwiIGlzIG5vdCByZWNvZ25pemVkIgogICAgICB9CiAgICBdCiAgfSwKICAicmVxdWVzdElkIjogIjVlYzk4YjUwNjk5YmUxODYwNjg5ZjQ5NWUzYjBjYTcxIgp9Cg==",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/dumri3ebknon\/environments\/master\/entries?sys.888=GO"
       },
-      "recorded_at" : 1508233976.8637819,
+      "recorded_at" : 1519833419.1148691,
       "request" : {
         "headers" : {
-          "X-Contentful-User-Agent" : "sdk contentful.swift\/0.11.0; platform Swift\/3.1; os macOS\/10.13.0;",
-          "Authorization" : "Bearer b4c0n73n7fu1"
+          "X-Contentful-User-Agent" : "sdk contentful.swift\/1.0.1; platform Swift\/4.0; os iOS\/11.2.0;",
+          "Authorization" : "Bearer e566e6f1d0545862159b6c63fddd25bebe0aa5c1bb8cbf9418c8531feff0d564"
         },
         "method" : "GET",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/entries?sys.888=GO"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/dumri3ebknon\/environments\/master\/entries?sys.888=GO"
       }
     },
     {
       "response" : {
-        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJTcGFjZSIsCiAgICAiaWQiOiAiY2ZleGFtcGxlYXBpIgogIH0sCiAgIm5hbWUiOiAiQ29udGVudGZ1bCBFeGFtcGxlIEFQSSIsCiAgImxvY2FsZXMiOiBbCiAgICB7CiAgICAgICJjb2RlIjogImVuLVVTIiwKICAgICAgImRlZmF1bHQiOiB0cnVlLAogICAgICAibmFtZSI6ICJFbmdsaXNoIiwKICAgICAgImZhbGxiYWNrQ29kZSI6IG51bGwKICAgIH0sCiAgICB7CiAgICAgICJjb2RlIjogInRsaCIsCiAgICAgICJkZWZhdWx0IjogZmFsc2UsCiAgICAgICJuYW1lIjogIktsaW5nb24iLAogICAgICAiZmFsbGJhY2tDb2RlIjogImVuLVVTIgogICAgfQogIF0KfQo=",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/"
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJBcnJheSIKICB9LAogICJ0b3RhbCI6IDIsCiAgInNraXAiOiAwLAogICJsaW1pdCI6IDEwMDAsCiAgIml0ZW1zIjogWwogICAgewogICAgICAiY29kZSI6ICJlbi1VUyIsCiAgICAgICJuYW1lIjogIkVuZ2xpc2giLAogICAgICAiZGVmYXVsdCI6IHRydWUsCiAgICAgICJmYWxsYmFja0NvZGUiOiBudWxsLAogICAgICAic3lzIjogewogICAgICAgICJpZCI6ICIwc2xicXV0NXFQam1UQlhxN01HaFhjIiwKICAgICAgICAidHlwZSI6ICJMb2NhbGUiLAogICAgICAgICJ2ZXJzaW9uIjogMgogICAgICB9CiAgICB9LAogICAgewogICAgICAiY29kZSI6ICJ0bGgiLAogICAgICAibmFtZSI6ICJLbGluZ29uIiwKICAgICAgImRlZmF1bHQiOiBmYWxzZSwKICAgICAgImZhbGxiYWNrQ29kZSI6ICJlbi1VUyIsCiAgICAgICJzeXMiOiB7CiAgICAgICAgImlkIjogIjI1eWJ5V2lyYVpGenkwQVk2dlBVbU0iLAogICAgICAgICJ0eXBlIjogIkxvY2FsZSIsCiAgICAgICAgInZlcnNpb24iOiAwCiAgICAgIH0KICAgIH0KICBdCn0K",
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/dumri3ebknon\/environments\/master\/locales?limit=1000"
       },
-      "recorded_at" : 1508233976.8970959,
+      "recorded_at" : 1519833419.1571012,
       "request" : {
         "headers" : {
-          "X-Contentful-User-Agent" : "sdk contentful.swift\/0.11.0; platform Swift\/3.1; os macOS\/10.13.0;",
-          "Authorization" : "Bearer b4c0n73n7fu1"
+          "X-Contentful-User-Agent" : "sdk contentful.swift\/1.0.1; platform Swift\/4.0; os iOS\/11.2.0;",
+          "Authorization" : "Bearer e566e6f1d0545862159b6c63fddd25bebe0aa5c1bb8cbf9418c8531feff0d564"
         },
         "method" : "GET",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/cfexampleapi\/"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/dumri3ebknon\/environments\/master\/locales?limit=1000"
       }
     }
   ],

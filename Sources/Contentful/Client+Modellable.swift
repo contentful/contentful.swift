@@ -33,8 +33,7 @@ extension Client {
      */
     @discardableResult public func fetchMappedEntries(matching query: Query,
                                                       then completion: @escaping ResultsHandler<MixedMappedArrayResponse>) -> URLSessionDataTask? {
-        let url = URL(forComponent: "entries", parameters: query.parameters)
-
+        let url = self.url(endpoint: .entries, parameters: query.parameters)
         return fetch(url: url, then: completion)
     }
 
@@ -52,7 +51,7 @@ extension Client {
     @discardableResult public func fetchMappedEntries<EntryType>(matching query: QueryOn<EntryType>,
         then completion: @escaping ResultsHandler<MappedArrayResponse<EntryType>>) -> URLSessionDataTask? {
 
-        let url = URL(forComponent: "entries", parameters: query.parameters)
+        let url = self.url(endpoint: .entries, parameters: query.parameters)
 
         return fetch(url: url, then: completion)
     }

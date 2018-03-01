@@ -42,7 +42,7 @@ class AssetTests: XCTestCase {
             case let .success(asset):
                 expect(asset.sys.id).to(equal("nyancat"))
                 expect(asset.sys.type).to(equal("Asset"))
-                expect(url(asset).absoluteString).to(equal("https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png"))
+                expect(url(asset).absoluteString).to(equal("https://images.contentful.com/dumri3ebknon/nyancat/c78aa97bf55b7de229ee5a5f88261aa4/Nyan_cat_250px_frame.png"))
             case let .error(error):
                 fail("\(error)")
             }
@@ -61,7 +61,7 @@ class AssetTests: XCTestCase {
             if let asset = (assets.items.filter { $0.sys.id == "nyancat" }).first {
                 expect(asset.sys.id).to(equal("nyancat"))
                 expect(asset.sys.type).to(equal("Asset"))
-                expect(url(asset).absoluteString).to(equal("https://images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png"))
+                expect(url(asset).absoluteString).to(equal("https://images.contentful.com/dumri3ebknon/nyancat/c78aa97bf55b7de229ee5a5f88261aa4/Nyan_cat_250px_frame.png"))
             } else {
                 fail("Could not find asset with id 'nyancat'")
             }

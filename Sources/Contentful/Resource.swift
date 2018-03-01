@@ -85,7 +85,7 @@ public class LocalizableResource: Resource, Decodable {
         let container       = try decoder.container(keyedBy: CodingKeys.self)
         let sys             = try container.decode(Sys.self, forKey: .sys)
 
-        guard let localizationContext = decoder.userInfo[DecoderContext.localizationContextKey] as? LocalizationContext else {
+        guard let localizationContext = decoder.userInfo[.localizationContextKey] as? LocalizationContext else {
             throw SDKError.localeHandlingError(message: """
                 SDK failed to find the necessary LocalizationContext
                 necessary to properly map API responses to internal format.
@@ -248,7 +248,7 @@ extension LocalizableResource: Hashable {
 
 extension LocalizableResource: Equatable {}
 /// Equatable implementation for `LocalizableResource`
-public func ==(lhs: LocalizableResource, rhs: LocalizableResource) -> Bool {
+public func == (lhs: LocalizableResource, rhs: LocalizableResource) -> Bool {
     return lhs.id == rhs.id && lhs.sys.updatedAt == rhs.sys.updatedAt
 }
 

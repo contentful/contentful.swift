@@ -26,8 +26,21 @@ open class Client {
     /// The identifier of the space this Client is set to interface with.
     public let spaceId: String
 
-    fileprivate var server: String {
+    /// The identifier of the environment within the space that this Client is set to interface with.
+    public let environmentId: String
 
+    /// Available Locales for this environment
+    public var locales: [Contentful.Locale]?
+
+    /// Context for holding information about the fallback chain of locales for the Space.
+    public private(set) var localizationContext: LocalizationContext! {
+        didSet {
+            // Inject locale information to JSONDecoder.
+            jsonDecoder.update(with: localizationContext)
+        }
+    }
+
+    fileprivate var server: String {
         if clientConfiguration.previewMode && clientConfiguration.server == Defaults.cdaHost {
             return Defaults.previewHost
         }
@@ -86,6 +99,7 @@ open class Client {
      - Returns: An initialized client instance.
      */
     public init(spaceId: String,
+                environmentId: String = "master",
                 accessToken: String,
                 clientConfiguration: ClientConfiguration = .default,
                 sessionConfiguration: URLSessionConfiguration = .default,
@@ -93,16 +107,17 @@ open class Client {
                 contentTypeClasses: [EntryDecodable.Type]? = nil) {
 
         self.spaceId = spaceId
+        self.environmentId = environmentId
         self.clientConfiguration = clientConfiguration
 
-        self.jsonDecoder = Client.jsonDecoderWithoutLocalizationContext()
+        self.jsonDecoder = JSONDecoder.withoutLocalizationContext()
         if let contentTypeClasses = contentTypeClasses {
             var contentTypes = [ContentTypeId: EntryDecodable.Type]()
             for type in contentTypeClasses {
                 contentTypes[type.contentTypeId] = type
             }
-            jsonDecoder.userInfo[DecoderContext.contentTypesContextKey] = contentTypes
-            jsonDecoder.userInfo[DecoderContext.linkResolverContextKey] = LinkResolver()
+            jsonDecoder.userInfo[.contentTypesContextKey] = contentTypes
+            jsonDecoder.userInfo[.linkResolverContextKey] = LinkResolver()
         }
 
         self.persistenceIntegration = persistenceIntegration
@@ -115,34 +130,39 @@ open class Client {
         self.urlSession = URLSession(configuration: sessionConfiguration)
     }
 
-    internal func URL(forComponent component: String = "", parameters: [String: Any]? = nil) -> URL? {
-        if var components = URLComponents(string: "\(scheme)://\(server)/spaces/\(spaceId)/\(component)") {
-            if let parameters = parameters {
-                let queryItems: [URLQueryItem] = parameters.map { (arg) in
-                    var (key, value) = arg
+    internal func url(endpoint: Endpoint, parameters: [String: Any]? = nil) -> URL? {
+        let pathComponent = endpoint.rawValue
+        var components: URLComponents?
 
-                    if let date = value as? Date {
-                        value = date.iso8601String
-                    }
+        switch endpoint {
+        case .spaces, .sync:
+            components = URLComponents(string: "\(scheme)://\(server)/spaces/\(spaceId)/\(pathComponent)")
+        case .assets, .contentTypes, .locales, .entries:
+            components = URLComponents(string: "\(scheme)://\(server)/spaces/\(spaceId)/environments/\(environmentId)/\(pathComponent)")
+        }
+        assert(components != nil)
 
-                    if let array = value as? NSArray {
-                        value = array.componentsJoined(by: ",")
-                    }
+        if let parameters = parameters {
+            let queryItems: [URLQueryItem] = parameters.map { (arg) in
+                var (key, value) = arg
 
-                    return URLQueryItem(name: key, value: (value as AnyObject).description)
+                if let date = value as? Date {
+                    value = date.iso8601String
                 }
 
-                if queryItems.count > 0 {
-                    components.queryItems = queryItems
+                if let array = value as? NSArray {
+                    value = array.componentsJoined(by: ",")
                 }
+
+                return URLQueryItem(name: key, value: (value as AnyObject).description)
             }
 
-            if let url = components.url {
-                return url
+            if queryItems.count > 0 {
+                components?.queryItems = queryItems
             }
         }
-
-        return nil
+        guard let url = components?.url else { return nil }
+        return url
     }
 
     internal func fetch<DecodableType: Decodable>(url: URL?,
@@ -164,12 +184,12 @@ open class Client {
         }
 
         let task = fetch(url: url) { dataResult in
-            if let spaceURL = self.URL(), spaceURL.absoluteString == url.absoluteString {
-                // Now that we have a space, start callback chain.
+            if url.lastPathComponent == "locales" || url.lastPathComponent == self.spaceId {
+                // Now that we have all the locale information, start callback chain.
                 finishDataFetch(dataResult)
             } else {
-                self.fetchSpace { spaceResult in
-                    switch spaceResult {
+                self.fetchLocales { localesResult in
+                    switch localesResult {
                     case .success:
                         // Trigger chain with data we're currently interested in.
                         finishDataFetch(dataResult)
@@ -273,6 +293,61 @@ open class Client {
 }
 
 extension Client {
+
+    /**
+     Fetch all the locales belonging to the environment that was configured with the client.
+
+     - Parameter completion: A handler being called on completion of the request.
+     - Returns: The data task being used, enables cancellation of requests.
+     */
+    @discardableResult public func fetchLocales(then completion: @escaping ResultsHandler<Array<Contentful.Locale>>) -> URLSessionDataTask? {
+        if let locales = self.locales {
+            let localeCodes = locales.map { $0.code }
+            persistenceIntegration?.update(localeCodes: localeCodes)
+            completion(Result.success(locales))
+            return nil
+        }
+
+        // The robust thing to do would be to fetch all pages of the `/locales` endpoint, however, pagination is not supported
+        // at the moment. We also are not expecting any consumers to have > 1000 locales as Contentful subscriptions do not allow that.
+        let query = ResourceQuery.limit(to: QueryConstants.maxLimit)
+        let url = self.url(endpoint: .locales, parameters: query.parameters)
+        return fetch(url: url) { (result: Result<ArrayResponse<Contentful.Locale>>) in
+
+            guard let locales = result.value?.items else {
+                let error = SDKError.localeHandlingError(message: "Unable to parse locales from JSON")
+                completion(Result.error(error))
+                return
+            }
+            self.locales = locales
+
+            let localeCodes = locales.map { $0.code }
+            self.persistenceIntegration?.update(localeCodes: localeCodes)
+
+            guard let localizationContext = LocalizationContext(locales: locales) else {
+                let error = SDKError.localeHandlingError(message: "Locale with default == true not found in Environment!")
+                completion(Result.error(error))
+                return
+            }
+            self.localizationContext = localizationContext
+            completion(Result.success(locales))
+        }
+    }
+
+    /**
+     Fetch all the locales belonging to the environment that was configured with the client.
+
+     - Parameter completion: A handler being called on completion of the request.
+
+     - Returns: The `Observable` for the resulting array of locales.
+     */
+    @discardableResult public func fetchLocales() -> Observable<Result<Array<Contentful.Locale>>> {
+        let asyncDataTask: SignalBang<Array<Contentful.Locale>> = fetchLocales(then:)
+        return toObservable(closure: asyncDataTask).observable
+    }
+}
+
+extension Client {
     /**
      Fetch the space this client is constrained to.
 
@@ -284,21 +359,11 @@ extension Client {
     @discardableResult public func fetchSpace(then completion: @escaping ResultsHandler<Space>) -> URLSessionDataTask? {
         // Attempt to pull from cache first.
         if let space = self.space {
-            let localeCodes = space.locales.map { $0.code }
-            persistenceIntegration?.update(localeCodes: localeCodes)
-
             completion(Result.success(space))
             return nil
         }
-        return fetch(url: self.URL()) { (result: Result<Space>) in
+        return fetch(url: url(endpoint: .spaces)) { (result: Result<Space>) in
             self.space = result.value
-
-            // Inject locale information to JSONDecoder.
-            Client.update(self.jsonDecoder, withLocalizationContextFrom: self.space)
-
-            // Inject locale information to
-            let localeCodes = self.space?.locales.map { $0.code } ?? []
-            self.persistenceIntegration?.update(localeCodes: localeCodes)
             completion(result)
         }
     }
@@ -325,7 +390,7 @@ extension Client {
      - Returns: The data task being used, enables cancellation of requests.
      */
     @discardableResult public func fetchAsset(id: String, then completion: @escaping ResultsHandler<Asset>) -> URLSessionDataTask? {
-        return fetch(url: URL(forComponent: "assets/\(id)"), then: completion)
+        return fetch(Asset.self, id: id, then: completion)
     }
 
     /**
@@ -333,7 +398,7 @@ extension Client {
 
      - Parameter id: The identifier of the Asset to be fetched.
 
-     - Returns: A tuple of data task and a signal for the resulting Asset.
+     - Returns: The `Observable` for the resulting Asset.
      */
     @discardableResult public func fetchAsset(id: String) -> Observable<Result<Asset>> {
         let asyncDataTask: AsyncDataTask<String, Asset> = fetchAsset(id:then:)
@@ -350,8 +415,7 @@ extension Client {
      */
     @discardableResult public func fetchAssets(matching query: AssetQuery? = nil,
                                                then completion: @escaping ResultsHandler<ArrayResponse<Asset>>) -> URLSessionDataTask? {
-        let url = URL(forComponent: "assets", parameters: query?.parameters)
-        return fetch(url: url, then: completion)
+        return fetch(url: url(endpoint: .assets, parameters: query?.parameters), then: completion)
     }
 
     /**
@@ -384,6 +448,49 @@ extension Client {
     }
 }
 
+
+// New way of interacting to be made public in future pull requests.
+extension Client {
+
+    @discardableResult internal func fetch<ResourceType, QueryType>(_ resourceType: ResourceType.Type, matching query: QueryType,
+        then completion: @escaping ResultsHandler<ArrayResponse<ResourceType>>) -> URLSessionDataTask?
+        where ResourceType: EndpointAccessible & ResourceQueryable, QueryType == ResourceType.QueryType {
+            return fetch(url: url(endpoint: ResourceType.endpoint, parameters: query.parameters), then: completion)
+    }
+
+    @discardableResult internal func fetch<ResourceType>(_ resourceType: ResourceType.Type,
+                                                         id: String,
+                                                         then completion: @escaping ResultsHandler<ResourceType>) -> URLSessionDataTask?
+        where ResourceType: Resource & Decodable & EndpointAccessible {
+
+            let fetchCompletion: (Result<ArrayResponse<ResourceType>>) -> Void = { result in
+                switch result {
+                case .success(let response) where response.items.first != nil:
+                    completion(Result.success(response.items.first!))
+                case .error(let error):
+                    completion(Result.error(error))
+                default:
+                    completion(Result.error(SDKError.noResourceFoundFor(id: id)))
+                }
+            }
+
+            let query = ResourceQuery.where(sys: .id, .equals(id))
+            return fetch(url: url(endpoint: ResourceType.endpoint, parameters: query.parameters), then: fetchCompletion)
+    }
+
+    @discardableResult internal func fetch<EntryType>(matching query: QueryOn<EntryType>,
+                                                      then completion: @escaping ResultsHandler<MappedArrayResponse<EntryType>>) -> URLSessionDataTask? {
+        let url = self.url(endpoint: .entries, parameters: query.parameters)
+        return fetch(url: url, then: completion)
+    }
+
+    @discardableResult internal func fetch(matching query: Query,
+                                           then completion: @escaping ResultsHandler<MixedMappedArrayResponse>) -> URLSessionDataTask? {
+        let url = self.url(endpoint: .entries, parameters: query.parameters)
+        return fetch(url: url, then: completion)
+    }
+}
+
 extension Client {
     /**
      Fetch a single Content Type from Contentful.
@@ -395,7 +502,7 @@ extension Client {
      */
     @discardableResult public func fetchContentType(id: String,
                                                     then completion: @escaping ResultsHandler<ContentType>) -> URLSessionDataTask? {
-        return fetch(url: URL(forComponent: "content_types/\(id)"), then: completion)
+        return fetch(ContentType.self, id: id, then: completion)
     }
 
     /**
@@ -420,7 +527,7 @@ extension Client {
      */
     @discardableResult public func fetchContentTypes(matching query: ContentTypeQuery? = nil,
                                                      then completion: @escaping ResultsHandler<ArrayResponse<ContentType>>) -> URLSessionDataTask? {
-        return fetch(url: URL(forComponent: "content_types", parameters: query?.parameters), then: completion)
+        return fetch(url: url(endpoint: .contentTypes, parameters: query?.parameters), then: completion)
     }
 
     /**
@@ -486,7 +593,7 @@ extension Client {
      */
     @discardableResult public func fetchEntries(matching query: Query? = nil,
                                                 then completion: @escaping ResultsHandler<ArrayResponse<Entry>>) -> URLSessionDataTask? {
-        let url = URL(forComponent: "entries", parameters: query?.parameters)
+        let url = self.url(endpoint: .entries, parameters: query?.parameters)
         return fetch(url: url, then: completion)
     }
 
@@ -507,6 +614,11 @@ extension Client {
 
 // MARK: Sync
 
+enum Sync {
+    case initial(types: SyncSpace.SyncableTypes)
+    case next(after: SyncSpace, types: SyncSpace.SyncableTypes)
+}
+
 extension Client {
     /**
      Perform an initial synchronization of the Space this client is constrained to.
@@ -518,6 +630,12 @@ extension Client {
      */
     @discardableResult public func initialSync(syncableTypes: SyncSpace.SyncableTypes = .all,
                                                then completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
+
+        // Sync currently only works for the master environemnt.
+        guard environmentId == "master" else {
+            completion(Result.error(SDKError.nonMasterEnvironmentsDoNotSupportSync()))
+            return nil
+        }
 
         let syncCompletion: (Result<SyncSpace>) -> Void = { result in
             self.finishSync(for: SyncSpace(syncToken: ""),
@@ -579,6 +697,12 @@ extension Client {
                                             syncableTypes: SyncSpace.SyncableTypes = .all,
                                             then completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
 
+        // Sync currently only works for the master environemnt.
+        guard environmentId == "master" else {
+            completion(Result.error(SDKError.nonMasterEnvironmentsDoNotSupportSync()))
+            return nil
+        }
+
         // Preview mode only supports `initialSync` not `nextSync`. The only reason `nextSync` should
         // be called while in preview mode, is internally by the SDK to finish a multiple page sync.
         // We are doing a multi page sync only when syncSpace.hasMorePages is true.
@@ -602,8 +726,7 @@ extension Client {
                           then completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
 
         let parameters = syncableTypes.parameters + operation.parameters
-
-        return fetch(url: URL(forComponent: "sync", parameters: parameters)) { (result: Result<SyncSpace>) in
+        return fetch(url: url(endpoint: .sync, parameters: parameters)) { (result: Result<SyncSpace>) in
 
             if let syncSpace = result.value, syncSpace.hasMorePages == true {
                 self.nextSync(for: syncSpace, syncableTypes: syncableTypes, then: completion)

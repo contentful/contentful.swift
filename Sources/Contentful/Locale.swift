@@ -10,9 +10,16 @@ import Foundation
 
 public typealias LocaleCode = String
 
-/// A Locale represents possible translations for Entry Fields
-public class Locale: Decodable {
+extension Locale: EndpointAccessible {
 
+    static let endpoint = Endpoint.locales
+}
+
+/// A Locale represents possible translations for Entry Fields
+public class Locale: Resource, Decodable {
+
+    /// System fields.
+    public let sys: Sys
     /// Linked list accessor for going to the next fallback locale
     public let fallbackLocaleCode: LocaleCode?
 
@@ -27,10 +34,28 @@ public class Locale: Decodable {
     public let name: String
 
     private enum CodingKeys: String, CodingKey {
+        case sys
         case code
         case isDefault          = "default"
         case name
         case fallbackLocaleCode = "fallbackCode"
+    }
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        name                = try container.decode(String.self, forKey: .name)
+        code                = try container.decode(LocaleCode.self, forKey: .code)
+        isDefault           = try container.decode(Bool.self, forKey: .isDefault)
+        fallbackLocaleCode  = try container.decodeIfPresent(LocaleCode.self, forKey: .fallbackLocaleCode)
+
+        // If we get locales as an array within a space, the sys property will not be present.
+        // Check if present, and if not, then manually construct a Sys object.
+        if let sys = try container.decodeIfPresent(Sys.self, forKey: .sys) {
+            self.sys = sys
+        } else {
+            self.sys = Sys(id: code, type: "Locale", createdAt: nil, updatedAt: nil,
+                           locale: nil, revision: nil, contentTypeInfo: nil)
+        }
     }
 }
 
@@ -51,8 +76,13 @@ public class LocalizationContext {
     /// The default locale of the space.
     public let `default`: Locale
 
-    internal init(default: Locale, locales: [Locale]) {
-        self.`default` = `default`
+    // Returns nil if no locale in the list is set to be the default for the environment.
+    internal init?(locales: [Locale]) {
+
+        guard let defaultLocale = locales.filter({ $0.isDefault }).first else {
+            return nil
+        }
+        self.`default` = defaultLocale
 
         var localeMap = [LocaleCode: Locale]()
         locales.forEach { localeMap[$0.code] = $0 }
