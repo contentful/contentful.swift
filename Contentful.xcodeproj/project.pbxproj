@@ -173,6 +173,12 @@
 		ED7862741F7D2FAC00CB2625 /* Interstellar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED7862751F7D2FAC00CB2625 /* Interstellar.framework */; };
 		ED7862761F7D2FB300CB2625 /* Interstellar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED7862771F7D2FB300CB2625 /* Interstellar.framework */; };
 		ED7862781F7D2FBD00CB2625 /* Interstellar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED7862791F7D2FBD00CB2625 /* Interstellar.framework */; };
+		ED882E9320484BF100D372BF /* EnvironmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED882E9220484BF100D372BF /* EnvironmentTests.swift */; };
+		ED882E9420484BF100D372BF /* EnvironmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED882E9220484BF100D372BF /* EnvironmentTests.swift */; };
+		ED882E9520484BF100D372BF /* EnvironmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED882E9220484BF100D372BF /* EnvironmentTests.swift */; };
+		ED882E972048517E00D372BF /* EnvironmentsTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED882E962048517D00D372BF /* EnvironmentsTests.json */; };
+		ED882E982048517E00D372BF /* EnvironmentsTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED882E962048517D00D372BF /* EnvironmentsTests.json */; };
+		ED882E992048517E00D372BF /* EnvironmentsTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED882E962048517D00D372BF /* EnvironmentsTests.json */; };
 		ED88B7DA1EF7CD3800538D1F /* ClientConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED88B7D91EF7CD3800538D1F /* ClientConfigurationTests.swift */; };
 		ED9102661E65AADA0076FDBD /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED9102651E65AADA0076FDBD /* DVR.framework */; };
 		ED91C1401EDCB03600F0FC0A /* ImageOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */; };
@@ -306,6 +312,8 @@
 		ED7862751F7D2FAC00CB2625 /* Interstellar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Interstellar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED7862771F7D2FB300CB2625 /* Interstellar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Interstellar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED7862791F7D2FBD00CB2625 /* Interstellar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Interstellar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED882E9220484BF100D372BF /* EnvironmentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentTests.swift; sourceTree = "<group>"; };
+		ED882E962048517D00D372BF /* EnvironmentsTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EnvironmentsTests.json; sourceTree = "<group>"; };
 		ED88B7D91EF7CD3800538D1F /* ClientConfigurationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientConfigurationTests.swift; sourceTree = "<group>"; };
 		ED9102651E65AADA0076FDBD /* DVR.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVR.framework; path = Carthage/Build/iOS/DVR.framework; sourceTree = "<group>"; };
 		ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageOptions.swift; sourceTree = "<group>"; };
@@ -498,6 +506,7 @@
 				A114BBC11C50E9E200DE6679 /* SyncTests.swift */,
 				A17D044C1C4F974F002E568B /* UtilityTests.swift */,
 				EDA7D96C1F8E6D660020EE86 /* ErrorTests.swift */,
+				ED882E9220484BF100D372BF /* EnvironmentTests.swift */,
 				A19CA3D51B836EDD00A0EFCD /* Info.plist */,
 			);
 			path = ContentfulTests;
@@ -568,6 +577,7 @@
 				ED4986EE204707D90014DCFE /* SyncTests.json */,
 				ED4986F820470D550014DCFE /* PreviewSyncTests.json */,
 				ED4986F3204708D70014DCFE /* ErrorTests.json */,
+				ED882E962048517D00D372BF /* EnvironmentsTests.json */,
 			);
 			path = DVRRecordings;
 			sourceTree = "<group>";
@@ -833,6 +843,7 @@
 				ED2367652046FCF000034724 /* RateLimitTests.json in Resources */,
 				ED0B45C02046FA3F0000223C /* AssetTests.json in Resources */,
 				ED4986FC20470D5A0014DCFE /* PreviewSyncTests.json in Resources */,
+				ED882E972048517E00D372BF /* EnvironmentsTests.json in Resources */,
 				ED0B45922046EFDB0000223C /* testFetchSpace.json in Resources */,
 				ED4986F2204707DC0014DCFE /* SyncTests.json in Resources */,
 				ED0B45BA2046F9C30000223C /* EntryTests.json in Resources */,
@@ -854,6 +865,7 @@
 				ED0B45BF2046FA3F0000223C /* AssetTests.json in Resources */,
 				ED0B45912046EFDA0000223C /* testFetchSpace.json in Resources */,
 				ED4986FB20470D5A0014DCFE /* PreviewSyncTests.json in Resources */,
+				ED882E982048517E00D372BF /* EnvironmentsTests.json in Resources */,
 				ED0B45B92046F9C30000223C /* EntryTests.json in Resources */,
 				ED4986F1204707DC0014DCFE /* SyncTests.json in Resources */,
 				ED4986DD204706710014DCFE /* ContentTypeTests.json in Resources */,
@@ -875,6 +887,7 @@
 				ED0B45BE2046FA3E0000223C /* AssetTests.json in Resources */,
 				ED0B45902046EFDA0000223C /* testFetchSpace.json in Resources */,
 				ED4986FA20470D590014DCFE /* PreviewSyncTests.json in Resources */,
+				ED882E992048517E00D372BF /* EnvironmentsTests.json in Resources */,
 				ED0B45BB2046F9C40000223C /* EntryTests.json in Resources */,
 				ED4986F0204707DC0014DCFE /* SyncTests.json in Resources */,
 				ED4986DC204706710014DCFE /* ContentTypeTests.json in Resources */,
@@ -1016,6 +1029,7 @@
 				ED02BC611E7047B900BAB2CA /* QueryTests.swift in Sources */,
 				ED2E03E71F97608A006422A6 /* EntryDecodableLinkResolutionTests.swift in Sources */,
 				ED88B7DA1EF7CD3800538D1F /* ClientConfigurationTests.swift in Sources */,
+				ED882E9320484BF100D372BF /* EnvironmentTests.swift in Sources */,
 				ED307F231EE6E5DF00633390 /* LocalizationTests.swift in Sources */,
 				ED5F8F981F94B8C400C86411 /* EntryTests.swift in Sources */,
 				A10FF9D21BBB2E5F001AA4E9 /* JSONDecodingTests.swift in Sources */,
@@ -1038,6 +1052,7 @@
 				EDA690971F43187B00581FC6 /* JSONDecodingTests.swift in Sources */,
 				ED2E03E81F97608A006422A6 /* EntryDecodableLinkResolutionTests.swift in Sources */,
 				EDA690951F43187B00581FC6 /* ContentTypeTests.swift in Sources */,
+				ED882E9420484BF100D372BF /* EnvironmentTests.swift in Sources */,
 				EDA690911F43187B00581FC6 /* RateLimitTests.swift in Sources */,
 				ED5F8F961F94B8C400C86411 /* EntryTests.swift in Sources */,
 				EDA690961F43187B00581FC6 /* LocalizationTests.swift in Sources */,
@@ -1060,6 +1075,7 @@
 				EDA690A31F43187C00581FC6 /* JSONDecodingTests.swift in Sources */,
 				ED2E03E91F97608A006422A6 /* EntryDecodableLinkResolutionTests.swift in Sources */,
 				EDA690A11F43187C00581FC6 /* ContentTypeTests.swift in Sources */,
+				ED882E9520484BF100D372BF /* EnvironmentTests.swift in Sources */,
 				EDA6909D1F43187C00581FC6 /* RateLimitTests.swift in Sources */,
 				ED5F8F971F94B8C400C86411 /* EntryTests.swift in Sources */,
 				EDA690A21F43187C00581FC6 /* LocalizationTests.swift in Sources */,
