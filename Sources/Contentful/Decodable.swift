@@ -19,7 +19,7 @@ import Foundation
 
  ```
  func fetchMappedEntries(with query: Query<Cat>,
- then completion: @escaping ResultsHandler<MappedCollection<Cat>>) -> URLSessionDataTask?
+ then completion: @escaping ResultsHandler<MappedCCollection<Cat>>) -> URLSessionDataTask?
  ```
  */
 public typealias EntryDecodable = Resource & EntryModel

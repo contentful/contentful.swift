@@ -51,7 +51,7 @@ public struct CollectionError: Decodable {
  This is the result type for any request of a collection of resources.
  See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/collection-resources-and-pagination>
  */
-public struct Collection<ItemType>: HomogeneousArray where ItemType: Resource & Decodable {
+public struct CCollection<ItemType>: HomogeneousArray where ItemType: Resource & Decodable {
 
     /// The resources which are part of the given array
     public let items: [ItemType]
@@ -97,7 +97,7 @@ public struct Collection<ItemType>: HomogeneousArray where ItemType: Resource & 
 }
 
 
-extension Collection: Decodable {
+extension CCollection: Decodable {
     public init(from decoder: Decoder) throws {
         let container   = try decoder.container(keyedBy: ArrayCodingKeys.self)
 
@@ -145,8 +145,8 @@ extension Collection: Decodable {
             // Resolve links.
             decoder.linkResolver.churnLinks()
         } else {
-            mappedIncludes = nil
-            includes        = try container.decodeIfPresent(Collection.Includes.self, forKey: .includes)
+            mappedIncludes  = nil
+            includes        = try container.decodeIfPresent(CCollection.Includes.self, forKey: .includes)
             items           = try container.decode([ItemType].self, forKey: .items)
 
             // Workaround for type system not allowing cast of items to [Entry]

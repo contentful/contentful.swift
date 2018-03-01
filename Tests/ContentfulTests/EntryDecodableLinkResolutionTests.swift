@@ -91,7 +91,7 @@ class LinkResolverTests: XCTestCase {
         let expectation = self.expectation(description: "CanResolveArrayOfLinksTests")
 
         let query = QueryOn<SingleRecord>.where(sys: .id, .equals("7BwFiM0nxCS4EGYaIAIkyU"))
-        LinkResolverTests.client.fetchMappedEntries(matching: query) { result in
+        LinkResolverTests.client.fetch(CCollection<SingleRecord>.self,  query) { result in
 
 
             switch result {
@@ -119,7 +119,7 @@ class LinkResolverTests: XCTestCase {
         let expectation = self.expectation(description: "Cannot resolve link to unpublished entity")
 
         let query = QueryOn<SingleRecord>.where(sys: .id, .equals("1k7s1gNcQA8WoUWiqcYaMO"))
-        LinkResolverTests.client.fetchMappedEntries(matching: query) { result in
+        LinkResolverTests.client.fetch(CCollection<SingleRecord>.self, query) { result in
             switch result {
             case .success(let Collection):
                 let records = Collection.items
@@ -147,7 +147,7 @@ class LinkResolverTests: XCTestCase {
         let expectation = self.expectation(description: "Two entries can resolve links to the same link")
 
         let query = QueryOn<SingleRecord>.where(sys: .id, .includes(["1wFgajHSpWOoIgS8UAk2ow", "7rUM7Pr16M2gEwiI02WAoI"]))
-        LinkResolverTests.client.fetchMappedEntries(matching: query) { result in
+        LinkResolverTests.client.fetch(CCollection<SingleRecord>.self, query) { result in
             switch result {
             case .success(let Collection):
                 let records = Collection.items
@@ -173,7 +173,7 @@ class LinkResolverTests: XCTestCase {
 
         let query = QueryOn<SingleRecord>.where(sys: .id, .equals("2JFSeiPTZYm4goMSUeYSCU"))
 
-        LinkResolverTests.client.fetchMappedEntries(matching: query) { result in
+        LinkResolverTests.client.fetch(CCollection<SingleRecord>.self, query) { result in
             switch result {
             case .success(let Collection):
                 let records = Collection.items

@@ -66,25 +66,27 @@ class LocalizationTests: XCTestCase {
 
         let expecatation = self.expectation(description: "Entries matching query network expectation")
 
-        LocalizationTests.client.fetchEntries(matching: Query.where(sys: .id, .equals("nyancat")).localizeResults(withLocaleCode: "*")).then { entriesCollection in
-            let entry = entriesCollection.items.first!
+        LocalizationTests.client.fetch(CCollection<Entry>.self, Query.where(sys: .id, .equals("nyancat")).localizeResults(withLocaleCode: "*")) { result in
+            switch result {
+            case .success(let entriesCollection):
+                let entry = entriesCollection.items.first!
 
-            expect(entry.currentlySelectedLocale.code).to(equal("en-US"))
-            expect(entry.sys.id).to(equal("nyancat"))
-            expect(entry.fields["name"] as? String).to(equal("Nyan Cat"))
-            expect(entry.fields["likes"] as? [String]).to(equal(["rainbows", "fish"]))
+                expect(entry.currentlySelectedLocale.code).to(equal("en-US"))
+                expect(entry.sys.id).to(equal("nyancat"))
+                expect(entry.fields["name"] as? String).to(equal("Nyan Cat"))
+                expect(entry.fields["likes"] as? [String]).to(equal(["rainbows", "fish"]))
 
-            // Set new locale.
-            entry.setLocale(withCode: "tlh")
-            expect(entry.currentlySelectedLocale.code).to(equal("tlh"))
+                // Set new locale.
+                entry.setLocale(withCode: "tlh")
+                expect(entry.currentlySelectedLocale.code).to(equal("tlh"))
 
-            expect(entry.fields["name"] as? String).to(equal("Nyan vIghro'"))
-            // fields with no value for "tlh" should fallback.
-            expect(entry.fields["likes"] as? [String]).to(equal(["rainbows", "fish"]))
+                expect(entry.fields["name"] as? String).to(equal("Nyan vIghro'"))
+                // fields with no value for "tlh" should fallback.
+                expect(entry.fields["likes"] as? [String]).to(equal(["rainbows", "fish"]))
 
-            expecatation.fulfill()
-        }.error {
-            fail("\($0)")
+            case .error(let error):
+                fail("\(error)")
+            }
             expecatation.fulfill()
         }
 

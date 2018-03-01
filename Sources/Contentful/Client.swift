@@ -313,7 +313,7 @@ extension Client {
         // at the moment. We also are not expecting any consumers to have > 1000 locales as Contentful subscriptions do not allow that.
         let query = ResourceQuery.limit(to: QueryConstants.maxLimit)
         let url = self.url(endpoint: .locales, parameters: query.parameters)
-        return fetch(url: url) { (result: Result<Collection<Contentful.Locale>>) in
+        return fetch(url: url) { (result: Result<CCollection<Contentful.Locale>>) in
 
             guard let locales = result.value?.items else {
                 let error = SDKError.localeHandlingError(message: "Unable to parse locales from JSON")
@@ -382,53 +382,53 @@ extension Client {
 }
 
 extension Client {
-    /**
-     Fetch a single Asset from Contentful.
-
-     - Parameter id: The identifier of the Asset to be fetched.
-     - Parameter completion: A handler being called on completion of the request.
-
-     - Returns: The data task being used, enables cancellation of requests.
-     */
-    @discardableResult public func fetchAsset(id: String, then completion: @escaping ResultsHandler<Asset>) -> URLSessionDataTask? {
-        return fetch(Asset.self, id: id, then: completion)
-    }
-
-    /**
-     Fetch a single Asset from Contentful.
-
-     - Parameter id: The identifier of the Asset to be fetched.
-
-     - Returns: The `Observable` for the resulting Asset.
-     */
-    @discardableResult public func fetchAsset(id: String) -> Observable<Result<Asset>> {
-        let asyncDataTask: AsyncDataTask<String, Asset> = fetchAsset(id:then:)
-        return toObservable(parameter: id, asyncDataTask: asyncDataTask).observable
-    }
-
-    /**
-     Fetch a collection of Assets from Contentful matching the specified query.
-
-     - Parameter query: The AssetQuery object to match results against.
-     - Parameter completion: A handler being called on completion of the request.
-
-     - Returns: The data task being used, enables cancellation of requests.
-     */
-    @discardableResult public func fetchAssets(matching query: AssetQuery? = nil,
-                                               then completion: @escaping ResultsHandler<Collection<Asset>>) -> URLSessionDataTask? {
-        return fetch(url: url(endpoint: .assets, parameters: query?.parameters), then: completion)
-    }
-
-    /**
-     Fetch a collection of Assets from Contentful matching the specified query.
-
-     - Parameter query: The AssetQuery object to match results against.
-     - Returns: The `Observable` for the resulting array of Assets.
-     */
-    @discardableResult public func fetchAssets(matching query: AssetQuery? = nil) -> Observable<Result<Collection<Asset>>> {
-        let asyncDataTask: AsyncDataTask<AssetQuery?, Collection<Asset>> = fetchAssets(matching:then:)
-        return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
-    }
+//    /**
+//     Fetch a single Asset from Contentful.
+//
+//     - Parameter id: The identifier of the Asset to be fetched.
+//     - Parameter completion: A handler being called on completion of the request.
+//
+//     - Returns: The data task being used, enables cancellation of requests.
+//     */
+//    @discardableResult public func fetchAsset(id: String, then completion: @escaping ResultsHandler<Asset>) -> URLSessionDataTask? {
+//        return fetch(Asset.self, id: id, then: completion)
+//    }
+//
+//    /**
+//     Fetch a single Asset from Contentful.
+//
+//     - Parameter id: The identifier of the Asset to be fetched.
+//
+//     - Returns: The `Observable` for the resulting Asset.
+//     */
+//    @discardableResult public func fetchAsset(id: String) -> Observable<Result<Asset>> {
+//        let asyncDataTask: AsyncDataTask<String, Asset> = fetchAsset(id:then:)
+//        return toObservable(parameter: id, asyncDataTask: asyncDataTask).observable
+//    }
+//
+//    /**
+//     Fetch a collection of Assets from Contentful matching the specified query.
+//
+//     - Parameter query: The AssetQuery object to match results against.
+//     - Parameter completion: A handler being called on completion of the request.
+//
+//     - Returns: The data task being used, enables cancellation of requests.
+//     */
+//    @discardableResult public func fetchAssets(matching query: AssetQuery? = nil,
+//                                               then completion: @escaping ResultsHandler<CCollection<Asset>>) -> URLSessionDataTask? {
+//        return fetch(url: url(endpoint: .assets, parameters: query?.parameters), then: completion)
+//    }
+//
+//    /**
+//     Fetch a collection of Assets from Contentful matching the specified query.
+//
+//     - Parameter query: The AssetQuery object to match results against.
+//     - Returns: The `Observable` for the resulting array of Assets.
+//     */
+//    @discardableResult public func fetchAssets(matching query: AssetQuery? = nil) -> Observable<Result<CCollection<Asset>>> {
+//        let asyncDataTask: AsyncDataTask<AssetQuery?, CCollection<Asset>> = fetchAssets(matching:then:)
+//        return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
+//    }
 
     /**
      Fetch the underlying media file as `Data`.
@@ -453,18 +453,29 @@ extension Client {
 // New way of interacting to be made public in future pull requests.
 extension Client {
 
-    @discardableResult internal func fetchCollection<ResourceType, QueryType>(_ resourceType: ResourceType.Type, _ query: QueryType,
-        then completion: @escaping ResultsHandler<Collection<ResourceType>>) -> URLSessionDataTask?
+    @discardableResult internal func fetch<ResourceType, QueryType>(_ resourceType: CCollection<ResourceType>.Type,
+                                                                    _ query: QueryType,
+                                                                    then completion: @escaping ResultsHandler<CCollection<ResourceType>>) -> URLSessionDataTask?
         where ResourceType: EndpointAccessible & ResourceQueryable, QueryType == ResourceType.QueryType {
             return fetch(url: url(endpoint: ResourceType.endpoint, parameters: query.parameters), then: completion)
     }
+
+    @discardableResult internal func fetch<ResourceType, QueryType>(_ resourceType: CCollection<ResourceType>.Type,
+                                                                    _ query: QueryType,
+                                                                    then completion: @escaping ResultsHandler<CCollection<ResourceType>>) -> Observable<Result<CCollection<ResourceType>>>
+        where ResourceType: EndpointAccessible & ResourceQueryable, QueryType == ResourceType.QueryType {
+
+            let asyncDataTask: TypeErasedAsyncDataTask<CCollection<ResourceType>, QueryType> = fetch(_:_:then:)
+            return toObservable(resourceType, parameter: query, asyncDataTask: asyncDataTask).observable
+    }
+
 
     @discardableResult internal func fetch<ResourceType>(_ resourceType: ResourceType.Type,
                                                          id: String,
                                                          then completion: @escaping ResultsHandler<ResourceType>) -> URLSessionDataTask?
         where ResourceType: Resource & Decodable & EndpointAccessible {
 
-            let fetchCompletion: (Result<Collection<ResourceType>>) -> Void = { result in
+            let fetchCompletion: (Result<CCollection<ResourceType>>) -> Void = { result in
                 switch result {
                 case .success(let response) where response.items.first != nil:
                     completion(Result.success(response.items.first!))
@@ -479,9 +490,19 @@ extension Client {
             return fetch(url: url(endpoint: ResourceType.endpoint, parameters: query.parameters), then: fetchCompletion)
     }
 
-    @discardableResult internal func fetch<EntryType>(_ entryType: Collection<EntryType>.Type,
-                                                                _ query: QueryOn<EntryType>,
-                                                                hen completion: @escaping ResultsHandler<Collection<EntryType>>) -> URLSessionDataTask? {
+
+    @discardableResult internal func fetch<ResourceType>(_ resourceType: ResourceType.Type,
+                                                         id: String,
+                                                         then completion: @escaping ResultsHandler<ResourceType>) -> Observable<Result<ResourceType>>
+            where ResourceType: Resource & Decodable & EndpointAccessible {
+        let asyncDataTask: TypeErasedAsyncDataTask<ResourceType, String> = fetch(_:id:then:)
+        return toObservable(resourceType, parameter: id, asyncDataTask: asyncDataTask).observable
+    }
+
+
+    @discardableResult internal func fetch<EntryType>(_ entryType: CCollection<EntryType>.Type,
+                                                      _ query: QueryOn<EntryType>,
+                                                      then completion: @escaping ResultsHandler<CCollection<EntryType>>) -> URLSessionDataTask? {
         let url = self.url(endpoint: .entries, parameters: query.parameters)
         return fetch(url: url, then: completion)
     }
@@ -493,125 +514,125 @@ extension Client {
     }
 }
 
-extension Client {
-    /**
-     Fetch a single Content Type from Contentful.
-
-     - Parameter id: The identifier of the Content Type to be fetched.
-     - Parameter completion: A handler being called on completion of the request.
-
-     - Returns: The data task being used, enables cancellation of requests.
-     */
-    @discardableResult public func fetchContentType(id: String,
-                                                    then completion: @escaping ResultsHandler<ContentType>) -> URLSessionDataTask? {
-        return fetch(ContentType.self, id: id, then: completion)
-    }
-
-    /**
-     Fetch a single Content Type from Contentful.
-
-     - Parameter id: The identifier of the Content Type to be fetched.
-
-     - Returns: A tuple of data task and a signal for the resulting Content Type.
-     */
-    @discardableResult public func fetchContentType(id: String) -> Observable<Result<ContentType>> {
-        let asyncDataTask: AsyncDataTask<String, ContentType> = fetchContentType(id:then:)
-        return toObservable(parameter: id, asyncDataTask: asyncDataTask).observable
-    }
-
-    /**
-     Fetch a collection of Content Types from Contentful.
-
-     - Parameter matching:   Optional list of search parameters the Content Types must match.
-     - Parameter completion: A handler being called on completion of the request.
-
-     - Returns: The data task being used, enables cancellation of requests.
-     */
-    @discardableResult public func fetchContentTypes(matching query: ContentTypeQuery? = nil,
-                                                     then completion: @escaping ResultsHandler<Collection<ContentType>>) -> URLSessionDataTask? {
-        return fetch(url: url(endpoint: .contentTypes, parameters: query?.parameters), then: completion)
-    }
-
-    /**
-     Fetch a collection of Content Types from Contentful.
-
-     - Parameter matching: Optional list of search parameters the Content Types must match.
-
-     - Returns: A tuple of data task and a signal for the resulting array of Content Types.
-     */
-    @discardableResult public func fetchContentTypes(matching query: ContentTypeQuery? = nil) -> Observable<Result<Collection<ContentType>>> {
-        let asyncDataTask: AsyncDataTask<ContentTypeQuery?, Collection<ContentType>> = fetchContentTypes(matching:then:)
-        return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
-    }
-}
-
-extension Client {
-    /**
-     Fetch a single Entry from Contentful.
-
-     - Parameter id: The identifier of the Entry to be fetched.
-     - Parameter completion: A handler being called on completion of the request.
-
-     - Returns: The data task being used, enables cancellation of requests.
-     */
-    @discardableResult public func fetchEntry(id: String,
-                                              then completion: @escaping ResultsHandler<Entry>) -> URLSessionDataTask? {
-        let fetchEntriesCompletion: (Result<Collection<Entry>>) -> Void = { result in
-            switch result {
-            case .success(let entries) where entries.items.first != nil:
-                completion(Result.success(entries.items.first!))
-            case .error(let error):
-                completion(Result.error(error))
-            default:
-                completion(Result.error(SDKError.noEntryFoundFor(id: id)))
-            }
-        }
-
-        let query = Query.where(sys: .id, .equals(id))
-        return fetchEntries(matching: query, then: fetchEntriesCompletion)
-    }
-
-    /**
-     Fetch a single Entry from Contentful.
-
-     - Parameter id: The identifier of the Entry to be fetched.
-
-     - Returns: A tuple of data task and a signal for the resulting Entry.
-     */
-    @discardableResult public func fetchEntry(id: String) ->  Observable<Result<Entry>> {
-        let asyncDataTask: AsyncDataTask<String, Entry> = fetchEntry(id:then:)
-        return toObservable(parameter: id, asyncDataTask: asyncDataTask).observable
-    }
-
-    /**
-     Fetch a collection of entries from Contentful matching the specified query. This method does not
-     specify the content_type in the query parameters, so the entries returned in the results can be
-     of any type.
-
-     - Parameter query: The query object to match results againts.
-     - Parameter completion: A handler being called on completion of the request.
-
-     - Returns: The data task being used, enables cancellation of requests.
-     */
-    @discardableResult public func fetchEntries(matching query: Query? = nil,
-                                                then completion: @escaping ResultsHandler<Collection<Entry>>) -> URLSessionDataTask? {
-        let url = self.url(endpoint: .entries, parameters: query?.parameters)
-        return fetch(url: url, then: completion)
-    }
-
-    /**
-     Fetch a collection of entries from Contentful matching the specified query. This method does not
-     specify the content_type in the query parameters, so the entries returned in the results can be
-     of any type.
-     - Parameter query: The query object to match results againts.
-
-     - Returns: A tuple of data task and an observable for the resulting array of Entry's.
-     */
-    @discardableResult public func fetchEntries(matching query: Query? = nil) -> Observable<Result<Collection<Entry>>> {
-        let asyncDataTask: AsyncDataTask<Query?, Collection<Entry>> = fetchEntries(matching:then:)
-        return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
-    }
-}
+//extension Client {
+//    /**
+//     Fetch a single Content Type from Contentful.
+//
+//     - Parameter id: The identifier of the Content Type to be fetched.
+//     - Parameter completion: A handler being called on completion of the request.
+//
+//     - Returns: The data task being used, enables cancellation of requests.
+//     */
+//    @discardableResult public func fetchContentType(id: String,
+//                                                    then completion: @escaping ResultsHandler<ContentType>) -> URLSessionDataTask? {
+//        return fetch(ContentType.self, id: id, then: completion)
+//    }
+//
+//    /**
+//     Fetch a single Content Type from Contentful.
+//
+//     - Parameter id: The identifier of the Content Type to be fetched.
+//
+//     - Returns: A tuple of data task and a signal for the resulting Content Type.
+//     */
+//    @discardableResult public func fetchContentType(id: String) -> Observable<Result<ContentType>> {
+//        let asyncDataTask: AsyncDataTask<String, ContentType> = fetchContentType(id:then:)
+//        return toObservable(parameter: id, asyncDataTask: asyncDataTask).observable
+//    }
+//
+//    /**
+//     Fetch a collection of Content Types from Contentful.
+//
+//     - Parameter matching:   Optional list of search parameters the Content Types must match.
+//     - Parameter completion: A handler being called on completion of the request.
+//
+//     - Returns: The data task being used, enables cancellation of requests.
+//     */
+//    @discardableResult public func fetchContentTypes(matching query: ContentTypeQuery? = nil,
+//                                                     then completion: @escaping ResultsHandler<CCollection<ContentType>>) -> URLSessionDataTask? {
+//        return fetch(url: url(endpoint: .contentTypes, parameters: query?.parameters), then: completion)
+//    }
+//
+//    /**
+//     Fetch a collection of Content Types from Contentful.
+//
+//     - Parameter matching: Optional list of search parameters the Content Types must match.
+//
+//     - Returns: A tuple of data task and a signal for the resulting array of Content Types.
+//     */
+//    @discardableResult public func fetchContentTypes(matching query: ContentTypeQuery? = nil) -> Observable<Result<CCollection<ContentType>>> {
+//        let asyncDataTask: AsyncDataTask<ContentTypeQuery?, CCollection<ContentType>> = fetchContentTypes(matching:then:)
+//        return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
+//    }
+//}
+//
+//extension Client {
+//    /**
+//     Fetch a single Entry from Contentful.
+//
+//     - Parameter id: The identifier of the Entry to be fetched.
+//     - Parameter completion: A handler being called on completion of the request.
+//
+//     - Returns: The data task being used, enables cancellation of requests.
+//     */
+//    @discardableResult public func fetchEntry(id: String,
+//                                              then completion: @escaping ResultsHandler<Entry>) -> URLSessionDataTask? {
+//        let fetchEntriesCompletion: (Result<CCollection<Entry>>) -> Void = { result in
+//            switch result {
+//            case .success(let entries) where entries.items.first != nil:
+//                completion(Result.success(entries.items.first!))
+//            case .error(let error):
+//                completion(Result.error(error))
+//            default:
+//                completion(Result.error(SDKError.noEntryFoundFor(id: id)))
+//            }
+//        }
+//
+//        let query = Query.where(sys: .id, .equals(id))
+//        return fetchEntries(matching: query, then: fetchEntriesCompletion)
+//    }
+//
+//    /**
+//     Fetch a single Entry from Contentful.
+//
+//     - Parameter id: The identifier of the Entry to be fetched.
+//
+//     - Returns: A tuple of data task and a signal for the resulting Entry.
+//     */
+//    @discardableResult public func fetchEntry(id: String) ->  Observable<Result<Entry>> {
+//        let asyncDataTask: AsyncDataTask<String, Entry> = fetchEntry(id:then:)
+//        return toObservable(parameter: id, asyncDataTask: asyncDataTask).observable
+//    }
+//
+//    /**
+//     Fetch a collection of entries from Contentful matching the specified query. This method does not
+//     specify the content_type in the query parameters, so the entries returned in the results can be
+//     of any type.
+//
+//     - Parameter query: The query object to match results againts.
+//     - Parameter completion: A handler being called on completion of the request.
+//
+//     - Returns: The data task being used, enables cancellation of requests.
+//     */
+//    @discardableResult public func fetchEntries(matching query: Query? = nil,
+//                                                then completion: @escaping ResultsHandler<CCollection<Entry>>) -> URLSessionDataTask? {
+//        let url = self.url(endpoint: .entries, parameters: query?.parameters)
+//        return fetch(url: url, then: completion)
+//    }
+//
+//    /**
+//     Fetch a collection of entries from Contentful matching the specified query. This method does not
+//     specify the content_type in the query parameters, so the entries returned in the results can be
+//     of any type.
+//     - Parameter query: The query object to match results againts.
+//
+//     - Returns: A tuple of data task and an observable for the resulting array of Entry's.
+//     */
+//    @discardableResult public func fetchEntries(matching query: Query? = nil) -> Observable<Result<CCollection<Entry>>> {
+//        let asyncDataTask: AsyncDataTask<Query?, CCollection<Entry>> = fetchEntries(matching:then:)
+//        return toObservable(parameter: query, asyncDataTask: asyncDataTask).observable
+//    }
+//}
 
 
 // MARK: Sync
