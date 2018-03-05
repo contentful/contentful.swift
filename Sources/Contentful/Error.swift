@@ -31,6 +31,9 @@ public enum SDKError: Error {
     /// Thrown if the sync endpoint is called while interfacing with an environment that is not master.
     case nonMasterEnvironmentsDoNotSupportSync()
 
+
+    // FIXME: Rename./
+    case noValuePresentFor()
     /**
      Thrown when receiving unparseable JSON responses.
      - Parameter data: The data being parsed.
