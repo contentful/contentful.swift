@@ -12,17 +12,13 @@ import Interstellar
 /// A container for the synchronized state of a Space
 public final class SyncSpace: Decodable {
 
-    internal enum Operation {
-        case initial
-        case next(syncToken: String)
+    /// The url parameters relevant for the next sync operation that this `SyncSpace` can perform.
+    public var parameters: [String: Any] {
 
-        var parameters: [String: Any] {
-            switch self {
-            case .initial:
-                return ["initial": true]
-            case .next(let syncToken):
-                return ["sync_token": syncToken]
-            }
+        if syncToken.isEmpty {
+            return ["initial": true]
+        } else {
+            return ["sync_token": syncToken]
         }
     }
 
@@ -96,7 +92,7 @@ public final class SyncSpace: Decodable {
 
      - returns: An initialized synchronized space instance
      */
-    public init(syncToken: String) {
+    public init(syncToken: String = "") {
         self.hasMorePages = false
         self.syncToken = syncToken
     }
