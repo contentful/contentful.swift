@@ -12,6 +12,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 > - Support for the new Environments
 > - Locales are now a property of `Client` and can be fetched on their own with the `fetchLocales` methods.
 > #### Changed
+> - **BREAKING:** The interface for synchronization has been simplified. `initialSync` and `nextSync` have been replaced with `sync` with a default argument of an empty sync space to start an initial sync operation.
 > - **BREAKING:** The SDK provided methods for creating a new `Swift.JSONDecoder` and updating it with locale information of your space or environment has changed.
 > - **BREAKING:** The `LocalizationContext` property of `Space` has been moved and is now a property of `Client`.
 > - **BREAKING:** `ResourceQueryable` has been renamed `EntryQueryable` for correctness and consistency.

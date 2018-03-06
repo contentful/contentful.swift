@@ -75,7 +75,7 @@ class EnvironmentsTests: XCTestCase {
     func testPerformInitialSync(syncableTypes: SyncSpace.SyncableTypes, action: @escaping (_ space: SyncSpace) -> ()) {
         let expectation = self.expectation(description: "Sync test expecation")
 
-        EnvironmentsTests.client.initialSync(syncableTypes: syncableTypes).then { syncSpace in
+        EnvironmentsTests.client.sync(syncableTypes: syncableTypes).then { syncSpace in
 
             fail("Should not successfully sync while connected to non-master nvironment")
             expectation.fulfill()

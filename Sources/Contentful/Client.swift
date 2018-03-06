@@ -614,88 +614,50 @@ extension Client {
 
 // MARK: Sync
 
-enum Sync {
-    case initial(types: SyncSpace.SyncableTypes)
-    case next(after: SyncSpace, types: SyncSpace.SyncableTypes)
-}
-
 extension Client {
-    /**
-     Perform an initial synchronization of the Space this client is constrained to.
-
-     - Parameter syncableTypes: The types that can be synchronized.
-     - Parameter completion: A handler being called on completion of the request.
-
-     - Returns: The data task being used, enables cancellation of requests.
-     */
-    @discardableResult public func initialSync(syncableTypes: SyncSpace.SyncableTypes = .all,
-                                               then completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
-
-        // Sync currently only works for the master environemnt.
-        guard environmentId == "master" else {
-            completion(Result.error(SDKError.nonMasterEnvironmentsDoNotSupportSync()))
-            return nil
-        }
-
-        let syncCompletion: (Result<SyncSpace>) -> Void = { result in
-            self.finishSync(for: SyncSpace(syncToken: ""),
-                            newestSyncResults: result,
-                            then: completion)
-        }
-        return sync(operation: .initial, syncableTypes: syncableTypes, then: syncCompletion)
-    }
 
     /**
-     Perform an initial synchronization of the Space this client is constrained to.
-
-     - Parameter matching: Additional options for the synchronization.
-     - Returns: An `Observable` for the resulting SyncSpace.
-     */
-
-    @discardableResult public func initialSync(syncableTypes: SyncSpace.SyncableTypes = .all) -> Observable<Result<SyncSpace>> {
-        let asyncDataTask: AsyncDataTask<SyncSpace.SyncableTypes, SyncSpace> = initialSync(syncableTypes:then:)
-        return toObservable(parameter: syncableTypes, asyncDataTask: asyncDataTask).observable
-    }
-
-    /**
-     Perform a subsequent synchronization operation, updating this object with
-     the latest content from Contentful.
+     Perform a synchronization operation, updating the passed in `SyncSpace` object with
+     latest content from Contentful. If the passed in `SyncSpace` is a new empty instance with an empty
+     sync token, a full synchronization will be done.
 
      Calling this will mutate the instance and also return a reference to itself to the completion
      handler in order to allow chaining of operations.
 
-     - Parameter syncSpace: the relevant `SyncSpace` to perform the subsequent sync on.
+     - Parameter syncSpace: the relevant `SyncSpace` to perform the subsequent sync on. Defaults to a new empty instance of sync space.
      - Parameter syncableTypes: The types that can be synchronized.
 
      - Returns: An `Observable` which will be fired when the `SyncSpace` is fully synchronized with Contentful.
      */
-    @discardableResult public func nextSync(for syncSpace: SyncSpace,
-                                            syncableTypes: SyncSpace.SyncableTypes = .all) -> Observable<Result<SyncSpace>> {
+    @discardableResult public func sync(for syncSpace: SyncSpace = SyncSpace(),
+                                        syncableTypes: SyncSpace.SyncableTypes = .all) -> Observable<Result<SyncSpace>> {
 
         let observable = Observable<Result<SyncSpace>>()
-        self.nextSync(for: syncSpace, syncableTypes: syncableTypes) { result in
+        self.sync(for: syncSpace, syncableTypes: syncableTypes) { result in
             observable.update(result)
         }
         return observable
     }
 
+
     /**
-     Perform a subsequent synchronization operation, updating the passed in `SyncSpace` with the
-     latest content from Contentful.
+     Perform a synchronization operation, updating the passed in `SyncSpace` object with
+     latest content from Contentful. If the passed in `SyncSpace` is a new empty instance with an empty
+     sync token, a full synchronization will be done.
 
      Calling this will mutate passed in SyncSpace and also return a reference to itself to the completion
      handler in order to allow chaining of operations.
 
-     - Parameter syncSpace: the relevant `SyncSpace` to perform the subsequent sync on.
+     - Parameter syncSpace: the relevant `SyncSpace` to perform the subsequent sync on. Defaults to a new empty instance of sync space.
      - Parameter syncableTypes: The types that can be synchronized.
      - Parameter completion: A handler which will be called on completion of the operation
 
      - Returns: The data task being used, enables cancellation of requests.
      */
 
-    @discardableResult public func nextSync(for syncSpace: SyncSpace,
-                                            syncableTypes: SyncSpace.SyncableTypes = .all,
-                                            then completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
+    @discardableResult public func sync(for syncSpace: SyncSpace = SyncSpace(),
+                                        syncableTypes: SyncSpace.SyncableTypes = .all,
+                                        then completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
 
         // Sync currently only works for the master environemnt.
         guard environmentId == "master" else {
@@ -706,49 +668,27 @@ extension Client {
         // Preview mode only supports `initialSync` not `nextSync`. The only reason `nextSync` should
         // be called while in preview mode, is internally by the SDK to finish a multiple page sync.
         // We are doing a multi page sync only when syncSpace.hasMorePages is true.
-        if clientConfiguration.previewMode == true && syncSpace.hasMorePages == false {
+        if !syncSpace.syncToken.isEmpty && clientConfiguration.previewMode == true && syncSpace.hasMorePages == false {
             completion(Result.error(SDKError.previewAPIDoesNotSupportSync()))
             return nil
         }
 
-        let syncCompletion: (Result<SyncSpace>) -> Void = { results in
-            self.finishSync(for: syncSpace,
-                            newestSyncResults: results,
-                            then: completion)
-        }
-
-        let task = self.sync(operation: .next(syncToken: syncSpace.syncToken), syncableTypes: syncableTypes, then: syncCompletion)
-        return task
-    }
-
-    fileprivate func sync(operation: SyncSpace.Operation,
-                          syncableTypes: SyncSpace.SyncableTypes = .all,
-                          then completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
-
-        let parameters = syncableTypes.parameters + operation.parameters
+        let parameters = syncableTypes.parameters + syncSpace.parameters
         return fetch(url: url(endpoint: .sync, parameters: parameters)) { (result: Result<SyncSpace>) in
 
-            if let syncSpace = result.value, syncSpace.hasMorePages == true {
-                self.nextSync(for: syncSpace, syncableTypes: syncableTypes, then: completion)
-            } else {
-                completion(result)
+            var mutableResult = result
+            if case .success(let newSyncSpace) = result {
+                // On each new page, update the original sync space and forward the diffs to the
+                // persistence integration.
+                syncSpace.updateWithDiffs(from: newSyncSpace)
+                self.persistenceIntegration?.update(with: newSyncSpace)
+                mutableResult = .success(syncSpace)
             }
-        }
-    }
-
-    fileprivate func finishSync(for syncSpace: SyncSpace,
-                                newestSyncResults: Result<SyncSpace>,
-                                then completion: ResultsHandler<SyncSpace>) {
-
-        switch newestSyncResults {
-        case .success(let newSyncSpace):
-            syncSpace.updateWithDiffs(from: newSyncSpace)
-            persistenceIntegration?.update(with: newSyncSpace)
-
-            // Send fully merged syncSpace to completion handler.
-            completion(Result.success(syncSpace))
-        case .error(let error):
-            completion(Result.error(error))
+            if let syncSpace = result.value, syncSpace.hasMorePages == true {
+                self.sync(for: syncSpace, syncableTypes: syncableTypes, then: completion)
+            } else {
+                completion(mutableResult)
+            }
         }
     }
 }

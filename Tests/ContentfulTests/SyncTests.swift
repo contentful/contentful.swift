@@ -29,7 +29,7 @@ class SyncTests: XCTestCase {
     func waitUntilSync(syncableTypes: SyncSpace.SyncableTypes, action: @escaping (_ space: SyncSpace) -> ()) {
         let expectation = self.expectation(description: "Sync test expecation")
 
-        SyncTests.client.initialSync(syncableTypes: syncableTypes).then {
+        SyncTests.client.sync(syncableTypes: syncableTypes).then {
             action($0)
             expectation.fulfill()
         }.error {
@@ -49,10 +49,10 @@ class SyncTests: XCTestCase {
 
     func testPerformSubsequentSync() {
         let expectation = self.expectation(description: "Subsequent Sync test expecation")
-        SyncTests.client.initialSync().flatMap { (result: Result<SyncSpace>) -> Observable<Result<SyncSpace>> in
+        SyncTests.client.sync().flatMap { (result: Result<SyncSpace>) -> Observable<Result<SyncSpace>> in
             switch result {
             case .success(let syncSpace):
-                return SyncTests.client.nextSync(for: syncSpace)
+                return SyncTests.client.sync(for: syncSpace)
             case .error(let error):
                 fail("\(error)")
                 return Observable<Result<SyncSpace>>()
@@ -112,7 +112,7 @@ class PreviewSyncTests: XCTestCase {
     func testDoInitialSyncWithPreviewAPI() {
         let expectation = self.expectation(description: "Can do initial sync with preview API Sync test expecation")
 
-        PreviewSyncTests.client.initialSync().then { syncSpace in
+        PreviewSyncTests.client.sync().then { syncSpace in
             expect(syncSpace.entries.count).to(beGreaterThan(0))
             expect(syncSpace.assets.count).to(beGreaterThan(0))
             expectation.fulfill()
@@ -126,11 +126,11 @@ class PreviewSyncTests: XCTestCase {
     func testSubsequentSyncWithPreviewAPIReturnsSDKError() {
         let expectation = self.expectation(description: "Can do initial sync with preview API Sync test expecation")
 
-        PreviewSyncTests.client.initialSync().then { syncSpace in
+        PreviewSyncTests.client.sync().then { syncSpace in
             expect(syncSpace.entries.count).to(beGreaterThan(0))
             expect(syncSpace.assets.count).to(beGreaterThan(0))
 
-            PreviewSyncTests.client.nextSync(for: syncSpace).then { nextSyncSpace in
+            PreviewSyncTests.client.sync(for: syncSpace).then { nextSyncSpace in
                 fail("Should not be able to do subsequent sync")
                 expectation.fulfill()
             }.error { error in
