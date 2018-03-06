@@ -278,8 +278,7 @@ public struct ContentfulFieldsContainer<K>: KeyedDecodingContainerProtocol where
         if let bool = try? keyedDecodingContainer.decode(type, forKey: key) {
             return bool
         } else {
-            let originalLocale = localizationContext.default
-            var currentLocale = originalLocale
+            var currentLocale = localizationContext.currentLocale
             let localesContainer = try keyedDecodingContainer.nestedContainer(keyedBy: JSONCodingKeys.self, forKey: key)
             while !localesContainer.contains(JSONCodingKeys(stringValue: currentLocale.code)!) {
                 // Break loops if we've walked through all of the locales.
