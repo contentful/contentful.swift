@@ -272,7 +272,7 @@ internal struct EmptyDecodable: Decodable {}
 extension KeyedDecodingContainer {
 
     // Decodes collections that include both entries, assets, and deleted resources.
-    internal func decodeHeterogeneousCollection(forKey key: K,
+    public func decodeHeterogeneousCollection(forKey key: K,
                                                 contentTypes: [ContentTypeId: EntryDecodable.Type],
                                                 throwIfNotPresent: Bool) throws -> [Resource & Decodable]? {
 

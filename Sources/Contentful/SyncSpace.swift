@@ -40,7 +40,7 @@ public final class SyncSpace: Decodable {
         case deletedAssets
 
         // Query parameters.
-        internal var parameters: [String: Any] {
+        public var parameters: [String: Any] {
             let typeParameter = "type"
             switch self {
             case .all:

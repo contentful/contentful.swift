@@ -73,17 +73,19 @@ public class LocalizationContext  {
     /// An ordered collection of locales representing the fallback chain.
     public let locales: [LocaleCode: Locale]
 
+    public var currentLocale: Locale
+
     /// The default locale of the space.
     public let `default`: Locale
 
     // Returns nil if no locale in the list is set to be the default for the environment.
-    internal init?(locales: [Locale]) {
+    public init?(locales: [Locale]) {
 
         guard let defaultLocale = locales.filter({ $0.isDefault }).first else {
             return nil
         }
         self.`default` = defaultLocale
-
+        self.currentLocale = defaultLocale
         var localeMap = [LocaleCode: Locale]()
         locales.forEach { localeMap[$0.code] = $0 }
         self.locales = localeMap

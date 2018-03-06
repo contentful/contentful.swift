@@ -21,7 +21,7 @@ public typealias ResultsHandler<T> = (_ result: Result<T>) -> Void
 /// Client object for performing requests against the Contentful API.
 open class Client {
 
-    internal let clientConfiguration: ClientConfiguration
+    public let clientConfiguration: ClientConfiguration
 
     /// The identifier of the space this Client is set to interface with.
     public let spaceId: String
@@ -130,7 +130,8 @@ open class Client {
         self.urlSession = URLSession(configuration: sessionConfiguration)
     }
 
-    internal func url(endpoint: Endpoint, parameters: [String: Any]? = nil) -> URL? {
+    // TODO: Document.
+    public func url(endpoint: Endpoint, parameters: [String: Any]? = nil) -> URL? {
         let pathComponent = endpoint.rawValue
         var components: URLComponents?
 
@@ -166,7 +167,7 @@ open class Client {
     }
 
     // TODO: make this function public
-    internal func fetch<DecodableType: Decodable>(url: URL?,
+    public func fetch<DecodableType: Decodable>(url: URL?,
                         then completion: @escaping ResultsHandler<DecodableType>) -> URLSessionDataTask? {
 
         guard let url = url else {
@@ -204,7 +205,8 @@ open class Client {
         return task
     }
 
-    internal func fetch(url: URL, completion: @escaping ResultsHandler<Data>) -> URLSessionDataTask {
+    // TODO: Document
+    public func fetch(url: URL, completion: @escaping ResultsHandler<Data>) -> URLSessionDataTask {
         let task = urlSession.dataTask(with: url) { data, response, error in
             if let data = data {
                 if self.didHandleRateLimitError(data: data, response: response, completion: completion) == true {

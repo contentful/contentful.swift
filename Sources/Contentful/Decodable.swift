@@ -29,15 +29,15 @@ public typealias EntryDecodable = Resource & EntryModel
 public extension Decoder {
 
     // The LinkResolver used by the SDK to cache and resolve links.
-    internal var linkResolver: LinkResolver {
+    public var linkResolver: LinkResolver {
         return userInfo[.linkResolverContextKey] as! LinkResolver
     }
 
-    internal var contentTypes: [ContentTypeId: EntryDecodable.Type] {
+    public var contentTypes: [ContentTypeId: EntryDecodable.Type] {
         return userInfo[.contentTypesContextKey] as! [ContentTypeId: EntryDecodable.Type]
     }
 
-    internal var localizationContext: LocalizationContext {
+    public var localizationContext: LocalizationContext {
         return userInfo[.localizationContextKey] as! LocalizationContext
     }
 
@@ -62,11 +62,6 @@ public extension Decoder {
     }
 }
 
-internal class KeyedFieldsDecodingContainer {
-    // FIXME: Implement
-    // - methods would give you special KeyedFieldsContainer which owns the regular container and it will get value for key and walk down the fallback chain for you. preserve localization scheme.
-}
-
 internal extension EntryModel where Self: EntryDecodable {
     // This is a magic workaround for the fact that dynamic metatypes cannot be passed into
     // initializers such as UnkeyedDecodingContainer.decode(Decodable.Type), yet static methods CAN
@@ -77,10 +72,10 @@ internal extension EntryModel where Self: EntryDecodable {
     }
 }
 
-internal extension CodingUserInfoKey {
-    static let linkResolverContextKey = CodingUserInfoKey(rawValue: "linkResolverContext")!
-    static let contentTypesContextKey = CodingUserInfoKey(rawValue: "contentTypesContext")!
-    static let localizationContextKey = CodingUserInfoKey(rawValue: "localizationContext")!
+public extension CodingUserInfoKey {
+    public static let linkResolverContextKey = CodingUserInfoKey(rawValue: "linkResolverContext")!
+    public static let contentTypesContextKey = CodingUserInfoKey(rawValue: "contentTypesContext")!
+    public static let localizationContextKey = CodingUserInfoKey(rawValue: "localizationContext")!
 }
 
 extension JSONDecoder {
@@ -108,7 +103,7 @@ extension JSONDecoder {
         userInfo[.contentTypesContextKey] = types
     }
 
-    internal var linkResolver: LinkResolver {
+    public var linkResolver: LinkResolver {
         return userInfo[.linkResolverContextKey] as! LinkResolver
     }
 }
@@ -195,13 +190,7 @@ public struct ContentfulFieldsContainer<K>: KeyedDecodingContainerProtocol where
             linkResolver.resolve(links, callback: callback)
         }
     }
-
-
-
-
-
-
-
+    
     public typealias Key = K
 
     private let keyedDecodingContainer: KeyedDecodingContainer<K>
@@ -327,7 +316,7 @@ public struct ContentfulFieldsContainer<K>: KeyedDecodingContainerProtocol where
         return try keyedDecodingContainer.superDecoder(forKey: key)
     }
 }
-internal class LinkResolver {
+public class LinkResolver {
 
     private var dataCache: DataCache = DataCache()
 
@@ -335,19 +324,19 @@ internal class LinkResolver {
 
     private static let linksArrayPrefix = "linksArrayPrefix"
 
-    internal func cache(assets: [Asset]) {
+    public func cache(assets: [Asset]) {
         for asset in assets {
             dataCache.add(asset: asset)
         }
     }
 
-    internal func cache(entryDecodables: [EntryDecodable]) {
+    public func cache(entryDecodables: [EntryDecodable]) {
         for entryDecodable in entryDecodables {
             dataCache.add(entry: entryDecodable)
         }
     }
 
-    internal func cache(resources: [Resource & Decodable]) {
+    public func cache(resources: [Resource & Decodable]) {
         for resource in resources {
             if let asset = resource as? Asset {
                 dataCache.add(asset: asset)
@@ -365,7 +354,7 @@ internal class LinkResolver {
     }
 
     // FIXME: Should we append the source item to the key so we can
-    internal func resolve(_ links: [Link], callback: @escaping (Any) -> Void) {
+    public func resolve(_ links: [Link], callback: @escaping (Any) -> Void) {
         let linksIdentifier: String = links.reduce(into: LinkResolver.linksArrayPrefix) { (id, link) in
             id += "," + DataCache.cacheKey(for: link)
         }
@@ -374,7 +363,7 @@ internal class LinkResolver {
 
     // Executes all cached callbacks to resolve links and then clears the callback cache and the data cache
     // where resources are cached before being resolved.
-    internal func churnLinks() {
+    public func churnLinks() {
         for (linkKey, callbacksList) in callbacks {
             if linkKey.hasPrefix(LinkResolver.linksArrayPrefix) {
                 let firstKeyIndex = linkKey.index(linkKey.startIndex, offsetBy: LinkResolver.linksArrayPrefix.count)

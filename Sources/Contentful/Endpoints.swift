@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal enum Endpoint: String {
+public enum Endpoint: String {
     case spaces         = ""
     case contentTypes   = "content_types"
     case entries
