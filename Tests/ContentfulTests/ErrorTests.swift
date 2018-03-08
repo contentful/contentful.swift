@@ -29,7 +29,7 @@ class ErrorTests: XCTestCase {
     func testErrorMessageForInvalidPath() {
         let expectation = self.expectation(description: "Invalid path")
         
-        ErrorTests.client.fetchEntries(matching: Query.where(valueAtKeyPath: "sys.888", .equals("GO"))) { result in
+        ErrorTests.client.fetch(CCollection<Entry>.self, .where(valueAtKeyPath: "sys.888", .equals("GO"))) { result in
             switch result {
             case .success:
                 fail("Request should not succeed")

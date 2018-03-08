@@ -41,7 +41,7 @@ class EnvironmentsTests: XCTestCase {
         let expectation = self.expectation(description: "Fetch all entries expectation")
 
         // Empty query means: get all entries. i.e. /entries
-        EnvironmentsTests.client.fetchMappedEntries(matching: Query()) { (result: Result<MixedMappedArrayResponse>) in
+        EnvironmentsTests.client.fetch(.any) { result in
 
             switch result {
             case .success(let response):

@@ -68,26 +68,29 @@ public class Locale: Resource, Decodable {
  for an `Entry` does not have data for the currently selected locale, the SDK will walk the fallback
  chain for this field until a non-null value is found, or full chain has been walked.
  */
-public class LocalizationContext {
+public class LocalizationContext  {
 
     /// An ordered collection of locales representing the fallback chain.
     public let locales: [LocaleCode: Locale]
+
+    public var currentLocale: Locale
 
     /// The default locale of the space.
     public let `default`: Locale
 
     // Returns nil if no locale in the list is set to be the default for the environment.
-    internal init?(locales: [Locale]) {
+    public init?(locales: [Locale]) {
 
         guard let defaultLocale = locales.filter({ $0.isDefault }).first else {
             return nil
         }
         self.`default` = defaultLocale
-
+        self.currentLocale = defaultLocale
         var localeMap = [LocaleCode: Locale]()
         locales.forEach { localeMap[$0.code] = $0 }
         self.locales = localeMap
     }
+
 }
 
 internal struct Localization {

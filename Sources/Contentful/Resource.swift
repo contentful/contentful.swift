@@ -27,9 +27,9 @@ extension Resource {
     }
 }
 
-internal class DeletedResource: Resource, Decodable {
+public class DeletedResource: Resource, Decodable {
 
-    let sys: Sys
+    public let sys: Sys
 
     init(sys: Sys) {
         self.sys = sys
@@ -253,12 +253,12 @@ public func == (lhs: LocalizableResource, rhs: LocalizableResource) -> Bool {
 }
 
 
-internal func +=<K, V> (left: [K: V], right: [K: V]) -> [K: V] {
+public func +=<K, V> (left: [K: V], right: [K: V]) -> [K: V] {
     var result = left
     right.forEach { (key, value) in result[key] = value }
     return result
 }
 
-internal func +<K, V> (left: [K: V], right: [K: V]) -> [K: V] {
+public func +<K, V> (left: [K: V], right: [K: V]) -> [K: V] {
     return left += right
 }

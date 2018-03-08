@@ -31,16 +31,16 @@ class RateLimitTests: XCTestCase {
         // Test org is configured so that 5 unique requests in an hour will trigger rate limit.
         let networkExpectation = expectation(description: "API will return rate limit error")
 
-        RateLimitTests.client.fetchAssets(matching: AssetQuery.limit(to: 10)) { _ in
-            RateLimitTests.client.fetchAssets(matching: AssetQuery.limit(to: 11)) { _ in
-                RateLimitTests.client.fetchAssets(matching: AssetQuery.limit(to: 12)) { _ in
-                    RateLimitTests.client.fetchAssets(matching: AssetQuery.limit(to: 13)) { _ in
-                        RateLimitTests.client.fetchAssets(matching: AssetQuery.limit(to: 14)) { _ in
-                            RateLimitTests.client.fetchAssets(matching: AssetQuery.limit(to: 15)) { _ in
-                                RateLimitTests.client.fetchAssets(matching: AssetQuery.limit(to: 16)) { _ in
-                                    RateLimitTests.client.fetchAssets(matching: AssetQuery.limit(to: 17)) { _ in
-                                        RateLimitTests.client.fetchAssets(matching: AssetQuery.limit(to: 18)) { _ in
-                                            RateLimitTests.client.fetchAssets(matching: AssetQuery.limit(to: 19)) { result in
+        RateLimitTests.client.fetch(CCollection<Asset>.self, .limit(to: 10)) { _ in
+            RateLimitTests.client.fetch(CCollection<Asset>.self, .limit(to: 11)) { _ in
+                RateLimitTests.client.fetch(CCollection<Asset>.self, .limit(to: 12)) { _ in
+                    RateLimitTests.client.fetch(CCollection<Asset>.self, .limit(to: 13)) { _ in
+                        RateLimitTests.client.fetch(CCollection<Asset>.self, .limit(to: 14)) { _ in
+                            RateLimitTests.client.fetch(CCollection<Asset>.self, .limit(to: 15)) { _ in
+                                RateLimitTests.client.fetch(CCollection<Asset>.self, .limit(to: 16)) { _ in
+                                    RateLimitTests.client.fetch(CCollection<Asset>.self, .limit(to: 17)) { _ in
+                                        RateLimitTests.client.fetch(CCollection<Asset>.self, .limit(to: 18)) { _ in
+                                            RateLimitTests.client.fetch(CCollection<Asset>.self, .limit(to:19)) { result in
 
                                                 guard let error = result.error as? RateLimitError else {
                                                     fail("Should have hit rate limit error")

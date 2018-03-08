@@ -38,7 +38,7 @@ public struct Sys {
     public let revision: Int?
 
     // The link describing the content type. Not present on `Asset` or `ContentType`
-    internal let contentTypeInfo: Link?
+    public let contentTypeInfo: Link?
 }
 
 extension Sys: Decodable {

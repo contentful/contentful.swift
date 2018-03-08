@@ -37,7 +37,7 @@ class AssetTests: XCTestCase {
 
         let expectation = self.expectation(description: "Fetch single asset network expectation")
 
-        AssetTests.client.fetchAsset(id: "nyancat") { (result) in
+        AssetTests.client.fetch(Asset.self, id: "nyancat") { (result) in
             switch result {
             case let .success(asset):
                 expect(asset.sys.id).to(equal("nyancat"))
@@ -55,7 +55,7 @@ class AssetTests: XCTestCase {
     func testFetchAllAssetsInSpace() {
         let expectation = self.expectation(description: "Fetch all assets network expectation")
         
-        AssetTests.client.fetchAssets().then { assets in
+        AssetTests.client.fetch(CCollection<Asset>.self, AssetQuery()).then { assets in
             expect(assets.items.count).to(equal(4))
 
             if let asset = (assets.items.filter { $0.sys.id == "nyancat" }).first {
@@ -76,7 +76,7 @@ class AssetTests: XCTestCase {
     func testFetchImageForAsset() {
         let expectation = self.expectation(description: "Fetch image from asset network expectation")
 
-        AssetTests.client.fetchAsset(id: "nyancat").then { asset in
+        AssetTests.client.fetch(Asset.self, id: "nyancat").then { asset in
             AssetTests.client.fetchImage(for: asset).then { image in
 
                 expect(image.size.width).to(equal(250.0))
@@ -93,12 +93,15 @@ class AssetTests: XCTestCase {
         let expectation = self.expectation(description: "Fetch image from asset network expectation")
 
         // FIXME: We should have a different test expectation as this mimics the one above
-        AssetTests.client.fetchAssets(matching: AssetQuery.where(mimetypeGroup: .image)).then { assets in
+        AssetTests.client.fetch(CCollection<Asset>.self, .where(mimetypeGroup: .image)) { result in
+            switch result {
+            case .success(let assets):
+                expect(assets.items.count).to(equal(4))
 
-            expect(assets.items.count).to(equal(4))
+            case .error(let error):
+                fail("\(error)")
+            }
             expectation.fulfill()
-        }.error {
-            fail("\($0)")
         }
 
         waitForExpectations(timeout: 10.0, handler: nil)
