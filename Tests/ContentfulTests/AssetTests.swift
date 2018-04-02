@@ -103,4 +103,19 @@ class AssetTests: XCTestCase {
 
         waitForExpectations(timeout: 10.0, handler: nil)
     }
+
+    func testDeserializingVideoAssetURL() {
+        let expectation = self.expectation(description: "Fetch video asset network expectation")
+
+        AssetTests.client.fetchAssets(matching: AssetQuery.where(mimetypeGroup: .video)).then { assets in
+
+            expect(assets.items.count).to(equal(1))
+            expect(assets.items.first?.urlString).to(equal("https://videos.ctfassets.net/dumri3ebknon/Gluj9lzquYcK0agoCkMUs/1104fffefa098062fd9f888a0a571edd/Cute_Cat_-_3092.mp4"))
+            expectation.fulfill()
+        }.error {
+            fail("\($0)")
+        }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
 }
