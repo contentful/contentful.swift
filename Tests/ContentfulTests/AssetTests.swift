@@ -42,7 +42,7 @@ class AssetTests: XCTestCase {
             case let .success(asset):
                 expect(asset.sys.id).to(equal("nyancat"))
                 expect(asset.sys.type).to(equal("Asset"))
-                expect(url(asset).absoluteString).to(equal("https://images.contentful.com/dumri3ebknon/nyancat/c78aa97bf55b7de229ee5a5f88261aa4/Nyan_cat_250px_frame.png"))
+                expect(url(asset).absoluteString).to(equal("https://images.ctfassets.net/dumri3ebknon/nyancat/c78aa97bf55b7de229ee5a5f88261aa4/Nyan_cat_250px_frame.png"))
             case let .error(error):
                 fail("\(error)")
             }
@@ -56,12 +56,12 @@ class AssetTests: XCTestCase {
         let expectation = self.expectation(description: "Fetch all assets network expectation")
         
         AssetTests.client.fetchAssets().then { assets in
-            expect(assets.items.count).to(equal(4))
+            expect(assets.items.count).to(equal(5))
 
             if let asset = (assets.items.filter { $0.sys.id == "nyancat" }).first {
                 expect(asset.sys.id).to(equal("nyancat"))
                 expect(asset.sys.type).to(equal("Asset"))
-                expect(url(asset).absoluteString).to(equal("https://images.contentful.com/dumri3ebknon/nyancat/c78aa97bf55b7de229ee5a5f88261aa4/Nyan_cat_250px_frame.png"))
+                expect(url(asset).absoluteString).to(equal("https://images.ctfassets.net/dumri3ebknon/nyancat/c78aa97bf55b7de229ee5a5f88261aa4/Nyan_cat_250px_frame.png"))
             } else {
                 fail("Could not find asset with id 'nyancat'")
             }
@@ -96,6 +96,21 @@ class AssetTests: XCTestCase {
         AssetTests.client.fetchAssets(matching: AssetQuery.where(mimetypeGroup: .image)).then { assets in
 
             expect(assets.items.count).to(equal(4))
+            expectation.fulfill()
+        }.error {
+            fail("\($0)")
+        }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testDeserializingVideoAssetURL() {
+        let expectation = self.expectation(description: "Fetch video asset network expectation")
+
+        AssetTests.client.fetchAssets(matching: AssetQuery.where(mimetypeGroup: .video)).then { assets in
+
+            expect(assets.items.count).to(equal(1))
+            expect(assets.items.first?.urlString).to(equal("https://videos.ctfassets.net/dumri3ebknon/Gluj9lzquYcK0agoCkMUs/1104fffefa098062fd9f888a0a571edd/Cute_Cat_-_3092.mp4"))
             expectation.fulfill()
         }.error {
             fail("\($0)")

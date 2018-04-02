@@ -115,7 +115,7 @@ public class Asset: LocalizableResource {
             public init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
                 size          = try container.decode(Int.self, forKey: .size)
-                imageInfo     = try container.decode(ImageInfo.self, forKey: .image)
+                imageInfo     = try container.decodeIfPresent(ImageInfo.self, forKey: .image)
             }
 
             private enum CodingKeys: String, CodingKey {
