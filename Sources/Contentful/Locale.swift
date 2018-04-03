@@ -76,8 +76,8 @@ public class LocalizationContext {
     /// The default locale of the space.
     public let `default`: Locale
 
-    // Returns nil if no locale in the list is set to be the default for the environment.
-    internal init?(locales: [Locale]) {
+    /// Initialize a new LocalizationContext with the relevant locales.
+    public init?(locales: [Locale]) {
 
         guard let defaultLocale = locales.filter({ $0.isDefault }).first else {
             return nil
