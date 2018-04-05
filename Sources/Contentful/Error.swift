@@ -100,7 +100,7 @@ public class APIError: Decodable, Error, CustomDebugStringConvertible {
 
     public var debugDescription: String {
         let statusCodeString = "HTTP status code " + String(statusCode)
-        let detailsStrings = details?.errors.flatMap({ $0.details }).joined(separator: "\n") ?? ""
+        let detailsStrings = details?.errors.compactMap({ $0.details }).joined(separator: "\n") ?? ""
         let debugDescription =
         """
         \(statusCodeString): \(message!)

@@ -70,6 +70,17 @@ public class Asset: LocalizableResource {
         return value
     }
 
+    // MARK: Private
+
+    private func localizedString(path: String) -> String? {
+        let localizableValue = localizableFields[path]
+        let value = localizableValue?[currentlySelectedLocale.code] as? String
+        return value
+    }
+}
+
+extension Asset {
+
     /// Metadata describing underlying media file.
     public struct FileMetadata: Decodable {
 
@@ -139,14 +150,6 @@ public class Asset: LocalizableResource {
         private enum CodingKeys: String, CodingKey {
             case fileName, contentType, url, details
         }
-    }
-
-    // MARK: Private
-
-    private func localizedString(path: String) -> String? {
-        let localizableValue = localizableFields[path]
-        let value = localizableValue?[currentlySelectedLocale.code] as? String
-        return value
     }
 }
 

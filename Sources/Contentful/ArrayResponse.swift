@@ -107,7 +107,7 @@ extension ArrayResponse: Decodable {
         errors          = try container.decodeIfPresent([ArrayResponseError].self, forKey: .errors)
 
         // Workaround for type system not allowing cast of items to [Entry]
-        let entries: [Entry] = items.flatMap { $0 as? Entry }
+        let entries: [Entry] = items.compactMap { $0 as? Entry }
 
         let allIncludedEntries = entries + (includedEntries ?? [])
 
@@ -219,7 +219,7 @@ extension MappedArrayResponse: Decodable {
         }
 
         // Workaround for type system not allowing cast of items to [ItemType].
-        self.items = entries.flatMap { $0 as? ItemType }
+        self.items = entries.compactMap { $0 as? ItemType }
 
         // Cache to enable link resolution.
         decoder.linkResolver.cache(entryDecodables: self.items)
