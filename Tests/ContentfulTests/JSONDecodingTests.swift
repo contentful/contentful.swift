@@ -93,7 +93,7 @@ class JSONDecodingTests: XCTestCase {
 
             expect(entry.sys.id).to(equal("nyancat"))
             expect(entry.fields["name"] as? String).to(equal("Nyan Cat"))
-
+            expect(entry.fields["lifes"]).to(beNil())
             entry.setLocale(withCode: "tlh")
 
             expect(entry.fields["name"] as? String).to(equal("Nyan vIghro'"))

@@ -270,7 +270,7 @@ internal extension KeyedDecodingContainer {
             } else if let nestedArray = try? decode(Array<Any>.self, forKey: key) {
                 dictionary[key.stringValue] = nestedArray
             } else if try decodeNil(forKey: key) {
-                dictionary[key.stringValue] = true
+                continue
             }
         }
         return dictionary
@@ -302,6 +302,8 @@ internal extension UnkeyedDecodingContainer {
                 array.append(nestedArray)
             } else if let location = try? decode(Location.self) {
                 array.append(location)
+            } else if try decodeNil() {
+                continue
             }
         }
         return array
