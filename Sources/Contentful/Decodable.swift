@@ -183,7 +183,7 @@ internal class LinkResolver {
                 let onlyKeysString = linkKey[firstKeyIndex ..< linkKey.endIndex]
                 // Split creates a [Substring] array, but we need [String] to index the cache
                 let keys = onlyKeysString.split(separator: ",").map { String($0) }
-                let items: [Any] = keys.flatMap { dataCache.item(for: $0) }
+                let items: [Any] = keys.compactMap { dataCache.item(for: $0) }
                 for callback in callbacksList {
                     callback(items as Any)
                 }

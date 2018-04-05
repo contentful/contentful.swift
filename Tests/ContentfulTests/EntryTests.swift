@@ -167,7 +167,7 @@ class EntryTests: XCTestCase {
             switch result {
             case .success(let entry):
                 if let categoryLinks = entry.fields["categories"] as? [Link] {
-                    let entries = categoryLinks.flatMap { $0.entry }
+                    let entries = categoryLinks.compactMap { $0.entry }
 
                     expect(entries.first).toNot(beNil())
                     expect(entries.first!.sys.id).to(equal("24DPGBDeGEaYy8ms4Y8QMQ"))
