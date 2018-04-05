@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 > #### Fixed
 > - Typed queries prepending "fields" two times when using the select operator. Thanks to [@cysp](https://github.com/cysp) for submitting the fix in [#169](https://github.com/contentful/contentful.swift/pull/169).
 > - Assets that contained media files that were not images failed to deserialize the metadata about the file properly.
+> - `null` values that were present for fields were being stored in dictionaries as a Bool with a value of `true`. Now these values are omitted from the dictionary.
 >
 > #### Added
 > - Support for the new Environments

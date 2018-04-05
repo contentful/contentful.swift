@@ -13,6 +13,7 @@
     "color": {
       "en-US": "rainbow"
     },
+    "lifes": null,
     "bestFriend": {
       "en-US": {
         "sys": {
