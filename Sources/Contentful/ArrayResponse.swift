@@ -200,7 +200,13 @@ extension MappedArrayResponse: Decodable {
         }
         var entriesJSONContainer = try container.nestedUnkeyedContainer(forKey: .items)
         var entries: [EntryDecodable] = []
-        let contentTypes = decoder.userInfo[.contentTypesContextKey] as! [ContentTypeId: EntryDecodable.Type]
+        guard let contentTypes = decoder.userInfo[.contentTypesContextKey] as? [ContentTypeId: EntryDecodable.Type] else {
+            fatalError(
+            """
+            Make sure to pass your content types into the `Client` intializer
+            so the SDK can properly deserializer your own types if you are using the `fetchMappedEntries` methods
+            """)
+        }
 
         while entriesJSONContainer.isAtEnd == false {
             let contentTypeInfo = try jsonItems.contentTypeInfo(at: entriesJSONContainer.currentIndex)
