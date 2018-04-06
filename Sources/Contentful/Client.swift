@@ -437,7 +437,7 @@ extension Client {
      - Returns: The `Observable` for the `Data` result.
 
      */
-    @discardableResult public func fetchData(for asset: Asset, with imageOptions: [ImageOption] = []) -> Observable<Result<Data>> {
+    @discardableResult public func fetchData(for asset: AssetProtocol, with imageOptions: [ImageOption] = []) -> Observable<Result<Data>> {
         do {
             return fetch(url: try asset.url(with: imageOptions)).observable
         } catch let error {

@@ -16,7 +16,7 @@ import CoreGraphics
 #endif
 
 
-public extension Asset {
+public extension AssetProtocol {
     /**
      The URL for the underlying media file with additional options for server side manipulations
      such as format changes, resizing, cropping, and focusing on different areas including on faces,
@@ -27,7 +27,7 @@ public extension Asset {
      */
     public func url(with imageOptions: [ImageOption] = []) throws -> URL {
         guard let url = try urlString?.url(with: imageOptions) else {
-            throw SDKError.invalidURL(string: urlString ?? "No url string is stored for Asset: \(sys.id)")
+            throw SDKError.invalidURL(string: urlString ?? "No url string is stored for Asset: \(id)")
         }
         return url
     }

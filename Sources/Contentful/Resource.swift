@@ -195,7 +195,7 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
      */
     public func linkedEntries(at key: Key) -> [Entry]? {
         let links = self[key] as? [Link]
-        let entries = links?.flatMap { $0.entry }
+        let entries = links?.compactMap { $0.entry }
         return entries
     }
 
@@ -207,7 +207,7 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
      */
     public func linkedAssets(at key: Key) -> [Asset]? {
         let links = self[key] as? [Link]
-        let assets = links?.flatMap { $0.asset }
+        let assets = links?.compactMap { $0.asset }
         return assets
     }
 

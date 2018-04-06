@@ -107,7 +107,7 @@ extension ArrayResponse: Decodable {
         errors          = try container.decodeIfPresent([ArrayResponseError].self, forKey: .errors)
 
         // Workaround for type system not allowing cast of items to [Entry]
-        let entries: [Entry] = items.flatMap { $0 as? Entry }
+        let entries: [Entry] = items.compactMap { $0 as? Entry }
 
         let allIncludedEntries = entries + (includedEntries ?? [])
 
@@ -200,7 +200,13 @@ extension MappedArrayResponse: Decodable {
         }
         var entriesJSONContainer = try container.nestedUnkeyedContainer(forKey: .items)
         var entries: [EntryDecodable] = []
-        let contentTypes = decoder.userInfo[.contentTypesContextKey] as! [ContentTypeId: EntryDecodable.Type]
+        guard let contentTypes = decoder.userInfo[.contentTypesContextKey] as? [ContentTypeId: EntryDecodable.Type] else {
+            fatalError(
+            """
+            Make sure to pass your content types into the `Client` intializer
+            so the SDK can properly deserializer your own types if you are using the `fetchMappedEntries` methods
+            """)
+        }
 
         while entriesJSONContainer.isAtEnd == false {
             let contentTypeInfo = try jsonItems.contentTypeInfo(at: entriesJSONContainer.currentIndex)
@@ -219,7 +225,7 @@ extension MappedArrayResponse: Decodable {
         }
 
         // Workaround for type system not allowing cast of items to [ItemType].
-        self.items = entries.flatMap { $0 as? ItemType }
+        self.items = entries.compactMap { $0 as? ItemType }
 
         // Cache to enable link resolution.
         decoder.linkResolver.cache(entryDecodables: self.items)
