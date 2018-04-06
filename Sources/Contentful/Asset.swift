@@ -30,8 +30,18 @@ internal extension String {
     }
 }
 
+/// A simple protocol to bridge `Contentful.Asset` and other formats for storing asset information.
+public protocol AssetProtocol {
+
+    /// The identifier of the asset.
+    var id: String { get }
+
+    /// String representation for the URL of the media file associated with this asset.
+    var urlString: String? { get }
+}
+
 /// An asset represents a media file in Contentful.
-public class Asset: LocalizableResource {
+public class Asset: LocalizableResource, AssetProtocol {
 
     /// The key paths for member fields of an Asset
     public enum Fields: String, CodingKey {
