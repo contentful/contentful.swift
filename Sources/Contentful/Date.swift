@@ -9,25 +9,63 @@
 import Foundation
 
 // Formatter and extensions pulled from: https://stackoverflow.com/a/28016692/4068264
+// and https://stackoverflow.com/a/46538676/4068264
 public extension Date {
 
-    /// A container for the iso8601 DateFormatter.
-    public struct Formatter {
+    // An array of 4 date formats: the format present on `sys` properties in Contentful,
+    // and the 3 formats used when creating entries in the Contentful web app. See this reference
+    // for date symbols: http://userguide.icu-project.org/formatparse/datetime
+    internal static let supportedFormats: [String] = [
+        // Fractional seconds, as seen in `sys.updatedAt` and `sys.createdAt`
+        "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX",
+        "yyyy-MM-dd",
+        "yyyy-MM-dd'T'HH:mm",
+        // Handle UTC offsets.
+        "yyyy-MM-dd'T'HH:mmxxx",
+        "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+    ]
 
-        /// A formatter ready to handle iso8601 dates.
-        public static let iso8601: DateFormatter = {
-            let formatter = DateFormatter()
-            formatter.calendar = Calendar(identifier: .iso8601)
-            formatter.locale = Foundation.Locale(identifier: "en_US_POSIX")
-            formatter.timeZone = TimeZone(secondsFromGMT: 0)
-            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
-            return formatter
-        }()
+    /// A small error type thrown when the date found in JSON cannot be deserialized.
+    public enum Error: String, Swift.Error {
+        case unsupportedDateFormat
+    }
+
+    /// A formatter ready to handle iso8601 dates: normalized string output to an offset of 0 from UTC.
+    public static func iso8601Formatter() -> DateFormatter {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        // The locale and timezone properties must be exactly as follows to have a true, time-zone agnostic (i.e. offset of 00:00 from UTC) ISO stamp.
+        formatter.locale = Foundation.Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        // Normalize to 0 UTC offset.
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+        return formatter
+    }
+
+    /// A custom for deserializing dates that come from Contentful
+    /// This method first attempts to deserialize ISO8601 internetDateTime with fractional seconds
+    /// then falls back to attempt the three other ISO8601 variants that the Contentful web app
+    /// enables for editing date fields.
+    /// - parameter decoder: The Decoder used to deserialize JSON from Contentful.
+    /// - throws: Error.unsupportedDateFormat if the date isn't one of the three formats the web app supports
+    ///           or the format used by Contentful `sys` properties.
+    public static func variableISO8601Strategy(_ decoder: Decoder) throws -> Date {
+        let container = try decoder.singleValueContainer()
+        let dateString = try container.decode(String.self)
+
+        let formatter = Date.iso8601Formatter()
+        for format in Date.supportedFormats {
+            formatter.dateFormat = format
+            if let date = formatter.date(from: dateString) {
+                return date
+            }
+        }
+        throw Error.unsupportedDateFormat
     }
 
     /// Returns a `String` in the ISO8601 format.
     public var iso8601String: String {
-        return Formatter.iso8601.string(from: self)
+        return Date.iso8601Formatter().string(from: self)
     }
 }
 
@@ -35,6 +73,6 @@ public extension String {
 
     /// Return a `Date` object if the current String is in the right format.
     public var iso8601StringDate: Date? {
-        return Date.Formatter.iso8601.date(from: self)
+        return Date.iso8601Formatter().date(from: self)
     }
 }

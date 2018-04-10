@@ -84,7 +84,7 @@ extension JSONDecoder {
      */
     public static func withoutLocalizationContext() -> JSONDecoder {
         let jsonDecoder = JSONDecoder()
-        jsonDecoder.dateDecodingStrategy = .formatted(Date.Formatter.iso8601)
+        jsonDecoder.dateDecodingStrategy = .custom(Date.variableISO8601Strategy)
         return jsonDecoder
     }
 
