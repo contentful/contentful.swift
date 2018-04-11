@@ -111,6 +111,11 @@ open class Client {
         self.clientConfiguration = clientConfiguration
 
         self.jsonDecoder = JSONDecoder.withoutLocalizationContext()
+        if let dateDecodingStrategy = clientConfiguration.dateDecodingStrategy {
+            // Override default date decoding strategy if present
+            jsonDecoder.dateDecodingStrategy = dateDecodingStrategy
+        }
+
         if let contentTypeClasses = contentTypeClasses {
             var contentTypes = [ContentTypeId: EntryDecodable.Type]()
             for type in contentTypeClasses {

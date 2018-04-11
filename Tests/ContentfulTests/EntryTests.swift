@@ -75,7 +75,7 @@ class EntryTests: XCTestCase {
         waitUntilMatchingEntries(query) {
             if let entryLink = $0.items.first?.fields["bestFriend"] as? Link, let entry = entryLink.entry {
                 if let assetLink = entry.fields["image"] as? Link, let asset = assetLink.asset {
-                    expect(url(asset).absoluteString).to(equal("https://images.contentful.com/dumri3ebknon/happycat/1cd8c934c9cd9e0ced81729843973f8d/happycatw.jpg"))
+                    expect(url(asset).absoluteString).to(equal("https://images.ctfassets.net/dumri3ebknon/happycat/1cd8c934c9cd9e0ced81729843973f8d/happycatw.jpg"))
                     return
                 }
             }
@@ -255,7 +255,7 @@ class EntryTests: XCTestCase {
                 expect(entry.fields["name"] as? String).to(equal("Nyan Cat"))
 
                 if let imageAsset = entry.fields.linkedAsset(at: "image") {
-                    expect(url(imageAsset).absoluteString).to(equal("https://images.contentful.com/dumri3ebknon/nyancat/c78aa97bf55b7de229ee5a5f88261aa4/Nyan_cat_250px_frame.png"))
+                    expect(url(imageAsset).absoluteString).to(equal("https://images.ctfassets.net/dumri3ebknon/nyancat/c78aa97bf55b7de229ee5a5f88261aa4/Nyan_cat_250px_frame.png"))
                 } else {
                     fail("Linked asset should exist.")
                 }
