@@ -53,6 +53,8 @@ public struct ClientConfiguration {
     public var server = Defaults.cdaHost
     /// The delegate which will receive messages containing the raw JSON data fetched at a specified URL.
     public var dataDelegate: DataDelegate?
+    /// An optional configuration to override the date decoding strategy that is provided by the the SDK.
+    public var dateDecodingStrategy: JSONDecoder.DateDecodingStrategy?
 
     /// Computed version of the user agent, including OS name and version
     internal func userAgentString(with integration: Integration?) -> String {
