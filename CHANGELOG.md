@@ -4,27 +4,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) starting from 1.x releases.
 
 ### Merged, but not yet released
-~~> All recent changes are published~~
-> #### Fixed
-> - Typed queries prepending "fields" two times when using the select operator. Thanks to [@cysp](https://github.com/cysp) for submitting the fix in [#169](https://github.com/contentful/contentful.swift/pull/169).
-> - Assets that contained media files that were not images failed to deserialize the metadata about the file properly.
-> - `null` values that were present for fields were being stored in dictionaries as a Bool with a value of `true`. Now these values are omitted from the dictionary.
-> - Date formats supported by the Contentful web app that were previously not being deserialized by the SDK's JSONDecoder
->
-> #### Added
-> - Support for the new Environments
-> - Locales are now a property of `Client` and can be fetched on their own with the `fetchLocales` methods.
-> - `AssetProtocol` to enable data fetches for other asset data types.
-> 
-> #### Changed
-> - **BREAKING:** Upgrades project to Swift 4.1 and Xcode 9.3
-> - **BREAKING:** The interface for synchronization has been simplified. `initialSync` and `nextSync` have been replaced with `sync` with a default argument of an empty sync space to start an initial sync operation.
-> - **BREAKING:** The SDK provided methods for creating a new `Swift.JSONDecoder` and updating it with locale information of your space or environment has changed.
-> - **BREAKING:** The `LocalizationContext` property of `Space` has been moved and is now a property of `Client`.
-> - **BREAKING:** `ResourceQueryable` has been renamed `EntryQueryable` for correctness and consistency.
+> All recent changes are published
 ---
 
 ## Table of contents
+
+#### 2.x Releases
+- `2.0.0` Releases = [2.0.0](#200)
 
 #### 1.x Releases
 - `1.0.0` Releases - [1.0.0](#100) | [1.0.1](#101)
@@ -40,6 +26,29 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 - `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041)
 - `0.3.x` Releases - [0.3.0](#030) | [0.3.1](#031)
+
+---
+
+## [`2.0.0`](https://github.com/contentful/contentful.swift/releases/tag/2.0.0)
+Released on 2018-04-16
+
+#### Fixed
+- Typed queries prepending "fields" two times when using the select operator. Thanks to [@cysp](https://github.com/cysp) for submitting the fix in [#169](https://github.com/contentful/contentful.swift/pull/169).
+- Assets that contained media files that were not images failed to deserialize the metadata about the file properly.
+- `null` values that were present for fields were being stored in dictionaries as a Bool with a value of `true`. Now these values are omitted from the dictionary. The handling of `null` values in JSON arrays has also been improved.
+- Date formats supported by the Contentful web app that were previously not being deserialized by the SDK's JSONDecoder
+
+#### Added
+- Support for the new Environments
+- Locales are now a property of `Client` and can be fetched on their own with the `fetchLocales` methods.
+- `AssetProtocol` to enable data fetches for other asset data types.
+
+#### Changed
+- **BREAKING:** Upgrades project to Swift 4.1 and Xcode 9.3
+- **BREAKING:** The interface for synchronization has been simplified. `initialSync` and `nextSync` have been replaced with `sync` with a default argument of an empty sync space to start an initial sync operation.
+- **BREAKING:** The SDK provided methods for creating a new `Swift.JSONDecoder` and updating it with locale information of your space or environment has changed.
+- **BREAKING:** The `LocalizationContext` property of `Space` has been moved and is now a property of `Client`.
+- **BREAKING:** `ResourceQueryable` has been renamed `EntryQueryable` for correctness and consistency.
 
 ---
 
