@@ -263,8 +263,12 @@ public enum Focus: String {
 public enum Fit: URLImageQueryExtendable {
 
     #if os(iOS) || os(tvOS) || os(watchOS)
+    /// If building for iOS, tvOS, or watchOS, `Color` aliases to `UIColor`. If building for macOS
+    /// `Color` aliases to `NSColor`
     public typealias Color = UIColor
     #else
+    /// If building for iOS, tvOS, or watchOS, `Color` aliases to `UIColor`. If building for macOS
+    /// `Color` aliases to `NSColor`
     public typealias Color = NSColor
     #endif
 

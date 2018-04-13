@@ -170,5 +170,6 @@ extension Asset: EndpointAccessible {
 
 extension Asset: ResourceQueryable {
 
+    /// The QueryType for an Asset is AssetQuery
     public typealias QueryType = AssetQuery
 }

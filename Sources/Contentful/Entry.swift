@@ -16,12 +16,12 @@ public class Entry: LocalizableResource {
         return sys.locale
     }
 
-    // A convenience subscript operator to access the fields dictionary directly and return a String?
+    /// A convenience subscript operator to access the fields dictionary directly and return a String?
     public subscript(key: String) -> String? {
         return fields[key] as? String
     }
 
-    // A convenience subscript operator to access the fields dictionary directly and return an Int?
+    /// A convenience subscript operator to access the fields dictionary directly and return an Int?
     public subscript(key: String) -> Int? {
         return fields[key] as? Int
     }
@@ -74,5 +74,6 @@ extension Entry: EndpointAccessible {
 
 extension Entry: ResourceQueryable {
 
+    /// The QueryType for an EntryQuery is Query.
     public typealias QueryType = Query
 }

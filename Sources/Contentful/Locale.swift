@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// An alias for String representing the code for a Contentful locale.
 public typealias LocaleCode = String
 
 extension Locale: EndpointAccessible {

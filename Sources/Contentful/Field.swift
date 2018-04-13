@@ -6,6 +6,7 @@
 //  Copyright © 2015 Contentful GmbH. All rights reserved.
 //
 
+/// An alias for String representing the id for a field.
 public typealias FieldName = String
 
 /// The possible Field types in Contentful
