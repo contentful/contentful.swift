@@ -231,9 +231,8 @@ internal extension KeyedDecodingContainer {
     }
 
     internal func decodeIfPresent(_ type: Dictionary<String, Any>.Type, forKey key: K) throws -> Dictionary<String, Any>? {
-        guard contains(key) else {
-            return nil
-        }
+        guard contains(key) else { return nil }
+        guard try decodeNil(forKey: key) == false else { return nil }
         return try decode(type, forKey: key)
     }
 
@@ -243,9 +242,8 @@ internal extension KeyedDecodingContainer {
     }
 
     internal func decodeIfPresent(_ type: Array<Any>.Type, forKey key: K) throws -> Array<Any>? {
-        guard contains(key) else {
-            return nil
-        }
+        guard contains(key) else { return nil }
+        guard try decodeNil(forKey: key) == false else { return nil }
         return try decode(type, forKey: key)
     }
 
@@ -276,8 +274,6 @@ internal extension KeyedDecodingContainer {
                 dictionary[key.stringValue] = nestedDictionary
             } else if let nestedArray = try? decode(Array<Any>.self, forKey: key) {
                 dictionary[key.stringValue] = nestedArray
-            } else if try decodeNil(forKey: key) {
-                continue
             }
         }
         return dictionary
@@ -289,7 +285,11 @@ internal extension UnkeyedDecodingContainer {
     internal mutating func decode(_ type: Array<Any>.Type) throws -> Array<Any> {
         var array: [Any] = []
         while isAtEnd == false {
-            if let value = try? decode(Bool.self) {
+            if try decodeNil() {
+                continue
+            } else if let value = try? decode(Bool.self) {
+                array.append(value)
+            } else if let value = try? decode(Int.self) {
                 array.append(value)
             } else if let value = try? decode(Double.self) {
                 array.append(value)
@@ -309,9 +309,8 @@ internal extension UnkeyedDecodingContainer {
                 array.append(nestedArray)
             } else if let location = try? decode(Location.self) {
                 array.append(location)
-            } else if try decodeNil() {
-                continue
             }
+
         }
         return array
     }

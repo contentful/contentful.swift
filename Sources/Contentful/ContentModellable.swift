@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// An alias for String representing the id of a content type.
 public typealias ContentTypeId = String
 
 /**

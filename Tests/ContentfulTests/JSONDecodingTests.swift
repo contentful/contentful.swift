@@ -41,6 +41,40 @@ class JSONDecodingTests: XCTestCase {
         }
     }
 
+    func testHandlingNullJSONValues() {
+
+        struct Klass: Decodable {
+            let dict: [String: Any]
+
+            init(from decoder: Decoder) throws {
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                dict = try container.decode([String: Any].self)
+            }
+            enum CodingKeys: String, CodingKey {
+                case key1, array
+            }
+        }
+
+        let json = """
+        {
+            "key1": null,
+            "array": [
+                null,
+                1,
+                3.3
+            ]
+        }
+        """.data(using: .utf8)!
+
+        let jsonDecoder = JSONDecoder.withoutLocalizationContext()
+        let wrapper = try! jsonDecoder.decode(Klass.self, from: json)
+        expect(wrapper.dict.keys.count).to(equal(1))
+        expect((wrapper.dict["array"] as! [Any])[0] as? Int).to(equal(1))
+        expect((wrapper.dict["array"] as! [Any])[1] as? Double).to(equal(3.3))
+        expect(wrapper.dict["key1"]).to(beNil())
+
+    }
+
     func testDecodeAsset() {
         do {
             let jsonDecoder = JSONDecoder.withoutLocalizationContext()

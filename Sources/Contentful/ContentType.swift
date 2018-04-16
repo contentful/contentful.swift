@@ -11,6 +11,7 @@ import Foundation
 /// A Content Type represents your data model for Entries in a Contentful Space
 public class ContentType: Resource, Decodable, ResourceQueryable {
 
+    /// The QueryType for ContentType is a ContentTypeQuery
     public typealias QueryType = ContentTypeQuery
 
     ///  System fields.

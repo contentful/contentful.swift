@@ -27,6 +27,7 @@ public extension Date {
 
     /// A small error type thrown when the date found in JSON cannot be deserialized.
     public enum Error: String, Swift.Error {
+        /// The error thrown when a date string returned in an API response cannot be parsed by the SDK.
         case unsupportedDateFormat
     }
 
