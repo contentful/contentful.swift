@@ -25,11 +25,8 @@ public enum SDKError: Error {
      */
     case invalidURL(string: String)
 
-    /// Thrown if the sync endpoint is called while being in preview mode.
+    /// Thrown if the subsequent sync operations are executed in preview mode.
     case previewAPIDoesNotSupportSync()
-
-    /// Thrown if the sync endpoint is called while interfacing with an environment that is not master.
-    case nonMasterEnvironmentsDoNotSupportSync()
 
     /**
      Thrown when receiving unparseable JSON responses.

@@ -140,9 +140,9 @@ open class Client {
         var components: URLComponents?
 
         switch endpoint {
-        case .spaces, .sync:
+        case .spaces:
             components = URLComponents(string: "\(scheme)://\(server)/spaces/\(spaceId)/\(pathComponent)")
-        case .assets, .contentTypes, .locales, .entries:
+        case .assets, .contentTypes, .locales, .entries, .sync:
             components = URLComponents(string: "\(scheme)://\(server)/spaces/\(spaceId)/environments/\(environmentId)/\(pathComponent)")
         }
         assert(components != nil)
@@ -663,12 +663,6 @@ extension Client {
     @discardableResult public func sync(for syncSpace: SyncSpace = SyncSpace(),
                                         syncableTypes: SyncSpace.SyncableTypes = .all,
                                         then completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
-
-        // Sync currently only works for the master environemnt.
-        guard environmentId == "master" else {
-            completion(Result.error(SDKError.nonMasterEnvironmentsDoNotSupportSync()))
-            return nil
-        }
 
         // Preview mode only supports `initialSync` not `nextSync`. The only reason `nextSync` should
         // be called while in preview mode, is internally by the SDK to finish a multiple page sync.

@@ -122,15 +122,9 @@
 		ED4986E6204707040014DCFE /* ImageTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED4986E4204706FC0014DCFE /* ImageTests.json */; };
 		ED4986E7204707040014DCFE /* ImageTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED4986E4204706FC0014DCFE /* ImageTests.json */; };
 		ED4986E8204707040014DCFE /* ImageTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED4986E4204706FC0014DCFE /* ImageTests.json */; };
-		ED4986F0204707DC0014DCFE /* SyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED4986EE204707D90014DCFE /* SyncTests.json */; };
-		ED4986F1204707DC0014DCFE /* SyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED4986EE204707D90014DCFE /* SyncTests.json */; };
-		ED4986F2204707DC0014DCFE /* SyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED4986EE204707D90014DCFE /* SyncTests.json */; };
 		ED4986F5204708D90014DCFE /* ErrorTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED4986F3204708D70014DCFE /* ErrorTests.json */; };
 		ED4986F6204708D90014DCFE /* ErrorTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED4986F3204708D70014DCFE /* ErrorTests.json */; };
 		ED4986F7204708D90014DCFE /* ErrorTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED4986F3204708D70014DCFE /* ErrorTests.json */; };
-		ED4986FA20470D590014DCFE /* PreviewSyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED4986F820470D550014DCFE /* PreviewSyncTests.json */; };
-		ED4986FB20470D5A0014DCFE /* PreviewSyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED4986F820470D550014DCFE /* PreviewSyncTests.json */; };
-		ED4986FC20470D5A0014DCFE /* PreviewSyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED4986F820470D550014DCFE /* PreviewSyncTests.json */; };
 		ED4986FE2047107D0014DCFE /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4986FD2047107D0014DCFE /* Endpoints.swift */; };
 		ED4986FF2047107D0014DCFE /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4986FD2047107D0014DCFE /* Endpoints.swift */; };
 		ED4987002047107D0014DCFE /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4986FD2047107D0014DCFE /* Endpoints.swift */; };
@@ -167,9 +161,6 @@
 		ED882E9320484BF100D372BF /* EnvironmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED882E9220484BF100D372BF /* EnvironmentTests.swift */; };
 		ED882E9420484BF100D372BF /* EnvironmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED882E9220484BF100D372BF /* EnvironmentTests.swift */; };
 		ED882E9520484BF100D372BF /* EnvironmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED882E9220484BF100D372BF /* EnvironmentTests.swift */; };
-		ED882E972048517E00D372BF /* EnvironmentsTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED882E962048517D00D372BF /* EnvironmentsTests.json */; };
-		ED882E982048517E00D372BF /* EnvironmentsTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED882E962048517D00D372BF /* EnvironmentsTests.json */; };
-		ED882E992048517E00D372BF /* EnvironmentsTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED882E962048517D00D372BF /* EnvironmentsTests.json */; };
 		ED88B7DA1EF7CD3800538D1F /* ClientConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED88B7D91EF7CD3800538D1F /* ClientConfigurationTests.swift */; };
 		ED9102661E65AADA0076FDBD /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED9102651E65AADA0076FDBD /* DVR.framework */; };
 		ED91C1401EDCB03600F0FC0A /* ImageOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */; };
@@ -225,6 +216,15 @@
 		EDE5BA3E2072375500A650FE /* AssetTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDE5BA3C2072375100A650FE /* AssetTests.json */; };
 		EDE5BA3F2072375500A650FE /* AssetTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDE5BA3C2072375100A650FE /* AssetTests.json */; };
 		EDE5BA402072375600A650FE /* AssetTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDE5BA3C2072375100A650FE /* AssetTests.json */; };
+		EDF7319B2091FB6200F9B9B1 /* SyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDF731992091FB6200F9B9B1 /* SyncTests.json */; };
+		EDF7319C2091FB6200F9B9B1 /* SyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDF731992091FB6200F9B9B1 /* SyncTests.json */; };
+		EDF7319D2091FB6200F9B9B1 /* SyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDF731992091FB6200F9B9B1 /* SyncTests.json */; };
+		EDF7319E2091FB6200F9B9B1 /* PreviewSyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDF7319A2091FB6200F9B9B1 /* PreviewSyncTests.json */; };
+		EDF7319F2091FB6200F9B9B1 /* PreviewSyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDF7319A2091FB6200F9B9B1 /* PreviewSyncTests.json */; };
+		EDF731A02091FB6200F9B9B1 /* PreviewSyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDF7319A2091FB6200F9B9B1 /* PreviewSyncTests.json */; };
+		EDF731A62091FCEC00F9B9B1 /* EnvironmentsTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDF731A52091FCEB00F9B9B1 /* EnvironmentsTests.json */; };
+		EDF731A72091FCEC00F9B9B1 /* EnvironmentsTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDF731A52091FCEB00F9B9B1 /* EnvironmentsTests.json */; };
+		EDF731A82091FCEC00F9B9B1 /* EnvironmentsTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDF731A52091FCEB00F9B9B1 /* EnvironmentsTests.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -296,9 +296,7 @@
 		ED4986DA2047066E0014DCFE /* ContentTypeTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ContentTypeTests.json; sourceTree = "<group>"; };
 		ED4986DF204706A30014DCFE /* LinkResolverTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LinkResolverTests.json; sourceTree = "<group>"; };
 		ED4986E4204706FC0014DCFE /* ImageTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ImageTests.json; sourceTree = "<group>"; };
-		ED4986EE204707D90014DCFE /* SyncTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SyncTests.json; sourceTree = "<group>"; };
 		ED4986F3204708D70014DCFE /* ErrorTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ErrorTests.json; sourceTree = "<group>"; };
-		ED4986F820470D550014DCFE /* PreviewSyncTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PreviewSyncTests.json; sourceTree = "<group>"; };
 		ED4986FD2047107D0014DCFE /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
 		ED52DB3F1EE94C8E00225140 /* RateLimitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateLimitTests.swift; sourceTree = "<group>"; };
 		ED535E631F5E8E1300886D93 /* Decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decodable.swift; sourceTree = "<group>"; };
@@ -313,7 +311,6 @@
 		ED7862771F7D2FB300CB2625 /* Interstellar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Interstellar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED7862791F7D2FBD00CB2625 /* Interstellar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Interstellar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED882E9220484BF100D372BF /* EnvironmentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentTests.swift; sourceTree = "<group>"; };
-		ED882E962048517D00D372BF /* EnvironmentsTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EnvironmentsTests.json; sourceTree = "<group>"; };
 		ED88B7D91EF7CD3800538D1F /* ClientConfigurationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientConfigurationTests.swift; sourceTree = "<group>"; };
 		ED9102651E65AADA0076FDBD /* DVR.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVR.framework; path = Carthage/Build/iOS/DVR.framework; sourceTree = "<group>"; };
 		ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageOptions.swift; sourceTree = "<group>"; };
@@ -336,6 +333,9 @@
 		EDE087FC207DFC6C00CB1287 /* QueryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QueryTests.json; sourceTree = "<group>"; };
 		EDE087FD207DFC6C00CB1287 /* EntryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EntryTests.json; sourceTree = "<group>"; };
 		EDE5BA3C2072375100A650FE /* AssetTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AssetTests.json; sourceTree = "<group>"; };
+		EDF731992091FB6200F9B9B1 /* SyncTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SyncTests.json; sourceTree = "<group>"; };
+		EDF7319A2091FB6200F9B9B1 /* PreviewSyncTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PreviewSyncTests.json; sourceTree = "<group>"; };
+		EDF731A52091FCEB00F9B9B1 /* EnvironmentsTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EnvironmentsTests.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -572,14 +572,14 @@
 				EDE5BA3C2072375100A650FE /* AssetTests.json */,
 				ED4986DA2047066E0014DCFE /* ContentTypeTests.json */,
 				EDE087FD207DFC6C00CB1287 /* EntryTests.json */,
-				ED882E962048517D00D372BF /* EnvironmentsTests.json */,
+				EDF731A52091FCEB00F9B9B1 /* EnvironmentsTests.json */,
 				ED4986F3204708D70014DCFE /* ErrorTests.json */,
 				ED4986E4204706FC0014DCFE /* ImageTests.json */,
 				ED4986DF204706A30014DCFE /* LinkResolverTests.json */,
-				ED4986F820470D550014DCFE /* PreviewSyncTests.json */,
+				EDF7319A2091FB6200F9B9B1 /* PreviewSyncTests.json */,
 				EDE087FC207DFC6C00CB1287 /* QueryTests.json */,
 				ED2367612046FCEB00034724 /* RateLimitTests.json */,
-				ED4986EE204707D90014DCFE /* SyncTests.json */,
+				EDF731992091FB6200F9B9B1 /* SyncTests.json */,
 				ED0B45AD2046F44B0000223C /* testClientCanAccessPreviewAPI.json */,
 				ED0B45AE2046F44C0000223C /* testClientCantAccessPreviewAPIWithProductionToken.json */,
 				ED0B458E2046EFD60000223C /* testFetchSpace.json */,
@@ -844,14 +844,14 @@
 			files = (
 				ED0B45B12046F4500000223C /* testClientCanAccessPreviewAPI.json in Resources */,
 				A10FF9D81BBB3860001AA4E9 /* Data in Resources */,
+				EDF7319B2091FB6200F9B9B1 /* SyncTests.json in Resources */,
 				EDE5BA402072375600A650FE /* AssetTests.json in Resources */,
 				ED2367652046FCF000034724 /* RateLimitTests.json in Resources */,
-				ED4986FC20470D5A0014DCFE /* PreviewSyncTests.json in Resources */,
+				EDF7319E2091FB6200F9B9B1 /* PreviewSyncTests.json in Resources */,
+				EDF731A62091FCEC00F9B9B1 /* EnvironmentsTests.json in Resources */,
 				EDE08801207DFC6C00CB1287 /* EntryTests.json in Resources */,
-				ED882E972048517E00D372BF /* EnvironmentsTests.json in Resources */,
 				EDE087FE207DFC6C00CB1287 /* QueryTests.json in Resources */,
 				ED0B45922046EFDB0000223C /* testFetchSpace.json in Resources */,
-				ED4986F2204707DC0014DCFE /* SyncTests.json in Resources */,
 				ED4986DE204706720014DCFE /* ContentTypeTests.json in Resources */,
 				ED4986F5204708D90014DCFE /* ErrorTests.json in Resources */,
 				ED4986E3204706C30014DCFE /* LinkResolverTests.json in Resources */,
@@ -866,13 +866,13 @@
 			files = (
 				ED0B45B32046F4500000223C /* testClientCanAccessPreviewAPI.json in Resources */,
 				EDE5BA3F2072375500A650FE /* AssetTests.json in Resources */,
+				EDF7319C2091FB6200F9B9B1 /* SyncTests.json in Resources */,
 				ED2367642046FCF000034724 /* RateLimitTests.json in Resources */,
 				ED0B45912046EFDA0000223C /* testFetchSpace.json in Resources */,
-				ED4986FB20470D5A0014DCFE /* PreviewSyncTests.json in Resources */,
+				EDF7319F2091FB6200F9B9B1 /* PreviewSyncTests.json in Resources */,
+				EDF731A72091FCEC00F9B9B1 /* EnvironmentsTests.json in Resources */,
 				EDE08802207DFC6C00CB1287 /* EntryTests.json in Resources */,
-				ED882E982048517E00D372BF /* EnvironmentsTests.json in Resources */,
 				EDE087FF207DFC6C00CB1287 /* QueryTests.json in Resources */,
-				ED4986F1204707DC0014DCFE /* SyncTests.json in Resources */,
 				ED4986DD204706710014DCFE /* ContentTypeTests.json in Resources */,
 				ED4986E2204706A70014DCFE /* LinkResolverTests.json in Resources */,
 				ED4986F6204708D90014DCFE /* ErrorTests.json in Resources */,
@@ -888,13 +888,13 @@
 			files = (
 				ED0B45B52046F4510000223C /* testClientCanAccessPreviewAPI.json in Resources */,
 				EDE5BA3E2072375500A650FE /* AssetTests.json in Resources */,
+				EDF7319D2091FB6200F9B9B1 /* SyncTests.json in Resources */,
 				ED2367632046FCEF00034724 /* RateLimitTests.json in Resources */,
 				ED0B45902046EFDA0000223C /* testFetchSpace.json in Resources */,
-				ED4986FA20470D590014DCFE /* PreviewSyncTests.json in Resources */,
+				EDF731A02091FB6200F9B9B1 /* PreviewSyncTests.json in Resources */,
+				EDF731A82091FCEC00F9B9B1 /* EnvironmentsTests.json in Resources */,
 				EDE08803207DFC6C00CB1287 /* EntryTests.json in Resources */,
-				ED882E992048517E00D372BF /* EnvironmentsTests.json in Resources */,
 				EDE08800207DFC6C00CB1287 /* QueryTests.json in Resources */,
-				ED4986F0204707DC0014DCFE /* SyncTests.json in Resources */,
 				ED4986DC204706710014DCFE /* ContentTypeTests.json in Resources */,
 				ED4986E1204706A70014DCFE /* LinkResolverTests.json in Resources */,
 				ED4986F7204708D90014DCFE /* ErrorTests.json in Resources */,
