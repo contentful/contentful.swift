@@ -80,8 +80,11 @@ class EnvironmentsTests: XCTestCase {
             switch result {
             case .success(let syncSpace):
                 expect(syncSpace.entries.count).to(equal(9))
+                expect(syncSpace.entries.first?.fields["name"] as? String).to(equal("Jake"))
+                expect(syncSpace.entries[2].fields["name"] as? String).to(equal("Finn"))
+
             case .error(let error):
-                 fail("Failed to sync on an environment \(error)")
+                 fail("Failed to sync on a non-master environment \(error)")
             }
             expectation.fulfill()
         }

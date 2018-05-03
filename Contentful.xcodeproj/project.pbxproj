@@ -50,6 +50,18 @@
 		ED1D78A01F3069FF0048E169 /* Client+Modellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1D789E1F3069FF0048E169 /* Client+Modellable.swift */; };
 		ED1D78A11F3069FF0048E169 /* Client+Modellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1D789E1F3069FF0048E169 /* Client+Modellable.swift */; };
 		ED1D78A21F3069FF0048E169 /* Client+Modellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1D789E1F3069FF0048E169 /* Client+Modellable.swift */; };
+		ED21E9DE209B47D900A6AD2D /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED21E9DD209B47D900A6AD2D /* QueryTests.json */; };
+		ED21E9DF209B47D900A6AD2D /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED21E9DD209B47D900A6AD2D /* QueryTests.json */; };
+		ED21E9E0209B47D900A6AD2D /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED21E9DD209B47D900A6AD2D /* QueryTests.json */; };
+		ED21E9E3209B484B00A6AD2D /* SyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED21E9E1209B484A00A6AD2D /* SyncTests.json */; };
+		ED21E9E4209B484B00A6AD2D /* SyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED21E9E1209B484A00A6AD2D /* SyncTests.json */; };
+		ED21E9E5209B484B00A6AD2D /* SyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED21E9E1209B484A00A6AD2D /* SyncTests.json */; };
+		ED21E9E6209B484B00A6AD2D /* PreviewSyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED21E9E2209B484A00A6AD2D /* PreviewSyncTests.json */; };
+		ED21E9E7209B484B00A6AD2D /* PreviewSyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED21E9E2209B484A00A6AD2D /* PreviewSyncTests.json */; };
+		ED21E9E8209B484B00A6AD2D /* PreviewSyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED21E9E2209B484A00A6AD2D /* PreviewSyncTests.json */; };
+		ED21E9EA209B49D900A6AD2D /* EnvironmentsTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED21E9E9209B49D900A6AD2D /* EnvironmentsTests.json */; };
+		ED21E9EB209B49D900A6AD2D /* EnvironmentsTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED21E9E9209B49D900A6AD2D /* EnvironmentsTests.json */; };
+		ED21E9EC209B49D900A6AD2D /* EnvironmentsTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED21E9E9209B49D900A6AD2D /* EnvironmentsTests.json */; };
 		ED2367632046FCEF00034724 /* RateLimitTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED2367612046FCEB00034724 /* RateLimitTests.json */; };
 		ED2367642046FCF000034724 /* RateLimitTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED2367612046FCEB00034724 /* RateLimitTests.json */; };
 		ED2367652046FCF000034724 /* RateLimitTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED2367612046FCEB00034724 /* RateLimitTests.json */; };
@@ -207,24 +219,12 @@
 		EDE087E1207CE2E000CB1287 /* ISO801DateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE087DF207CE2B200CB1287 /* ISO801DateTests.swift */; };
 		EDE087E2207CE2E000CB1287 /* ISO801DateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE087DF207CE2B200CB1287 /* ISO801DateTests.swift */; };
 		EDE087E3207CE2E000CB1287 /* ISO801DateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE087DF207CE2B200CB1287 /* ISO801DateTests.swift */; };
-		EDE087FE207DFC6C00CB1287 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDE087FC207DFC6C00CB1287 /* QueryTests.json */; };
-		EDE087FF207DFC6C00CB1287 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDE087FC207DFC6C00CB1287 /* QueryTests.json */; };
-		EDE08800207DFC6C00CB1287 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDE087FC207DFC6C00CB1287 /* QueryTests.json */; };
 		EDE08801207DFC6C00CB1287 /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDE087FD207DFC6C00CB1287 /* EntryTests.json */; };
 		EDE08802207DFC6C00CB1287 /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDE087FD207DFC6C00CB1287 /* EntryTests.json */; };
 		EDE08803207DFC6C00CB1287 /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDE087FD207DFC6C00CB1287 /* EntryTests.json */; };
 		EDE5BA3E2072375500A650FE /* AssetTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDE5BA3C2072375100A650FE /* AssetTests.json */; };
 		EDE5BA3F2072375500A650FE /* AssetTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDE5BA3C2072375100A650FE /* AssetTests.json */; };
 		EDE5BA402072375600A650FE /* AssetTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDE5BA3C2072375100A650FE /* AssetTests.json */; };
-		EDF7319B2091FB6200F9B9B1 /* SyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDF731992091FB6200F9B9B1 /* SyncTests.json */; };
-		EDF7319C2091FB6200F9B9B1 /* SyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDF731992091FB6200F9B9B1 /* SyncTests.json */; };
-		EDF7319D2091FB6200F9B9B1 /* SyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDF731992091FB6200F9B9B1 /* SyncTests.json */; };
-		EDF7319E2091FB6200F9B9B1 /* PreviewSyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDF7319A2091FB6200F9B9B1 /* PreviewSyncTests.json */; };
-		EDF7319F2091FB6200F9B9B1 /* PreviewSyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDF7319A2091FB6200F9B9B1 /* PreviewSyncTests.json */; };
-		EDF731A02091FB6200F9B9B1 /* PreviewSyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDF7319A2091FB6200F9B9B1 /* PreviewSyncTests.json */; };
-		EDF731A62091FCEC00F9B9B1 /* EnvironmentsTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDF731A52091FCEB00F9B9B1 /* EnvironmentsTests.json */; };
-		EDF731A72091FCEC00F9B9B1 /* EnvironmentsTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDF731A52091FCEB00F9B9B1 /* EnvironmentsTests.json */; };
-		EDF731A82091FCEC00F9B9B1 /* EnvironmentsTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDF731A52091FCEB00F9B9B1 /* EnvironmentsTests.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -285,6 +285,10 @@
 		ED1638C41ED5CA6D009BAA9F /* ImageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTests.swift; sourceTree = "<group>"; };
 		ED1D78991F2F96260048E169 /* DataCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataCache.swift; sourceTree = "<group>"; };
 		ED1D789E1F3069FF0048E169 /* Client+Modellable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Client+Modellable.swift"; sourceTree = "<group>"; };
+		ED21E9DD209B47D900A6AD2D /* QueryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QueryTests.json; sourceTree = "<group>"; };
+		ED21E9E1209B484A00A6AD2D /* SyncTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SyncTests.json; sourceTree = "<group>"; };
+		ED21E9E2209B484A00A6AD2D /* PreviewSyncTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PreviewSyncTests.json; sourceTree = "<group>"; };
+		ED21E9E9209B49D900A6AD2D /* EnvironmentsTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EnvironmentsTests.json; sourceTree = "<group>"; };
 		ED2367612046FCEB00034724 /* RateLimitTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RateLimitTests.json; sourceTree = "<group>"; };
 		ED2C99791ECDD0AF0039056E /* Client+UIKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Client+UIKit.swift"; sourceTree = "<group>"; };
 		ED2E03E61F97608A006422A6 /* EntryDecodableLinkResolutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryDecodableLinkResolutionTests.swift; sourceTree = "<group>"; };
@@ -330,12 +334,8 @@
 		EDDC071C1E3BCEA40022F2F9 /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDDC07291E3BCEB10022F2F9 /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDE087DF207CE2B200CB1287 /* ISO801DateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ISO801DateTests.swift; sourceTree = "<group>"; };
-		EDE087FC207DFC6C00CB1287 /* QueryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QueryTests.json; sourceTree = "<group>"; };
 		EDE087FD207DFC6C00CB1287 /* EntryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EntryTests.json; sourceTree = "<group>"; };
 		EDE5BA3C2072375100A650FE /* AssetTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AssetTests.json; sourceTree = "<group>"; };
-		EDF731992091FB6200F9B9B1 /* SyncTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SyncTests.json; sourceTree = "<group>"; };
-		EDF7319A2091FB6200F9B9B1 /* PreviewSyncTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PreviewSyncTests.json; sourceTree = "<group>"; };
-		EDF731A52091FCEB00F9B9B1 /* EnvironmentsTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EnvironmentsTests.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -572,14 +572,14 @@
 				EDE5BA3C2072375100A650FE /* AssetTests.json */,
 				ED4986DA2047066E0014DCFE /* ContentTypeTests.json */,
 				EDE087FD207DFC6C00CB1287 /* EntryTests.json */,
-				EDF731A52091FCEB00F9B9B1 /* EnvironmentsTests.json */,
+				ED21E9E9209B49D900A6AD2D /* EnvironmentsTests.json */,
 				ED4986F3204708D70014DCFE /* ErrorTests.json */,
 				ED4986E4204706FC0014DCFE /* ImageTests.json */,
 				ED4986DF204706A30014DCFE /* LinkResolverTests.json */,
-				EDF7319A2091FB6200F9B9B1 /* PreviewSyncTests.json */,
-				EDE087FC207DFC6C00CB1287 /* QueryTests.json */,
+				ED21E9E2209B484A00A6AD2D /* PreviewSyncTests.json */,
+				ED21E9DD209B47D900A6AD2D /* QueryTests.json */,
 				ED2367612046FCEB00034724 /* RateLimitTests.json */,
-				EDF731992091FB6200F9B9B1 /* SyncTests.json */,
+				ED21E9E1209B484A00A6AD2D /* SyncTests.json */,
 				ED0B45AD2046F44B0000223C /* testClientCanAccessPreviewAPI.json */,
 				ED0B45AE2046F44C0000223C /* testClientCantAccessPreviewAPIWithProductionToken.json */,
 				ED0B458E2046EFD60000223C /* testFetchSpace.json */,
@@ -844,14 +844,14 @@
 			files = (
 				ED0B45B12046F4500000223C /* testClientCanAccessPreviewAPI.json in Resources */,
 				A10FF9D81BBB3860001AA4E9 /* Data in Resources */,
-				EDF7319B2091FB6200F9B9B1 /* SyncTests.json in Resources */,
 				EDE5BA402072375600A650FE /* AssetTests.json in Resources */,
+				ED21E9DE209B47D900A6AD2D /* QueryTests.json in Resources */,
 				ED2367652046FCF000034724 /* RateLimitTests.json in Resources */,
-				EDF7319E2091FB6200F9B9B1 /* PreviewSyncTests.json in Resources */,
-				EDF731A62091FCEC00F9B9B1 /* EnvironmentsTests.json in Resources */,
 				EDE08801207DFC6C00CB1287 /* EntryTests.json in Resources */,
-				EDE087FE207DFC6C00CB1287 /* QueryTests.json in Resources */,
+				ED21E9EA209B49D900A6AD2D /* EnvironmentsTests.json in Resources */,
 				ED0B45922046EFDB0000223C /* testFetchSpace.json in Resources */,
+				ED21E9E6209B484B00A6AD2D /* PreviewSyncTests.json in Resources */,
+				ED21E9E3209B484B00A6AD2D /* SyncTests.json in Resources */,
 				ED4986DE204706720014DCFE /* ContentTypeTests.json in Resources */,
 				ED4986F5204708D90014DCFE /* ErrorTests.json in Resources */,
 				ED4986E3204706C30014DCFE /* LinkResolverTests.json in Resources */,
@@ -866,14 +866,14 @@
 			files = (
 				ED0B45B32046F4500000223C /* testClientCanAccessPreviewAPI.json in Resources */,
 				EDE5BA3F2072375500A650FE /* AssetTests.json in Resources */,
-				EDF7319C2091FB6200F9B9B1 /* SyncTests.json in Resources */,
 				ED2367642046FCF000034724 /* RateLimitTests.json in Resources */,
+				ED21E9DF209B47D900A6AD2D /* QueryTests.json in Resources */,
 				ED0B45912046EFDA0000223C /* testFetchSpace.json in Resources */,
-				EDF7319F2091FB6200F9B9B1 /* PreviewSyncTests.json in Resources */,
-				EDF731A72091FCEC00F9B9B1 /* EnvironmentsTests.json in Resources */,
 				EDE08802207DFC6C00CB1287 /* EntryTests.json in Resources */,
-				EDE087FF207DFC6C00CB1287 /* QueryTests.json in Resources */,
+				ED21E9EB209B49D900A6AD2D /* EnvironmentsTests.json in Resources */,
 				ED4986DD204706710014DCFE /* ContentTypeTests.json in Resources */,
+				ED21E9E7209B484B00A6AD2D /* PreviewSyncTests.json in Resources */,
+				ED21E9E4209B484B00A6AD2D /* SyncTests.json in Resources */,
 				ED4986E2204706A70014DCFE /* LinkResolverTests.json in Resources */,
 				ED4986F6204708D90014DCFE /* ErrorTests.json in Resources */,
 				ED4986E7204707040014DCFE /* ImageTests.json in Resources */,
@@ -888,14 +888,14 @@
 			files = (
 				ED0B45B52046F4510000223C /* testClientCanAccessPreviewAPI.json in Resources */,
 				EDE5BA3E2072375500A650FE /* AssetTests.json in Resources */,
-				EDF7319D2091FB6200F9B9B1 /* SyncTests.json in Resources */,
 				ED2367632046FCEF00034724 /* RateLimitTests.json in Resources */,
+				ED21E9E0209B47D900A6AD2D /* QueryTests.json in Resources */,
 				ED0B45902046EFDA0000223C /* testFetchSpace.json in Resources */,
-				EDF731A02091FB6200F9B9B1 /* PreviewSyncTests.json in Resources */,
-				EDF731A82091FCEC00F9B9B1 /* EnvironmentsTests.json in Resources */,
 				EDE08803207DFC6C00CB1287 /* EntryTests.json in Resources */,
-				EDE08800207DFC6C00CB1287 /* QueryTests.json in Resources */,
+				ED21E9EC209B49D900A6AD2D /* EnvironmentsTests.json in Resources */,
 				ED4986DC204706710014DCFE /* ContentTypeTests.json in Resources */,
+				ED21E9E8209B484B00A6AD2D /* PreviewSyncTests.json in Resources */,
+				ED21E9E5209B484B00A6AD2D /* SyncTests.json in Resources */,
 				ED4986E1204706A70014DCFE /* LinkResolverTests.json in Resources */,
 				ED4986F7204708D90014DCFE /* ErrorTests.json in Resources */,
 				ED4986E6204707040014DCFE /* ImageTests.json in Resources */,

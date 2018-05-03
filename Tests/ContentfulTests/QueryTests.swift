@@ -187,8 +187,8 @@ class QueryTests: XCTestCase {
 
         let expectation = self.expectation(description: "Fetch all entries expectation")
 
-        // Empty query means: get all entries. i.e. /entries
-        QueryTests.client.fetchMappedEntries(matching: Query()) { (result: Result<MixedMappedArrayResponse>) in
+        let query = try! Query.order(by: Ordering(sys: .updatedAt))
+        QueryTests.client.fetchMappedEntries(matching: query) { (result: Result<MixedMappedArrayResponse>) in
 
             switch result {
             case .success(let response):
@@ -196,17 +196,17 @@ class QueryTests: XCTestCase {
                 // We didn't decode the "human" content type so only 9 decoded entries should be returned instead of 10
                 expect(entries.count).to(equal(9))
 
-                if let cat = entries[4] as? Cat, let bestFriend = cat.bestFriend {
+                if let cat = entries.first as? Cat, let bestFriend = cat.bestFriend {
                     expect(bestFriend.name).to(equal("Nyan Cat"))
                 } else {
-                    fail("The first entry in the heterogenous array should be a cat wiht a best friend named 'Nyan Cat'")
+                    fail("The first entry in the heterogenous array should be a cat with a best friend named 'Nyan Cat'")
                 }
 
-                if let dog = entries[7] as? Dog, let image = dog.image {
+                if let dog = entries[4] as? Dog, let image = dog.image {
                     expect(dog.description).to(equal("Bacon pancakes, makin' bacon pancakes!"))
                     expect(image.id).to(equal("jake"))
                 } else {
-                    fail("The last entry in the heterogenous array should be a dog with an image with named 'jake'")
+                    fail("The 4th entry in the heterogenous array should be a dog with an image with named 'jake'")
                 }
 
             case .error(let error):
