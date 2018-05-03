@@ -135,7 +135,7 @@ open class Client {
         self.urlSession = URLSession(configuration: sessionConfiguration)
     }
 
-    internal func url(endpoint: Endpoint, parameters: [String: Any]? = nil) -> URL? {
+    internal func url(endpoint: Endpoint, parameters: [String: String]? = nil) -> URL? {
         let pathComponent = endpoint.rawValue
         var components: URLComponents?
 
@@ -147,25 +147,11 @@ open class Client {
         }
         assert(components != nil)
 
-        if let parameters = parameters {
-            let queryItems: [URLQueryItem] = parameters.map { (arg) in
-                var (key, value) = arg
-
-                if let date = value as? Date {
-                    value = date.iso8601String
-                }
-
-                if let array = value as? NSArray {
-                    value = array.componentsJoined(by: ",")
-                }
-
-                return URLQueryItem(name: key, value: (value as AnyObject).description)
-            }
-
-            if queryItems.count > 0 {
-                components?.queryItems = queryItems
-            }
+        let queryItems: [URLQueryItem]? = parameters?.map { (key, value) in
+            return URLQueryItem(name: key, value: value)
         }
+        components?.queryItems = queryItems
+
         guard let url = components?.url else { return nil }
         return url
     }
