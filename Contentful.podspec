@@ -34,7 +34,7 @@ Pod::Spec.new do |spec|
   spec.watchos.deployment_target = '2.0'
   spec.tvos.deployment_target    = '9.0'
 
-  spec.dependency 'Interstellar', '~> 2.1.0'
+  spec.dependency 'Interstellar', '~> 2.2.0'
 end
 
 
