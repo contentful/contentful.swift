@@ -42,7 +42,7 @@ class SyncTests: XCTestCase {
 
     func testPerformInitialSync() {
         self.waitUntilSync(syncableTypes: .all) {
-            expect($0.assets.count).to(equal(4))
+            expect($0.assets.count).to(equal(5))
             expect($0.entries.count).to(equal(10))
         }
     }
@@ -58,7 +58,7 @@ class SyncTests: XCTestCase {
                 return Observable<Result<SyncSpace>>()
             }
         }.then {
-            expect($0.assets.count).to(equal(4))
+            expect($0.assets.count).to(equal(5))
             expect($0.entries.count).to(equal(10))
 
             expectation.fulfill()
@@ -74,7 +74,7 @@ class SyncTests: XCTestCase {
 
     func testSyncDataOfSpecificType() {
         waitUntilSync(syncableTypes: .assets) {
-            expect($0.assets.count).to(equal(4))
+            expect($0.assets.count).to(equal(5))
             expect($0.entries.count).to(equal(0))
         }
     }

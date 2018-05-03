@@ -10,7 +10,8 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 ## Table of contents
 
 #### 2.x Releases
-- `2.0.0` Releases = [2.0.0](#200)
+- `2.1.0` Releases - [2.1.0](#210)
+- `2.0.0` Releases - [2.0.0](#200)
 
 #### 1.x Releases
 - `1.0.0` Releases - [1.0.0](#100) | [1.0.1](#101)
@@ -26,6 +27,14 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 - `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041)
 - `0.3.x` Releases - [0.3.0](#030) | [0.3.1](#031)
+
+---
+
+## [`2.1.0`](https://github.com/contentful/contentful.swift/releases/tag/2.1.0)
+Released on 2018-04-27
+
+#### Added
+- Support for using the `/sync` endpoint on non-master environments.
 
 ---
 

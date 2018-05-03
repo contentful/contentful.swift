@@ -9,7 +9,7 @@ let package = Package(
             targets: ["Contentful"])
     ],
     dependencies: [
-        .package(url: "https://github.com/jensravens/Interstellar", .upToNextMinor(from: "2.1.0"))
+        .package(url: "https://github.com/jensravens/Interstellar", .upToNextMinor(from: "2.2.0"))
     ],
     targets: [
         .target(

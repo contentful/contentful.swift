@@ -13,10 +13,10 @@ import Interstellar
 public final class SyncSpace: Decodable {
 
     /// The url parameters relevant for the next sync operation that this `SyncSpace` can perform.
-    public var parameters: [String: Any] {
+    public var parameters: [String: String] {
 
         if syncToken.isEmpty {
-            return ["initial": true]
+            return ["initial": true.description]
         } else {
             return ["sync_token": syncToken]
         }
@@ -40,7 +40,7 @@ public final class SyncSpace: Decodable {
         case deletedAssets
 
         // Query parameters.
-        internal var parameters: [String: Any] {
+        internal var parameters: [String: String] {
             let typeParameter = "type"
             switch self {
             case .all:

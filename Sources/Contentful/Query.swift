@@ -142,7 +142,6 @@ extension Int: QueryableRange {
 
 extension String: QueryableRange {
 
-
     public var stringValue: String {
         return self
     }

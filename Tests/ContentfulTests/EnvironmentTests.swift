@@ -41,7 +41,8 @@ class EnvironmentsTests: XCTestCase {
         let expectation = self.expectation(description: "Fetch all entries expectation")
 
         // Empty query means: get all entries. i.e. /entries
-        EnvironmentsTests.client.fetchMappedEntries(matching: Query()) { (result: Result<MixedMappedArrayResponse>) in
+        let query = try! Query.order(by: Ordering(sys: .createdAt))
+        EnvironmentsTests.client.fetchMappedEntries(matching: query) { (result: Result<MixedMappedArrayResponse>) in
 
             switch result {
             case .success(let response):
@@ -72,18 +73,21 @@ class EnvironmentsTests: XCTestCase {
     }
 
     // Copy of tests from SyncTests but using a different environment.
-    func testPerformInitialSync(syncableTypes: SyncSpace.SyncableTypes, action: @escaping (_ space: SyncSpace) -> ()) {
+    func testInitialSyncOnNonMasterEnvironment() {
         let expectation = self.expectation(description: "Sync test expecation")
 
-        EnvironmentsTests.client.sync(syncableTypes: syncableTypes).then { syncSpace in
+        EnvironmentsTests.client.sync { result in
+            switch result {
+            case .success(let syncSpace):
+                expect(syncSpace.entries.count).to(equal(9))
+                expect(syncSpace.entries.first?.fields["name"] as? String).to(equal("Jake"))
+                expect(syncSpace.entries[2].fields["name"] as? String).to(equal("Finn"))
 
-            fail("Should not successfully sync while connected to non-master nvironment")
-            expectation.fulfill()
-        }.error { error in
-            expect(error).to(beAKindOf(SDKError.self))
+            case .error(let error):
+                 fail("Failed to sync on a non-master environment \(error)")
+            }
             expectation.fulfill()
         }
-
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 }
