@@ -14,11 +14,11 @@ Swift SDK for the [Contentful][1] Content Delivery API.
 
 [Contentful][1] provides a content infrastructure for digital teams to power content in websites, apps, and devices. Unlike a CMS, Contentful was built to integrate with the modern software stack. It offers a central hub for structured content, powerful management and delivery APIs, and a customizable web app that enable developers and content creators to ship digital products faster.
 
-However, it provides a more usable API than the [Objective-C SDK][4] and has support for more API features. It is recommended to use contentful.swift over contentful.objc as future development at Contentful will focus on Swift rather than Objective-C.
+It is recommended to use [contentful.swift][10] over [contentful.objc][4] as future development at Contentful will focus on Swift.
 
-#### Full feature comparison of [contentful.swift][10] & [contentful.objc][4]
+#### Full feature comparison of contentful.swift & contentful.objc
 
-| CDA Features | [contentful.swift][10] | [contentful.objc][4] |
+| CDA Features | contentful.swift | contentful.objc |
 | -----------  | ----------- | ----------- |
 | API coverage* | :white_check_mark: | :white_check_mark: |
 | Images API | :white_check_mark: | :white_check_mark: |
@@ -29,9 +29,20 @@ However, it provides a more usable API than the [Objective-C SDK][4] and has sup
 
 *API Coverage definition: all endpoints can be interfaced with and complex queries can be constructed by passing in dictionaries of http parameter/argument pairs. Note that the Swift SDK provides much more comprehensive coverage and takes advantage of type system, outdoing the "stringly typed" interface that the Objective-C SDK offers.
 
+## Example application
+
+See the [Swift iOS app on Github][9] and follow the instructions on the README to get a copy of the space so you can see how changing content in Contentful affects the presentation of the app.
+
 ## Usage
 
-First, grab credentials for your Contentful space by [navigating to the "APIs" section of the Contentful Web App](https://app.contentful.com/deeplink?link=api).
+First, the imports:
+
+```swift
+import Contentful
+import Interstellar // A lightweight Functional Reactive Programming dependency.
+```
+
+Grab credentials for your Contentful space by [navigating to the "APIs" section of the Contentful Web App](https://app.contentful.com/deeplink?link=api).
 If you don't have access tokens for your app, create a new set for the Delivery and Preview APIs.
 Next, pass the id of your space and delivery access token into the initializer like so:
 
@@ -131,6 +142,39 @@ final class Cat: EntryDecodable, EntryQueryable {
 }
 ```
 
+## Migrating from version `1.x.x` to `2.x.x`
+
+The breaking changes between `1.x.x` and `2.x.x` are minimal. Nonetheless, you may need to update some of your code:
+
+- The interface for synchronization has been simplified. `initialSync` and `nextSync` have been replaced with `sync` with a default argument of an empty sync space to start an initial sync operation. An initial sync would be done like this:
+```swift
+client.sync { result in
+   ...
+}
+```
+
+A subsequent sync is done like so:
+
+```swift
+// `syncSpace` is an existing instance returned by a prior sync.
+client.sync(syncSpace: syncSpace) { result in
+   ...
+}
+```
+
+- The SDK provided methods for creating a new `Swift.JSONDecoder` and updating it with locale information of your space or environment has changed. The new syntax uses extensions on the `JSONDecoder` type and looks as follows:
+```swift
+let jsonDecoder = JSONDecoder.withoutLocalizationContext()
+jsonDecoder.update(with: localizationContext) // Pass in an instance of `LocalizationContext`
+```
+
+- The `LocalizationContext` property of `Space` has been moved and is now a property of `Client`.
+- `ResourceQueryable` has been renamed `EntryQueryable` for correctness and consistency; update your model class definitions as follows:
+
+```swift
+class MyModelClass: EntryDecodable, EntryQueryable
+```
+
 ## Swift playground
 
 If you'd like to try an interactive demo of the API via a Swift Playground, do the following:
@@ -145,7 +189,7 @@ Then build the "Contentful_macOS" scheme, open the playground file and go! Note:
 
 ## Reference Documentation
 
-For further information about the API, check out the [Content Delivery API Reference Documentation][3].
+The SDK has 100% documentation coverage of all public variables, types, and functions. You can view the docs on the [web][6] or browse them in Xcode. For further information about the Content Delivery API, check out the [Content Delivery API Reference Documentation][3].
 
 ## Swift Versioning
 
@@ -172,7 +216,7 @@ pod 'Contentful'
 You can specify a specific version of Contentful depending on your needs. To learn more about operators for dependency versioning within a Podfile, see the [CocoaPods doc on the Podfile][7].
 
 ```ruby
-pod 'Contentful', '~> 2.0.0' 
+pod 'Contentful', '~> 2.1.0' 
 ```
 
 Note that if you must use older versions of Swift and the SDK, you will need to add a post-install script to your Podfile if installing with Cocoapods:
@@ -192,7 +236,7 @@ end
 You can also use [Carthage][8] for integration by adding the following to your `Cartfile`:
 
 ```
-github "contentful/contentful.swift" ~> 2.0.0
+github "contentful/contentful.swift" ~> 2.1.0
 ```
 
 ## License
@@ -204,7 +248,9 @@ Copyright (c) 2018 Contentful GmbH. See LICENSE for further details.
 [3]: https://www.contentful.com/developers/documentation/content-delivery-api/
 [4]: https://github.com/contentful/contentful.objc
 [5]: https://www.contentful.com/blog/2014/05/09/ios-content-synchronization/
+[6]: https://contentful.github.io/contentful.swift/docs/index.html
 [7]: https://guides.cocoapods.org/using/the-podfile.html
 [8]: https://github.com/Carthage/Carthage
+[9]: https://github.com/contentful/the-example-app.swift
 [10]: https://github.com/contentful/contentful.swift
 
