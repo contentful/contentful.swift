@@ -30,7 +30,11 @@ struct TestClientFactory {
             var apiCoverageConfiguration = clientConfiguration // Mutable copy.
             apiCoverageConfiguration.server = "127.0.0.1:5000"
             apiCoverageConfiguration.secure = false
-            client = Client(spaceId: testSpaceId, environmentId: environmentId, accessToken: testAccessToken, clientConfiguration: apiCoverageConfiguration, contentTypeClasses: contentTypeClasses)
+            client = Client(spaceId: testSpaceId,
+                            environmentId: environmentId,
+                            accessToken: testAccessToken,
+                            clientConfiguration: apiCoverageConfiguration,
+                            contentTypeClasses: contentTypeClasses)
         #else
             client = Client(spaceId: testSpaceId, environmentId: environmentId, accessToken: testAccessToken, clientConfiguration: clientConfiguration, contentTypeClasses: contentTypeClasses)
             let dvrSession = DVR.Session(cassetteName: cassetteName, backingSession: client.urlSession)
