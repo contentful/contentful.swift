@@ -87,9 +87,10 @@ class ImageTests: XCTestCase {
         expect(urlWithOptions.absoluteString).to(equal("https://images.ctfassets.net/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png?fm=jpg&q=50"))
     }
 
+
     func testMultipleImageOptionsOfSameTypeAreInvalid() {
         let formatImageOptions: [ImageOption] = [
-            .formatAs(.png),
+            .formatAs(.png(bits: .standard)),
             .formatAs(.jpg(withQuality: .unspecified))
         ]
         do {
@@ -236,7 +237,7 @@ class ImageTests: XCTestCase {
     // MARK: Test image format options.
 
     func testAllImageFormatOptions() {
-        let pngImageOptions: [ImageOption] = [.formatAs(.png)]
+        let pngImageOptions: [ImageOption] = [.formatAs(.png(bits: .standard))]
 
         let pngURL = try! nyanCatAsset.url(with: pngImageOptions)
         expect(pngURL.absoluteString).to(equal("https://images.ctfassets.net/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png?fm=png"))
@@ -265,7 +266,7 @@ class ImageTests: XCTestCase {
         }
     }
 
-    func testValidQualityRangeAndProgressiveJPGOptions() {
+    func testURLsWithFormatFlagsAreProperlyConstructed() {
         let validJPQQualityOptions: [ImageOption] = [.formatAs(.jpg(withQuality: .asPercent(50)))]
 
         let jpgURL = try! nyanCatAsset.url(with: validJPQQualityOptions)
@@ -277,6 +278,15 @@ class ImageTests: XCTestCase {
         expect(progressiveJPGURL.absoluteString).to(equal("https://images.ctfassets.net/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png?fm=jpg&fl=progressive"))
 
 
+        let eightBitPngImageOptions: [ImageOption] = [.formatAs(.png(bits: .eight))]
+        let urlWithEightBitPngOptions = try! nyanCatAsset.url(with: eightBitPngImageOptions)
+        expect(urlWithEightBitPngOptions.absoluteString).to(equal("https://images.ctfassets.net/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png?fm=png&fl=png8"))
+
+
+
+        let standardPngImageOptions: [ImageOption] = [.formatAs(.png(bits: .standard))]
+        let standardBitPngOptions = try! nyanCatAsset.url(with: standardPngImageOptions)
+        expect(standardBitPngOptions.absoluteString).to(equal("https://images.ctfassets.net/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png?fm=png"))
     }
 
     // MARK: Test fetching images.

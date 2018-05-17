@@ -4,7 +4,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) starting from 1.x releases.
 
 ### Merged, but not yet released
-> All recent changes are published
+> ~~All recent changes are published~~
+> #### Added
+> - **BREAKING:** PNGs can now be retrieved with `.standard` or `.eight` bits as an additional `ImageOption` to request PNGs from the Images API.
 ---
 
 ## Table of contents
