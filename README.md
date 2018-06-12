@@ -15,7 +15,8 @@
 > Swift SDK for the Contentful [Content Delivery API](https://www.contentful.com/developers/docs/references/content-delivery-api/) and [Content Preview API](https://www.contentful.com/developers/docs/references/content-preview-api/). It helps you to easily access your Content stored in Contentful with your Swift applications.
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Status-Maintained-green.svg" alt="This repository is actively maintained" /> &nbsp;
+  <img src="https://img.shields.io/badge/Status-Maintained-green.svg" alt="This repository is actively maintained" />
+  &nbsp;
   <a href="LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-brightgreen.svg" alt="MIT License" />
   </a>
@@ -71,7 +72,7 @@
     - [Your first request](#your-first-request)
     - [Accessing the Preview API](#accessing-the-preview-api)
     - [Authorization](#authorization)
-    - [`EntryDecodable`](#entrydecodable)
+    - [Map Contentful entries to Swift classes via `EntryDecodable`](#map-contentful-entries-to-swift-classes-via-entrydecodable)
   - [Documentation & References](#documentation--references)
     - [Reference Documentation](#reference-documentation)
     - [Tutorials & other resources](#tutorials--other-resources)
@@ -99,11 +100,11 @@
 - [Synchronization](https://www.contentful.com/developers/docs/concepts/sync/)
 - [Localization support](https://www.contentful.com/developers/docs/concepts/locales/)
 - Up-to-date with the latest Swift development stack: Swift 4.x | Xcode 9.x
-- Supports [Environments](https://www.contentful.com/developers/docs/concepts/multiple-environments/) (**since v2.0.0 - 06. April 2018**)
+- Supports [Environments](https://www.contentful.com/developers/docs/concepts/multiple-environments/) (**v2.0.0+**)
 
 ## Getting started
 
-In order to get started with the Contentful JS SDK you'll need not only to install it, but also to get credentials which will allow you to have access to your content in Contentful.
+In order to get started with the Contentful Swift SDK you'll need not only to install it, but also to get credentials which will allow you to have access to your content in Contentful.
 
 - [Installation](#installation)
 - [Your first request](#your-first-request)
@@ -183,7 +184,7 @@ Grab credentials for your Contentful space by [navigating to the "APIs" section 
 If you don't have access tokens for your app, create a new set for the Delivery and Preview APIs.
 Next, pass the id of your space and delivery access token into the initializer like so:
 
-### `EntryDecodable`
+### Map Contentful entries to Swift classes via `EntryDecodable`
 
 The `EntryDecodable` protocol allows you to define a mapping between your content types and your Swift classes that entries will be serialized to. When using methods such as:
 
