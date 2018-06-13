@@ -12,6 +12,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 ## Table of contents
 
 #### 2.x Releases
+- `2.2.0` Releases - [2.2.0](#220)
 - `2.1.0` Releases - [2.1.0](#210)
 - `2.0.0` Releases - [2.0.0](#200)
 
@@ -29,6 +30,14 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 - `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041)
 - `0.3.x` Releases - [0.3.0](#030) | [0.3.1](#031)
+
+---
+
+## [`2.2.0`](https://github.com/contentful/contentful.swift/releases/tag/2.2.0)
+Released on 2018-06-13
+
+#### Added
+- An additional configuration option, `timeZone` on the `ClientConfiguration` to specify which `TimeZone` should be used when normalizing dates returned by the API. The default timezone is 0 seconds offset from GMT which enables serializing the exact representation the API returns rather than transforming to the current system time.
 
 ---
 
