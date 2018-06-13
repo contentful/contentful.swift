@@ -71,6 +71,7 @@ internal extension EntryModellable where Self: EntryDecodable {
 
 internal extension CodingUserInfoKey {
     static let linkResolverContextKey = CodingUserInfoKey(rawValue: "linkResolverContext")!
+    static let timeZoneContextKey = CodingUserInfoKey(rawValue: "timeZoneContext")!
     static let contentTypesContextKey = CodingUserInfoKey(rawValue: "contentTypesContext")!
     static let localizationContextKey = CodingUserInfoKey(rawValue: "localizationContext")!
 }

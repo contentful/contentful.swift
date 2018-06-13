@@ -36,4 +36,12 @@ class ISO8601DateTests: XCTestCase {
         expect(dates[4].iso8601String).to(equal("2018-04-27T06:00:00Z"))
         expect(dates[5].iso8601String).to(equal("2018-04-27T14:00:00Z"))
     }
+
+    func testConfiguringTimeZone() {
+        var clientConfig = ClientConfiguration()
+        let timeZone = TimeZone.current
+        clientConfig.timeZone = timeZone
+        let client = Client(spaceId: "", accessToken: "", clientConfiguration: clientConfig)
+        expect(client.jsonDecoder.userInfo[.timeZoneContextKey] as? TimeZone).to(be(timeZone))
+    }
 }

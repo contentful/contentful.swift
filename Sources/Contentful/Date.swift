@@ -32,13 +32,12 @@ public extension Date {
     }
 
     /// A formatter ready to handle iso8601 dates: normalized string output to an offset of 0 from UTC.
-    public static func iso8601Formatter() -> DateFormatter {
+    public static func iso8601Formatter(timeZone: TimeZone? = nil) -> DateFormatter {
         let formatter = DateFormatter()
         formatter.calendar = Calendar(identifier: .iso8601)
         // The locale and timezone properties must be exactly as follows to have a true, time-zone agnostic (i.e. offset of 00:00 from UTC) ISO stamp.
         formatter.locale = Foundation.Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone(secondsFromGMT: 0)
-        // Normalize to 0 UTC offset.
+        formatter.timeZone = timeZone ?? TimeZone(secondsFromGMT: 0)
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
         return formatter
     }
@@ -54,7 +53,9 @@ public extension Date {
         let container = try decoder.singleValueContainer()
         let dateString = try container.decode(String.self)
 
-        let formatter = Date.iso8601Formatter()
+        let timeZone = decoder.userInfo[.timeZoneContextKey] as? TimeZone
+        let formatter = Date.iso8601Formatter(timeZone: timeZone)
+
         for format in Date.supportedFormats {
             formatter.dateFormat = format
             if let date = formatter.date(from: dateString) {
