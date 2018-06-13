@@ -56,6 +56,10 @@ public struct ClientConfiguration {
     /// An optional configuration to override the date decoding strategy that is provided by the the SDK.
     public var dateDecodingStrategy: JSONDecoder.DateDecodingStrategy?
 
+    /// An optional configuration to override the TimeZone the SDk will use to serialize Date instances. The SDK will
+    /// use a TimeZone with 0 seconds offset from GMT if this configuration is omitted.
+    public var timeZone: TimeZone?
+
     /// Computed version of the user agent, including OS name and version
     internal func userAgentString(with integration: Integration?) -> String {
         // Inspired by Alamofire https://github.com/Alamofire/Alamofire/blob/25d8fdd8a36f510a2bc4fe98289f367ec385d337/Source/SessionManager.swift
