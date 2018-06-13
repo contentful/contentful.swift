@@ -152,7 +152,7 @@ public func == (lhs: ImageOption, rhs: ImageOption) -> Bool {
 }
 
 /**
- Quality options for JPG images to be used when specifying jpg as the desired image format.
+ Quality options for JPG images to be used when specifying `.jpg` as the desired image format.
  Example usage
  
  ```
@@ -181,11 +181,36 @@ public enum JPGQuality {
             }
             return URLQueryItem(name: ImageParameters.quality, value: String(quality))
         case .progressive:
-            return URLQueryItem(name: ImageParameters.progressiveJPG, value: "progressive")
+            return URLQueryItem(name: ImageParameters.formatFlag, value: "progressive")
         }
     }
 }
 
+/**
+ Quality options for PNG images to be used when specifying `.png` as the desired image format.
+ Example usage
+
+ ```
+ let imageOptions = [.formatAs(.png(bits: .standard))]
+ ```
+ */
+public enum PngBits {
+
+    /// Specify that the PNG should be represented with standard bit-depth.
+    case standard
+
+    /// Specify that the PNG should be represented with only 8 bits.
+    case eight
+
+    fileprivate func urlQueryItem() -> URLQueryItem? {
+        switch self {
+        case .standard:
+            return nil
+        case .eight:
+            return URLQueryItem(name: ImageParameters.formatFlag, value: "png8")
+        }
+    }
+}
 
 /**
  Use `Format` to specify the image file formats supported by Contentful's Images API.
@@ -202,7 +227,7 @@ public enum Format: URLImageQueryExtendable {
     case jpg(withQuality: JPGQuality)
 
     /// Specify that the API should return the image as a png.
-    case png
+    case png(bits: PngBits)
 
     /// Specify that the API should return the image as a webp file.
     case webp
@@ -219,6 +244,8 @@ public enum Format: URLImageQueryExtendable {
         switch self {
         case .jpg(let quality):
             return try quality.urlQueryItem()
+        case .png(let bits):
+            return bits.urlQueryItem()
         default:
             return nil
         }
@@ -362,8 +389,8 @@ private struct ImageParameters {
     static let backgroundColor  = "bg"
     static let fit              = "fit"
     static let format           = "fm"
+    static let formatFlag       = "fl"
     static let quality          = "q"
-    static let progressiveJPG   = "fl"
 }
 
 
