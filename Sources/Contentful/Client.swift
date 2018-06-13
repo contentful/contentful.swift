@@ -115,6 +115,9 @@ open class Client {
             // Override default date decoding strategy if present
             jsonDecoder.dateDecodingStrategy = dateDecodingStrategy
         }
+        if let timeZone = clientConfiguration.timeZone {
+            jsonDecoder.userInfo[.timeZoneContextKey] = timeZone
+        }
 
         if let contentTypeClasses = contentTypeClasses {
             var contentTypes = [ContentTypeId: EntryDecodable.Type]()
