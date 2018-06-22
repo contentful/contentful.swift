@@ -248,9 +248,15 @@ open class Client {
     fileprivate func readRateLimitHeaderIfPresent(response: URLResponse?) -> Int? {
         if let httpResponse = response as? HTTPURLResponse {
             if httpResponse.statusCode == 429 {
-                if let rateLimitResetString = httpResponse.allHeaderFields["X-Contentful-RateLimit-Reset"] as? String {
+
+                let rateLimitResetPair = httpResponse.allHeaderFields.filter { arg in
+                    let (key, _) = arg
+                    return (key as? String)?.lowercased() == "x-contentful-ratelimit-reset"
+                }
+                if let rateLimitResetString = rateLimitResetPair.first?.value as? String {
                     return Int(rateLimitResetString)
                 }
+
             }
         }
         return nil

@@ -19,12 +19,12 @@ class RateLimitTests: XCTestCase {
 
     override class func setUp() {
         super.setUp()
-//        (client.urlSession as? DVR.Session)?.beginRecording()
+        (client.urlSession as? DVR.Session)?.beginRecording()
     }
 
     override class func tearDown() {
         super.tearDown()
-//        (client.urlSession as? DVR.Session)?.endRecording()
+        (client.urlSession as? DVR.Session)?.endRecording()
     }
 
     func testRateLimit() {
