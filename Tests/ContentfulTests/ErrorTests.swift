@@ -10,9 +10,9 @@
 import XCTest
 import DVR
 import Nimble
+import OHHTTPStubs
 
 class ErrorTests: XCTestCase {
-
 
     static let client = TestClientFactory.testClient(withCassetteNamed:  "ErrorTests")
 
@@ -52,5 +52,29 @@ class ErrorTests: XCTestCase {
         
         waitForExpectations(timeout: 10.0, handler: nil)
     }
+}
 
+class UnparsableErrorTests: XCTestCase {
+
+    func testUnparsableErrorPassesSDKError() {
+
+        let expectation = self.expectation(description: "Error is passed into callback")
+
+        stub(condition: isPath("/spaces/cfexampleapi")) { request -> OHHTTPStubsResponse in
+            let stubPath = OHPathForFile("Fixtures/unparsable-error.json", UnparsableErrorTests.self)
+            return fixture(filePath: stubPath!, status: 401, headers: ["Content-Type": "application/json"])
+        }.name = "UnparsableError stub"
+
+        let client = Client(spaceId: "cfexampleapi", accessToken: "")
+        client.fetchSpace() { result in
+            switch result {
+            case .success:
+                fail("Error should have been returned")
+            case .error(let error):
+                expect(error).to(beAKindOf(SDKError.self))
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
 }

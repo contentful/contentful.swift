@@ -15,7 +15,7 @@ import Nimble
 class JSONDecodingTests: XCTestCase {
 
     static func jsonData(_ fileName: String) -> Data {
-        let path = NSString(string: "Data").appendingPathComponent(fileName)
+        let path = NSString(string: "Fixtures").appendingPathComponent(fileName)
         let bundle = Bundle(for: JSONDecodingTests.self)
         let urlPath = bundle.path(forResource: path, ofType: "json")!
         let data = try! Data(contentsOf: URL(fileURLWithPath: urlPath))
