@@ -91,11 +91,9 @@ class SyncTests: XCTestCase {
 class PreviewSyncTests: XCTestCase {
 
     static let client: Client = {
-        var clientConfiguration = Contentful.ClientConfiguration()
-        clientConfiguration.previewMode = true
         let client = TestClientFactory.testClient(withCassetteNamed: "PreviewSyncTests",
                                                   accessToken: "fd53c0a7a0a9bdd930efe1ec9d1f1bcc9b29628d5d4a7a409b160d00b1b2910b",
-                                                  clientConfiguration: clientConfiguration)
+                                                  host: Host.preview)
         return client
     }()
 

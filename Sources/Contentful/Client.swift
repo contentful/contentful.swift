@@ -40,12 +40,8 @@ open class Client {
         }
     }
 
-    fileprivate var server: String {
-        if clientConfiguration.previewMode && clientConfiguration.server == Defaults.cdaHost {
-            return Defaults.previewHost
-        }
-        return clientConfiguration.server
-    }
+    /// The base domain that all URIs have for each request the client makes.
+    public let host: String
 
     /// The JSONDecoder that the receiving client instance uses to deserialize JSON. The SDK will
     /// inject information about the locales to this decoder and use this information to normalize
@@ -101,6 +97,7 @@ open class Client {
     public init(spaceId: String,
                 environmentId: String = "master",
                 accessToken: String,
+                host: String = Host.delivery,
                 clientConfiguration: ClientConfiguration = .default,
                 sessionConfiguration: URLSessionConfiguration = .default,
                 persistenceIntegration: PersistenceIntegration? = nil,
@@ -108,6 +105,7 @@ open class Client {
 
         self.spaceId = spaceId
         self.environmentId = environmentId
+        self.host = host
         self.clientConfiguration = clientConfiguration
 
         self.jsonDecoder = JSONDecoder.withoutLocalizationContext()
@@ -144,9 +142,9 @@ open class Client {
 
         switch endpoint {
         case .spaces:
-            components = URLComponents(string: "\(scheme)://\(server)/spaces/\(spaceId)/\(pathComponent)")
+            components = URLComponents(string: "\(scheme)://\(host)/spaces/\(spaceId)/\(pathComponent)")
         case .assets, .contentTypes, .locales, .entries, .sync:
-            components = URLComponents(string: "\(scheme)://\(server)/spaces/\(spaceId)/environments/\(environmentId)/\(pathComponent)")
+            components = URLComponents(string: "\(scheme)://\(host)/spaces/\(spaceId)/environments/\(environmentId)/\(pathComponent)")
         }
         assert(components != nil)
 
@@ -672,7 +670,7 @@ extension Client {
         // Preview mode only supports `initialSync` not `nextSync`. The only reason `nextSync` should
         // be called while in preview mode, is internally by the SDK to finish a multiple page sync.
         // We are doing a multi page sync only when syncSpace.hasMorePages is true.
-        if !syncSpace.syncToken.isEmpty && clientConfiguration.previewMode == true && syncSpace.hasMorePages == false {
+        if !syncSpace.syncToken.isEmpty && host == Host.preview && syncSpace.hasMorePages == false {
             completion(Result.error(SDKError.previewAPIDoesNotSupportSync()))
             return nil
         }
