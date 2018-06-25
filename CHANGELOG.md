@@ -7,6 +7,9 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 > ~~All recent changes are published~~
 > #### Added
 > - **BREAKING:** PNGs can now be retrieved with `.standard` or `.eight` bits as an additional `ImageOption` to request PNGs from the Images API.
+> 
+> #### Fixed
+> - Now all error responses from the API will fallback to seraializing an `SDKError` if the SDK is unable to serialize an `APIError`
 ---
 
 ## Table of contents
