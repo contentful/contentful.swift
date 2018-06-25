@@ -206,17 +206,27 @@ open class Client {
 
                 // Use failable initializer to optional rather than initializer that throws,
                 // because failure to find an error in the JSON should error should not throw an error that JSON is not parseable.
-                if let response = response as? HTTPURLResponse, let apiError = APIError.error(with: self.jsonDecoder,
-                                                                                              data: data,
-                                                                                              statusCode: response.statusCode) {
-                    completion(Result.error(apiError))
-                    return
+                if let response = response as? HTTPURLResponse {
+                    if response.statusCode != 200 {
+                        if let apiError = APIError.error(with: self.jsonDecoder,
+                                                         data: data,
+                                                         statusCode: response.statusCode) {
+                            completion(Result.error(apiError))
+                        } else {
+                            // In case there is an error returned by the API that has an unexpected format, return a custom error.
+                            let errorMessage = "An API error was returned that the SDK was unable to parse"
+                            let error = SDKError.unparseableJSON(data: data, errorMessage: errorMessage)
+                            completion(Result.error(error))
+                        }
+                        return
+                    }
                 }
                 completion(Result.success(data))
                 return
             }
 
             if let error = error {
+                // An extra check, just in case.
                 completion(Result.error(error))
                 return
             }
@@ -238,9 +248,15 @@ open class Client {
     fileprivate func readRateLimitHeaderIfPresent(response: URLResponse?) -> Int? {
         if let httpResponse = response as? HTTPURLResponse {
             if httpResponse.statusCode == 429 {
-                if let rateLimitResetString = httpResponse.allHeaderFields["X-Contentful-RateLimit-Reset"] as? String {
+
+                let rateLimitResetPair = httpResponse.allHeaderFields.filter { arg in
+                    let (key, _) = arg
+                    return (key as? String)?.lowercased() == "x-contentful-ratelimit-reset"
+                }
+                if let rateLimitResetString = rateLimitResetPair.first?.value as? String {
                     return Int(rateLimitResetString)
                 }
+
             }
         }
         return nil
