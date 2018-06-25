@@ -9,11 +9,11 @@
 import Foundation
 
 /// Some default values that the SDK uses.
-public enum Defaults {
+public struct Host {
     /// The path for the Contentful Delivery API.
-    public static let cdaHost = "cdn.contentful.com"
+    public static let delivery = "cdn.contentful.com"
     /// The path for the Contentful Preview API.
-    public static let previewHost = "preview.contentful.com"
+    public static let preview = "preview.contentful.com"
 }
 
 /**
@@ -43,14 +43,10 @@ public struct ClientConfiguration {
 
     /// The default instance of ClientConfiguration which interfaces with the Content Delivery API.
     public static let `default` = ClientConfiguration()
-    /// Whether or not to use the preview mode when accessing Contentful, requires a preview token
-    public var previewMode = false
-    /// Whether or not to automatically rate limit requests, defaults to `false`
-    public var rateLimiting = false
+
     /// Whether or not to use HTTPS connections, defaults to `true`
     public var secure = true
-    /// The server to use for performing requests, defaults to `cdn.contentful.com`
-    public var server = Defaults.cdaHost
+
     /// The delegate which will receive messages containing the raw JSON data fetched at a specified URL.
     public var dataDelegate: DataDelegate?
     /// An optional configuration to override the date decoding strategy that is provided by the the SDK.

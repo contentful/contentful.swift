@@ -87,8 +87,11 @@ class ClientConfigurationTests: XCTestCase {
     }
 
     func testDefaultConfiguration() {
-        let clientConfiguration = ClientConfiguration.default
-        expect(clientConfiguration.server).to(equal(Defaults.cdaHost))
-        expect(clientConfiguration.previewMode).to(be(false))
+        let client = Client(spaceId: "", accessToken: "")
+        expect(client.host).to(equal(Host.delivery))
+        let previewClient = Client(spaceId: "", accessToken: "", host: Host.preview)
+        expect(previewClient.host).to(equal(Host.preview))
+        let customHostClient = Client(spaceId: "", accessToken: "", host: "myenterprise.contentful.com")
+        expect(customHostClient.host).to(equal("myenterprise.contentful.com"))
     }
 }

@@ -19,6 +19,7 @@ struct TestClientFactory {
                            spaceId: String? = nil,
                            environmentId: String = "master",
                            accessToken: String? = nil,
+                           host: String = Host.delivery,
                            contentTypeClasses: [EntryDecodable.Type]? = nil,
                            clientConfiguration: ClientConfiguration = .default) -> Client {
 
@@ -33,10 +34,16 @@ struct TestClientFactory {
             client = Client(spaceId: testSpaceId,
                             environmentId: environmentId,
                             accessToken: testAccessToken,
+                            host: host,
                             clientConfiguration: apiCoverageConfiguration,
                             contentTypeClasses: contentTypeClasses)
         #else
-            client = Client(spaceId: testSpaceId, environmentId: environmentId, accessToken: testAccessToken, clientConfiguration: clientConfiguration, contentTypeClasses: contentTypeClasses)
+            client = Client(spaceId: testSpaceId,
+                            environmentId: environmentId,
+                            accessToken: testAccessToken,
+                            host: host,
+                            clientConfiguration: clientConfiguration,
+                            contentTypeClasses: contentTypeClasses)
             let dvrSession = DVR.Session(cassetteName: cassetteName, backingSession: client.urlSession)
             client.urlSession = dvrSession
         #endif
@@ -86,12 +93,10 @@ class PreviewAPITests: XCTestCase {
 
     // https://preview.contentful.com/spaces/cfexampleapi?access_token=e5e8d4c5c122cf28fc1af3ff77d28bef78a3952957f15067bbc29f2f0dde0b50 > testClientCanAccessPreviewAPI.response
     func testClientCanAccessPreviewAPI() {
-        var clientConfiguration = Contentful.ClientConfiguration()
-        clientConfiguration.previewMode = true
 
         let client = Client(spaceId: "dumri3ebknon",
                             accessToken: "fd53c0a7a0a9bdd930efe1ec9d1f1bcc9b29628d5d4a7a409b160d00b1b2910b",
-                            clientConfiguration: clientConfiguration)
+                            host: Host.preview)
 
         client.urlSession = DVR.Session(cassetteName: "testClientCanAccessPreviewAPI", backingSession: client.urlSession)
         (client.urlSession as? DVR.Session)?.beginRecording()
@@ -113,13 +118,9 @@ class PreviewAPITests: XCTestCase {
     // https://preview.contentful.com/spaces/cfexampleapi?access_token=b4c0n73n7fu1 > testClientCantAccessPreviewAPIWithProductionToken.response
     func testClientCantAccessPreviewAPIWithProductionToken() {
 
-        var clientConfiguration = Contentful.ClientConfiguration()
-        clientConfiguration.previewMode = true
-
-
         let client = TestClientFactory.testClient(withCassetteNamed: "testClientCantAccessPreviewAPIWithProductionToken",
                                                   accessToken: "e566e6f1d0545862159b6c63fddd25bebe0aa5c1bb8cbf9418c8531feff0d564",
-                                                  clientConfiguration: clientConfiguration)
+                                                  host: Host.preview)
         (client.urlSession as? DVR.Session)?.beginRecording()
 
         let networkExpectation = expectation(description: "Client can't fetch space with wrong token")
