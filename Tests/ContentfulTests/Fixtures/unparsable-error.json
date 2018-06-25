@@ -1,0 +1,20 @@
+
+{
+    "sys":{
+        "type":"Error",
+        "id": "Unauthorized"
+    },
+    "unhandledKey": "Without a message, we can't parse an `APIError`",
+    "details": {
+        "errors": [
+            {
+                "name":"unknown",
+                "path": [
+                    "fields",
+                    "startDate"
+                ]
+            }
+        ]
+    },
+    "requestId": "adfasdfadfa"
+}

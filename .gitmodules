@@ -7,3 +7,6 @@
 [submodule "Carthage/Checkouts/Nimble"]
 	path = Carthage/Checkouts/Nimble
 	url = https://github.com/Quick/Nimble.git
+[submodule "Carthage/Checkouts/OHHTTPStubs"]
+	path = Carthage/Checkouts/OHHTTPStubs
+	url = https://github.com/AliSoftware/OHHTTPStubs.git
