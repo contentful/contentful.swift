@@ -124,7 +124,7 @@ pod 'Contentful'
 You can specify a specific version of Contentful depending on your needs. To learn more about operators for dependency versioning within a Podfile, see the [CocoaPods doc on the Podfile](https://guides.cocoapods.org/using/the-podfile.html).
 
 ```ruby
-pod 'Contentful', '~> 2.1.0' 
+pod 'Contentful', '~> 2.2.0' 
 ```
 
 #### Carthage installation
@@ -132,7 +132,7 @@ pod 'Contentful', '~> 2.1.0'
 You can also use [Carthage](https://github.com/Carthage/Carthage) for integration by adding the following to your `Cartfile`:
 
 ```
-github "contentful/contentful.swift" ~> 2.1.0
+github "contentful/contentful.swift" ~> 2.2.0
 ```
 
 #### Swift Package Manager [swift-tools-version 4.2]
@@ -140,7 +140,7 @@ github "contentful/contentful.swift" ~> 2.1.0
 Add the following line to your array of dependencies:
 
 ```swift
-.package(url: "https://github.com/contentful/contentful.swift", .upToNextMajor(from: "2.1.0"))
+.package(url: "https://github.com/contentful/contentful.swift", .upToNextMajor(from: "2.2.0"))
 ```
 
 ### Your first request
@@ -157,7 +157,7 @@ let client = Client(spaceId: "cfexampleapi",
 
 client.fetchEntry(id: "nyancat") { (result: Result<Entry>) in
     switch result {
-        case .success(entry):
+        case .success(let entry):
             print(entry)
         case .error(let error):
             print("Error \(error)!")
@@ -191,7 +191,7 @@ The `EntryDecodable` protocol allows you to define a mapping between your conten
 ```swift
 let query = QueryOn<Cat>.where(field: .color, .equals("gray"))
 
-func fetchMappedEntries(matching: query) { (result: Result<MappedArrayResponse<Cat>>) in
+client.fetchMappedEntries(matching: query) { (result: Result<MappedArrayResponse<Cat>>) in
     guard let cats = result.value?.items else { return }
     print(cats)
 }
