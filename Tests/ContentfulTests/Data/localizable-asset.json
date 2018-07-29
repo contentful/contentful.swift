@@ -1,0 +1,45 @@
+{
+  "sys": {
+    "space": {
+      "sys": {
+        "type": "Link",
+        "linkType": "Space",
+        "id": "cfexampleapi"
+      }
+    },
+    "id": "1x0xpXu4pSGS4OukSyWGUK",
+    "type": "Asset",
+    "createdAt": "2013-11-06T09:45:10.000Z",
+    "updatedAt": "2013-12-18T13:27:14.917Z",
+    "environment": {
+      "sys": {
+        "id": "master",
+        "type": "Link",
+        "linkType": "Environment"
+      }
+    },
+    "revision": 6
+  },
+  "fields": {
+    "title": {
+      "en-US": "Doge"
+    },
+    "description": {
+      "en-US": "nice picture"
+    },
+    "file": {
+      "en-US": {
+        "url": "//images.ctfassets.net/cfexampleapi/1x0xpXu4pSGS4OukSyWGUK/cc1239c6385428ef26f4180190532818/doge.jpg",
+        "details": {
+          "size": 522943,
+          "image": {
+            "width": 5800,
+            "height": 4350
+          }
+        },
+        "fileName": "doge.jpg",
+        "contentType": "image/jpeg"
+      }
+    }
+  }
+}

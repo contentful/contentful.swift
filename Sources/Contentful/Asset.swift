@@ -52,6 +52,7 @@ public class Asset: LocalizableResource, AssetProtocol {
     /// The URL for the underlying media file. Returns nil if the url was omitted from the response (i.e. `select` operation in query)
     /// or if the underlying media file is still processing with Contentful.
     public var url: URL? {
+
         guard let url = file?.url else { return nil }
         return url
     }
@@ -65,27 +66,17 @@ public class Asset: LocalizableResource, AssetProtocol {
 
     /// The title of the asset. Optional for compatibility with `select` operator queries.
     public var title: String? {
-        return localizedString(path: "title")
+        return fields["title"] as? String
     }
 
     /// Description of the asset. Optional for compatibility with `select` operator queries.
     public var description: String? {
-        return localizedString(path: "description")
+        return fields["description"] as? String
     }
 
     /// Metadata describing the file associated with the asset. Optional for compatibility with `select` operator queries.
     public var file: FileMetadata? {
-        let localizableValue = localizableFields["file"]
-        let value = localizableValue?[currentlySelectedLocale.code] as? FileMetadata
-        return value
-    }
-
-    // MARK: Private
-
-    private func localizedString(path: String) -> String? {
-        let localizableValue = localizableFields[path]
-        let value = localizableValue?[currentlySelectedLocale.code] as? String
-        return value
+        return fields["file"] as? FileMetadata
     }
 }
 

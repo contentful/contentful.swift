@@ -90,5 +90,24 @@ class LocalizationTests: XCTestCase {
 
         waitForExpectations(timeout: 10.0, handler: nil)
     }
+
+    func testWalkingFallbackchainOnAsset() {
+        let jsonDecoder = JSONDecoder.withoutLocalizationContext()
+        let localesJSONData = JSONDecodingTests.jsonData("all-locales")
+        let localesResponse = try! jsonDecoder.decode(ArrayResponse<Contentful.Locale>.self, from: localesJSONData)
+        jsonDecoder.update(with: LocalizationContext(locales: localesResponse.items)!)
+
+
+        let assetJSONData = JSONDecodingTests.jsonData("localizable-asset")
+        let asset = try! jsonDecoder.decode(Asset.self, from: assetJSONData)
+
+        expect(asset.sys.id).to(equal("1x0xpXu4pSGS4OukSyWGUK"))
+        expect(asset.urlString).to(equal("https://images.ctfassets.net/cfexampleapi/1x0xpXu4pSGS4OukSyWGUK/cc1239c6385428ef26f4180190532818/doge.jpg"))
+
+        asset.setLocale(withCode: "tlh")
+        expect(asset.urlString).to(equal("https://images.ctfassets.net/cfexampleapi/1x0xpXu4pSGS4OukSyWGUK/cc1239c6385428ef26f4180190532818/doge.jpg"))
+
+
+    }
 }
 
