@@ -143,7 +143,7 @@ public class APIError: Decodable, Error, CustomDebugStringConvertible {
             /// The `path` property of the error.
             public let path: [String]
             /// The `details` property of the error.
-            public let details: String
+            public let details: String?
         }
     }
 

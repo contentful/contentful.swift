@@ -4,7 +4,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) starting from 1.x releases.
 
 ### Merged, but not yet released
-> All recent changes are published
+> ~~All recent changes are published~~
+> #### Added
+> - **BREAKING:** PNGs can now be retrieved with `.standard` or `.eight` bits as an additional `ImageOption` to request PNGs from the Images API.
+> 
+> #### Fixed
+> - Now all error responses from the API will fallback to seraializing an `SDKError` if the SDK is unable to serialize an `APIError`
+>
+> #### Changed
+> - **BREAKING:** Configuring a `Client` to interface with Content Preview API is no longer done through the `ClientConfiguration` type. Instead, pass `host: Host.preview` to the `Client` initializer. Also, you can now configure the client to use any arbitrary string host if you have whitelisted via your plan in Contentful.
 ---
 
 ## Table of contents

@@ -40,12 +40,8 @@ open class Client {
         }
     }
 
-    fileprivate var server: String {
-        if clientConfiguration.previewMode && clientConfiguration.server == Defaults.cdaHost {
-            return Defaults.previewHost
-        }
-        return clientConfiguration.server
-    }
+    /// The base domain that all URIs have for each request the client makes.
+    public let host: String
 
     /// The JSONDecoder that the receiving client instance uses to deserialize JSON. The SDK will
     /// inject information about the locales to this decoder and use this information to normalize
@@ -101,6 +97,7 @@ open class Client {
     public init(spaceId: String,
                 environmentId: String = "master",
                 accessToken: String,
+                host: String = Host.delivery,
                 clientConfiguration: ClientConfiguration = .default,
                 sessionConfiguration: URLSessionConfiguration = .default,
                 persistenceIntegration: PersistenceIntegration? = nil,
@@ -108,6 +105,7 @@ open class Client {
 
         self.spaceId = spaceId
         self.environmentId = environmentId
+        self.host = host
         self.clientConfiguration = clientConfiguration
 
         self.jsonDecoder = JSONDecoder.withoutLocalizationContext()
@@ -144,9 +142,9 @@ open class Client {
 
         switch endpoint {
         case .spaces:
-            components = URLComponents(string: "\(scheme)://\(server)/spaces/\(spaceId)/\(pathComponent)")
+            components = URLComponents(string: "\(scheme)://\(host)/spaces/\(spaceId)/\(pathComponent)")
         case .assets, .contentTypes, .locales, .entries, .sync:
-            components = URLComponents(string: "\(scheme)://\(server)/spaces/\(spaceId)/environments/\(environmentId)/\(pathComponent)")
+            components = URLComponents(string: "\(scheme)://\(host)/spaces/\(spaceId)/environments/\(environmentId)/\(pathComponent)")
         }
         assert(components != nil)
 
@@ -206,17 +204,27 @@ open class Client {
 
                 // Use failable initializer to optional rather than initializer that throws,
                 // because failure to find an error in the JSON should error should not throw an error that JSON is not parseable.
-                if let response = response as? HTTPURLResponse, let apiError = APIError.error(with: self.jsonDecoder,
-                                                                                              data: data,
-                                                                                              statusCode: response.statusCode) {
-                    completion(Result.error(apiError))
-                    return
+                if let response = response as? HTTPURLResponse {
+                    if response.statusCode != 200 {
+                        if let apiError = APIError.error(with: self.jsonDecoder,
+                                                         data: data,
+                                                         statusCode: response.statusCode) {
+                            completion(Result.error(apiError))
+                        } else {
+                            // In case there is an error returned by the API that has an unexpected format, return a custom error.
+                            let errorMessage = "An API error was returned that the SDK was unable to parse"
+                            let error = SDKError.unparseableJSON(data: data, errorMessage: errorMessage)
+                            completion(Result.error(error))
+                        }
+                        return
+                    }
                 }
                 completion(Result.success(data))
                 return
             }
 
             if let error = error {
+                // An extra check, just in case.
                 completion(Result.error(error))
                 return
             }
@@ -238,9 +246,15 @@ open class Client {
     fileprivate func readRateLimitHeaderIfPresent(response: URLResponse?) -> Int? {
         if let httpResponse = response as? HTTPURLResponse {
             if httpResponse.statusCode == 429 {
-                if let rateLimitResetString = httpResponse.allHeaderFields["X-Contentful-RateLimit-Reset"] as? String {
+
+                let rateLimitResetPair = httpResponse.allHeaderFields.filter { arg in
+                    let (key, _) = arg
+                    return (key as? String)?.lowercased() == "x-contentful-ratelimit-reset"
+                }
+                if let rateLimitResetString = rateLimitResetPair.first?.value as? String {
                     return Int(rateLimitResetString)
                 }
+
             }
         }
         return nil
@@ -656,7 +670,7 @@ extension Client {
         // Preview mode only supports `initialSync` not `nextSync`. The only reason `nextSync` should
         // be called while in preview mode, is internally by the SDK to finish a multiple page sync.
         // We are doing a multi page sync only when syncSpace.hasMorePages is true.
-        if !syncSpace.syncToken.isEmpty && clientConfiguration.previewMode == true && syncSpace.hasMorePages == false {
+        if !syncSpace.syncToken.isEmpty && host == Host.preview && syncSpace.hasMorePages == false {
             completion(Result.error(SDKError.previewAPIDoesNotSupportSync()))
             return nil
         }
