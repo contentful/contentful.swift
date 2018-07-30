@@ -4,18 +4,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) starting from 1.x releases.
 
 ### Merged, but not yet released
-> ~~All recent changes are published~~
-> #### Added
-> - **BREAKING:** PNGs can now be retrieved with `.standard` or `.eight` bits as an additional `ImageOption` to request PNGs from the Images API.
-> 
-> #### Fixed
-> - Now all error responses from the API will fallback to seraializing an `SDKError` if the SDK is unable to serialize an `APIError`
->
-> #### Changed
-> - **BREAKING:** Configuring a `Client` to interface with Content Preview API is no longer done through the `ClientConfiguration` type. Instead, pass `host: Host.preview` to the `Client` initializer. Also, you can now configure the client to use any arbitrary string host if you have whitelisted via your plan in Contentful.
+> All recent changes are published
 ---
 
 ## Table of contents
+
+#### 3.x Releases
+- `3.0.0` Releases - [3.0.0](#300)
 
 #### 2.x Releases
 - `2.2.0` Releases - [2.2.0](#220) | [2.2.1](#221)
@@ -37,6 +32,20 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041)
 - `0.3.x` Releases - [0.3.0](#030) | [0.3.1](#031)
 
+---
+
+## [`3.0.0`](https://github.com/contentful/contentful.swift/releases/tag/3.0.0)
+Released on 2018-07-30
+
+#### Added
+- **BREAKING:** PNGs can now be retrieved with `.standard` or `.eight` bits as an additional `ImageOption` to request PNGs from the Images API.
+
+#### Fixed
+- Now all error responses from the API will fallback to seraializing an `SDKError` if the SDK is unable to serialize an `APIError`
+
+#### Changed
+- **BREAKING:** Configuring a `Client` to interface with Content Preview API is no longer done through the `ClientConfiguration` type. Instead, pass `host: Host.preview` to the `Client` initializer. Also, you can now configure the client to use any arbitrary string host if you have whitelisted via your plan in Contentful.
+ 
 ---
 
 ## [`2.2.1`](https://github.com/contentful/contentful.swift/releases/tag/2.2.1)
