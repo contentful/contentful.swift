@@ -1,3 +1,31 @@
+## Migrating from version `2.x.x` to `3.x.x`
+
+
+There are only two breaking changes to look out for when migrating from `2.x.x` to `3.x.x` versions. 
+
+#### Client configuration changes
+
+If you were using the `Client` type to interface with the Content Preview API, you will need to refactor your `Client` initializer. Instead of setting a variable on the `ClientConfiguration`, you now will configure a `Client` like so:
+
+```swift
+let client = Client(spaceId: "<space_id>",
+                    accessToken: "<preview_token>",
+                    host: Host.preview) // Defaults to Host.delivery if omitted.
+```
+
+You can also pass in a custom host if your Contentful organization has white-labeled a separate API domain as part of your plan.
+
+#### Image formatting changes
+
+If you want to use the Images API to convert an image to a png before being returned from the server, you must now specify the bit depth. The options are `.eight` or `.standard`;
+
+```swift
+let imageOptions: [ImageOption] = [.formatAs(.png(bits: .eight))]
+
+client.fetchImage(for: asset, with: imageOptions) { ... }
+```
+
+
 ## Migrating from version `1.x.x` to `2.x.x`
 
 The breaking changes between `1.x.x` and `2.x.x` are minimal. Nonetheless, you may need to update some of your code:

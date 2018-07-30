@@ -116,7 +116,7 @@ In order to get started with the Contentful Swift SDK you'll need not only to in
 ##### CocoaPods installation
 
 ```ruby
-platform :ios, '8.0'
+platform :ios, '9.0'
 use_frameworks!
 pod 'Contentful'
 ```
@@ -124,7 +124,7 @@ pod 'Contentful'
 You can specify a specific version of Contentful depending on your needs. To learn more about operators for dependency versioning within a Podfile, see the [CocoaPods doc on the Podfile](https://guides.cocoapods.org/using/the-podfile.html).
 
 ```ruby
-pod 'Contentful', '~> 2.2.0' 
+pod 'Contentful', '~> 3.0.0' 
 ```
 
 #### Carthage installation
@@ -132,7 +132,7 @@ pod 'Contentful', '~> 2.2.0'
 You can also use [Carthage](https://github.com/Carthage/Carthage) for integration by adding the following to your `Cartfile`:
 
 ```
-github "contentful/contentful.swift" ~> 2.2.0
+github "contentful/contentful.swift" ~> 3.0.0
 ```
 
 #### Swift Package Manager [swift-tools-version 4.2]
@@ -140,7 +140,7 @@ github "contentful/contentful.swift" ~> 2.2.0
 Add the following line to your array of dependencies:
 
 ```swift
-.package(url: "https://github.com/contentful/contentful.swift", .upToNextMajor(from: "2.2.0"))
+.package(url: "https://github.com/contentful/contentful.swift", .upToNextMajor(from: "3.0.0"))
 ```
 
 ### Your first request
@@ -170,12 +170,10 @@ client.fetchEntry(id: "nyancat") { (result: Result<Entry>) in
 To access the Content Preview API, use your preview access token and set your client configuration to use preview as shown below.
 
 ```swift
-var clientConfiguration = ClientConfiguration()
-clientConfiguration.previewMode = true
 
 let client = Client(spaceId: "cfexampleapi",
                     accessToken: "e5e8d4c5c122cf28fc1af3ff77d28bef78a3952957f15067bbc29f2f0dde0b50",
-                    clientConfiguration: clientConfiguration)
+                    host: Host.preview) // Defaults to Host.delivery if omitted.
 ```
 
 ### Authorization
