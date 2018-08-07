@@ -8,7 +8,7 @@ endif
 
 WORKSPACE=Contentful.xcworkspace
 
-.PHONY: open test integration_test setup lint coverage carthage docs
+.PHONY: open test integration_test setup lint coverage carthage docs release
 
 open:
 	open $(WORKSPACE)
@@ -47,4 +47,7 @@ carthage:
 
 docs:
 	./Scripts/reference-docs.sh
+
+release:
+	./Scripts/release.sh
 
