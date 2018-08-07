@@ -87,7 +87,7 @@ public struct ClientConfiguration {
     }
 
     private func platformVersionString() -> String? {
-        var swiftVersionString: String? = nil
+        var swiftVersionString: String?
 
         // The project is only compatible with swift >=4.0
         #if swift(>=4.0)
