@@ -29,12 +29,11 @@ struct TestClientFactory {
 
         #if API_COVERAGE
             var apiCoverageConfiguration = clientConfiguration // Mutable copy.
-            apiCoverageConfiguration.server = "127.0.0.1:5000"
             apiCoverageConfiguration.secure = false
             client = Client(spaceId: testSpaceId,
                             environmentId: environmentId,
                             accessToken: testAccessToken,
-                            host: host,
+                            host: "127.0.0.1:5000",
                             clientConfiguration: apiCoverageConfiguration,
                             contentTypeClasses: contentTypeClasses)
         #else
