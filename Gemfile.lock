@@ -7,7 +7,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    atomos (0.1.2)
+    atomos (0.1.3)
     claide (1.0.2)
     clamp (0.6.5)
     cocoapods (1.5.3)
@@ -65,7 +65,7 @@ GEM
     liferaft (0.0.6)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
-    molinillo (0.6.5)
+    molinillo (0.6.6)
     mustache (0.99.8)
     nanaimo (0.2.6)
     nap (1.1.0)
@@ -109,11 +109,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  cocoapods (~> 1.5.0)
+  cocoapods (~> 1.5)
   dotenv
   jazzy
   slather (~> 2.4)
   xcpretty
 
 BUNDLED WITH
-   1.16.1
+   1.16.3

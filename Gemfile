@@ -4,5 +4,5 @@ gem 'xcpretty'
 gem 'slather', '~> 2.4'
 gem 'jazzy'
 gem 'dotenv'
-gem 'cocoapods', '~> 1.5.0'
+gem 'cocoapods', '~> 1.5'
 

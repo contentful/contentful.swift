@@ -30,6 +30,7 @@ struct TestClientFactory {
         #if API_COVERAGE
             var apiCoverageConfiguration = clientConfiguration // Mutable copy.
             apiCoverageConfiguration.secure = false
+
             client = Client(spaceId: testSpaceId,
                             environmentId: environmentId,
                             accessToken: testAccessToken,
@@ -88,6 +89,8 @@ class SpaceTests: XCTestCase {
     }
 }
 
+// CPA tests aren't necessary for coverage reports.
+#if !API_COVERAGE
 class PreviewAPITests: XCTestCase {
 
     // https://preview.contentful.com/spaces/cfexampleapi?access_token=e5e8d4c5c122cf28fc1af3ff77d28bef78a3952957f15067bbc29f2f0dde0b50 > testClientCanAccessPreviewAPI.response
@@ -143,4 +146,4 @@ class PreviewAPITests: XCTestCase {
     }
 
 }
-
+#endif
