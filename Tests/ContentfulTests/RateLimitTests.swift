@@ -11,6 +11,7 @@ import XCTest
 import DVR
 import Nimble
 
+#if !API_COVERAGE
 class RateLimitTests: XCTestCase {
 
     static let client = TestClientFactory.testClient(withCassetteNamed: "RateLimitTests",
@@ -66,3 +67,4 @@ class RateLimitTests: XCTestCase {
         waitForExpectations(timeout: 100, handler: nil)
     }
 }
+#endif

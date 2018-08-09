@@ -88,6 +88,7 @@ class SyncTests: XCTestCase {
 
 }
 
+#if !API_COVERAGE
 class PreviewSyncTests: XCTestCase {
 
     static let client: Client = {
@@ -141,5 +142,6 @@ class PreviewSyncTests: XCTestCase {
         }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
-}
 
+}
+#endif
