@@ -711,7 +711,37 @@ class QueryTests: XCTestCase {
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
-    // MARK: - Limits and Skip
+    // MARK: - Limits, Skip, Includes
+
+    func testIncludeParameter() {
+        let expectation = self.expectation(description: "Includes param")
+
+        let query = Query.include(0)
+
+        QueryTests.client.fetchEntries(matching: query) { result in
+            switch result {
+            case .success(let entriesResponse):
+                let entries = entriesResponse.items
+                let catEntries = entries.filter { $0.sys.contentTypeId == "cat" }
+                expect(catEntries.first).toNot(beNil())
+                // Let's just assert link is unresolved
+                if let link = catEntries.first?.fields["image"] as? Link {
+                    switch link {
+                    case .unresolved: XCTAssert(true)
+                    default: fail("link should not be resolved when includes are 0:")
+                    }
+                } else {
+                    fail("there should be an unresolved link at image field when includes are 0")
+                }
+
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
     func testLimitNumberOfEntriesBeingFetched() {
         let expectation = self.expectation(description: "Limit results")
 
@@ -730,7 +760,7 @@ class QueryTests: XCTestCase {
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
-    func testSkipEntriesInAQuery() {
+    func testSkipEntriesInAQueryWithOrder() {
         let expectation = self.expectation(description: "Skip results")
 
         let query = Query.skip(theFirst: 9)
@@ -749,6 +779,27 @@ class QueryTests: XCTestCase {
         }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
+
+    func testSkipEntries() {
+        let expectation = self.expectation(description: "Skip results")
+
+        let query = Query.skip(theFirst: 9)
+
+        QueryTests.client.fetchEntries(matching: query) { result in
+            switch result {
+            case .success(let entriesResponse):
+                let entries = entriesResponse.items
+                expect(entriesResponse.skip).to(equal(9))
+                expect(entries.count).to(equal(1))
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+
 
     // MARK: - Search on References
 
@@ -782,6 +833,53 @@ class QueryTests: XCTestCase {
                                 hasValueAtKeyPath: "fields.name",
                                 withTargetContentTypeId: "cat",
                                 that: .matches("Happy Cat"))
+
+        QueryTests.client.fetchEntries(matching: query) { result in
+            switch result {
+            case .success(let catsWithHappyCatAsBestFriendResponse):
+                let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
+                expect(catsWithHappyCatAsBestFriend.count).to(equal(1))
+                expect(catsWithHappyCatAsBestFriend.first?.fields["name"] as? String).to(equal("Nyan Cat"))
+                if let happyCatsBestFriend = catsWithHappyCatAsBestFriend.first?.fields.linkedEntry(at: "bestFriend") {
+                    expect(happyCatsBestFriend.fields.string(at: "name")).to(equal("Happy Cat"))
+                } else {
+                    fail("Should be able to get linked entry.")
+                }
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testLinksToEntryWithField() {
+        let expectation = self.expectation(description: "Search on references")
+
+        let query = QueryOn<Cat>.where(linkAtField: .bestFriend, hasTargetId: "happycat")
+
+        QueryTests.client.fetchMappedEntries(matching: query) { result in
+            switch result {
+            case .success(let catsWithHappyCatAsBestFriendResponse):
+                let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
+                expect(catsWithHappyCatAsBestFriend.count).to(equal(1))
+                expect(catsWithHappyCatAsBestFriend.first?.name).to(equal("Nyan Cat"))
+                expect(catsWithHappyCatAsBestFriend.first?.bestFriend?.name).to(equal("Happy Cat"))
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testUnTypedLinksToEntryWithField() {
+        let expectation = self.expectation(description: "Search on references")
+
+        let query = Query.where(linkAtFieldNamed: "bestFriend",
+                                onSourceContentTypeWithId: "cat",
+                                hasTargetId: "happycat")
 
         QueryTests.client.fetchEntries(matching: query) { result in
             switch result {
