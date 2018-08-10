@@ -652,7 +652,7 @@ class QueryTests: XCTestCase {
     func testFetchEntriesWithFullTextSearchOnSpecificField() {
         let expectation = self.expectation(description: "Full text search on specific field")
 
-        let query = QueryOn<Dog>.where(valueAtKeyPath: "fields.description", .matches("bacon pancakes"))
+        let query = QueryOn<Dog>.where(valueAtKeyPath: "fields.description", .matches("bacon"))
 
         QueryTests.client.fetchMappedEntries(matching: query) { result in
             switch result {

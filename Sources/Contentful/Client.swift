@@ -471,6 +471,13 @@ extension Client {
                                                          then completion: @escaping ResultsHandler<ResourceType>) -> URLSessionDataTask?
         where ResourceType: Resource & Decodable & EndpointAccessible {
 
+            // If the resource is not an entry, then don't worry about fetching with includes.
+            if resourceType != EntryDecodable.self && resourceType != Entry.self {
+                var url = self.url(endpoint: ResourceType.endpoint)
+                url?.appendPathComponent(id)
+                return fetch(url: url, then: completion)
+            }
+
             let fetchCompletion: (Result<ArrayResponse<ResourceType>>) -> Void = { result in
                 switch result {
                 case .success(let response) where response.items.first != nil:

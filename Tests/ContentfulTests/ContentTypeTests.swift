@@ -66,6 +66,26 @@ class ContentTypeTests: XCTestCase {
     }
 
     func testFetchAllContentTypesInSpace() {
+        let expectation = self.expectation(description: "can fetch all content types of a space")
+
+        ContentTypeTests.client.fetchContentTypes { result in
+            switch result {
+            case let .success(array):
+                expect(array.total).to(equal(4))
+                expect(array.limit).to(equal(100))
+                expect(array.skip).to(equal(0))
+                expect(array.items.count).to(equal(4))
+
+            case let .error(error):
+                fail("\(error)")
+            }
+
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 10, handler: nil)
+    }
+    
+    func testFetchAllContentTypesInSpaceWithOrder() {
 
         let expectation = self.expectation(description: "can fetch all content types of a space")
 
