@@ -416,6 +416,5 @@ class EntryTests: XCTestCase {
             expectation.fulfill()
         }
         waitForExpectations(timeout: 10.0, handler: nil)
-
     }
 }

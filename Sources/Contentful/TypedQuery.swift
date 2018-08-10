@@ -212,7 +212,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
     }
 
     /**
-     Convenience initalizer for performing searches where Linked objects at the specified linking field match the filtering query.
+     Static method for performing searches where Linked objects at the specified linking field match the filtering query.
      For instance, if you want to query all Entry's of type "cat" where cat's linked via the "bestFriend" field have names that match "Happy Cat"
      the code would look like the following:
 
@@ -228,18 +228,12 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
      See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references>
      - Parameter fieldNameForLink: The name of the property which contains a link to another Entry.
      - Parameter filterQuery: The optional filter query applied to the linked objects which are being searched.
-     set on the `Client` instance is used.
+     - Returns: A newly initialized QueryOn query.
      */
-    public static func `where`<LinkType>(linkAtField fieldsKey: EntryType.Fields, matches linkQuery: LinkQuery<LinkType>) -> QueryOn<EntryType> {
+    public static func `where`<LinkType>(linkAtField fieldsKey: EntryType.Fields,
+                                         matches linkQuery: LinkQuery<LinkType>) -> QueryOn<EntryType> {
         let query = QueryOn<EntryType>()
-
-        query.parameters["fields.\(fieldsKey.stringValue).sys.contentType.sys.id"] = LinkType.contentTypeId
-
-        // If propertyName isn't unrwrapped, the string isn't constructed correctly for some reason.
-        if let propertyName = linkQuery.propertyName {
-            let filterParameterName = "fields.\(fieldsKey.stringValue).\(propertyName)\(linkQuery.operation.string)"
-            query.parameters[filterParameterName] = linkQuery.operation.values
-        }
+        query.where(linkAtField: fieldsKey, matches: linkQuery)
         return query
     }
 
@@ -251,6 +245,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
      ```
      let linkQuery = LinkQuery<Cat>.where(field: .name, .matches("Happy Cat"))
      let query = QueryOn<Cat>(whereLinkAtField: .bestFriend, matches: linkQuery)
+
      client.fetchMappedEntries(with: query).observable.then { catsWithHappyCatAsBestFriendResponse in
      let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
      // Do stuff with catsWithHappyCatAsBestFriend
@@ -260,7 +255,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
      See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references>
      - Parameter fieldNameForLink: The name of the property which contains a link to another Entry.
      - Parameter filterQuery: The optional filter query applied to the linked objects which are being searched.
-     set on the `Client` instance is used.
+     - Returns: A reference to the receiving query to enable chaining.
      */
     @discardableResult public func `where`<LinkType>(linkAtField fieldsKey: EntryType.Fields,
                                                      matches linkQuery: LinkQuery<LinkType>) -> QueryOn<EntryType> {
@@ -272,6 +267,58 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
             let filterParameterName = "fields.\(fieldsKey.stringValue).\(propertyName)\(linkQuery.operation.string)"
             parameters[filterParameterName] = linkQuery.operation.values
         }
+        return self
+    }
+
+    /**
+     Static method creating a query that requires that an specific field of an entry
+     holds a reference to another specific entry.
+
+     ```
+     let query = QueryOn<Cat>(whereLinkAtField: .bestFriend, hasTargetId: "nyancat")
+
+     client.fetchMappedEntries(with: query).observable.then { catsWithHappyCatAsBestFriendResponse in
+     let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
+     // Do stuff with catsWithHappyCatAsBestFriend
+     }
+     ```
+
+     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references>
+     - Parameter fieldNameForLink: The name of the property which contains a link to another Entry.
+     - Parameter targetId: The identifier of the entry or asset being linked to at the specified linking field.
+     - Returns: A newly initialized QueryOn query.
+     */
+    public static func `where`(linkAtField fieldsKey: EntryType.Fields,
+                               hasTargetId targetId: String) -> QueryOn<EntryType> {
+        let query = QueryOn<EntryType>()
+        query.where(linkAtField: fieldsKey, hasTargetId: targetId)
+        return query
+    }
+
+    /**
+     Instance method creating a query that requires that an specific field of an entry
+     holds a reference to another specific entry.
+
+     ```
+     let query = QueryOn<Cat>(whereLinkAtField: .bestFriend, hasTargetId: "nyancat")
+
+     client.fetchMappedEntries(with: query).observable.then { catsWithHappyCatAsBestFriendResponse in
+     let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
+     // Do stuff with catsWithHappyCatAsBestFriend
+     }
+     ```
+
+     See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references>
+     - Parameter fieldNameForLink: The name of the property which contains a link to another Entry.
+     - Parameter filterQuery: The optional filter query applied to the linked objects which are being searched.
+     - Returns: A reference to the receiving query to enable chaining.
+     */
+    @discardableResult public func `where`(linkAtField fieldsKey: EntryType.Fields,
+                                           hasTargetId targetId: String) -> QueryOn<EntryType> {
+
+        let filterParameterName = "fields.\(fieldsKey.stringValue).sys.id"
+        parameters[filterParameterName] = targetId
+
         return self
     }
 }

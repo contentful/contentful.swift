@@ -755,6 +755,54 @@ public extension EntryQuery {
     }
 
     /**
+     Static method creating a query that requires that an specific field of an entry
+     holds a reference to another specific entry.
+
+     Example usage:
+     ```
+     let query = Query.where(linkAtFieldNamed: "bestFriend",
+     onSourceContentTypeWithId: "cat",
+     hasValueAtKeyPath: "fields.name",
+     withTargetContentTypeId: "cat",
+     that: .matches("Happy Cat"))
+     ```
+     - Parameter linkingFieldName: The field name which holds a reference to a link.
+     - Parameter sourceContentTypeId: The content type identifier of the link source.
+     - Parameter targetId: The identifier of the entry or asset being linked to at the specified linking field.
+     - Returns: A newly initialized Query for searching on references.
+     */
+    public static func `where`(linkAtFieldNamed linkingFieldName: String,
+                               onSourceContentTypeWithId sourceContentTypeId: ContentTypeId,
+                               hasTargetId targetId: String) -> Self {
+        let query = Self()
+        query.where(linkAtFieldNamed: linkingFieldName,
+                    onSourceContentTypeWithId: sourceContentTypeId,
+                    hasTargetId: targetId)
+        return query
+    }
+
+    /**
+     Instance method creating a query that requires that an specific field of an entry
+     holds a reference to another specific entry.
+
+     Example usage:
+
+     - Parameter linkingFieldName: The field name which holds a reference to a link.
+     - Parameter sourceContentTypeId: The content type identifier of the link source.
+     - Parameter targetId: The identifier of the entry or asset being linked to at the specified linking field.
+
+     - Returns: A reference to the receiving query to enable chaining.
+     */
+    @discardableResult public func `where`(linkAtFieldNamed linkingFieldName: String,
+                                           onSourceContentTypeWithId sourceContentTypeId: ContentTypeId,
+                                           hasTargetId targetId: String) -> Self {
+        self.parameters[QueryParameter.contentType] = sourceContentTypeId
+        self.parameters["fields.\(linkingFieldName).sys.id"] = targetId
+
+        return self
+    }
+
+    /**
      Static method for creating a query that will search for entries that have a field linking to
      another entry with a specific id.
 
