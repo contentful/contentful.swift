@@ -322,6 +322,10 @@ extension Client {
         let url = self.url(endpoint: .locales, parameters: query.parameters)
         return fetch(url: url) { (result: Result<ArrayResponse<Contentful.Locale>>) in
 
+            if let error = result.error {
+                completion(Result.error(error))
+                return
+            }
             guard let locales = result.value?.items else {
                 let error = SDKError.localeHandlingError(message: "Unable to parse locales from JSON")
                 completion(Result.error(error))

@@ -10,7 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 ## Table of contents
 
 #### 3.x Releases
-- `3.1.0` Releases - [3.1.0](#310)
+- `3.1.0` Releases - [3.1.0](#310) | [3.1.1](#311)
 - `3.0.0` Releases - [3.0.0](#300)
 
 #### 2.x Releases
@@ -32,6 +32,14 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 - `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041)
 - `0.3.x` Releases - [0.3.0](#030) | [0.3.1](#031)
+
+---
+
+## [`3.1.1`](https://github.com/contentful/contentful.swift/releases/tag/3.1.1)
+Released on 2018-08-22
+
+#### Fixed
+- A critical bug that caused the `fetchLocales(then:)` method to not pass the correct error back to it's completion handler. This bug would, for example, incorrectly pass back an `SDKError` if internet connection dropped rather than passing back the proper `NSErrror` from Foundation.
 
 ---
 
