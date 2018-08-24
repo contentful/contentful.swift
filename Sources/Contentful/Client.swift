@@ -298,6 +298,10 @@ open class Client {
             completion(Result.error(SDKError.unparseableJSON(data: data, errorMessage: "The SDK was unable to parse the JSON: \(error)")))
         }
     }
+    
+    deinit {
+        urlSession.invalidateAndCancel()
+    }
 }
 
 extension Client {
