@@ -10,7 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 ## Table of contents
 
 #### 3.x Releases
-- `3.1.0` Releases - [3.1.0](#310) | [3.1.1](#311)
+- `3.1.0` Releases - [3.1.0](#310) | [3.1.1](#311) | [3.1.2](#312)
 - `3.0.0` Releases - [3.0.0](#300)
 
 #### 2.x Releases
@@ -32,6 +32,14 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 - `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041)
 - `0.3.x` Releases - [0.3.0](#030) | [0.3.1](#031)
+
+---
+
+## [`3.1.2`](https://github.com/contentful/contentful.swift/releases/tag/3.1.2)
+Released on 2018-08-24
+
+#### Fixed
+A retain cycle due to the fact that the `URLSession` owned by `Client` was not invalidated on client deallocation. Thanks to [@edwardmp](https://github.com/edwardmp) for identifying the issue and submitting a fix in [#226](https://github.com/contentful/contentful.swift/pull/226).
 
 ---
 
