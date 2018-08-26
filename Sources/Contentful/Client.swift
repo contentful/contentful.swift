@@ -155,7 +155,6 @@ open class Client {
         return url
     }
 
-
     /// This is a generic fetch method which will decode the returned JSON from any URL and pass the
     /// decoded result back in a completion handler wrapped in a `Result` instance. Use this method if you prefer
     /// to specify your `Decodable` types and interfaces yourself rather than using the semantics provided by the SDK.
@@ -195,7 +194,6 @@ open class Client {
         }
         return task
     }
-
 
     /// This is the base fetch method which all other fetch methods delegate to. Use it if you want to
     /// get back raw `Data` objects and handle JSON parsing completely on your own.
@@ -306,7 +304,6 @@ open class Client {
 
 extension Client {
 
-
     /**
      Fetch all the locales belonging to the environment that was configured with the client.
 
@@ -364,6 +361,7 @@ extension Client {
 }
 
 extension Client {
+
     /**
      Fetch the space this client is constrained to.
 
@@ -386,6 +384,7 @@ extension Client {
 }
 
 extension Client {
+
     /**
      Fetch the underlying media file as `Data`.
 
