@@ -72,7 +72,6 @@ class JSONDecodingTests: XCTestCase {
         expect((wrapper.dict["array"] as! [Any])[0] as? Int).to(equal(1))
         expect((wrapper.dict["array"] as! [Any])[1] as? Double).to(equal(3.3))
         expect(wrapper.dict["key1"]).to(beNil())
-
     }
 
     func testDecodeAsset() {

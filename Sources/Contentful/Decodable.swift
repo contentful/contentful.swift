@@ -93,6 +93,20 @@ internal extension Decodable where Self: AssetDecodable {
     }
 }
 
+internal extension Decodable where Self: Node {
+    static func popNodeDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
+        do {
+            let contentDecodable = try container.decode(self)
+            return contentDecodable
+
+        } catch let error {
+            print(error)
+            throw(error)
+        }
+    }
+}
+
+
 internal extension CodingUserInfoKey {
     internal static let linkResolverContextKey = CodingUserInfoKey(rawValue: "linkResolverContext")!
     internal static let timeZoneContextKey = CodingUserInfoKey(rawValue: "timeZoneContext")!
