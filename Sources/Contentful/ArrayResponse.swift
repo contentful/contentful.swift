@@ -120,7 +120,7 @@ extension ArrayResponse: Decodable {
             var entries: [EntryDecodable] = []
             let contentTypes = decoder.userInfo[.contentTypesContextKey] as! [ContentTypeId: EntryDecodable.Type]
 
-            while entriesJSONContainer.isAtEnd == false {
+            while !entriesJSONContainer.isAtEnd {
                 guard let contentTypeInfo = jsonItems.contentTypeInfo(at: entriesJSONContainer.currentIndex) else {
                     let errorMessage = "SDK was unable to parse sys.type property necessary to finish resource serialization."
                     throw SDKError.unparseableJSON(data: nil, errorMessage: errorMessage)
@@ -286,7 +286,7 @@ extension KeyedDecodingContainer {
         var entriesJSONContainer = try self.nestedUnkeyedContainer(forKey: key)
 
         var entries: [EntryDecodable] = []
-        while entriesJSONContainer.isAtEnd == false {
+        while !entriesJSONContainer.isAtEnd {
 
             guard let contentTypeInfo = itemsAsDictionaries.contentTypeInfo(at: entriesJSONContainer.currentIndex) else {
                 let errorMessage = "SDK was unable to parse sys.type property necessary to finish resource serialization."
