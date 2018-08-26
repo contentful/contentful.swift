@@ -6,16 +6,15 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 ### Merged, but not yet released
 > All recent changes are published
 > #### Changed
-> - *BREAKING:* `Interstellar` has been removed as a dependency of the SDK and the SDK now has it's own `Result` type. If you were relying on fetch methods that returned an `Observable`, you will need to update your code.
+> - *BREAKING:* `Interstellar` has been removed as a dependency of the SDK and the SDK now has its own `Result` type. If you were relying on fetch methods that returned an `Observable`, you will need to update your code.
 > - *BREAKING:* The syntax for many of the fetch methods on `Client` have changed. Refer to the [v4 migration guide](Migrations.md#migrating-from-version-3xx-to-4xx).
-> - *BREAKING:* `EntryQueryable` has been renamed `FieldKeysQueryable`, the required associated type `Fields` has been renamed `FieldKeys` to accurately reflect the typs real usage.
+> - *BREAKING:* `EntryQueryable` has been renamed `FieldKeysQueryable`, the required associated type `Fields` has been renamed `FieldKeys` to accurately reflect the type's real usage.
 > - *BREAKING:* `MixedMappedArrayResponse` has been renamed `MixedArrayResponse`. 
 > 
 > #### Added
 > - Base fetch methods for fetching data, or fetching data and deserializing any type conforming to `Swift.Decodable` have been exposed so that SDK usage is more flexible for various development strategies.
 > - `Endpoint` enum and `EndpointAccessible` protocol for clarity on endpoints available through the APIs and which resource types are returned from said endpoints.
- for more info.
-> - `ResourceQueryable` protocol which `Resource` typs can conform if that type has querying enabled by the APIs.
+> - `ResourceQueryable` protocol, which `Asset`, `Entry`, `ContentType` conform to; it enables querying and filtering on the API for conforming types.
 > - `FlatResource` protocol which can be used if you prefer to have all `sys` properties on the top level of your `EntryDecodable`. All `Resource` types have a default implmentation of `FlatResource` so refactoring is opt-in.
 >
 > #### Removed
