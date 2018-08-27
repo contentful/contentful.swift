@@ -28,7 +28,7 @@ class ContentTypeTests: XCTestCase {
     func testFetchContentType() {
         let expectation = self.expectation(description: "Client can fetch a content type")
 
-        ContentTypeTests.client.fetchContentType(id: "cat") { (result) in
+        ContentTypeTests.client.fetch(ContentType.self, id: "cat") { (result) in
 
             switch result {
             case let .success(type):
@@ -68,7 +68,7 @@ class ContentTypeTests: XCTestCase {
     func testFetchAllContentTypesInSpace() {
         let expectation = self.expectation(description: "can fetch all content types of a space")
 
-        ContentTypeTests.client.fetchContentTypes { result in
+        ContentTypeTests.client.fetchArray(of: ContentType.self) { result in
             switch result {
             case let .success(array):
                 expect(array.total).to(equal(4))
@@ -90,7 +90,7 @@ class ContentTypeTests: XCTestCase {
         let expectation = self.expectation(description: "can fetch all content types of a space")
 
         let query = try! ContentTypeQuery.order(by: Ordering(sys: .id))
-        ContentTypeTests.client.fetchContentTypes(matching: query) { result in
+        ContentTypeTests.client.fetchArray(of: ContentType.self, matching: query) { result in
             switch result {
             case let .success(array):
                 expect(array.total).to(equal(4))
@@ -114,7 +114,7 @@ class ContentTypeTests: XCTestCase {
         let expectation = self.expectation(description: "can fetch all content types of a space")
 
         let query = ContentTypeQuery.where(queryableCodingKey: .name, .equals("Cat"))
-        ContentTypeTests.client.fetchContentTypes(matching: query) { result in
+        ContentTypeTests.client.fetchArray(of: ContentType.self, matching: query) { result in
             switch result {
             case let .success(array):
                 expect(array.total).to(equal(1))

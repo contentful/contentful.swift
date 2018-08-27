@@ -12,7 +12,6 @@ import XCTest
 import Nimble
 import DVR
 
-
 // TODO: Use this in the main target...or seperate dependency.
 extension Date {
     static func fromComponents(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int) -> Date {
@@ -27,7 +26,7 @@ extension Date {
 
 class EntryTests: XCTestCase {
 
-    static let client = TestClientFactory.testClient(withCassetteNamed:  "EntryTests")
+    static let client = TestClientFactory.testClient(withCassetteNamed: "EntryTests")
 
     override class func setUp() {
         super.setUp()
@@ -42,13 +41,16 @@ class EntryTests: XCTestCase {
     func waitUntilMatchingEntries(_ query: Query, action: @escaping (_ entries: ArrayResponse<Entry>) -> ()) {
         let expecatation = self.expectation(description: "Entries matching query network expectation")
 
-        EntryTests.client.fetchEntries(matching: query).then {
-            action($0)
-            expecatation.fulfill()
-        }.error {
-            fail("\($0)")
+        EntryTests.client.fetchArray(of: Entry.self, matching: query) { result in
+            switch result {
+            case .success(let collection):
+                action(collection)
+            case .error(let error):
+                fail("\(error)")
+            }
             expecatation.fulfill()
         }
+
 
         waitForExpectations(timeout: 10.0, handler: nil)
     }
@@ -141,7 +143,7 @@ class EntryTests: XCTestCase {
 
     func testFetchSingleEntry() {
         let expectation = self.expectation(description: "Fetch single entry expectation")
-        EntryTests.client.fetchEntry(id: "nyancat") { (result) in
+        EntryTests.client.fetch(Entry.self, id: "nyancat") { (result) in
             switch result {
             case let .success(entry):
                 expect(entry.sys.id).to(equal("nyancat"))
@@ -163,7 +165,7 @@ class EntryTests: XCTestCase {
 
         let expectation = self.expectation(description: "Fetch single entry expectation")
 
-        client.fetchEntry(id: "5KsDBWseXY6QegucYAoacS") { result in
+        client.fetch(Entry.self, id: "5KsDBWseXY6QegucYAoacS") { result in
             switch result {
             case .success(let entry):
                 if let categoryLinks = entry.fields["categories"] as? [Link] {
@@ -212,7 +214,7 @@ class EntryTests: XCTestCase {
     func testFetchAllEntriesInSpace() {
         let expectation = self.expectation(description: "Fetch all entries in space expectation")
 
-        EntryTests.client.fetchEntries() { (result) in
+        EntryTests.client.fetchArray(of: Entry.self) { (result) in
             switch result {
             case let .success(array):
                 expect(array.total).to(equal(10))
@@ -231,12 +233,14 @@ class EntryTests: XCTestCase {
 
     func testFetchEntriesOfContentType() {
         let expectation = self.expectation(description: "Fetch entires of content type expectation")
-        EntryTests.client.fetchEntries(matching: Query.where(contentTypeId: "cat")).then {
-            let cats = $0.items.filter { $0.sys.contentTypeId == "cat" }
-            expect(cats.count).to(equal($0.items.count))
-            expectation.fulfill()
-        }.error {
-            fail("\($0)")
+        EntryTests.client.fetchArray(of: Entry.self, matching: .where(contentTypeId: "cat")) { result in
+            switch result {
+            case .success(let array):
+                let cats = array.items.filter { $0.sys.contentTypeId == "cat" }
+                expect(cats.count).to(equal(array.items.count))
+            case .error(let error):
+                fail("\(error)")
+            }
             expectation.fulfill()
         }
         waitForExpectations(timeout: 10.0, handler: nil)
@@ -245,7 +249,7 @@ class EntryTests: XCTestCase {
     func testFetchSpecificEntryMatchingSysId() {
 
         let expectation = self.expectation(description: "Fetch specific entry with id expectation")
-        EntryTests.client.fetchEntries(matching: Query.where(valueAtKeyPath: "sys.id", .equals("nyancat"))) { result in
+        EntryTests.client.fetchArray(of: Entry.self, matching: .where(valueAtKeyPath: "sys.id", .equals("nyancat"))) { result in
 
             switch result {
             case let .success(array):
@@ -385,7 +389,7 @@ class EntryTests: XCTestCase {
         let query = Query.where(linksToAssetWithId: "happycat")
         let expectation = self.expectation(description: "Will return entries pointing to the happy cat image")
 
-        EntryTests.client.fetchEntries(matching: query) { result in
+        EntryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
             case .success(let entriesArrayResponse):
                 expect(entriesArrayResponse.items.count).to(equal(1))
@@ -404,7 +408,7 @@ class EntryTests: XCTestCase {
 
         let expectation = self.expectation(description: "Will return entries likning to happy cat ")
 
-        EntryTests.client.fetchEntries(matching: query) { result in
+        EntryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
             case .success(let entriesArrayResponse):
                 expect(entriesArrayResponse.items.count).to(equal(1))

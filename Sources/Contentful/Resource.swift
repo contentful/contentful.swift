@@ -15,21 +15,70 @@ public protocol Resource {
     var sys: Sys { get }
 }
 
-extension Resource {
-    /// The unique identifier of this Resource.
+/// A protocol signifying that a resource's Sys property are accessible for lookup from the top level.
+public protocol FlatResource {
+    /// The unique identifier of the Resource.
+    var id: String { get }
+
+    /// The date representing the last time the Contentful Resource was updated.
+    var updatedAt: Date? { get }
+
+    /// The date that the Contentful Resource was first created.
+    var createdAt: Date? { get }
+
+    /// The code which represents which locale the Resource of interest contains data for.
+    var localeCode: String? { get }
+}
+
+public extension FlatResource where Self: Resource {
     public var id: String {
         return sys.id
     }
 
-    /// The language identifier. Generally in the format language-region or language-dialect e.g: en-US, de-DE.
+    public var type: String {
+        return sys.type
+    }
+
+    public var updatedAt: Date? {
+        return sys.updatedAt
+    }
+
+    public var createdAt: Date? {
+        return sys.createdAt
+    }
+
     public var localeCode: String? {
         return sys.locale
     }
 }
 
-internal class DeletedResource: Resource, Decodable {
+/// A protocol enabling strongly typed queries to the Contentful Delivery API via the SDK.
+public protocol FieldKeysQueryable {
 
-    let sys: Sys
+    /// The CodingKey representing the names of each of the fields for the corresponding content type.
+    /// These coding keys should be the same as those used when implementing Decodable.
+    associatedtype FieldKeys: CodingKey
+}
+
+
+/// Classes conforming to this protocol are accessible via an `Endpoint`.
+public protocol EndpointAccessible {
+    static var endpoint: Endpoint { get }
+}
+
+/// Entities conforming to this protocol have a QueryType that the SDK can use to make generic fetch requests.
+public protocol ResourceQueryable {
+
+    associatedtype QueryType: AbstractQuery
+}
+
+public typealias ContentTypeId = String
+
+
+/// Class to represent the information describing a resource that has been deleted from Contentful.
+public class DeletedResource: Resource, FlatResource, Decodable {
+
+    public let sys: Sys
 
     init(sys: Sys) {
         self.sys = sys
@@ -45,7 +94,7 @@ internal class DeletedResource: Resource, Decodable {
  all locales. This class gives an interface to specify which locale should be used when fetching data
  from `Resource` instances that are in memory.
  */
-public class LocalizableResource: Resource, Decodable {
+public class LocalizableResource: Resource, FlatResource, Decodable {
 
     /// System fields
     public let sys: Sys
@@ -234,7 +283,6 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
         let location = Location(latitude: latitude, longitude: longitude)
         return location
     }
-
 }
 
 // MARK: Internal
@@ -246,19 +294,7 @@ extension LocalizableResource: Hashable {
     }
 }
 
-extension LocalizableResource: Equatable {}
 /// Equatable implementation for `LocalizableResource`
 public func == (lhs: LocalizableResource, rhs: LocalizableResource) -> Bool {
     return lhs.id == rhs.id && lhs.sys.updatedAt == rhs.sys.updatedAt
-}
-
-
-internal func +=<K, V> (left: [K: V], right: [K: V]) -> [K: V] {
-    var result = left
-    right.forEach { (key, value) in result[key] = value }
-    return result
-}
-
-internal func +<K, V> (left: [K: V], right: [K: V]) -> [K: V] {
-    return left += right
 }

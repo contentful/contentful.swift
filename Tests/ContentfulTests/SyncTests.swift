@@ -9,7 +9,6 @@
 @testable import Contentful
 import XCTest
 import DVR
-import Interstellar
 import Nimble
 
 class SyncTests: XCTestCase {
@@ -25,18 +24,19 @@ class SyncTests: XCTestCase {
         super.tearDown()
         (client.urlSession as? DVR.Session)?.endRecording()
     }
-    
+
     func waitUntilSync(syncableTypes: SyncSpace.SyncableTypes, action: @escaping (_ space: SyncSpace) -> ()) {
         let expectation = self.expectation(description: "Sync test expecation")
 
-        SyncTests.client.sync(syncableTypes: syncableTypes).then {
-            action($0)
-            expectation.fulfill()
-        }.error {
-            fail("\($0)")
+        SyncTests.client.sync(syncableTypes: syncableTypes) { result in
+            switch result {
+            case .success(let syncSpace):
+                action(syncSpace)
+            case .error(let error):
+                fail("\(error)")
+            }
             expectation.fulfill()
         }
-
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
@@ -49,24 +49,23 @@ class SyncTests: XCTestCase {
 
     func testPerformSubsequentSync() {
         let expectation = self.expectation(description: "Subsequent Sync test expecation")
-        SyncTests.client.sync().flatMap { (result: Result<SyncSpace>) -> Observable<Result<SyncSpace>> in
+        SyncTests.client.sync { result in
             switch result {
             case .success(let syncSpace):
-                return SyncTests.client.sync(for: syncSpace)
+
+                SyncTests.client.sync(for: syncSpace) { nextSyncResult in
+                    if let nextSyncSpace = nextSyncResult.value {
+                        expect(nextSyncSpace.assets.count).to(equal(5))
+                        expect(nextSyncSpace.entries.count).to(equal(10))
+                    } else if let error = nextSyncResult.error {
+                        fail("\(error)")
+                    }
+                    expectation.fulfill()
+                }
             case .error(let error):
                 fail("\(error)")
-                return Observable<Result<SyncSpace>>()
+                expectation.fulfill()
             }
-        }.then {
-            expect($0.assets.count).to(equal(5))
-            expect($0.entries.count).to(equal(10))
-
-            expectation.fulfill()
-
-        }.error {
-            fail("\($0)")
-
-            expectation.fulfill()
         }
 
         waitForExpectations(timeout: 10.0, handler: nil)
@@ -111,12 +110,14 @@ class PreviewSyncTests: XCTestCase {
     func testDoInitialSyncWithPreviewAPI() {
         let expectation = self.expectation(description: "Can do initial sync with preview API Sync test expecation")
 
-        PreviewSyncTests.client.sync().then { syncSpace in
-            expect(syncSpace.entries.count).to(beGreaterThan(0))
-            expect(syncSpace.assets.count).to(beGreaterThan(0))
-            expectation.fulfill()
-        }.error {
-            fail("\($0)")
+        PreviewSyncTests.client.sync { result in
+            switch result {
+            case .success(let syncSpace):
+                expect(syncSpace.entries.count).to(beGreaterThan(0))
+                expect(syncSpace.assets.count).to(beGreaterThan(0))
+            case .error(let error):
+                fail("\(error)")
+            }
             expectation.fulfill()
         }
         waitForExpectations(timeout: 10.0, handler: nil)
@@ -125,20 +126,24 @@ class PreviewSyncTests: XCTestCase {
     func testSubsequentSyncWithPreviewAPIReturnsSDKError() {
         let expectation = self.expectation(description: "Can do initial sync with preview API Sync test expecation")
 
-        PreviewSyncTests.client.sync().then { syncSpace in
-            expect(syncSpace.entries.count).to(beGreaterThan(0))
-            expect(syncSpace.assets.count).to(beGreaterThan(0))
+        PreviewSyncTests.client.sync { result in
+            switch result {
+            case .success(let syncSpace):
+                expect(syncSpace.entries.count).to(beGreaterThan(0))
+                expect(syncSpace.assets.count).to(beGreaterThan(0))
 
-            PreviewSyncTests.client.sync(for: syncSpace).then { nextSyncSpace in
-                fail("Should not be able to do subsequent sync")
-                expectation.fulfill()
-            }.error { error in
-                expect(error).to(beAKindOf(SDKError.self))
+                PreviewSyncTests.client.sync(for: syncSpace) { nextSyncResult in
+                    if let _ = nextSyncResult.value  {
+                        fail("Should not be able to do subsequent sync")
+                    } else if let error = nextSyncResult.error {
+                        expect(error).to(beAKindOf(SDKError.self))
+                    }
+                    expectation.fulfill()
+                }
+            case .error(let error):
+                fail("\(error)")
                 expectation.fulfill()
             }
-        }.error {
-            fail("\($0)")
-            expectation.fulfill()
         }
         waitForExpectations(timeout: 10.0, handler: nil)
     }

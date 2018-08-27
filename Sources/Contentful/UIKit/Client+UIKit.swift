@@ -8,25 +8,24 @@
 
 #if os(iOS) || os(tvOS) || os(watchOS)
 import Foundation
-import Interstellar
 import UIKit
 
 extension Client {
+
     /**
      Fetch the underlying media file as `UIImage`.
 
      - returns: The signal for the `UIImage` result
      */
-    public func fetchImage(for asset: Asset, with imageOptions: [ImageOption] = []) -> Observable<Result<UIImage>> {
-        return self.fetchData(for: asset, with: imageOptions).flatMap { result -> Observable<Result<UIImage>> in
-
-            let imageResult = result.flatMap { data -> Result<UIImage> in
-                if let image = UIImage(data: data) {
-                    return Result.success(image)
-                }
-                return Result.error(SDKError.unableToDecodeImageData)
+    @discardableResult public func fetchImage(for asset: Asset,
+                                              with imageOptions: [ImageOption] = [],
+                                              then completion: @escaping ResultsHandler<UIImage>) -> URLSessionDataTask? {
+        return fetchData(for: asset, with: imageOptions) { result in
+            if let imageData = result.value, let image = UIImage(data: imageData) {
+                completion(Result.success(image))
+                return
             }
-            return Observable<Result<UIImage>>(imageResult)
+            completion(Result.error(SDKError.unableToDecodeImageData))
         }
     }
 }

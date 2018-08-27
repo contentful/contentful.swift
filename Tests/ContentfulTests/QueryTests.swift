@@ -10,9 +10,8 @@
 import XCTest
 import Nimble
 import DVR
-import Interstellar
 
-final class Cat: EntryDecodable, EntryQueryable {
+final class Cat: Resource, EntryDecodable, FieldKeysQueryable {
 
     static let contentTypeId: String = "cat"
 
@@ -28,7 +27,7 @@ final class Cat: EntryDecodable, EntryQueryable {
 
     public required init(from decoder: Decoder) throws {
         sys             = try decoder.sys()
-        let fields      = try decoder.contentfulFieldsContainer(keyedBy: Cat.Fields.self)
+        let fields      = try decoder.contentfulFieldsContainer(keyedBy: Cat.FieldKeys.self)
 
         self.name       = try fields.decodeIfPresent(String.self, forKey: .name)
         self.color      = try fields.decodeIfPresent(String.self, forKey: .color)
@@ -43,13 +42,13 @@ final class Cat: EntryDecodable, EntryQueryable {
         }
     }
     
-    enum Fields: String, CodingKey {
+    enum FieldKeys: String, CodingKey {
         case bestFriend, image
         case name, color, likes, lives
     }
 }
 
-final class City: EntryDecodable, EntryQueryable {
+final class City: Resource, EntryDecodable, FieldKeysQueryable {
 
     static let contentTypeId: String = "1t9IbcfdCk6m04uISSsaIK"
 
@@ -58,17 +57,17 @@ final class City: EntryDecodable, EntryQueryable {
 
     public required init(from decoder: Decoder) throws {
         sys             = try decoder.sys()
-        let fields      = try decoder.contentfulFieldsContainer(keyedBy: City.Fields.self)
+        let fields      = try decoder.contentfulFieldsContainer(keyedBy: City.FieldKeys.self)
 
         self.location   = try fields.decode(Location.self, forKey: .location)
     }
 
-    enum Fields: String, CodingKey {
+    enum FieldKeys: String, CodingKey {
         case location = "center"
     }
 }
 
-final class Dog: EntryDecodable, EntryQueryable {
+final class Dog: Resource, EntryDecodable, FieldKeysQueryable {
 
     static let contentTypeId: String = "dog"
 
@@ -79,7 +78,7 @@ final class Dog: EntryDecodable, EntryQueryable {
 
     public required init(from decoder: Decoder) throws {
         sys             = try decoder.sys()
-        let fields      = try decoder.contentfulFieldsContainer(keyedBy: Dog.Fields.self)
+        let fields      = try decoder.contentfulFieldsContainer(keyedBy: Dog.FieldKeys.self)
         name            = try fields.decode(String.self, forKey: .name)
         description     = try fields.decodeIfPresent(String.self, forKey: .description)
 
@@ -88,7 +87,7 @@ final class Dog: EntryDecodable, EntryQueryable {
         }
     }
 
-    enum Fields: String, CodingKey {
+    enum FieldKeys: String, CodingKey {
         case image, name, description
     }
 }
@@ -133,7 +132,7 @@ class QueryTests: XCTestCase {
         let expectation = self.expectation(description: "Select operator expectation")
         let query = try! QueryOn<Cat>.select(fieldsNamed: selections)
 
-        QueryTests.client.fetchMappedEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
@@ -156,13 +155,8 @@ class QueryTests: XCTestCase {
 
     func testQueryReturningClientDefinedModelUsingFields() {
         let expectation = self.expectation(description: "Select operator expectation")
-        let query = QueryOn<Cat>.select(fieldsNamed: [
-            .bestFriend,
-            .color,
-            .name,
-        ])
 
-        QueryTests.client.fetchMappedEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: Cat.self, matching: .select(fieldsNamed: [.bestFriend, .color, .name])) { (result: Result<ArrayResponse<Cat>>) in
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
@@ -178,8 +172,8 @@ class QueryTests: XCTestCase {
                 fail("Should not throw an error \(error)")
             }
             expectation.fulfill()
-        }
 
+        }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
@@ -188,7 +182,7 @@ class QueryTests: XCTestCase {
         let expectation = self.expectation(description: "Fetch all entries expectation")
 
         let query = try! Query.order(by: Ordering(sys: .updatedAt))
-        QueryTests.client.fetchMappedEntries(matching: query) { (result: Result<MixedMappedArrayResponse>) in
+        QueryTests.client.fetchArray(matching: query) { (result: Result<MixedArrayResponse>) in
 
             switch result {
             case .success(let response):
@@ -225,7 +219,7 @@ class QueryTests: XCTestCase {
         let query = try! QueryOn<Dog>.select(fieldsNamed: selections)
         try! query.order(by: Ordering(sys: .id))
 
-        QueryTests.client.fetchMappedEntries(matching: query) { (result: Result<MappedArrayResponse<Dog>>) in
+        QueryTests.client.fetchArray(of: Dog.self, matching: query) { (result: Result<ArrayResponse<Dog>>) in
 
             switch result {
             case .success(let dogsResponse):
@@ -251,7 +245,7 @@ class QueryTests: XCTestCase {
 
         let query = Query.where(contentTypeId: "cat")
 
-        QueryTests.client.fetchEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
@@ -271,9 +265,7 @@ class QueryTests: XCTestCase {
 
         let expectation = self.expectation(description: "Equality operator expectation")
 
-        let query = QueryOn<Cat>.where(field: .color, .equals("gray"))
-
-        QueryTests.client.fetchMappedEntries(matching: query) { (result: Result<MappedArrayResponse<Cat>>) in
+        QueryTests.client.fetchArray(of: Cat.self, matching: .where(field: .color, .equals("gray"))) { result in
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
@@ -294,7 +286,7 @@ class QueryTests: XCTestCase {
 
         let query = QueryOn<Cat>.where(valueAtKeyPath: "fields.color", .doesNotEqual("gray"))
 
-        QueryTests.client.fetchMappedEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
@@ -314,7 +306,7 @@ class QueryTests: XCTestCase {
 
         let query = QueryOn<Cat>.where(valueAtKeyPath: "fields.likes", .includes(["rainbows"]))
 
-        QueryTests.client.fetchMappedEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
@@ -339,7 +331,7 @@ class QueryTests: XCTestCase {
         let query = QueryOn<Cat>.where(valueAtKeyPath: "fields.likes", .excludes(["rainbows"]))
         try! query.order(by: Ordering(sys: .createdAt))
 
-        QueryTests.client.fetchMappedEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
@@ -364,7 +356,7 @@ class QueryTests: XCTestCase {
 
         let query = QueryOn<Cat>.where(valueAtKeyPath: "fields.likes", .hasAll(["rainbows","fish"]))
 
-        QueryTests.client.fetchMappedEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
@@ -388,7 +380,7 @@ class QueryTests: XCTestCase {
 
         let query = QueryOn<Cat>.where(valueAtKeyPath: "fields.color", .exists(true))
 
-        QueryTests.client.fetchMappedEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
@@ -410,7 +402,7 @@ class QueryTests: XCTestCase {
         let query = QueryOn<Cat>.where(valueAtKeyPath: "fields.color", .doesNotEqual("gray"))
             query.where(valueAtKeyPath:"fields.lives", .equals("9"))
 
-        QueryTests.client.fetchMappedEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
@@ -433,7 +425,7 @@ class QueryTests: XCTestCase {
             .where(valueAtKeyPath: "fields.color", .doesNotEqual("gray"))
             .where(valueAtKeyPath: "fields.lives", .equals("9"))
 
-        QueryTests.client.fetchEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
@@ -455,7 +447,7 @@ class QueryTests: XCTestCase {
         let query = AssetQuery.where(sys: .id, .equals("1x0xpXu4pSGS4OukSyWGUK"))
         try! query.select(fieldsNamed: ["title"])
 
-        QueryTests.client.fetchAssets(matching: query) { result in
+        QueryTests.client.fetchArray(of: Asset.self, matching: query) { result in
             switch result {
             case .success(let assetsResponse):
                 let assets = assetsResponse.items
@@ -476,7 +468,7 @@ class QueryTests: XCTestCase {
         let query = AssetQuery.where(sys: .id, .equals("1x0xpXu4pSGS4OukSyWGUK"))
         query.select(fields: [.title])
 
-        QueryTests.client.fetchAssets(matching: query) { result in
+        QueryTests.client.fetchArray(of: Asset.self, matching: query) { result in
             switch result {
             case .success(let assetsResponse):
                 let assets = assetsResponse.items
@@ -512,7 +504,7 @@ class QueryTests: XCTestCase {
 
         let query = Query.where(valueAtKeyPath: "sys.updatedAt", .isLessThanOrEqualTo(date))
 
-        QueryTests.client.fetchEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
             case .success(let entriesResponse):
                 let entries = entriesResponse.items
@@ -535,7 +527,7 @@ class QueryTests: XCTestCase {
 
         let query = QueryOn<Cat>.where(valueAtKeyPath: "sys.updatedAt", .isLessThanOrEqualTo("2019-01-01T00:00:00Z"))
 
-        QueryTests.client.fetchMappedEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
@@ -555,7 +547,7 @@ class QueryTests: XCTestCase {
 
         let query = try! Query.order(by: Ordering(sys: .createdAt))
 
-        QueryTests.client.fetchEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
             case .success(let entriesResponse):
                 let entries = entriesResponse.items
@@ -574,7 +566,7 @@ class QueryTests: XCTestCase {
 
         let query = try! Query.order(by: Ordering("sys.createdAt", inReverse: true))
 
-        QueryTests.client.fetchEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
             case .success(let entriesResponse):
                 let entries = entriesResponse.items
@@ -595,7 +587,7 @@ class QueryTests: XCTestCase {
 
         let query = try! QueryOn<Cat>.order(by: Ordering(sys: .createdAt))
 
-        QueryTests.client.fetchMappedEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
@@ -615,7 +607,7 @@ class QueryTests: XCTestCase {
 
         let query = try! Query.order(by: Ordering("sys.revision"), Ordering(sys: .id))
 
-        QueryTests.client.fetchEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
             case .success(let entriesResponse):
                 let entries = entriesResponse.items
@@ -636,7 +628,7 @@ class QueryTests: XCTestCase {
 
         let query = try! QueryOn<Dog>.searching(for: "bacon")
 
-        QueryTests.client.fetchMappedEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: Dog.self, matching: query) { result in
             switch result {
             case .success(let dogsResponse):
                 let dogs = dogsResponse.items
@@ -654,7 +646,7 @@ class QueryTests: XCTestCase {
 
         let query = QueryOn<Dog>.where(valueAtKeyPath: "fields.description", .matches("bacon"))
 
-        QueryTests.client.fetchMappedEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: Dog.self, matching: query) { result in
             switch result {
             case .success(let dogsResponse):
                 let dogs = dogsResponse.items
@@ -677,7 +669,7 @@ class QueryTests: XCTestCase {
 
         let query = QueryOn<City>.where(valueAtKeyPath:  "fields.center", .isNear(Location(latitude: 38, longitude: -122)))
 
-        QueryTests.client.fetchMappedEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: City.self, matching: query) { result in
             switch result {
             case .success(let citiesResponse):
                 let cities = citiesResponse.items
@@ -697,7 +689,7 @@ class QueryTests: XCTestCase {
 
         let query = QueryOn<City>.where(valueAtKeyPath:  "fields.center", .isWithin(bounds))
 
-        QueryTests.client.fetchMappedEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: City.self, matching: query) { result in
             switch result {
             case .success(let citiesResponse):
                 let cities = citiesResponse.items
@@ -718,7 +710,7 @@ class QueryTests: XCTestCase {
 
         let query = Query.include(0)
 
-        QueryTests.client.fetchEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
             case .success(let entriesResponse):
                 let entries = entriesResponse.items
@@ -747,7 +739,7 @@ class QueryTests: XCTestCase {
 
         let query = Query.limit(to: 5)
 
-        QueryTests.client.fetchEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
             case .success(let entriesResponse):
                 let entries = entriesResponse.items
@@ -766,7 +758,7 @@ class QueryTests: XCTestCase {
         let query = Query.skip(theFirst: 9)
         try! query.order(by: Ordering("sys.createdAt"))
 
-        QueryTests.client.fetchEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
             case .success(let entriesResponse):
                 let entries = entriesResponse.items
@@ -785,7 +777,7 @@ class QueryTests: XCTestCase {
 
         let query = Query.skip(theFirst: 9)
 
-        QueryTests.client.fetchEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
             case .success(let entriesResponse):
                 let entries = entriesResponse.items
@@ -808,9 +800,7 @@ class QueryTests: XCTestCase {
 
         let linkQuery = LinkQuery<Cat>.where(field: .name, .matches("Happy Cat"))
 
-        let query = QueryOn<Cat>.where(linkAtField: .bestFriend, matches: linkQuery)
-
-        QueryTests.client.fetchMappedEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: Cat.self, matching: .where(linkAtField: .bestFriend, matches: linkQuery)) { result in
             switch result {
             case .success(let catsWithHappyCatAsBestFriendResponse):
                 let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
@@ -834,7 +824,7 @@ class QueryTests: XCTestCase {
                                 withTargetContentTypeId: "cat",
                                 that: .matches("Happy Cat"))
 
-        QueryTests.client.fetchEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
             case .success(let catsWithHappyCatAsBestFriendResponse):
                 let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
@@ -859,7 +849,7 @@ class QueryTests: XCTestCase {
 
         let query = QueryOn<Cat>.where(linkAtField: .bestFriend, hasTargetId: "happycat")
 
-        QueryTests.client.fetchMappedEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
             case .success(let catsWithHappyCatAsBestFriendResponse):
                 let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
@@ -881,7 +871,7 @@ class QueryTests: XCTestCase {
                                 onSourceContentTypeWithId: "cat",
                                 hasTargetId: "happycat")
 
-        QueryTests.client.fetchEntries(matching: query) { result in
+        QueryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
             case .success(let catsWithHappyCatAsBestFriendResponse):
                 let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
@@ -908,7 +898,7 @@ class QueryTests: XCTestCase {
 
         let query = AssetQuery.where(mimetypeGroup: .image)
 
-        QueryTests.client.fetchAssets(matching: query) { result in
+        QueryTests.client.fetchArray(of: Asset.self, matching: query) { result in
             switch result {
             case .success(let assetsResponse):
                 let assets = assetsResponse.items

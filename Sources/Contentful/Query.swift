@@ -105,7 +105,7 @@ public class Ordering {
  conforms to ResourceQueryable in order to take advantage of the CodingKey fields available on your type.
  See: `ChainableQuery.order(by order: Ordering...)`
  */
-public class Ordered<EntryType>: Ordering where EntryType: EntryQueryable {
+public class Ordered<EntryType>: Ordering where EntryType: FieldKeysQueryable {
 
     /**
      Initializer for creating a new Ordering operator.
@@ -114,7 +114,7 @@ public class Ordered<EntryType>: Ordering where EntryType: EntryQueryable {
      - Parameter inReverse: Specifies if the ordering by the sys parameter should be reversed or not. Defaults to `false`.
      - Throws: Will throw an error if the keypaths specified in the ordering are not valid.
      */
-    public init(field: EntryType.Fields, inReverse: Bool = false) throws {
+    public init(field: EntryType.FieldKeys, inReverse: Bool = false) throws {
         try super.init("fields.\(field.stringValue)", inReverse: inReverse)
     }
 }

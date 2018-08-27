@@ -302,12 +302,15 @@ class ImageTests: XCTestCase {
             .withCornerRadius(4.0)
         ]
         // "https://images.ctfassets.net/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png?w=100&h=100&fm=jpg&fit=fill&r=4.0"
-        ImageTests.client.fetchImage(for: nyanCatAsset, with: imageOptions).then { image in
-            expect(image.size.width).to(equal(100.0))
-            expect(image.size.height).to(equal(100.0))
+        ImageTests.client.fetchImage(for: nyanCatAsset, with: imageOptions) { result in
+            switch result {
+            case .success(let image):
+                expect(image.size.width).to(equal(100.0))
+                expect(image.size.height).to(equal(100.0))
+            case .error(let error):
+                fail("\(error)")
+            }
             expectation.fulfill()
-        }.error {
-            fail("\($0)")
         }
 
         waitForExpectations(timeout: 10.0, handler: nil)

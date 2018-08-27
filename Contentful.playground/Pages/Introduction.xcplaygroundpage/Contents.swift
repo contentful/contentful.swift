@@ -7,7 +7,6 @@ PlaygroundPage.current.needsIndefiniteExecution = true
   Contentful is an API-first CMS which helps developers deliver content to their apps with API calls, while offering content editors a familiar-looking [web app](https://app.contentful.com) for creating and managing content. This Playground shows how to make API calls to fetch content from Contentful's Content Delivery API (CDA) via the Swift SDK. It also explains what the API response looks like after it has been mapped to native Swift types, and suggests some relevant next steps.
  */
 import Contentful
-import Interstellar
 //: This is the space identifer. A space is like a project folder in Contentful terms.
 let spaceId = "developer_bookshelf"
 //: This is the access token for this space. You can find both the space id and your CDA access token in the Contentful web app.

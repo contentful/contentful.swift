@@ -10,33 +10,45 @@
 import XCTest
 import Nimble
 import DVR
-import Interstellar
 
 // From Complex-Sync-Test-Space
-class LinkClass: EntryDecodable, EntryQueryable {
+class LinkClass: FlatResource, EntryDecodable, FieldKeysQueryable {
 
     static let contentTypeId = "link"
 
-    let sys: Sys
+    let id: String
+    let localeCode: String?
+    let updatedAt: Date?
+    let createdAt: Date?
     let awesomeLinkTitle: String?
 
     public required init(from decoder: Decoder) throws {
-        sys             = try decoder.sys()
-        let fields      = try decoder.contentfulFieldsContainer(keyedBy: Fields.self)
+        let sys = try decoder.sys()
+        
+        id = sys.id
+        localeCode = sys.locale
+        updatedAt = sys.updatedAt
+        createdAt = sys.createdAt
+
+        let fields = try decoder.contentfulFieldsContainer(keyedBy: FieldKeys.self)
         awesomeLinkTitle = try fields.decodeIfPresent(String.self, forKey: .awesomeLinkTitle)
     }
 
-    enum Fields: String, CodingKey {
+    enum FieldKeys: String, CodingKey {
         case awesomeLinkTitle
     }
 }
 
 
-class SingleRecord: EntryDecodable, EntryQueryable {
+class SingleRecord: FlatResource, EntryDecodable, FieldKeysQueryable {
 
     static let contentTypeId = "singleRecord"
 
-    let sys: Sys
+    let id: String
+    let localeCode: String?
+    let updatedAt: Date?
+    let createdAt: Date?
+
     let textBody: String?
     var linkField: LinkClass?
 
@@ -44,9 +56,13 @@ class SingleRecord: EntryDecodable, EntryQueryable {
     var assetsArrayLinkField: [Asset]?
 
     public required init(from decoder: Decoder) throws {
-        sys             = try decoder.sys()
-        let fields      = try decoder.contentfulFieldsContainer(keyedBy: Fields.self)
-        textBody        = try fields.decodeIfPresent(String.self, forKey: .textBody)
+        let sys = try decoder.sys()
+        id = sys.id
+        localeCode = sys.locale
+        updatedAt = sys.updatedAt
+        createdAt = sys.createdAt
+        let fields = try decoder.contentfulFieldsContainer(keyedBy: FieldKeys.self)
+        textBody = try fields.decodeIfPresent(String.self, forKey: .textBody)
 
         try fields.resolveLink(forKey: .linkField, decoder: decoder) { [weak self] link in
             self?.linkField = link as? LinkClass
@@ -61,7 +77,7 @@ class SingleRecord: EntryDecodable, EntryQueryable {
         }
     }
 
-    enum Fields: String, CodingKey {
+    enum FieldKeys: String, CodingKey {
         case textBody, arrayLinkField, linkField, assetsArrayLinkField
     }
 }
@@ -85,22 +101,22 @@ class LinkResolverTests: XCTestCase {
         (client.urlSession as? DVR.Session)?.endRecording()
     }
 
-    // FIXME: Test link query with array of lijnks.
     func testDecoderCanResolveArrayOfLinks() {
 
         let expectation = self.expectation(description: "CanResolveArrayOfLinksTests")
 
         let query = QueryOn<SingleRecord>.where(sys: .id, .equals("7BwFiM0nxCS4EGYaIAIkyU"))
-        LinkResolverTests.client.fetchMappedEntries(matching: query) { result in
+        LinkResolverTests.client.fetchArray(of: SingleRecord.self,  matching: query) { result in
 
 
             switch result {
             case .success(let arrayResponse):
                 let records = arrayResponse.items
+
                 expect(records.count).to(equal(1))
                 if let singleRecord = records.first {
                     expect(singleRecord.arrayLinkField).toNot(beNil())
-                    expect(singleRecord.arrayLinkField?.count).to(equal(2))
+                    expect(singleRecord.arrayLinkField?.count).to(equal(8))
                     expect(singleRecord.arrayLinkField?.first?.awesomeLinkTitle).to(equal("AWESOMELINK!!!"))
                     expect(singleRecord.arrayLinkField?[1].awesomeLinkTitle).to(equal("The second link"))
                 } else {
@@ -119,7 +135,7 @@ class LinkResolverTests: XCTestCase {
         let expectation = self.expectation(description: "Cannot resolve link to unpublished entity")
 
         let query = QueryOn<SingleRecord>.where(sys: .id, .equals("1k7s1gNcQA8WoUWiqcYaMO"))
-        LinkResolverTests.client.fetchMappedEntries(matching: query) { result in
+        LinkResolverTests.client.fetchArray(of: SingleRecord.self, matching: query) { result in
             switch result {
             case .success(let arrayResponse):
                 let records = arrayResponse.items
@@ -147,14 +163,14 @@ class LinkResolverTests: XCTestCase {
         let expectation = self.expectation(description: "Two entries can resolve links to the same link")
 
         let query = QueryOn<SingleRecord>.where(sys: .id, .includes(["1wFgajHSpWOoIgS8UAk2ow", "7rUM7Pr16M2gEwiI02WAoI"]))
-        LinkResolverTests.client.fetchMappedEntries(matching: query) { result in
+        LinkResolverTests.client.fetchArray(of: SingleRecord.self, matching: query) { result in
             switch result {
             case .success(let arrayResponse):
                 let records = arrayResponse.items
                 expect(records.count).to(equal(2))
                 for record in records {
                     if let link = record.linkField {
-                        expect(link.sys.id).to(equal("6QAxlZlsXY8kmMKG08qaia"))
+                        expect(link.id).to(equal("6QAxlZlsXY8kmMKG08qaia"))
                     } else {
                         fail("There should be a link")
                     }
@@ -173,14 +189,14 @@ class LinkResolverTests: XCTestCase {
 
         let query = QueryOn<SingleRecord>.where(sys: .id, .equals("2JFSeiPTZYm4goMSUeYSCU"))
 
-        LinkResolverTests.client.fetchMappedEntries(matching: query) { result in
+        LinkResolverTests.client.fetchArray(of: SingleRecord.self, matching: query) { result in
             switch result {
             case .success(let arrayResponse):
                 let records = arrayResponse.items
                 expect(records.count).to(equal(1))
                 if let record = records.first, record.id == "2JFSeiPTZYm4goMSUeYSCU" {
                     expect(record.assetsArrayLinkField).toNot(beNil())
-                    expect(record.assetsArrayLinkField?.count).to(equal(2))
+                    expect(record.assetsArrayLinkField?.count).to(equal(4))
                     expect(record.assetsArrayLinkField?.first?.id).to(equal("6Wsz8owhtCGSICg44IUYAm"))
                 } else {
                     fail("Expected an array of length 1 with a an entry with id '2JFSeiPTZYm4goMSUeYSCU'")

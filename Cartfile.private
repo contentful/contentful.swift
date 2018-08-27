@@ -1,4 +1,4 @@
-github "Quick/Nimble" ~> 7.1.0
+github "Quick/Nimble" ~> 7.1.3
 github "venmo/DVR" ~> 1.2.0
 github "AliSoftware/OHHTTPStubs" ~> 6.1.0
 
