@@ -114,9 +114,9 @@ open class Client {
                 contentTypes[type.contentTypeId] = type
             }
             jsonDecoder.userInfo[.contentTypesContextKey] = contentTypes
-            jsonDecoder.userInfo[.linkResolverContextKey] = LinkResolver()
         }
 
+        jsonDecoder.userInfo[.linkResolverContextKey] = LinkResolver()
         self.persistenceIntegration = persistenceIntegration
         let contentfulHTTPHeaders = [
             "Authorization": "Bearer \(accessToken)",

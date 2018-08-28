@@ -50,22 +50,22 @@ final class STTest: Resource, EntryDecodable, FieldKeysQueryable {
     }
 }
 
-class StructuredTextResolutionTests: XCTestCase {
+class StructuredTextTests: XCTestCase {
 
     static let client = TestClientFactory.testClient(withCassetteNamed: "StructuredTextResolutionTests",
                                                      spaceId: "jd7yc4wnatx3",
                                                      accessToken: "6256b8ef7d66805ca41f2728271daf27e8fa6055873b802a813941a0fe696248",
-                                                     contentTypeClasses: [STTest.self])
+                                                     contentTypeClasses: [STTest.self, EmbeddedEntry.self])
 
-//    override class func setUp() {
-//        super.setUp()
-//        (client.urlSession as? DVR.Session)?.beginRecording()
-//    }
-//
-//    override class func tearDown() {
-//        super.tearDown()
-//        (client.urlSession as? DVR.Session)?.endRecording()
-//    }
+    override class func setUp() {
+        super.setUp()
+        (client.urlSession as? DVR.Session)?.beginRecording()
+    }
+
+    override class func tearDown() {
+        super.tearDown()
+        (client.urlSession as? DVR.Session)?.endRecording()
+    }
 
     func testDecodingStructuredText() {
         do {
@@ -75,6 +75,7 @@ class StructuredTextResolutionTests: XCTestCase {
             let localesResponse = try! jsonDecoder.decode(ArrayResponse<Contentful.Locale>.self, from: localesJSONData)
             jsonDecoder.update(with: LocalizationContext(locales: localesResponse.items)!)
 
+            jsonDecoder.userInfo[.linkResolverContextKey] = LinkResolver()
 
             let document = try jsonDecoder.decode(Document.self, from: structuredTextData)
             expect(document.content.count).to(equal(17))
@@ -83,15 +84,19 @@ class StructuredTextResolutionTests: XCTestCase {
         }
     }
 
-    func testResolvingLinksInStructuredText() {
+    func testResolvingEntryDecodableLinksInStructuredText() {
         let expectation = self.expectation(description: "")
 
-        StructuredTextResolutionTests.client.fetchArray(of: STTest.self, matching: QueryOn<STTest>.limit(to: 1).skip(theFirst: 1)) { result in
+        StructuredTextTests.client.fetchArray(of: STTest.self, matching: QueryOn<STTest>.limit(to: 1).skip(theFirst: 1)) { result in
             switch result {
             case .success(let arrayResponse):
                 expect(arrayResponse.items.count).to(equal(1))
                 expect(arrayResponse.items.first!.body.content.count).to(equal(17))
-                expect(arrayResponse.items.first!.body.content[2].nodeType).to(equal(17))
+                expect(arrayResponse.items.first!.body.content[2].nodeType).to(equal(NodeType.embeddedEntryBlock))
+
+                let nodeWithEmbeddedEntry = arrayResponse.items.first!.body.content[2] as! Block
+                expect(nodeWithEmbeddedEntry.data.resolvedEntryDecodable).toNot(beNil())
+
             case .error(let error):
                 fail("\(error)")
             }
@@ -99,4 +104,27 @@ class StructuredTextResolutionTests: XCTestCase {
         }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
+//
+//    func testResolvingEntryLinksInStructuredText() {
+//        let expectation = self.expectation(description: "")
+//
+//        let query = Query.where(contentTypeId: "stTest").limit(to: 1).skip(theFirst: 1)
+//
+//        StructuredTextTests.client.fetchArray(of: Entry.self, matching: query) { result in
+//            switch result {
+//            case .success(let arrayResponse):
+//                expect(arrayResponse.items.count).to(equal(1))
+//                expect((arrayResponse.items.first!.fields["body"] as! Document).content.count).to(equal(17))
+//                expect((arrayResponse.items.first!.fields["body"] as! Document).content[2].nodeType).to(equal(NodeType.embeddedEntryBlock))
+//
+//                let nodeWithEmbeddedEntry = (arrayResponse.items.first!.fields["body"] as! Document).content[2] as! Block
+//                expect(nodeWithEmbeddedEntry.data.resolvedEntry).toNot(beNil())
+//
+//            case .error(let error):
+//                fail("\(error)")
+//            }
+//            expectation.fulfill()
+//        }
+//        waitForExpectations(timeout: 10.0, handler: nil)
+//    }
 }

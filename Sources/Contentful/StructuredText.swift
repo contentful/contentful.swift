@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 public protocol Node: Decodable {
     var nodeType: NodeType { get }
     var nodeClass: NodeClass { get }
@@ -106,13 +105,38 @@ public struct H2: Node {
     }
 }
 
-public struct Block: Node {
+public class Block: Node {
     public let nodeType: NodeType
     public let nodeClass: NodeClass
     public let data: BlockData
 
-    public struct BlockData: Decodable {
+    public class BlockData: Decodable {
         public let target: Link
+        public var resolvedEntryDecodable: EntryDecodable?
+        public var resolvedEntry: Entry?
+        public var resolvedAsset: Asset?
+
+        public required init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: JSONCodingKeys.self)
+            target = try container.decode(Link.self, forKey: JSONCodingKeys(stringValue: "target")!)
+            try container.resolveLink(forKey: JSONCodingKeys(stringValue: "target")!, decoder: decoder) { [weak self] asset in
+                self?.resolvedAsset = asset as? Asset
+            }
+            try container.resolveLink(forKey: JSONCodingKeys(stringValue: "target")!, decoder: decoder) { [weak self] entry in
+                self?.resolvedEntry = entry as? Entry
+            }
+            try container.resolveLink(forKey: JSONCodingKeys(stringValue: "target")!, decoder: decoder) { [weak self] decodable in
+                // Workaroudn for bug in the Swift compiler: https://bugs.swift.org/browse/SR-3871
+                self?.resolvedEntryDecodable = decodable as? EntryDecodable
+            }
+        }
+    }
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: JSONCodingKeys.self)
+        nodeType = try container.decode(NodeType.self, forKey: JSONCodingKeys(stringValue: "nodeType")!)
+        nodeClass = try container.decode(NodeClass.self, forKey: JSONCodingKeys(stringValue: "nodeClass")!)
+        data = try container.decode(BlockData.self, forKey: JSONCodingKeys(stringValue: "data")!)
     }
 }
 
@@ -147,6 +171,7 @@ public struct Hyperlink: Node {
         data = try container.decode(HyperlinkData.self, forKey: .data)
         content = try container.decodeContent(forKey: .content)
     }
+
     public struct HyperlinkData: Decodable {
         public let url: URL
         public let title: String
