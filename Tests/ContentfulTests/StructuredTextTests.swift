@@ -104,27 +104,27 @@ class StructuredTextTests: XCTestCase {
         }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
-//
-//    func testResolvingEntryLinksInStructuredText() {
-//        let expectation = self.expectation(description: "")
-//
-//        let query = Query.where(contentTypeId: "stTest").limit(to: 1).skip(theFirst: 1)
-//
-//        StructuredTextTests.client.fetchArray(of: Entry.self, matching: query) { result in
-//            switch result {
-//            case .success(let arrayResponse):
-//                expect(arrayResponse.items.count).to(equal(1))
-//                expect((arrayResponse.items.first!.fields["body"] as! Document).content.count).to(equal(17))
-//                expect((arrayResponse.items.first!.fields["body"] as! Document).content[2].nodeType).to(equal(NodeType.embeddedEntryBlock))
-//
-//                let nodeWithEmbeddedEntry = (arrayResponse.items.first!.fields["body"] as! Document).content[2] as! Block
-//                expect(nodeWithEmbeddedEntry.data.resolvedEntry).toNot(beNil())
-//
-//            case .error(let error):
-//                fail("\(error)")
-//            }
-//            expectation.fulfill()
-//        }
-//        waitForExpectations(timeout: 10.0, handler: nil)
-//    }
+
+    func testResolvingEntryLinksInStructuredText() {
+        let expectation = self.expectation(description: "")
+
+        let query = Query.where(contentTypeId: "stTest").limit(to: 1).skip(theFirst: 1)
+
+        StructuredTextTests.client.fetchArray(of: Entry.self, matching: query) { result in
+            switch result {
+            case .success(let arrayResponse):
+                expect(arrayResponse.items.count).to(equal(1))
+                expect((arrayResponse.items.first!.fields["body"] as! Document).content.count).to(equal(17))
+                expect((arrayResponse.items.first!.fields["body"] as! Document).content[2].nodeType).to(equal(NodeType.embeddedEntryBlock))
+
+                let nodeWithEmbeddedEntry = (arrayResponse.items.first!.fields["body"] as! Document).content[2] as! Block
+                expect(nodeWithEmbeddedEntry.data.target.entry).toNot(beNil())
+
+            case .error(let error):
+                fail("\(error)")
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
 }

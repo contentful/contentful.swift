@@ -173,6 +173,9 @@
 		ED737C951EF1785A00ECB3F1 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED737C931EF1785A00ECB3F1 /* Persistence.swift */; };
 		ED737C961EF1785A00ECB3F1 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED737C931EF1785A00ECB3F1 /* Persistence.swift */; };
 		ED737C971EF1785A00ECB3F1 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED737C931EF1785A00ECB3F1 /* Persistence.swift */; };
+		ED7AC7512135D9BB0085FDF1 /* StructuredTextResolutionTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED7AC7502135D9BA0085FDF1 /* StructuredTextResolutionTests.json */; };
+		ED7AC7522135D9BB0085FDF1 /* StructuredTextResolutionTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED7AC7502135D9BA0085FDF1 /* StructuredTextResolutionTests.json */; };
+		ED7AC7532135D9BB0085FDF1 /* StructuredTextResolutionTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED7AC7502135D9BA0085FDF1 /* StructuredTextResolutionTests.json */; };
 		ED882E9320484BF100D372BF /* EnvironmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED882E9220484BF100D372BF /* EnvironmentTests.swift */; };
 		ED882E9420484BF100D372BF /* EnvironmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED882E9220484BF100D372BF /* EnvironmentTests.swift */; };
 		ED882E9520484BF100D372BF /* EnvironmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED882E9220484BF100D372BF /* EnvironmentTests.swift */; };
@@ -324,6 +327,7 @@
 		ED7862751F7D2FAC00CB2625 /* Interstellar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Interstellar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED7862771F7D2FB300CB2625 /* Interstellar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Interstellar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED7862791F7D2FBD00CB2625 /* Interstellar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Interstellar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED7AC7502135D9BA0085FDF1 /* StructuredTextResolutionTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = StructuredTextResolutionTests.json; sourceTree = "<group>"; };
 		ED882E9220484BF100D372BF /* EnvironmentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentTests.swift; sourceTree = "<group>"; };
 		ED88B7D91EF7CD3800538D1F /* ClientConfigurationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientConfigurationTests.swift; sourceTree = "<group>"; };
 		ED9102651E65AADA0076FDBD /* DVR.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVR.framework; path = Carthage/Build/iOS/DVR.framework; sourceTree = "<group>"; };
@@ -595,6 +599,7 @@
 				ED21E9E2209B484A00A6AD2D /* PreviewSyncTests.json */,
 				ED0F5ADD212F01CA0097069E /* QueryTests.json */,
 				ED2367612046FCEB00034724 /* RateLimitTests.json */,
+				ED7AC7502135D9BA0085FDF1 /* StructuredTextResolutionTests.json */,
 				ED21E9E1209B484A00A6AD2D /* SyncTests.json */,
 				ED0B45AD2046F44B0000223C /* testClientCanAccessPreviewAPI.json */,
 				ED0B45AE2046F44C0000223C /* testClientCantAccessPreviewAPIWithProductionToken.json */,
@@ -865,6 +870,7 @@
 				ED0B45B12046F4500000223C /* testClientCanAccessPreviewAPI.json in Resources */,
 				EDA2B2B6212DAD400053CF77 /* AssetTests.json in Resources */,
 				ED2367652046FCF000034724 /* RateLimitTests.json in Resources */,
+				ED7AC7512135D9BB0085FDF1 /* StructuredTextResolutionTests.json in Resources */,
 				EDA2B2BE212DADCC0053CF77 /* EntryTests.json in Resources */,
 				EDA2B2C2212DAE4D0053CF77 /* LinkResolverTests.json in Resources */,
 				ED21E9EA209B49D900A6AD2D /* EnvironmentsTests.json in Resources */,
@@ -888,6 +894,7 @@
 				ED0B45B32046F4500000223C /* testClientCanAccessPreviewAPI.json in Resources */,
 				ED2367642046FCF000034724 /* RateLimitTests.json in Resources */,
 				EDA2B2B7212DAD400053CF77 /* AssetTests.json in Resources */,
+				ED7AC7522135D9BB0085FDF1 /* StructuredTextResolutionTests.json in Resources */,
 				EDA2B2BF212DADCC0053CF77 /* EntryTests.json in Resources */,
 				EDA2B2C3212DAE4D0053CF77 /* LinkResolverTests.json in Resources */,
 				ED0B45912046EFDA0000223C /* testFetchSpace.json in Resources */,
@@ -911,6 +918,7 @@
 				ED0B45B52046F4510000223C /* testClientCanAccessPreviewAPI.json in Resources */,
 				ED2367632046FCEF00034724 /* RateLimitTests.json in Resources */,
 				EDA2B2B8212DAD400053CF77 /* AssetTests.json in Resources */,
+				ED7AC7532135D9BB0085FDF1 /* StructuredTextResolutionTests.json in Resources */,
 				EDA2B2C0212DADCC0053CF77 /* EntryTests.json in Resources */,
 				EDA2B2C4212DAE4D0053CF77 /* LinkResolverTests.json in Resources */,
 				ED0B45902046EFDA0000223C /* testFetchSpace.json in Resources */,

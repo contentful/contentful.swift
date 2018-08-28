@@ -64,6 +64,11 @@ public struct Document: Node, Decodable {
         nodeClass = try container.decode(NodeClass.self, forKey: .nodeClass)
         content = try container.decodeContent(forKey: .content)
     }
+    internal init(content: [Node]) {
+        self.content = content
+        nodeType = .document
+        nodeClass = .document
+    }
 }
 
 public struct Paragraph: Node {
@@ -111,20 +116,14 @@ public class Block: Node {
     public let data: BlockData
 
     public class BlockData: Decodable {
-        public let target: Link
+        // TODO: Add initializers to make immutable.
+        public var target: Link
         public var resolvedEntryDecodable: EntryDecodable?
-        public var resolvedEntry: Entry?
-        public var resolvedAsset: Asset?
 
         public required init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: JSONCodingKeys.self)
             target = try container.decode(Link.self, forKey: JSONCodingKeys(stringValue: "target")!)
-            try container.resolveLink(forKey: JSONCodingKeys(stringValue: "target")!, decoder: decoder) { [weak self] asset in
-                self?.resolvedAsset = asset as? Asset
-            }
-            try container.resolveLink(forKey: JSONCodingKeys(stringValue: "target")!, decoder: decoder) { [weak self] entry in
-                self?.resolvedEntry = entry as? Entry
-            }
+
             try container.resolveLink(forKey: JSONCodingKeys(stringValue: "target")!, decoder: decoder) { [weak self] decodable in
                 // Workaroudn for bug in the Swift compiler: https://bugs.swift.org/browse/SR-3871
                 self?.resolvedEntryDecodable = decodable as? EntryDecodable

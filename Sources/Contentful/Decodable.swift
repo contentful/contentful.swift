@@ -106,7 +106,6 @@ internal extension Decodable where Self: Node {
     }
 }
 
-
 internal extension CodingUserInfoKey {
     internal static let linkResolverContextKey = CodingUserInfoKey(rawValue: "linkResolverContext")!
     internal static let timeZoneContextKey = CodingUserInfoKey(rawValue: "timeZoneContext")!
@@ -276,8 +275,9 @@ internal extension KeyedDecodingContainer {
                 dictionary[key.stringValue] = link
             } else if let location = try? decode(Location.self, forKey: key) {
                 dictionary[key.stringValue] = location
+            } else if let document = try? decode(Document.self, forKey: key) {
+                dictionary[key.stringValue] = document
             }
-
             // These must be called after attempting to decode all other custom types.
             else if let nestedDictionary = try? decode(Dictionary<String, Any>.self, forKey: key) {
                 dictionary[key.stringValue] = nestedDictionary
