@@ -114,9 +114,9 @@ open class Client {
                 contentTypes[type.contentTypeId] = type
             }
             jsonDecoder.userInfo[.contentTypesContextKey] = contentTypes
-            jsonDecoder.userInfo[.linkResolverContextKey] = LinkResolver()
         }
 
+        jsonDecoder.userInfo[.linkResolverContextKey] = LinkResolver()
         self.persistenceIntegration = persistenceIntegration
         let contentfulHTTPHeaders = [
             "Authorization": "Bearer \(accessToken)",
@@ -465,7 +465,7 @@ extension Client {
     ///   - completion: The handler being called on completion of the request with a Result wrapping an ArrayResponse of decoded type or an error.
     /// - Returns: A reference to the URLSessionDataTask to enable cancelling the request.
     @discardableResult public func fetchArray<EntryType>(of entryType: EntryType.Type,
-                                                         matching query: QueryOn<EntryType>,
+                                                         matching query: QueryOn<EntryType> = QueryOn<EntryType>(),
                                                          then completion: @escaping ResultsHandler<ArrayResponse<EntryType>>) -> URLSessionDataTask {
         let url = self.url(endpoint: .entries, parameters: query.parameters)
         return fetch(url: url, then: completion)
@@ -478,9 +478,9 @@ extension Client {
     ///   - query: The `Query` with which to match the results against.
     ///   - completion: The handler being called on completion of the request with a Result wrapping your decoded type or an error.
     /// - Returns: A reference to the URLSessionDataTask to enable cancelling the request.
-    @discardableResult public func fetchArray(matching query: Query,
+    @discardableResult public func fetchArray(matching query: Query? = nil,
                                               then completion: @escaping ResultsHandler<MixedArrayResponse>) -> URLSessionDataTask {
-        let url = self.url(endpoint: .entries, parameters: query.parameters)
+        let url = self.url(endpoint: .entries, parameters: query?.parameters ?? [:])
         return fetch(url: url, then: completion)
     }
 }

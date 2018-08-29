@@ -1,4 +1,3 @@
-
 //
 //  ContentfulTests.swift
 //  ContentfulTests

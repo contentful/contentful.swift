@@ -93,6 +93,13 @@ internal extension Decodable where Self: AssetDecodable {
     }
 }
 
+internal extension Decodable where Self: Node {
+    static func popNodeDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
+        let contentDecodable = try container.decode(self)
+        return contentDecodable
+    }
+}
+
 internal extension CodingUserInfoKey {
     internal static let linkResolverContextKey = CodingUserInfoKey(rawValue: "linkResolverContext")!
     internal static let timeZoneContextKey = CodingUserInfoKey(rawValue: "timeZoneContext")!
@@ -114,7 +121,7 @@ public extension KeyedDecodingContainer {
      */
     public func resolveLink(forKey key: KeyedDecodingContainer.Key,
                             decoder: Decoder,
-                            callback: @escaping (Any) -> Void) throws {
+                            callback: @escaping (AnyObject) -> Void) throws {
 
         let linkResolver = decoder.linkResolver
         if let link = try decodeIfPresent(Link.self, forKey: key) {
@@ -133,7 +140,7 @@ public extension KeyedDecodingContainer {
      */
     public func resolveLinksArray(forKey key: KeyedDecodingContainer.Key,
                                   decoder: Decoder,
-                                  callback: @escaping (Any) -> Void) throws {
+                                  callback: @escaping (AnyObject) -> Void) throws {
 
         let linkResolver = decoder.linkResolver
         if let links = try decodeIfPresent(Array<Link>.self, forKey: key) {
@@ -146,7 +153,7 @@ internal class LinkResolver {
 
     private var dataCache: DataCache = DataCache()
 
-    private var callbacks: [String: [(Any) -> Void]] = [:]
+    private var callbacks: [String: [(AnyObject) -> Void]] = [:]
 
     private static let linksArrayPrefix = "linksArrayPrefix"
 
@@ -162,24 +169,14 @@ internal class LinkResolver {
         }
     }
 
-    internal func cache(resources: [FlatResource & Decodable]) {
-        for resource in resources {
-            if let asset = resource as? Asset {
-                dataCache.add(asset: asset)
-            } else if let entryDecodable = resource as? EntryDecodable {
-                dataCache.add(entry: entryDecodable)
-            }
-        }
-    }
-
     // Caches the callback to resolve the relationship represented by a Link at a later time.
-    internal func resolve(_ link: Link, callback: @escaping (Any) -> Void) {
+    internal func resolve(_ link: Link, callback: @escaping (AnyObject) -> Void) {
         let key = DataCache.cacheKey(for: link)
         // Swift 4 API enables setting a default value, if none exists for the given key.
         callbacks[key, default: []] += [callback]
     }
 
-    internal func resolve(_ links: [Link], callback: @escaping (Any) -> Void) {
+    internal func resolve(_ links: [Link], callback: @escaping (AnyObject) -> Void) {
         let linksIdentifier: String = links.reduce(into: LinkResolver.linksArrayPrefix) { (id, link) in
             id += "," + DataCache.cacheKey(for: link)
         }
@@ -195,14 +192,14 @@ internal class LinkResolver {
                 let onlyKeysString = linkKey[firstKeyIndex ..< linkKey.endIndex]
                 // Split creates a [Substring] array, but we need [String] to index the cache
                 let keys = onlyKeysString.split(separator: ",").map { String($0) }
-                let items: [Any] = keys.compactMap { dataCache.item(for: $0) }
+                let items: [AnyObject] = keys.compactMap { dataCache.item(for: $0) }
                 for callback in callbacksList {
-                    callback(items as Any)
+                    callback(items as AnyObject)
                 }
             } else {
                 let item = dataCache.item(for: linkKey)
                 for callback in callbacksList {
-                    callback(item as Any)
+                    callback(item as AnyObject)
                 }
             }
         }
@@ -272,8 +269,9 @@ internal extension KeyedDecodingContainer {
                 dictionary[key.stringValue] = link
             } else if let location = try? decode(Location.self, forKey: key) {
                 dictionary[key.stringValue] = location
+            } else if let document = try? decode(Document.self, forKey: key) {
+                dictionary[key.stringValue] = document
             }
-
             // These must be called after attempting to decode all other custom types.
             else if let nestedDictionary = try? decode(Dictionary<String, Any>.self, forKey: key) {
                 dictionary[key.stringValue] = nestedDictionary

@@ -28,7 +28,6 @@ public enum Link: Decodable {
         public let type: String
     }
 
-
     /// The Link points to an `Asset`
     case asset(Asset)
 
