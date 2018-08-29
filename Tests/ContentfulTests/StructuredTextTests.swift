@@ -93,9 +93,12 @@ class StructuredTextTests: XCTestCase {
                 expect(arrayResponse.items.count).to(equal(1))
                 expect(arrayResponse.items.first!.body.content.count).to(equal(17))
                 expect(arrayResponse.items.first!.body.content[2].nodeType).to(equal(NodeType.embeddedEntryBlock))
-
-                let nodeWithEmbeddedEntry = arrayResponse.items.first!.body.content[2] as! Block
+                let headingNode = arrayResponse.items.first!.body.content.first as! H1
+                expect((headingNode.content.first as? InlineNode)?.value).to(equal("Some heading"))
+                let nodeWithEmbeddedEntry = arrayResponse.items.first!.body.content[2] as! EmbeddedEntryBlock
                 expect(nodeWithEmbeddedEntry.data.resolvedEntryDecodable).toNot(beNil())
+                expect((nodeWithEmbeddedEntry.data.resolvedEntryDecodable as? EmbeddedEntry)?.body).to(equal("Embedded 1"))
+
 
             case .error(let error):
                 fail("\(error)")
@@ -104,6 +107,31 @@ class StructuredTextTests: XCTestCase {
         }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
+
+    func testMarkDeserializationInStructuredText() {
+        let expectation = self.expectation(description: "")
+
+        StructuredTextTests.client.fetchArray(of: STTest.self, matching: QueryOn<STTest>.limit(to: 1)) { result in
+            switch result {
+            case .success(let arrayResponse):
+                expect(arrayResponse.items.count).to(equal(1))
+                expect(arrayResponse.items.first?.body.content.count).to(equal(1))
+                expect((arrayResponse.items.first?.body.content.first as? Paragraph)?.content.first?.nodeType).to(equal(NodeType.text))
+
+                let textNode = (arrayResponse.items.first?.body.content.first as? Paragraph)?.content.first as? Text
+                expect(textNode?.marks.count).to(equal(2))
+                expect(textNode?.marks.first?.type).to(equal(Text.MarkType.bold))
+                expect(textNode?.marks.last?.type).to(equal(Text.MarkType.italic))
+
+
+            case .error(let error):
+                fail("\(error)")
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
 
     func testResolvingEntryLinksInStructuredText() {
         let expectation = self.expectation(description: "")
@@ -117,8 +145,9 @@ class StructuredTextTests: XCTestCase {
                 expect((arrayResponse.items.first!.fields["body"] as! Document).content.count).to(equal(17))
                 expect((arrayResponse.items.first!.fields["body"] as! Document).content[2].nodeType).to(equal(NodeType.embeddedEntryBlock))
 
-                let nodeWithEmbeddedEntry = (arrayResponse.items.first!.fields["body"] as! Document).content[2] as! Block
+                let nodeWithEmbeddedEntry = (arrayResponse.items.first!.fields["body"] as! Document).content[2] as! EmbeddedEntryBlock
                 expect(nodeWithEmbeddedEntry.data.target.entry).toNot(beNil())
+                expect(nodeWithEmbeddedEntry.data.target.entry?.fields["body"] as? String).to(equal("Embedded 1"))
 
             case .error(let error):
                 fail("\(error)")
@@ -127,4 +156,5 @@ class StructuredTextTests: XCTestCase {
         }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
+
 }

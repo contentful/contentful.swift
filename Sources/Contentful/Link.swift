@@ -79,7 +79,6 @@ public enum Link: Decodable {
         }
     }
 
-    // TODO: Just return a LocalizableResource.
     internal func resolve(against includedEntries: [Entry]?, and includedAssets: [Asset]?) -> Link {
         switch self {
         case .unresolved(let sys):
