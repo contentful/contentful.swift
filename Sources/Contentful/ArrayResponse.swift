@@ -112,10 +112,15 @@ extension ArrayResponse: Decodable {
             includes = nil
             mappedIncludes       = try container.decodeIfPresent(MappedIncludes.self, forKey: .includes)
 
+
+            // TODO: Use JSONLookup here.
+
             // A copy as an array of dictionaries just to extract "sys.type" field.
             guard let jsonItems = try container.decode(Swift.Array<Any>.self, forKey: .items) as? [[String: Any]] else {
                 throw SDKError.unparseableJSON(data: nil, errorMessage: "SDK was unable to serialize returned resources")
             }
+
+
             var entriesJSONContainer = try container.nestedUnkeyedContainer(forKey: .items)
             var entries: [EntryDecodable] = []
             let contentTypes = decoder.userInfo[.contentTypesContextKey] as! [ContentTypeId: EntryDecodable.Type]
@@ -265,7 +270,7 @@ internal extension Swift.Array where Element == Dictionary<String, Any> {
         return contentTypeInfo
     }
 
-    func nodeTypeInfo(at index: Int) -> NodeType? {
+    func nodeType(at index: Int) -> NodeType? {
         guard let nodeTypeString = self[index]["nodeType"] as? String, let nodeType = NodeType(rawValue: nodeTypeString) else {
             return nil
         }
@@ -324,7 +329,7 @@ extension KeyedDecodingContainer {
         var content: [Node] = []
 
         while !contentJSONContainer.isAtEnd {
-            guard let nodeType = jsonContent.nodeTypeInfo(at: contentJSONContainer.currentIndex) else {
+            guard let nodeType = jsonContent.nodeType(at: contentJSONContainer.currentIndex) else {
                 let errorMessage = "SDK was unable to parse nodeType property necessary to finish resource serialization."
                 throw SDKError.unparseableJSON(data: nil, errorMessage: errorMessage)
             }
