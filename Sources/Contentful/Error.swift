@@ -45,12 +45,6 @@ public enum SDKError: Error {
     /// Thrown when no resource is found matching a specified id
     case noResourceFoundFor(id: String)
 
-    /**
-     Thrown when the construction of a URL pointing to an underlying media file for an Asset is invalid.
-     - Parameter message: The message from the erorr which occured during parsing.
-     */
-    case invalidImageParameters(String)
-
     /// Thrown when a `Foundation.Data` object is unable to be transformed to a `UIImage` or an `NSImage` object.
     case unableToDecodeImageData
 

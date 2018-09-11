@@ -15,19 +15,23 @@ import CoreGraphics
     import Cocoa
 #endif
 
+public extension String {
 
-public extension AssetProtocol {
     /**
-     The URL for the underlying media file with additional options for server side manipulations
-     such as format changes, resizing, cropping, and focusing on different areas including on faces,
-     among others.
-
-     - Parameter imageOptions: An array of `ImageOption` that will be used for server side manipulations.
-     - Throws: Will throw SDKError if the SDK is unable to generate a valid URL with the desired ImageOptions.
+     Will make a `URL` from the current `String` instance if possible.
      */
-    public func url(with imageOptions: [ImageOption] = []) throws -> URL {
-        guard let url = try urlString?.url(with: imageOptions) else {
-            throw SDKError.invalidURL(string: urlString ?? "No url string is stored for Asset: \(id)")
+    internal func toURL() throws -> URL {
+        guard var urlComponents = URLComponents(string: self) else {
+            throw ImageOptionError(message: "Invalid URL String: \(self)")
+        }
+
+        // Append https scheme if not present.
+        if urlComponents.scheme == nil {
+            urlComponents.scheme = "https"
+        }
+
+        guard let url = urlComponents.url else {
+            throw ImageOptionError(message: "Invalid URL String: \(self)")
         }
         return url
     }
@@ -41,9 +45,9 @@ public extension String {
      among others.
 
      - Parameter imageOptions: An array of `ImageOption` that will be used for server side manipulations.
-     - Throws: Will throw SDKError if the SDK is unable to generate a valid URL with the desired ImageOptions.
+     - Throws: Will throw an `ImageQueryError` if the SDK is unable to generate a valid URL with the desired ImageOptions.
      */
-    public func url(with imageOptions: [ImageOption] = []) throws -> URL {
+    public func url(with imageOptions: [ImageOption]) throws -> URL {
 
         // Check that there are no two image options that specifiy the same query parameter.
         // https://stackoverflow.com/a/27624476/4068264z
@@ -51,16 +55,16 @@ public extension String {
         // and unique'ify the elements in the array.
         let uniqueImageOptions = Array(Set<ImageOption>(imageOptions))
         guard uniqueImageOptions.count == imageOptions.count else {
-            throw SDKError.invalidImageParameters("Cannot specify two instances of ImageOption of the same case."
+            throw ImageOptionError(message: "Cannot specify two instances of ImageOption of the same case."
                 + "i.e. `[.formatAs(.png), .formatAs(.jpg(withQuality: .unspecified)]` is invalid.")
         }
         guard imageOptions.count > 0 else {
-            return try url()
+            return try toURL()
         }
 
-        let urlString = try url().absoluteString
+        let urlString = try toURL().absoluteString
         guard var urlComponents = URLComponents(string: urlString) else {
-            throw SDKError.invalidURL(string: urlString)
+            throw ImageOptionError(message: "The url string is not valid: \(urlString)")
         }
 
         urlComponents.queryItems = try imageOptions.flatMap { option in
@@ -68,7 +72,11 @@ public extension String {
         }
 
         guard let url = urlComponents.url else {
-            throw SDKError.invalidURL(string: urlString)
+            let message = """
+            The SDK was unable to generate a valid URL for the given ImageOptions.
+            Please contact the maintainer on Github with a copy of the query \(urlString)
+            """
+            throw ImageOptionError(message: message)
         }
         return url
     }
@@ -104,7 +112,7 @@ public enum ImageOption: Equatable, Hashable {
             return [URLQueryItem(name: ImageParameters.width, value: String(width))]
 
         case .width, .height:
-            throw SDKError.invalidImageParameters("The specified width or height parameters are not within the acceptable range")
+            throw ImageOptionError(message: "The specified width or height parameters are not within the acceptable range")
 
         case .formatAs(let format):
             return try format.urlQueryItems()
@@ -177,7 +185,7 @@ public enum JPGQuality {
             return nil
         case .asPercent(let quality):
             if quality > 100 {
-                throw SDKError.invalidImageParameters("JPG quality must be between 0 and 100 (inclusive).")
+                throw ImageOptionError(message: "JPG quality must be between 0 and 100 (inclusive).")
             }
             return URLQueryItem(name: ImageParameters.quality, value: String(quality))
         case .progressive:
@@ -352,6 +360,14 @@ public enum Fit: URLImageQueryExtendable {
     }
 }
 
+public struct ImageOptionError: Error, CustomDebugStringConvertible {
+
+    let message: String
+
+    public var debugDescription: String {
+        return message
+    }
+}
 
 // MARK: - Private
 
