@@ -8,28 +8,6 @@
 
 import Foundation
 
-internal extension String {
-
-    /**
-     Will make a `URL` from the current `String` instance if possible.
-     */
-    internal func url() throws -> URL {
-        guard var urlComponents = URLComponents(string: self) else {
-            throw SDKError.invalidURL(string: self)
-        }
-
-        // Append https scheme if not present.
-        if urlComponents.scheme == nil {
-            urlComponents.scheme = "https"
-        }
-
-        guard let url = urlComponents.url else {
-            throw SDKError.invalidURL(string: self)
-        }
-        return url
-    }
-}
-
 /// A simple protocol to bridge `Contentful.Asset` and other formats for storing asset information.
 public protocol AssetProtocol: FlatResource {
 
@@ -78,6 +56,23 @@ public class Asset: LocalizableResource, AssetDecodable {
     /// Metadata describing the file associated with the asset. Optional for compatibility with `select` operator queries.
     public var file: FileMetadata? {
         return fields["file"] as? FileMetadata
+    }
+}
+
+public extension AssetProtocol {
+    /**
+     The URL for the underlying media file with additional options for server side manipulations
+     such as format changes, resizing, cropping, and focusing on different areas including on faces,
+     among others.
+
+     - Parameter imageOptions: An array of `ImageOption` that will be used for server side manipulations.
+     - Throws: Will throw SDKError if the SDK is unable to generate a valid URL with the desired ImageOptions.
+     */
+    public func url(with imageOptions: [ImageOption] = []) throws -> URL {
+        guard let url = try urlString?.url(with: imageOptions) else {
+            throw SDKError.invalidURL(string: urlString ?? "No url string is stored for Asset: \(id)")
+        }
+        return url
     }
 }
 
