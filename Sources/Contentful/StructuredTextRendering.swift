@@ -31,6 +31,14 @@ public typealias FontDescriptor = NSFontDescriptor
 public typealias View = NSView
 #endif
 
+
+
+public extension NSAttributedString.Key {
+    public static let block = NSAttributedStringKey(rawValue: "ContentfulBlockAttribute")
+    public static let embed = NSAttributedStringKey(rawValue: "ContentfulEmbed")
+}
+
+
 public struct Styling {
 
     public static let `default` = Styling()
@@ -107,7 +115,7 @@ public struct ParagraphRenderer: NodeRenderer {
             }
         }
         var rendered = [Rendered.string(attributedString)]
-//        rendered.appendNewlineIfNecessary()
+        rendered.appendNewlineIfNecessary()
 
         return rendered
     }
@@ -179,7 +187,7 @@ public struct UnorderedListRenderer: NodeRenderer {
             attributedString.insert(NSAttributedString(string: "•\t"), at: 0)
 
             paragraphStyle.tabStops = [NSTextTab(textAlignment: .left, location: indentation, options: [:])]
-//            paragraphStyle.firstLineHeadIndent = indentation
+            // Indent subsequent lines to line up with first tab stop after bullet.
             paragraphStyle.headIndent = indentation
 
             attributedString.addAttributes([.paragraphStyle: paragraphStyle], range: NSRange(location: 0, length: attributedString.length))
@@ -240,7 +248,28 @@ public struct HyperlinkRenderer: NodeRenderer {
 
 public struct QuoteRenderer: NodeRenderer {
     public func render(node: Node, renderer: DocumentRenderer, context: [CodingUserInfoKey: Any]) -> [Rendered] {
-        return [Rendered.string(NSAttributedString(string: "QUOTE_STUB"))]
+        let blockQuote = node as! Quote
+
+        let renderedChildren = blockQuote.content.reduce(into: [Rendered]()) { (rendered, node) in
+            let nodeRenderer = renderer.renderer(for: node)
+
+            let renderedChildren = nodeRenderer.render(node: node, renderer: renderer, context: context)
+            // TODO: Push onto context.
+            rendered.append(contentsOf: renderedChildren)
+        }
+        
+        let quoteString = renderedChildren.reduce(into: NSMutableAttributedString()) { (mutableString, renderedChild) in
+            switch renderedChild {
+            case .string(let string):
+                mutableString.append(string)
+            default:
+                break
+            }
+        }
+        let attrs: [NSAttributedString.Key: Any] = [.block: true]
+
+        quoteString.addAttributes(attrs, range: NSRange(location: 0, length: quoteString.length))
+        return [Rendered.string(quoteString)]
     }
 }
 
@@ -250,6 +279,13 @@ public struct EmptyRenderer: NodeRenderer {
     }
 }
 
+
+public struct EmbedRenderer: NodeRenderer {
+    public func render(node: Node, renderer: DocumentRenderer, context: [CodingUserInfoKey: Any]) -> [Rendered] {
+        let attrs: [NSAttributedString.Key: Any] = [NSAttributedString.Key.embed: CGSize(width: 400.0, height: 200.0)]
+        return [Rendered.string(NSAttributedString(string: "STUB", attributes: attrs))]
+    }
+}
 
 public protocol NodeRenderer {
     func render(node: Node, renderer: DocumentRenderer, context: [CodingUserInfoKey: Any]) -> [Rendered]
@@ -283,6 +319,7 @@ public struct DefaultDocumentRenderer: DocumentRenderer {
     public var emptyRenderer: EmptyRenderer
     public var paragraphRenderer: ParagraphRenderer
     public var hyperlinkRenderer: HyperlinkRenderer
+    public var embedRenderer: NodeRenderer
 
     public let styling: Styling
 
@@ -296,6 +333,8 @@ public struct DefaultDocumentRenderer: DocumentRenderer {
         listItemRenderer = ListItemRenderer()
         paragraphRenderer = ParagraphRenderer()
         hyperlinkRenderer = HyperlinkRenderer()
+        embedRenderer = EmbedRenderer()
+
         self.styling = styling
     }
 
@@ -351,7 +390,7 @@ public struct DefaultDocumentRenderer: DocumentRenderer {
 
         // TODO:
         case .embeddedEntryBlock:
-            return emptyRenderer
+            return embedRenderer
 
         // TODO:
         case .horizontalRule:
@@ -423,5 +462,10 @@ public extension Font {
 
     public func resized(to size: CGFloat) -> Font {
         return Font(descriptor: fontDescriptor.withSize(size), size: size)
+    }
+
+    // This is dead code for fiddling.
+    public func preferred() -> Font? {
+        return Font.preferredFont(forTextStyle: UIFontTextStyle.caption1)
     }
 }
