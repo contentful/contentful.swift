@@ -79,6 +79,42 @@
 		ED2E03E81F97608A006422A6 /* EntryDecodableLinkResolutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2E03E61F97608A006422A6 /* EntryDecodableLinkResolutionTests.swift */; };
 		ED2E03E91F97608A006422A6 /* EntryDecodableLinkResolutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2E03E61F97608A006422A6 /* EntryDecodableLinkResolutionTests.swift */; };
 		ED307F231EE6E5DF00633390 /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED307F211EE6E5D700633390 /* LocalizationTests.swift */; };
+		ED33165C215A679200133AB8 /* DocumentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED33165B215A679200133AB8 /* DocumentRenderer.swift */; };
+		ED33165D215A679200133AB8 /* DocumentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED33165B215A679200133AB8 /* DocumentRenderer.swift */; };
+		ED33165E215A679200133AB8 /* DocumentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED33165B215A679200133AB8 /* DocumentRenderer.swift */; };
+		ED33165F215A679200133AB8 /* DocumentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED33165B215A679200133AB8 /* DocumentRenderer.swift */; };
+		ED331661215A73D600133AB8 /* EmbeddedEntryRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331660215A73D600133AB8 /* EmbeddedEntryRenderer.swift */; };
+		ED331662215A73D600133AB8 /* EmbeddedEntryRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331660215A73D600133AB8 /* EmbeddedEntryRenderer.swift */; };
+		ED331663215A73D600133AB8 /* EmbeddedEntryRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331660215A73D600133AB8 /* EmbeddedEntryRenderer.swift */; };
+		ED331664215A73D600133AB8 /* EmbeddedEntryRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331660215A73D600133AB8 /* EmbeddedEntryRenderer.swift */; };
+		ED33166B215BA59800133AB8 /* ListItemRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331665215BA59800133AB8 /* ListItemRenderer.swift */; };
+		ED33166C215BA59800133AB8 /* ListItemRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331665215BA59800133AB8 /* ListItemRenderer.swift */; };
+		ED33166D215BA59800133AB8 /* ListItemRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331665215BA59800133AB8 /* ListItemRenderer.swift */; };
+		ED33166E215BA59800133AB8 /* ListItemRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331665215BA59800133AB8 /* ListItemRenderer.swift */; };
+		ED33166F215BA59800133AB8 /* HeadingRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331666215BA59800133AB8 /* HeadingRenderer.swift */; };
+		ED331670215BA59800133AB8 /* HeadingRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331666215BA59800133AB8 /* HeadingRenderer.swift */; };
+		ED331671215BA59800133AB8 /* HeadingRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331666215BA59800133AB8 /* HeadingRenderer.swift */; };
+		ED331672215BA59800133AB8 /* HeadingRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331666215BA59800133AB8 /* HeadingRenderer.swift */; };
+		ED331673215BA59800133AB8 /* OrderedListRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331667215BA59800133AB8 /* OrderedListRenderer.swift */; };
+		ED331674215BA59800133AB8 /* OrderedListRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331667215BA59800133AB8 /* OrderedListRenderer.swift */; };
+		ED331675215BA59800133AB8 /* OrderedListRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331667215BA59800133AB8 /* OrderedListRenderer.swift */; };
+		ED331676215BA59800133AB8 /* OrderedListRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331667215BA59800133AB8 /* OrderedListRenderer.swift */; };
+		ED331677215BA59800133AB8 /* HyperlinkRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331668215BA59800133AB8 /* HyperlinkRenderer.swift */; };
+		ED331678215BA59800133AB8 /* HyperlinkRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331668215BA59800133AB8 /* HyperlinkRenderer.swift */; };
+		ED331679215BA59800133AB8 /* HyperlinkRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331668215BA59800133AB8 /* HyperlinkRenderer.swift */; };
+		ED33167A215BA59800133AB8 /* HyperlinkRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331668215BA59800133AB8 /* HyperlinkRenderer.swift */; };
+		ED33167B215BA59800133AB8 /* ParagraphRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331669215BA59800133AB8 /* ParagraphRenderer.swift */; };
+		ED33167C215BA59800133AB8 /* ParagraphRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331669215BA59800133AB8 /* ParagraphRenderer.swift */; };
+		ED33167D215BA59800133AB8 /* ParagraphRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331669215BA59800133AB8 /* ParagraphRenderer.swift */; };
+		ED33167E215BA59800133AB8 /* ParagraphRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331669215BA59800133AB8 /* ParagraphRenderer.swift */; };
+		ED33167F215BA59800133AB8 /* UnorderedListRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED33166A215BA59800133AB8 /* UnorderedListRenderer.swift */; };
+		ED331680215BA59800133AB8 /* UnorderedListRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED33166A215BA59800133AB8 /* UnorderedListRenderer.swift */; };
+		ED331681215BA59800133AB8 /* UnorderedListRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED33166A215BA59800133AB8 /* UnorderedListRenderer.swift */; };
+		ED331682215BA59800133AB8 /* UnorderedListRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED33166A215BA59800133AB8 /* UnorderedListRenderer.swift */; };
+		ED331684215BA61C00133AB8 /* QuoteRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331683215BA61C00133AB8 /* QuoteRenderer.swift */; };
+		ED331685215BA61C00133AB8 /* QuoteRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331683215BA61C00133AB8 /* QuoteRenderer.swift */; };
+		ED331686215BA61C00133AB8 /* QuoteRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331683215BA61C00133AB8 /* QuoteRenderer.swift */; };
+		ED331687215BA61C00133AB8 /* QuoteRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331683215BA61C00133AB8 /* QuoteRenderer.swift */; };
 		ED36B6F51E3BD052005581FD /* ArrayResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E31B83888200A0EFCD /* ArrayResponse.swift */; };
 		ED36B6F61E3BD052005581FD /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0876D91E1D07B3008E1A06 /* Date.swift */; };
 		ED36B6F71E3BD052005581FD /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15193AD1BB9236300FB83CD /* Asset.swift */; };
@@ -317,6 +353,15 @@
 		ED2C99791ECDD0AF0039056E /* Client+UIKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Client+UIKit.swift"; sourceTree = "<group>"; };
 		ED2E03E61F97608A006422A6 /* EntryDecodableLinkResolutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryDecodableLinkResolutionTests.swift; sourceTree = "<group>"; };
 		ED307F211EE6E5D700633390 /* LocalizationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationTests.swift; sourceTree = "<group>"; };
+		ED33165B215A679200133AB8 /* DocumentRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentRenderer.swift; sourceTree = "<group>"; };
+		ED331660215A73D600133AB8 /* EmbeddedEntryRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedEntryRenderer.swift; sourceTree = "<group>"; };
+		ED331665215BA59800133AB8 /* ListItemRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListItemRenderer.swift; sourceTree = "<group>"; };
+		ED331666215BA59800133AB8 /* HeadingRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadingRenderer.swift; sourceTree = "<group>"; };
+		ED331667215BA59800133AB8 /* OrderedListRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedListRenderer.swift; sourceTree = "<group>"; };
+		ED331668215BA59800133AB8 /* HyperlinkRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HyperlinkRenderer.swift; sourceTree = "<group>"; };
+		ED331669215BA59800133AB8 /* ParagraphRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParagraphRenderer.swift; sourceTree = "<group>"; };
+		ED33166A215BA59800133AB8 /* UnorderedListRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnorderedListRenderer.swift; sourceTree = "<group>"; };
+		ED331683215BA61C00133AB8 /* QuoteRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteRenderer.swift; sourceTree = "<group>"; };
 		ED3CBF191E7AD57100E5B02E /* Sys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Sys.swift; sourceTree = "<group>"; };
 		ED3CBF1E1E7AD58100E5B02E /* Link.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Link.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
@@ -503,7 +548,6 @@
 				ED3CBF1E1E7AD58100E5B02E /* Link.swift */,
 				ED535E631F5E8E1300886D93 /* Decodable.swift */,
 				ED1D78991F2F96260048E169 /* DataCache.swift */,
-				ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */,
 				ED737C931EF1785A00ECB3F1 /* Persistence.swift */,
 				ED68BD711E6DC47A00939F6D /* Query.swift */,
 				ED5F8F9E1F94D52200C86411 /* QueryOperation.swift */,
@@ -513,8 +557,8 @@
 				A1B2E3641BBACF2C00814D63 /* Locale.swift */,
 				A10FF9D41BBB3676001AA4E9 /* Error.swift */,
 				A10FF9DB1BBB4692001AA4E9 /* Field.swift */,
-				ED4A6E542133015F00690EA4 /* StructuredText.swift */,
-				EDC1A8ED2136DBC600899D64 /* StructuredTextRendering.swift */,
+				ED1A7200215A4D69009355FD /* ImageOptions */,
+				ED1A71FF215A4D29009355FD /* StructuredTextKit */,
 				ED91C1461EDCB1DE00F0FC0A /* AppKit */,
 				ED2C99781ECDD0990039056E /* UIKit */,
 			);
@@ -548,6 +592,32 @@
 				A17D044C1C4F974F002E568B /* UtilityTests.swift */,
 			);
 			path = ContentfulTests;
+			sourceTree = "<group>";
+		};
+		ED1A71FF215A4D29009355FD /* StructuredTextKit */ = {
+			isa = PBXGroup;
+			children = (
+				ED331666215BA59800133AB8 /* HeadingRenderer.swift */,
+				ED331683215BA61C00133AB8 /* QuoteRenderer.swift */,
+				ED331668215BA59800133AB8 /* HyperlinkRenderer.swift */,
+				ED331665215BA59800133AB8 /* ListItemRenderer.swift */,
+				ED331667215BA59800133AB8 /* OrderedListRenderer.swift */,
+				ED331669215BA59800133AB8 /* ParagraphRenderer.swift */,
+				ED33166A215BA59800133AB8 /* UnorderedListRenderer.swift */,
+				ED4A6E542133015F00690EA4 /* StructuredText.swift */,
+				EDC1A8ED2136DBC600899D64 /* StructuredTextRendering.swift */,
+				ED33165B215A679200133AB8 /* DocumentRenderer.swift */,
+				ED331660215A73D600133AB8 /* EmbeddedEntryRenderer.swift */,
+			);
+			path = StructuredTextKit;
+			sourceTree = "<group>";
+		};
+		ED1A7200215A4D69009355FD /* ImageOptions */ = {
+			isa = PBXGroup;
+			children = (
+				ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */,
+			);
+			path = ImageOptions;
 			sourceTree = "<group>";
 		};
 		ED2C99781ECDD0990039056E /* UIKit */ = {
@@ -1043,14 +1113,19 @@
 				A10FF9DD1BBB47D2001AA4E9 /* Entry.swift in Sources */,
 				A10FF9DE1BBB4829001AA4E9 /* Space.swift in Sources */,
 				ED0876DA1E1D07B3008E1A06 /* Date.swift in Sources */,
+				ED331661215A73D600133AB8 /* EmbeddedEntryRenderer.swift in Sources */,
 				ED737C941EF1785A00ECB3F1 /* Persistence.swift in Sources */,
+				ED33167F215BA59800133AB8 /* UnorderedListRenderer.swift in Sources */,
 				A19CA3E21B8386CC00A0EFCD /* ClientConfiguration.swift in Sources */,
+				ED33165C215A679200133AB8 /* DocumentRenderer.swift in Sources */,
 				A10FF9DA1BBB4680001AA4E9 /* ContentType.swift in Sources */,
 				ED02DC1320E11D0A005EC57B /* Result.swift in Sources */,
 				ED02DC1720E11D0A005EC57B /* Util.swift in Sources */,
 				ED535E641F5E8E1300886D93 /* Decodable.swift in Sources */,
 				ED1D789A1F2F96260048E169 /* DataCache.swift in Sources */,
 				ED91C1401EDCB03600F0FC0A /* ImageOptions.swift in Sources */,
+				ED33167B215BA59800133AB8 /* ParagraphRenderer.swift in Sources */,
+				ED331673215BA59800133AB8 /* OrderedListRenderer.swift in Sources */,
 				A10FF9D91BBB3BE1001AA4E9 /* ArrayResponse.swift in Sources */,
 				A19CA3E01B836F2500A0EFCD /* Client.swift in Sources */,
 				ED4A6E552133015F00690EA4 /* StructuredText.swift in Sources */,
@@ -1061,11 +1136,15 @@
 				ED4986FE2047107D0014DCFE /* Endpoints.swift in Sources */,
 				A10FF9DC1BBB4692001AA4E9 /* Field.swift in Sources */,
 				ED5F8F911F8F9EA200C86411 /* TypedQuery.swift in Sources */,
+				ED33166F215BA59800133AB8 /* HeadingRenderer.swift in Sources */,
 				A19CA3E81B83890D00A0EFCD /* Resource.swift in Sources */,
 				A1B2E3651BBACF2C00814D63 /* Locale.swift in Sources */,
 				ED2C997B1ECDD0AF0039056E /* Client+UIKit.swift in Sources */,
 				ED68BD721E6DC47A00939F6D /* Query.swift in Sources */,
+				ED331684215BA61C00133AB8 /* QuoteRenderer.swift in Sources */,
+				ED33166B215BA59800133AB8 /* ListItemRenderer.swift in Sources */,
 				ED3CBF1F1E7AD58100E5B02E /* Link.swift in Sources */,
+				ED331677215BA59800133AB8 /* HyperlinkRenderer.swift in Sources */,
 				A10FF9D51BBB3676001AA4E9 /* Error.swift in Sources */,
 				ED3CBF1A1E7AD57100E5B02E /* Sys.swift in Sources */,
 			);
@@ -1156,14 +1235,19 @@
 				ED36B7011E3BD052005581FD /* Resource.swift in Sources */,
 				ED36B6FE1E3BD052005581FD /* Entry.swift in Sources */,
 				ED36B7041E3BD052005581FD /* SyncSpace.swift in Sources */,
+				ED331662215A73D600133AB8 /* EmbeddedEntryRenderer.swift in Sources */,
 				ED737C951EF1785A00ECB3F1 /* Persistence.swift in Sources */,
+				ED331680215BA59800133AB8 /* UnorderedListRenderer.swift in Sources */,
 				ED36B7001E3BD052005581FD /* Field.swift in Sources */,
+				ED33165D215A679200133AB8 /* DocumentRenderer.swift in Sources */,
 				ED1D789B1F2F96260048E169 /* DataCache.swift in Sources */,
 				ED02DC1420E11D0A005EC57B /* Result.swift in Sources */,
 				ED02DC1820E11D0A005EC57B /* Util.swift in Sources */,
 				ED535E651F5E8E1300886D93 /* Decodable.swift in Sources */,
 				ED36B7031E3BD052005581FD /* Space.swift in Sources */,
 				ED36B6F71E3BD052005581FD /* Asset.swift in Sources */,
+				ED33167C215BA59800133AB8 /* ParagraphRenderer.swift in Sources */,
+				ED331674215BA59800133AB8 /* OrderedListRenderer.swift in Sources */,
 				ED36B6FF1E3BD052005581FD /* Error.swift in Sources */,
 				ED36B6F91E3BD052005581FD /* ClientConfiguration.swift in Sources */,
 				ED4A6E562133015F00690EA4 /* StructuredText.swift in Sources */,
@@ -1174,11 +1258,15 @@
 				ED4986FF2047107D0014DCFE /* Endpoints.swift in Sources */,
 				ED36B6F81E3BD052005581FD /* Client.swift in Sources */,
 				ED5F8F921F8F9EA200C86411 /* TypedQuery.swift in Sources */,
+				ED331670215BA59800133AB8 /* HeadingRenderer.swift in Sources */,
 				ED36B6F61E3BD052005581FD /* Date.swift in Sources */,
 				ED36B6FC1E3BD052005581FD /* Locale.swift in Sources */,
 				ED68BD731E6DC47F00939F6D /* Query.swift in Sources */,
 				ED3CBF201E7AD58100E5B02E /* Link.swift in Sources */,
+				ED331685215BA61C00133AB8 /* QuoteRenderer.swift in Sources */,
+				ED33166C215BA59800133AB8 /* ListItemRenderer.swift in Sources */,
 				ED36B6FA1E3BD052005581FD /* ContentType.swift in Sources */,
+				ED331678215BA59800133AB8 /* HyperlinkRenderer.swift in Sources */,
 				ED91C1411EDCB03900F0FC0A /* ImageOptions.swift in Sources */,
 				ED3CBF1B1E7AD57100E5B02E /* Sys.swift in Sources */,
 			);
@@ -1191,14 +1279,19 @@
 				ED36B7111E3BD052005581FD /* Resource.swift in Sources */,
 				ED36B70E1E3BD052005581FD /* Entry.swift in Sources */,
 				ED36B7141E3BD052005581FD /* SyncSpace.swift in Sources */,
+				ED331663215A73D600133AB8 /* EmbeddedEntryRenderer.swift in Sources */,
 				ED737C961EF1785A00ECB3F1 /* Persistence.swift in Sources */,
+				ED331681215BA59800133AB8 /* UnorderedListRenderer.swift in Sources */,
 				ED36B7101E3BD052005581FD /* Field.swift in Sources */,
+				ED33165E215A679200133AB8 /* DocumentRenderer.swift in Sources */,
 				ED1D789C1F2F96260048E169 /* DataCache.swift in Sources */,
 				ED02DC1520E11D0A005EC57B /* Result.swift in Sources */,
 				ED02DC1920E11D0A005EC57B /* Util.swift in Sources */,
 				ED535E661F5E8E1300886D93 /* Decodable.swift in Sources */,
 				ED36B7131E3BD052005581FD /* Space.swift in Sources */,
 				ED36B7071E3BD052005581FD /* Asset.swift in Sources */,
+				ED33167D215BA59800133AB8 /* ParagraphRenderer.swift in Sources */,
+				ED331675215BA59800133AB8 /* OrderedListRenderer.swift in Sources */,
 				ED36B70F1E3BD052005581FD /* Error.swift in Sources */,
 				ED36B7091E3BD052005581FD /* ClientConfiguration.swift in Sources */,
 				ED4A6E572133015F00690EA4 /* StructuredText.swift in Sources */,
@@ -1209,11 +1302,15 @@
 				ED4987002047107D0014DCFE /* Endpoints.swift in Sources */,
 				ED36B7081E3BD052005581FD /* Client.swift in Sources */,
 				ED5F8F931F8F9EA200C86411 /* TypedQuery.swift in Sources */,
+				ED331671215BA59800133AB8 /* HeadingRenderer.swift in Sources */,
 				ED36B7061E3BD052005581FD /* Date.swift in Sources */,
 				ED36B70C1E3BD052005581FD /* Locale.swift in Sources */,
 				ED68BD741E6DC48000939F6D /* Query.swift in Sources */,
 				ED3CBF211E7AD58100E5B02E /* Link.swift in Sources */,
+				ED331686215BA61C00133AB8 /* QuoteRenderer.swift in Sources */,
+				ED33166D215BA59800133AB8 /* ListItemRenderer.swift in Sources */,
 				ED91C1421EDCB03A00F0FC0A /* ImageOptions.swift in Sources */,
+				ED331679215BA59800133AB8 /* HyperlinkRenderer.swift in Sources */,
 				ED36B70A1E3BD052005581FD /* ContentType.swift in Sources */,
 				ED3CBF1C1E7AD57100E5B02E /* Sys.swift in Sources */,
 			);
@@ -1226,14 +1323,19 @@
 				ED36B7211E3BD053005581FD /* Resource.swift in Sources */,
 				EDBB1F4F1F3DF44A00D90FBE /* Client+AppKit.swift in Sources */,
 				ED36B71E1E3BD053005581FD /* Entry.swift in Sources */,
+				ED331664215A73D600133AB8 /* EmbeddedEntryRenderer.swift in Sources */,
 				ED36B7241E3BD053005581FD /* SyncSpace.swift in Sources */,
+				ED331682215BA59800133AB8 /* UnorderedListRenderer.swift in Sources */,
 				ED737C971EF1785A00ECB3F1 /* Persistence.swift in Sources */,
+				ED33165F215A679200133AB8 /* DocumentRenderer.swift in Sources */,
 				ED1D789D1F2F96260048E169 /* DataCache.swift in Sources */,
 				ED02DC1620E11D0A005EC57B /* Result.swift in Sources */,
 				ED02DC1A20E11D0A005EC57B /* Util.swift in Sources */,
 				ED535E671F5E8E1300886D93 /* Decodable.swift in Sources */,
 				ED36B7201E3BD053005581FD /* Field.swift in Sources */,
 				ED36B7231E3BD053005581FD /* Space.swift in Sources */,
+				ED33167E215BA59800133AB8 /* ParagraphRenderer.swift in Sources */,
+				ED331676215BA59800133AB8 /* OrderedListRenderer.swift in Sources */,
 				ED36B7171E3BD053005581FD /* Asset.swift in Sources */,
 				ED36B71F1E3BD053005581FD /* Error.swift in Sources */,
 				EDC1A8F12136DBC800899D64 /* StructuredTextRendering.swift in Sources */,
@@ -1244,11 +1346,15 @@
 				ED4987012047107D0014DCFE /* Endpoints.swift in Sources */,
 				ED36B7181E3BD053005581FD /* Client.swift in Sources */,
 				ED5F8F941F8F9EA200C86411 /* TypedQuery.swift in Sources */,
+				ED331672215BA59800133AB8 /* HeadingRenderer.swift in Sources */,
 				ED36B7161E3BD053005581FD /* Date.swift in Sources */,
 				ED36B71C1E3BD053005581FD /* Locale.swift in Sources */,
 				ED68BD751E6DC48000939F6D /* Query.swift in Sources */,
 				ED3CBF221E7AD58100E5B02E /* Link.swift in Sources */,
+				ED331687215BA61C00133AB8 /* QuoteRenderer.swift in Sources */,
+				ED33166E215BA59800133AB8 /* ListItemRenderer.swift in Sources */,
 				ED36B71A1E3BD053005581FD /* ContentType.swift in Sources */,
+				ED33167A215BA59800133AB8 /* HyperlinkRenderer.swift in Sources */,
 				ED91C1431EDCB03B00F0FC0A /* ImageOptions.swift in Sources */,
 				ED3CBF1D1E7AD57100E5B02E /* Sys.swift in Sources */,
 			);
