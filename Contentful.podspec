@@ -39,8 +39,8 @@ Pod::Spec.new do |spec|
     subspec.source_files = 'Sources/Contentful/ImageOptions/*.swift'
   end
 
-  spec.subspec 'StructuredTextKit' do |subspec|
-    subspec.source_files = 'Sources/Contentful/StructuredTextKit/*.swift'
+  spec.subspec 'RichText' do |subspec|
+    subspec.source_files = 'Sources/Contentful/RichText/*.swift'
   end
 end
 

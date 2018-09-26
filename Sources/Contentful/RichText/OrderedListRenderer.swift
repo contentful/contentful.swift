@@ -7,29 +7,31 @@
 //
 
 import Foundation
+import UIKit
 
 public struct OrderedListRenderer: NodeRenderer {
     public func render(node: Node, renderer: DocumentRenderer, context: [CodingUserInfoKey: Any]) -> [NSMutableAttributedString] {
+        let orderedList = node as! OrderedList
 
         var mutableContext = context
-        mutableContext[.indentLevel] = (context[.indentLevel] as! Int) + 1
-        mutableContext[.listItemContext] = ListItemContext(level: (mutableContext[.listItemContext] as! ListItemContext).level + 1 )
+        var listContext = mutableContext[.listContext] as! ListContext
+        listContext.incrementLevel()
+        mutableContext[.listContext] = listContext
 
-        let orderedList = node as! OrderedList
+        listContext.parentType = .orderedList
+
         var rendered = orderedList.content.reduce(into: [NSMutableAttributedString]()) { (rendered, node) in
+
+            mutableContext[.listContext] = listContext
             let nodeRenderer = renderer.renderer(for: node)
-
             let renderedChildren = nodeRenderer.render(node: node, renderer: renderer, context: mutableContext)
-            // TODO: Push onto context.
+
+            // Append to the list of all items.
             rendered.append(contentsOf: renderedChildren)
+
+            listContext.itemIndex += 1
         }
-
         rendered.appendNewlineIfNecessary(node: node)
-
-        // TODO: Ensure we don't go lower than 0
-        mutableContext[.indentLevel] = (context[.indentLevel] as! Int) - 1
-        mutableContext[.listItemContext] = ListItemContext(level: (mutableContext[.listItemContext] as! ListItemContext).level - 1 )
-
         return rendered
     }
 }

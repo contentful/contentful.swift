@@ -1,4 +1,3 @@
-
 //
 //  File.swift
 //  Contentful
@@ -19,7 +18,7 @@ public struct DefaultDocumentRenderer: DocumentRenderer {
     public var textRenderer: NodeRenderer
     public var orderedListRenderer: NodeRenderer
     public var unorderedListRenderer: NodeRenderer
-    public var quoteRenderer: NodeRenderer
+    public var blockQuoteRenderer: NodeRenderer
     public var listItemRenderer: NodeRenderer
     public var emptyRenderer: NodeRenderer
     public var paragraphRenderer: NodeRenderer
@@ -33,7 +32,7 @@ public struct DefaultDocumentRenderer: DocumentRenderer {
         unorderedListRenderer = UnorderedListRenderer()
         textRenderer = TextRenderer()
         headingRenderer = HeadingRenderer()
-        quoteRenderer = QuoteRenderer()
+        blockQuoteRenderer = BlockQuoteRenderer()
         emptyRenderer = EmptyRenderer()
         listItemRenderer = ListItemRenderer()
         paragraphRenderer = ParagraphRenderer()
@@ -43,12 +42,10 @@ public struct DefaultDocumentRenderer: DocumentRenderer {
         self.styling = styling
     }
 
-
     public var baseContext: [CodingUserInfoKey: Any] {
         return [
             .styles: styling,
-            .indentLevel: 0,
-            .listItemContext: ListItemContext(level: 0)
+            .listContext: ListContext(level: 0, parentType: nil, itemIndex: 0, isFirstListItemChild: false)
         ]
     }
 
@@ -86,8 +83,8 @@ public struct DefaultDocumentRenderer: DocumentRenderer {
         case .listItem:
             return listItemRenderer
 
-        case .quote:
-            return quoteRenderer
+        case .blockquote:
+            return blockQuoteRenderer
 
         case .hyperlink:
             return hyperlinkRenderer

@@ -1,5 +1,5 @@
 //
-//  QuoteRenderer.swift
+//  BlockQuoteRenderer.swift
 //  Contentful
 //
 //  Created by JP Wright on 9/26/18.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-public struct QuoteRenderer: NodeRenderer {
+public struct BlockQuoteRenderer: NodeRenderer {
     public func render(node: Node, renderer: DocumentRenderer, context: [CodingUserInfoKey: Any]) -> [NSMutableAttributedString] {
-        let blockQuote = node as! Quote
+        let blockQuote = node as! BlockQuote
 
         let renderedChildren = blockQuote.content.reduce(into: [NSMutableAttributedString]()) { (rendered, node) in
             let nodeRenderer = renderer.renderer(for: node)
@@ -26,6 +26,7 @@ public struct QuoteRenderer: NodeRenderer {
 
         quoteString.addAttributes(attrs, range: NSRange(location: 0, length: quoteString.length))
         var rendered = [quoteString]
+        rendered.applyListItemStylingIfNecessary(node: node, context: context)
         rendered.appendNewlineIfNecessary(node: node)
         return rendered
     }

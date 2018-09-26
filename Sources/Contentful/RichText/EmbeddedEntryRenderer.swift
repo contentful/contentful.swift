@@ -26,8 +26,7 @@ public struct ViewProvider {
 struct EmbedRenderer: NodeRenderer {
 
     public func render(node: Node, renderer: DocumentRenderer, context: [CodingUserInfoKey: Any]) -> [NSMutableAttributedString] {
-
-        let embeddedResourceNode = node as! EmbeddedResource
+        let embeddedResourceNode = node as! EmbeddedResourceBlock
         guard let resolvedResource = embeddedResourceNode.data.resolvedEntryDecodable else { return [] }
 
 
@@ -47,8 +46,8 @@ struct EmbedRenderer: NodeRenderer {
             semaphore.signal()
         }
         _ = semaphore.wait(timeout: DispatchTime.distantFuture)
-        let string = NSMutableAttributedString(string: "\n")
-        string.append(NSAttributedString(string: "\n", attributes: [.embed: view]))
-        return [string]
+        var rendered = [NSMutableAttributedString(string:  " ", attributes: [.embed: view])]
+        rendered.applyListItemStylingIfNecessary(node: node, context: context)
+        return rendered
     }
 }

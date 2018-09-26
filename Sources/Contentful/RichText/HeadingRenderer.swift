@@ -1,5 +1,5 @@
 //
-//  ListItemRenderer.swift
+//  HeadingRenderer.swift
 //  Contentful
 //
 //  Created by JP Wright on 9/26/18.
@@ -8,19 +8,20 @@
 
 import Foundation
 
-public struct ListItemContext {
-    var level: UInt
-}
+public struct HeadingRenderer: NodeRenderer {
 
-public struct ListItemRenderer: NodeRenderer {
     public func render(node: Node, renderer: DocumentRenderer, context: [CodingUserInfoKey: Any]) -> [NSMutableAttributedString] {
-        let listItem = node as! ListItem
-
-        var rendered = listItem.content.reduce(into: [NSMutableAttributedString]()) { (rendered, node) in
+        let heading = node as! Heading
+        var rendered = heading.content.reduce(into: [NSMutableAttributedString]()) { (rendered, node) in
             let nodeRenderer = renderer.renderer(for: node)
             let renderedChildren = nodeRenderer.render(node: node, renderer: renderer, context: context)
             rendered.append(contentsOf: renderedChildren)
         }
+
+        rendered.forEach {
+            $0.addAttributes(context.styles.headingAttributes(level: Int(heading.level)), range: NSRange(location: 0, length: $0.length))
+        }
+        rendered.applyListItemStylingIfNecessary(node: node, context: context)
         rendered.appendNewlineIfNecessary(node: node)
         return rendered
     }

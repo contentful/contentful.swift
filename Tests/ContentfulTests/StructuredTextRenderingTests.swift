@@ -1,5 +1,5 @@
 //
-//  StructuredTextRenderingTests.swift
+//  RichTextRenderingTests.swift
 //  Contentful
 //
 //  Created by JP Wright on 18.09.18.
@@ -12,7 +12,7 @@ import Nimble
 import DVR
 import Foundation
 
-class StructuredTextRenderingTests: XCTestCase {
+class RichTextRenderingTests: XCTestCase {
 
     func testRenderingDocument() {
         let expectation = self.expectation(description: "")

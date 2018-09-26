@@ -19,7 +19,7 @@ public struct ParagraphRenderer: NodeRenderer {
             // TODO: Push onto context.
             rendered.append(contentsOf: renderedChildren)
         }
-
+        rendered.applyListItemStylingIfNecessary(node: node, context: context)
         rendered.appendNewlineIfNecessary(node: node)
         return rendered
     }

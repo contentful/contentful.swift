@@ -1,5 +1,5 @@
 //
-//  StructuredTextTests.swift
+//  RichTextTests.swift
 //  Contentful
 //
 //  Created by JP Wright on 26.08.18.
@@ -72,7 +72,7 @@ final class AtomicStructuredTextModel: Resource, EntryDecodable, FieldKeysQuerya
 }
 
 
-class StructuredDeserializationTextTests: XCTestCase {
+class RichTextDeserializationTests: XCTestCase {
 
     static let client = TestClientFactory.testClient(withCassetteNamed: "StructuredTextResolutionTests",
                                                      spaceId: "pzlh94jb0ghw",
@@ -109,7 +109,7 @@ class StructuredDeserializationTextTests: XCTestCase {
     func testDeserializingH1() {
         let expectation = self.expectation(description: "")
 
-        StructuredDeserializationTextTests.client.fetchArray(of: AtomicStructuredTextModel.self, matching: QueryOn<AtomicStructuredTextModel>.where(field: .name, .equals("simple_headline_1"))) { result in
+        RichTextDeserializationTests.client.fetchArray(of: AtomicStructuredTextModel.self, matching: QueryOn<AtomicStructuredTextModel>.where(field: .name, .equals("simple_headline_1"))) { result in
             switch result {
             case .success(let arrayResponse):
                 let model = arrayResponse.items.first!
@@ -129,7 +129,7 @@ class StructuredDeserializationTextTests: XCTestCase {
     func testDeserializingH6() {
         let expectation = self.expectation(description: "")
 
-        StructuredDeserializationTextTests.client.fetchArray(of: AtomicStructuredTextModel.self, matching: QueryOn<AtomicStructuredTextModel>.where(field: .name, .equals("simple_headline_6"))) { result in
+        RichTextDeserializationTests.client.fetchArray(of: AtomicStructuredTextModel.self, matching: QueryOn<AtomicStructuredTextModel>.where(field: .name, .equals("simple_headline_6"))) { result in
             switch result {
             case .success(let arrayResponse):
                 let model = arrayResponse.items.first!
@@ -150,7 +150,7 @@ class StructuredDeserializationTextTests: XCTestCase {
     func testDeserializingParagraphWithTextOnly() {
         let expectation = self.expectation(description: "")
 
-        StructuredDeserializationTextTests.client.fetchArray(of: AtomicStructuredTextModel.self, matching: QueryOn<AtomicStructuredTextModel>.where(field: .name, .equals("simple_text"))) { result in
+        RichTextDeserializationTests.client.fetchArray(of: AtomicStructuredTextModel.self, matching: QueryOn<AtomicStructuredTextModel>.where(field: .name, .equals("simple_text"))) { result in
             switch result {
             case .success(let arrayResponse):
                 let model = arrayResponse.items.first!
@@ -171,12 +171,12 @@ class StructuredDeserializationTextTests: XCTestCase {
     func testDeserializingEmbeddedEntryWithText() {
         let expectation = self.expectation(description: "")
 
-        StructuredDeserializationTextTests.client.fetchArray(of: AtomicStructuredTextModel.self, matching: QueryOn<AtomicStructuredTextModel>.where(field: .name, .equals("simple_text_embeded"))) { result in
+        RichTextDeserializationTests.client.fetchArray(of: AtomicStructuredTextModel.self, matching: QueryOn<AtomicStructuredTextModel>.where(field: .name, .equals("simple_text_embeded"))) { result in
             switch result {
             case .success(let arrayResponse):
                 let model = arrayResponse.items.first!
 //                expect(model.structured.content.count).to(equal(1))
-                let embeddedNode = model.structured.content.first as! EmbeddedResource
+                let embeddedNode = model.structured.content.first as! EmbeddedResourceBlock
                 let embeddedEntry = embeddedNode.data.resolvedEntryDecodable as? AtomicStructuredTextModel
                 expect(embeddedEntry?.name).to(equal("simple_text"))
 
@@ -191,7 +191,7 @@ class StructuredDeserializationTextTests: XCTestCase {
     func testDeserializingTextWithMarks() {
         let expectation = self.expectation(description: "")
 
-        StructuredDeserializationTextTests.client.fetchArray(of: AtomicStructuredTextModel.self, matching: QueryOn<AtomicStructuredTextModel>.where(field: .name, .equals("simple_text_mixed_bold_italic_underline_code_all"))) { result in
+        RichTextDeserializationTests.client.fetchArray(of: AtomicStructuredTextModel.self, matching: QueryOn<AtomicStructuredTextModel>.where(field: .name, .equals("simple_text_mixed_bold_italic_underline_code_all"))) { result in
             switch result {
             case .success(let arrayResponse):
                 let model = arrayResponse.items.first!
@@ -216,7 +216,7 @@ class StructuredDeserializationTextTests: XCTestCase {
     func testDeserializingHorizontalRule() {
         let expectation = self.expectation(description: "")
 
-        StructuredDeserializationTextTests.client.fetchArray(of: AtomicStructuredTextModel.self, matching: QueryOn<AtomicStructuredTextModel>.where(field: .name, .equals("simple_horizontal_rule"))) { result in
+        RichTextDeserializationTests.client.fetchArray(of: AtomicStructuredTextModel.self, matching: QueryOn<AtomicStructuredTextModel>.where(field: .name, .equals("simple_horizontal_rule"))) { result in
             switch result {
             case .success(let arrayResponse):
                 let model = arrayResponse.items.first!
@@ -235,12 +235,12 @@ class StructuredDeserializationTextTests: XCTestCase {
     func testDeserializingQuote() {
         let expectation = self.expectation(description: "")
 
-        StructuredDeserializationTextTests.client.fetchArray(of: AtomicStructuredTextModel.self, matching: QueryOn<AtomicStructuredTextModel>.where(field: .name, .equals("simple_quote"))) { result in
+        RichTextDeserializationTests.client.fetchArray(of: AtomicStructuredTextModel.self, matching: QueryOn<AtomicStructuredTextModel>.where(field: .name, .equals("simple_quote"))) { result in
             switch result {
             case .success(let arrayResponse):
                 let model = arrayResponse.items.first!
 
-                let quote = model.structured.content.first as? Quote
+                let quote = model.structured.content.first as? BlockQuote
                 let paragraph = quote?.content.first as? Paragraph
                 expect(paragraph).toNot(beNil())
                 let text = paragraph?.content.first as? Text
@@ -257,7 +257,7 @@ class StructuredDeserializationTextTests: XCTestCase {
     func testDeserializingOrderedList() {
         let expectation = self.expectation(description: "")
 
-        StructuredDeserializationTextTests.client.fetchArray(of: AtomicStructuredTextModel.self, matching: QueryOn<AtomicStructuredTextModel>.where(field: .name, .equals("simple_ordered_list"))) { result in
+        RichTextDeserializationTests.client.fetchArray(of: AtomicStructuredTextModel.self, matching: QueryOn<AtomicStructuredTextModel>.where(field: .name, .equals("simple_ordered_list"))) { result in
             switch result {
             case .success(let arrayResponse):
                 let model = arrayResponse.items.first!
@@ -281,7 +281,7 @@ class StructuredDeserializationTextTests: XCTestCase {
     func testDeserializingUnorderedList() {
         let expectation = self.expectation(description: "")
 
-        StructuredDeserializationTextTests.client.fetchArray(of: AtomicStructuredTextModel.self, matching: QueryOn<AtomicStructuredTextModel>.where(field: .name, .equals("simple_unordered_list"))) { result in
+        RichTextDeserializationTests.client.fetchArray(of: AtomicStructuredTextModel.self, matching: QueryOn<AtomicStructuredTextModel>.where(field: .name, .equals("simple_unordered_list"))) { result in
             switch result {
             case .success(let arrayResponse):
                 let model = arrayResponse.items.first!
@@ -305,7 +305,7 @@ class StructuredDeserializationTextTests: XCTestCase {
     func testDeserializingTextWithHyperlink() {
         let expectation = self.expectation(description: "")
 
-        StructuredDeserializationTextTests.client.fetchArray(of: AtomicStructuredTextModel.self, matching: QueryOn<AtomicStructuredTextModel>.where(field: .name, .equals("simple_text_with_link"))) { result in
+        RichTextDeserializationTests.client.fetchArray(of: AtomicStructuredTextModel.self, matching: QueryOn<AtomicStructuredTextModel>.where(field: .name, .equals("simple_text_with_link"))) { result in
             switch result {
             case .success(let arrayResponse):
                 let model = arrayResponse.items.first!
@@ -347,7 +347,7 @@ class StructuredDeserializationTextTests: XCTestCase {
                 expect(arrayResponse.items.first!.body.content[2].nodeType).to(equal(NodeType.embeddedEntryBlock))
                 let headingNode = arrayResponse.items.first!.body.content.first as! Heading
                 expect((headingNode.content.first as? Text)?.value).to(equal("Some heading"))
-                let nodeWithEmbeddedEntry = arrayResponse.items.first!.body.content[2] as! EmbeddedResource
+                let nodeWithEmbeddedEntry = arrayResponse.items.first!.body.content[2] as! EmbeddedResourceBlock
                 expect(nodeWithEmbeddedEntry.data.resolvedEntryDecodable).toNot(beNil())
                 expect((nodeWithEmbeddedEntry.data.resolvedEntryDecodable as? EmbeddedEntry)?.body).to(equal("Embedded 1"))
 

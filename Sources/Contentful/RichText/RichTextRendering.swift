@@ -1,5 +1,5 @@
 //
-//  StructuredTextRendering.swift
+//  RichTextRendering.swift
 //  Contentful
 //
 //  Created by JP Wright on 29.08.18.
@@ -52,9 +52,13 @@ public struct Styling {
 
     public var textColor = Color.black
 
-    public var paragraphStyling = NSParagraphStyle()
+    public var paragraphSpacing: CGFloat = 15.0
+
+    public var lineSpacing: CGFloat = 0.0
 
     public var indentationMultiplier: CGFloat = 15.0
+
+    public var distanceFromBulletToChar: CGFloat = 3.0
 
     public var fontsForHeadingLevels: [Font] = [
         Font.systemFont(ofSize: 24.0, weight: .semibold),
@@ -78,8 +82,37 @@ extension Dictionary where Key == CodingUserInfoKey {
 
 extension Swift.Array where Element == NSMutableAttributedString {
     mutating func appendNewlineIfNecessary(node: Node) {
-        guard node.nodeClass == .block else { return }
+        guard node is BlockNode else { return }
         append(NSMutableAttributedString(string: "\n"))
+    }
+
+    mutating func applyListItemStylingIfNecessary(node: Node, context: [CodingUserInfoKey: Any]) {
+
+        // check the current node and if it has children,
+        // if any of children are blocks, mutate and pass down context.
+        // if it doesn’t have children, apply styles, clear conte
+        guard node is InlineNode || node is Text || (node as? BlockNode)?.content.filter({ $0 is BlockNode }).count == 0 else {
+            return
+        }
+
+        let listContext = context[.listContext] as! ListContext
+        guard listContext.level > 0 else { return }
+
+        // Get the character for the index.
+        let listIndex = listContext.itemIndex
+        let listChar = listContext.listChar(at: listIndex) ?? ""
+
+        if listContext.isFirstListItemChild {
+            insert(NSMutableAttributedString(string: "\t" + listChar + "\t"), at: 0)
+        } else if node is BlockNode {
+            for _ in 0...listContext.level {
+                insert(NSMutableAttributedString(string: "\t"), at: 0)
+            }
+        }
+
+        forEach { string in
+            string.applyListItemStyling(node: node, context: context)
+        }
     }
 }
 
@@ -90,13 +123,19 @@ public struct TextRenderer: NodeRenderer {
         let styles = context[.styles] as! Styling
 
         let font = DefaultDocumentRenderer.font(for: text, styling: styles)
-        let attributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: font]
+
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = styles.lineSpacing
+        paragraphStyle.paragraphSpacing = styles.paragraphSpacing
+
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: font,
+            .paragraphStyle: paragraphStyle
+        ]
         let attributedString = NSMutableAttributedString(string: text.value, attributes: attributes)
         return [attributedString]
     }
 }
-
-
 
 public struct EmptyRenderer: NodeRenderer {
     public func render(node: Node, renderer: DocumentRenderer, context: [CodingUserInfoKey: Any]) -> [NSMutableAttributedString] {
@@ -106,9 +145,8 @@ public struct EmptyRenderer: NodeRenderer {
 
 public extension CodingUserInfoKey {
     public static let paragraphStyling = CodingUserInfoKey(rawValue: "paragraphStylingKey")!
-    public static let indentLevel = CodingUserInfoKey(rawValue: "indentLevelKey")!
     public static let styles = CodingUserInfoKey(rawValue: "stylesKey")!
-    public static let listItemContext = CodingUserInfoKey(rawValue: "listItemContextKey")!
+    public static let listContext = CodingUserInfoKey(rawValue: "listItemContextKey")!
 }
 
 
