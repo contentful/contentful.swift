@@ -43,12 +43,14 @@ public protocol NodeRenderer {
 
 public struct Styling {
 
+    public init() {}
+    
     public static let `default` = Styling()
 
     /// The base font with which to begin styling.
     public var baseFont = Font.systemFont(ofSize: Font.systemFontSize)
 
-    public var viewProvider: ViewProvider = ViewProvider()
+    public var viewProvider: ViewProvider = EmptyViewProvider()
 
     public var textColor = Color.black
 

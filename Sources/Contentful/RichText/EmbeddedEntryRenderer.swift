@@ -15,11 +15,29 @@ import Cocoa
 import AppKit
 #endif
 
-public struct ViewProvider {
 
-    public func view(for entry: EntryDecodable) -> View {
+public typealias EmbeddedResourceView = EmbeddedResourceRepresentable & View
 
-        return View(frame: .zero)
+public protocol EmbeddedResourceRepresentable {
+
+    var surroundingTextShouldWrap: Bool { get }
+    var context: [CodingUserInfoKey: Any] { get set }
+}
+
+public protocol ViewProvider {
+    func view(for entry: EntryDecodable, context: [CodingUserInfoKey: Any]) -> EmbeddedResourceView
+}
+
+public class EmptyView: View, EmbeddedResourceRepresentable {
+    public var surroundingTextShouldWrap: Bool = true
+    public var context: [CodingUserInfoKey: Any] = [:]
+}
+
+public struct EmptyViewProvider: ViewProvider {
+
+    public func view(for entry: EntryDecodable, context: [CodingUserInfoKey: Any]) -> EmbeddedResourceView {
+
+        return EmptyView(frame: .zero)
     }
 }
 
@@ -29,25 +47,22 @@ struct EmbedRenderer: NodeRenderer {
         let embeddedResourceNode = node as! EmbeddedResourceBlock
         guard let resolvedResource = embeddedResourceNode.data.resolvedEntryDecodable else { return [] }
 
-
         let provider = (context[.styles] as! Styling).viewProvider
 
         let semaphore = DispatchSemaphore(value: 0)
 
-        var view: UIButton!
+        var view: UIView!
 
         DispatchQueue.main.sync {
-            view = UIButton(frame: .zero)
-            view!.frame.size = CGSize(width: 256.0, height: 256)
-            view!.backgroundColor = .purple
-            view.setTitle("not pressed", for: .normal)
-            view.setTitle("is pressed", for: .highlighted)
-            view.setTitle("is pressed", for: .selected)
+
+            view = provider.view(for: resolvedResource, context: context)
+
             semaphore.signal()
         }
         _ = semaphore.wait(timeout: DispatchTime.distantFuture)
-        var rendered = [NSMutableAttributedString(string:  " ", attributes: [.embed: view])]
+        var rendered = [NSMutableAttributedString(string: " ", attributes: [.embed: view])]
         rendered.applyListItemStylingIfNecessary(node: node, context: context)
+        rendered.appendNewlineIfNecessary(node: node)
         return rendered
     }
 }

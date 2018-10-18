@@ -25,7 +25,7 @@ public struct DefaultDocumentRenderer: DocumentRenderer {
     public var hyperlinkRenderer: NodeRenderer
     public var embedRenderer: NodeRenderer
 
-    public let styling: Styling
+    public var styling: Styling
 
     public init(styling: Styling) {
         orderedListRenderer = OrderedListRenderer()

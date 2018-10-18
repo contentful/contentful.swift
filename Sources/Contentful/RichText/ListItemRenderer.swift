@@ -95,7 +95,7 @@ public struct ListItemRenderer: NodeRenderer {
         listContext.isFirstListItemChild = true
         mutableContext[.listContext] = listContext
 
-        var rendered = listItem.content.reduce(into: [NSMutableAttributedString]()) { (rendered, node) in
+        let rendered = listItem.content.reduce(into: [NSMutableAttributedString]()) { (rendered, node) in
             let nodeRenderer = renderer.renderer(for: node)
             let renderedChildren = nodeRenderer.render(node: node, renderer: renderer, context: mutableContext)
             listContext.isFirstListItemChild = false
@@ -103,7 +103,7 @@ public struct ListItemRenderer: NodeRenderer {
 
             rendered.append(contentsOf: renderedChildren)
         }
-        rendered.appendNewlineIfNecessary(node: node)
+//        rendered.appendNewlineIfNecessary(node: node)
         return rendered
     }
 }
