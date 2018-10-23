@@ -149,18 +149,17 @@ The following code snippet is the most basic one you can use to fetch content fr
 
 ```swift
 import Contentful
-import Interstellar // A lightweight Functional Reactive Programming dependency.
 
 let client = Client(spaceId: "cfexampleapi",
                     environmentId: "master", // Defaults to "master" if omitted.
                     accessToken: "b4c0n73n7fu1")
 
-client.fetchEntry(id: "nyancat") { (result: Result<Entry>) in
+client.fetch(Entry.self, id: "nyancat") { (result: Result<Entry>) in
     switch result {
-        case .success(let entry):
-            print(entry)
-        case .error(let error):
-            print("Error \(error)!")
+    case .success(let entry):
+        print(entry)
+    case .error(let error):
+        print("Error \(error)!")
     }
 }
 ```
@@ -189,15 +188,15 @@ The `EntryDecodable` protocol allows you to define a mapping between your conten
 ```swift
 let query = QueryOn<Cat>.where(field: .color, .equals("gray"))
 
-client.fetchMappedEntries(matching: query) { (result: Result<MappedArrayResponse<Cat>>) in
+client.fetchArray(of: Cat.self, matching: query) { (result: Result<ArrayResponse<Cat>>) in
     guard let cats = result.value?.items else { return }
     print(cats)
 }
 ```
 
-The asynchronously returned result will be an instance of `MappedArrayResponse` in which the generic type parameter is the class you've defined for your content type. If you are using a `Query` that does not restrict the response to contain entries of one content type, you will use methods that return `MixedMappedArrayResponse` instead of `MappedArrayResponse`. The `EntryDecodable` protocol extends the `Decodable` protocol in Swift 4's Foundation standard library. The SDK provides helper methods for resolving relationships between `EntryDecodable`s and also for grabbing values from the fields container in the JSON for each resource.
+The asynchronously returned result will be an instance of `ArrayResponse` in which the generic type parameter is the same type you've passed into the `fetch` method. If you are using a `Query` that does not restrict the response to contain entries of one content type, you will use methods that return `MixedArrayResponse` instead of `ArrayResponse`. The `EntryDecodable` protocol extends the `Decodable` protocol in Swift 4's Foundation standard library. The SDK provides helper methods for resolving relationships between `EntryDecodable`s and also for grabbing values from the fields container in the JSON for each resource.
 
-In the example above, `Cat` is a type of our own definition conforming to `EntryDecodable` and `EntryQueryable`. In order for the SDK to properly create your model types when receiving JSON, you must pass in these types to your `Client` instance:
+In the example above, `Cat` is a type of our own definition conforming to `EntryDecodable` and `FieldKeysQueryable`. In order for the SDK to properly create your model types when receiving JSON, you must pass in these types to your `Client` instance:
 
 ```swift
 let contentTypeClasses: [EntryDecodable.Type] = [
@@ -214,7 +213,7 @@ let client = Client(spaceId: spaceId,
 The source for the `Cat` model class is below; note the helper methods the SDK adds to Swift 4's `Decoder` type to simplify for parsing JSON returned by Contentful. You also need to pass in these types to your `Client` instance in order to use the fetch methods which take `EntryDecodable` type references:
 
 ```swift
-final class Cat: EntryDecodable, EntryQueryable {
+final class Cat: EntryDecodable, FieldKeysQueryable {
 
     static let contentTypeId: String = "cat"
 
@@ -241,7 +240,7 @@ final class Cat: EntryDecodable, EntryQueryable {
         }
     }
 
-    enum Fields: String, CodingKey {
+    enum FieldKeys: String, CodingKey {
         case bestFriend
         case name, color, likes, lives
     }
