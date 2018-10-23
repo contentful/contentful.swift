@@ -51,7 +51,7 @@ Released on 2018-10-24
 - Base fetch methods for fetching data, or fetching data and deserializing any type conforming to `Swift.Decodable` have been exposed so that SDK usage is more flexible for various development strategies.
 - `Endpoint` enum and `EndpointAccessible` protocol for clarity on endpoints available through the APIs and which resource types are returned from said endpoints.
 - `ResourceQueryable` protocol, which `Asset`, `Entry`, `ContentType` conform to; it enables querying and filtering on the API for conforming types.
-- `FlatResource` protocol which can be used if you prefer to have all `sys` properties on the top level of your `EntryDecodable`. All `Resource` types have a default implmentation of `FlatResource` so refactoring is opt-in.
+- `FlatResource` protocol which can be used if you prefer to have all `sys` properties on the top level of your `EntryDecodable`. All `Resource` types have a default implementation of `FlatResource` so refactoring is opt-in.
 
 #### Removed
 - The `DataDelegate` protocol has been removed in favor of directly fetching raw `Data` on your own. If you want to store JSON to disk, simply fetch it and do what you like.
