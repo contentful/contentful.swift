@@ -149,7 +149,11 @@ open class Client {
         let queryItems: [URLQueryItem]? = parameters?.map { (key, value) in
             return URLQueryItem(name: key, value: value)
         }
-        components.queryItems = queryItems
+        // Since Swift 4.2, the order of a dictionary's keys will vary accross executions so we must sort
+        // the parameters so that the URL is consistent accross executions (so that all test recordings are found).
+        components.queryItems = queryItems?.sorted { (a, b) in
+            return a.name > b.name
+        }
 
         let url = components.url!
         return url

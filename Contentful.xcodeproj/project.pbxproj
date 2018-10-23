@@ -53,14 +53,6 @@
 		ED0B45B42046F4500000223C /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */ = {isa = PBXBuildFile; fileRef = ED0B45AE2046F44C0000223C /* testClientCantAccessPreviewAPIWithProductionToken.json */; };
 		ED0B45B52046F4510000223C /* testClientCanAccessPreviewAPI.json in Resources */ = {isa = PBXBuildFile; fileRef = ED0B45AD2046F44B0000223C /* testClientCanAccessPreviewAPI.json */; };
 		ED0B45B62046F4510000223C /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */ = {isa = PBXBuildFile; fileRef = ED0B45AE2046F44C0000223C /* testClientCantAccessPreviewAPIWithProductionToken.json */; };
-		ED0F5AD9212EF51F0097069E /* LocalizationTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED0F5AD8212EF51F0097069E /* LocalizationTests.json */; };
-		ED0F5ADA212EF51F0097069E /* LocalizationTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED0F5AD8212EF51F0097069E /* LocalizationTests.json */; };
-		ED0F5ADB212EF51F0097069E /* LocalizationTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED0F5AD8212EF51F0097069E /* LocalizationTests.json */; };
-		ED0F5ADC212EF51F0097069E /* LocalizationTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED0F5AD8212EF51F0097069E /* LocalizationTests.json */; };
-		ED0F5ADE212F01CB0097069E /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED0F5ADD212F01CA0097069E /* QueryTests.json */; };
-		ED0F5ADF212F01CB0097069E /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED0F5ADD212F01CA0097069E /* QueryTests.json */; };
-		ED0F5AE0212F01CB0097069E /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED0F5ADD212F01CA0097069E /* QueryTests.json */; };
-		ED0F5AE1212F01CB0097069E /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED0F5ADD212F01CA0097069E /* QueryTests.json */; };
 		ED1638C51ED5CA6D009BAA9F /* ImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1638C41ED5CA6D009BAA9F /* ImageTests.swift */; };
 		ED1D789A1F2F96260048E169 /* DataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1D78991F2F96260048E169 /* DataCache.swift */; };
 		ED1D789B1F2F96260048E169 /* DataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1D78991F2F96260048E169 /* DataCache.swift */; };
@@ -183,18 +175,27 @@
 		ED91C1421EDCB03A00F0FC0A /* ImageOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */; };
 		ED91C1431EDCB03B00F0FC0A /* ImageOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */; };
 		ED91C1451EDCB14D00F0FC0A /* Client+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2C99791ECDD0AF0039056E /* Client+UIKit.swift */; };
+		ED9F0092217F4EEA00FBCD82 /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED9F0091217F4EEA00FBCD82 /* EntryTests.json */; };
+		ED9F0093217F4EEA00FBCD82 /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED9F0091217F4EEA00FBCD82 /* EntryTests.json */; };
+		ED9F0094217F4EEA00FBCD82 /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED9F0091217F4EEA00FBCD82 /* EntryTests.json */; };
+		ED9F0096217F4FA800FBCD82 /* LinkResolverTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED9F0095217F4FA800FBCD82 /* LinkResolverTests.json */; };
+		ED9F0097217F4FA800FBCD82 /* LinkResolverTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED9F0095217F4FA800FBCD82 /* LinkResolverTests.json */; };
+		ED9F0098217F4FA800FBCD82 /* LinkResolverTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED9F0095217F4FA800FBCD82 /* LinkResolverTests.json */; };
+		ED9F009A217F504F00FBCD82 /* LocalizationTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED9F0099217F504F00FBCD82 /* LocalizationTests.json */; };
+		ED9F009B217F504F00FBCD82 /* LocalizationTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED9F0099217F504F00FBCD82 /* LocalizationTests.json */; };
+		ED9F009C217F504F00FBCD82 /* LocalizationTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED9F0099217F504F00FBCD82 /* LocalizationTests.json */; };
+		ED9F009E217F509700FBCD82 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED9F009D217F509600FBCD82 /* QueryTests.json */; };
+		ED9F009F217F509700FBCD82 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED9F009D217F509600FBCD82 /* QueryTests.json */; };
+		ED9F00A0217F509700FBCD82 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED9F009D217F509600FBCD82 /* QueryTests.json */; };
+		ED9F00A2217F50F800FBCD82 /* StructuredTextResolutionTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED9F00A1217F50F800FBCD82 /* StructuredTextResolutionTests.json */; };
+		ED9F00A3217F50F800FBCD82 /* StructuredTextResolutionTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED9F00A1217F50F800FBCD82 /* StructuredTextResolutionTests.json */; };
+		ED9F00A4217F50F800FBCD82 /* StructuredTextResolutionTests.json in Resources */ = {isa = PBXBuildFile; fileRef = ED9F00A1217F50F800FBCD82 /* StructuredTextResolutionTests.json */; };
 		EDA2B2B6212DAD400053CF77 /* AssetTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDA2B2B5212DAD400053CF77 /* AssetTests.json */; };
 		EDA2B2B7212DAD400053CF77 /* AssetTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDA2B2B5212DAD400053CF77 /* AssetTests.json */; };
 		EDA2B2B8212DAD400053CF77 /* AssetTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDA2B2B5212DAD400053CF77 /* AssetTests.json */; };
 		EDA2B2BA212DAD760053CF77 /* ContentTypeTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDA2B2B9212DAD750053CF77 /* ContentTypeTests.json */; };
 		EDA2B2BB212DAD760053CF77 /* ContentTypeTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDA2B2B9212DAD750053CF77 /* ContentTypeTests.json */; };
 		EDA2B2BC212DAD760053CF77 /* ContentTypeTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDA2B2B9212DAD750053CF77 /* ContentTypeTests.json */; };
-		EDA2B2BE212DADCC0053CF77 /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDA2B2BD212DADCC0053CF77 /* EntryTests.json */; };
-		EDA2B2BF212DADCC0053CF77 /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDA2B2BD212DADCC0053CF77 /* EntryTests.json */; };
-		EDA2B2C0212DADCC0053CF77 /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDA2B2BD212DADCC0053CF77 /* EntryTests.json */; };
-		EDA2B2C2212DAE4D0053CF77 /* LinkResolverTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDA2B2C1212DAE4D0053CF77 /* LinkResolverTests.json */; };
-		EDA2B2C3212DAE4D0053CF77 /* LinkResolverTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDA2B2C1212DAE4D0053CF77 /* LinkResolverTests.json */; };
-		EDA2B2C4212DAE4D0053CF77 /* LinkResolverTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDA2B2C1212DAE4D0053CF77 /* LinkResolverTests.json */; };
 		EDA690901F43187B00581FC6 /* AssetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19C74421C47A812005334AD /* AssetTests.swift */; };
 		EDA690911F43187B00581FC6 /* RateLimitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED52DB3F1EE94C8E00225140 /* RateLimitTests.swift */; };
 		EDA690921F43187B00581FC6 /* ImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1638C41ED5CA6D009BAA9F /* ImageTests.swift */; };
@@ -229,9 +230,6 @@
 		EDBEC9511E3F548F0040FC56 /* Contentful.h in Headers */ = {isa = PBXBuildFile; fileRef = EDBEC9491E3F51FE0040FC56 /* Contentful.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EDBEC9521E3F548F0040FC56 /* Contentful.h in Headers */ = {isa = PBXBuildFile; fileRef = EDBEC9491E3F51FE0040FC56 /* Contentful.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EDBEC9531E3F54900040FC56 /* Contentful.h in Headers */ = {isa = PBXBuildFile; fileRef = EDBEC9491E3F51FE0040FC56 /* Contentful.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EDC1A8E42136BD5D00899D64 /* StructuredTextResolutionTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDC1A8E32136BD5C00899D64 /* StructuredTextResolutionTests.json */; };
-		EDC1A8E52136BD5D00899D64 /* StructuredTextResolutionTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDC1A8E32136BD5C00899D64 /* StructuredTextResolutionTests.json */; };
-		EDC1A8E62136BD5D00899D64 /* StructuredTextResolutionTests.json in Resources */ = {isa = PBXBuildFile; fileRef = EDC1A8E32136BD5C00899D64 /* StructuredTextResolutionTests.json */; };
 		EDE087E1207CE2E000CB1287 /* ISO801DateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE087DF207CE2B200CB1287 /* ISO801DateTests.swift */; };
 		EDE087E2207CE2E000CB1287 /* ISO801DateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE087DF207CE2B200CB1287 /* ISO801DateTests.swift */; };
 		EDE087E3207CE2E000CB1287 /* ISO801DateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE087DF207CE2B200CB1287 /* ISO801DateTests.swift */; };
@@ -296,8 +294,6 @@
 		ED0B458E2046EFD60000223C /* testFetchSpace.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testFetchSpace.json; sourceTree = "<group>"; };
 		ED0B45AD2046F44B0000223C /* testClientCanAccessPreviewAPI.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testClientCanAccessPreviewAPI.json; sourceTree = "<group>"; };
 		ED0B45AE2046F44C0000223C /* testClientCantAccessPreviewAPIWithProductionToken.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testClientCantAccessPreviewAPIWithProductionToken.json; sourceTree = "<group>"; };
-		ED0F5AD8212EF51F0097069E /* LocalizationTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LocalizationTests.json; sourceTree = "<group>"; };
-		ED0F5ADD212F01CA0097069E /* QueryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QueryTests.json; sourceTree = "<group>"; };
 		ED1638C41ED5CA6D009BAA9F /* ImageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTests.swift; sourceTree = "<group>"; };
 		ED1D78991F2F96260048E169 /* DataCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataCache.swift; sourceTree = "<group>"; };
 		ED21E9E1209B484A00A6AD2D /* SyncTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SyncTests.json; sourceTree = "<group>"; };
@@ -331,10 +327,13 @@
 		ED88B7D91EF7CD3800538D1F /* ClientConfigurationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientConfigurationTests.swift; sourceTree = "<group>"; };
 		ED9102651E65AADA0076FDBD /* DVR.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVR.framework; path = Carthage/Build/iOS/DVR.framework; sourceTree = "<group>"; };
 		ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageOptions.swift; sourceTree = "<group>"; };
+		ED9F0091217F4EEA00FBCD82 /* EntryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EntryTests.json; sourceTree = "<group>"; };
+		ED9F0095217F4FA800FBCD82 /* LinkResolverTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LinkResolverTests.json; sourceTree = "<group>"; };
+		ED9F0099217F504F00FBCD82 /* LocalizationTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LocalizationTests.json; sourceTree = "<group>"; };
+		ED9F009D217F509600FBCD82 /* QueryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QueryTests.json; sourceTree = "<group>"; };
+		ED9F00A1217F50F800FBCD82 /* StructuredTextResolutionTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = StructuredTextResolutionTests.json; sourceTree = "<group>"; };
 		EDA2B2B5212DAD400053CF77 /* AssetTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AssetTests.json; sourceTree = "<group>"; };
 		EDA2B2B9212DAD750053CF77 /* ContentTypeTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ContentTypeTests.json; sourceTree = "<group>"; };
-		EDA2B2BD212DADCC0053CF77 /* EntryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EntryTests.json; sourceTree = "<group>"; };
-		EDA2B2C1212DAE4D0053CF77 /* LinkResolverTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LinkResolverTests.json; sourceTree = "<group>"; };
 		EDA690741F43185200581FC6 /* ContentfulTests_macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContentfulTests_macOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDA690841F43186600581FC6 /* ContentfulTests_tvOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContentfulTests_tvOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDA690C81F4319A000581FC6 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/Mac/Nimble.framework; sourceTree = "<group>"; };
@@ -347,7 +346,6 @@
 		EDBEC9381E3F4ADE0040FC56 /* Info_tvOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info_tvOS.plist; sourceTree = "<group>"; };
 		EDBEC9391E3F4ADE0040FC56 /* Info_watchOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info_watchOS.plist; sourceTree = "<group>"; };
 		EDBEC9491E3F51FE0040FC56 /* Contentful.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contentful.h; sourceTree = "<group>"; };
-		EDC1A8E32136BD5C00899D64 /* StructuredTextResolutionTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = StructuredTextResolutionTests.json; sourceTree = "<group>"; };
 		EDDC070F1E3BCE920022F2F9 /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDDC071C1E3BCEA40022F2F9 /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDDC07291E3BCEB10022F2F9 /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -588,18 +586,18 @@
 		ED9102671E65AE880076FDBD /* DVRRecordings */ = {
 			isa = PBXGroup;
 			children = (
+				ED9F0099217F504F00FBCD82 /* LocalizationTests.json */,
+				ED9F0095217F4FA800FBCD82 /* LinkResolverTests.json */,
+				ED9F0091217F4EEA00FBCD82 /* EntryTests.json */,
 				EDA2B2B5212DAD400053CF77 /* AssetTests.json */,
+				ED9F00A1217F50F800FBCD82 /* StructuredTextResolutionTests.json */,
 				EDA2B2B9212DAD750053CF77 /* ContentTypeTests.json */,
-				EDA2B2BD212DADCC0053CF77 /* EntryTests.json */,
 				ED21E9E9209B49D900A6AD2D /* EnvironmentsTests.json */,
 				ED4986F3204708D70014DCFE /* ErrorTests.json */,
 				ED4986E4204706FC0014DCFE /* ImageTests.json */,
-				EDC1A8E32136BD5C00899D64 /* StructuredTextResolutionTests.json */,
-				EDA2B2C1212DAE4D0053CF77 /* LinkResolverTests.json */,
-				ED0F5AD8212EF51F0097069E /* LocalizationTests.json */,
 				ED21E9E2209B484A00A6AD2D /* PreviewSyncTests.json */,
-				ED0F5ADD212F01CA0097069E /* QueryTests.json */,
 				ED2367612046FCEB00034724 /* RateLimitTests.json */,
+				ED9F009D217F509600FBCD82 /* QueryTests.json */,
 				ED21E9E1209B484A00A6AD2D /* SyncTests.json */,
 				ED0B45AD2046F44B0000223C /* testClientCanAccessPreviewAPI.json */,
 				ED0B45AE2046F44C0000223C /* testClientCantAccessPreviewAPIWithProductionToken.json */,
@@ -856,8 +854,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED0F5ADE212F01CB0097069E /* QueryTests.json in Resources */,
-				ED0F5AD9212EF51F0097069E /* LocalizationTests.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -865,20 +861,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED0F5ADF212F01CB0097069E /* QueryTests.json in Resources */,
 				EDA2B2BA212DAD760053CF77 /* ContentTypeTests.json in Resources */,
 				ED0B45B12046F4500000223C /* testClientCanAccessPreviewAPI.json in Resources */,
+				ED9F009A217F504F00FBCD82 /* LocalizationTests.json in Resources */,
 				EDA2B2B6212DAD400053CF77 /* AssetTests.json in Resources */,
 				ED2367652046FCF000034724 /* RateLimitTests.json in Resources */,
-				EDC1A8E42136BD5D00899D64 /* StructuredTextResolutionTests.json in Resources */,
-				EDA2B2BE212DADCC0053CF77 /* EntryTests.json in Resources */,
-				EDA2B2C2212DAE4D0053CF77 /* LinkResolverTests.json in Resources */,
+				ED9F00A2217F50F800FBCD82 /* StructuredTextResolutionTests.json in Resources */,
 				ED21E9EA209B49D900A6AD2D /* EnvironmentsTests.json in Resources */,
 				ED0B45922046EFDB0000223C /* testFetchSpace.json in Resources */,
 				ED21E9E6209B484B00A6AD2D /* PreviewSyncTests.json in Resources */,
-				ED0F5ADA212EF51F0097069E /* LocalizationTests.json in Resources */,
 				ED21E9E3209B484B00A6AD2D /* SyncTests.json in Resources */,
+				ED9F009E217F509700FBCD82 /* QueryTests.json in Resources */,
+				ED9F0092217F4EEA00FBCD82 /* EntryTests.json in Resources */,
 				ED4986F5204708D90014DCFE /* ErrorTests.json in Resources */,
+				ED9F0096217F4FA800FBCD82 /* LinkResolverTests.json in Resources */,
 				ED02DC9F20E12405005EC57B /* Fixtures in Resources */,
 				ED4986E8204707040014DCFE /* ImageTests.json in Resources */,
 				ED0B45B22046F4500000223C /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */,
@@ -889,20 +885,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED0F5AE0212F01CB0097069E /* QueryTests.json in Resources */,
 				EDA2B2BB212DAD760053CF77 /* ContentTypeTests.json in Resources */,
 				ED0B45B32046F4500000223C /* testClientCanAccessPreviewAPI.json in Resources */,
+				ED9F009B217F504F00FBCD82 /* LocalizationTests.json in Resources */,
 				ED2367642046FCF000034724 /* RateLimitTests.json in Resources */,
 				EDA2B2B7212DAD400053CF77 /* AssetTests.json in Resources */,
-				EDC1A8E52136BD5D00899D64 /* StructuredTextResolutionTests.json in Resources */,
-				EDA2B2BF212DADCC0053CF77 /* EntryTests.json in Resources */,
-				EDA2B2C3212DAE4D0053CF77 /* LinkResolverTests.json in Resources */,
+				ED9F00A3217F50F800FBCD82 /* StructuredTextResolutionTests.json in Resources */,
 				ED0B45912046EFDA0000223C /* testFetchSpace.json in Resources */,
 				ED21E9EB209B49D900A6AD2D /* EnvironmentsTests.json in Resources */,
 				ED21E9E7209B484B00A6AD2D /* PreviewSyncTests.json in Resources */,
-				ED0F5ADB212EF51F0097069E /* LocalizationTests.json in Resources */,
 				ED21E9E4209B484B00A6AD2D /* SyncTests.json in Resources */,
+				ED9F009F217F509700FBCD82 /* QueryTests.json in Resources */,
+				ED9F0093217F4EEA00FBCD82 /* EntryTests.json in Resources */,
 				ED4986F6204708D90014DCFE /* ErrorTests.json in Resources */,
+				ED9F0097217F4FA800FBCD82 /* LinkResolverTests.json in Resources */,
 				ED02DCA020E12405005EC57B /* Fixtures in Resources */,
 				ED4986E7204707040014DCFE /* ImageTests.json in Resources */,
 				ED0B45B42046F4500000223C /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */,
@@ -913,20 +909,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED0F5AE1212F01CB0097069E /* QueryTests.json in Resources */,
 				EDA2B2BC212DAD760053CF77 /* ContentTypeTests.json in Resources */,
 				ED0B45B52046F4510000223C /* testClientCanAccessPreviewAPI.json in Resources */,
+				ED9F009C217F504F00FBCD82 /* LocalizationTests.json in Resources */,
 				ED2367632046FCEF00034724 /* RateLimitTests.json in Resources */,
 				EDA2B2B8212DAD400053CF77 /* AssetTests.json in Resources */,
-				EDC1A8E62136BD5D00899D64 /* StructuredTextResolutionTests.json in Resources */,
-				EDA2B2C0212DADCC0053CF77 /* EntryTests.json in Resources */,
-				EDA2B2C4212DAE4D0053CF77 /* LinkResolverTests.json in Resources */,
+				ED9F00A4217F50F800FBCD82 /* StructuredTextResolutionTests.json in Resources */,
 				ED0B45902046EFDA0000223C /* testFetchSpace.json in Resources */,
 				ED21E9EC209B49D900A6AD2D /* EnvironmentsTests.json in Resources */,
 				ED21E9E8209B484B00A6AD2D /* PreviewSyncTests.json in Resources */,
-				ED0F5ADC212EF51F0097069E /* LocalizationTests.json in Resources */,
 				ED21E9E5209B484B00A6AD2D /* SyncTests.json in Resources */,
+				ED9F00A0217F509700FBCD82 /* QueryTests.json in Resources */,
+				ED9F0094217F4EEA00FBCD82 /* EntryTests.json in Resources */,
 				ED4986F7204708D90014DCFE /* ErrorTests.json in Resources */,
+				ED9F0098217F4FA800FBCD82 /* LinkResolverTests.json in Resources */,
 				ED02DCA120E12405005EC57B /* Fixtures in Resources */,
 				ED4986E6204707040014DCFE /* ImageTests.json in Resources */,
 				ED0B45B62046F4510000223C /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */,
