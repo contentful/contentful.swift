@@ -99,7 +99,7 @@
 - Rich query syntax for type-safe queries
 - [Synchronization](https://www.contentful.com/developers/docs/concepts/sync/)
 - [Localization support](https://www.contentful.com/developers/docs/concepts/locales/)
-- Up-to-date with the latest Swift development stack: Swift 4.x | Xcode 9.x
+- Up-to-date with the latest Swift development stack: Swift 4.x | Xcode 10.x
 - Supports [Environments](https://www.contentful.com/developers/docs/concepts/multiple-environments/) (**v2.0.0+**)
 
 ## Getting started
@@ -124,7 +124,7 @@ pod 'Contentful'
 You can specify a specific version of Contentful depending on your needs. To learn more about operators for dependency versioning within a Podfile, see the [CocoaPods doc on the Podfile](https://guides.cocoapods.org/using/the-podfile.html).
 
 ```ruby
-pod 'Contentful', '~> 3.1.2' 
+pod 'Contentful', '~> 4.0.0'
 ```
 
 #### Carthage installation
@@ -132,7 +132,7 @@ pod 'Contentful', '~> 3.1.2'
 You can also use [Carthage](https://github.com/Carthage/Carthage) for integration by adding the following to your `Cartfile`:
 
 ```
-github "contentful/contentful.swift" ~> 3.1.2
+github "contentful/contentful.swift" ~> 4.0.0
 ```
 
 #### Swift Package Manager [swift-tools-version 4.2]
@@ -140,7 +140,7 @@ github "contentful/contentful.swift" ~> 3.1.2
 Add the following line to your array of dependencies:
 
 ```swift
-.package(url: "https://github.com/contentful/contentful.swift", .upToNextMajor(from: "3.1.2"))
+.package(url: "https://github.com/contentful/contentful.swift", .upToNextMajor(from: "4.0.0"))
 ```
 
 ### Your first request
@@ -281,11 +281,12 @@ We gathered all information related to migrating from older versions of the libr
 
 ## Swift Versioning
 
-It is recommended to use Swift 4.1, as older versions of the SDK will not have fixes backported. If you must use older Swift versions, see the compatible tags below.
+It is recommended to use Swift 4.2, as older versions of the SDK will not have fixes backported. If you must use older Swift versions, see the compatible tags below.
 
  Swift version | Compatible Contentful tag |
 | --- | --- |
-| Swift 4.1 | [ ≥ `2.0.0`]
+| Swift 4.2 | [ ≥ `4.0.0` ] |
+| Swift 4.1 | [`2.0.0` - `3.1.2`] |
 | Swift 4.0 | [`0.10.0` - `1.0.1`] |
 | Swift 3.x | [`0.3.0` - `0.9.3`] |
 | Swift 2.3 | `0.2.3` |
@@ -322,3 +323,4 @@ This repository is published under the [MIT](LICENSE) license.
 We want to provide a safe, inclusive, welcoming, and harassment-free space and experience for all participants, regardless of gender identity and expression, sexual orientation, disability, physical appearance, socioeconomic status, body size, ethnicity, nationality, level of experience, age, religion (or lack thereof), or other identity markers.
 
 [Read our full Code of Conduct](https://github.com/contentful-developer-relations/community-code-of-conduct).
+
