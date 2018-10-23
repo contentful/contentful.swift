@@ -796,11 +796,11 @@
 				TargetAttributes = {
 					A19CA3C31B836EDD00A0EFCD = {
 						CreatedOnToolsVersion = 7.0;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 1000;
 					};
 					A19CA3CD1B836EDD00A0EFCD = {
 						CreatedOnToolsVersion = 7.0;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 1000;
 					};
 					EDA690731F43185200581FC6 = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -1390,7 +1390,7 @@
 				PRODUCT_NAME = Contentful;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1416,7 +1416,7 @@
 				PRODUCT_NAME = Contentful;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -1846,7 +1846,7 @@
 				PRODUCT_NAME = Contentful;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = API_Coverage;
 		};
