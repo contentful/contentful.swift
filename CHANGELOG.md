@@ -10,7 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 ## Table of contents
 
 #### 4.x Releases
-- `4.0.0` Releases - [4.0.0](#400)
+- `4.0.0` Releases - [4.0.0](#400) | [4.0.1](#401)
 
 #### 3.x Releases
 - `3.1.0` Releases - [3.1.0](#310) | [3.1.1](#311) | [3.1.2](#312)
@@ -35,6 +35,14 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 - `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041)
 - `0.3.x` Releases - [0.3.0](#030) | [0.3.1](#031)
+
+---
+
+## [`4.0.1`](https://github.com/contentful/contentful.swift/releases/tag/4.0.1)
+Released on 2018-10-25
+
+#### Changed
+- This release ensures that CI runs on Xcode 10 with Swift 4.2
 
 ---
 
