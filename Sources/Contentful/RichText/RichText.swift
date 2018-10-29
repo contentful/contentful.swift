@@ -85,7 +85,7 @@ public enum NodeType: String, Decodable {
         case .h1, .h2, .h3, .h4, .h5, .h6:
             return Heading.self
         case .document:
-            return Document.self
+            return RichTextDocument.self
         case .blockquote:
             return BlockQuote.self
         case .horizontalRule:
@@ -133,8 +133,9 @@ public class InlineNode: Node {
         self.content = content
     }
 }
+
 /// The top level node which contains all other nodes.
-public class Document: Node {
+public class RichTextDocument: Node {
     public let nodeType: NodeType
     public internal(set) var content: [Node]
 

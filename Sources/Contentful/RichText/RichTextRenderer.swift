@@ -8,11 +8,12 @@
 
 import Foundation
 
-public protocol DocumentRenderer {
+public protocol RichTextRenderer {
     func renderer(for node: Node) -> NodeRenderer
+    func render(document: RichTextDocument) -> NSAttributedString
 }
 
-public struct DefaultDocumentRenderer: DocumentRenderer {
+public struct DefaultRichTextRenderer: RichTextRenderer {
 
     public var headingRenderer: NodeRenderer
     public var textRenderer: NodeRenderer
@@ -41,6 +42,19 @@ public struct DefaultDocumentRenderer: DocumentRenderer {
 
         self.styling = styling
     }
+    public init() {
+        orderedListRenderer = OrderedListRenderer()
+        unorderedListRenderer = UnorderedListRenderer()
+        textRenderer = TextRenderer()
+        headingRenderer = HeadingRenderer()
+        blockQuoteRenderer = BlockQuoteRenderer()
+        emptyRenderer = EmptyRenderer()
+        listItemRenderer = ListItemRenderer()
+        paragraphRenderer = ParagraphRenderer()
+        hyperlinkRenderer = HyperlinkRenderer()
+        embedRenderer = EmbedRenderer()
+        styling = Styling()
+    }
 
     public var baseContext: [CodingUserInfoKey: Any] {
         return [
@@ -49,7 +63,7 @@ public struct DefaultDocumentRenderer: DocumentRenderer {
         ]
     }
 
-    public func render(document: Document) -> NSAttributedString {
+    public func render(document: RichTextDocument) -> NSAttributedString {
         let context = baseContext
         let renderedChildren = document.content.reduce(into: [NSMutableAttributedString]()) { (rendered, node) in
             let nodeRenderer = self.renderer(for: node)

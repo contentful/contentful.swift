@@ -61,6 +61,16 @@
 		5D09C26C21870C27006B83F4 /* testClientCanAccessPreviewAPI.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23E21870C27006B83F4 /* testClientCanAccessPreviewAPI.json */; };
 		5D09C26D21870C27006B83F4 /* testClientCanAccessPreviewAPI.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23E21870C27006B83F4 /* testClientCanAccessPreviewAPI.json */; };
 		5D09C26E21870C27006B83F4 /* testClientCanAccessPreviewAPI.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23E21870C27006B83F4 /* testClientCanAccessPreviewAPI.json */; };
+		5D09C27421871123006B83F4 /* RichTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D09C27321871123006B83F4 /* RichTextViewController.swift */; };
+		5D09C27521871123006B83F4 /* RichTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D09C27321871123006B83F4 /* RichTextViewController.swift */; };
+		5D09C27621871123006B83F4 /* RichTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D09C27321871123006B83F4 /* RichTextViewController.swift */; };
+		5D09C278218719E0006B83F4 /* RichText+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D09C277218719E0006B83F4 /* RichText+UIKit.swift */; };
+		5D09C279218719E0006B83F4 /* RichText+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D09C277218719E0006B83F4 /* RichText+UIKit.swift */; };
+		5D09C27A218719E0006B83F4 /* RichText+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D09C277218719E0006B83F4 /* RichText+UIKit.swift */; };
+		5D09C27C21871A1B006B83F4 /* RichTextRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D09C27B21871A1B006B83F4 /* RichTextRenderer.swift */; };
+		5D09C27D21871A1B006B83F4 /* RichTextRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D09C27B21871A1B006B83F4 /* RichTextRenderer.swift */; };
+		5D09C27E21871A1B006B83F4 /* RichTextRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D09C27B21871A1B006B83F4 /* RichTextRenderer.swift */; };
+		5D09C27F21871A1B006B83F4 /* RichTextRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D09C27B21871A1B006B83F4 /* RichTextRenderer.swift */; };
 		5D4F67B52162ED9F006F8F90 /* NSAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4F67B42162ED9F006F8F90 /* NSAttributedString.swift */; };
 		5D4F67B62162ED9F006F8F90 /* NSAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4F67B42162ED9F006F8F90 /* NSAttributedString.swift */; };
 		5D4F67B72162ED9F006F8F90 /* NSAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4F67B42162ED9F006F8F90 /* NSAttributedString.swift */; };
@@ -110,10 +120,6 @@
 		ED2E03E81F97608A006422A6 /* EntryDecodableLinkResolutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2E03E61F97608A006422A6 /* EntryDecodableLinkResolutionTests.swift */; };
 		ED2E03E91F97608A006422A6 /* EntryDecodableLinkResolutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2E03E61F97608A006422A6 /* EntryDecodableLinkResolutionTests.swift */; };
 		ED307F231EE6E5DF00633390 /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED307F211EE6E5D700633390 /* LocalizationTests.swift */; };
-		ED33165C215A679200133AB8 /* DocumentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED33165B215A679200133AB8 /* DocumentRenderer.swift */; };
-		ED33165D215A679200133AB8 /* DocumentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED33165B215A679200133AB8 /* DocumentRenderer.swift */; };
-		ED33165E215A679200133AB8 /* DocumentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED33165B215A679200133AB8 /* DocumentRenderer.swift */; };
-		ED33165F215A679200133AB8 /* DocumentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED33165B215A679200133AB8 /* DocumentRenderer.swift */; };
 		ED331661215A73D600133AB8 /* EmbeddedEntryRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331660215A73D600133AB8 /* EmbeddedEntryRenderer.swift */; };
 		ED331662215A73D600133AB8 /* EmbeddedEntryRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331660215A73D600133AB8 /* EmbeddedEntryRenderer.swift */; };
 		ED331663215A73D600133AB8 /* EmbeddedEntryRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED331660215A73D600133AB8 /* EmbeddedEntryRenderer.swift */; };
@@ -326,6 +332,9 @@
 		5D09C23C21870C27006B83F4 /* AssetTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AssetTests.json; sourceTree = "<group>"; };
 		5D09C23D21870C27006B83F4 /* LinkResolverTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LinkResolverTests.json; sourceTree = "<group>"; };
 		5D09C23E21870C27006B83F4 /* testClientCanAccessPreviewAPI.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testClientCanAccessPreviewAPI.json; sourceTree = "<group>"; };
+		5D09C27321871123006B83F4 /* RichTextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewController.swift; sourceTree = "<group>"; };
+		5D09C277218719E0006B83F4 /* RichText+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RichText+UIKit.swift"; sourceTree = "<group>"; };
+		5D09C27B21871A1B006B83F4 /* RichTextRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichTextRenderer.swift; sourceTree = "<group>"; };
 		5D4F67B42162ED9F006F8F90 /* NSAttributedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSAttributedString.swift; sourceTree = "<group>"; };
 		A10FF9D41BBB3676001AA4E9 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Error.swift; sourceTree = "<group>"; };
 		A10FF9DB1BBB4692001AA4E9 /* Field.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Field.swift; sourceTree = "<group>"; };
@@ -345,7 +354,7 @@
 		A19CA3DF1B836F2500A0EFCD /* Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Client.swift; sourceTree = "<group>"; };
 		A19CA3E11B8386CC00A0EFCD /* ClientConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ClientConfiguration.swift; sourceTree = "<group>"; };
 		A19CA3E31B83888200A0EFCD /* ArrayResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ArrayResponse.swift; sourceTree = "<group>"; };
-		A19CA3E51B8388ED00A0EFCD /* Entry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Entry.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		A19CA3E51B8388ED00A0EFCD /* Entry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Entry.swift; sourceTree = "<group>"; };
 		A19CA3E71B83890D00A0EFCD /* Resource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Resource.swift; sourceTree = "<group>"; };
 		A1B2E3641BBACF2C00814D63 /* Locale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Locale.swift; sourceTree = "<group>"; };
 		A1B2E3661BBAD06000814D63 /* JSONDecodingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = JSONDecodingTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -362,7 +371,6 @@
 		ED2C99791ECDD0AF0039056E /* Client+UIKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Client+UIKit.swift"; sourceTree = "<group>"; };
 		ED2E03E61F97608A006422A6 /* EntryDecodableLinkResolutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryDecodableLinkResolutionTests.swift; sourceTree = "<group>"; };
 		ED307F211EE6E5D700633390 /* LocalizationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationTests.swift; sourceTree = "<group>"; };
-		ED33165B215A679200133AB8 /* DocumentRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentRenderer.swift; sourceTree = "<group>"; };
 		ED331660215A73D600133AB8 /* EmbeddedEntryRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedEntryRenderer.swift; sourceTree = "<group>"; };
 		ED331665215BA59800133AB8 /* ListItemRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListItemRenderer.swift; sourceTree = "<group>"; };
 		ED331666215BA59800133AB8 /* HeadingRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadingRenderer.swift; sourceTree = "<group>"; };
@@ -482,6 +490,22 @@
 				EDA2B2C1212DAE4D0053CF77 /* LinkResolverTests.json */,
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		5D09C27121871100006B83F4 /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				5D09C27321871123006B83F4 /* RichTextViewController.swift */,
+				5D09C277218719E0006B83F4 /* RichText+UIKit.swift */,
+			);
+			path = UIKit;
+			sourceTree = "<group>";
+		};
+		5D09C27221871106006B83F4 /* AppKit */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AppKit;
 			sourceTree = "<group>";
 		};
 		A19CA3BA1B836EDD00A0EFCD = {
@@ -605,6 +629,7 @@
 		ED1A71FF215A4D29009355FD /* RichText */ = {
 			isa = PBXGroup;
 			children = (
+				5D09C27B21871A1B006B83F4 /* RichTextRenderer.swift */,
 				ED331666215BA59800133AB8 /* HeadingRenderer.swift */,
 				ED331683215BA61C00133AB8 /* QuoteRenderer.swift */,
 				5D4F67B42162ED9F006F8F90 /* NSAttributedString.swift */,
@@ -615,8 +640,9 @@
 				ED33166A215BA59800133AB8 /* UnorderedListRenderer.swift */,
 				ED4A6E542133015F00690EA4 /* RichText.swift */,
 				EDC1A8ED2136DBC600899D64 /* RichTextRendering.swift */,
-				ED33165B215A679200133AB8 /* DocumentRenderer.swift */,
 				ED331660215A73D600133AB8 /* EmbeddedEntryRenderer.swift */,
+				5D09C27221871106006B83F4 /* AppKit */,
+				5D09C27121871100006B83F4 /* UIKit */,
 			);
 			path = RichText;
 			sourceTree = "<group>";
@@ -1123,8 +1149,8 @@
 				ED737C941EF1785A00ECB3F1 /* Persistence.swift in Sources */,
 				ED33167F215BA59800133AB8 /* UnorderedListRenderer.swift in Sources */,
 				A19CA3E21B8386CC00A0EFCD /* ClientConfiguration.swift in Sources */,
-				ED33165C215A679200133AB8 /* DocumentRenderer.swift in Sources */,
 				A10FF9DA1BBB4680001AA4E9 /* ContentType.swift in Sources */,
+				5D09C27421871123006B83F4 /* RichTextViewController.swift in Sources */,
 				ED02DC1320E11D0A005EC57B /* Result.swift in Sources */,
 				ED02DC1720E11D0A005EC57B /* Util.swift in Sources */,
 				ED535E641F5E8E1300886D93 /* Decodable.swift in Sources */,
@@ -1134,6 +1160,7 @@
 				ED331673215BA59800133AB8 /* OrderedListRenderer.swift in Sources */,
 				A10FF9D91BBB3BE1001AA4E9 /* ArrayResponse.swift in Sources */,
 				5D4F67B52162ED9F006F8F90 /* NSAttributedString.swift in Sources */,
+				5D09C278218719E0006B83F4 /* RichText+UIKit.swift in Sources */,
 				A19CA3E01B836F2500A0EFCD /* Client.swift in Sources */,
 				ED4A6E552133015F00690EA4 /* RichText.swift in Sources */,
 				EDC1A8EE2136DBC600899D64 /* RichTextRendering.swift in Sources */,
@@ -1150,6 +1177,7 @@
 				ED68BD721E6DC47A00939F6D /* Query.swift in Sources */,
 				ED331684215BA61C00133AB8 /* QuoteRenderer.swift in Sources */,
 				ED33166B215BA59800133AB8 /* ListItemRenderer.swift in Sources */,
+				5D09C27C21871A1B006B83F4 /* RichTextRenderer.swift in Sources */,
 				ED3CBF1F1E7AD58100E5B02E /* Link.swift in Sources */,
 				ED331677215BA59800133AB8 /* HyperlinkRenderer.swift in Sources */,
 				A10FF9D51BBB3676001AA4E9 /* Error.swift in Sources */,
@@ -1246,8 +1274,8 @@
 				ED737C951EF1785A00ECB3F1 /* Persistence.swift in Sources */,
 				ED331680215BA59800133AB8 /* UnorderedListRenderer.swift in Sources */,
 				ED36B7001E3BD052005581FD /* Field.swift in Sources */,
-				ED33165D215A679200133AB8 /* DocumentRenderer.swift in Sources */,
 				ED1D789B1F2F96260048E169 /* DataCache.swift in Sources */,
+				5D09C27521871123006B83F4 /* RichTextViewController.swift in Sources */,
 				ED02DC1420E11D0A005EC57B /* Result.swift in Sources */,
 				ED02DC1820E11D0A005EC57B /* Util.swift in Sources */,
 				ED535E651F5E8E1300886D93 /* Decodable.swift in Sources */,
@@ -1257,6 +1285,7 @@
 				ED331674215BA59800133AB8 /* OrderedListRenderer.swift in Sources */,
 				ED36B6FF1E3BD052005581FD /* Error.swift in Sources */,
 				5D4F67B62162ED9F006F8F90 /* NSAttributedString.swift in Sources */,
+				5D09C279218719E0006B83F4 /* RichText+UIKit.swift in Sources */,
 				ED36B6F91E3BD052005581FD /* ClientConfiguration.swift in Sources */,
 				ED4A6E562133015F00690EA4 /* RichText.swift in Sources */,
 				EDC1A8EF2136DBC600899D64 /* RichTextRendering.swift in Sources */,
@@ -1273,6 +1302,7 @@
 				ED3CBF201E7AD58100E5B02E /* Link.swift in Sources */,
 				ED331685215BA61C00133AB8 /* QuoteRenderer.swift in Sources */,
 				ED33166C215BA59800133AB8 /* ListItemRenderer.swift in Sources */,
+				5D09C27D21871A1B006B83F4 /* RichTextRenderer.swift in Sources */,
 				ED36B6FA1E3BD052005581FD /* ContentType.swift in Sources */,
 				ED331678215BA59800133AB8 /* HyperlinkRenderer.swift in Sources */,
 				ED91C1411EDCB03900F0FC0A /* ImageOptions.swift in Sources */,
@@ -1291,8 +1321,8 @@
 				ED737C961EF1785A00ECB3F1 /* Persistence.swift in Sources */,
 				ED331681215BA59800133AB8 /* UnorderedListRenderer.swift in Sources */,
 				ED36B7101E3BD052005581FD /* Field.swift in Sources */,
-				ED33165E215A679200133AB8 /* DocumentRenderer.swift in Sources */,
 				ED1D789C1F2F96260048E169 /* DataCache.swift in Sources */,
+				5D09C27621871123006B83F4 /* RichTextViewController.swift in Sources */,
 				ED02DC1520E11D0A005EC57B /* Result.swift in Sources */,
 				ED02DC1920E11D0A005EC57B /* Util.swift in Sources */,
 				ED535E661F5E8E1300886D93 /* Decodable.swift in Sources */,
@@ -1302,6 +1332,7 @@
 				ED331675215BA59800133AB8 /* OrderedListRenderer.swift in Sources */,
 				ED36B70F1E3BD052005581FD /* Error.swift in Sources */,
 				5D4F67B72162ED9F006F8F90 /* NSAttributedString.swift in Sources */,
+				5D09C27A218719E0006B83F4 /* RichText+UIKit.swift in Sources */,
 				ED36B7091E3BD052005581FD /* ClientConfiguration.swift in Sources */,
 				ED4A6E572133015F00690EA4 /* RichText.swift in Sources */,
 				EDC1A8F02136DBC600899D64 /* RichTextRendering.swift in Sources */,
@@ -1318,6 +1349,7 @@
 				ED3CBF211E7AD58100E5B02E /* Link.swift in Sources */,
 				ED331686215BA61C00133AB8 /* QuoteRenderer.swift in Sources */,
 				ED33166D215BA59800133AB8 /* ListItemRenderer.swift in Sources */,
+				5D09C27E21871A1B006B83F4 /* RichTextRenderer.swift in Sources */,
 				ED91C1421EDCB03A00F0FC0A /* ImageOptions.swift in Sources */,
 				ED331679215BA59800133AB8 /* HyperlinkRenderer.swift in Sources */,
 				ED36B70A1E3BD052005581FD /* ContentType.swift in Sources */,
@@ -1333,10 +1365,10 @@
 				EDBB1F4F1F3DF44A00D90FBE /* Client+AppKit.swift in Sources */,
 				ED36B71E1E3BD053005581FD /* Entry.swift in Sources */,
 				ED331664215A73D600133AB8 /* EmbeddedEntryRenderer.swift in Sources */,
+				5D09C27F21871A1B006B83F4 /* RichTextRenderer.swift in Sources */,
 				ED36B7241E3BD053005581FD /* SyncSpace.swift in Sources */,
 				ED331682215BA59800133AB8 /* UnorderedListRenderer.swift in Sources */,
 				ED737C971EF1785A00ECB3F1 /* Persistence.swift in Sources */,
-				ED33165F215A679200133AB8 /* DocumentRenderer.swift in Sources */,
 				ED1D789D1F2F96260048E169 /* DataCache.swift in Sources */,
 				ED02DC1620E11D0A005EC57B /* Result.swift in Sources */,
 				ED02DC1A20E11D0A005EC57B /* Util.swift in Sources */,
@@ -1447,7 +1479,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1503,7 +1535,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1534,7 +1566,7 @@
 				PRODUCT_NAME = Contentful;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1561,7 +1593,7 @@
 				PRODUCT_NAME = Contentful;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -1757,7 +1789,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 3.1;
 			};
@@ -1785,7 +1817,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 3.1;
 			};
@@ -1813,7 +1845,7 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
@@ -1841,7 +1873,7 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
@@ -1872,7 +1904,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1901,7 +1933,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -1961,7 +1993,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1994,7 +2026,7 @@
 				PRODUCT_NAME = Contentful;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = API_Coverage;
 		};
@@ -2045,7 +2077,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 3.1;
 			};
@@ -2076,7 +2108,7 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
@@ -2110,7 +2142,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = API_Coverage;
 		};

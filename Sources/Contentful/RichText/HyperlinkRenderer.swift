@@ -10,7 +10,7 @@ import Foundation
 
 public struct HyperlinkRenderer: NodeRenderer {
 
-    public func render(node: Node, renderer: DocumentRenderer, context: [CodingUserInfoKey: Any]) -> [NSMutableAttributedString] {
+    public func render(node: Node, renderer: RichTextRenderer, context: [CodingUserInfoKey: Any]) -> [NSMutableAttributedString] {
         let hyperlink = node as! Hyperlink
 
         let attributes: [NSAttributedString.Key: Any] = [

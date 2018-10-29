@@ -41,6 +41,9 @@ Pod::Spec.new do |spec|
 
   spec.subspec 'RichText' do |subspec|
     subspec.source_files = 'Sources/Contentful/RichText/*.swift'
+    subspec.ios.source_files = 'Sources/Contentful/RichText/UIKit/*.swift'
+    subspec.watchos.source_files = 'Sources/Contentful/RichText/UIKit/*.swift'
+    subspec.tvos.source_files = 'Sources/Contentful/RichText/UIKit/*.swift'
   end
 end
 

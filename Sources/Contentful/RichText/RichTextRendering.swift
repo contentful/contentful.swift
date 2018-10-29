@@ -38,13 +38,13 @@ public extension NSAttributedString.Key {
 }
 
 public protocol NodeRenderer {
-    func render(node: Node, renderer: DocumentRenderer, context: [CodingUserInfoKey: Any]) -> [NSMutableAttributedString]
+    func render(node: Node, renderer: RichTextRenderer, context: [CodingUserInfoKey: Any]) -> [NSMutableAttributedString]
 }
 
 public struct Styling {
 
     public init() {}
-    
+
     public static let `default` = Styling()
 
     /// The base font with which to begin styling.
@@ -120,11 +120,11 @@ extension Swift.Array where Element == NSMutableAttributedString {
 
 public struct TextRenderer: NodeRenderer {
 
-    public func render(node: Node, renderer: DocumentRenderer, context: [CodingUserInfoKey: Any]) -> [NSMutableAttributedString] {
+    public func render(node: Node, renderer: RichTextRenderer, context: [CodingUserInfoKey: Any]) -> [NSMutableAttributedString] {
         let text = node as! Text
         let styles = context[.styles] as! Styling
 
-        let font = DefaultDocumentRenderer.font(for: text, styling: styles)
+        let font = DefaultRichTextRenderer.font(for: text, styling: styles)
 
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = styles.lineSpacing
@@ -140,7 +140,7 @@ public struct TextRenderer: NodeRenderer {
 }
 
 public struct EmptyRenderer: NodeRenderer {
-    public func render(node: Node, renderer: DocumentRenderer, context: [CodingUserInfoKey: Any]) -> [NSMutableAttributedString] {
+    public func render(node: Node, renderer: RichTextRenderer, context: [CodingUserInfoKey: Any]) -> [NSMutableAttributedString] {
         return [NSMutableAttributedString(string: "")]
     }
 }

@@ -54,7 +54,7 @@ public struct ListContext {
             return nil
         }
     }
-    
+
     mutating func incrementLevel() {
         itemIndex = 0
         level += 1
@@ -86,7 +86,7 @@ public struct ListContext {
 }
 
 public struct ListItemRenderer: NodeRenderer {
-    public func render(node: Node, renderer: DocumentRenderer, context: [CodingUserInfoKey: Any]) -> [NSMutableAttributedString] {
+    public func render(node: Node, renderer: RichTextRenderer, context: [CodingUserInfoKey: Any]) -> [NSMutableAttributedString] {
 
         let listItem = node as! ListItem
 

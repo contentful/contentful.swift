@@ -9,7 +9,7 @@
 import Foundation
 
 public struct BlockQuoteRenderer: NodeRenderer {
-    public func render(node: Node, renderer: DocumentRenderer, context: [CodingUserInfoKey: Any]) -> [NSMutableAttributedString] {
+    public func render(node: Node, renderer: RichTextRenderer, context: [CodingUserInfoKey: Any]) -> [NSMutableAttributedString] {
         let blockQuote = node as! BlockQuote
 
         let renderedChildren = blockQuote.content.reduce(into: [NSMutableAttributedString]()) { (rendered, node) in

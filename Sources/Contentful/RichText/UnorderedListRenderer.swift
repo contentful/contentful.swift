@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 public struct UnorderedListRenderer: NodeRenderer {
-    public func render(node: Node, renderer: DocumentRenderer, context: [CodingUserInfoKey: Any]) -> [NSMutableAttributedString] {
+    public func render(node: Node, renderer: RichTextRenderer, context: [CodingUserInfoKey: Any]) -> [NSMutableAttributedString] {
         let unorderedList = node as! UnorderedList
 
         var mutableContext = context

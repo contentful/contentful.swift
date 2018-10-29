@@ -269,7 +269,7 @@ internal extension KeyedDecodingContainer {
                 dictionary[key.stringValue] = link
             } else if let location = try? decode(Location.self, forKey: key) {
                 dictionary[key.stringValue] = location
-            } else if let document = try? decode(Document.self, forKey: key) {
+            } else if let document = try? decode(RichTextDocument.self, forKey: key) {
                 dictionary[key.stringValue] = document
             }
             // These must be called after attempting to decode all other custom types.
