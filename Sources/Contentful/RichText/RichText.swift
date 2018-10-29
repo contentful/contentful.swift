@@ -24,7 +24,7 @@ public class EmbeddedResourceData: Decodable {
 
     /// When using the SDK in conjunction with your own `EntryDecodable` classes, this property will
     /// be to the resolved `EntryDecodable` instance.
-    public var resolvedEntryDecodable: EntryDecodable?
+    public var resolvedResource: FlatResource?
 
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: JSONCodingKeys.self)
@@ -32,12 +32,12 @@ public class EmbeddedResourceData: Decodable {
         title = try container.decodeIfPresent(String.self, forKey: JSONCodingKeys(stringValue: "title")!)
         try container.resolveLink(forKey: JSONCodingKeys(stringValue: "target")!, decoder: decoder) { [weak self] decodable in
             // Workaroudn for bug in the Swift compiler: https://bugs.swift.org/browse/SR-3871
-            self?.resolvedEntryDecodable = decodable as? EntryDecodable
+            self?.resolvedResource = decodable as? FlatResource
         }
     }
     internal init(resolvedTarget: Link, title: String? = nil) {
         target = resolvedTarget
-        resolvedEntryDecodable = nil
+        resolvedResource = nil
         self.title = title
     }
 }
@@ -71,7 +71,7 @@ public enum NodeType: String, Decodable {
     case unorderedList = "unordered-list"
     case listItem = "list-item"
     case hyperlink
-    case embeddedAssetBlock
+    case embeddedAssetBlock = "embedded-asset-block"
     case embeddedEntryInline = "embedded-entry-inline"
     case assetHyperlink = "asset-hyperlink"
     case entryHyperlink = "entry-hyperlink"

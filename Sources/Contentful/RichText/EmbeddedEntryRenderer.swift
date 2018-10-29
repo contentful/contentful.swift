@@ -25,7 +25,7 @@ public protocol EmbeddedResourceRepresentable {
 }
 
 public protocol ViewProvider {
-    func view(for entry: EntryDecodable, context: [CodingUserInfoKey: Any]) -> EmbeddedResourceView
+    func view(for resource: FlatResource, context: [CodingUserInfoKey: Any]) -> EmbeddedResourceView
 }
 
 public class EmptyView: View, EmbeddedResourceRepresentable {
@@ -35,7 +35,7 @@ public class EmptyView: View, EmbeddedResourceRepresentable {
 
 public struct EmptyViewProvider: ViewProvider {
 
-    public func view(for entry: EntryDecodable, context: [CodingUserInfoKey: Any]) -> EmbeddedResourceView {
+    public func view(for resource: FlatResource, context: [CodingUserInfoKey: Any]) -> EmbeddedResourceView {
 
         return EmptyView(frame: .zero)
     }
@@ -45,7 +45,7 @@ struct EmbedRenderer: NodeRenderer {
 
     public func render(node: Node, renderer: RichTextRenderer, context: [CodingUserInfoKey: Any]) -> [NSMutableAttributedString] {
         let embeddedResourceNode = node as! EmbeddedResourceBlock
-        guard let resolvedResource = embeddedResourceNode.data.resolvedEntryDecodable else { return [] }
+        guard let resolvedResource = embeddedResourceNode.data.resolvedResource else { return [] }
 
         let provider = (context[.styles] as! Styling).viewProvider
 

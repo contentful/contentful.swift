@@ -39,8 +39,8 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
         } else {
             // TODO: Fallback on earlier versions
         }
-
     }
+
     override open func viewDidLoad() {
         super.viewDidLoad()
 
@@ -85,9 +85,9 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
             return nil
         }
 
-        guard size.width > 0.0 && size.height > 0.0 else {
-            return nil
-        }
+//        guard size.width > 0.0 && size.height > 0.0 else {
+//            return nil
+//        }
 
         let lineFragmentRect = layoutManager.lineFragmentRect(forGlyphAt: glyphIndex, effectiveRange: nil)
         let glyphLocation = layoutManager.location(forGlyphAt: glyphIndex)
@@ -117,7 +117,7 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
                                                                                       layoutManager: layoutManager,
                                                                                       size: view.bounds.size) else {
                                                                                         // If we can't determine the rectangle for the attachment: just hide it.
-                                                                                        view.isHidden = true
+//                                                                                        view.isHidden = true
                                                                                         continue
             }
             var adaptedRect = attachmentRect
