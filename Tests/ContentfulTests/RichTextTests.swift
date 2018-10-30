@@ -36,13 +36,13 @@ final class STTest: Resource, EntryDecodable, FieldKeysQueryable {
 
     let sys: Sys
     let name: String
-    let body: Document
+    let body: RichTextDocument
 
     public required init(from decoder: Decoder) throws {
         sys = try decoder.sys()
         let fields = try decoder.contentfulFieldsContainer(keyedBy: FieldKeys.self)
         name = try fields.decode(String.self, forKey: .name)
-        body = try fields.decode(Document.self, forKey: .body)
+        body = try fields.decode(RichTextDocument.self, forKey: .body)
     }
 
     enum FieldKeys: String, CodingKey {
@@ -50,27 +50,24 @@ final class STTest: Resource, EntryDecodable, FieldKeysQueryable {
     }
 }
 
-final class AtomicStructuredTextModel: Resource, EntryDecodable, FieldKeysQueryable {
-
-    static let contentTypeId = "structured"
+final class MarkdownContentType: Resource, EntryDecodable, FieldKeysQueryable {
+    static let contentTypeId = "markdownContentType"
 
     let sys: Sys
+    let markdownBody: String
     let name: String
-    let structured: Document
-
 
     public required init(from decoder: Decoder) throws {
         sys = try decoder.sys()
         let fields = try decoder.contentfulFieldsContainer(keyedBy: FieldKeys.self)
+        markdownBody = try fields.decode(String.self, forKey: .markdownBody)
         name = try fields.decode(String.self, forKey: .name)
-        structured = try fields.decode(Document.self, forKey: .structured)
     }
 
     enum FieldKeys: String, CodingKey {
-        case name, structured
+        case name, markdownBody
     }
 }
-
 
 class RichTextDeserializationTests: XCTestCase {
 
@@ -99,7 +96,7 @@ class RichTextDeserializationTests: XCTestCase {
 
             jsonDecoder.userInfo[.linkResolverContextKey] = LinkResolver()
 
-            let document = try jsonDecoder.decode(Document.self, from: structuredTextData)
+            let document = try jsonDecoder.decode(RichTextDocument.self, from: structuredTextData)
             expect(document.content.count).to(equal(17))
         } catch _ {
             fail("Should not have thrown error deserializing structured text")
@@ -177,7 +174,7 @@ class RichTextDeserializationTests: XCTestCase {
                 let model = arrayResponse.items.first!
 //                expect(model.structured.content.count).to(equal(1))
                 let embeddedNode = model.structured.content.first as! EmbeddedResourceBlock
-                let embeddedEntry = embeddedNode.data.resolvedEntryDecodable as? AtomicStructuredTextModel
+                let embeddedEntry = embeddedNode.data.resolvedResource as? AtomicStructuredTextModel
                 expect(embeddedEntry?.name).to(equal("simple_text"))
 
             case .error(let error):
@@ -348,8 +345,8 @@ class RichTextDeserializationTests: XCTestCase {
                 let headingNode = arrayResponse.items.first!.body.content.first as! Heading
                 expect((headingNode.content.first as? Text)?.value).to(equal("Some heading"))
                 let nodeWithEmbeddedEntry = arrayResponse.items.first!.body.content[2] as! EmbeddedResourceBlock
-                expect(nodeWithEmbeddedEntry.data.resolvedEntryDecodable).toNot(beNil())
-                expect((nodeWithEmbeddedEntry.data.resolvedEntryDecodable as? EmbeddedEntry)?.body).to(equal("Embedded 1"))
+                expect(nodeWithEmbeddedEntry.data.resolvedResource).toNot(beNil())
+                expect((nodeWithEmbeddedEntry.data.resolvedResource as? EmbeddedEntry)?.body).to(equal("Embedded 1"))
 
 
             case .error(let error):
@@ -419,7 +416,7 @@ class RichTextDeserializationTests: XCTestCase {
 
         jsonDecoder.userInfo[.linkResolverContextKey] = LinkResolver()
 
-        let document = try! jsonDecoder.decode(Document.self, from: structuredTextData)
+        let document = try! jsonDecoder.decode(RichTextDocument.self, from: structuredTextData)
         expect(document.content.count).to(equal(17))
     }
 }

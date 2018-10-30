@@ -59,7 +59,7 @@ public struct Styling {
     public var lineSpacing: CGFloat = 0.0
 
     public var embedMargin: CGFloat = 10.0
-    
+
     public var indentationMultiplier: CGFloat = 15.0
 
     public var distanceFromBulletToChar: CGFloat = 3.0
