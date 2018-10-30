@@ -12,12 +12,14 @@ public struct ListContext {
 
     public var level: Int
 
+    public var indentationLevel: Int
+
     public var parentType: NodeType?
 
     public var itemIndex: Int = 0
-    /// Document that users can change this.
 
-    public static var unorderedListChars = ["●", "○", "■", "□"]
+    /// Document that users can change this.
+    public static var unorderedListChars = ["•", "◦", "▪︎", "▫︎"]
 
     public var isFirstListItemChild: Bool
 
@@ -31,9 +33,9 @@ public struct ListContext {
         var value: String
         switch level % 3 {
         case 0:
-            value = String(index + 1)
-        case 1:
             value = toRoman(number: index + 1).lowercased()
+        case 1:
+            value = String(index + 1)
         case 2:
             value = String(characters[index % characters.count])
         default:
@@ -55,9 +57,14 @@ public struct ListContext {
         }
     }
 
-    mutating func incrementLevel() {
+    mutating func incrementIndentLevel(incrementNestingLevel: Bool) {
         itemIndex = 0
-        level += 1
+        indentationLevel += 1
+        if incrementNestingLevel {
+            level += 1
+        } else {
+            level = 1
+        }
     }
 
     // https://gist.github.com/kumo/a8e1cb1f4b7cff1548c7
@@ -103,7 +110,6 @@ public struct ListItemRenderer: NodeRenderer {
 
             rendered.append(contentsOf: renderedChildren)
         }
-//        rendered.appendNewlineIfNecessary(node: node)
         return rendered
     }
 }

@@ -15,7 +15,11 @@ public struct UnorderedListRenderer: NodeRenderer {
 
         var mutableContext = context
         var listContext = mutableContext[.listContext] as! ListContext
-        listContext.incrementLevel()
+        if let parentType = listContext.parentType, parentType == .unorderedList {
+            listContext.incrementIndentLevel(incrementNestingLevel: true)
+        } else {
+            listContext.incrementIndentLevel(incrementNestingLevel: false)
+        }
         listContext.parentType = .unorderedList
         mutableContext[.listContext] = listContext
 

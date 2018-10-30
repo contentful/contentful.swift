@@ -60,7 +60,11 @@ public struct DefaultRichTextRenderer: RichTextRenderer {
     public var baseContext: [CodingUserInfoKey: Any] {
         return [
             .styles: styling,
-            .listContext: ListContext(level: 0, parentType: nil, itemIndex: 0, isFirstListItemChild: false)
+            .listContext: ListContext(level: 0,
+                                      indentationLevel: 0,
+                                      parentType: nil,
+                                      itemIndex: 0,
+                                      isFirstListItemChild: false)
         ]
     }
 

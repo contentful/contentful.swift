@@ -18,7 +18,7 @@ public extension NSMutableAttributedString {
 
         let styles = context[.styles] as! Styling
         let paragraphStyle = NSMutableParagraphStyle()
-        let indentation = CGFloat(listContext.level) * styles.indentationMultiplier
+        let indentation = CGFloat(listContext.indentationLevel) * styles.indentationMultiplier
 
         // TODO: Inject this var
         let distancePastListCharStart: CGFloat = 20

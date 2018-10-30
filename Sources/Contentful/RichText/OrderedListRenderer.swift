@@ -15,10 +15,13 @@ public struct OrderedListRenderer: NodeRenderer {
 
         var mutableContext = context
         var listContext = mutableContext[.listContext] as! ListContext
-        listContext.incrementLevel()
-        mutableContext[.listContext] = listContext
-
+        if let parentType = listContext.parentType, parentType == .orderedList {
+            listContext.incrementIndentLevel(incrementNestingLevel: true)
+        } else {
+            listContext.incrementIndentLevel(incrementNestingLevel: false)
+        }
         listContext.parentType = .orderedList
+        mutableContext[.listContext] = listContext
 
         var rendered = orderedList.content.reduce(into: [NSMutableAttributedString]()) { (rendered, node) in
 

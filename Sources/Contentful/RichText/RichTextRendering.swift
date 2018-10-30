@@ -109,7 +109,7 @@ extension Swift.Array where Element == NSMutableAttributedString {
         if listContext.isFirstListItemChild {
             insert(NSMutableAttributedString(string: "\t" + listChar + "\t"), at: 0)
         } else if node is BlockNode {
-            for _ in 0...listContext.level {
+            for _ in 0...listContext.indentationLevel {
                 insert(NSMutableAttributedString(string: "\t"), at: 0)
             }
         }
