@@ -16,21 +16,23 @@ import AppKit
 #endif
 
 
-public typealias EmbeddedResourceView = EmbeddedResourceRepresentable & View
+public typealias EmbeddedResourceView = EmbeddedResourceBlockRepresentable & View
 
-public protocol EmbeddedResourceRepresentable {
+public protocol EmbeddedResourceBlockRepresentable {
 
     var surroundingTextShouldWrap: Bool { get }
     var context: [CodingUserInfoKey: Any] { get set }
+    func layout(with width: CGFloat)
 }
 
 public protocol ViewProvider {
     func view(for resource: FlatResource, context: [CodingUserInfoKey: Any]) -> EmbeddedResourceView
 }
 
-public class EmptyView: View, EmbeddedResourceRepresentable {
+public class EmptyView: View, EmbeddedResourceBlockRepresentable {
     public var surroundingTextShouldWrap: Bool = true
     public var context: [CodingUserInfoKey: Any] = [:]
+    public func layout(with width: CGFloat) {}
 }
 
 public struct EmptyViewProvider: ViewProvider {
@@ -60,7 +62,7 @@ struct EmbedRenderer: NodeRenderer {
             semaphore.signal()
         }
         _ = semaphore.wait(timeout: DispatchTime.distantFuture)
-        var rendered = [NSMutableAttributedString(string: " ", attributes: [.embed: view])]
+        var rendered = [NSMutableAttributedString(string: "\0", attributes: [.embed: view])] // use null character
         rendered.applyListItemStylingIfNecessary(node: node, context: context)
         rendered.appendNewlineIfNecessary(node: node)
         return rendered

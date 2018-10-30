@@ -11,6 +11,7 @@ import Foundation
 public protocol RichTextRenderer {
     func renderer(for node: Node) -> NodeRenderer
     func render(document: RichTextDocument) -> NSAttributedString
+    var styling: Styling { get set }
 }
 
 public struct DefaultRichTextRenderer: RichTextRenderer {

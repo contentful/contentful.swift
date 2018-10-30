@@ -31,12 +31,12 @@ private extension CGPoint {
 
 public extension NSAttributedString {
 
-    var subviewAttachmentRanges: [(attachment: UIView, range: NSRange)] {
-        var ranges = [(UIView, NSRange)]()
+    var subviewAttachmentRanges: [(attachment: EmbeddedResourceView, range: NSRange)] {
+        var ranges = [(EmbeddedResourceView, NSRange)]()
 
         let fullRange = NSRange(location: 0, length: self.length)
         enumerateAttribute(.embed, in: fullRange) { value, range, _ in
-            if let view = value as? UIView {
+            if let view = value as? EmbeddedResourceView {
                 ranges.append((view, range))
             }
         }

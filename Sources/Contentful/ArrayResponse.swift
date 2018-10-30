@@ -112,9 +112,6 @@ extension ArrayResponse: Decodable {
             includes = nil
             mappedIncludes       = try container.decodeIfPresent(MappedIncludes.self, forKey: .includes)
 
-
-            // TODO: Use JSONLookup here.
-
             // A copy as an array of dictionaries just to extract "sys.type" field.
             guard let jsonItems = try container.decode(Swift.Array<Any>.self, forKey: .items) as? [[String: Any]] else {
                 throw SDKError.unparseableJSON(data: nil, errorMessage: "SDK was unable to serialize returned resources")

@@ -78,16 +78,14 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
 
     public var exclusionPaths: [String: UIBezierPath] = [:]
 
-    private static func boundingRectAndLineFragmentRect(forAttachmentCharacterAt characterIndex: Int, layoutManager: NSLayoutManager, size: CGSize) -> CGRect? {
+    private func boundingRectAndLineFragmentRect(forAttachmentCharacterAt characterIndex: Int,
+                                                 attachmentView: EmbeddedResourceView,
+                                                 layoutManager: NSLayoutManager) -> (CGRect, CGRect)? {
         let glyphRange = layoutManager.glyphRange(forCharacterRange: NSRange(location: characterIndex, length: 1), actualCharacterRange: nil)
         let glyphIndex = glyphRange.location
         guard glyphIndex != NSNotFound && glyphRange.length == 1 else {
             return nil
         }
-
-//        guard size.width > 0.0 && size.height > 0.0 else {
-//            return nil
-//        }
 
         let lineFragmentRect = layoutManager.lineFragmentRect(forGlyphAt: glyphIndex, effectiveRange: nil)
         let glyphLocation = layoutManager.location(forGlyphAt: glyphIndex)
@@ -95,10 +93,15 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
             return nil
         }
 
-        let boundingRect = CGRect(origin: CGPoint(x: lineFragmentRect.minX + glyphLocation.x,
-                                                  y: lineFragmentRect.minY),
-                                  size: size)
-        return boundingRect
+        let newWidth = view.frame.width - lineFragmentRect.minX
+        let scaleFactor = newWidth / attachmentView.frame.width
+        let newHeight = scaleFactor * attachmentView.frame.height
+
+        let boundingRect = CGRect(x: lineFragmentRect.minX + glyphLocation.x,
+                                  y: lineFragmentRect.minY,
+                                  width: view.frame.width - lineFragmentRect.minX,
+                                  height: newHeight)
+        return (boundingRect, lineFragmentRect)
     }
 
     // Inspired by: https://github.com/vlas-voloshin/SubviewAttachingTextView/blob/master/SubviewAttachingTextView/SubviewAttachingTextViewBehavior.swift
@@ -113,21 +116,24 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
         // For each attached subview, find its associated attachment and position it according to its text layout
         let attachmentRanges = textView.textStorage.subviewAttachmentRanges
         for (view, range) in attachmentRanges {
-            guard let attachmentRect = RichTextViewController.boundingRectAndLineFragmentRect(forAttachmentCharacterAt: range.location,
-                                                                                      layoutManager: layoutManager,
-                                                                                      size: view.bounds.size) else {
-                                                                                        // If we can't determine the rectangle for the attachment: just hide it.
-//                                                                                        view.isHidden = true
-                                                                                        continue
+            guard let (attachmentRect, lineFragmentRect) = boundingRectAndLineFragmentRect(forAttachmentCharacterAt: range.location,
+                                                                                           attachmentView: view,
+                                                                                           layoutManager: layoutManager) else {
+                // If we can't determine the rectangle for the attachment: just hide it.
+                view.isHidden = true
+                continue
             }
-            var adaptedRect = attachmentRect
             // Make the view's frame the correct width.
-            adaptedRect.size.width = self.view.frame.width - adaptedRect.origin.x - 10.0 // TODO: margin
+            var adaptedRect = attachmentRect
+            adaptedRect.size.width = self.view.frame.width - adaptedRect.origin.x - renderer.styling.embedMargin - textView.textContainerInset.right - textView.textContainerInset.left
+            view.layout(with: adaptedRect.width)
 
             // Make the exclusion rect take up the entire width so that text doesn't wrap where it shouldn't
+            adaptedRect.size = view.frame.size
+
             var exclusionRect = adaptedRect
 
-            if let embeddedView = view as? EmbeddedResourceRepresentable, !embeddedView.surroundingTextShouldWrap {
+            if !view.surroundingTextShouldWrap {
                 exclusionRect.size.width = self.view.frame.width - exclusionRect.origin.x
             }
 
@@ -138,6 +144,17 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
                 let exclusionPath = UIBezierPath(rect: exclusionRect)
                 exclusionPaths[String(range.hashValue)] = exclusionPath
                 textView.textContainer.exclusionPaths.append(exclusionPath)
+
+                // If we have an embedded resource that extends below a list item indicator, we need to exclude
+                // TODO: Check if is in a list item.
+                if lineFragmentRect.height < convertedRect.height && !view.surroundingTextShouldWrap {
+                    let additionalExclusionRect = CGRect(x: 0.0,
+                                                         y: lineFragmentRect.origin.y + lineFragmentRect.height,
+                                                         width: self.view.frame.width,
+                                                         height: exclusionRect.height - lineFragmentRect.height + renderer.styling.embedMargin)
+                    textView.textContainer.exclusionPaths.append(UIBezierPath(rect: additionalExclusionRect))
+                }
+
                 view.frame = convertedRect
                 textView.addSubview(view)
             }
@@ -195,9 +212,9 @@ public class RichTextContainer: NSTextContainer {
 
     // This is for block quotes.
     public override func lineFragmentRect(forProposedRect proposedRect: CGRect,
-                                   at characterIndex: Int,
-                                   writingDirection baseWritingDirection: NSWritingDirection,
-                                   remaining remainingRect: UnsafeMutablePointer<CGRect>?) -> CGRect {
+                                          at characterIndex: Int,
+                                          writingDirection baseWritingDirection: NSWritingDirection,
+                                          remaining remainingRect: UnsafeMutablePointer<CGRect>?) -> CGRect {
         let output = super.lineFragmentRect(forProposedRect: proposedRect,
                                             at: characterIndex,
                                             writingDirection: baseWritingDirection,
