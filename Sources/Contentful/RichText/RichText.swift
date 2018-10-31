@@ -16,7 +16,7 @@ public protocol Node: Decodable {
 }
 
 /// The data describing the linked entry or asset for an `EmbeddedResouceNode`
-public class EmbeddedResourceData: Decodable {
+public class ResourceLinkData: Decodable {
     /// The raw link object which describes the target entry or asset.
     public let target: Link
 
@@ -54,8 +54,7 @@ public enum NodeType: String, Decodable {
     case paragraph
     /// A string of text which may contain marks.
     case text
-    /// A block with another Contentful entry embedded inside.
-    case embeddedEntryBlock = "embedded-entry-block"
+
     /// A large heading.
     case h1 = "heading-1"
     /// A sub-heading.
@@ -70,9 +69,13 @@ public enum NodeType: String, Decodable {
     case orderedList = "ordered-list"
     case unorderedList = "unordered-list"
     case listItem = "list-item"
-    case hyperlink
+
+    // Links
+    /// A block with another Contentful entry embedded inside.
+    case embeddedEntryBlock = "embedded-entry-block"
     case embeddedAssetBlock = "embedded-asset-block"
     case embeddedEntryInline = "embedded-entry-inline"
+    case hyperlink
     case assetHyperlink = "asset-hyperlink"
     case entryHyperlink = "entry-hyperlink"
 
@@ -96,10 +99,12 @@ public enum NodeType: String, Decodable {
             return UnorderedList.self
         case .listItem:
             return ListItem.self
+        case .embeddedAssetBlock, .embeddedEntryBlock:
+            return ResourceLinkBlock.self
+        case .embeddedEntryInline, .assetHyperlink, .entryHyperlink:
+            return ResourceLinkInline.self
         case .hyperlink:
             return Hyperlink.self
-        case .embeddedAssetBlock, .embeddedEntryBlock, .embeddedEntryInline, .assetHyperlink, .entryHyperlink:
-            return EmbeddedResourceBlock.self
         }
     }
 }
@@ -186,7 +191,7 @@ public final class Heading: BlockNode {
     }
 }
 
-// TODO: Make an inline representation
+/// A hyperlink with a title and URI.
 public class Hyperlink: InlineNode {
 
     public let data: Hyperlink.Data
@@ -203,22 +208,38 @@ public class Hyperlink: InlineNode {
 }
 
 /// A block containing data for a linked entry.
-public class EmbeddedResourceBlock: BlockNode {
+public class ResourceLinkBlock: BlockNode {
 
-    public let data: EmbeddedResourceData
+    public let data: ResourceLinkData
 
-    internal init(resolvedData: EmbeddedResourceData, nodeType: NodeType, content: [Node]) {
+    internal init(resolvedData: ResourceLinkData, nodeType: NodeType, content: [Node]) {
         self.data = resolvedData
         super.init(nodeType: nodeType, content: content)
     }
 
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: NodeContentCodingKeys.self)
-        data = try container.decode(EmbeddedResourceData.self, forKey: .data)
+        data = try container.decode(ResourceLinkData.self, forKey: .data)
         try super.init(from: decoder)
     }
 }
 
+/// A block containing data for a linked entry.
+public class ResourceLinkInline: InlineNode {
+
+    public let data: ResourceLinkData
+
+    internal init(resolvedData: ResourceLinkData, nodeType: NodeType, content: [Node]) {
+        self.data = resolvedData
+        super.init(nodeType: nodeType, content: content)
+    }
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: NodeContentCodingKeys.self)
+        data = try container.decode(ResourceLinkData.self, forKey: .data)
+        try super.init(from: decoder)
+    }
+}
 
 /// A node containing text with marks.
 public struct Text: Node {

@@ -1,5 +1,5 @@
 //
-//  EmbeddedEntryRenderer.swift
+//  ResourceLinkBlockRenderer.swift
 //  Contentful
 //
 //  Created by JP Wright on 9/25/18.
@@ -16,9 +16,9 @@ import AppKit
 #endif
 
 
-public typealias EmbeddedResourceView = EmbeddedResourceBlockRepresentable & View
+public typealias ResourceBlockView = ResourceLinkBlockRepresentable & View
 
-public protocol EmbeddedResourceBlockRepresentable {
+public protocol ResourceLinkBlockRepresentable {
 
     var surroundingTextShouldWrap: Bool { get }
     var context: [CodingUserInfoKey: Any] { get set }
@@ -26,10 +26,10 @@ public protocol EmbeddedResourceBlockRepresentable {
 }
 
 public protocol ViewProvider {
-    func view(for resource: FlatResource, context: [CodingUserInfoKey: Any]) -> EmbeddedResourceView
+    func view(for resource: FlatResource, context: [CodingUserInfoKey: Any]) -> ResourceBlockView
 }
 
-public class EmptyView: View, EmbeddedResourceBlockRepresentable {
+public class EmptyView: View, ResourceLinkBlockRepresentable {
     public var surroundingTextShouldWrap: Bool = true
     public var context: [CodingUserInfoKey: Any] = [:]
     public func layout(with width: CGFloat) {}
@@ -37,16 +37,16 @@ public class EmptyView: View, EmbeddedResourceBlockRepresentable {
 
 public struct EmptyViewProvider: ViewProvider {
 
-    public func view(for resource: FlatResource, context: [CodingUserInfoKey: Any]) -> EmbeddedResourceView {
+    public func view(for resource: FlatResource, context: [CodingUserInfoKey: Any]) -> ResourceBlockView {
 
         return EmptyView(frame: .zero)
     }
 }
 
-struct EmbedRenderer: NodeRenderer {
+struct ResourceLinkBlockRenderer: NodeRenderer {
 
     public func render(node: Node, renderer: RichTextRenderer, context: [CodingUserInfoKey: Any]) -> [NSMutableAttributedString] {
-        let embeddedResourceNode = node as! EmbeddedResourceBlock
+        let embeddedResourceNode = node as! ResourceLinkBlock
         guard let resolvedResource = embeddedResourceNode.data.resolvedResource else { return [] }
 
         let provider = (context[.styles] as! Styling).viewProvider
@@ -56,9 +56,7 @@ struct EmbedRenderer: NodeRenderer {
         var view: UIView!
 
         DispatchQueue.main.sync {
-
             view = provider.view(for: resolvedResource, context: context)
-
             semaphore.signal()
         }
         _ = semaphore.wait(timeout: DispatchTime.distantFuture)

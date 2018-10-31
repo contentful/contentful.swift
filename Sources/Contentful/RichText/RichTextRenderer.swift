@@ -39,7 +39,7 @@ public struct DefaultRichTextRenderer: RichTextRenderer {
         listItemRenderer = ListItemRenderer()
         paragraphRenderer = ParagraphRenderer()
         hyperlinkRenderer = HyperlinkRenderer()
-        embedRenderer = EmbedRenderer()
+        embedRenderer = ResourceLinkBlockRenderer()
 
         self.styling = styling
     }
@@ -53,7 +53,7 @@ public struct DefaultRichTextRenderer: RichTextRenderer {
         listItemRenderer = ListItemRenderer()
         paragraphRenderer = ParagraphRenderer()
         hyperlinkRenderer = HyperlinkRenderer()
-        embedRenderer = EmbedRenderer()
+        embedRenderer = ResourceLinkBlockRenderer()
         styling = Styling()
     }
 

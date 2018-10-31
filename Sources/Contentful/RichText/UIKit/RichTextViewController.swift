@@ -79,7 +79,7 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
     public var exclusionPaths: [String: UIBezierPath] = [:]
 
     private func boundingRectAndLineFragmentRect(forAttachmentCharacterAt characterIndex: Int,
-                                                 attachmentView: EmbeddedResourceView,
+                                                 attachmentView: ResourceBlockView,
                                                  layoutManager: NSLayoutManager) -> (CGRect, CGRect)? {
         let glyphRange = layoutManager.glyphRange(forCharacterRange: NSRange(location: characterIndex, length: 1), actualCharacterRange: nil)
         let glyphIndex = glyphRange.location

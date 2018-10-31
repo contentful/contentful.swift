@@ -83,10 +83,10 @@ public class Entry: LocalizableResource {
                 // Resolve links for structured text fields.
                 if let value = fieldValueForLocaleCode as? RichTextDocument {
                     let embeddedEntryNodes: [Node] = value.content.map { node in
-                        if let blockNode = node as? EmbeddedResourceBlock {
+                        if let blockNode = node as? ResourceLinkBlock {
                             let resolvedTarget = blockNode.data.target.resolve(against: includedEntries, and: includedAssets)
-                            let newData = EmbeddedResourceData(resolvedTarget: resolvedTarget)
-                            let newBlockNode = EmbeddedResourceBlock(resolvedData: newData, nodeType: blockNode.nodeType, content: blockNode.content)
+                            let newData = ResourceLinkData(resolvedTarget: resolvedTarget)
+                            let newBlockNode = ResourceLinkBlock(resolvedData: newData, nodeType: blockNode.nodeType, content: blockNode.content)
                             return newBlockNode
                         }
                         return node
