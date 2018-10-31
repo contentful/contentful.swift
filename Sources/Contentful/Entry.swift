@@ -80,6 +80,7 @@ public class Entry: LocalizableResource {
                     resolvedLocalizableFieldMap[localeCode] = resolvedLinks
                 }
 
+                // FIXME: Make sure inline links are resolved as well.
                 // Resolve links for structured text fields.
                 if let value = fieldValueForLocaleCode as? RichTextDocument {
                     let embeddedEntryNodes: [Node] = value.content.map { node in

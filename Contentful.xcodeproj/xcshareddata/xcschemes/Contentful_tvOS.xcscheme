@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EDDC071B1E3BCEA40022F2F9"
-               BuildableName = "Contentful_tvOS"
+               BuildableName = "Contentful.framework"
                BlueprintName = "Contentful_tvOS"
                ReferencedContainer = "container:Contentful.xcodeproj">
             </BuildableReference>
@@ -44,7 +44,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EDDC071B1E3BCEA40022F2F9"
-            BuildableName = "Contentful_tvOS"
+            BuildableName = "Contentful.framework"
             BlueprintName = "Contentful_tvOS"
             ReferencedContainer = "container:Contentful.xcodeproj">
          </BuildableReference>
@@ -66,7 +66,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EDDC071B1E3BCEA40022F2F9"
-            BuildableName = "Contentful_tvOS"
+            BuildableName = "Contentful.framework"
             BlueprintName = "Contentful_tvOS"
             ReferencedContainer = "container:Contentful.xcodeproj">
          </BuildableReference>
@@ -84,7 +84,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EDDC071B1E3BCEA40022F2F9"
-            BuildableName = "Contentful_tvOS"
+            BuildableName = "Contentful.framework"
             BlueprintName = "Contentful_tvOS"
             ReferencedContainer = "container:Contentful.xcodeproj">
          </BuildableReference>

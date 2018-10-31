@@ -34,17 +34,8 @@ Pod::Spec.new do |spec|
   spec.watchos.deployment_target = '2.0'
   spec.tvos.deployment_target    = '9.0'
 
-  # Subspecs
   spec.subspec 'ImageOptions' do |subspec|
     subspec.source_files = 'Sources/Contentful/ImageOptions/*.swift'
   end
-
-  spec.subspec 'RichText' do |subspec|
-    subspec.source_files = 'Sources/Contentful/RichText/*.swift'
-    subspec.ios.source_files = 'Sources/Contentful/RichText/UIKit/*.swift'
-    subspec.watchos.source_files = 'Sources/Contentful/RichText/UIKit/*.swift'
-    subspec.tvos.source_files = 'Sources/Contentful/RichText/UIKit/*.swift'
-  end
 end
-
 

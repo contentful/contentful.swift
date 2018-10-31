@@ -314,24 +314,4 @@ extension KeyedDecodingContainer {
         return entries
     }
 
-    internal func decodeContent(forKey key: K) throws -> [Node] {
-
-        // A copy as an array of dictionaries just to extract "nodeType" field.
-        guard let jsonContent = try decode(Swift.Array<Any>.self, forKey: key) as? [[String: Any]] else {
-            throw SDKError.unparseableJSON(data: nil, errorMessage: "SDK was unable to serialize returned resources")
-        }
-
-        var contentJSONContainer = try nestedUnkeyedContainer(forKey: key)
-        var content: [Node] = []
-
-        while !contentJSONContainer.isAtEnd {
-            guard let nodeType = jsonContent.nodeType(at: contentJSONContainer.currentIndex) else {
-                let errorMessage = "SDK was unable to parse nodeType property necessary to finish resource serialization."
-                throw SDKError.unparseableJSON(data: nil, errorMessage: errorMessage)
-            }
-            let element = try nodeType.type.popNodeDecodable(from: &contentJSONContainer)
-            content.append(element)
-        }
-        return content
-    }
 }
