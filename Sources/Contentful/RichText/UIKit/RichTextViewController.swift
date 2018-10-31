@@ -33,8 +33,12 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
         super.viewDidLayoutSubviews()
 
         if #available(iOS 11.0, *) {
-            textView.frame = view.bounds.insetBy(dx: view.safeAreaInsets.left,
-                                                 dy: view.safeAreaInsets.top)
+            if #available(tvOSApplicationExtension 11.0, *) {
+                textView.frame = view.bounds.insetBy(dx: view.safeAreaInsets.left,
+                                                     dy: view.safeAreaInsets.top)
+            } else {
+                // Fallback on earlier versions
+            }
             textView.center = view.center
         } else {
             // TODO: Fallback on earlier versions

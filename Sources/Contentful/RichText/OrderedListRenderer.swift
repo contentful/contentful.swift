@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import UIKit
 
 public struct OrderedListRenderer: NodeRenderer {
     public func render(node: Node, renderer: RichTextRenderer, context: [CodingUserInfoKey: Any]) -> [NSMutableAttributedString] {

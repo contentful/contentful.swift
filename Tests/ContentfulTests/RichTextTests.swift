@@ -37,7 +37,7 @@ class RichTextNodeDecodingTests: XCTestCase {
     static let client = TestClientFactory.testClient(withCassetteNamed: "RichTextNodeDecodingTests",
                                                      spaceId: "pzlh94jb0ghw",
                                                      accessToken: "1859a86ac82f679e8436af5ed5202bdb45f96b1deed3b5d1e20275698b5184c9",
-                                                     contentTypeClasses: [STTest.self, EmbeddedEntry.self, RichTextContentType.self])
+                                                     contentTypeClasses: [RichTextContentType.self])
 
     override class func setUp() {
         super.setUp()

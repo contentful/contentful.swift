@@ -53,7 +53,7 @@ struct ResourceLinkBlockRenderer: NodeRenderer {
 
         let semaphore = DispatchSemaphore(value: 0)
 
-        var view: UIView!
+        var view: View!
 
         DispatchQueue.main.sync {
             view = provider.view(for: resolvedResource, context: context)
