@@ -1,11 +1,3 @@
-__SIM_ID=`xcrun simctl list|egrep -m 1 '$(SIM_NAME) \([^(]*\) \([^(]*\)$$'|sed -e 's/.* (\(.*\)) (.*)/\1/'`
-SIM_NAME=iPhone X
-SIM_ID=$(shell echo $(__SIM_ID))
-
-ifeq ($(strip $(SIM_ID)),)
-$(error Could not find $(SIM_NAME) simulator)
-endif
-
 WORKSPACE=Contentful.xcworkspace
 
 .PHONY: open test integration_test setup lint coverage carthage docs release
@@ -24,7 +16,7 @@ kill_simulator:
 
 test: clean clean_simulators
 	set -x -o pipefail && xcodebuild test -workspace $(WORKSPACE) \
-		-scheme Contentful_iOS -destination 'id=$(SIM_ID)' | bundle exec xcpretty -c
+		-scheme Contentful_iOS -destination 'platform=iOS Simulator,name=iPhone X,OS=12.1' | bundle exec xcpretty -c
 
 integration_test: clean clean_simulators
 	set -x -o pipefail && xcodebuild test -workspace $(WORKSPACE) \
