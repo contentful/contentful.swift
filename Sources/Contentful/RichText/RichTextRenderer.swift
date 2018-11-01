@@ -26,6 +26,7 @@ public struct DefaultRichTextRenderer: RichTextRenderer {
     public var paragraphRenderer: NodeRenderer
     public var hyperlinkRenderer: NodeRenderer
     public var embedRenderer: NodeRenderer
+    public var inlineRenderer: NodeRenderer
 
     public var styling: Styling
 
@@ -40,7 +41,8 @@ public struct DefaultRichTextRenderer: RichTextRenderer {
         paragraphRenderer = ParagraphRenderer()
         hyperlinkRenderer = HyperlinkRenderer()
         embedRenderer = ResourceLinkBlockRenderer()
-
+        inlineRenderer = ResourceLinkInlineRenderer()
+        
         self.styling = styling
     }
     public init() {
@@ -54,6 +56,8 @@ public struct DefaultRichTextRenderer: RichTextRenderer {
         paragraphRenderer = ParagraphRenderer()
         hyperlinkRenderer = HyperlinkRenderer()
         embedRenderer = ResourceLinkBlockRenderer()
+        inlineRenderer = ResourceLinkInlineRenderer()
+
         styling = Styling()
     }
 
@@ -111,24 +115,14 @@ public struct DefaultRichTextRenderer: RichTextRenderer {
         case .document:
             return emptyRenderer
 
-        case .embeddedEntryBlock:
+        case .embeddedEntryBlock, .embeddedAssetBlock:
             return embedRenderer
 
-        case .embeddedAssetBlock:
-            return embedRenderer
-
-        // TODO:
         case .horizontalRule:
             return emptyRenderer
 
-        case .embeddedEntryInline:
-            return emptyRenderer
-
-        case .assetHyperlink:
-            return emptyRenderer
-
-        case .entryHyperlink:
-            return emptyRenderer
+        case .embeddedEntryInline, .assetHyperlink, .entryHyperlink:
+            return inlineRenderer
         }
     }
 

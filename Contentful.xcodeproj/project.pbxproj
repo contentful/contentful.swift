@@ -479,13 +479,6 @@
 			path = UIKit;
 			sourceTree = "<group>";
 		};
-		5D09C27221871106006B83F4 /* AppKit */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = AppKit;
-			sourceTree = "<group>";
-		};
 		A19CA3BA1B836EDD00A0EFCD = {
 			isa = PBXGroup;
 			children = (
@@ -620,7 +613,6 @@
 				EDC1A8ED2136DBC600899D64 /* RichTextRendering.swift */,
 				ED331660215A73D600133AB8 /* ResourceLinkBlockRenderer.swift */,
 				5DFE08DE2189D83B00B0D68E /* ResourceLinkInlineRenderer.swift */,
-				5D09C27221871106006B83F4 /* AppKit */,
 				5D09C27121871100006B83F4 /* UIKit */,
 			);
 			path = RichText;

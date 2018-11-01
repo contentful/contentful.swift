@@ -52,6 +52,8 @@ public struct Styling {
 
     public var viewProvider: ViewProvider = EmptyViewProvider()
 
+    public var inlineResourceProvider: InlineProvider = EmptyInlineProvider()
+
     public var textColor = Color.black
 
     public var paragraphSpacing: CGFloat = 15.0
@@ -95,7 +97,7 @@ extension Swift.Array where Element == NSMutableAttributedString {
         // check the current node and if it has children,
         // if any of children are blocks, mutate and pass down context.
         // if it doesn’t have children, apply styles, clear conte
-        guard node is InlineNode || node is Text || (node as? BlockNode)?.content.filter({ $0 is BlockNode }).count == 0 else {
+        guard node is Text || (node as? BlockNode)?.content.filter({ $0 is BlockNode }).count == 0 else {
             return
         }
 

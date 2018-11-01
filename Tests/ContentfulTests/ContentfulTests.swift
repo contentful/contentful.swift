@@ -42,8 +42,8 @@ struct TestClientFactory {
                             host: host,
                             clientConfiguration: clientConfiguration,
                             contentTypeClasses: contentTypeClasses)
-            let dvrSession = DVR.Session(cassetteName: cassetteName, backingSession: client.urlSession)
-            client.urlSession = dvrSession
+//            let dvrSession = DVR.Session(cassetteName: cassetteName, backingSession: client.urlSession)
+//            client.urlSession = dvrSession
         #endif
         return client
     }

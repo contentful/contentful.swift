@@ -374,4 +374,37 @@ class RichTextNodeDecodingTests: XCTestCase {
         }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
+
+    // MARK: Integration of multiple node types in tree
+
+    func testDecodingParagraphWithAllInlineAndHyperlinkNodes() {
+        let expectation = self.expectation(description: "")
+
+        RichTextNodeDecodingTests.client.fetchArray(of: RichTextContentType.self,
+                                                    matching: .where(field: .name, .equals("inline_hyperlink_integration"))) { result in
+            switch result {
+            case .success(let arrayResponse):
+                let model = arrayResponse.items.first!
+
+                let paragraph = model.rich.content.first as? Paragraph
+                let hyperlink = paragraph?.content[1] as? Hyperlink
+                expect(hyperlink?.data.uri).to(equal("https://www.example.com/"))
+
+                let entryHyperlink = paragraph?.content[3] as? ResourceLinkInline
+                expect((entryHyperlink?.data.resolvedResource as! RichTextContentType).name).to(equal("simple_headline_1"))
+
+                let assetHyperlink = paragraph?.content[5] as? ResourceLinkInline
+                expect((assetHyperlink?.data.resolvedResource as! Asset).title).to(equal("cat"))
+
+                let entryInlineLink = paragraph?.content[7] as? ResourceLinkInline
+                expect((entryInlineLink?.data.resolvedResource as! RichTextContentType).name).to(equal("Hello World"))
+
+            case .error(let error):
+                fail("\(error)")
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
 }
