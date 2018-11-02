@@ -22,7 +22,7 @@ public struct OrderedListRenderer: NodeRenderer {
         listContext.parentType = .orderedList
         mutableContext[.listContext] = listContext
 
-        var rendered = orderedList.content.reduce(into: [NSMutableAttributedString]()) { (rendered, node) in
+        let rendered = orderedList.content.reduce(into: [NSMutableAttributedString]()) { (rendered, node) in
 
             mutableContext[.listContext] = listContext
             let nodeRenderer = renderer.renderer(for: node)
@@ -33,7 +33,7 @@ public struct OrderedListRenderer: NodeRenderer {
 
             listContext.itemIndex += 1
         }
-        rendered.appendNewlineIfNecessary(node: node)
+
         return rendered
     }
 }

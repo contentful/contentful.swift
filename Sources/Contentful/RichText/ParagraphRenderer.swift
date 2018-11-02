@@ -16,7 +16,6 @@ public struct ParagraphRenderer: NodeRenderer {
             let nodeRenderer = renderer.renderer(for: node)
 
             let renderedChildren = nodeRenderer.render(node: node, renderer: renderer, context: context)
-            // TODO: Push onto context.
             rendered.append(contentsOf: renderedChildren)
         }
         rendered.applyListItemStylingIfNecessary(node: node, context: context)

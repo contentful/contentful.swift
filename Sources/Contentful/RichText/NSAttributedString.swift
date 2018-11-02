@@ -25,19 +25,17 @@ public extension NSMutableAttributedString {
         let paragraphStyle = NSMutableParagraphStyle()
         let indentation = CGFloat(listContext.indentationLevel) * styles.indentationMultiplier
 
-        // TODO: Inject this var
-        let distancePastListCharStart: CGFloat = 20
         // The first tab stop defines the x-position where the bullet or index is drawn.
         // The second tab stop defines the x-position where the list content begins.
         let tabStops = [
             NSTextTab(textAlignment: .left, location: indentation, options: [:]),
-            NSTextTab(textAlignment: .left, location: indentation + distancePastListCharStart, options: [:])
+            NSTextTab(textAlignment: .left, location: indentation + styles.distanceFromBulletMinXToCharMinX, options: [:])
         ]
 
         paragraphStyle.tabStops = tabStops
 
         // Indent subsequent lines to line up with first tab stop after bullet.
-        paragraphStyle.headIndent = indentation + distancePastListCharStart
+        paragraphStyle.headIndent = indentation + styles.distanceFromBulletMinXToCharMinX
 
         paragraphStyle.paragraphSpacing = styles.paragraphSpacing
         paragraphStyle.lineSpacing = styles.lineSpacing

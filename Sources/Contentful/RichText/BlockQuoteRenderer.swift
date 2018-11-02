@@ -15,7 +15,6 @@ public struct BlockQuoteRenderer: NodeRenderer {
         let renderedChildren = blockQuote.content.reduce(into: [NSMutableAttributedString]()) { (rendered, node) in
             let nodeRenderer = renderer.renderer(for: node)
             let renderedChildren = nodeRenderer.render(node: node, renderer: renderer, context: context)
-            // TODO: Push onto context.
             rendered.append(contentsOf: renderedChildren)
         }
 

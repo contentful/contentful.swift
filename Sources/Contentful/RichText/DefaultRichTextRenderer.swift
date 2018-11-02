@@ -79,7 +79,6 @@ public struct DefaultRichTextRenderer: RichTextRenderer {
         let context = baseContext
         let renderedChildren = document.content.reduce(into: [NSMutableAttributedString]()) { (rendered, node) in
             let nodeRenderer = self.renderer(for: node)
-            // TODO: pass in context
             let renderedNodes = nodeRenderer.render(node: node, renderer: self, context: context)
             rendered.append(contentsOf: renderedNodes)
         }
@@ -129,7 +128,6 @@ public struct DefaultRichTextRenderer: RichTextRenderer {
         }
     }
 
-    // TODO: font for string renderable node...
     public static func font(for textNode: Text, styling: Styling) -> Font {
         let markTypes = textNode.marks.map { $0.type }
         if markTypes.contains(.bold) && markTypes.contains(.italic) {

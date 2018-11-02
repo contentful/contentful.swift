@@ -21,6 +21,7 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
 
     public var textContainerInset = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0) {
         didSet {
+            // TODO: Ensure this works correctly.
             layoutManager.textContainerInset = textContainerInset
             textView.textContainerInset = textContainerInset
         }

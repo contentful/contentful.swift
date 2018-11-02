@@ -67,8 +67,7 @@ public struct Styling {
 
     public var indentationMultiplier: CGFloat = 15.0
 
-    // TODO: use this
-    public var distanceFromBulletToChar: CGFloat = 3.0
+    public var distanceFromBulletMinXToCharMinX: CGFloat = 20.0
 
     public var blockQuoteColor: UIColor = .lightGray
 

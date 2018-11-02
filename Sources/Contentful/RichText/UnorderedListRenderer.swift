@@ -22,13 +22,11 @@ public struct UnorderedListRenderer: NodeRenderer {
         listContext.parentType = .unorderedList
         mutableContext[.listContext] = listContext
 
-        var rendered = unorderedList.content.reduce(into: [NSMutableAttributedString]()) { (rendered, node) in
+        let rendered = unorderedList.content.reduce(into: [NSMutableAttributedString]()) { (rendered, node) in
             let nodeRenderer = renderer.renderer(for: node)
             let renderedChildren = nodeRenderer.render(node: node, renderer: renderer, context: mutableContext)
             rendered.append(contentsOf: renderedChildren)
         }
-
-        rendered.appendNewlineIfNecessary(node: node)
 
         return rendered
     }
