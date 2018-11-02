@@ -19,6 +19,13 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
     public let layoutManager = RichTextLayoutManager()
     public var textContainer: RichTextContainer!
 
+    public var textContainerInset = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0) {
+        didSet {
+            layoutManager.textContainerInset = textContainerInset
+            textView.textContainerInset = textContainerInset
+        }
+    }
+
     public init(richText: RichTextDocument?, renderer: RichTextRenderer?, nibName: String?, bundle: Bundle?) {
         self.richText = richText
         self.renderer = renderer ?? DefaultRichTextRenderer()
@@ -48,6 +55,9 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
     override open func viewDidLoad() {
         super.viewDidLoad()
 
+        layoutManager.blockQuoteWidth = renderer.styling.blockQuoteWidth
+        layoutManager.blockQuoteColor = renderer.styling.blockQuoteColor
+
         textStorage.addLayoutManager(layoutManager)
 
         if #available(iOS 11.0, *) {
@@ -55,6 +65,9 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
         } else {
             // TODO: Fallback on earlier versions
         }
+        textContainer.blockQuoteTextInset = renderer.styling.blockQuoteTextInset
+        textContainer.blockQuoteWidth = renderer.styling.blockQuoteWidth
+
 
         textContainer.widthTracksTextView = true
         textContainer.heightTracksTextView = true
@@ -150,6 +163,7 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
             exclusionRect = textView.convertRectFromTextContainer(exclusionRect)
             let convertedRect = textView.convertRectFromTextContainer(adaptedRect)
 
+            // TODO: delete all exclusion paths when device rotates.
             if exclusionPaths[String(range.hashValue)] == nil {
                 let exclusionPath = UIBezierPath(rect: exclusionRect)
                 exclusionPaths[String(range.hashValue)] = exclusionPath
@@ -211,6 +225,12 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
 
 public class RichTextLayoutManager: NSLayoutManager {
 
+    var blockQuoteWidth: CGFloat!
+
+    var blockQuoteColor: UIColor!
+
+    var textContainerInset: UIEdgeInsets!
+
     public override init() {
         super.init()
         allowsNonContiguousLayout = true
@@ -234,19 +254,18 @@ public class RichTextLayoutManager: NSLayoutManager {
             guard attrs[.block] != nil else { return }
             let context = UIGraphicsGetCurrentContext()
             context?.setLineWidth(0)
-            // TODO: Pass in colors.
-            UIColor(white: 0.95, alpha: 1.0).setFill()
+
+            self.blockQuoteColor.setFill()
             context?.saveGState()
 
             let textContainer = textContainers.first!
             let theseGlyphys = self.glyphRange(forCharacterRange: range, actualCharacterRange: nil)
             var frame = boundingRect(forGlyphRange: theseGlyphys, in: textContainer)
 
-            // TODO: Just calculate these correctly!
-            frame.size.width = 10.0
-            frame.origin.x -= 10.0
-            frame.size.height += 20
-
+            frame.size.width = blockQuoteWidth
+            frame.origin.x = textContainerInset.left + textContainers.first!.lineFragmentPadding
+            frame.origin.y += textContainers.first!.lineFragmentPadding
+            frame.size.height += textContainers.first!.lineFragmentPadding * 2
             context?.saveGState()
             context?.fill(frame)
             context?.stroke(frame)
@@ -256,6 +275,11 @@ public class RichTextLayoutManager: NSLayoutManager {
 }
 
 public class RichTextContainer: NSTextContainer {
+
+    var blockQuoteTextInset: CGFloat!
+
+    var blockQuoteWidth: CGFloat!
+
 
     // This is for block quotes.
     public override func lineFragmentRect(forProposedRect proposedRect: CGRect,
@@ -270,9 +294,8 @@ public class RichTextContainer: NSTextContainer {
         let length = layoutManager!.textStorage!.length
         guard characterIndex < length else { return output }
 
-        // TODO: Use a custom BlockAttribute struct to get the padding there.
         if layoutManager?.textStorage?.attribute(.block, at: characterIndex, effectiveRange: nil) != nil {
-            return output.insetBy(dx: 50.0, dy: 0.0)
+            return output.insetBy(dx: blockQuoteTextInset, dy: 0.0)
         }
         return output
     }

@@ -67,7 +67,13 @@ public struct Styling {
 
     public var indentationMultiplier: CGFloat = 15.0
 
+    // TODO: use this
     public var distanceFromBulletToChar: CGFloat = 3.0
+
+    public var blockQuoteColor: UIColor = .lightGray
+
+    public var blockQuoteWidth: CGFloat = 10.0
+    public var blockQuoteTextInset: CGFloat = 30.0
 
     public var fontsForHeadingLevels: [Font] = [
         Font.systemFont(ofSize: 24.0, weight: .semibold),
@@ -79,8 +85,10 @@ public struct Styling {
     ]
 
     public func headingAttributes(level: Int) -> [NSAttributedString.Key: Any] {
+        // TODO: Check if level is within bounds of the array.
         return [.font: fontsForHeadingLevels[level]]
     }
+
 }
 
 extension Dictionary where Key == CodingUserInfoKey {
