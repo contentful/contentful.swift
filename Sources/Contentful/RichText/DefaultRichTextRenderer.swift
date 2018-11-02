@@ -27,6 +27,7 @@ public struct DefaultRichTextRenderer: RichTextRenderer {
     public var hyperlinkRenderer: NodeRenderer
     public var embedRenderer: NodeRenderer
     public var inlineRenderer: NodeRenderer
+    public var horizontalRuleRenderer: NodeRenderer
 
     public var styling: Styling
 
@@ -42,7 +43,8 @@ public struct DefaultRichTextRenderer: RichTextRenderer {
         hyperlinkRenderer = HyperlinkRenderer()
         embedRenderer = ResourceLinkBlockRenderer()
         inlineRenderer = ResourceLinkInlineRenderer()
-        
+        horizontalRuleRenderer = HorizontalRuleRenderer()
+
         self.styling = styling
     }
     public init() {
@@ -57,6 +59,7 @@ public struct DefaultRichTextRenderer: RichTextRenderer {
         hyperlinkRenderer = HyperlinkRenderer()
         embedRenderer = ResourceLinkBlockRenderer()
         inlineRenderer = ResourceLinkInlineRenderer()
+        horizontalRuleRenderer = HorizontalRuleRenderer()
 
         styling = Styling()
     }
@@ -119,7 +122,7 @@ public struct DefaultRichTextRenderer: RichTextRenderer {
             return embedRenderer
 
         case .horizontalRule:
-            return emptyRenderer
+            return horizontalRuleRenderer
 
         case .embeddedEntryInline, .assetHyperlink, .entryHyperlink:
             return inlineRenderer

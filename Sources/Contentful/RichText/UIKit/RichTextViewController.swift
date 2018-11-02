@@ -83,7 +83,7 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
     public var exclusionPaths: [String: UIBezierPath] = [:]
 
     private func boundingRectAndLineFragmentRect(forAttachmentCharacterAt characterIndex: Int,
-                                                 attachmentView: ResourceBlockView,
+                                                 attachmentView: View,
                                                  layoutManager: NSLayoutManager) -> (CGRect, CGRect)? {
         let glyphRange = layoutManager.glyphRange(forCharacterRange: NSRange(location: characterIndex, length: 1), actualCharacterRange: nil)
         let glyphIndex = glyphRange.location
@@ -117,16 +117,22 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
 
         let layoutManager = textView.layoutManager
 
+        layoutEmbeddedResourceViews(layoutManager: layoutManager)
+        layoutHorizontalRules(layoutManager: layoutManager)
+    }
+
+    private func layoutEmbeddedResourceViews(layoutManager: NSLayoutManager) {
         // For each attached subview, find its associated attachment and position it according to its text layout
-        let attachmentRanges = textView.textStorage.subviewAttachmentRanges
+        let attachmentRanges = textView.textStorage.attachmentRanges(forAttribute: .embed) as! [(ResourceBlockView, NSRange)]
         for (view, range) in attachmentRanges {
             guard let (attachmentRect, lineFragmentRect) = boundingRectAndLineFragmentRect(forAttachmentCharacterAt: range.location,
                                                                                            attachmentView: view,
                                                                                            layoutManager: layoutManager) else {
-                // If we can't determine the rectangle for the attachment: just hide it.
-                view.isHidden = true
-                continue
+                                                                                            // If we can't determine the rectangle for the attachment: just hide it.
+                                                                                            view.isHidden = true
+                                                                                            continue
             }
+            // TODO: Better documentation and cleanup.
             // Make the view's frame the correct width.
             var adaptedRect = attachmentRect
             adaptedRect.size.width = self.view.frame.width - adaptedRect.origin.x - renderer.styling.embedMargin - textView.textContainerInset.right - textView.textContainerInset.left
@@ -159,6 +165,43 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
                     textView.textContainer.exclusionPaths.append(UIBezierPath(rect: additionalExclusionRect))
                 }
 
+                view.frame = convertedRect
+                textView.addSubview(view)
+            }
+        }
+    }
+
+    private func layoutHorizontalRules(layoutManager: NSLayoutManager) {
+        let attachmentRanges = textView.textStorage.attachmentRanges(forAttribute: .horizontalRule)
+
+        for (view, range) in attachmentRanges {
+            guard let (attachmentRect, _) = boundingRectAndLineFragmentRect(forAttachmentCharacterAt: range.location,
+                                                                                           attachmentView: view,
+                                                                                           layoutManager: layoutManager) else {
+                                                                                            // If we can't determine the rectangle for the attachment: just hide it.
+                                                                                            view.isHidden = true
+                                                                                            continue
+            }
+            // Make the view's frame the correct width.
+            var adaptedRect = attachmentRect
+            adaptedRect.size.width = self.view.frame.width - adaptedRect.origin.x - renderer.styling.embedMargin - textView.textContainerInset.right - textView.textContainerInset.left
+            view.frame.size.width = adaptedRect.width
+            // Make the exclusion rect take up the entire width so that text doesn't wrap where it shouldn't
+            adaptedRect.size = view.frame.size
+
+            var exclusionRect = adaptedRect
+
+            // Make exclusion rect span width of text view.
+            exclusionRect.size.width = self.view.frame.width - exclusionRect.origin.x
+
+            exclusionRect = textView.convertRectFromTextContainer(exclusionRect)
+            let convertedRect = textView.convertRectFromTextContainer(adaptedRect)
+
+            if exclusionPaths[String(range.hashValue)] == nil {
+                let exclusionPath = UIBezierPath(rect: exclusionRect)
+                exclusionPaths[String(range.hashValue)] = exclusionPath
+                textView.textContainer.exclusionPaths.append(exclusionPath)
+                
                 view.frame = convertedRect
                 textView.addSubview(view)
             }

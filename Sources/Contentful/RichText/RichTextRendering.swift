@@ -35,6 +35,7 @@ public typealias View = NSView
 public extension NSAttributedString.Key {
     public static let block = NSAttributedString.Key(rawValue: "ContentfulBlockAttribute")
     public static let embed = NSAttributedString.Key(rawValue: "ContentfulEmbed")
+    public static let horizontalRule = NSAttributedString.Key(rawValue: "ContentfulHorizontalRule")
 }
 
 public protocol NodeRenderer {
@@ -53,6 +54,8 @@ public struct Styling {
     public var viewProvider: ViewProvider = EmptyViewProvider()
 
     public var inlineResourceProvider: InlineProvider = EmptyInlineProvider()
+
+    public var horizontalRuleProvider: HorizontalRuleProvider  = DefaultHorizontalRuleProvider()
 
     public var textColor = Color.black
 
@@ -75,7 +78,7 @@ public struct Styling {
         Font.systemFont(ofSize: 13, weight: .semibold)
     ]
 
-    func headingAttributes(level: Int) -> [NSAttributedString.Key: Any] {
+    public func headingAttributes(level: Int) -> [NSAttributedString.Key: Any] {
         return [.font: fontsForHeadingLevels[level]]
     }
 }

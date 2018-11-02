@@ -159,7 +159,7 @@ public class RichTextDocument: Node {
 /// A block of text, containing child `Text` nodes.
 public final class Paragraph: BlockNode {}
 
-// Strongly typed block nodes.
+
 public final class UnorderedList: BlockNode {}
 
 public final class OrderedList: BlockNode {}
@@ -169,9 +169,7 @@ public final class BlockQuote: BlockNode {}
 // Weakly typed block nodes.
 public final class ListItem: BlockNode {}
 
-public struct HorizontalRule: Node {
-    public let nodeType: NodeType
-}
+public final class HorizontalRule: BlockNode {}
 
 /// A heading for the document.
 public final class Heading: BlockNode {
