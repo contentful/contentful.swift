@@ -41,31 +41,38 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
         super.viewDidLayoutSubviews()
 
         if #available(iOS 11.0, *) {
-            if #available(tvOSApplicationExtension 11.0, *) {
-                textView.frame = view.bounds.insetBy(dx: view.safeAreaInsets.left,
-                                                     dy: view.safeAreaInsets.top)
-            } else {
-                // Fallback on earlier versions
-            }
+            textView.frame = view.bounds.insetBy(dx: view.safeAreaInsets.left,
+                                                 dy: view.safeAreaInsets.top)
             textView.center = view.center
-        } else {
-            // TODO: Fallback on earlier versions
         }
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    @objc func rotated() {
+        exclusionPaths = [:]
+        textView.textContainer.exclusionPaths = []
+
+        layoutManager.invalidateLayout(forCharacterRange: NSRange(location: 0, length: textStorage.length), actualCharacterRange: nil)
+
     }
 
     override open func viewDidLoad() {
         super.viewDidLoad()
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(RichTextViewController.rotated),
+                                               name: UIDevice.orientationDidChangeNotification,
+                                               object: nil)
 
         layoutManager.blockQuoteWidth = renderer.styling.blockQuoteWidth
         layoutManager.blockQuoteColor = renderer.styling.blockQuoteColor
 
         textStorage.addLayoutManager(layoutManager)
 
-        if #available(iOS 11.0, *) {
-            textContainer = RichTextContainer(size: view.bounds.size)
-        } else {
-            // TODO: Fallback on earlier versions
-        }
+        textContainer = RichTextContainer(size: view.bounds.size)
         textContainer.blockQuoteTextInset = renderer.styling.blockQuoteTextInset
         textContainer.blockQuoteWidth = renderer.styling.blockQuoteWidth
 
@@ -77,6 +84,7 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
         layoutManager.addTextContainer(textContainer)
         layoutManager.delegate = self
         textView = UITextView(frame: view.bounds, textContainer: textContainer)
+
         view.addSubview(textView)
         textView.isScrollEnabled = true
         textView.contentSize.height = .greatestFiniteMagnitude
@@ -85,42 +93,16 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
         textContainer.size.height = .greatestFiniteMagnitude
 
         // Apply layout constraints on the text view.
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            textView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            textView.topAnchor.constraint(equalTo: view.topAnchor),
-            textView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-            ])
+//        textView.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            textView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//            textView.topAnchor.constraint(equalTo: view.topAnchor),
+//            textView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+//            ])
     }
 
     public var exclusionPaths: [String: UIBezierPath] = [:]
-
-    private func boundingRectAndLineFragmentRect(forAttachmentCharacterAt characterIndex: Int,
-                                                 attachmentView: View,
-                                                 layoutManager: NSLayoutManager) -> (CGRect, CGRect)? {
-        let glyphRange = layoutManager.glyphRange(forCharacterRange: NSRange(location: characterIndex, length: 1), actualCharacterRange: nil)
-        let glyphIndex = glyphRange.location
-        guard glyphIndex != NSNotFound && glyphRange.length == 1 else {
-            return nil
-        }
-
-        let lineFragmentRect = layoutManager.lineFragmentRect(forGlyphAt: glyphIndex, effectiveRange: nil)
-        let glyphLocation = layoutManager.location(forGlyphAt: glyphIndex)
-        guard lineFragmentRect.width > 0.0 && lineFragmentRect.height > 0.0 else {
-            return nil
-        }
-
-        let newWidth = view.frame.width - lineFragmentRect.minX
-        let scaleFactor = newWidth / attachmentView.frame.width
-        let newHeight = scaleFactor * attachmentView.frame.height
-
-        let boundingRect = CGRect(x: lineFragmentRect.minX + glyphLocation.x,
-                                  y: lineFragmentRect.minY,
-                                  width: view.frame.width - lineFragmentRect.minX,
-                                  height: newHeight)
-        return (boundingRect, lineFragmentRect)
-    }
 
     // Inspired by: https://github.com/vlas-voloshin/SubviewAttachingTextView/blob/master/SubviewAttachingTextView/SubviewAttachingTextViewBehavior.swift
     public func layoutManager(_ layoutManager: NSLayoutManager,
@@ -135,6 +117,31 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
         layoutHorizontalRules(layoutManager: layoutManager)
     }
 
+    private func boundingRectAndLineFragmentRect(forAttachmentCharacterAt characterIndex: Int,
+                                                 attachmentView: View,
+                                                 layoutManager: NSLayoutManager) -> (CGRect, CGRect)? {
+        let glyphRange = layoutManager.glyphRange(forCharacterRange: NSRange(location: characterIndex, length: 1), actualCharacterRange: nil)
+        let glyphIndex = glyphRange.location
+        guard glyphIndex != NSNotFound && glyphRange.length == 1 else {
+            return nil
+        }
+
+        let lineFragmentRect = layoutManager.lineFragmentRect(forGlyphAt: glyphIndex, effectiveRange: nil)
+        let glyphLocation = layoutManager.location(forGlyphAt: glyphIndex)
+
+        let textViewSize = self.view.frame.size
+
+        let newWidth = textViewSize.width - lineFragmentRect.minX
+        let scaleFactor = newWidth / attachmentView.frame.width
+        let newHeight = scaleFactor * attachmentView.frame.height
+
+        let boundingRect = CGRect(x: lineFragmentRect.minX + glyphLocation.x,
+                                  y: lineFragmentRect.minY,
+                                  width: newWidth,
+                                  height: newHeight)
+        return (boundingRect, lineFragmentRect)
+    }
+
     private func layoutEmbeddedResourceViews(layoutManager: NSLayoutManager) {
         // For each attached subview, find its associated attachment and position it according to its text layout
         let attachmentRanges = textView.textStorage.attachmentRanges(forAttribute: .embed) as! [(ResourceBlockView, NSRange)]
@@ -142,14 +149,16 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
             guard let (attachmentRect, lineFragmentRect) = boundingRectAndLineFragmentRect(forAttachmentCharacterAt: range.location,
                                                                                            attachmentView: view,
                                                                                            layoutManager: layoutManager) else {
-                                                                                            // If we can't determine the rectangle for the attachment: just hide it.
-                                                                                            view.isHidden = true
-                                                                                            continue
+                // If we can't determine the rectangle for the attachment: just hide it.
+                view.isHidden = true
+                continue
             }
+
             // TODO: Better documentation and cleanup.
             // Make the view's frame the correct width.
             var adaptedRect = attachmentRect
-            adaptedRect.size.width = self.view.frame.width - adaptedRect.origin.x - renderer.styling.embedMargin - textView.textContainerInset.right - textView.textContainerInset.left
+            let textViewSize = self.view.frame.size
+            adaptedRect.size.width = textViewSize.width - adaptedRect.origin.x - renderer.styling.embedMargin - textView.textContainerInset.right - textView.textContainerInset.left
             view.layout(with: adaptedRect.width)
 
             // Make the exclusion rect take up the entire width so that text doesn't wrap where it shouldn't
@@ -158,13 +167,12 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
             var exclusionRect = adaptedRect
 
             if !view.surroundingTextShouldWrap {
-                exclusionRect.size.width = self.view.frame.width - exclusionRect.origin.x
+                exclusionRect.size.width = textViewSize.width - exclusionRect.origin.x
             }
 
             exclusionRect = textView.convertRectFromTextContainer(exclusionRect)
             let convertedRect = textView.convertRectFromTextContainer(adaptedRect)
 
-            // TODO: delete all exclusion paths when device rotates.
             if exclusionPaths[String(range.hashValue)] == nil {
                 let exclusionPath = UIBezierPath(rect: exclusionRect)
                 exclusionPaths[String(range.hashValue)] = exclusionPath
@@ -175,13 +183,15 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
                 if lineFragmentRect.height < convertedRect.height && !view.surroundingTextShouldWrap {
                     let additionalExclusionRect = CGRect(x: 0.0,
                                                          y: lineFragmentRect.origin.y + lineFragmentRect.height,
-                                                         width: self.view.frame.width,
+                                                         width: textViewSize.width,
                                                          height: exclusionRect.height - lineFragmentRect.height + renderer.styling.embedMargin)
                     textView.textContainer.exclusionPaths.append(UIBezierPath(rect: additionalExclusionRect))
                 }
 
                 view.frame = convertedRect
-                textView.addSubview(view)
+                if view.superview == nil {
+                    textView.addSubview(view)
+                }
             }
         }
     }
@@ -191,15 +201,17 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
 
         for (view, range) in attachmentRanges {
             guard let (attachmentRect, _) = boundingRectAndLineFragmentRect(forAttachmentCharacterAt: range.location,
-                                                                                           attachmentView: view,
-                                                                                           layoutManager: layoutManager) else {
-                                                                                            // If we can't determine the rectangle for the attachment: just hide it.
-                                                                                            view.isHidden = true
-                                                                                            continue
+                                                                            attachmentView: view,
+                                                                            layoutManager: layoutManager) else {
+                // If we can't determine the rectangle for the attachment: just hide it.
+                view.isHidden = true
+                continue
             }
             // Make the view's frame the correct width.
             var adaptedRect = attachmentRect
-            adaptedRect.size.width = self.view.frame.width - adaptedRect.origin.x - renderer.styling.embedMargin - textView.textContainerInset.right - textView.textContainerInset.left
+            let textViewSize = self.view.frame.size
+
+            adaptedRect.size.width = textViewSize.width - adaptedRect.origin.x - renderer.styling.embedMargin - textView.textContainerInset.right - textView.textContainerInset.left
             view.frame.size.width = adaptedRect.width
             // Make the exclusion rect take up the entire width so that text doesn't wrap where it shouldn't
             adaptedRect.size = view.frame.size
@@ -207,7 +219,7 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
             var exclusionRect = adaptedRect
 
             // Make exclusion rect span width of text view.
-            exclusionRect.size.width = self.view.frame.width - exclusionRect.origin.x
+            exclusionRect.size.width = textViewSize.width - exclusionRect.origin.x
 
             exclusionRect = textView.convertRectFromTextContainer(exclusionRect)
             let convertedRect = textView.convertRectFromTextContainer(adaptedRect)
@@ -218,7 +230,9 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
                 textView.textContainer.exclusionPaths.append(exclusionPath)
                 
                 view.frame = convertedRect
-                textView.addSubview(view)
+                if view.superview == nil {
+                    textView.addSubview(view)
+                }
             }
         }
     }
