@@ -130,15 +130,23 @@ public struct DefaultRichTextRenderer: RichTextRenderer {
 
     public static func font(for textNode: Text, styling: Styling) -> Font {
         let markTypes = textNode.marks.map { $0.type }
+
+        var font: Font?
+
         if markTypes.contains(.bold) && markTypes.contains(.italic) {
-            return styling.baseFont.italicizedAndBolded()!
+            font = styling.baseFont.italicizedAndBolded()
         } else if markTypes.contains(.bold) {
-            return styling.baseFont.bolded()!
+            font = styling.baseFont.bolded()
         } else if markTypes.contains(.italic) {
-            return styling.baseFont.italicized()!
+            font = styling.baseFont.italicized()
         } else if markTypes.contains(.code) {
-            return styling.baseFont.monospaced()!
+            font = styling.baseFont.monospaced()
         }
-        return styling.baseFont
+        if let font = font {
+            return font
+        } else {
+            // TODO: Log that no font was found for the relevant traits.
+            return styling.baseFont
+        }
     }
 }

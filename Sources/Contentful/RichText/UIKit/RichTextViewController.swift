@@ -14,14 +14,18 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
 
     public var renderer: RichTextRenderer = DefaultRichTextRenderer()
 
-    public var textView: UITextView!
+    public var textView: UITextView!  {
+        didSet {
+            textView.textContainerInset = self.textContainerInset
+        }
+    }
+
     public let textStorage = NSTextStorage()
     public let layoutManager = RichTextLayoutManager()
     public var textContainer: RichTextContainer!
 
-    public var textContainerInset = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0) {
+    public var textContainerInset: UIEdgeInsets = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0) {
         didSet {
-            // TODO: Ensure this works correctly.
             layoutManager.textContainerInset = textContainerInset
             textView.textContainerInset = textContainerInset
         }
@@ -31,6 +35,7 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
         self.richText = richText
         self.renderer = renderer ?? DefaultRichTextRenderer()
         super.init(nibName: nibName, bundle: bundle)
+        layoutManager.textContainerInset = self.textContainerInset
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -178,8 +183,7 @@ open class RichTextViewController: UIViewController, NSLayoutManagerDelegate {
                 exclusionPaths[String(range.hashValue)] = exclusionPath
                 textView.textContainer.exclusionPaths.append(exclusionPath)
 
-                // If we have an embedded resource that extends below a list item indicator, we need to exclude
-                // TODO: Check if is in a list item.
+                // If we have an embedded resource that extends below a list item indicator, we need to exclude it.
                 if lineFragmentRect.height < convertedRect.height && !view.surroundingTextShouldWrap {
                     let additionalExclusionRect = CGRect(x: 0.0,
                                                          y: lineFragmentRect.origin.y + lineFragmentRect.height,
@@ -294,7 +298,6 @@ public class RichTextContainer: NSTextContainer {
     var blockQuoteTextInset: CGFloat!
 
     var blockQuoteWidth: CGFloat!
-
 
     // This is for block quotes.
     public override func lineFragmentRect(forProposedRect proposedRect: CGRect,

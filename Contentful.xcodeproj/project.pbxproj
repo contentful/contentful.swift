@@ -56,6 +56,7 @@
 		5D09C278218719E0006B83F4 /* RichText+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D09C277218719E0006B83F4 /* RichText+UIKit.swift */; };
 		5D09C27C21871A1B006B83F4 /* DefaultRichTextRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D09C27B21871A1B006B83F4 /* DefaultRichTextRenderer.swift */; };
 		5D4F67B52162ED9F006F8F90 /* NSAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4F67B42162ED9F006F8F90 /* NSAttributedString.swift */; };
+		5D5BE20C2190A26A00FC6BD2 /* EmbeddedAssetImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5BE20B2190A26A00FC6BD2 /* EmbeddedAssetImageView.swift */; };
 		5DBE47BB218B4DCF009CBF45 /* HorizontalRuleRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE47BA218B4DCF009CBF45 /* HorizontalRuleRenderer.swift */; };
 		5DFE08D72189D66200B0D68E /* RichTextNodeDecodingTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DFE08D62189D66200B0D68E /* RichTextNodeDecodingTests.json */; };
 		5DFE08D82189D66200B0D68E /* RichTextNodeDecodingTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DFE08D62189D66200B0D68E /* RichTextNodeDecodingTests.json */; };
@@ -297,6 +298,7 @@
 		5D09C277218719E0006B83F4 /* RichText+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RichText+UIKit.swift"; sourceTree = "<group>"; };
 		5D09C27B21871A1B006B83F4 /* DefaultRichTextRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultRichTextRenderer.swift; sourceTree = "<group>"; };
 		5D4F67B42162ED9F006F8F90 /* NSAttributedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSAttributedString.swift; sourceTree = "<group>"; };
+		5D5BE20B2190A26A00FC6BD2 /* EmbeddedAssetImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedAssetImageView.swift; sourceTree = "<group>"; };
 		5DBE47BA218B4DCF009CBF45 /* HorizontalRuleRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalRuleRenderer.swift; sourceTree = "<group>"; };
 		5DFE08D62189D66200B0D68E /* RichTextNodeDecodingTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RichTextNodeDecodingTests.json; sourceTree = "<group>"; };
 		5DFE08DA2189D6AC00B0D68E /* EntryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EntryTests.json; sourceTree = "<group>"; };
@@ -477,6 +479,7 @@
 			children = (
 				5D09C27321871123006B83F4 /* RichTextViewController.swift */,
 				5D09C277218719E0006B83F4 /* RichText+UIKit.swift */,
+				5D5BE20B2190A26A00FC6BD2 /* EmbeddedAssetImageView.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -1141,6 +1144,7 @@
 				A10FF9DA1BBB4680001AA4E9 /* ContentType.swift in Sources */,
 				5D09C27421871123006B83F4 /* RichTextViewController.swift in Sources */,
 				ED02DC1320E11D0A005EC57B /* Result.swift in Sources */,
+				5D5BE20C2190A26A00FC6BD2 /* EmbeddedAssetImageView.swift in Sources */,
 				ED02DC1720E11D0A005EC57B /* Util.swift in Sources */,
 				ED535E641F5E8E1300886D93 /* Decodable.swift in Sources */,
 				ED1D789A1F2F96260048E169 /* DataCache.swift in Sources */,

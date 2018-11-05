@@ -84,10 +84,9 @@ public struct Styling {
     ]
 
     public func headingAttributes(level: Int) -> [NSAttributedString.Key: Any] {
-        // TODO: Check if level is within bounds of the array.
-        return [.font: fontsForHeadingLevels[level]]
+        let safeLevel = level < fontsForHeadingLevels.count ? level : 0
+        return [.font: fontsForHeadingLevels[safeLevel]]
     }
-
 }
 
 extension Dictionary where Key == CodingUserInfoKey {
@@ -184,7 +183,6 @@ public extension Font {
     }
 
     public func monospaced() -> Font? {
-        // TODO: Figure out safer way of grabbing a monospace font from the system.
         return Font(name: "Menlo-Regular", size: pointSize)
     }
 
@@ -193,14 +191,5 @@ public extension Font {
             return Font(descriptor: descriptor, size: pointSize)
         }
         return nil
-    }
-
-    public func resized(to size: CGFloat) -> Font {
-        return Font(descriptor: fontDescriptor.withSize(size), size: size)
-    }
-
-    // This is dead code for fiddling.
-    public func preferred() -> Font? {
-        return Font.preferredFont(forTextStyle: UIFont.TextStyle.caption1)
     }
 }
