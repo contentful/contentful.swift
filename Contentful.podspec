@@ -16,7 +16,9 @@ Pod::Spec.new do |spec|
 
   spec.authors      = { "JP Wright" => "jp@contentful.com", "Boris Bügling" => "boris@buegling.com" }
   spec.source       = { :git => "https://github.com/contentful/contentful.swift.git",
-                        :tag => spec.version.to_s }
+                        :tag => spec.version.to_s,
+                        :submodules => true
+                      }
   spec.requires_arc = true
 
   spec.source_files              = 'Sources/Contentful/*.swift'
@@ -34,16 +36,18 @@ Pod::Spec.new do |spec|
   spec.watchos.deployment_target = '2.0'
   spec.tvos.deployment_target    = '9.0'
 
-  # Subspecs
+  spec.default_subspecs = 'ImageOptions'
+
   spec.subspec 'ImageOptions' do |subspec|
     subspec.source_files = 'Sources/Contentful/ImageOptions/*.swift'
   end
 
   spec.subspec 'RichText' do |subspec|
-    subspec.source_files = 'Sources/Contentful/RichText/*.swift'
-    subspec.ios.source_files = 'Sources/Contentful/RichText/UIKit/*.swift'
-    subspec.watchos.source_files = 'Sources/Contentful/RichText/UIKit/*.swift'
-    subspec.tvos.source_files = 'Sources/Contentful/RichText/UIKit/*.swift'
+    subspec.source_files = 'Carthage/Checkouts/RichTextRenderer/Sources/RichTextRenderer/'
+    subspec.ios.source_files = 'Carthage/Checkouts/RichTextRenderer/Sources/RichTextRenderer/UIKit/*.swift'
+    subspec.dependency 'AlamofireImage', '~> 3.4'
+#    subspec.tvos.source_files = 'Sources/Contentful/RichText/UIKit/*.swift'
+    #
   end
 end
 

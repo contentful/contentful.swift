@@ -5,6 +5,9 @@
       location = "container:Contentful.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:Carthage/Checkouts/RichTextRenderer/RichTextRenderer.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Contentful.playground">
    </FileRef>
    <FileRef

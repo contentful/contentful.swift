@@ -7,3 +7,6 @@
 [submodule "Carthage/Checkouts/OHHTTPStubs"]
 	path = Carthage/Checkouts/OHHTTPStubs
 	url = https://github.com/AliSoftware/OHHTTPStubs.git
+[submodule "Carthage/Checkouts/rich-text-renderer.swift"]
+	path = Carthage/Checkouts/rich-text-renderer.swift
+	url = https://github.com/contentful-labs/rich-text-renderer.swift.git
