@@ -1,6 +1,6 @@
 language: objective-c
 rvm:
-  - 2.5.1
+  - 2.4.3
 cache: bundler
 
 # Whitelist `master` branch as the only branch to build pushes for.

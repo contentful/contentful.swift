@@ -37,8 +37,8 @@ public enum FieldType: String, Decodable {
     case text                           = "Text"
     /// An unknown kind of value
     case none                           = "None"
-    /// The structured text field type.
-    case structuredText                 = "StructuredText"
+    /// The rich text field type.
+    case richText                       = "RichText"
 }
 
 /// A Field describes a single value inside an Entry.
