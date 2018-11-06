@@ -79,22 +79,6 @@ public class Entry: LocalizableResource {
                     let resolvedLinks = alreadyResolvedLinks + newlyResolvedLinks
                     resolvedLocalizableFieldMap[localeCode] = resolvedLinks
                 }
-
-                // FIXME: Make sure inline links are resolved as well.
-                // Resolve links for structured text fields.
-                if let value = fieldValueForLocaleCode as? RichTextDocument {
-                    let embeddedEntryNodes: [Node] = value.content.map { node in
-                        if let blockNode = node as? ResourceLinkBlock {
-                            let resolvedTarget = blockNode.data.target.resolve(against: includedEntries, and: includedAssets)
-                            let newData = ResourceLinkData(resolvedTarget: resolvedTarget)
-                            let newBlockNode = ResourceLinkBlock(resolvedData: newData, nodeType: blockNode.nodeType, content: blockNode.content)
-                            return newBlockNode
-                        }
-                        return node
-                    }
-                    let newDocument = RichTextDocument(content: embeddedEntryNodes)
-                    resolvedLocalizableFieldMap[localeCode] = newDocument
-                }
             }
             localizableFields[fieldName] = resolvedLocalizableFieldMap
         }
