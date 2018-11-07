@@ -9,68 +9,112 @@
 /* Begin PBXBuildFile section */
 		5D001E60200423C700AC5A4C /* PersistenceIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D001E5F200423C700AC5A4C /* PersistenceIntegrationTests.swift */; };
 		5D001E61200423C700AC5A4C /* PersistenceIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D001E5F200423C700AC5A4C /* PersistenceIntegrationTests.swift */; };
-		5D001E62200423C700AC5A4C /* PersistenceIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D001E5F200423C700AC5A4C /* PersistenceIntegrationTests.swift */; };
 		5D09C24221870C27006B83F4 /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23021870C26006B83F4 /* testClientCantAccessPreviewAPIWithProductionToken.json */; };
 		5D09C24321870C27006B83F4 /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23021870C26006B83F4 /* testClientCantAccessPreviewAPIWithProductionToken.json */; };
-		5D09C24421870C27006B83F4 /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23021870C26006B83F4 /* testClientCantAccessPreviewAPIWithProductionToken.json */; };
 		5D09C24521870C27006B83F4 /* ErrorTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23121870C26006B83F4 /* ErrorTests.json */; };
 		5D09C24621870C27006B83F4 /* ErrorTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23121870C26006B83F4 /* ErrorTests.json */; };
-		5D09C24721870C27006B83F4 /* ErrorTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23121870C26006B83F4 /* ErrorTests.json */; };
 		5D09C24821870C27006B83F4 /* RateLimitTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23221870C26006B83F4 /* RateLimitTests.json */; };
 		5D09C24921870C27006B83F4 /* RateLimitTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23221870C26006B83F4 /* RateLimitTests.json */; };
-		5D09C24A21870C27006B83F4 /* RateLimitTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23221870C26006B83F4 /* RateLimitTests.json */; };
 		5D09C24B21870C27006B83F4 /* testFetchSpace.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23321870C27006B83F4 /* testFetchSpace.json */; };
 		5D09C24C21870C27006B83F4 /* testFetchSpace.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23321870C27006B83F4 /* testFetchSpace.json */; };
-		5D09C24D21870C27006B83F4 /* testFetchSpace.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23321870C27006B83F4 /* testFetchSpace.json */; };
 		5D09C24E21870C27006B83F4 /* EnvironmentsTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23421870C27006B83F4 /* EnvironmentsTests.json */; };
 		5D09C24F21870C27006B83F4 /* EnvironmentsTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23421870C27006B83F4 /* EnvironmentsTests.json */; };
-		5D09C25021870C27006B83F4 /* EnvironmentsTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23421870C27006B83F4 /* EnvironmentsTests.json */; };
 		5D09C25121870C27006B83F4 /* ImageTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23521870C27006B83F4 /* ImageTests.json */; };
 		5D09C25221870C27006B83F4 /* ImageTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23521870C27006B83F4 /* ImageTests.json */; };
-		5D09C25321870C27006B83F4 /* ImageTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23521870C27006B83F4 /* ImageTests.json */; };
 		5D09C25421870C27006B83F4 /* LocalizationTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23621870C27006B83F4 /* LocalizationTests.json */; };
 		5D09C25521870C27006B83F4 /* LocalizationTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23621870C27006B83F4 /* LocalizationTests.json */; };
-		5D09C25621870C27006B83F4 /* LocalizationTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23621870C27006B83F4 /* LocalizationTests.json */; };
 		5D09C25721870C27006B83F4 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23721870C27006B83F4 /* QueryTests.json */; };
 		5D09C25821870C27006B83F4 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23721870C27006B83F4 /* QueryTests.json */; };
-		5D09C25921870C27006B83F4 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23721870C27006B83F4 /* QueryTests.json */; };
 		5D09C25D21870C27006B83F4 /* ContentTypeTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23921870C27006B83F4 /* ContentTypeTests.json */; };
 		5D09C25E21870C27006B83F4 /* ContentTypeTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23921870C27006B83F4 /* ContentTypeTests.json */; };
-		5D09C25F21870C27006B83F4 /* ContentTypeTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23921870C27006B83F4 /* ContentTypeTests.json */; };
 		5D09C26021870C27006B83F4 /* SyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23A21870C27006B83F4 /* SyncTests.json */; };
 		5D09C26121870C27006B83F4 /* SyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23A21870C27006B83F4 /* SyncTests.json */; };
-		5D09C26221870C27006B83F4 /* SyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23A21870C27006B83F4 /* SyncTests.json */; };
 		5D09C26321870C27006B83F4 /* PreviewSyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23B21870C27006B83F4 /* PreviewSyncTests.json */; };
 		5D09C26421870C27006B83F4 /* PreviewSyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23B21870C27006B83F4 /* PreviewSyncTests.json */; };
-		5D09C26521870C27006B83F4 /* PreviewSyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23B21870C27006B83F4 /* PreviewSyncTests.json */; };
 		5D09C26621870C27006B83F4 /* AssetTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23C21870C27006B83F4 /* AssetTests.json */; };
 		5D09C26721870C27006B83F4 /* AssetTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23C21870C27006B83F4 /* AssetTests.json */; };
-		5D09C26821870C27006B83F4 /* AssetTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23C21870C27006B83F4 /* AssetTests.json */; };
 		5D09C26921870C27006B83F4 /* LinkResolverTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23D21870C27006B83F4 /* LinkResolverTests.json */; };
 		5D09C26A21870C27006B83F4 /* LinkResolverTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23D21870C27006B83F4 /* LinkResolverTests.json */; };
-		5D09C26B21870C27006B83F4 /* LinkResolverTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23D21870C27006B83F4 /* LinkResolverTests.json */; };
 		5D09C26C21870C27006B83F4 /* testClientCanAccessPreviewAPI.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23E21870C27006B83F4 /* testClientCanAccessPreviewAPI.json */; };
 		5D09C26D21870C27006B83F4 /* testClientCanAccessPreviewAPI.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23E21870C27006B83F4 /* testClientCanAccessPreviewAPI.json */; };
-		5D09C26E21870C27006B83F4 /* testClientCanAccessPreviewAPI.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23E21870C27006B83F4 /* testClientCanAccessPreviewAPI.json */; };
+		5D52E2462193375300C88FC9 /* RichText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD410462190BC8B003FC01E /* RichText.swift */; };
+		5D52E2472193375300C88FC9 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02DC1120E11D0A005EC57B /* Result.swift */; };
+		5D52E2482193375300C88FC9 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02DC1220E11D0A005EC57B /* Util.swift */; };
+		5D52E2492193375300C88FC9 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3DF1B836F2500A0EFCD /* Client.swift */; };
+		5D52E24A2193375300C88FC9 /* ClientConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E11B8386CC00A0EFCD /* ClientConfiguration.swift */; };
+		5D52E24B2193375300C88FC9 /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4986FD2047107D0014DCFE /* Endpoints.swift */; };
+		5D52E24C2193375300C88FC9 /* Sys.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3CBF191E7AD57100E5B02E /* Sys.swift */; };
+		5D52E24D2193375300C88FC9 /* Space.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15193A91BB91DE700FB83CD /* Space.swift */; };
+		5D52E24E2193375300C88FC9 /* ContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15193AB1BB91FED00FB83CD /* ContentType.swift */; };
+		5D52E24F2193375300C88FC9 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E71B83890D00A0EFCD /* Resource.swift */; };
+		5D52E2502193375300C88FC9 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E51B8388ED00A0EFCD /* Entry.swift */; };
+		5D52E2512193375300C88FC9 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15193AD1BB9236300FB83CD /* Asset.swift */; };
+		5D52E2522193375300C88FC9 /* ArrayResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E31B83888200A0EFCD /* ArrayResponse.swift */; };
+		5D52E2532193375300C88FC9 /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3CBF1E1E7AD58100E5B02E /* Link.swift */; };
+		5D52E2542193375300C88FC9 /* Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED535E631F5E8E1300886D93 /* Decodable.swift */; };
+		5D52E2552193375300C88FC9 /* DataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1D78991F2F96260048E169 /* DataCache.swift */; };
+		5D52E2562193375300C88FC9 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED737C931EF1785A00ECB3F1 /* Persistence.swift */; };
+		5D52E2572193375300C88FC9 /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED68BD711E6DC47A00939F6D /* Query.swift */; };
+		5D52E2582193375300C88FC9 /* QueryOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F8F9E1F94D52200C86411 /* QueryOperation.swift */; };
+		5D52E2592193375300C88FC9 /* TypedQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F8F901F8F9EA200C86411 /* TypedQuery.swift */; };
+		5D52E25A2193375300C88FC9 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0876D91E1D07B3008E1A06 /* Date.swift */; };
+		5D52E25B2193375300C88FC9 /* SyncSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A114BBBF1C4FD3C300DE6679 /* SyncSpace.swift */; };
+		5D52E25C2193375300C88FC9 /* Locale.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2E3641BBACF2C00814D63 /* Locale.swift */; };
+		5D52E25D2193375300C88FC9 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10FF9D41BBB3676001AA4E9 /* Error.swift */; };
+		5D52E25E2193375300C88FC9 /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10FF9DB1BBB4692001AA4E9 /* Field.swift */; };
+		5D52E25F2193375300C88FC9 /* ImageOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */; };
+		5D52E2612193375300C88FC9 /* Client+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2C99791ECDD0AF0039056E /* Client+UIKit.swift */; };
+		5D52E2722193381F00C88FC9 /* RichTextNodeDecodingTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DD410E421918E62003FC01E /* RichTextNodeDecodingTests.json */; };
+		5D52E2732193381F00C88FC9 /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DFE08DA2189D6AC00B0D68E /* EntryTests.json */; };
+		5D52E2742193381F00C88FC9 /* AssetTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23C21870C27006B83F4 /* AssetTests.json */; };
+		5D52E2752193381F00C88FC9 /* ContentTypeTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23921870C27006B83F4 /* ContentTypeTests.json */; };
+		5D52E2762193381F00C88FC9 /* EnvironmentsTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23421870C27006B83F4 /* EnvironmentsTests.json */; };
+		5D52E2772193381F00C88FC9 /* ErrorTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23121870C26006B83F4 /* ErrorTests.json */; };
+		5D52E2782193381F00C88FC9 /* ImageTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23521870C27006B83F4 /* ImageTests.json */; };
+		5D52E2792193381F00C88FC9 /* LinkResolverTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23D21870C27006B83F4 /* LinkResolverTests.json */; };
+		5D52E27A2193381F00C88FC9 /* LocalizationTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23621870C27006B83F4 /* LocalizationTests.json */; };
+		5D52E27B2193381F00C88FC9 /* PreviewSyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23B21870C27006B83F4 /* PreviewSyncTests.json */; };
+		5D52E27C2193381F00C88FC9 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23721870C27006B83F4 /* QueryTests.json */; };
+		5D52E27D2193381F00C88FC9 /* RateLimitTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23221870C26006B83F4 /* RateLimitTests.json */; };
+		5D52E27E2193381F00C88FC9 /* SyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23A21870C27006B83F4 /* SyncTests.json */; };
+		5D52E27F2193381F00C88FC9 /* testClientCanAccessPreviewAPI.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23E21870C27006B83F4 /* testClientCanAccessPreviewAPI.json */; };
+		5D52E2802193381F00C88FC9 /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23021870C26006B83F4 /* testClientCantAccessPreviewAPIWithProductionToken.json */; };
+		5D52E2812193381F00C88FC9 /* testFetchSpace.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23321870C27006B83F4 /* testFetchSpace.json */; };
+		5D52E2822193381F00C88FC9 /* Fixtures in Resources */ = {isa = PBXBuildFile; fileRef = ED02DC9E20E12405005EC57B /* Fixtures */; };
+		5D52E2832193384100C88FC9 /* AssetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19C74421C47A812005334AD /* AssetTests.swift */; };
+		5D52E2842193384100C88FC9 /* ClientConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED88B7D91EF7CD3800538D1F /* ClientConfigurationTests.swift */; };
+		5D52E2852193384100C88FC9 /* ContentfulTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3D31B836EDD00A0EFCD /* ContentfulTests.swift */; };
+		5D52E2862193384100C88FC9 /* ContentTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19C743E1C47A7F5005334AD /* ContentTypeTests.swift */; };
+		5D52E2872193384100C88FC9 /* EntryDecodableLinkResolutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2E03E61F97608A006422A6 /* EntryDecodableLinkResolutionTests.swift */; };
+		5D52E2882193384100C88FC9 /* EntryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F8F951F94B8C300C86411 /* EntryTests.swift */; };
+		5D52E2892193384100C88FC9 /* EnvironmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED882E9220484BF100D372BF /* EnvironmentTests.swift */; };
+		5D52E28A2193384100C88FC9 /* ErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7D96C1F8E6D660020EE86 /* ErrorTests.swift */; };
+		5D52E28B2193384100C88FC9 /* ImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1638C41ED5CA6D009BAA9F /* ImageTests.swift */; };
+		5D52E28C2193384100C88FC9 /* ISO801DateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE087DF207CE2B200CB1287 /* ISO801DateTests.swift */; };
+		5D52E28D2193384100C88FC9 /* JSONDecodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2E3661BBAD06000814D63 /* JSONDecodingTests.swift */; };
+		5D52E28E2193384100C88FC9 /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED307F211EE6E5D700633390 /* LocalizationTests.swift */; };
+		5D52E28F2193384100C88FC9 /* PersistenceIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D001E5F200423C700AC5A4C /* PersistenceIntegrationTests.swift */; };
+		5D52E2902193384100C88FC9 /* QueryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02BC5F1E7047AE00BAB2CA /* QueryTests.swift */; };
+		5D52E2912193384100C88FC9 /* RateLimitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED52DB3F1EE94C8E00225140 /* RateLimitTests.swift */; };
+		5D52E2922193384100C88FC9 /* RichTextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4A6E502132FEC100690EA4 /* RichTextTests.swift */; };
+		5D52E2932193384100C88FC9 /* SyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A114BBC11C50E9E200DE6679 /* SyncTests.swift */; };
+		5D52E2942193384100C88FC9 /* UtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17D044C1C4F974F002E568B /* UtilityTests.swift */; };
+		5D52E2962193386900C88FC9 /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D52E2952193386900C88FC9 /* DVR.framework */; };
+		5D52E2982193386900C88FC9 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D52E2972193386900C88FC9 /* Nimble.framework */; };
+		5D52E29A2193386900C88FC9 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D52E2992193386900C88FC9 /* OHHTTPStubs.framework */; };
+		5D52E29C2193387600C88FC9 /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D52E29B2193387600C88FC9 /* DVR.framework */; };
+		5D52E29E2193387600C88FC9 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D52E29D2193387600C88FC9 /* Nimble.framework */; };
+		5D52E2A02193387600C88FC9 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D52E29F2193387600C88FC9 /* OHHTTPStubs.framework */; };
+		5D52E2A22193388200C88FC9 /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D52E2A12193388200C88FC9 /* DVR.framework */; };
+		5D52E2A42193388200C88FC9 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D52E2A32193388200C88FC9 /* Nimble.framework */; };
+		5D52E2A62193388200C88FC9 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D52E2A52193388200C88FC9 /* OHHTTPStubs.framework */; };
 		5DD410472190BC8B003FC01E /* RichText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD410462190BC8B003FC01E /* RichText.swift */; };
 		5DD410482190BC8B003FC01E /* RichText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD410462190BC8B003FC01E /* RichText.swift */; };
-		5DD410492190BC8B003FC01E /* RichText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD410462190BC8B003FC01E /* RichText.swift */; };
 		5DD4104A2190BC8B003FC01E /* RichText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD410462190BC8B003FC01E /* RichText.swift */; };
-		5DD410E921918E83003FC01E /* RichTextNodeDecodingTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DD410E421918E62003FC01E /* RichTextNodeDecodingTests.json */; };
 		5DD410EA21918E84003FC01E /* RichTextNodeDecodingTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DD410E421918E62003FC01E /* RichTextNodeDecodingTests.json */; };
 		5DD410EB21918E84003FC01E /* RichTextNodeDecodingTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DD410E421918E62003FC01E /* RichTextNodeDecodingTests.json */; };
 		5DFE08DB2189D6AC00B0D68E /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DFE08DA2189D6AC00B0D68E /* EntryTests.json */; };
 		5DFE08DC2189D6AC00B0D68E /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DFE08DA2189D6AC00B0D68E /* EntryTests.json */; };
-		5DFE08DD2189D6AC00B0D68E /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DFE08DA2189D6AC00B0D68E /* EntryTests.json */; };
-		5DFE08ED2189DCC600B0D68E /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DFE08EC2189DCC600B0D68E /* Nimble.framework */; };
-		5DFE08EF2189DCC600B0D68E /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DFE08EE2189DCC600B0D68E /* OHHTTPStubs.framework */; };
-		5DFE08F52189DCD700B0D68E /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DFE08F42189DCD700B0D68E /* OHHTTPStubs.framework */; };
-		5DFE08F72189DCE300B0D68E /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DFE08F62189DCE300B0D68E /* DVR.framework */; };
-		5DFE08F92189DCE300B0D68E /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DFE08F82189DCE300B0D68E /* Nimble.framework */; };
-		5DFE08FB2189DCE700B0D68E /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DFE08FA2189DCE700B0D68E /* OHHTTPStubs.framework */; };
-		5DFE08FE2189E31900B0D68E /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DFE08FD2189E31900B0D68E /* DVR.framework */; };
-		5DFE09002189E97100B0D68E /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DFE08FF2189E97100B0D68E /* DVR.framework */; };
-		5DFE09022189EB0200B0D68E /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DFE09012189EB0200B0D68E /* Nimble.framework */; };
 		A10FF9D21BBB2E5F001AA4E9 /* JSONDecodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2E3661BBAD06000814D63 /* JSONDecodingTests.swift */; };
 		A10FF9D31BBB32FD001AA4E9 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15193AD1BB9236300FB83CD /* Asset.swift */; };
 		A10FF9D51BBB3676001AA4E9 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10FF9D41BBB3676001AA4E9 /* Error.swift */; };
@@ -92,26 +136,20 @@
 		ED02BC611E7047B900BAB2CA /* QueryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02BC5F1E7047AE00BAB2CA /* QueryTests.swift */; };
 		ED02DC1320E11D0A005EC57B /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02DC1120E11D0A005EC57B /* Result.swift */; };
 		ED02DC1420E11D0A005EC57B /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02DC1120E11D0A005EC57B /* Result.swift */; };
-		ED02DC1520E11D0A005EC57B /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02DC1120E11D0A005EC57B /* Result.swift */; };
 		ED02DC1620E11D0A005EC57B /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02DC1120E11D0A005EC57B /* Result.swift */; };
 		ED02DC1720E11D0A005EC57B /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02DC1220E11D0A005EC57B /* Util.swift */; };
 		ED02DC1820E11D0A005EC57B /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02DC1220E11D0A005EC57B /* Util.swift */; };
-		ED02DC1920E11D0A005EC57B /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02DC1220E11D0A005EC57B /* Util.swift */; };
 		ED02DC1A20E11D0A005EC57B /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02DC1220E11D0A005EC57B /* Util.swift */; };
 		ED02DC9F20E12405005EC57B /* Fixtures in Resources */ = {isa = PBXBuildFile; fileRef = ED02DC9E20E12405005EC57B /* Fixtures */; };
 		ED02DCA020E12405005EC57B /* Fixtures in Resources */ = {isa = PBXBuildFile; fileRef = ED02DC9E20E12405005EC57B /* Fixtures */; };
-		ED02DCA120E12405005EC57B /* Fixtures in Resources */ = {isa = PBXBuildFile; fileRef = ED02DC9E20E12405005EC57B /* Fixtures */; };
 		ED0876DA1E1D07B3008E1A06 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0876D91E1D07B3008E1A06 /* Date.swift */; };
 		ED1638C51ED5CA6D009BAA9F /* ImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1638C41ED5CA6D009BAA9F /* ImageTests.swift */; };
 		ED1D789A1F2F96260048E169 /* DataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1D78991F2F96260048E169 /* DataCache.swift */; };
 		ED1D789B1F2F96260048E169 /* DataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1D78991F2F96260048E169 /* DataCache.swift */; };
-		ED1D789C1F2F96260048E169 /* DataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1D78991F2F96260048E169 /* DataCache.swift */; };
 		ED1D789D1F2F96260048E169 /* DataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1D78991F2F96260048E169 /* DataCache.swift */; };
 		ED2C997B1ECDD0AF0039056E /* Client+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2C99791ECDD0AF0039056E /* Client+UIKit.swift */; };
-		ED2C99BB1ED5AE820039056E /* Client+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2C99791ECDD0AF0039056E /* Client+UIKit.swift */; };
 		ED2E03E71F97608A006422A6 /* EntryDecodableLinkResolutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2E03E61F97608A006422A6 /* EntryDecodableLinkResolutionTests.swift */; };
 		ED2E03E81F97608A006422A6 /* EntryDecodableLinkResolutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2E03E61F97608A006422A6 /* EntryDecodableLinkResolutionTests.swift */; };
-		ED2E03E91F97608A006422A6 /* EntryDecodableLinkResolutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2E03E61F97608A006422A6 /* EntryDecodableLinkResolutionTests.swift */; };
 		ED307F231EE6E5DF00633390 /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED307F211EE6E5D700633390 /* LocalizationTests.swift */; };
 		ED36B6F51E3BD052005581FD /* ArrayResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E31B83888200A0EFCD /* ArrayResponse.swift */; };
 		ED36B6F61E3BD052005581FD /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0876D91E1D07B3008E1A06 /* Date.swift */; };
@@ -126,19 +164,6 @@
 		ED36B7011E3BD052005581FD /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E71B83890D00A0EFCD /* Resource.swift */; };
 		ED36B7031E3BD052005581FD /* Space.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15193A91BB91DE700FB83CD /* Space.swift */; };
 		ED36B7041E3BD052005581FD /* SyncSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A114BBBF1C4FD3C300DE6679 /* SyncSpace.swift */; };
-		ED36B7051E3BD052005581FD /* ArrayResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E31B83888200A0EFCD /* ArrayResponse.swift */; };
-		ED36B7061E3BD052005581FD /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0876D91E1D07B3008E1A06 /* Date.swift */; };
-		ED36B7071E3BD052005581FD /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15193AD1BB9236300FB83CD /* Asset.swift */; };
-		ED36B7081E3BD052005581FD /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3DF1B836F2500A0EFCD /* Client.swift */; };
-		ED36B7091E3BD052005581FD /* ClientConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E11B8386CC00A0EFCD /* ClientConfiguration.swift */; };
-		ED36B70A1E3BD052005581FD /* ContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15193AB1BB91FED00FB83CD /* ContentType.swift */; };
-		ED36B70C1E3BD052005581FD /* Locale.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2E3641BBACF2C00814D63 /* Locale.swift */; };
-		ED36B70E1E3BD052005581FD /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E51B8388ED00A0EFCD /* Entry.swift */; };
-		ED36B70F1E3BD052005581FD /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10FF9D41BBB3676001AA4E9 /* Error.swift */; };
-		ED36B7101E3BD052005581FD /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10FF9DB1BBB4692001AA4E9 /* Field.swift */; };
-		ED36B7111E3BD052005581FD /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E71B83890D00A0EFCD /* Resource.swift */; };
-		ED36B7131E3BD052005581FD /* Space.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15193A91BB91DE700FB83CD /* Space.swift */; };
-		ED36B7141E3BD052005581FD /* SyncSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A114BBBF1C4FD3C300DE6679 /* SyncSpace.swift */; };
 		ED36B7151E3BD053005581FD /* ArrayResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E31B83888200A0EFCD /* ArrayResponse.swift */; };
 		ED36B7161E3BD053005581FD /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0876D91E1D07B3008E1A06 /* Date.swift */; };
 		ED36B7171E3BD053005581FD /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15193AD1BB9236300FB83CD /* Asset.swift */; };
@@ -154,50 +179,38 @@
 		ED36B7241E3BD053005581FD /* SyncSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A114BBBF1C4FD3C300DE6679 /* SyncSpace.swift */; };
 		ED3CBF1A1E7AD57100E5B02E /* Sys.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3CBF191E7AD57100E5B02E /* Sys.swift */; };
 		ED3CBF1B1E7AD57100E5B02E /* Sys.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3CBF191E7AD57100E5B02E /* Sys.swift */; };
-		ED3CBF1C1E7AD57100E5B02E /* Sys.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3CBF191E7AD57100E5B02E /* Sys.swift */; };
 		ED3CBF1D1E7AD57100E5B02E /* Sys.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3CBF191E7AD57100E5B02E /* Sys.swift */; };
 		ED3CBF1F1E7AD58100E5B02E /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3CBF1E1E7AD58100E5B02E /* Link.swift */; };
 		ED3CBF201E7AD58100E5B02E /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3CBF1E1E7AD58100E5B02E /* Link.swift */; };
-		ED3CBF211E7AD58100E5B02E /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3CBF1E1E7AD58100E5B02E /* Link.swift */; };
 		ED3CBF221E7AD58100E5B02E /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3CBF1E1E7AD58100E5B02E /* Link.swift */; };
 		ED4986FE2047107D0014DCFE /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4986FD2047107D0014DCFE /* Endpoints.swift */; };
 		ED4986FF2047107D0014DCFE /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4986FD2047107D0014DCFE /* Endpoints.swift */; };
-		ED4987002047107D0014DCFE /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4986FD2047107D0014DCFE /* Endpoints.swift */; };
 		ED4987012047107D0014DCFE /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4986FD2047107D0014DCFE /* Endpoints.swift */; };
 		ED4A6E512132FEC100690EA4 /* RichTextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4A6E502132FEC100690EA4 /* RichTextTests.swift */; };
 		ED4A6E522132FEC100690EA4 /* RichTextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4A6E502132FEC100690EA4 /* RichTextTests.swift */; };
-		ED4A6E532132FEC100690EA4 /* RichTextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4A6E502132FEC100690EA4 /* RichTextTests.swift */; };
 		ED52DB401EE94C8E00225140 /* RateLimitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED52DB3F1EE94C8E00225140 /* RateLimitTests.swift */; };
 		ED535E641F5E8E1300886D93 /* Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED535E631F5E8E1300886D93 /* Decodable.swift */; };
 		ED535E651F5E8E1300886D93 /* Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED535E631F5E8E1300886D93 /* Decodable.swift */; };
-		ED535E661F5E8E1300886D93 /* Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED535E631F5E8E1300886D93 /* Decodable.swift */; };
 		ED535E671F5E8E1300886D93 /* Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED535E631F5E8E1300886D93 /* Decodable.swift */; };
 		ED5F8F911F8F9EA200C86411 /* TypedQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F8F901F8F9EA200C86411 /* TypedQuery.swift */; };
 		ED5F8F921F8F9EA200C86411 /* TypedQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F8F901F8F9EA200C86411 /* TypedQuery.swift */; };
-		ED5F8F931F8F9EA200C86411 /* TypedQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F8F901F8F9EA200C86411 /* TypedQuery.swift */; };
 		ED5F8F941F8F9EA200C86411 /* TypedQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F8F901F8F9EA200C86411 /* TypedQuery.swift */; };
 		ED5F8F961F94B8C400C86411 /* EntryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F8F951F94B8C300C86411 /* EntryTests.swift */; };
-		ED5F8F971F94B8C400C86411 /* EntryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F8F951F94B8C300C86411 /* EntryTests.swift */; };
 		ED5F8F981F94B8C400C86411 /* EntryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F8F951F94B8C300C86411 /* EntryTests.swift */; };
 		ED5F8F9F1F94D52200C86411 /* QueryOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F8F9E1F94D52200C86411 /* QueryOperation.swift */; };
 		ED5F8FA01F94D52200C86411 /* QueryOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F8F9E1F94D52200C86411 /* QueryOperation.swift */; };
-		ED5F8FA11F94D52200C86411 /* QueryOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F8F9E1F94D52200C86411 /* QueryOperation.swift */; };
 		ED5F8FA21F94D52200C86411 /* QueryOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F8F9E1F94D52200C86411 /* QueryOperation.swift */; };
 		ED68BD721E6DC47A00939F6D /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED68BD711E6DC47A00939F6D /* Query.swift */; };
 		ED68BD731E6DC47F00939F6D /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED68BD711E6DC47A00939F6D /* Query.swift */; };
-		ED68BD741E6DC48000939F6D /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED68BD711E6DC47A00939F6D /* Query.swift */; };
 		ED68BD751E6DC48000939F6D /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED68BD711E6DC47A00939F6D /* Query.swift */; };
 		ED737C941EF1785A00ECB3F1 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED737C931EF1785A00ECB3F1 /* Persistence.swift */; };
 		ED737C951EF1785A00ECB3F1 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED737C931EF1785A00ECB3F1 /* Persistence.swift */; };
-		ED737C961EF1785A00ECB3F1 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED737C931EF1785A00ECB3F1 /* Persistence.swift */; };
 		ED737C971EF1785A00ECB3F1 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED737C931EF1785A00ECB3F1 /* Persistence.swift */; };
 		ED882E9320484BF100D372BF /* EnvironmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED882E9220484BF100D372BF /* EnvironmentTests.swift */; };
 		ED882E9420484BF100D372BF /* EnvironmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED882E9220484BF100D372BF /* EnvironmentTests.swift */; };
-		ED882E9520484BF100D372BF /* EnvironmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED882E9220484BF100D372BF /* EnvironmentTests.swift */; };
 		ED88B7DA1EF7CD3800538D1F /* ClientConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED88B7D91EF7CD3800538D1F /* ClientConfigurationTests.swift */; };
 		ED91C1401EDCB03600F0FC0A /* ImageOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */; };
 		ED91C1411EDCB03900F0FC0A /* ImageOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */; };
-		ED91C1421EDCB03A00F0FC0A /* ImageOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */; };
 		ED91C1431EDCB03B00F0FC0A /* ImageOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */; };
 		ED91C1451EDCB14D00F0FC0A /* Client+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2C99791ECDD0AF0039056E /* Client+UIKit.swift */; };
 		EDA690901F43187B00581FC6 /* AssetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19C74421C47A812005334AD /* AssetTests.swift */; };
@@ -211,31 +224,24 @@
 		EDA690991F43187B00581FC6 /* QueryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02BC5F1E7047AE00BAB2CA /* QueryTests.swift */; };
 		EDA6909A1F43187B00581FC6 /* SyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A114BBC11C50E9E200DE6679 /* SyncTests.swift */; };
 		EDA6909B1F43187B00581FC6 /* UtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17D044C1C4F974F002E568B /* UtilityTests.swift */; };
-		EDA6909C1F43187C00581FC6 /* AssetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19C74421C47A812005334AD /* AssetTests.swift */; };
-		EDA6909D1F43187C00581FC6 /* RateLimitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED52DB3F1EE94C8E00225140 /* RateLimitTests.swift */; };
-		EDA6909E1F43187C00581FC6 /* ImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1638C41ED5CA6D009BAA9F /* ImageTests.swift */; };
-		EDA6909F1F43187C00581FC6 /* ContentfulTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3D31B836EDD00A0EFCD /* ContentfulTests.swift */; };
-		EDA690A01F43187C00581FC6 /* ClientConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED88B7D91EF7CD3800538D1F /* ClientConfigurationTests.swift */; };
-		EDA690A11F43187C00581FC6 /* ContentTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19C743E1C47A7F5005334AD /* ContentTypeTests.swift */; };
-		EDA690A21F43187C00581FC6 /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED307F211EE6E5D700633390 /* LocalizationTests.swift */; };
-		EDA690A31F43187C00581FC6 /* JSONDecodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2E3661BBAD06000814D63 /* JSONDecodingTests.swift */; };
-		EDA690A51F43187C00581FC6 /* QueryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02BC5F1E7047AE00BAB2CA /* QueryTests.swift */; };
-		EDA690A61F43187C00581FC6 /* SyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A114BBC11C50E9E200DE6679 /* SyncTests.swift */; };
-		EDA690A71F43187C00581FC6 /* UtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17D044C1C4F974F002E568B /* UtilityTests.swift */; };
 		EDA7D96D1F8E6D660020EE86 /* ErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7D96C1F8E6D660020EE86 /* ErrorTests.swift */; };
 		EDA7D96E1F8E6D660020EE86 /* ErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7D96C1F8E6D660020EE86 /* ErrorTests.swift */; };
-		EDA7D96F1F8E6D660020EE86 /* ErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7D96C1F8E6D660020EE86 /* ErrorTests.swift */; };
 		EDBB1F4F1F3DF44A00D90FBE /* Client+AppKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBB1F4D1F3DF44700D90FBE /* Client+AppKit.swift */; };
 		EDBEC94A1E3F51FE0040FC56 /* Contentful.h in Headers */ = {isa = PBXBuildFile; fileRef = EDBEC9491E3F51FE0040FC56 /* Contentful.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EDBEC9511E3F548F0040FC56 /* Contentful.h in Headers */ = {isa = PBXBuildFile; fileRef = EDBEC9491E3F51FE0040FC56 /* Contentful.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EDBEC9521E3F548F0040FC56 /* Contentful.h in Headers */ = {isa = PBXBuildFile; fileRef = EDBEC9491E3F51FE0040FC56 /* Contentful.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EDBEC9531E3F54900040FC56 /* Contentful.h in Headers */ = {isa = PBXBuildFile; fileRef = EDBEC9491E3F51FE0040FC56 /* Contentful.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EDE087E1207CE2E000CB1287 /* ISO801DateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE087DF207CE2B200CB1287 /* ISO801DateTests.swift */; };
 		EDE087E2207CE2E000CB1287 /* ISO801DateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE087DF207CE2B200CB1287 /* ISO801DateTests.swift */; };
 		EDE087E3207CE2E000CB1287 /* ISO801DateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE087DF207CE2B200CB1287 /* ISO801DateTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		5D52E26C219337AF00C88FC9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A19CA3BB1B836EDD00A0EFCD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5D52E23C2193374100C88FC9;
+			remoteInfo = Contentful_tvOS2;
+		};
 		A19CA3D01B836EDD00A0EFCD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A19CA3BB1B836EDD00A0EFCD /* Project object */;
@@ -250,19 +256,10 @@
 			remoteGlobalIDString = EDDC07281E3BCEB10022F2F9;
 			remoteInfo = Contentful_macOS;
 		};
-		EDA6908A1F43186600581FC6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A19CA3BB1B836EDD00A0EFCD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = EDDC071B1E3BCEA40022F2F9;
-			remoteInfo = Contentful_tvOS;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		5D001E5F200423C700AC5A4C /* PersistenceIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceIntegrationTests.swift; sourceTree = "<group>"; };
-		5D09C22A21870BD2006B83F4 /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5D09C22D21870BE0006B83F4 /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D09C23021870C26006B83F4 /* testClientCantAccessPreviewAPIWithProductionToken.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testClientCantAccessPreviewAPIWithProductionToken.json; sourceTree = "<group>"; };
 		5D09C23121870C26006B83F4 /* ErrorTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ErrorTests.json; sourceTree = "<group>"; };
 		5D09C23221870C26006B83F4 /* RateLimitTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RateLimitTests.json; sourceTree = "<group>"; };
@@ -277,24 +274,20 @@
 		5D09C23C21870C27006B83F4 /* AssetTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AssetTests.json; sourceTree = "<group>"; };
 		5D09C23D21870C27006B83F4 /* LinkResolverTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LinkResolverTests.json; sourceTree = "<group>"; };
 		5D09C23E21870C27006B83F4 /* testClientCanAccessPreviewAPI.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testClientCanAccessPreviewAPI.json; sourceTree = "<group>"; };
+		5D52E23D2193374100C88FC9 /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D52E266219337AF00C88FC9 /* ContentfulTests_tvOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContentfulTests_tvOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D52E2952193386900C88FC9 /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D52E2972193386900C88FC9 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D52E2992193386900C88FC9 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OHHTTPStubs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D52E29B2193387600C88FC9 /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D52E29D2193387600C88FC9 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D52E29F2193387600C88FC9 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OHHTTPStubs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D52E2A12193388200C88FC9 /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D52E2A32193388200C88FC9 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D52E2A52193388200C88FC9 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OHHTTPStubs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DD410462190BC8B003FC01E /* RichText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichText.swift; sourceTree = "<group>"; };
 		5DD410E421918E62003FC01E /* RichTextNodeDecodingTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RichTextNodeDecodingTests.json; sourceTree = "<group>"; };
 		5DFE08DA2189D6AC00B0D68E /* EntryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EntryTests.json; sourceTree = "<group>"; };
-		5DFE08E42189DCB900B0D68E /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5DFE08E62189DCB900B0D68E /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5DFE08E82189DCB900B0D68E /* OHHTTPStubs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OHHTTPStubs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5DFE08EA2189DCC600B0D68E /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5DFE08EC2189DCC600B0D68E /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5DFE08EE2189DCC600B0D68E /* OHHTTPStubs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OHHTTPStubs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5DFE08F02189DCD700B0D68E /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5DFE08F22189DCD700B0D68E /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5DFE08F42189DCD700B0D68E /* OHHTTPStubs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OHHTTPStubs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5DFE08F62189DCE300B0D68E /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5DFE08F82189DCE300B0D68E /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5DFE08FA2189DCE700B0D68E /* OHHTTPStubs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OHHTTPStubs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5DFE08FD2189E31900B0D68E /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5DFE08FF2189E97100B0D68E /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5DFE09012189EB0200B0D68E /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A10FF9D41BBB3676001AA4E9 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Error.swift; sourceTree = "<group>"; };
 		A10FF9DB1BBB4692001AA4E9 /* Field.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Field.swift; sourceTree = "<group>"; };
 		A114BBBF1C4FD3C300DE6679 /* SyncSpace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SyncSpace.swift; sourceTree = "<group>"; };
@@ -320,9 +313,6 @@
 		ED02BC5F1E7047AE00BAB2CA /* QueryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryTests.swift; sourceTree = "<group>"; };
 		ED02DC1120E11D0A005EC57B /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		ED02DC1220E11D0A005EC57B /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
-		ED02DC2020E11DEA005EC57B /* OHHTTPStubs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OHHTTPStubs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		ED02DC2220E11DEF005EC57B /* OHHTTPStubs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OHHTTPStubs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		ED02DC2420E11DF4005EC57B /* OHHTTPStubs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OHHTTPStubs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED02DC9E20E12405005EC57B /* Fixtures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fixtures; sourceTree = "<group>"; };
 		ED0876D91E1D07B3008E1A06 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		ED1638C41ED5CA6D009BAA9F /* ImageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTests.swift; sourceTree = "<group>"; };
@@ -343,16 +333,11 @@
 		ED65CF951E3F6BF8000EBC62 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		ED68BD711E6DC47A00939F6D /* Query.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Query.swift; sourceTree = "<group>"; };
 		ED737C931EF1785A00ECB3F1 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		ED7862731F7D2F9400CB2625 /* Interstellar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Interstellar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		ED7862751F7D2FAC00CB2625 /* Interstellar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Interstellar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		ED7862771F7D2FB300CB2625 /* Interstellar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Interstellar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		ED7862791F7D2FBD00CB2625 /* Interstellar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Interstellar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED882E9220484BF100D372BF /* EnvironmentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentTests.swift; sourceTree = "<group>"; };
 		ED88B7D91EF7CD3800538D1F /* ClientConfigurationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientConfigurationTests.swift; sourceTree = "<group>"; };
 		ED9102651E65AADA0076FDBD /* DVR.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVR.framework; path = Carthage/Build/iOS/DVR.framework; sourceTree = "<group>"; };
 		ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageOptions.swift; sourceTree = "<group>"; };
 		EDA690741F43185200581FC6 /* ContentfulTests_macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContentfulTests_macOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		EDA690841F43186600581FC6 /* ContentfulTests_tvOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContentfulTests_tvOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDA690C81F4319A000581FC6 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/Mac/Nimble.framework; sourceTree = "<group>"; };
 		EDA690CA1F4319AC00581FC6 /* DVR.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVR.framework; path = Carthage/Build/Mac/DVR.framework; sourceTree = "<group>"; };
 		EDA690CC1F431A0C00581FC6 /* DVR.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVR.framework; path = Carthage/Build/tvOS/DVR.framework; sourceTree = "<group>"; };
@@ -363,13 +348,29 @@
 		EDBEC9381E3F4ADE0040FC56 /* Info_tvOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info_tvOS.plist; sourceTree = "<group>"; };
 		EDBEC9391E3F4ADE0040FC56 /* Info_watchOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info_watchOS.plist; sourceTree = "<group>"; };
 		EDBEC9491E3F51FE0040FC56 /* Contentful.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contentful.h; sourceTree = "<group>"; };
-		EDC02DF32181FFC800438C24 /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDDC070F1E3BCE920022F2F9 /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDDC07291E3BCEB10022F2F9 /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDE087DF207CE2B200CB1287 /* ISO801DateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ISO801DateTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5D52E23A2193374100C88FC9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5D52E263219337AF00C88FC9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5D52E2A22193388200C88FC9 /* DVR.framework in Frameworks */,
+				5D52E2A42193388200C88FC9 /* Nimble.framework in Frameworks */,
+				5D52E2A62193388200C88FC9 /* OHHTTPStubs.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A19CA3C01B836EDD00A0EFCD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -381,9 +382,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5DFE08FB2189DCE700B0D68E /* OHHTTPStubs.framework in Frameworks */,
-				5DFE08F72189DCE300B0D68E /* DVR.framework in Frameworks */,
-				5DFE08F92189DCE300B0D68E /* Nimble.framework in Frameworks */,
+				5D52E2962193386900C88FC9 /* DVR.framework in Frameworks */,
+				5D52E2982193386900C88FC9 /* Nimble.framework in Frameworks */,
+				5D52E29A2193386900C88FC9 /* OHHTTPStubs.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,30 +392,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5DFE08FE2189E31900B0D68E /* DVR.framework in Frameworks */,
-				5DFE08ED2189DCC600B0D68E /* Nimble.framework in Frameworks */,
-				5DFE08EF2189DCC600B0D68E /* OHHTTPStubs.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		EDA690811F43186600581FC6 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5DFE09022189EB0200B0D68E /* Nimble.framework in Frameworks */,
-				5DFE09002189E97100B0D68E /* DVR.framework in Frameworks */,
-				5DFE08F52189DCD700B0D68E /* OHHTTPStubs.framework in Frameworks */,
+				5D52E29C2193387600C88FC9 /* DVR.framework in Frameworks */,
+				5D52E29E2193387600C88FC9 /* Nimble.framework in Frameworks */,
+				5D52E2A02193387600C88FC9 /* OHHTTPStubs.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		EDDC070B1E3BCE920022F2F9 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		EDDC07181E3BCEA40022F2F9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -451,7 +435,8 @@
 				EDDC070F1E3BCE920022F2F9 /* Contentful.framework */,
 				EDDC07291E3BCEB10022F2F9 /* Contentful.framework */,
 				EDA690741F43185200581FC6 /* ContentfulTests_macOS.xctest */,
-				EDA690841F43186600581FC6 /* ContentfulTests_tvOS.xctest */,
+				5D52E23D2193374100C88FC9 /* Contentful.framework */,
+				5D52E266219337AF00C88FC9 /* ContentfulTests_tvOS.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -566,31 +551,15 @@
 		ED65CF8A1E3F6B87000EBC62 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5DFE09012189EB0200B0D68E /* Nimble.framework */,
-				5DFE08FF2189E97100B0D68E /* DVR.framework */,
-				5DFE08FD2189E31900B0D68E /* DVR.framework */,
-				5DFE08FA2189DCE700B0D68E /* OHHTTPStubs.framework */,
-				5DFE08F62189DCE300B0D68E /* DVR.framework */,
-				5DFE08F82189DCE300B0D68E /* Nimble.framework */,
-				5DFE08F02189DCD700B0D68E /* DVR.framework */,
-				5DFE08F22189DCD700B0D68E /* Nimble.framework */,
-				5DFE08F42189DCD700B0D68E /* OHHTTPStubs.framework */,
-				5DFE08EA2189DCC600B0D68E /* DVR.framework */,
-				5DFE08EC2189DCC600B0D68E /* Nimble.framework */,
-				5DFE08EE2189DCC600B0D68E /* OHHTTPStubs.framework */,
-				5DFE08E42189DCB900B0D68E /* DVR.framework */,
-				5DFE08E62189DCB900B0D68E /* Nimble.framework */,
-				5DFE08E82189DCB900B0D68E /* OHHTTPStubs.framework */,
-				5D09C22D21870BE0006B83F4 /* DVR.framework */,
-				5D09C22A21870BD2006B83F4 /* DVR.framework */,
-				EDC02DF32181FFC800438C24 /* DVR.framework */,
-				ED02DC2420E11DF4005EC57B /* OHHTTPStubs.framework */,
-				ED02DC2220E11DEF005EC57B /* OHHTTPStubs.framework */,
-				ED02DC2020E11DEA005EC57B /* OHHTTPStubs.framework */,
-				ED7862791F7D2FBD00CB2625 /* Interstellar.framework */,
-				ED7862771F7D2FB300CB2625 /* Interstellar.framework */,
-				ED7862751F7D2FAC00CB2625 /* Interstellar.framework */,
-				ED7862731F7D2F9400CB2625 /* Interstellar.framework */,
+				5D52E2A12193388200C88FC9 /* DVR.framework */,
+				5D52E2A32193388200C88FC9 /* Nimble.framework */,
+				5D52E2A52193388200C88FC9 /* OHHTTPStubs.framework */,
+				5D52E29B2193387600C88FC9 /* DVR.framework */,
+				5D52E29D2193387600C88FC9 /* Nimble.framework */,
+				5D52E29F2193387600C88FC9 /* OHHTTPStubs.framework */,
+				5D52E2952193386900C88FC9 /* DVR.framework */,
+				5D52E2972193386900C88FC9 /* Nimble.framework */,
+				5D52E2992193386900C88FC9 /* OHHTTPStubs.framework */,
 				ED65CF8B1E3F6B9E000EBC62 /* iOS */,
 				ED65CF8C1E3F6BA2000EBC62 /* macOS */,
 				ED65CF8D1E3F6BA8000EBC62 /* tvOS */,
@@ -659,6 +628,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		5D52E2382193374100C88FC9 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A19CA3C11B836EDD00A0EFCD /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -675,14 +651,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		EDDC07191E3BCEA40022F2F9 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				EDBEC9521E3F548F0040FC56 /* Contentful.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		EDDC07261E3BCEB10022F2F9 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -694,6 +662,42 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		5D52E23C2193374100C88FC9 /* Contentful_tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5D52E2422193374100C88FC9 /* Build configuration list for PBXNativeTarget "Contentful_tvOS" */;
+			buildPhases = (
+				5D52E2382193374100C88FC9 /* Headers */,
+				5D52E2392193374100C88FC9 /* Sources */,
+				5D52E23A2193374100C88FC9 /* Frameworks */,
+				5D52E23B2193374100C88FC9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Contentful_tvOS;
+			productName = Contentful_tvOS2;
+			productReference = 5D52E23D2193374100C88FC9 /* Contentful.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		5D52E265219337AF00C88FC9 /* ContentfulTests_tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5D52E26E219337AF00C88FC9 /* Build configuration list for PBXNativeTarget "ContentfulTests_tvOS" */;
+			buildPhases = (
+				5D52E262219337AF00C88FC9 /* Sources */,
+				5D52E263219337AF00C88FC9 /* Frameworks */,
+				5D52E264219337AF00C88FC9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5D52E26D219337AF00C88FC9 /* PBXTargetDependency */,
+			);
+			name = ContentfulTests_tvOS;
+			productName = Contentful_tvOS2Tests;
+			productReference = 5D52E266219337AF00C88FC9 /* ContentfulTests_tvOS.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		A19CA3C31B836EDD00A0EFCD /* Contentful_iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A19CA3D81B836EDD00A0EFCD /* Build configuration list for PBXNativeTarget "Contentful_iOS" */;
@@ -749,24 +753,6 @@
 			productReference = EDA690741F43185200581FC6 /* ContentfulTests_macOS.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		EDA690831F43186600581FC6 /* ContentfulTests_tvOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = EDA6908C1F43186600581FC6 /* Build configuration list for PBXNativeTarget "ContentfulTests_tvOS" */;
-			buildPhases = (
-				EDA690801F43186600581FC6 /* Sources */,
-				EDA690811F43186600581FC6 /* Frameworks */,
-				EDA690821F43186600581FC6 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				EDA6908B1F43186600581FC6 /* PBXTargetDependency */,
-			);
-			name = ContentfulTests_tvOS;
-			productName = ContentfulTests_tvOS;
-			productReference = EDA690841F43186600581FC6 /* ContentfulTests_tvOS.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		EDDC070E1E3BCE920022F2F9 /* Contentful_watchOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EDDC07161E3BCE920022F2F9 /* Build configuration list for PBXNativeTarget "Contentful_watchOS" */;
@@ -784,24 +770,6 @@
 			name = Contentful_watchOS;
 			productName = Contentful_watchOS;
 			productReference = EDDC070F1E3BCE920022F2F9 /* Contentful.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		EDDC071B1E3BCEA40022F2F9 /* Contentful_tvOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = EDDC07211E3BCEA40022F2F9 /* Build configuration list for PBXNativeTarget "Contentful_tvOS" */;
-			buildPhases = (
-				EDDC07171E3BCEA40022F2F9 /* Sources */,
-				EDDC07181E3BCEA40022F2F9 /* Frameworks */,
-				EDDC07191E3BCEA40022F2F9 /* Headers */,
-				EDDC071A1E3BCEA40022F2F9 /* Resources */,
-				EDA690D71F433C0700581FC6 /* Swiftlint */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = Contentful_tvOS;
-			productName = Contentful_tvOS;
 			productType = "com.apple.product-type.framework";
 		};
 		EDDC07281E3BCEB10022F2F9 /* Contentful_macOS */ = {
@@ -829,10 +797,20 @@
 		A19CA3BB1B836EDD00A0EFCD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0830;
+				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Contentful GmbH";
 				TargetAttributes = {
+					5D52E23C2193374100C88FC9 = {
+						CreatedOnToolsVersion = 10.1;
+						DevelopmentTeam = RWJ5E97L7R;
+						ProvisioningStyle = Automatic;
+					};
+					5D52E265219337AF00C88FC9 = {
+						CreatedOnToolsVersion = 10.1;
+						DevelopmentTeam = RWJ5E97L7R;
+						ProvisioningStyle = Automatic;
+					};
 					A19CA3C31B836EDD00A0EFCD = {
 						CreatedOnToolsVersion = 7.0;
 						LastSwiftMigration = 0820;
@@ -847,16 +825,7 @@
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
-					EDA690831F43186600581FC6 = {
-						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = RWJ5E97L7R;
-						ProvisioningStyle = Automatic;
-					};
 					EDDC070E1E3BCE920022F2F9 = {
-						CreatedOnToolsVersion = 8.2.1;
-						ProvisioningStyle = Automatic;
-					};
-					EDDC071B1E3BCEA40022F2F9 = {
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
 					};
@@ -881,16 +850,47 @@
 			targets = (
 				A19CA3C31B836EDD00A0EFCD /* Contentful_iOS */,
 				EDDC070E1E3BCE920022F2F9 /* Contentful_watchOS */,
-				EDDC071B1E3BCEA40022F2F9 /* Contentful_tvOS */,
+				5D52E23C2193374100C88FC9 /* Contentful_tvOS */,
 				EDDC07281E3BCEB10022F2F9 /* Contentful_macOS */,
 				A19CA3CD1B836EDD00A0EFCD /* ContentfulTests_iOS */,
 				EDA690731F43185200581FC6 /* ContentfulTests_macOS */,
-				EDA690831F43186600581FC6 /* ContentfulTests_tvOS */,
+				5D52E265219337AF00C88FC9 /* ContentfulTests_tvOS */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5D52E23B2193374100C88FC9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5D52E264219337AF00C88FC9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5D52E2722193381F00C88FC9 /* RichTextNodeDecodingTests.json in Resources */,
+				5D52E2732193381F00C88FC9 /* EntryTests.json in Resources */,
+				5D52E2742193381F00C88FC9 /* AssetTests.json in Resources */,
+				5D52E2752193381F00C88FC9 /* ContentTypeTests.json in Resources */,
+				5D52E2762193381F00C88FC9 /* EnvironmentsTests.json in Resources */,
+				5D52E2772193381F00C88FC9 /* ErrorTests.json in Resources */,
+				5D52E2782193381F00C88FC9 /* ImageTests.json in Resources */,
+				5D52E2792193381F00C88FC9 /* LinkResolverTests.json in Resources */,
+				5D52E27A2193381F00C88FC9 /* LocalizationTests.json in Resources */,
+				5D52E27B2193381F00C88FC9 /* PreviewSyncTests.json in Resources */,
+				5D52E27C2193381F00C88FC9 /* QueryTests.json in Resources */,
+				5D52E27D2193381F00C88FC9 /* RateLimitTests.json in Resources */,
+				5D52E27E2193381F00C88FC9 /* SyncTests.json in Resources */,
+				5D52E27F2193381F00C88FC9 /* testClientCanAccessPreviewAPI.json in Resources */,
+				5D52E2802193381F00C88FC9 /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */,
+				5D52E2812193381F00C88FC9 /* testFetchSpace.json in Resources */,
+				5D52E2822193381F00C88FC9 /* Fixtures in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A19CA3C21B836EDD00A0EFCD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -946,38 +946,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		EDA690821F43186600581FC6 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5D09C24721870C27006B83F4 /* ErrorTests.json in Resources */,
-				5D09C26B21870C27006B83F4 /* LinkResolverTests.json in Resources */,
-				5D09C24D21870C27006B83F4 /* testFetchSpace.json in Resources */,
-				5D09C26821870C27006B83F4 /* AssetTests.json in Resources */,
-				5D09C26E21870C27006B83F4 /* testClientCanAccessPreviewAPI.json in Resources */,
-				5D09C26221870C27006B83F4 /* SyncTests.json in Resources */,
-				5D09C25021870C27006B83F4 /* EnvironmentsTests.json in Resources */,
-				5D09C26521870C27006B83F4 /* PreviewSyncTests.json in Resources */,
-				5DD410E921918E83003FC01E /* RichTextNodeDecodingTests.json in Resources */,
-				5D09C25921870C27006B83F4 /* QueryTests.json in Resources */,
-				ED02DCA120E12405005EC57B /* Fixtures in Resources */,
-				5D09C25621870C27006B83F4 /* LocalizationTests.json in Resources */,
-				5DFE08DD2189D6AC00B0D68E /* EntryTests.json in Resources */,
-				5D09C25321870C27006B83F4 /* ImageTests.json in Resources */,
-				5D09C25F21870C27006B83F4 /* ContentTypeTests.json in Resources */,
-				5D09C24A21870C27006B83F4 /* RateLimitTests.json in Resources */,
-				5D09C24421870C27006B83F4 /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		EDDC070D1E3BCE920022F2F9 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		EDDC071A1E3BCEA40022F2F9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1022,20 +991,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"$SRCROOT/Scripts/BuildPhases/SwiftLint.sh\"\n";
 		};
-		EDA690D71F433C0700581FC6 /* Swiftlint */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = Swiftlint;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"$SRCROOT/Scripts/BuildPhases/SwiftLint.sh\"\n";
-		};
 		EDA690D81F433C1E00581FC6 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1053,6 +1008,65 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5D52E2392193374100C88FC9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5D52E2462193375300C88FC9 /* RichText.swift in Sources */,
+				5D52E2472193375300C88FC9 /* Result.swift in Sources */,
+				5D52E2482193375300C88FC9 /* Util.swift in Sources */,
+				5D52E2492193375300C88FC9 /* Client.swift in Sources */,
+				5D52E24A2193375300C88FC9 /* ClientConfiguration.swift in Sources */,
+				5D52E24B2193375300C88FC9 /* Endpoints.swift in Sources */,
+				5D52E24C2193375300C88FC9 /* Sys.swift in Sources */,
+				5D52E24D2193375300C88FC9 /* Space.swift in Sources */,
+				5D52E24E2193375300C88FC9 /* ContentType.swift in Sources */,
+				5D52E24F2193375300C88FC9 /* Resource.swift in Sources */,
+				5D52E2502193375300C88FC9 /* Entry.swift in Sources */,
+				5D52E2512193375300C88FC9 /* Asset.swift in Sources */,
+				5D52E2522193375300C88FC9 /* ArrayResponse.swift in Sources */,
+				5D52E2532193375300C88FC9 /* Link.swift in Sources */,
+				5D52E2542193375300C88FC9 /* Decodable.swift in Sources */,
+				5D52E2552193375300C88FC9 /* DataCache.swift in Sources */,
+				5D52E2562193375300C88FC9 /* Persistence.swift in Sources */,
+				5D52E2572193375300C88FC9 /* Query.swift in Sources */,
+				5D52E2582193375300C88FC9 /* QueryOperation.swift in Sources */,
+				5D52E2592193375300C88FC9 /* TypedQuery.swift in Sources */,
+				5D52E25A2193375300C88FC9 /* Date.swift in Sources */,
+				5D52E25B2193375300C88FC9 /* SyncSpace.swift in Sources */,
+				5D52E25C2193375300C88FC9 /* Locale.swift in Sources */,
+				5D52E25D2193375300C88FC9 /* Error.swift in Sources */,
+				5D52E25E2193375300C88FC9 /* Field.swift in Sources */,
+				5D52E25F2193375300C88FC9 /* ImageOptions.swift in Sources */,
+				5D52E2612193375300C88FC9 /* Client+UIKit.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5D52E262219337AF00C88FC9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5D52E2832193384100C88FC9 /* AssetTests.swift in Sources */,
+				5D52E2842193384100C88FC9 /* ClientConfigurationTests.swift in Sources */,
+				5D52E2852193384100C88FC9 /* ContentfulTests.swift in Sources */,
+				5D52E2862193384100C88FC9 /* ContentTypeTests.swift in Sources */,
+				5D52E2872193384100C88FC9 /* EntryDecodableLinkResolutionTests.swift in Sources */,
+				5D52E2882193384100C88FC9 /* EntryTests.swift in Sources */,
+				5D52E2892193384100C88FC9 /* EnvironmentTests.swift in Sources */,
+				5D52E28A2193384100C88FC9 /* ErrorTests.swift in Sources */,
+				5D52E28B2193384100C88FC9 /* ImageTests.swift in Sources */,
+				5D52E28C2193384100C88FC9 /* ISO801DateTests.swift in Sources */,
+				5D52E28D2193384100C88FC9 /* JSONDecodingTests.swift in Sources */,
+				5D52E28E2193384100C88FC9 /* LocalizationTests.swift in Sources */,
+				5D52E28F2193384100C88FC9 /* PersistenceIntegrationTests.swift in Sources */,
+				5D52E2902193384100C88FC9 /* QueryTests.swift in Sources */,
+				5D52E2912193384100C88FC9 /* RateLimitTests.swift in Sources */,
+				5D52E2922193384100C88FC9 /* RichTextTests.swift in Sources */,
+				5D52E2932193384100C88FC9 /* SyncTests.swift in Sources */,
+				5D52E2942193384100C88FC9 /* UtilityTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A19CA3BF1B836EDD00A0EFCD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1137,31 +1151,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		EDA690801F43186600581FC6 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				EDA690A71F43187C00581FC6 /* UtilityTests.swift in Sources */,
-				EDA6909C1F43187C00581FC6 /* AssetTests.swift in Sources */,
-				EDA690A01F43187C00581FC6 /* ClientConfigurationTests.swift in Sources */,
-				EDA690A61F43187C00581FC6 /* SyncTests.swift in Sources */,
-				5D001E62200423C700AC5A4C /* PersistenceIntegrationTests.swift in Sources */,
-				EDA6909E1F43187C00581FC6 /* ImageTests.swift in Sources */,
-				EDA690A31F43187C00581FC6 /* JSONDecodingTests.swift in Sources */,
-				ED2E03E91F97608A006422A6 /* EntryDecodableLinkResolutionTests.swift in Sources */,
-				EDA690A11F43187C00581FC6 /* ContentTypeTests.swift in Sources */,
-				ED882E9520484BF100D372BF /* EnvironmentTests.swift in Sources */,
-				EDA6909D1F43187C00581FC6 /* RateLimitTests.swift in Sources */,
-				ED4A6E532132FEC100690EA4 /* RichTextTests.swift in Sources */,
-				ED5F8F971F94B8C400C86411 /* EntryTests.swift in Sources */,
-				EDA690A21F43187C00581FC6 /* LocalizationTests.swift in Sources */,
-				EDE087E1207CE2E000CB1287 /* ISO801DateTests.swift in Sources */,
-				EDA7D96F1F8E6D660020EE86 /* ErrorTests.swift in Sources */,
-				EDA690A51F43187C00581FC6 /* QueryTests.swift in Sources */,
-				EDA6909F1F43187C00581FC6 /* ContentfulTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		EDDC070A1E3BCE920022F2F9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1193,40 +1182,6 @@
 				ED36B6FA1E3BD052005581FD /* ContentType.swift in Sources */,
 				ED91C1411EDCB03900F0FC0A /* ImageOptions.swift in Sources */,
 				ED3CBF1B1E7AD57100E5B02E /* Sys.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		EDDC07171E3BCEA40022F2F9 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				ED36B7111E3BD052005581FD /* Resource.swift in Sources */,
-				ED36B70E1E3BD052005581FD /* Entry.swift in Sources */,
-				ED36B7141E3BD052005581FD /* SyncSpace.swift in Sources */,
-				ED737C961EF1785A00ECB3F1 /* Persistence.swift in Sources */,
-				ED36B7101E3BD052005581FD /* Field.swift in Sources */,
-				ED1D789C1F2F96260048E169 /* DataCache.swift in Sources */,
-				5DD410492190BC8B003FC01E /* RichText.swift in Sources */,
-				ED02DC1520E11D0A005EC57B /* Result.swift in Sources */,
-				ED02DC1920E11D0A005EC57B /* Util.swift in Sources */,
-				ED535E661F5E8E1300886D93 /* Decodable.swift in Sources */,
-				ED36B7131E3BD052005581FD /* Space.swift in Sources */,
-				ED36B7071E3BD052005581FD /* Asset.swift in Sources */,
-				ED36B70F1E3BD052005581FD /* Error.swift in Sources */,
-				ED36B7091E3BD052005581FD /* ClientConfiguration.swift in Sources */,
-				ED5F8FA11F94D52200C86411 /* QueryOperation.swift in Sources */,
-				ED2C99BB1ED5AE820039056E /* Client+UIKit.swift in Sources */,
-				ED36B7051E3BD052005581FD /* ArrayResponse.swift in Sources */,
-				ED4987002047107D0014DCFE /* Endpoints.swift in Sources */,
-				ED36B7081E3BD052005581FD /* Client.swift in Sources */,
-				ED5F8F931F8F9EA200C86411 /* TypedQuery.swift in Sources */,
-				ED36B7061E3BD052005581FD /* Date.swift in Sources */,
-				ED36B70C1E3BD052005581FD /* Locale.swift in Sources */,
-				ED68BD741E6DC48000939F6D /* Query.swift in Sources */,
-				ED3CBF211E7AD58100E5B02E /* Link.swift in Sources */,
-				ED91C1421EDCB03A00F0FC0A /* ImageOptions.swift in Sources */,
-				ED36B70A1E3BD052005581FD /* ContentType.swift in Sources */,
-				ED3CBF1C1E7AD57100E5B02E /* Sys.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1267,6 +1222,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		5D52E26D219337AF00C88FC9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5D52E23C2193374100C88FC9 /* Contentful_tvOS */;
+			targetProxy = 5D52E26C219337AF00C88FC9 /* PBXContainerItemProxy */;
+		};
 		A19CA3D11B836EDD00A0EFCD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A19CA3C31B836EDD00A0EFCD /* Contentful_iOS */;
@@ -1277,14 +1237,182 @@
 			target = EDDC07281E3BCEB10022F2F9 /* Contentful_macOS */;
 			targetProxy = EDA6907A1F43185200581FC6 /* PBXContainerItemProxy */;
 		};
-		EDA6908B1F43186600581FC6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = EDDC071B1E3BCEA40022F2F9 /* Contentful_tvOS */;
-			targetProxy = EDA6908A1F43186600581FC6 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		5D52E2432193374100C88FC9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = RWJ5E97L7R;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_tvOS.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-tvOS";
+				PRODUCT_NAME = Contentful;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = Debug;
+		};
+		5D52E2442193374100C88FC9 /* API_Coverage */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = RWJ5E97L7R;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_tvOS.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-tvOS";
+				PRODUCT_NAME = Contentful;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = API_Coverage;
+		};
+		5D52E2452193374100C88FC9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = RWJ5E97L7R;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_tvOS.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-tvOS";
+				PRODUCT_NAME = Contentful;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = Release;
+		};
+		5D52E26F219337AF00C88FC9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RWJ5E97L7R;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "$(SRCROOT)/Tests/ContentfulTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-tvOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 12.1;
+			};
+			name = Debug;
+		};
+		5D52E270219337AF00C88FC9 /* API_Coverage */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RWJ5E97L7R;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "$(SRCROOT)/Tests/ContentfulTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-tvOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 12.1;
+			};
+			name = API_Coverage;
+		};
+		5D52E271219337AF00C88FC9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RWJ5E97L7R;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "$(SRCROOT)/Tests/ContentfulTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-tvOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 12.1;
+			};
+			name = Release;
+		};
 		A19CA3D61B836EDD00A0EFCD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
@@ -1343,6 +1471,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TVOS_DEPLOYMENT_TARGET = 9.2;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1399,6 +1528,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TVOS_DEPLOYMENT_TARGET = 9.2;
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1566,69 +1696,6 @@
 			};
 			name = Release;
 		};
-		EDA6908D1F43186600581FC6 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				DEVELOPMENT_TEAM = RWJ5E97L7R;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = "$(SRCROOT)/Tests/ContentfulTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.ContentfulTests-tvOS";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
-				TVOS_DEPLOYMENT_TARGET = 10.2;
-			};
-			name = Debug;
-		};
-		EDA6908E1F43186600581FC6 /* API_Coverage */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				DEVELOPMENT_TEAM = RWJ5E97L7R;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(BUILD_DIR)/Release-$(PLATFORM_NAME)",
-				);
-				INFOPLIST_FILE = "$(SRCROOT)/Tests/ContentfulTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.ContentfulTests-tvOS";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
-				TVOS_DEPLOYMENT_TARGET = 10.2;
-			};
-			name = API_Coverage;
-		};
-		EDA6908F1F43186600581FC6 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				DEVELOPMENT_TEAM = RWJ5E97L7R;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = "$(SRCROOT)/Tests/ContentfulTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.ContentfulTests-tvOS";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
-				TVOS_DEPLOYMENT_TARGET = 10.2;
-			};
-			name = Release;
-		};
 		EDDC07141E3BCE920022F2F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
@@ -1682,62 +1749,6 @@
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 3.1;
-			};
-			name = Release;
-		};
-		EDDC07221E3BCEA40022F2F9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_IDENTITY = "";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_tvOS.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-tvOS";
-				PRODUCT_NAME = Contentful;
-				SDKROOT = appletvos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 10.1;
-			};
-			name = Debug;
-		};
-		EDDC07231E3BCEA40022F2F9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_IDENTITY = "";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_tvOS.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-tvOS";
-				PRODUCT_NAME = Contentful;
-				SDKROOT = appletvos;
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Release;
 		};
@@ -1857,6 +1868,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TVOS_DEPLOYMENT_TARGET = 9.2;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1945,37 +1957,6 @@
 			};
 			name = API_Coverage;
 		};
-		EDF53E1D1E5B2B3000FE060A /* API_Coverage */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_IDENTITY = "";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(BUILD_DIR)/Release-$(PLATFORM_NAME)",
-				);
-				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_tvOS.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-tvOS";
-				PRODUCT_NAME = Contentful;
-				SDKROOT = appletvos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 10.1;
-			};
-			name = API_Coverage;
-		};
 		EDF53E1E1E5B2B3000FE060A /* API_Coverage */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
@@ -2011,6 +1992,26 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5D52E2422193374100C88FC9 /* Build configuration list for PBXNativeTarget "Contentful_tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5D52E2432193374100C88FC9 /* Debug */,
+				5D52E2442193374100C88FC9 /* API_Coverage */,
+				5D52E2452193374100C88FC9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5D52E26E219337AF00C88FC9 /* Build configuration list for PBXNativeTarget "ContentfulTests_tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5D52E26F219337AF00C88FC9 /* Debug */,
+				5D52E270219337AF00C88FC9 /* API_Coverage */,
+				5D52E271219337AF00C88FC9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		A19CA3BE1B836EDD00A0EFCD /* Build configuration list for PBXProject "Contentful" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2051,32 +2052,12 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		EDA6908C1F43186600581FC6 /* Build configuration list for PBXNativeTarget "ContentfulTests_tvOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				EDA6908D1F43186600581FC6 /* Debug */,
-				EDA6908E1F43186600581FC6 /* API_Coverage */,
-				EDA6908F1F43186600581FC6 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		EDDC07161E3BCE920022F2F9 /* Build configuration list for PBXNativeTarget "Contentful_watchOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EDDC07141E3BCE920022F2F9 /* Debug */,
 				EDF53E1C1E5B2B3000FE060A /* API_Coverage */,
 				EDDC07151E3BCE920022F2F9 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		EDDC07211E3BCEA40022F2F9 /* Build configuration list for PBXNativeTarget "Contentful_tvOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				EDDC07221E3BCEA40022F2F9 /* Debug */,
-				EDF53E1D1E5B2B3000FE060A /* API_Coverage */,
-				EDDC07231E3BCEA40022F2F9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
