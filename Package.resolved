@@ -1,15 +1,7 @@
 {
   "object": {
     "pins": [
-      {
-        "package": "Interstellar",
-        "repositoryURL": "https://github.com/jensravens/Interstellar",
-        "state": {
-          "branch": null,
-          "revision": "f5f6287a902524d06d82edc3ac09aa739f43ef09",
-          "version": "2.2.0"
-        }
-      }
+
     ]
   },
   "version": 1

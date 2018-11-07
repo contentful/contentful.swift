@@ -5,24 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 
 ### Merged, but not yet released
 > All recent changes are published
-> #### Changed
-> - *BREAKING:* `Interstellar` has been removed as a dependency of the SDK and the SDK now has its own `Result` type. If you were relying on fetch methods that returned an `Observable`, you will need to update your code.
-> - *BREAKING:* The syntax for many of the fetch methods on `Client` have changed. Refer to the [v4 migration guide](Migrations.md#migrating-from-version-3xx-to-4xx).
-> - *BREAKING:* `EntryQueryable` has been renamed `FieldKeysQueryable`, the required associated type `Fields` has been renamed `FieldKeys` to accurately reflect the type's real usage.
-> - *BREAKING:* `MixedMappedArrayResponse` has been renamed `MixedArrayResponse`. 
-> 
-> #### Added
-> - Base fetch methods for fetching data, or fetching data and deserializing any type conforming to `Swift.Decodable` have been exposed so that SDK usage is more flexible for various development strategies.
-> - `Endpoint` enum and `EndpointAccessible` protocol for clarity on endpoints available through the APIs and which resource types are returned from said endpoints.
-> - `ResourceQueryable` protocol, which `Asset`, `Entry`, `ContentType` conform to; it enables querying and filtering on the API for conforming types.
-> - `FlatResource` protocol which can be used if you prefer to have all `sys` properties on the top level of your `EntryDecodable`. All `Resource` types have a default implmentation of `FlatResource` so refactoring is opt-in.
->
-> #### Removed
-> - The `DataDelegate` protocol has been removed in favor of directly fetching raw `Data` on your own. If you want to store JSON to disk, simply fetch it and do what you like.
-> - The `EntryModellable` protocol is now gone. Just use `EntryDecodable`.
 ---
 
 ## Table of contents
+
+#### 4.x Releases
+- `4.1.0` Releases - [4.1.0](#410)
+- `4.0.0` Releases - [4.0.0](#400) | [4.0.1](#401)
 
 #### 3.x Releases
 - `3.1.0` Releases - [3.1.0](#310) | [3.1.1](#311) | [3.1.2](#312)
@@ -47,6 +36,46 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 - `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041)
 - `0.3.x` Releases - [0.3.0](#030) | [0.3.1](#031)
+
+---
+
+## [`4.1.0`](https://github.com/contentful/contentful.swift/releases/tag/4.1.0)
+Released on 2018-11-06
+
+#### Added
+- The `RichTextDocument` type which can be used in `EntryDecodable` instances as a field type corresponding to rich text fields in Contentful.
+
+#### Removed
+- Support for iOS 8.
+
+---
+
+## [`4.0.1`](https://github.com/contentful/contentful.swift/releases/tag/4.0.1)
+Released on 2018-10-25
+
+#### Changed
+- This release ensures that CI runs on Xcode 10 with Swift 4.2
+
+---
+
+## [`4.0.0`](https://github.com/contentful/contentful.swift/releases/tag/4.0.0)
+Released on 2018-10-24
+
+#### Changed
+- *BREAKING:* `Interstellar` has been removed as a dependency of the SDK and the SDK now has its own `Result` type. If you were relying on fetch methods that returned an `Observable`, you will need to update your code.
+- *BREAKING:* The syntax for many of the fetch methods on `Client` have changed. Refer to the [v4 migration guide](Migrations.md#migrating-from-version-3xx-to-4xx).
+- *BREAKING:* `EntryQueryable` has been renamed `FieldKeysQueryable`, the required associated type `Fields` has been renamed `FieldKeys` to accurately reflect the type's real usage.
+- *BREAKING:* `MixedMappedArrayResponse` has been renamed `MixedArrayResponse`. 
+
+#### Added
+- Base fetch methods for fetching data, or fetching data and deserializing any type conforming to `Swift.Decodable` have been exposed so that SDK usage is more flexible for various development strategies.
+- `Endpoint` enum and `EndpointAccessible` protocol for clarity on endpoints available through the APIs and which resource types are returned from said endpoints.
+- `ResourceQueryable` protocol, which `Asset`, `Entry`, `ContentType` conform to; it enables querying and filtering on the API for conforming types.
+- `FlatResource` protocol which can be used if you prefer to have all `sys` properties on the top level of your `EntryDecodable`. All `Resource` types have a default implementation of `FlatResource` so refactoring is opt-in.
+
+#### Removed
+- The `DataDelegate` protocol has been removed in favor of directly fetching raw `Data` on your own. If you want to store JSON to disk, simply fetch it and do what you like.
+- The `EntryModellable` protocol is now gone. Just use `EntryDecodable`.
 
 ---
 

@@ -78,8 +78,10 @@ class EnvironmentsTests: XCTestCase {
             switch result {
             case .success(let syncSpace):
                 expect(syncSpace.entries.count).to(equal(9))
-                expect(syncSpace.entries.first?.fields["name"] as? String).to(equal("Jake"))
-                expect(syncSpace.entries[2].fields["name"] as? String).to(equal("Finn"))
+                // Sort the entries since they are otherwise in a non-determinant order with Swift 4.2.
+                let entries = syncSpace.entries.sorted { $0.sys.id < $1.sys.id }
+                expect(entries.first?.fields["name"] as? String).to(equal("Berlin"))
+                expect(entries[2].fields["name"] as? String).to(equal("Doge"))
 
             case .error(let error):
                  fail("Failed to sync on a non-master environment \(error)")

@@ -10,9 +10,6 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "Contentful",
-            dependencies: [
-                "Interstellar"
-            ])
+            name: "Contentful")
     ]
 )

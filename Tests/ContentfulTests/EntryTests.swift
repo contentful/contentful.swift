@@ -294,7 +294,7 @@ class EntryTests: XCTestCase {
         let action: (ArrayResponse<Entry>) -> () = {
             expect($0.items.count).to(equal(2))
             let ids = $0.items.map { $0.sys.id }
-            expect(ids).to(equal(["finn", "jake"]))
+            expect(ids).to(equal(["jake", "finn"]))
         }
 
         waitUntilMatchingEntries(Query.where(sys: .id, .includes(["finn", "jake"])), action: action)

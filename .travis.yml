@@ -1,6 +1,6 @@
 language: objective-c
 rvm:
-  - 2.5.1
+  - 2.4.3
 cache: bundler
 
 # Whitelist `master` branch as the only branch to build pushes for.
@@ -10,13 +10,13 @@ branches:
 
 matrix:
   include:
-    - osx_image: xcode9.3
-      env: SDK=iphonesimulator PLATFORM="iOS Simulator,name=iPhone 6s,OS=11.3" SCHEME=Contentful_iOS
-    - osx_image: xcode9.3
-      env: SDK=appletvsimulator PLATFORM="tvOS Simulator,name=Apple TV 1080p,OS=11.0" SCHEME=Contentful_tvOS
-    - osx_image: xcode9.3
-      env: SDK=macosx PLATFORM="OS X" SCHEME=Contentful_macOS
-    - osx_image: xcode9.3
+    - osx_image: xcode10.1
+      env: SDK=iphonesimulator PLATFORM="iOS Simulator,name=iPhone X,OS=12.1" SCHEME=Contentful_iOS
+    - osx_image: xcode10.1
+      env: SDK=appletvsimulator PLATFORM="tvOS Simulator,name=Apple TV,OS=12.1" SCHEME=Contentful_tvOS
+    - osx_image: xcode10.1
+      env: SDK=macosx PLATFORM="macOS" SCHEME=Contentful_macOS
+    - osx_image: xcode10.1
       env: SWIFT_BUILD=true
       
 script:
