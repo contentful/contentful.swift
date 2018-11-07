@@ -1006,7 +1006,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = $SRCROOT/Scripts/BuildPhases/SwiftLint.sh;
+			shellScript = "\"$SRCROOT/Scripts/BuildPhases/SwiftLint.sh\"\n";
 		};
 		EDA690D61F433BFA00581FC6 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1020,7 +1020,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = $SRCROOT/Scripts/BuildPhases/SwiftLint.sh;
+			shellScript = "\"$SRCROOT/Scripts/BuildPhases/SwiftLint.sh\"\n";
 		};
 		EDA690D71F433C0700581FC6 /* Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1034,7 +1034,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = $SRCROOT/Scripts/BuildPhases/SwiftLint.sh;
+			shellScript = "\"$SRCROOT/Scripts/BuildPhases/SwiftLint.sh\"\n";
 		};
 		EDA690D81F433C1E00581FC6 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1048,7 +1048,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = $SRCROOT/Scripts/BuildPhases/SwiftLint.sh;
+			shellScript = "\"$SRCROOT/Scripts/BuildPhases/SwiftLint.sh\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
