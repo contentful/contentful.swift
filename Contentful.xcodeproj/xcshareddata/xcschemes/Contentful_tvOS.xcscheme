@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EDDC071B1E3BCEA40022F2F9"
+               BlueprintIdentifier = "5D52E23C2193374100C88FC9"
                BuildableName = "Contentful.framework"
                BlueprintName = "Contentful_tvOS"
                ReferencedContainer = "container:Contentful.xcodeproj">
@@ -33,7 +33,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EDA690831F43186600581FC6"
+               BlueprintIdentifier = "5D52E265219337AF00C88FC9"
                BuildableName = "ContentfulTests_tvOS.xctest"
                BlueprintName = "ContentfulTests_tvOS"
                ReferencedContainer = "container:Contentful.xcodeproj">
@@ -43,7 +43,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EDDC071B1E3BCEA40022F2F9"
+            BlueprintIdentifier = "5D52E23C2193374100C88FC9"
             BuildableName = "Contentful.framework"
             BlueprintName = "Contentful_tvOS"
             ReferencedContainer = "container:Contentful.xcodeproj">
@@ -65,7 +65,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EDDC071B1E3BCEA40022F2F9"
+            BlueprintIdentifier = "5D52E23C2193374100C88FC9"
             BuildableName = "Contentful.framework"
             BlueprintName = "Contentful_tvOS"
             ReferencedContainer = "container:Contentful.xcodeproj">
@@ -83,7 +83,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EDDC071B1E3BCEA40022F2F9"
+            BlueprintIdentifier = "5D52E23C2193374100C88FC9"
             BuildableName = "Contentful.framework"
             BlueprintName = "Contentful_tvOS"
             ReferencedContainer = "container:Contentful.xcodeproj">
