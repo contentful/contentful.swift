@@ -8,7 +8,6 @@
 
 @testable import Contentful
 import XCTest
-import Nimble
 import DVR
 
 // From Complex-Sync-Test-Space
@@ -113,17 +112,17 @@ class LinkResolverTests: XCTestCase {
             case .success(let arrayResponse):
                 let records = arrayResponse.items
 
-                expect(records.count).to(equal(1))
+                XCTAssertEqual(records.count, 1)
                 if let singleRecord = records.first {
-                    expect(singleRecord.arrayLinkField).toNot(beNil())
-                    expect(singleRecord.arrayLinkField?.count).to(equal(8))
-                    expect(singleRecord.arrayLinkField?.first?.awesomeLinkTitle).to(equal("AWESOMELINK!!!"))
-                    expect(singleRecord.arrayLinkField?[1].awesomeLinkTitle).to(equal("The second link"))
+                    XCTAssertNotNil(singleRecord.arrayLinkField)
+                    XCTAssertEqual(singleRecord.arrayLinkField?.count, 8)
+                    XCTAssertEqual(singleRecord.arrayLinkField?.first?.awesomeLinkTitle, "AWESOMELINK!!!")
+                    XCTAssertEqual(singleRecord.arrayLinkField?[1].awesomeLinkTitle, "The second link")
                 } else {
-                    fail("There shoudl be at least one entry in the array of records")
+                    XCTFail("There shoudl be at least one entry in the array of records")
                 }
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
 
             expectation.fulfill()
@@ -139,20 +138,20 @@ class LinkResolverTests: XCTestCase {
             switch result {
             case .success(let arrayResponse):
                 let records = arrayResponse.items
-                expect(records.count).to(equal(1))
+                XCTAssertEqual(records.count, 1)
                 if let singleRecord = records.first {
-                    expect(singleRecord.textBody).to(equal("Record with unresolvable link"))
-                    expect(singleRecord.linkField).to(beNil())
+                    XCTAssertEqual(singleRecord.textBody, "Record with unresolvable link")
+                    XCTAssertNil(singleRecord.linkField)
                     if let unresolvableLink = arrayResponse.errors?.first {
-                        expect(unresolvableLink.details.id).to(equal("2bQUUwIT3mk6GaKqgo40cu"))
+                        XCTAssertEqual(unresolvableLink.details.id, "2bQUUwIT3mk6GaKqgo40cu")
                     } else {
-                        fail("There should be an unresolveable link error in the array response")
+                        XCTFail("There should be an unresolveable link error in the array response")
                     }
                 } else {
-                    fail("There should be at least one entry in the array of records")
+                    XCTFail("There should be at least one entry in the array of records")
                 }
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -167,16 +166,16 @@ class LinkResolverTests: XCTestCase {
             switch result {
             case .success(let arrayResponse):
                 let records = arrayResponse.items
-                expect(records.count).to(equal(2))
+                XCTAssertEqual(records.count, 2)
                 for record in records {
                     if let link = record.linkField {
-                        expect(link.id).to(equal("6QAxlZlsXY8kmMKG08qaia"))
+                        XCTAssertEqual(link.id, "6QAxlZlsXY8kmMKG08qaia")
                     } else {
-                        fail("There should be a link")
+                        XCTFail("There should be a link")
                     }
                 }
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -193,16 +192,16 @@ class LinkResolverTests: XCTestCase {
             switch result {
             case .success(let arrayResponse):
                 let records = arrayResponse.items
-                expect(records.count).to(equal(1))
+                XCTAssertEqual(records.count, 1)
                 if let record = records.first, record.id == "2JFSeiPTZYm4goMSUeYSCU" {
-                    expect(record.assetsArrayLinkField).toNot(beNil())
-                    expect(record.assetsArrayLinkField?.count).to(equal(4))
-                    expect(record.assetsArrayLinkField?.first?.id).to(equal("6Wsz8owhtCGSICg44IUYAm"))
+                    XCTAssertNotNil(record.assetsArrayLinkField)
+                    XCTAssertEqual(record.assetsArrayLinkField?.count, 4)
+                    XCTAssertEqual(record.assetsArrayLinkField?.first?.id, "6Wsz8owhtCGSICg44IUYAm")
                 } else {
-                    fail("Expected an array of length 1 with a an entry with id '2JFSeiPTZYm4goMSUeYSCU'")
+                    XCTFail("Expected an array of length 1 with a an entry with id '2JFSeiPTZYm4goMSUeYSCU'")
                 }
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }

@@ -8,7 +8,6 @@
 
 @testable import Contentful
 import XCTest
-import Nimble
 import DVR
 
 class ContentTypeTests: XCTestCase {
@@ -32,32 +31,32 @@ class ContentTypeTests: XCTestCase {
 
             switch result {
             case let .success(type):
-                expect(type.id).to(equal("cat"))
-                expect(type.type).to(equal("ContentType"))
+                XCTAssertEqual(type.id, "cat")
+                XCTAssertEqual(type.type, "ContentType")
 
                 if let field = type.fields.first {
-                    expect(field.disabled).to(equal(false))
-                    expect(field.localized).to(equal(true))
-                    expect(field.required).to(equal(true))
+                    XCTAssertFalse(field.disabled)
+                    XCTAssert(field.localized)
+                    XCTAssert(field.required)
 
-                    expect(field.type).to(equal(FieldType.text))
-                    expect(field.itemType).to(equal(FieldType.none))
+                    XCTAssertEqual(field.type, FieldType.text)
+                    XCTAssertEqual(field.itemType, FieldType.none)
                 } else {
-                    fail()
+                    XCTFail()
                 }
 
                 if let field = type.fields.filter({ $0.id == "likes" }).first {
-                    expect(field.itemType).to(equal(FieldType.symbol))
+                    XCTAssertEqual(field.itemType, FieldType.symbol)
                 }
 
                 if let field = type.fields.filter({ $0.id == "image" }).first {
-                    expect(field.itemType).to(equal(FieldType.asset))
+                    XCTAssertEqual(field.itemType, FieldType.asset)
                 }
 
                 let field = type.fields[0]
-                expect(field.id).to(equal("name"))
+                XCTAssertEqual(field.id, "name")
             case let .error(error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
             expectation.fulfill()
         }
@@ -71,13 +70,13 @@ class ContentTypeTests: XCTestCase {
         ContentTypeTests.client.fetchArray(of: ContentType.self) { result in
             switch result {
             case let .success(array):
-                expect(array.total).to(equal(4))
-                expect(array.limit).to(equal(100))
-                expect(array.skip).to(equal(0))
-                expect(array.items.count).to(equal(4))
+                XCTAssertEqual(array.total, 4)
+                XCTAssertEqual(array.limit, 100)
+                XCTAssertEqual(array.skip, 0)
+                XCTAssertEqual(array.items.count, 4)
 
             case let .error(error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
 
             expectation.fulfill()
@@ -93,16 +92,16 @@ class ContentTypeTests: XCTestCase {
         ContentTypeTests.client.fetchArray(of: ContentType.self, matching: query) { result in
             switch result {
             case let .success(array):
-                expect(array.total).to(equal(4))
-                expect(array.limit).to(equal(100))
-                expect(array.skip).to(equal(0))
-                expect(array.items.count).to(equal(4))
+                XCTAssertEqual(array.total, 4)
+                XCTAssertEqual(array.limit, 100)
+                XCTAssertEqual(array.skip, 0)
+                XCTAssertEqual(array.items.count, 4)
 
                 let _ = array.items.first.flatMap { (type: ContentType) in
-                    expect(type.name).to(equal("City"))
+                    XCTAssertEqual(type.name, "City")
                 }
             case let .error(error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
 
             expectation.fulfill()
@@ -117,13 +116,13 @@ class ContentTypeTests: XCTestCase {
         ContentTypeTests.client.fetchArray(of: ContentType.self, matching: query) { result in
             switch result {
             case let .success(array):
-                expect(array.total).to(equal(1))
+                XCTAssertEqual(array.total, 1)
 
                 let _ = array.items.first.flatMap { (type: ContentType) in
-                    expect(type.name).to(equal("Cat"))
+                    XCTAssertEqual(type.name, "Cat")
                 }
             case let .error(error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
 
             expectation.fulfill()

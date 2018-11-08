@@ -8,7 +8,6 @@
 
 @testable import Contentful
 import XCTest
-import Nimble
 import DVR
 
 struct TestClientFactory {
@@ -61,11 +60,11 @@ class SpaceTests: XCTestCase {
         client.fetchSpace { result in
             switch result {
             case .success(let space):
-                expect(space.id).to(equal("dumri3ebknon"))
-                expect(space.type).to(equal("Space"))
-                expect(space.name).to(equal("Swift `cfexampleapi` copy"))
+                XCTAssertEqual(space.id, "dumri3ebknon")
+                XCTAssertEqual(space.type, "Space")
+                XCTAssertEqual(space.name, "Swift `cfexampleapi` copy")
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
             networkExpectation.fulfill()
         }
@@ -81,7 +80,7 @@ class SpaceTests: XCTestCase {
         client.fetchSpace { result in
             switch result {
             case .success:
-                fail("Should not succeed")
+                XCTFail("Should not succeed")
                 networkExpectation.fulfill()
             case .error:
                 XCTAssert(true)
@@ -111,9 +110,9 @@ class PreviewAPITests: XCTestCase {
         client.fetchSpace { result in
             switch result {
             case .success(let space):
-                expect(space.id).to(equal("dumri3ebknon"))
+                XCTAssertEqual(space.id, "dumri3ebknon")
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
             networkExpectation.fulfill()
         }
@@ -134,12 +133,12 @@ class PreviewAPITests: XCTestCase {
         client.fetchSpace { result in
             switch result {
             case .success:
-                fail("expected error not received")
+                XCTFail("expected error not received")
             case .error(let error):
                 if let error = error as? APIError {
-                    expect(error.id).to(equal("AccessTokenInvalid"))
+                    XCTAssertEqual(error.id, "AccessTokenInvalid")
                 } else {
-                    fail("expected error not received")
+                    XCTFail("expected error not received")
                 }
             }
             networkExpectation.fulfill()
@@ -147,8 +146,6 @@ class PreviewAPITests: XCTestCase {
 
         waitForExpectations(timeout: 19, handler: nil)
         (client.urlSession as? DVR.Session)?.endRecording()
-
     }
-
 }
 #endif

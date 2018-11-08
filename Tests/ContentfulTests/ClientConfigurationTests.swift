@@ -8,7 +8,6 @@
 
 @testable import Contentful
 import XCTest
-import Nimble
 import DVR
 
 class FakePersistenceIntegration: PersistenceIntegration {
@@ -44,13 +43,13 @@ class ClientConfigurationTests: XCTestCase {
         for validVersionString in ["0.10.0", "10.3.2-RC", "10.2.0-beta1", "0.4.79-alpha"] {
             // expect 1 matc
             let matches = versionMatchingRegex.matches(in: validVersionString, options: [], range: NSRange(location: 0, length: validVersionString.count))
-            expect(matches.count).to(equal(1))
+            XCTAssertEqual(matches.count, 1)
         }
 
         for invalidVersionString in ["0..9","0.a.9", "9.1", "0.10.9-", "0.10.9-ri", "0.10.9-RCHU"] {
             // expect 0 matches
             let matches = versionMatchingRegex.matches(in: invalidVersionString, options: [], range: NSRange(location: 0, length: invalidVersionString.count))
-            expect(matches.count).to(equal(0))
+            XCTAssertEqual(matches.count, 0)
         }
 
         #if os(macOS)
@@ -63,34 +62,34 @@ class ClientConfigurationTests: XCTestCase {
 
         let regex = try! NSRegularExpression(pattern: "sdk contentful.swift/\(onlyVersionNumberRegexString); platform Swift/4.0; os \(platform)/\(osVersionString);" , options: [])
         let matches = regex.matches(in: userAgentString, options: [], range: NSRange(location: 0, length: userAgentString.count))
-        expect(matches.count).to(equal(1))
+        XCTAssertEqual(matches.count, 1)
 
         let client = Client(spaceId: "", accessToken: "", clientConfiguration: clientConfiguration)
 
         if let userAgent = client.urlSession.configuration.httpAdditionalHeaders?["X-Contentful-User-Agent"] as? String {
             let regex = try! NSRegularExpression(pattern: "sdk contentful.swift/\(onlyVersionNumberRegexString); platform Swift/4.0; os \(platform)/\(osVersionString);" , options: [])
             let matches = regex.matches(in: userAgent, options: [], range: NSRange(location: 0, length: userAgent.count))
-            expect(matches.count).to(equal(1))
+            XCTAssertEqual(matches.count, 1)
         } else {
-            fail("User agent should be set")
+            XCTFail("User agent should be set")
         }
 
         client.persistenceIntegration = FakePersistenceIntegration()
         if let userAgent = client.urlSession.configuration.httpAdditionalHeaders?["X-Contentful-User-Agent"] as? String {
             let regex = try! NSRegularExpression(pattern: "sdk contentful.swift/\(onlyVersionNumberRegexString); platform Swift/4.0; os \(platform)/\(osVersionString); integration fake-integration/1.0.0;" , options: [])
             let matches = regex.matches(in: userAgent, options: [], range: NSRange(location: 0, length: userAgent.count))
-            expect(matches.count).to(equal(1))
+            XCTAssertEqual(matches.count, 1)
         } else {
-            fail("User agent should be set")
+            XCTFail("User agent should be set")
         }
     }
 
     func testDefaultConfiguration() {
         let client = Client(spaceId: "", accessToken: "")
-        expect(client.host).to(equal(Host.delivery))
+        XCTAssertEqual(client.host, Host.delivery)
         let previewClient = Client(spaceId: "", accessToken: "", host: Host.preview)
-        expect(previewClient.host).to(equal(Host.preview))
+        XCTAssertEqual(previewClient.host, Host.preview)
         let customHostClient = Client(spaceId: "", accessToken: "", host: "myenterprise.contentful.com")
-        expect(customHostClient.host).to(equal("myenterprise.contentful.com"))
+        XCTAssertEqual(customHostClient.host, "myenterprise.contentful.com")
     }
 }

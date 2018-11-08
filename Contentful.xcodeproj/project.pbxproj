@@ -100,13 +100,10 @@
 		5D52E2932193384100C88FC9 /* SyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A114BBC11C50E9E200DE6679 /* SyncTests.swift */; };
 		5D52E2942193384100C88FC9 /* UtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17D044C1C4F974F002E568B /* UtilityTests.swift */; };
 		5D52E2962193386900C88FC9 /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D52E2952193386900C88FC9 /* DVR.framework */; };
-		5D52E2982193386900C88FC9 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D52E2972193386900C88FC9 /* Nimble.framework */; };
 		5D52E29A2193386900C88FC9 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D52E2992193386900C88FC9 /* OHHTTPStubs.framework */; };
 		5D52E29C2193387600C88FC9 /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D52E29B2193387600C88FC9 /* DVR.framework */; };
-		5D52E29E2193387600C88FC9 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D52E29D2193387600C88FC9 /* Nimble.framework */; };
 		5D52E2A02193387600C88FC9 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D52E29F2193387600C88FC9 /* OHHTTPStubs.framework */; };
 		5D52E2A22193388200C88FC9 /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D52E2A12193388200C88FC9 /* DVR.framework */; };
-		5D52E2A42193388200C88FC9 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D52E2A32193388200C88FC9 /* Nimble.framework */; };
 		5D52E2A62193388200C88FC9 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D52E2A52193388200C88FC9 /* OHHTTPStubs.framework */; };
 		5DD410472190BC8B003FC01E /* RichText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD410462190BC8B003FC01E /* RichText.swift */; };
 		5DD410482190BC8B003FC01E /* RichText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD410462190BC8B003FC01E /* RichText.swift */; };
@@ -366,7 +363,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D52E2A22193388200C88FC9 /* DVR.framework in Frameworks */,
-				5D52E2A42193388200C88FC9 /* Nimble.framework in Frameworks */,
 				5D52E2A62193388200C88FC9 /* OHHTTPStubs.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -383,7 +379,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D52E2962193386900C88FC9 /* DVR.framework in Frameworks */,
-				5D52E2982193386900C88FC9 /* Nimble.framework in Frameworks */,
 				5D52E29A2193386900C88FC9 /* OHHTTPStubs.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -393,7 +388,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D52E29C2193387600C88FC9 /* DVR.framework in Frameworks */,
-				5D52E29E2193387600C88FC9 /* Nimble.framework in Frameworks */,
 				5D52E2A02193387600C88FC9 /* OHHTTPStubs.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1465,6 +1459,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1474,6 +1469,7 @@
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 3.1;
 			};
 			name = Debug;
 		};
@@ -1523,6 +1519,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
@@ -1532,6 +1529,7 @@
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 3.1;
 			};
 			name = Release;
 		};
@@ -1862,6 +1860,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1871,6 +1870,7 @@
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 3.1;
 			};
 			name = API_Coverage;
 		};

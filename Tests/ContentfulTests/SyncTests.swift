@@ -9,7 +9,6 @@
 @testable import Contentful
 import XCTest
 import DVR
-import Nimble
 
 class SyncTests: XCTestCase {
 
@@ -33,7 +32,7 @@ class SyncTests: XCTestCase {
             case .success(let syncSpace):
                 action(syncSpace)
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
             expectation.fulfill()
         }
@@ -42,8 +41,8 @@ class SyncTests: XCTestCase {
 
     func testPerformInitialSync() {
         self.waitUntilSync(syncableTypes: .all) {
-            expect($0.assets.count).to(equal(5))
-            expect($0.entries.count).to(equal(10))
+            XCTAssertEqual($0.assets.count, 5)
+            XCTAssertEqual($0.entries.count, 10)
         }
     }
 
@@ -55,15 +54,15 @@ class SyncTests: XCTestCase {
 
                 SyncTests.client.sync(for: syncSpace) { nextSyncResult in
                     if let nextSyncSpace = nextSyncResult.value {
-                        expect(nextSyncSpace.assets.count).to(equal(5))
-                        expect(nextSyncSpace.entries.count).to(equal(10))
+                        XCTAssertEqual(nextSyncSpace.assets.count, 5)
+                        XCTAssertEqual(nextSyncSpace.entries.count, 10)
                     } else if let error = nextSyncResult.error {
-                        fail("\(error)")
+                        XCTFail("\(error)")
                     }
                     expectation.fulfill()
                 }
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
                 expectation.fulfill()
             }
         }
@@ -73,15 +72,15 @@ class SyncTests: XCTestCase {
 
     func testSyncDataOfSpecificType() {
         waitUntilSync(syncableTypes: .assets) {
-            expect($0.assets.count).to(equal(5))
-            expect($0.entries.count).to(equal(0))
+            XCTAssertEqual($0.assets.count, 5)
+            XCTAssertEqual($0.entries.count, 0)
         }
     }
 
     func testSyncEntriesOfContentType() {
         waitUntilSync(syncableTypes: .entriesOfContentType(withId: "cat")) {
-            expect($0.assets.count).to(equal(0))
-            expect($0.entries.count).to(equal(3))
+            XCTAssertEqual($0.assets.count, 0)
+            XCTAssertEqual($0.entries.count, 3)
         }
     }
 
@@ -113,10 +112,11 @@ class PreviewSyncTests: XCTestCase {
         PreviewSyncTests.client.sync { result in
             switch result {
             case .success(let syncSpace):
-                expect(syncSpace.entries.count).to(beGreaterThan(0))
-                expect(syncSpace.assets.count).to(beGreaterThan(0))
+                XCTAssertGreaterThan(syncSpace.entries.count, 0)
+                XCTAssertGreaterThan(syncSpace.assets.count, 0)
+
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
             expectation.fulfill()
         }
@@ -129,19 +129,19 @@ class PreviewSyncTests: XCTestCase {
         PreviewSyncTests.client.sync { result in
             switch result {
             case .success(let syncSpace):
-                expect(syncSpace.entries.count).to(beGreaterThan(0))
-                expect(syncSpace.assets.count).to(beGreaterThan(0))
+                XCTAssertGreaterThan(syncSpace.entries.count, 0)
+                XCTAssertGreaterThan(syncSpace.assets.count, 0)
 
                 PreviewSyncTests.client.sync(for: syncSpace) { nextSyncResult in
                     if let _ = nextSyncResult.value  {
-                        fail("Should not be able to do subsequent sync")
+                        XCTFail("Should not be able to do subsequent sync")
                     } else if let error = nextSyncResult.error {
-                        expect(error).to(beAKindOf(SDKError.self))
+                        XCTAssert(error is SDKError)
                     }
                     expectation.fulfill()
                 }
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
                 expectation.fulfill()
             }
         }

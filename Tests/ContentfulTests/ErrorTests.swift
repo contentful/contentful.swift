@@ -9,7 +9,6 @@
 @testable import Contentful
 import XCTest
 import DVR
-import Nimble
 import OHHTTPStubs
 
 class ErrorTests: XCTestCase {
@@ -32,7 +31,7 @@ class ErrorTests: XCTestCase {
         ErrorTests.client.fetchArray(of: Entry.self, matching: .where(valueAtKeyPath: "sys.888", .equals("GO"))) { result in
             switch result {
             case .success:
-                fail("Request should not succeed")
+                XCTFail("Request should not succeed")
             case .error(let error as APIError):
                 // The DVR recorder fails to record not 200 status codes, so using a regex to check the status code intead (it returns 0 since the recorder is plugging it as nil).
                 let expectedRegexString =
@@ -43,9 +42,9 @@ class ErrorTests: XCTestCase {
                 """ 
                 let regex = try! NSRegularExpression(pattern: expectedRegexString, options: [])
                 let matches = regex.matches(in: error.debugDescription, options: [], range: NSRange(location: 0, length: error.debugDescription.count))
-                expect(matches.count).to(equal(1))
+                XCTAssertEqual(matches.count, 1)
             case .error:
-                fail("Error returned should be an APIError")
+                XCTFail("Error returned should be an APIError")
             }
             expectation.fulfill()
         }
@@ -69,9 +68,9 @@ class UnparsableErrorTests: XCTestCase {
         client.fetchSpace { result in
             switch result {
             case .success:
-                fail("Error should have been returned")
+                XCTFail("Error should have been returned")
             case .error(let error):
-                expect(error).to(beAKindOf(SDKError.self))
+                XCTAssert(error is SDKError)
             }
             expectation.fulfill()
         }

@@ -8,7 +8,6 @@
 
 @testable import Contentful
 import XCTest
-import Nimble
 import DVR
 import Foundation
 
@@ -60,9 +59,9 @@ class RichTextNodeDecodingTests: XCTestCase {
             jsonDecoder.userInfo[.linkResolverContextKey] = LinkResolver()
 
             let document = try jsonDecoder.decode(RichTextDocument.self, from: structuredTextData)
-            expect(document.content.count).to(equal(17))
+            XCTAssertEqual(document.content.count, 17)
         } catch _ {
-            fail("Should not have thrown error Decoding structured text")
+            XCTFail("Should not have thrown error Decoding structured text")
         }
     }
 
@@ -75,11 +74,11 @@ class RichTextNodeDecodingTests: XCTestCase {
             case .success(let arrayResponse):
                 let model = arrayResponse.items.first!
                 let headingNode = model.rich.content.first as! Heading
-                expect(headingNode.level).to(equal(1))
-                expect((headingNode.content.first as! Text).value).to(equal("This is some simple text"))
+                XCTAssertEqual(headingNode.level, 1)
+                XCTAssertEqual((headingNode.content.first as! Text).value, "This is some simple text")
 
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
             expectation.fulfill()
         }
@@ -95,12 +94,12 @@ class RichTextNodeDecodingTests: XCTestCase {
             case .success(let arrayResponse):
                 let model = arrayResponse.items.first!
                 let headingNode = model.rich.content.first as! Heading
-                expect(headingNode.level).to(equal(6))
-                expect((headingNode.content.first as! Text).value).to(equal("This is some simple text"))
+                XCTAssertEqual(headingNode.level, 6)
+                XCTAssertEqual((headingNode.content.first as! Text).value, "This is some simple text")
 
 
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
             expectation.fulfill()
         }
@@ -117,10 +116,10 @@ class RichTextNodeDecodingTests: XCTestCase {
                 let model = arrayResponse.items.first!
                 let paragraph = model.rich.content.first as! Paragraph
                 let text = paragraph.content.first as! Text
-                expect(text.value).to(equal("This is some simple text"))
+                XCTAssertEqual(text.value, "This is some simple text")
 
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
             expectation.fulfill()
         }
@@ -138,15 +137,18 @@ class RichTextNodeDecodingTests: XCTestCase {
 
                 let paragraph = model.rich.content.first as! Paragraph
                 let textNodes = paragraph.content.compactMap { $0 as? Text }
-                expect(textNodes.first?.marks.map { $0.type }).to(equal([.bold]))
-                expect(textNodes[2].marks.map { $0.type }).to(equal([.italic]))
-                expect(textNodes[4].marks.map { $0.type }).to(equal([.underline]))
-                expect(textNodes[6].marks.map { $0.type }).to(equal([.code]))
+                XCTAssertEqual(textNodes.first?.marks.map { $0.type }, [.bold])
+                XCTAssertEqual(textNodes[2].marks.map { $0.type }, [.italic])
+                XCTAssertEqual(textNodes[4].marks.map { $0.type }, [.underline])
+                XCTAssertEqual(textNodes[6].marks.map { $0.type }, [.code])
                 // Node with all marks.
-                expect(textNodes.last?.marks.map { $0.type }).to(contain([.bold, .italic, .underline, .code]))
-
+                let markTypes = textNodes.last!.marks.map { $0.type }
+                XCTAssert(markTypes.contains(.bold))
+                XCTAssert(markTypes.contains(.italic))
+                XCTAssert(markTypes.contains(.underline))
+                XCTAssert(markTypes.contains(.code))
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
             expectation.fulfill()
         }
@@ -163,10 +165,10 @@ class RichTextNodeDecodingTests: XCTestCase {
                 let model = arrayResponse.items.first!
 
                 let hr = model.rich.content.first as? HorizontalRule
-                expect(hr).toNot(beNil())
+                XCTAssertNotNil(hr)
 
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
             expectation.fulfill()
         }
@@ -184,12 +186,12 @@ class RichTextNodeDecodingTests: XCTestCase {
 
                 let quote = model.rich.content.first as? BlockQuote
                 let paragraph = quote?.content.first as? Paragraph
-                expect(paragraph).toNot(beNil())
+                XCTAssertNotNil(paragraph)
                 let text = paragraph?.content.first as? Text
-                expect(text?.value).to(equal("This is some simple blockquote"))
+                XCTAssertEqual(text?.value, "This is some simple blockquote")
 
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
             expectation.fulfill()
         }
@@ -208,13 +210,13 @@ class RichTextNodeDecodingTests: XCTestCase {
                 let list = model.rich.content.first as? OrderedList
                 let listItems = list?.content.compactMap { $0 as? ListItem }
                 let firstParagraphItem = listItems?.first?.content.first as? Paragraph
-                expect((firstParagraphItem?.content.first as? Text)?.value).to(equal("This "))
+                XCTAssertEqual((firstParagraphItem?.content.first as? Text)?.value, "This ")
 
                 let lastParagraphItem = listItems?.last?.content.first as? Paragraph
-                expect((lastParagraphItem?.content.first as? Text)?.value).to(equal("text"))
+                XCTAssertEqual((lastParagraphItem?.content.first as? Text)?.value, "text")
 
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
             expectation.fulfill()
         }
@@ -233,13 +235,13 @@ class RichTextNodeDecodingTests: XCTestCase {
                 let list = model.rich.content.first as? UnorderedList
                 let listItems = list?.content.compactMap { $0 as? ListItem }
                 let firstParagraphItem = listItems?.first?.content.first as? Paragraph
-                expect((firstParagraphItem?.content.first as? Text)?.value).to(equal("This"))
+                XCTAssertEqual((firstParagraphItem?.content.first as? Text)?.value, "This")
 
                 let lastParagraphItem = listItems?.last?.content.first as? Paragraph
-                expect((lastParagraphItem?.content.first as? Text)?.value).to(equal("list"))
+                XCTAssertEqual((lastParagraphItem?.content.first as? Text)?.value, "list")
 
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
             expectation.fulfill()
         }
@@ -258,10 +260,10 @@ class RichTextNodeDecodingTests: XCTestCase {
                 let model = arrayResponse.items.first!
 
                 let entryLinkBlock = model.rich.content.first as? ResourceLinkBlock
-                expect((entryLinkBlock?.data.resolvedResource as! RichTextContentType).name).to(equal("simple_text"))
+                XCTAssertEqual((entryLinkBlock?.data.resolvedResource as! RichTextContentType).name, "simple_text")
 
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
             expectation.fulfill()
         }
@@ -278,10 +280,10 @@ class RichTextNodeDecodingTests: XCTestCase {
                 let model = arrayResponse.items.first!
 
                 let entryLinkBlock = model.rich.content.first as? ResourceLinkBlock
-                expect((entryLinkBlock?.data.resolvedResource as! Asset).title).to(equal("cat"))
+                XCTAssertEqual((entryLinkBlock?.data.resolvedResource as! Asset).title, "cat")
 
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
             expectation.fulfill()
         }
@@ -299,10 +301,10 @@ class RichTextNodeDecodingTests: XCTestCase {
 
                 let paragraph = model.rich.content.first as? Paragraph
                 let link = paragraph?.content[1] as? ResourceLinkInline
-                expect((link?.data.resolvedResource as! RichTextContentType).name).to(equal("Hello World"))
+                XCTAssertEqual((link?.data.resolvedResource as! RichTextContentType).name, "Hello World")
 
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
             expectation.fulfill()
         }
@@ -320,11 +322,11 @@ class RichTextNodeDecodingTests: XCTestCase {
 
                 let paragraph = model.rich.content.first as? Paragraph
                 let hyperlink = paragraph?.content[1] as? Hyperlink
-                expect(hyperlink?.data.uri).to(equal("https://www.example.com/"))
-                expect((hyperlink?.content.first as? Text)?.value).to(equal("Regular hyperlink to example.com"))
+                XCTAssertEqual(hyperlink?.data.uri, "https://www.example.com/")
+                XCTAssertEqual((hyperlink?.content.first as? Text)?.value, "Regular hyperlink to example.com")
 
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
             expectation.fulfill()
         }
@@ -342,11 +344,11 @@ class RichTextNodeDecodingTests: XCTestCase {
 
                 let paragraph = model.rich.content.first as? Paragraph
                 let hyperlink = paragraph?.content[1] as? ResourceLinkInline
-                expect((hyperlink?.data.resolvedResource as! RichTextContentType).name).to(equal("Hello World"))
-                expect((hyperlink?.content.first as? Text)?.value).to(equal("Entry hyperlink to \"Hello World\""))
+                XCTAssertEqual((hyperlink?.data.resolvedResource as! RichTextContentType).name, "Hello World")
+                XCTAssertEqual((hyperlink?.content.first as? Text)?.value, "Entry hyperlink to \"Hello World\"")
 
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
             expectation.fulfill()
         }
@@ -364,11 +366,11 @@ class RichTextNodeDecodingTests: XCTestCase {
 
                 let paragraph = model.rich.content.first as? Paragraph
                 let hyperlink = paragraph?.content[1] as? ResourceLinkInline
-                expect((hyperlink?.data.resolvedResource as! Asset).title).to(equal("cat"))
-                expect((hyperlink?.content.first as? Text)?.value).to(equal("Asset hyperlink to cat image"))
+                XCTAssertEqual((hyperlink?.data.resolvedResource as! Asset).title, "cat")
+                XCTAssertEqual((hyperlink?.content.first as? Text)?.value, "Asset hyperlink to cat image")
 
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
             expectation.fulfill()
         }
@@ -388,19 +390,19 @@ class RichTextNodeDecodingTests: XCTestCase {
 
                 let paragraph = model.rich.content.first as? Paragraph
                 let hyperlink = paragraph?.content[1] as? Hyperlink
-                expect(hyperlink?.data.uri).to(equal("https://www.example.com/"))
+                XCTAssertEqual(hyperlink?.data.uri, "https://www.example.com/")
 
                 let entryHyperlink = paragraph?.content[3] as? ResourceLinkInline
-                expect((entryHyperlink?.data.resolvedResource as! RichTextContentType).name).to(equal("simple_headline_1"))
+                XCTAssertEqual((entryHyperlink?.data.resolvedResource as! RichTextContentType).name, "simple_headline_1")
 
                 let assetHyperlink = paragraph?.content[5] as? ResourceLinkInline
-                expect((assetHyperlink?.data.resolvedResource as! Asset).title).to(equal("cat"))
+                XCTAssertEqual((assetHyperlink?.data.resolvedResource as! Asset).title, "cat")
 
                 let entryInlineLink = paragraph?.content[7] as? ResourceLinkInline
-                expect((entryInlineLink?.data.resolvedResource as! RichTextContentType).name).to(equal("Hello World"))
+                XCTAssertEqual((entryInlineLink?.data.resolvedResource as! RichTextContentType).name, "Hello World")
 
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
             expectation.fulfill()
         }

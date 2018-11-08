@@ -10,7 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 ## Table of contents
 
 #### 4.x Releases
-- `4.1.0` Releases - [4.1.0](#410)
+- `4.1.0` Releases - [4.1.0](#410) | [4.1.3](#413)
 - `4.0.0` Releases - [4.0.0](#400) | [4.0.1](#401)
 
 #### 3.x Releases
@@ -36,6 +36,15 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 - `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041)
 - `0.3.x` Releases - [0.3.0](#030) | [0.3.1](#031)
+
+
+---
+
+## [`4.1.3`](https://github.com/contentful/contentful.swift/releases/tag/4.1.3)
+Released on 2018-11-08
+
+#### Changed
+- `4.1.1`, `4.1.2`, and `4.1.3` are all hotfix releases that fixed small corruptions in the Xcode project configuration. `4.1.3` specifically sets the deployment version on the macOS target, even though the correct deployment version was set on the macOS framework target.
 
 ---
 
