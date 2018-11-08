@@ -9,7 +9,6 @@
 @testable import Contentful
 import Foundation
 import XCTest
-import Nimble
 
 class ISO8601DateTests: XCTestCase {
 
@@ -29,12 +28,12 @@ class ISO8601DateTests: XCTestCase {
         let dates = try! decoder.decode([Date].self, from: datesJSON)
 
         // Dates are always serialized exactly to the same format, normalized to 0 offset from UTC with "Zulu" time
-        expect(dates[0].iso8601String).to(equal("2018-04-09T15:25:20Z"))
-        expect(dates[1].iso8601String).to(equal("2018-04-09T17:25:20Z"))
-        expect(dates[2].iso8601String).to(equal("2018-04-11T00:00:00Z"))
-        expect(dates[3].iso8601String).to(equal("2018-04-24T00:00:00Z"))
-        expect(dates[4].iso8601String).to(equal("2018-04-27T06:00:00Z"))
-        expect(dates[5].iso8601String).to(equal("2018-04-27T14:00:00Z"))
+        XCTAssertEqual(dates[0].iso8601String, "2018-04-09T15:25:20Z")
+        XCTAssertEqual(dates[1].iso8601String, "2018-04-09T17:25:20Z")
+        XCTAssertEqual(dates[2].iso8601String, "2018-04-11T00:00:00Z")
+        XCTAssertEqual(dates[3].iso8601String, "2018-04-24T00:00:00Z")
+        XCTAssertEqual(dates[4].iso8601String, "2018-04-27T06:00:00Z")
+        XCTAssertEqual(dates[5].iso8601String, "2018-04-27T14:00:00Z")
     }
 
     func testConfiguringTimeZone() {
@@ -42,6 +41,6 @@ class ISO8601DateTests: XCTestCase {
         let timeZone = TimeZone.current
         clientConfig.timeZone = timeZone
         let client = Client(spaceId: "", accessToken: "", clientConfiguration: clientConfig)
-        expect(client.jsonDecoder.userInfo[.timeZoneContextKey] as? TimeZone).to(be(timeZone))
+        XCTAssertEqual(client.jsonDecoder.userInfo[.timeZoneContextKey] as! TimeZone, timeZone)
     }
 }

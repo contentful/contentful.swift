@@ -9,7 +9,6 @@
 @testable import Contentful
 import XCTest
 import DVR
-import Nimble
 
 func url(_ asset: Asset) -> URL {
     var url = URL(string: "http://example.com")
@@ -40,11 +39,11 @@ class AssetTests: XCTestCase {
         AssetTests.client.fetch(Asset.self, id: "nyancat") { (result) in
             switch result {
             case let .success(asset):
-                expect(asset.sys.id).to(equal("nyancat"))
-                expect(asset.sys.type).to(equal("Asset"))
-                expect(url(asset).absoluteString).to(equal("https://images.ctfassets.net/dumri3ebknon/nyancat/c78aa97bf55b7de229ee5a5f88261aa4/Nyan_cat_250px_frame.png"))
+                XCTAssertEqual(asset.sys.id, "nyancat")
+                XCTAssertEqual(asset.sys.type, "Asset")
+                XCTAssertEqual(url(asset).absoluteString, "https://images.ctfassets.net/dumri3ebknon/nyancat/c78aa97bf55b7de229ee5a5f88261aa4/Nyan_cat_250px_frame.png")
             case let .error(error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
 
             expectation.fulfill()
@@ -58,17 +57,17 @@ class AssetTests: XCTestCase {
         AssetTests.client.fetchArray(of: Asset.self) { result in
             switch result {
             case .success(let assetsReponse):
-                expect(assetsReponse.items.count).to(equal(5))
+                XCTAssertEqual(assetsReponse.items.count, 5)
 
                 if let asset = (assetsReponse.items.filter { $0.sys.id == "nyancat" }).first {
-                    expect(asset.sys.id).to(equal("nyancat"))
-                    expect(asset.sys.type).to(equal("Asset"))
-                    expect(url(asset).absoluteString).to(equal("https://images.ctfassets.net/dumri3ebknon/nyancat/c78aa97bf55b7de229ee5a5f88261aa4/Nyan_cat_250px_frame.png"))
+                    XCTAssertEqual(asset.sys.id, "nyancat")
+                    XCTAssertEqual(asset.sys.type, "Asset")
+                    XCTAssertEqual(url(asset).absoluteString, "https://images.ctfassets.net/dumri3ebknon/nyancat/c78aa97bf55b7de229ee5a5f88261aa4/Nyan_cat_250px_frame.png")
                 } else {
-                    fail("Could not find asset with id 'nyancat'")
+                    XCTFail("Could not find asset with id 'nyancat'")
                 }
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
             expectation.fulfill()
         }
@@ -83,15 +82,15 @@ class AssetTests: XCTestCase {
             case .success(let asset):
                 AssetTests.client.fetchImage(for: asset) { imageResult in
                     if let image = imageResult.value {
-                        expect(image.size.width).to(equal(250.0))
-                        expect(image.size.height).to(equal(250.0))
+                        XCTAssertEqual(image.size.width, 250.0)
+                        XCTAssertEqual(image.size.height, 250.0)
                     } else if let error = imageResult.error {
-                        fail("\(error)")
+                        XCTFail("\(error)")
                     }
                     expectation.fulfill()
                 }
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
                 expectation.fulfill()
             }
         }
@@ -105,10 +104,10 @@ class AssetTests: XCTestCase {
         AssetTests.client.fetchArray(of: Asset.self, matching: .where(mimetypeGroup: .image)) { result in
             switch result {
             case .success(let assets):
-                expect(assets.items.count).to(equal(4))
+                XCTAssertEqual(assets.items.count, 4)
 
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
             expectation.fulfill()
         }
@@ -123,10 +122,10 @@ class AssetTests: XCTestCase {
             switch result {
             case .success(let assetsResponse):
                 let assets = assetsResponse.items
-                expect(assets.count).to(equal(1))
-                expect(assets.first?.urlString).to(equal("https://videos.ctfassets.net/dumri3ebknon/Gluj9lzquYcK0agoCkMUs/1104fffefa098062fd9f888a0a571edd/Cute_Cat_-_3092.mp4"))
+                XCTAssertEqual(assets.count, 1)
+                XCTAssertEqual(assets.first?.urlString, "https://videos.ctfassets.net/dumri3ebknon/Gluj9lzquYcK0agoCkMUs/1104fffefa098062fd9f888a0a571edd/Cute_Cat_-_3092.mp4")
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
             expectation.fulfill()
         }

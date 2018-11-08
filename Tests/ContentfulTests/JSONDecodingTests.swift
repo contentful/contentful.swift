@@ -9,8 +9,6 @@
 @testable import Contentful
 import Foundation
 import XCTest
-import Nimble
-
 
 class JSONDecodingTests: XCTestCase {
 
@@ -29,15 +27,15 @@ class JSONDecodingTests: XCTestCase {
             // Reset userInfo state since it's a static var that exists through the test cycle.
             jsonDecoder.userInfo = [CodingUserInfoKey: Any]()
             let _ = try jsonDecoder.decode(Asset.self, from: assetData)
-            fail("Mapping without a localizatoin context should throw an error")
+            XCTFail("Mapping without a localizatoin context should throw an error")
         } catch let error as SDKError  {
             switch error {
             case .localeHandlingError:
                 XCTAssert(true)
-            default: fail("Wrong error thrown")
+            default: XCTFail("Wrong error thrown")
             }
         } catch _ {
-            fail("Wrong error thrown")
+            XCTFail("Wrong error thrown")
         }
     }
 
@@ -68,10 +66,10 @@ class JSONDecodingTests: XCTestCase {
 
         let jsonDecoder = JSONDecoder.withoutLocalizationContext()
         let wrapper = try! jsonDecoder.decode(Klass.self, from: json)
-        expect(wrapper.dict.keys.count).to(equal(1))
-        expect((wrapper.dict["array"] as! [Any])[0] as? Int).to(equal(1))
-        expect((wrapper.dict["array"] as! [Any])[1] as? Double).to(equal(3.3))
-        expect(wrapper.dict["key1"]).to(beNil())
+        XCTAssertEqual(wrapper.dict.keys.count, 1)
+        XCTAssertEqual((wrapper.dict["array"] as! [Any])[0] as? Int, 1)
+        XCTAssertEqual((wrapper.dict["array"] as! [Any])[1] as? Double, 3.3)
+        XCTAssertNil(wrapper.dict["key1"])
     }
 
     func testDecodeAsset() {
@@ -85,14 +83,14 @@ class JSONDecodingTests: XCTestCase {
             let assetJSONData = JSONDecodingTests.jsonData("asset")
             let asset = try jsonDecoder.decode(Asset.self, from: assetJSONData)
 
-            expect(asset.sys.id).to(equal("nyancat"))
-            expect(asset.sys.type).to(equal("Asset"))
-            expect(asset.sys.createdAt).toNot(beNil())
-            expect(asset.file?.details?.imageInfo?.width).to(equal(250.0))
-            expect(asset.file?.details?.imageInfo?.height).to(equal(250.0))
-            expect(try asset.url()).to(equal(URL(string: "https://images.ctfassets.net/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png")))
+            XCTAssertEqual(asset.sys.id, "nyancat")
+            XCTAssertEqual(asset.sys.type, "Asset")
+            XCTAssertNotNil(asset.sys.createdAt)
+            XCTAssertEqual(asset.file?.details?.imageInfo?.width, 250.0)
+            XCTAssertEqual(asset.file?.details?.imageInfo?.height, 250.0)
+            XCTAssertEqual(try asset.url(), URL(string: "https://images.ctfassets.net/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png"))
         } catch _ {
-            fail("Asset decoding should not throw an error")
+            XCTFail("Asset decoding should not throw an error")
         }
     }
 
@@ -102,14 +100,14 @@ class JSONDecodingTests: XCTestCase {
             let spaceJSONData = JSONDecodingTests.jsonData("space")
             let space = try jsonDecoder.decode(Space.self, from: spaceJSONData)
 
-            expect(space.sys.id).to(equal("cfexampleapi"))
-            expect(space.name).to(equal("Contentful Example API"))
-            expect(space.locales.count).to(equal(2))
-            expect(space.locales[0].name).to(equal("English"))
-            expect(space.locales[0].code).to(equal("en-US"))
-            expect(space.locales[0].isDefault).to(equal(true))
+            XCTAssertEqual(space.sys.id, "cfexampleapi")
+            XCTAssertEqual(space.name, "Contentful Example API")
+            XCTAssertEqual(space.locales.count, 2)
+            XCTAssertEqual(space.locales[0].name, "English")
+            XCTAssertEqual(space.locales[0].code, "en-US")
+            XCTAssert(space.locales[0].isDefault)
         } catch _ {
-            fail("Space decoding should not throw an error")
+            XCTFail("Space decoding should not throw an error")
         }
     }
 
@@ -124,14 +122,14 @@ class JSONDecodingTests: XCTestCase {
             let localizedEntryJSONData = JSONDecodingTests.jsonData("localized")
             let entry = try jsonDecoder.decode(Entry.self, from: localizedEntryJSONData)
 
-            expect(entry.sys.id).to(equal("nyancat"))
-            expect(entry.fields["name"] as? String).to(equal("Nyan Cat"))
-            expect(entry.fields["lifes"]).to(beNil())
+            XCTAssertEqual(entry.sys.id, "nyancat")
+            XCTAssertEqual(entry.fields["name"] as? String, "Nyan Cat")
+            XCTAssertNil(entry.fields["lifes"])
             entry.setLocale(withCode: "tlh")
 
-            expect(entry.fields["name"] as? String).to(equal("Nyan vIghro'"))
+            XCTAssertEqual(entry.fields["name"] as? String, "Nyan vIghro'")
         } catch _ {
-            fail("Localized Entry decoding should not throw an error")
+            XCTFail("Localized Entry decoding should not throw an error")
         }
     }
 
@@ -146,11 +144,11 @@ class JSONDecodingTests: XCTestCase {
             let syncSpaceJSONData = JSONDecodingTests.jsonData("sync")
             let syncSpace = try jsonDecoder.decode(SyncSpace.self, from: syncSpaceJSONData)
 
-            expect(syncSpace.assets.count).to(equal(4))
-            expect(syncSpace.entries.count).to(equal(11))
-            expect(syncSpace.syncToken).to(equal("w5ZGw6JFwqZmVcKsE8Kow4grw45QdybCnV_Cg8OASMKpwo1UY8K8bsKFwqJrw7DDhcKnM2RDOVbDt1E-wo7CnDjChMKKGsK1wrzCrBzCqMOpZAwOOcOvCcOAwqHDv0XCiMKaOcOxZA8BJUzDr8K-wo1lNx7DnHE"))
+            XCTAssertEqual(syncSpace.assets.count, 4)
+            XCTAssertEqual(syncSpace.entries.count, 11)
+            XCTAssertEqual(syncSpace.syncToken, "w5ZGw6JFwqZmVcKsE8Kow4grw45QdybCnV_Cg8OASMKpwo1UY8K8bsKFwqJrw7DDhcKnM2RDOVbDt1E-wo7CnDjChMKKGsK1wrzCrBzCqMOpZAwOOcOvCcOAwqHDv0XCiMKaOcOxZA8BJUzDr8K-wo1lNx7DnHE")
         } catch _ {
-            fail("Decoding sync responses should not throw an error")
+            XCTFail("Decoding sync responses should not throw an error")
         }
     }
 
@@ -160,12 +158,12 @@ class JSONDecodingTests: XCTestCase {
             let syncDeletedAssetData = JSONDecodingTests.jsonData("deleted-asset")
             let syncSpace = try jsonDecoder.decode(SyncSpace.self, from: syncDeletedAssetData)
 
-            expect(syncSpace.assets.count).to(equal(0))
-            expect(syncSpace.entries.count).to(equal(0))
-            expect(syncSpace.deletedAssetIds.count).to(equal(1))
-            expect(syncSpace.deletedEntryIds.count).to(equal(0))
+            XCTAssertEqual(syncSpace.assets.count, 0)
+            XCTAssertEqual(syncSpace.entries.count, 0)
+            XCTAssertEqual(syncSpace.deletedAssetIds.count, 1)
+            XCTAssertEqual(syncSpace.deletedEntryIds.count, 0)
         } catch _ {
-            fail("Decoding sync responses with deleted Assets should not throw an error")
+            XCTFail("Decoding sync responses with deleted Assets should not throw an error")
         }
     }
 
@@ -176,12 +174,12 @@ class JSONDecodingTests: XCTestCase {
             let syncDeletedEntryData = JSONDecodingTests.jsonData("deleted")
             let syncSpace = try jsonDecoder.decode(SyncSpace.self, from: syncDeletedEntryData)
 
-            expect(syncSpace.assets.count).to(equal(0))
-            expect(syncSpace.entries.count).to(equal(0))
-            expect(syncSpace.deletedAssetIds.count).to(equal(0))
-            expect(syncSpace.deletedEntryIds.count).to(equal(1))
+            XCTAssertEqual(syncSpace.assets.count, 0)
+            XCTAssertEqual(syncSpace.entries.count, 0)
+            XCTAssertEqual(syncSpace.deletedAssetIds.count, 0)
+            XCTAssertEqual(syncSpace.deletedEntryIds.count, 1)
         } catch _ {
-            fail("Decoding sync responses with deleted Entries should not throw an error")
+            XCTFail("Decoding sync responses with deleted Entries should not throw an error")
         }
     }
 }

@@ -9,7 +9,6 @@
 @testable import Contentful
 import Foundation
 import XCTest
-import Nimble
 
 class PersistenceIntegrationTests: XCTestCase {
     
@@ -26,16 +25,16 @@ class PersistenceIntegrationTests: XCTestCase {
             let entry = try jsonDecoder.decode(Entry.self, from: entryJSONData)
 
             let location = entry.fields["center"] as? Contentful.Location
-            expect(location).toNot(beNil())
+            XCTAssertNotNil(location)
 
             NSKeyedArchiver.archiveRootObject(location as Any, toFile: "location")
             let deserializedLocation = NSKeyedUnarchiver.unarchiveObject(withFile: "location") as? Contentful.Location
-            expect(deserializedLocation?.latitude).to(equal(location?.latitude))
-            expect(deserializedLocation?.latitude).to(equal(48.856614))
-            expect(deserializedLocation?.longitude).to(equal(2.3522219000000177))
+            XCTAssertEqual(deserializedLocation?.latitude, location?.latitude)
+            XCTAssertEqual(deserializedLocation?.latitude, 48.856614)
+            XCTAssertEqual(deserializedLocation?.longitude, 2.3522219000000177)
 
         } catch _ {
-            fail("Asset decoding should not throw an error")
+            XCTFail("Asset decoding should not throw an error")
         }
     }
 }

@@ -9,7 +9,6 @@
 @testable import Contentful
 import XCTest
 import DVR
-import Nimble
 
 #if !API_COVERAGE
 class RateLimitTests: XCTestCase {
@@ -44,14 +43,13 @@ class RateLimitTests: XCTestCase {
                                             RateLimitTests.client.fetchArray(of: Asset.self, matching: .limit(to:19)) { result in
 
                                                 guard let error = result.error as? RateLimitError else {
-                                                    fail("Should have hit rate limit error")
+                                                    XCTFail("Should have hit rate limit error")
                                                     networkExpectation.fulfill()
                                                     return
                                                 }
-                                                expect(error).to(beAKindOf(RateLimitError.self))
-                                                expect(error.id).to(equal("RateLimitExceeded"))
-                                                expect(error.timeBeforeLimitReset).toNot(beNil())
-                                                expect(error.timeBeforeLimitReset!).to(beGreaterThan(0))
+                                                XCTAssertEqual(error.id, "RateLimitExceeded")
+                                                XCTAssertNotNil(error.timeBeforeLimitReset)
+                                                XCTAssertGreaterThan(error.timeBeforeLimitReset!, 0)
                                                 networkExpectation.fulfill()
 
                                             }

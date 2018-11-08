@@ -8,7 +8,6 @@
 
 @testable import Contentful
 import XCTest
-import Nimble
 import DVR
 
 struct LocaleFactory {
@@ -48,8 +47,8 @@ class LocalizationTests: XCTestCase {
         let enUSLocale = LocaleFactory.enUSDefault()
         let singleLocaleNormalizedFields = try! Localization.fieldsInMultiLocaleFormat(from: singleLocaleFields, selectedLocale: enUSLocale, wasSelectedOnAPILevel: true)
 
-        expect((singleLocaleNormalizedFields["name"]?["en-US"] as! String)).to(equal("Happy Cat"))
-        expect(singleLocaleNormalizedFields["name"]?["tlh"]).to(beNil())
+        XCTAssertEqual((singleLocaleNormalizedFields["name"]?["en-US"] as! String), "Happy Cat")
+        XCTAssertNil(singleLocaleNormalizedFields["name"]?["tlh"])
 
         // Multi locale format.
         let multiLocaleJSONData = JSONDecodingTests.jsonData("fields-in-mulit-locale-format")
@@ -57,9 +56,9 @@ class LocalizationTests: XCTestCase {
         let multiLocaleFields = multiLocaleJSON["fields"] as! [String: Any]
         let multiLocaleNormalizedFields = try! Localization.fieldsInMultiLocaleFormat(from: multiLocaleFields, selectedLocale: enUSLocale, wasSelectedOnAPILevel: false)
 
-        expect((multiLocaleNormalizedFields["name"]?["en-US"] as! String)).to(equal("Happy Cat"))
-        expect(multiLocaleNormalizedFields["name"]?["tlh"]).toNot(beNil())
-        expect((multiLocaleNormalizedFields["name"]?["tlh"] as! String)).to(equal("Quch vIghro"))
+        XCTAssertEqual((multiLocaleNormalizedFields["name"]?["en-US"] as! String), "Happy Cat")
+        XCTAssertNotNil(multiLocaleNormalizedFields["name"]?["tlh"])
+        XCTAssertEqual((multiLocaleNormalizedFields["name"]?["tlh"] as! String), "Quch vIghro")
     }
 
     func testWalkingFallbackChain() {
@@ -71,21 +70,21 @@ class LocalizationTests: XCTestCase {
             case .success(let entriesCollection):
                 let entry = entriesCollection.items.first!
 
-                expect(entry.currentlySelectedLocale.code).to(equal("en-US"))
-                expect(entry.sys.id).to(equal("nyancat"))
-                expect(entry.fields["name"] as? String).to(equal("Nyan Cat"))
-                expect(entry.fields["likes"] as? [String]).to(equal(["rainbows", "fish"]))
+                XCTAssertEqual(entry.currentlySelectedLocale.code, "en-US")
+                XCTAssertEqual(entry.sys.id, "nyancat")
+                XCTAssertEqual(entry.fields["name"] as? String, "Nyan Cat")
+                XCTAssertEqual(entry.fields["likes"] as? [String], ["rainbows", "fish"])
 
                 // Set new locale.
                 entry.setLocale(withCode: "tlh")
-                expect(entry.currentlySelectedLocale.code).to(equal("tlh"))
+                XCTAssertEqual(entry.currentlySelectedLocale.code, "tlh")
 
-                expect(entry.fields["name"] as? String).to(equal("Nyan vIghro'"))
+                XCTAssertEqual(entry.fields["name"] as? String, "Nyan vIghro'")
                 // fields with no value for "tlh" should fallback.
-                expect(entry.fields["likes"] as? [String]).to(equal(["rainbows", "fish"]))
+                XCTAssertEqual(entry.fields["likes"] as? [String], ["rainbows", "fish"])
 
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
             expecatation.fulfill()
         }
@@ -99,15 +98,14 @@ class LocalizationTests: XCTestCase {
         let localesResponse = try! jsonDecoder.decode(ArrayResponse<Contentful.Locale>.self, from: localesJSONData)
         jsonDecoder.update(with: LocalizationContext(locales: localesResponse.items)!)
 
-
         let assetJSONData = JSONDecodingTests.jsonData("localizable-asset")
         let asset = try! jsonDecoder.decode(Asset.self, from: assetJSONData)
 
-        expect(asset.sys.id).to(equal("1x0xpXu4pSGS4OukSyWGUK"))
-        expect(asset.urlString).to(equal("https://images.ctfassets.net/cfexampleapi/1x0xpXu4pSGS4OukSyWGUK/cc1239c6385428ef26f4180190532818/doge.jpg"))
+        XCTAssertEqual(asset.sys.id, "1x0xpXu4pSGS4OukSyWGUK")
+        XCTAssertEqual(asset.urlString, "https://images.ctfassets.net/cfexampleapi/1x0xpXu4pSGS4OukSyWGUK/cc1239c6385428ef26f4180190532818/doge.jpg")
 
         asset.setLocale(withCode: "tlh")
-        expect(asset.urlString).to(equal("https://images.ctfassets.net/cfexampleapi/1x0xpXu4pSGS4OukSyWGUK/cc1239c6385428ef26f4180190532818/doge.jpg"))
+        XCTAssertEqual(asset.urlString, "https://images.ctfassets.net/cfexampleapi/1x0xpXu4pSGS4OukSyWGUK/cc1239c6385428ef26f4180190532818/doge.jpg")
     }
 
         func testLocalizationForEntryDecodableWorks() {
@@ -119,13 +117,13 @@ class LocalizationTests: XCTestCase {
                 case .success(let entriesCollection):
                     let cat = entriesCollection.items.first!
 
-                    expect(cat.localeCode).to(equal("tlh"))
-                    expect(cat.sys.id).to(equal("nyancat"))
-                    expect(cat.name).to(equal("Nyan vIghro'"))
-                    expect(cat.likes).to(equal(["rainbows", "fish"]))
+                    XCTAssertEqual(cat.localeCode, "tlh")
+                    XCTAssertEqual(cat.sys.id, "nyancat")
+                    XCTAssertEqual(cat.name, "Nyan vIghro'")
+                    XCTAssertEqual(cat.likes, ["rainbows", "fish"])
 
                 case .error(let error):
-                    fail("\(error)")
+                    XCTFail("\(error)")
                 }
                 expecatation.fulfill()
             }

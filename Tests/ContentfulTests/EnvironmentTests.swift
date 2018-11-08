@@ -8,7 +8,6 @@
 
 @testable import Contentful
 import XCTest
-import Nimble
 import DVR
 
 class EnvironmentsTests: XCTestCase {
@@ -47,23 +46,23 @@ class EnvironmentsTests: XCTestCase {
                 let entries = response.items
                 // We didn't decode the "human" content type so only 9 decoded entries should be returned instead of 10
                 // THere is one less entry in this environment than the other environment.
-                expect(entries.count).to(equal(8))
+                XCTAssertEqual(entries.count, 8)
 
                 if let cat = entries.first as? Cat, let bestFriend = cat.bestFriend {
-                    expect(bestFriend.name).to(equal("Nyan Cat"))
+                    XCTAssertEqual(bestFriend.name, "Nyan Cat")
                 } else {
-                    fail("The first entry in the heterogenous array should be a cat wiht a best friend named 'Nyan Cat'")
+                    XCTFail("The first entry in the heterogenous array should be a cat wiht a best friend named 'Nyan Cat'")
                 }
 
                 if let dog = entries[4] as? Dog, let image = dog.image {
-                    expect(dog.description).to(equal("Bacon pancakes, makin' bacon pancakes!"))
-                    expect(image.id).to(equal("jake"))
+                    XCTAssertEqual(dog.description, "Bacon pancakes, makin' bacon pancakes!")
+                    XCTAssertEqual(image.id, "jake")
                 } else {
-                    fail("The last entry in the heterogenous array should be a dog with an image with named 'jake'")
+                    XCTFail("The last entry in the heterogenous array should be a dog with an image with named 'jake'")
                 }
 
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -77,14 +76,14 @@ class EnvironmentsTests: XCTestCase {
         EnvironmentsTests.client.sync { result in
             switch result {
             case .success(let syncSpace):
-                expect(syncSpace.entries.count).to(equal(9))
+                XCTAssertEqual(syncSpace.entries.count, 9)
                 // Sort the entries since they are otherwise in a non-determinant order with Swift 4.2.
                 let entries = syncSpace.entries.sorted { $0.sys.id < $1.sys.id }
-                expect(entries.first?.fields["name"] as? String).to(equal("Berlin"))
-                expect(entries[2].fields["name"] as? String).to(equal("Doge"))
+                XCTAssertEqual(entries.first?.fields["name"] as? String, "Berlin")
+                XCTAssertEqual(entries[2].fields["name"] as? String, "Doge")
 
             case .error(let error):
-                 fail("Failed to sync on a non-master environment \(error)")
+                 XCTFail("Failed to sync on a non-master environment \(error)")
             }
             expectation.fulfill()
         }

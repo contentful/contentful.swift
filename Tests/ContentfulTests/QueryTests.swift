@@ -8,7 +8,6 @@
 
 @testable import Contentful
 import XCTest
-import Nimble
 import DVR
 
 final class Cat: Resource, EntryDecodable, FieldKeysQueryable {
@@ -123,7 +122,7 @@ class QueryTests: XCTestCase {
         let query = Query.where(contentTypeId: "<content_type_id>")
                          .where(valueAtKeyPath: "fields.<field_name>.sys.id", .equals("<entry_id>"))
                          .include(2)
-        expect(query.parameters).to(equal(expectedQueryParameters))
+        XCTAssertEqual(query.parameters, expectedQueryParameters)
     }
 
     func testQueryReturningClientDefinedModel() {
@@ -137,15 +136,15 @@ class QueryTests: XCTestCase {
             case .success(let catsResponse):
                 let cats = catsResponse.items
                 let nyanCat = cats.first!
-                expect(nyanCat.color).toNot(beNil())
-                expect(nyanCat.name).to(equal("Happy Cat"))
+                XCTAssertNotNil(nyanCat.color)
+                XCTAssertEqual(nyanCat.name, "Happy Cat")
                 // Test links
-                expect(nyanCat.bestFriend?.name).to(equal("Nyan Cat"))
+                XCTAssertEqual(nyanCat.bestFriend?.name, "Nyan Cat")
 
                 // Test uniqueness in memory.
-                expect(nyanCat).to(be(nyanCat.bestFriend?.bestFriend))
+                XCTAssert(nyanCat === nyanCat.bestFriend?.bestFriend)
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -161,15 +160,15 @@ class QueryTests: XCTestCase {
             case .success(let catsResponse):
                 let cats = catsResponse.items
                 let nyanCat = cats.first!
-                expect(nyanCat.color).toNot(beNil())
-                expect(nyanCat.name).to(equal("Happy Cat"))
+                XCTAssertNotNil(nyanCat.color)
+                XCTAssertEqual(nyanCat.name, "Happy Cat")
                 // Test links
-                expect(nyanCat.bestFriend?.name).to(equal("Nyan Cat"))
+                XCTAssertEqual(nyanCat.bestFriend?.name, "Nyan Cat")
 
                 // Test uniqueness in memory.
-                expect(nyanCat).to(be(nyanCat.bestFriend?.bestFriend))
+                XCTAssert(nyanCat === nyanCat.bestFriend?.bestFriend)
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
 
@@ -188,23 +187,23 @@ class QueryTests: XCTestCase {
             case .success(let response):
                 let entries = response.items
                 // We didn't decode the "human" content type so only 9 decoded entries should be returned instead of 10
-                expect(entries.count).to(equal(9))
+                XCTAssertEqual(entries.count, 9)
 
                 if let cat = entries.first as? Cat, let bestFriend = cat.bestFriend {
-                    expect(bestFriend.name).to(equal("Nyan Cat"))
+                    XCTAssertEqual(bestFriend.name, "Nyan Cat")
                 } else {
-                    fail("The first entry in the heterogenous array should be a cat with a best friend named 'Nyan Cat'")
+                    XCTFail("The first entry in the heterogenous array should be a cat with a best friend named 'Nyan Cat'")
                 }
 
                 if let dog = entries[4] as? Dog, let image = dog.image {
-                    expect(dog.description).to(equal("Bacon pancakes, makin' bacon pancakes!"))
-                    expect(image.id).to(equal("jake"))
+                    XCTAssertEqual(dog.description, "Bacon pancakes, makin' bacon pancakes!")
+                    XCTAssertEqual(image.id, "jake")
                 } else {
-                    fail("The 4th entry in the heterogenous array should be a dog with an image with named 'jake'")
+                    XCTFail("The 4th entry in the heterogenous array should be a dog with an image with named 'jake'")
                 }
 
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -225,13 +224,13 @@ class QueryTests: XCTestCase {
             case .success(let dogsResponse):
                 let dogs = dogsResponse.items
                 let doge = dogs.first
-                expect(doge?.name).to(equal("Doge"))
+                XCTAssertEqual(doge?.name, "Doge")
 
                 // Test links
-                expect(doge?.image).toNot(beNil())
-                expect(doge?.image?.id).to(equal("1x0xpXu4pSGS4OukSyWGUK"))
+                XCTAssertNotNil(doge?.image)
+                XCTAssertEqual(doge?.image?.id, "1x0xpXu4pSGS4OukSyWGUK")
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -250,10 +249,10 @@ class QueryTests: XCTestCase {
             case .success(let catsResponse):
                 let cats = catsResponse.items
                 for cat in cats {
-                    expect(cat.sys.contentTypeId).to(equal("cat"))
+                    XCTAssertEqual(cat.sys.contentTypeId, "cat")
                 }
             case .error:
-                fail("Should not throw an error")
+                XCTFail("Should not throw an error")
             }
             expectation.fulfill()
         }
@@ -269,10 +268,10 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
-                expect(cats.count).to(equal(1))
-                expect(cats.first?.color).to(equal("gray"))
+                XCTAssertEqual(cats.count, 1)
+                XCTAssertEqual(cats.first?.color, "gray")
             case .error:
-                fail("Should not throw an error")
+                XCTFail("Should not throw an error")
             }
             expectation.fulfill()
         }
@@ -290,10 +289,10 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
-                expect(cats.count).to(beGreaterThan(0))
-                expect(cats.first?.color).toNot(equal("gray"))
+                XCTAssertGreaterThan(cats.count, 0)
+                XCTAssertNotEqual(cats.first?.color, "gray")
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -310,14 +309,14 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
-                expect(cats.count).to(equal(1))
-                expect(cats.first?.name).to(equal("Nyan Cat"))
-                expect(cats.first?.likes?.count).to(equal(2))
-                expect(cats.first?.likes).to(contain("rainbows"))
-                expect(cats.first?.likes).to(contain("fish"))
+                XCTAssertEqual(cats.count, 1)
+                XCTAssertEqual(cats.first?.name, "Nyan Cat")
+                XCTAssertEqual(cats.first?.likes?.count, 2)
+                XCTAssert(cats.first!.likes!.contains("rainbows"))
+                XCTAssert(cats.first!.likes!.contains("fish"))
 
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -335,15 +334,15 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
-                expect(cats.count).to(equal(2))
-                expect(cats.first).toNot(beNil())
+                XCTAssertEqual(cats.count, 2)
+                XCTAssertNotNil(cats.first)
                 if let happyCat = cats.first {
-                    expect(happyCat.name).to(equal("Happy Cat"))
-                    expect(happyCat.likes?.count).to(equal(1))
-                    expect(happyCat.likes).to(contain("cheezburger"))
+                    XCTAssertEqual(happyCat.name, "Happy Cat")
+                    XCTAssertEqual(happyCat.likes?.count, 1)
+                    XCTAssert(happyCat.likes!.contains("cheezburger"))
                 }
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -360,14 +359,14 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
-                expect(cats.count).to(equal(1))
-                expect(cats.first?.name).to(equal("Nyan Cat"))
-                expect(cats.first?.likes?.count).to(equal(2))
-                expect(cats.first?.likes).to(contain("rainbows"))
-                expect(cats.first?.likes).to(contain("fish"))
+                XCTAssertEqual(cats.count, 1)
+                XCTAssertEqual(cats.first?.name, "Nyan Cat")
+                XCTAssertEqual(cats.first?.likes?.count, 2)
+                XCTAssert(cats.first!.likes!.contains("rainbows"))
+                XCTAssert(cats.first!.likes!.contains("fish"))
 
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -384,10 +383,10 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
-                expect(cats.count).to(beGreaterThan(0))
-                expect(cats.first?.color).to(equal("gray"))
+                XCTAssertGreaterThan(cats.count, 0)
+                XCTAssertEqual(cats.first?.color, "gray")
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -406,11 +405,11 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
-                expect(cats.count).to(equal(1))
-                expect(cats.first?.lives).to(equal(9))
+                XCTAssertEqual(cats.count, 1)
+                XCTAssertEqual(cats.first?.lives, 9)
 
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -429,11 +428,11 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
-                expect(cats.count).to(equal(1))
-                expect(cats.first?.fields["lives"] as? Int).to(equal(9))
+                XCTAssertEqual(cats.count, 1)
+                XCTAssertEqual(cats.first?.fields["lives"] as? Int, 9)
 
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -451,11 +450,11 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let assetsResponse):
                 let assets = assetsResponse.items
-                expect(assets.count).to(equal(1))
-                expect(assets.first?.sys.id).to(equal("1x0xpXu4pSGS4OukSyWGUK"))
-                expect(assets.first?.fields["title"] as? String).to(equal("doge"))
+                XCTAssertEqual(assets.count, 1)
+                XCTAssertEqual(assets.first?.sys.id, "1x0xpXu4pSGS4OukSyWGUK")
+                XCTAssertEqual(assets.first?.fields["title"] as? String, "doge")
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -472,11 +471,11 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let assetsResponse):
                 let assets = assetsResponse.items
-                expect(assets.count).to(equal(1))
-                expect(assets.first?.sys.id).to(equal("1x0xpXu4pSGS4OukSyWGUK"))
-                expect(assets.first?.fields["title"] as? String).to(equal("doge"))
+                XCTAssertEqual(assets.count, 1)
+                XCTAssertEqual(assets.first?.sys.id, "1x0xpXu4pSGS4OukSyWGUK")
+                XCTAssertEqual(assets.first?.fields["title"] as? String, "doge")
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -489,11 +488,11 @@ class QueryTests: XCTestCase {
         do {
             let _ = try QueryOn<Dog>.select(fieldsNamed: fieldNames)
 
-            fail("Query selection with depth > 2 should throw an error and not reahc here")
+            XCTFail("Query selection with depth > 2 should throw an error and not reahc here")
         } catch let error as QueryError {
-            expect(error.message).toNot(beNil())
+            XCTAssertNotNil(error.message)
         } catch _ {
-            fail("Should throw a QueryError")
+            XCTFail("Should throw a QueryError")
         }
     }
 
@@ -508,9 +507,9 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let entriesResponse):
                 let entries = entriesResponse.items
-                expect(entries.count).to(equal(10))
+                XCTAssertEqual(entries.count, 10)
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
 
@@ -531,9 +530,9 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
-                expect(cats.count).to(equal(3))
+                XCTAssertEqual(cats.count, 3)
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -552,9 +551,9 @@ class QueryTests: XCTestCase {
             case .success(let entriesResponse):
                 let entries = entriesResponse.items
                 let ids = entries.map { $0.sys.id }
-                expect(ids).to(equal(EntryTests.orderedEntries))
+                XCTAssertEqual(ids, EntryTests.orderedEntries)
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
             }
             expectation.fulfill()
         }
@@ -571,9 +570,9 @@ class QueryTests: XCTestCase {
             case .success(let entriesResponse):
                 let entries = entriesResponse.items
                 let ids = entries.map { $0.sys.id }
-                expect(ids).to(equal(EntryTests.orderedEntries.reversed()))
+                XCTAssertEqual(ids, EntryTests.orderedEntries.reversed())
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -592,10 +591,10 @@ class QueryTests: XCTestCase {
             case .success(let catsResponse):
                 let cats = catsResponse.items
                 let ids = cats.map { $0.id }
-                expect(cats.count).to(equal(3))
-                expect(ids).to(equal(QueryTests.orderedCatNames))
+                XCTAssertEqual(cats.count, 3)
+                XCTAssertEqual(ids, QueryTests.orderedCatNames)
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -612,9 +611,9 @@ class QueryTests: XCTestCase {
             case .success(let entriesResponse):
                 let entries = entriesResponse.items
                 let ids = entries.map { $0.sys.id }
-                expect(ids).to(equal(EntryTests.orderedEntriesByMultiple))
+                XCTAssertEqual(ids, EntryTests.orderedEntriesByMultiple)
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -632,9 +631,9 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let dogsResponse):
                 let dogs = dogsResponse.items
-                expect(dogs.count).to(equal(1))
+                XCTAssertEqual(dogs.count, 1)
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -650,10 +649,10 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let dogsResponse):
                 let dogs = dogsResponse.items
-                expect(dogs.count).to(equal(1))
-                expect(dogs.first?.name).to(equal("Jake"))
+                XCTAssertEqual(dogs.count, 1)
+                XCTAssertEqual(dogs.first?.name, "Jake")
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -673,9 +672,9 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let citiesResponse):
                 let cities = citiesResponse.items
-                expect(cities.count).to(equal(4))
+                XCTAssertEqual(cities.count, 4)
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -693,9 +692,9 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let citiesResponse):
                 let cities = citiesResponse.items
-                expect(cities.count).to(equal(1))
+                XCTAssertEqual(cities.count, 1)
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -715,19 +714,19 @@ class QueryTests: XCTestCase {
             case .success(let entriesResponse):
                 let entries = entriesResponse.items
                 let catEntries = entries.filter { $0.sys.contentTypeId == "cat" }
-                expect(catEntries.first).toNot(beNil())
+                XCTAssertNotNil(catEntries.first)
                 // Let's just assert link is unresolved
                 if let link = catEntries.first?.fields["image"] as? Link {
                     switch link {
                     case .unresolved: XCTAssert(true)
-                    default: fail("link should not be resolved when includes are 0:")
+                    default: XCTFail("link should not be resolved when includes are 0:")
                     }
                 } else {
-                    fail("there should be an unresolved link at image field when includes are 0")
+                    XCTFail("there should be an unresolved link at image field when includes are 0")
                 }
 
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -743,9 +742,9 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let entriesResponse):
                 let entries = entriesResponse.items
-                expect(entries.count).to(equal(5))
+                XCTAssertEqual(entries.count, 5)
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -762,10 +761,10 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let entriesResponse):
                 let entries = entriesResponse.items
-                expect(entries.count).to(equal(1))
-                expect(entries.first?.sys.id).to(equal("garfield"))
+                XCTAssertEqual(entries.count, 1)
+                XCTAssertEqual(entries.first?.sys.id, "garfield")
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -781,10 +780,10 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let entriesResponse):
                 let entries = entriesResponse.items
-                expect(entriesResponse.skip).to(equal(9))
-                expect(entries.count).to(equal(1))
+                XCTAssertEqual(entriesResponse.skip, 9)
+                XCTAssertEqual(entries.count, 1)
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -804,11 +803,11 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let catsWithHappyCatAsBestFriendResponse):
                 let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
-                expect(catsWithHappyCatAsBestFriend.count).to(equal(1))
-                expect(catsWithHappyCatAsBestFriend.first?.name).to(equal("Nyan Cat"))
-                expect(catsWithHappyCatAsBestFriend.first?.bestFriend?.name).to(equal("Happy Cat"))
+                XCTAssertEqual(catsWithHappyCatAsBestFriend.count, 1)
+                XCTAssertEqual(catsWithHappyCatAsBestFriend.first?.name, "Nyan Cat")
+                XCTAssertEqual(catsWithHappyCatAsBestFriend.first?.bestFriend?.name, "Happy Cat")
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -828,15 +827,15 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let catsWithHappyCatAsBestFriendResponse):
                 let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
-                expect(catsWithHappyCatAsBestFriend.count).to(equal(1))
-                expect(catsWithHappyCatAsBestFriend.first?.fields["name"] as? String).to(equal("Nyan Cat"))
+                XCTAssertEqual(catsWithHappyCatAsBestFriend.count, 1)
+                XCTAssertEqual(catsWithHappyCatAsBestFriend.first?.fields["name"] as? String, "Nyan Cat")
                 if let happyCatsBestFriend = catsWithHappyCatAsBestFriend.first?.fields.linkedEntry(at: "bestFriend") {
-                    expect(happyCatsBestFriend.fields.string(at: "name")).to(equal("Happy Cat"))
+                    XCTAssertEqual(happyCatsBestFriend.fields.string(at: "name"), "Happy Cat")
                 } else {
-                    fail("Should be able to get linked entry.")
+                    XCTFail("Should be able to get linked entry.")
                 }
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -853,11 +852,11 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let catsWithHappyCatAsBestFriendResponse):
                 let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
-                expect(catsWithHappyCatAsBestFriend.count).to(equal(1))
-                expect(catsWithHappyCatAsBestFriend.first?.name).to(equal("Nyan Cat"))
-                expect(catsWithHappyCatAsBestFriend.first?.bestFriend?.name).to(equal("Happy Cat"))
+                XCTAssertEqual(catsWithHappyCatAsBestFriend.count, 1)
+                XCTAssertEqual(catsWithHappyCatAsBestFriend.first?.name, "Nyan Cat")
+                XCTAssertEqual(catsWithHappyCatAsBestFriend.first?.bestFriend?.name, "Happy Cat")
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -875,15 +874,15 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let catsWithHappyCatAsBestFriendResponse):
                 let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
-                expect(catsWithHappyCatAsBestFriend.count).to(equal(1))
-                expect(catsWithHappyCatAsBestFriend.first?.fields["name"] as? String).to(equal("Nyan Cat"))
+                XCTAssertEqual(catsWithHappyCatAsBestFriend.count, 1)
+                XCTAssertEqual(catsWithHappyCatAsBestFriend.first?.fields["name"] as? String, "Nyan Cat")
                 if let happyCatsBestFriend = catsWithHappyCatAsBestFriend.first?.fields.linkedEntry(at: "bestFriend") {
-                    expect(happyCatsBestFriend.fields.string(at: "name")).to(equal("Happy Cat"))
+                    XCTAssertEqual(happyCatsBestFriend.fields.string(at: "name"), "Happy Cat")
                 } else {
-                    fail("Should be able to get linked entry.")
+                    XCTFail("Should be able to get linked entry.")
                 }
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -902,9 +901,9 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let assetsResponse):
                 let assets = assetsResponse.items
-                expect(assets.count).to(equal(4))
+                XCTAssertEqual(assets.count, 4)
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
