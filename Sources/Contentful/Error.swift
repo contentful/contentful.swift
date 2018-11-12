@@ -53,6 +53,29 @@ public enum SDKError: Error {
      - Parameter message: The message from the erorr which occured during parsing.
     */
     case localeHandlingError(message: String)
+
+    public var debugDescription: String {
+        return message
+    }
+
+    internal var message: String {
+        switch self {
+        case .invalidHTTPResponse(let response):
+            return "The HTTP request returned a corrupted HTTP response: \(response.debugDescription)"
+        case .invalidURL(let string):
+            return string
+        case .previewAPIDoesNotSupportSync:
+            return "The Content Preview API does not support subsequent sync operations."
+        case .unparseableJSON(_, let errorMessage):
+            return errorMessage
+        case .noResourceFoundFor(let id):
+            return "No resource was found with the id: \(id)"
+        case .unableToDecodeImageData:
+            return "The binary data returned was not convertible to a native UIImage or NSImage"
+        case .localeHandlingError(let message):
+            return message
+        }
+    }
 }
 
 /// Errors thrown for queries which have invalid construction.

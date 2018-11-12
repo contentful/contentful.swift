@@ -220,15 +220,27 @@ open class Client {
                         if let apiError = APIError.error(with: self.jsonDecoder,
                                                          data: data,
                                                          statusCode: response.statusCode) {
+                            let errorMessage = """
+                            Errored: 'GET' (\(response.statusCode)) \(url.absoluteString)
+                            Message: \(apiError.message!)"
+                            """
+                            ContentfulLogger.log(.error, message: errorMessage)
                             completion(Result.error(apiError))
                         } else {
                             // In case there is an error returned by the API that has an unexpected format, return a custom error.
                             let errorMessage = "An API error was returned that the SDK was unable to parse"
+                            let logMessage = """
+                            Errored: 'GET' \(url.absoluteString). \(errorMessage)
+                            Message: \(errorMessage)
+                            """
+                            ContentfulLogger.log(.error, message: logMessage)
                             let error = SDKError.unparseableJSON(data: data, errorMessage: errorMessage)
                             completion(Result.error(error))
                         }
                         return
                     }
+                    let successMessage = "Success: 'GET' (\(response.statusCode)) \(url.absoluteString)"
+                    ContentfulLogger.log(.info, message: successMessage)
                 }
                 completion(Result.success(data))
                 return
@@ -236,14 +248,26 @@ open class Client {
 
             if let error = error {
                 // An extra check, just in case.
+                let errorMessage = """
+                Errored: 'GET' \(url.absoluteString)
+                Message: \(error.localizedDescription)
+                """
+                ContentfulLogger.log(.error, message: errorMessage)
                 completion(Result.error(error))
                 return
             }
 
             let sdkError = SDKError.invalidHTTPResponse(response: response)
+            let errorMessage = """
+            Errored: 'GET' \(url.absoluteString)
+            Message: Request returned invalid HTTP response: \(sdkError.localizedDescription)"
+            """
+            ContentfulLogger.log(.error, message: errorMessage)
             completion(Result.error(sdkError))
         }
 
+        let logMessage = "Request: 'GET' \(url.absoluteString)"
+        ContentfulLogger.log(.info, message: logMessage)
         task.resume()
         return task
     }
@@ -271,7 +295,8 @@ open class Client {
         if let timeUntilLimitReset = self.readRateLimitHeaderIfPresent(response: response) {
             // At this point, We know for sure that the type returned by the API can be mapped to an `APIError` instance.
             // Directly handle JSON and exit.
-            self.handleRateLimitJSON(data, timeUntilLimitReset: timeUntilLimitReset) { (_ result: Result<RateLimitError>) in
+            let statusCode = (response as! HTTPURLResponse).statusCode
+            self.handleRateLimitJSON(data, timeUntilLimitReset: timeUntilLimitReset, statusCode: statusCode) { (_ result: Result<RateLimitError>) in
                 switch result {
                 case .success(let rateLimitError):
                     completion(Result.error(rateLimitError))
@@ -285,13 +310,20 @@ open class Client {
         return false
     }
 
-    fileprivate func handleRateLimitJSON(_ data: Data, timeUntilLimitReset: Int, _ completion: ResultsHandler<RateLimitError>) {
+    fileprivate func handleRateLimitJSON(_ data: Data, timeUntilLimitReset: Int, statusCode: Int, _ completion: ResultsHandler<RateLimitError>) {
+
             guard let rateLimitError = try? jsonDecoder.decode(RateLimitError.self, from: data) else {
                 completion(Result.error(SDKError.unparseableJSON(data: data, errorMessage: "SDK unable to parse RateLimitError payload")))
                 return
             }
+            rateLimitError.statusCode = statusCode
             rateLimitError.timeBeforeLimitReset = timeUntilLimitReset
 
+            let errorMessage = """
+            Errored: Rate Limit Error
+            Message: \(rateLimitError)"
+            """
+            ContentfulLogger.log(.error, message: errorMessage)
             // In this case, .success means that a RateLimitError was successfully initialized.
             completion(Result.success(rateLimitError))
     }
@@ -300,8 +332,10 @@ open class Client {
         do {
             let decodedObject = try jsonDecoder.decode(DecodableType.self, from: data)
             completion(Result.success(decodedObject))
-        } catch {
-            completion(Result.error(SDKError.unparseableJSON(data: data, errorMessage: "The SDK was unable to parse the JSON: \(error)")))
+        } catch let error {
+            let sdkError = SDKError.unparseableJSON(data: data, errorMessage: "\(error)")
+            ContentfulLogger.log(.error, message: sdkError.message)
+            completion(Result.error(sdkError))
         }
     }
 }

@@ -40,6 +40,14 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 
 ---
 
+## [`4.2.0`](https://github.com/contentful/contentful.swift/releases/tag/4.2.0)
+Released on 2018-11-13
+
+#### Added
+- `ContentfulLogger` which will log messages to the console. `ContentfulLogger` can be configured with a `CustomLogger` in order to use any third-party logging frameworks of your choice.
+
+---
+
 ## [`4.1.3`](https://github.com/contentful/contentful.swift/releases/tag/4.1.3)
 Released on 2018-11-08
 

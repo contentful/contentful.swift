@@ -25,8 +25,8 @@ public extension Decoder {
     internal var contentTypes: [ContentTypeId: EntryDecodable.Type] {
         guard let contentTypes = userInfo[.contentTypesContextKey] as? [ContentTypeId: EntryDecodable.Type] else {
             fatalError(
-                """
-            Make sure to pass your content types into the `Client` intializer
+            """
+            Make sure to pass your content types into the Client intializer
             so the SDK can properly deserializer your own types if you are using the `fetchMappedEntries` methods
             """)
         }

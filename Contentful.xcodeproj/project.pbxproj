@@ -105,6 +105,13 @@
 		5D52E2A02193387600C88FC9 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D52E29F2193387600C88FC9 /* OHHTTPStubs.framework */; };
 		5D52E2A22193388200C88FC9 /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D52E2A12193388200C88FC9 /* DVR.framework */; };
 		5D52E2A62193388200C88FC9 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D52E2A52193388200C88FC9 /* OHHTTPStubs.framework */; };
+		5DC635C7219997A8001E3174 /* ContentfulLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC635C6219997A8001E3174 /* ContentfulLogger.swift */; };
+		5DC635C8219997A8001E3174 /* ContentfulLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC635C6219997A8001E3174 /* ContentfulLogger.swift */; };
+		5DC635C9219997A8001E3174 /* ContentfulLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC635C6219997A8001E3174 /* ContentfulLogger.swift */; };
+		5DC635CA219997A8001E3174 /* ContentfulLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC635C6219997A8001E3174 /* ContentfulLogger.swift */; };
+		5DC635CF219AC0B0001E3174 /* LoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC635CE219AC0B0001E3174 /* LoggerTests.swift */; };
+		5DC635D0219AC0B0001E3174 /* LoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC635CE219AC0B0001E3174 /* LoggerTests.swift */; };
+		5DC635D1219AC0B0001E3174 /* LoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC635CE219AC0B0001E3174 /* LoggerTests.swift */; };
 		5DD410472190BC8B003FC01E /* RichText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD410462190BC8B003FC01E /* RichText.swift */; };
 		5DD410482190BC8B003FC01E /* RichText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD410462190BC8B003FC01E /* RichText.swift */; };
 		5DD4104A2190BC8B003FC01E /* RichText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD410462190BC8B003FC01E /* RichText.swift */; };
@@ -282,6 +289,8 @@
 		5D52E2A12193388200C88FC9 /* DVR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DVR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D52E2A32193388200C88FC9 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D52E2A52193388200C88FC9 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OHHTTPStubs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DC635C6219997A8001E3174 /* ContentfulLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentfulLogger.swift; sourceTree = "<group>"; };
+		5DC635CE219AC0B0001E3174 /* LoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerTests.swift; sourceTree = "<group>"; };
 		5DD410462190BC8B003FC01E /* RichText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichText.swift; sourceTree = "<group>"; };
 		5DD410E421918E62003FC01E /* RichTextNodeDecodingTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RichTextNodeDecodingTests.json; sourceTree = "<group>"; };
 		5DFE08DA2189D6AC00B0D68E /* EntryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EntryTests.json; sourceTree = "<group>"; };
@@ -471,6 +480,7 @@
 				ED02DC1220E11D0A005EC57B /* Util.swift */,
 				A19CA3DF1B836F2500A0EFCD /* Client.swift */,
 				A19CA3E11B8386CC00A0EFCD /* ClientConfiguration.swift */,
+				5DC635C6219997A8001E3174 /* ContentfulLogger.swift */,
 				ED4986FD2047107D0014DCFE /* Endpoints.swift */,
 				ED3CBF191E7AD57100E5B02E /* Sys.swift */,
 				A15193A91BB91DE700FB83CD /* Space.swift */,
@@ -502,20 +512,21 @@
 			isa = PBXGroup;
 			children = (
 				A19CA3D51B836EDD00A0EFCD /* Info.plist */,
+				ED02DC9E20E12405005EC57B /* Fixtures */,
+				ED9102671E65AE880076FDBD /* DVRRecordings */,
 				A19C74421C47A812005334AD /* AssetTests.swift */,
 				ED88B7D91EF7CD3800538D1F /* ClientConfigurationTests.swift */,
 				A19CA3D31B836EDD00A0EFCD /* ContentfulTests.swift */,
 				A19C743E1C47A7F5005334AD /* ContentTypeTests.swift */,
-				ED9102671E65AE880076FDBD /* DVRRecordings */,
 				ED2E03E61F97608A006422A6 /* EntryDecodableLinkResolutionTests.swift */,
 				ED5F8F951F94B8C300C86411 /* EntryTests.swift */,
 				ED882E9220484BF100D372BF /* EnvironmentTests.swift */,
 				EDA7D96C1F8E6D660020EE86 /* ErrorTests.swift */,
-				ED02DC9E20E12405005EC57B /* Fixtures */,
 				ED1638C41ED5CA6D009BAA9F /* ImageTests.swift */,
 				EDE087DF207CE2B200CB1287 /* ISO801DateTests.swift */,
 				A1B2E3661BBAD06000814D63 /* JSONDecodingTests.swift */,
 				ED307F211EE6E5D700633390 /* LocalizationTests.swift */,
+				5DC635CE219AC0B0001E3174 /* LoggerTests.swift */,
 				5D001E5F200423C700AC5A4C /* PersistenceIntegrationTests.swift */,
 				ED02BC5F1E7047AE00BAB2CA /* QueryTests.swift */,
 				ED52DB3F1EE94C8E00225140 /* RateLimitTests.swift */,
@@ -1017,6 +1028,7 @@
 				5D52E24E2193375300C88FC9 /* ContentType.swift in Sources */,
 				5D52E24F2193375300C88FC9 /* Resource.swift in Sources */,
 				5D52E2502193375300C88FC9 /* Entry.swift in Sources */,
+				5DC635C9219997A8001E3174 /* ContentfulLogger.swift in Sources */,
 				5D52E2512193375300C88FC9 /* Asset.swift in Sources */,
 				5D52E2522193375300C88FC9 /* ArrayResponse.swift in Sources */,
 				5D52E2532193375300C88FC9 /* Link.swift in Sources */,
@@ -1042,6 +1054,7 @@
 			files = (
 				5D52E2832193384100C88FC9 /* AssetTests.swift in Sources */,
 				5D52E2842193384100C88FC9 /* ClientConfigurationTests.swift in Sources */,
+				5DC635D1219AC0B0001E3174 /* LoggerTests.swift in Sources */,
 				5D52E2852193384100C88FC9 /* ContentfulTests.swift in Sources */,
 				5D52E2862193384100C88FC9 /* ContentTypeTests.swift in Sources */,
 				5D52E2872193384100C88FC9 /* EntryDecodableLinkResolutionTests.swift in Sources */,
@@ -1076,6 +1089,7 @@
 				ED02DC1720E11D0A005EC57B /* Util.swift in Sources */,
 				ED535E641F5E8E1300886D93 /* Decodable.swift in Sources */,
 				ED1D789A1F2F96260048E169 /* DataCache.swift in Sources */,
+				5DC635C7219997A8001E3174 /* ContentfulLogger.swift in Sources */,
 				ED91C1401EDCB03600F0FC0A /* ImageOptions.swift in Sources */,
 				A10FF9D91BBB3BE1001AA4E9 /* ArrayResponse.swift in Sources */,
 				A19CA3E01B836F2500A0EFCD /* Client.swift in Sources */,
@@ -1101,6 +1115,7 @@
 			files = (
 				A17D044D1C4F974F002E568B /* UtilityTests.swift in Sources */,
 				ED1638C51ED5CA6D009BAA9F /* ImageTests.swift in Sources */,
+				5DC635CF219AC0B0001E3174 /* LoggerTests.swift in Sources */,
 				ED52DB401EE94C8E00225140 /* RateLimitTests.swift in Sources */,
 				A114BBC31C50EA3200DE6679 /* SyncTests.swift in Sources */,
 				5D001E60200423C700AC5A4C /* PersistenceIntegrationTests.swift in Sources */,
@@ -1126,6 +1141,7 @@
 			files = (
 				EDA6909B1F43187B00581FC6 /* UtilityTests.swift in Sources */,
 				EDA690901F43187B00581FC6 /* AssetTests.swift in Sources */,
+				5DC635D0219AC0B0001E3174 /* LoggerTests.swift in Sources */,
 				EDA690941F43187B00581FC6 /* ClientConfigurationTests.swift in Sources */,
 				EDA6909A1F43187B00581FC6 /* SyncTests.swift in Sources */,
 				5D001E61200423C700AC5A4C /* PersistenceIntegrationTests.swift in Sources */,
@@ -1160,6 +1176,7 @@
 				ED02DC1820E11D0A005EC57B /* Util.swift in Sources */,
 				ED535E651F5E8E1300886D93 /* Decodable.swift in Sources */,
 				ED36B7031E3BD052005581FD /* Space.swift in Sources */,
+				5DC635C8219997A8001E3174 /* ContentfulLogger.swift in Sources */,
 				ED36B6F71E3BD052005581FD /* Asset.swift in Sources */,
 				ED36B6FF1E3BD052005581FD /* Error.swift in Sources */,
 				ED36B6F91E3BD052005581FD /* ClientConfiguration.swift in Sources */,
@@ -1194,6 +1211,7 @@
 				ED02DC1A20E11D0A005EC57B /* Util.swift in Sources */,
 				ED535E671F5E8E1300886D93 /* Decodable.swift in Sources */,
 				ED36B7201E3BD053005581FD /* Field.swift in Sources */,
+				5DC635CA219997A8001E3174 /* ContentfulLogger.swift in Sources */,
 				ED36B7231E3BD053005581FD /* Space.swift in Sources */,
 				ED36B7171E3BD053005581FD /* Asset.swift in Sources */,
 				ED36B71F1E3BD053005581FD /* Error.swift in Sources */,
