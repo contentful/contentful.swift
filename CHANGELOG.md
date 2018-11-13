@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 ## Table of contents
 
 #### 4.x Releases
+- `4.2.0` Releases - [4.2.0](#420)
 - `4.1.0` Releases - [4.1.0](#410) | [4.1.3](#413)
 - `4.0.0` Releases - [4.0.0](#400) | [4.0.1](#401)
 
