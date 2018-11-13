@@ -9,9 +9,7 @@
 import Foundation
 
 /// Possible errors being thrown by the SDK
-public enum SDKError: Error {
-    /// Thrown when no valid client is available during sync
-    case invalidClient()
+public enum SDKError: Error, CustomDebugStringConvertible {
 
     /**
      Thrown when receiving an invalid HTTP response.
@@ -28,19 +26,12 @@ public enum SDKError: Error {
     /// Thrown if the subsequent sync operations are executed in preview mode.
     case previewAPIDoesNotSupportSync()
 
-    /// Thrown if a resource returned in the multi-locale format does not have any value for the given
-    /// fallback chain.
-    case noValuePresent(fieldKey: CodingKey)
-
     /**
      Thrown when receiving unparseable JSON responses.
      - Parameter data: The data being parsed.
      - Parameter errorMessage: The message from the error which occured during parsing.
      */
     case unparseableJSON(data: Data?, errorMessage: String)
-
-    /// Thrown when no entry is found matching a specified Entry id
-    case noEntryFoundFor(id: String)
 
     /// Thrown when no resource is found matching a specified id
     case noResourceFoundFor(id: String)

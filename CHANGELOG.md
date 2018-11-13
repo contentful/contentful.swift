@@ -45,7 +45,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 Released on 2018-11-13
 
 #### Added
-- `ContentfulLogger` which will log messages to the console. `ContentfulLogger` can be configured with a `CustomLogger` in order to use any third-party logging frameworks of your choice.
+- A `ContentfulLogger` singleton which will log messages to the console. `ContentfulLogger` can be configured with a `CustomLogger` in order to use any third-party logging frameworks of your choice.
 
 ---
 
