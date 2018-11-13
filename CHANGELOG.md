@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 ## Table of contents
 
 #### 4.x Releases
+- `4.2.0` Releases - [4.2.0](#420)
 - `4.1.0` Releases - [4.1.0](#410) | [4.1.3](#413)
 - `4.0.0` Releases - [4.0.0](#400) | [4.0.1](#401)
 
@@ -37,6 +38,14 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041)
 - `0.3.x` Releases - [0.3.0](#030) | [0.3.1](#031)
 
+
+---
+
+## [`4.2.0`](https://github.com/contentful/contentful.swift/releases/tag/4.2.0)
+Released on 2018-11-13
+
+#### Added
+- A `ContentfulLogger` singleton which will log messages to the console. `ContentfulLogger` can be configured with a `CustomLogger` in order to use any third-party logging frameworks of your choice.
 
 ---
 

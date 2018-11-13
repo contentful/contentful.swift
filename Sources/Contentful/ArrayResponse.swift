@@ -110,16 +110,18 @@ extension ArrayResponse: Decodable {
 
             // All items and includes.
             includes = nil
-            mappedIncludes       = try container.decodeIfPresent(MappedIncludes.self, forKey: .includes)
+            mappedIncludes = try container.decodeIfPresent(MappedIncludes.self, forKey: .includes)
 
             // A copy as an array of dictionaries just to extract "sys.type" field.
             guard let jsonItems = try container.decode(Swift.Array<Any>.self, forKey: .items) as? [[String: Any]] else {
-                throw SDKError.unparseableJSON(data: nil, errorMessage: "SDK was unable to serialize returned resources")
+                let errorMessage = "SDK was unable to serialize returned resources"
+                throw SDKError.unparseableJSON(data: nil, errorMessage: errorMessage)
             }
 
             var entriesJSONContainer = try container.nestedUnkeyedContainer(forKey: .items)
             var entries: [EntryDecodable] = []
-            let contentTypes = decoder.userInfo[.contentTypesContextKey] as! [ContentTypeId: EntryDecodable.Type]
+
+            let contentTypes = decoder.userInfo[.contentTypesContextKey] as? [ContentTypeId: EntryDecodable.Type]
 
             while !entriesJSONContainer.isAtEnd {
                 guard let contentTypeInfo = jsonItems.contentTypeInfo(at: entriesJSONContainer.currentIndex) else {
@@ -129,10 +131,10 @@ extension ArrayResponse: Decodable {
 
                 // Throw an error in this case as if there is no matching content type for the current id, then
                 // we can't serialize any of the entries. The type must match ItemType as this is a homogenous array.
-                guard let entryDecodableType = contentTypes[contentTypeInfo.id], entryDecodableType == ItemType.self else {
+                guard let entryDecodableType = contentTypes?[contentTypeInfo.id], entryDecodableType == ItemType.self else {
                     let errorMessage = """
-                    A response for the QueryOn<\(ItemType.self)> did return successfully, but a serious error
-                    occurred when decoding the array of \(ItemType.self).
+                    A response for the QueryOn<\(ItemType.self)> did return successfully, but a serious error occurred when decoding the array of \(ItemType.self).
+                    Double check that you are passing \(ItemType.self).self, and references to all other EntryDecodable classes into the Client initializer.
                     """
                     throw SDKError.unparseableJSON(data: nil, errorMessage: errorMessage)
                 }
@@ -286,7 +288,7 @@ extension KeyedDecodingContainer {
 
         guard let itemsAsDictionaries = try self.decodeIfPresent(Swift.Array<Any>.self, forKey: key) as? [[String: Any]] else {
             if throwIfNotPresent {
-                throw SDKError.unparseableJSON(data: nil, errorMessage: "SDK was unable to serialize returned resources")
+                throw SDKError.unparseableJSON(data: nil, errorMessage: "SDK was unable to deserialize returned resources")
             } else {
                 return nil
             }
@@ -297,7 +299,7 @@ extension KeyedDecodingContainer {
         while !entriesJSONContainer.isAtEnd {
 
             guard let contentTypeInfo = itemsAsDictionaries.contentTypeInfo(at: entriesJSONContainer.currentIndex) else {
-                let errorMessage = "SDK was unable to parse sys.type property necessary to finish resource serialization."
+                let errorMessage = "SDK was unable to parse the `sys.contentType` property necessary to finish resource serialization."
                 throw SDKError.unparseableJSON(data: nil, errorMessage: errorMessage)
             }
 

@@ -9,9 +9,7 @@
 import Foundation
 
 /// Possible errors being thrown by the SDK
-public enum SDKError: Error {
-    /// Thrown when no valid client is available during sync
-    case invalidClient()
+public enum SDKError: Error, CustomDebugStringConvertible {
 
     /**
      Thrown when receiving an invalid HTTP response.
@@ -28,19 +26,12 @@ public enum SDKError: Error {
     /// Thrown if the subsequent sync operations are executed in preview mode.
     case previewAPIDoesNotSupportSync()
 
-    /// Thrown if a resource returned in the multi-locale format does not have any value for the given
-    /// fallback chain.
-    case noValuePresent(fieldKey: CodingKey)
-
     /**
      Thrown when receiving unparseable JSON responses.
      - Parameter data: The data being parsed.
      - Parameter errorMessage: The message from the error which occured during parsing.
      */
     case unparseableJSON(data: Data?, errorMessage: String)
-
-    /// Thrown when no entry is found matching a specified Entry id
-    case noEntryFoundFor(id: String)
 
     /// Thrown when no resource is found matching a specified id
     case noResourceFoundFor(id: String)
@@ -53,6 +44,29 @@ public enum SDKError: Error {
      - Parameter message: The message from the erorr which occured during parsing.
     */
     case localeHandlingError(message: String)
+
+    public var debugDescription: String {
+        return message
+    }
+
+    internal var message: String {
+        switch self {
+        case .invalidHTTPResponse(let response):
+            return "The HTTP request returned a corrupted HTTP response: \(response.debugDescription)"
+        case .invalidURL(let string):
+            return string
+        case .previewAPIDoesNotSupportSync:
+            return "The Content Preview API does not support subsequent sync operations."
+        case .unparseableJSON(_, let errorMessage):
+            return errorMessage
+        case .noResourceFoundFor(let id):
+            return "No resource was found with the id: \(id)"
+        case .unableToDecodeImageData:
+            return "The binary data returned was not convertible to a native UIImage or NSImage"
+        case .localeHandlingError(let message):
+            return message
+        }
+    }
 }
 
 /// Errors thrown for queries which have invalid construction.
