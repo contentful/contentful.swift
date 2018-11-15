@@ -101,7 +101,7 @@
 - [Localization support](https://www.contentful.com/developers/docs/concepts/locales/)
 - Up-to-date with the latest Swift development stack: Swift 4.x | Xcode 10.x
 - Supports [Environments](https://www.contentful.com/developers/docs/concepts/multiple-environments/) (**v2.0.0+**)
-
+- Experimental: to render [Rich Text](https://www.contentful.com/developers/docs/concepts/rich-text/) on iOS apps, check out [rich-text-renderer.swift](https://github.com/contentful-labs/rich-text-renderer.swift) on Github.
 ## Getting started
 
 In order to get started with the Contentful Swift SDK you'll need not only to install it, but also to get credentials which will allow you to have access to your content in Contentful.
@@ -294,7 +294,8 @@ It is recommended to use Swift 4.2, as older versions of the SDK will not have f
 
 ## Reach out to us
 
-### You have questions about how to use this library?
+### Have questions about how to use this library?
+
 * Reach out to our community forum: [![Contentful Community Forum](https://img.shields.io/badge/-Join%20Community%20Forum-3AB2E6.svg?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MiA1OSI+CiAgPHBhdGggZmlsbD0iI0Y4RTQxOCIgZD0iTTE4IDQxYTE2IDE2IDAgMCAxIDAtMjMgNiA2IDAgMCAwLTktOSAyOSAyOSAwIDAgMCAwIDQxIDYgNiAwIDEgMCA5LTkiIG1hc2s9InVybCgjYikiLz4KICA8cGF0aCBmaWxsPSIjNTZBRUQyIiBkPSJNMTggMThhMTYgMTYgMCAwIDEgMjMgMCA2IDYgMCAxIDAgOS05QTI5IDI5IDAgMCAwIDkgOWE2IDYgMCAwIDAgOSA5Ii8+CiAgPHBhdGggZmlsbD0iI0UwNTM0RSIgZD0iTTQxIDQxYTE2IDE2IDAgMCAxLTIzIDAgNiA2IDAgMSAwLTkgOSAyOSAyOSAwIDAgMCA0MSAwIDYgNiAwIDAgMC05LTkiLz4KICA8cGF0aCBmaWxsPSIjMUQ3OEE0IiBkPSJNMTggMThhNiA2IDAgMSAxLTktOSA2IDYgMCAwIDEgOSA5Ii8+CiAgPHBhdGggZmlsbD0iI0JFNDMzQiIgZD0iTTE4IDUwYTYgNiAwIDEgMS05LTkgNiA2IDAgMCAxIDkgOSIvPgo8L3N2Zz4K&maxAge=31557600)](https://support.contentful.com/)
 * Jump into our community slack channel: [![Contentful Community Slack](https://img.shields.io/badge/-Join%20Community%20Slack-2AB27B.svg?logo=slack&maxAge=31557600)](https://www.contentful.com/slack/)
 
