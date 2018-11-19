@@ -8,25 +8,25 @@
 
 import Foundation
 
-/// A Content Type represents your data model for Entries in a Contentful Space
+/// A `ContentType` represents your content model for entries in a Contentful space.
 public class ContentType: Resource, FlatResource, Decodable, ResourceQueryable {
 
-    /// The QueryType for ContentType is a ContentTypeQuery
+    /// The `QueryType` for `ContentType` is a `ContentTypeQuery`.
     public typealias QueryType = ContentTypeQuery
 
-    ///  System fields.
+    /// System fields.
     public let sys: Sys
 
-    /// The fields which are part of this Content Type
+    /// The fields which are part of this content type.
     public let fields: [Field]
 
-    /// The name of this Content Type
+    /// The name of this content type.
     public let name: String
 
-    /// The description of this Content Type.
+    /// The description of this content type.
     public let description: String?
 
-    /// Resource type ("ContentType")
+    /// Resource type ("ContentType").
     public var type: String {
         return sys.type
     }

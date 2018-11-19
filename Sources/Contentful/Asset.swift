@@ -60,14 +60,14 @@ public class Asset: LocalizableResource, AssetDecodable {
 }
 
 public extension AssetProtocol {
-    /**
-     The URL for the underlying media file with additional options for server side manipulations
-     such as format changes, resizing, cropping, and focusing on different areas including on faces,
-     among others.
 
-     - Parameter imageOptions: An array of `ImageOption` that will be used for server side manipulations.
-     - Throws: Will throw SDKError if the SDK is unable to generate a valid URL with the desired ImageOptions.
-     */
+    /// The URL for the underlying media file with additional options for server side manipulations
+    /// such as format changes, resizing, cropping, and focusing on different areas including on faces,
+    /// among others.
+    ///
+    /// - Parameter imageOptions: An array of `ImageOption` that will be used for server side manipulations.
+    /// - Returns: The URL for the image with the image manipulations, represented in the `imageOptions` parameter, applied.
+    /// - Throws: Will throw `SDKError` if the SDK is unable to generate a valid URL with the desired ImageOptions.
     public func url(with imageOptions: [ImageOption] = []) throws -> URL {
         guard let url = try urlString?.url(with: imageOptions) else {
             throw SDKError.invalidURL(string: urlString ?? "No url string is stored for Asset: \(id)")
@@ -84,7 +84,7 @@ extension Asset {
         /// Original filename of the file.
         public let fileName: String
 
-        ///  Content type of the file.
+        /// Content type of the file.
         public let contentType: String
 
         /// Details of the file, depending on it's MIME type.

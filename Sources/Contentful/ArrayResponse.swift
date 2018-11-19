@@ -28,15 +28,15 @@ private protocol HomogeneousArray: Array {
     var items: [ItemType] { get }
 }
 
-/**
- Sometimes, when links are unresolvable (for instance, when a linked entry is not published), the API
- will return an array of errors, one for each unresolvable link.
-*/
+/// Sometimes, when links are unresolvable (for instance, when a linked entry is not published), the API
+/// will return an array of errors, one for each unresolvable link.
 public struct ArrayResponseError: Decodable {
     /// The system fields of the error.
     public struct Sys: Decodable {
-        let id: String
-        let type: String
+        /// The identifer of the error.
+        public let id: String
+        /// The type identifier for the error.
+        public let type: String
     }
 
     /// System fields for the unresolvable link.
@@ -45,24 +45,21 @@ public struct ArrayResponseError: Decodable {
     public let sys: ArrayResponseError.Sys
 }
 
-/**
- A list of resources in Contentful
-
- This is the result type for any request of a collection of resources.
- See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/collection-resources-and-pagination>
- */
+/// A list of resources in Contentful
+/// This is the result type for any request of a collection of resources.
+/// See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/collection-resources-and-pagination>
 public struct ArrayResponse<ItemType>: HomogeneousArray where ItemType: Decodable & EndpointAccessible {
 
-    /// The resources which are part of the given array
+    /// The resources which are part of the array response.
     public let items: [ItemType]
 
-    /// The maximum number of resources originally requested
+    /// The maximum number of resources originally requested.
     public let limit: UInt
 
-    /// The number of elements skipped when performing the request
+    /// The number of elements skipped when performing the request.
     public let skip: UInt
 
-    /// The total number of resources which matched the original request
+    /// The total number of resources which matched the original request.
     public let total: UInt
 
     /// An array of errors, or partial errors, which describe links which were returned in the response that
@@ -197,28 +194,24 @@ internal struct MappedIncludes: Decodable {
     }
 }
 
-
-/**
- A list of Contentful entries that have been mapped to types conforming to `EntryDecodable` instances.
- A MixedArrayResponse respresents a heterogeneous collection of EntryDecodables being returned,
- for instance if hitting the base /entries endpoint with no additional query parameters. If there is no
- user-defined type for a particular entry, that entry will not be serialized at all. It is up to you to
- introspect the type of each element in the items array to handle the response data properly.
-
- See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/collection-resources-and-pagination>
- */
+/// A list of Contentful entries that have been mapped to types conforming to `EntryDecodable` instances.
+/// A `MixedArrayResponse` respresents a heterogeneous collection of `EntryDecodable` being returned,
+/// for instance, if hitting the base `/entries` endpoint with no additional query parameters. If there is no
+/// user-defined type for a particular entry, that entry will not be deserialized at all. It is up to you to
+/// introspect the type of each element in the items array to handle the response data properly.
+/// See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/collection-resources-and-pagination>
 public struct MixedArrayResponse: Array {
 
-    /// The resources which are part of the given array
+    /// The resources which are part of the given array response.
     public let items: [EntryDecodable]
 
     /// The maximum number of resources originally requested
     public let limit: UInt
 
-    /// The number of elements skipped when performing the request
+    /// The number of elements skipped when performing the request.
     public let skip: UInt
 
-    /// The total number of resources which matched the original request
+    /// The total number of resources which matched the original request.
     public let total: UInt
 
     /// An array of errors, or partial errors, which describe links which were returned in the response that

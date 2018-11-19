@@ -21,34 +21,26 @@ public protocol ResultType {
 }
 
 
-/**
- A result contains the result of a computation or task. It might be either successfull
- with an attached value or a failure with an attached error (which conforms to Swift 2's
- ErrorType). You can read more about the implementation in
- [this blog post](http://jensravens.de/a-swifter-way-of-handling-errors/).
- */
+/// A result contains the result of a computation or task. It might be either successfull
+/// with an attached value or a failure with an attached error (which conforms to Swift 2's
+/// ErrorType). You can read more about the implementation in
+/// [this blog post](http://jensravens.de/a-swifter-way-of-handling-errors/).
 public enum Result<T>: ResultType {
     case success(T)
     case error(Error)
 
-    /**
-     Initialize a result containing a successful value.
-     */
+    /// Initialize a result containing a successful value.
     public init(success value: T) {
         self = Result.success(value)
     }
 
-    /**
-     Initialize a result containing an error
-     */
+    /// Initializes a result containing an error
     public init(error: Error) {
         self = .error(error)
     }
 
-    /**
-     Direct access to the content of the result as an optional. If the result was a success,
-     the optional will contain the value of the result.
-     */
+    /// Direct access to the content of the result as an optional. If the result was a success,
+    /// the optional will contain the value of the result.
     public var value: T? {
         switch self {
         case let .success(v): return v
@@ -56,10 +48,8 @@ public enum Result<T>: ResultType {
         }
     }
 
-    /**
-     Direct access to the error of the result as an optional. If the result was an error,
-     the optional will contain the error of the result.
-     */
+    /// Direct access to the error of the result as an optional. If the result was an error,
+    /// the optional will contain the error of the result.
     public var error: Error? {
         switch self {
         case .success: return nil
@@ -68,10 +58,7 @@ public enum Result<T>: ResultType {
     }
 }
 
-
-/**
- Provide a default value for failed results.
- */
+/// Provides a default value for failed results.
 public func ?? <T> (result: Result<T>, defaultValue: @autoclosure () -> T) -> T {
     switch result {
     case .success(let x): return x

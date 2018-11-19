@@ -8,25 +8,25 @@
 
 import Foundation
 
-/// Protocol for resources inside Contentful
+/// Protocol for resources inside Contentful.
 public protocol Resource {
 
-    /// System fields
+    /// System fields.
     var sys: Sys { get }
 }
 
-/// A protocol signifying that a resource's Sys property are accessible for lookup from the top level.
+/// A protocol signifying that a resource's `Sys` property are accessible for lookup from the top level of the instance.
 public protocol FlatResource {
     /// The unique identifier of the Resource.
     var id: String { get }
 
-    /// The date representing the last time the Contentful Resource was updated.
+    /// The date representing the last time the Contentful resource was updated.
     var updatedAt: Date? { get }
 
-    /// The date that the Contentful Resource was first created.
+    /// The date that the Contentful resource was first created.
     var createdAt: Date? { get }
 
-    /// The code which represents which locale the Resource of interest contains data for.
+    /// The code of the locale the current resource contains content for.
     var localeCode: String? { get }
 }
 
@@ -55,25 +55,26 @@ public extension FlatResource where Self: Resource {
 /// A protocol enabling strongly typed queries to the Contentful Delivery API via the SDK.
 public protocol FieldKeysQueryable {
 
-    /// The CodingKey representing the names of each of the fields for the corresponding content type.
-    /// These coding keys should be the same as those used when implementing Decodable.
+    /// The `CodingKey` representing the field identifiers/JSON keys for the corresponding content type.
+    /// These coding keys should be the same as those used when implementing `Decodable`.
     associatedtype FieldKeys: CodingKey
 }
 
 
 /// Classes conforming to this protocol are accessible via an `Endpoint`.
 public protocol EndpointAccessible {
+    /// The endpoint that `EndpointAccessible` types are accessible from.
     static var endpoint: Endpoint { get }
 }
 
-/// Entities conforming to this protocol have a QueryType that the SDK can use to make generic fetch requests.
+/// Entities conforming to this protocol have a `QueryType` that the SDK can use to make generic fetch requests.
 public protocol ResourceQueryable {
-
+    /// The associated query type.
     associatedtype QueryType: AbstractQuery
 }
 
+/// A typealias to improve expressiveness.
 public typealias ContentTypeId = String
-
 
 /// Class to represent the information describing a resource that has been deleted from Contentful.
 public class DeletedResource: Resource, FlatResource, Decodable {
@@ -85,36 +86,32 @@ public class DeletedResource: Resource, FlatResource, Decodable {
     }
 }
 
-/**
- LocalizableResource
- 
- Base class for any Resource that has the capability of carrying information for multiple locales.
- If more than one locale is fetched using either `/sync` endpoint, or specifying the wildcard value
- for the locale paramater (i.e ["locale": "*"]) during a fetch, the SDK will cache returned values for 
- all locales. This class gives an interface to specify which locale should be used when fetching data
- from `Resource` instances that are in memory.
- */
+/// Base class for any Resource that has the capability of carrying information for multiple locales.
+/// If more than one locale is fetched using either `/sync` endpoint, or specifying the wildcard value
+/// for the locale paramater (i.e "locale=*") during a fetch, the SDK will cache returned values for
+/// all locales in moery. This class gives an interface to specify which locale should be used when
+/// reading content from `Resource` instances that are in memory.
 public class LocalizableResource: Resource, FlatResource, Decodable {
 
-    /// System fields
+    /// System fields.
     public let sys: Sys
 
-    /// Currently selected locale to use when reading data from the `fields` dictionary.
+    /// The currently selected locale to use when reading data from the `fields` dictionary.
     public var currentlySelectedLocale: Locale
 
-    /**
-     Content fields. If there is no value for a field associated with the currently selected `Locale`,
-     the SDK will walk down fallback chain until a value is found. If there is still no value after
-     walking the full chain, the field will be omitted from the `fields` dictionary.
-    */
+    /// The fields with content. If there is no value for a field associated with the currently selected `Locale`,
+    /// the SDK will walk down fallback chain until a value is found. If there is still no value after
+    /// walking the full chain, the field will be omitted from the `fields` dictionary.
     public var fields: [FieldName: Any] {
         return Localization.fields(forLocale: currentlySelectedLocale, localizableFields: localizableFields, localizationContext: localizationContext)
     }
 
-    /** Set's the locale on the Localizable Resource (i.e. an instance of `Asset` or `Entry`) 
-        so that future reads from the `fields` property will return data corresponding 
-        to the specified locale code.
-     */
+    /// Sets the locale on the Localizable Resource (i.e. an instance of `Asset` or `Entry`)
+    /// so that future reads from the `fields` property will return data corresponding
+    /// to the specified locale code.
+    ///
+    /// - Parameter code: The string code for the Locale.
+    /// - Returns: `false` if the locale code doesn't correspond to any locales in the space, `true`.
     @discardableResult public func setLocale(withCode code: LocaleCode) -> Bool {
         guard let newLocale = localizationContext.locales[code] else {
             return false
@@ -163,125 +160,6 @@ public class LocalizableResource: Resource, FlatResource, Decodable {
         case sys
         /// The JSON key for the fields object.
         case fields
-    }
-}
-
-
-/// Convenience methods for reading from dictionaries without conditional casts.
-public extension Dictionary where Key: ExpressibleByStringLiteral {
-
-    /**
-     Extract the String at the specified fieldName.
-
-     - Parameter key: The name of the field to extract the `String` from
-     - Returns: The `String` value, or `nil` if data contained is not convertible to a `String`.
-     */
-    public func string(at key: Key) -> String? {
-        return self[key] as? String
-    }
-
-    /** 
-     Extract the array of `String` at the specified fieldName.
-     
-     - Parameter key: The name of the field to extract the `[String]` from
-     - Returns: The `[String]`, or nil if data contained is not convertible to an `[String]`.
-     */
-    public func strings(at key: Key) -> [String]? {
-        return self[key] as? [String]
-    }
-
-    /**
-     Extract the `Int` at the specified fieldName.
-
-     - Parameter key: The name of the field to extract the `Int` value from.
-     - Returns: The `Int` value, or `nil` if data contained is not convertible to an `Int`.
-     */
-    public func int(at key: Key) -> Int? {
-        return self[key] as? Int
-    }
-
-    /**
-     Extract the `Date` at the specified fieldName.
-
-     - Parameter key: The name of the field to extract the `Date` value from.
-     - Returns: The `Date` value, or `nil` if data contained is not convertible to a `Date`.
-     */
-    public func int(at key: Key) -> Date? {
-        let dateString = self[key] as? String
-        let date = dateString?.iso8601StringDate
-        return date
-    }
-
-    /**
-     Extract the `Entry` at the specified fieldName.
-
-     - Parameter key: The name of the field to extract the `Entry` from.
-     - Returns: The `Entry` value, or `nil` if data contained does not have contain a Link referencing an `Entry`.
-     */
-    public func linkedEntry(at key: Key) -> Entry? {
-        let link = self[key] as? Link
-        let entry = link?.entry
-        return entry
-    }
-
-    /**
-     Extract the `Asset` at the specified fieldName.
-
-     - Parameter key: The name of the field to extract the `Asset` from.
-     - Returns: The `Asset` value, or `nil` if data contained does not have contain a Link referencing an `Asset`.
-     */
-    public func linkedAsset(at key: Key) -> Asset? {
-        let link = self[key] as? Link
-        let asset = link?.asset
-        return asset
-    }
-
-    /**
-     Extract the `[Entry]` at the specified fieldName.
-
-     - Parameter key: The name of the field to extract the `[Entry]` from.
-     - Returns: The `[Entry]` value, or `nil` if data contained does not have contain a Link referencing an `Entry`.
-     */
-    public func linkedEntries(at key: Key) -> [Entry]? {
-        let links = self[key] as? [Link]
-        let entries = links?.compactMap { $0.entry }
-        return entries
-    }
-
-    /**
-     Extract the `[Asset]` at the specified fieldName.
-
-     - Parameter key: The name of the field to extract the `[Asset]` from.
-     - Returns: The `[Asset]` value, or `nil` if data contained does not have contain a Link referencing an `[Asset]`.
-     */
-    public func linkedAssets(at key: Key) -> [Asset]? {
-        let links = self[key] as? [Link]
-        let assets = links?.compactMap { $0.asset }
-        return assets
-    }
-
-    /**
-     Extract the `CLLocationCoordinate2D` at the specified fieldName.
-
-     - Parameter key: The name of the field to extract the `CLLocationCoordinate2D` value from.
-     - Returns: The `Bool` value, or `nil` if data contained is not convertible to a `Bool`.
-     */
-    public func bool(at key: Key) -> Bool? {
-        return self[key] as? Bool
-    }
-
-    /**
-     Extract the `Bool` at the specified fieldName.
-
-     - Parameter key: The name of the field to extract the `Bool` value from.
-     - Returns: The `Bool` value, or `nil` if data contained is not convertible to a `Bool`.
-     */
-    public func location(at key: Key) -> Location? {
-        let coordinateJSON = self[key] as? [String: Any]
-        guard let longitude = coordinateJSON?["lon"] as? Double else { return nil }
-        guard let latitude = coordinateJSON?["lat"] as? Double else { return nil }
-        let location = Location(latitude: latitude, longitude: longitude)
-        return location
     }
 }
 

@@ -11,9 +11,9 @@ import Foundation
 /// Endpoints that are available for the Content Delivery and Preview APIs.
 public enum Endpoint: String {
     /// The spaces endpoint; also the base-path for all other endpoints.
-    case spaces         = ""
+    case spaces = ""
     /// The content types endpoint.
-    case contentTypes   = "content_types"
+    case contentTypes  = "content_types"
     /// The entries endpoint.
     case entries
     /// The assets endpoint.
@@ -23,7 +23,7 @@ public enum Endpoint: String {
     /// The synchronization endpoint.
     case sync
 
-    /// The path component string for this endpoint.
+    /// The path component string for the current endpoint.
     public var pathComponent: String {
         return rawValue
     }

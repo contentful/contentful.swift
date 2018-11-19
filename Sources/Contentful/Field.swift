@@ -6,10 +6,10 @@
 //  Copyright © 2015 Contentful GmbH. All rights reserved.
 //
 
-/// An alias for String representing the id for a field.
+/// An alias for String representing the id for a field to improve expressiveness.
 public typealias FieldName = String
 
-/// The possible Field types in Contentful
+/// The possible Field types in a Contentful content type.
 public enum FieldType: String, Decodable {
     /// An array of links or symbols
     case array                          = "Array"
@@ -43,26 +43,28 @@ public enum FieldType: String, Decodable {
 
 /// A Field describes a single value inside an Entry.
 public struct Field: Decodable {
+
     /// The unique identifier of this Field
     public let id: String
+
     /// The name of this Field
     public let name: String
 
     /// Whether this field is disabled (invisible by default in the UI)
     public let disabled: Bool
+
     /// Whether this field is localized (can have different values depending on locale)
     public let localized: Bool
+
     /// Whether this field is required (needs to have a value)
     public let required: Bool
 
     /// The type of this Field
     public let type: FieldType
 
-    /**
-     The item type of this Field (a subtype if `type` is `Array` or `Link`)
-     For `Array`s, itemType is inferred via items.type.
-     For `Link`s, itemType is inferred via "linkType".
-     */
+    /// The item type of this Field (a subtype if `type` is `Array` or `Link`)
+    /// For `Array`s, itemType is inferred via items.type.
+    /// For `Link`s, itemType is inferred via "linkType".
     public let itemType: FieldType?
 
     public init(from decoder: Decoder) throws {

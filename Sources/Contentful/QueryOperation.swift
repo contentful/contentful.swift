@@ -9,23 +9,22 @@
 import Foundation
 
 public extension Query {
-    /**
-     Property-value query operations used for matching patterns on either "sys" or "fields" properties of `Asset`s and `Entry`s.
-     Each operation specifies a property name on the left-hand side, with a value to match on the right.
-     For instance, using the doesNotEqual operation in an a concrete Query like:
 
-     ```
-     Query(where:"fields.name", .doesNotEqual("Happy Cat"))
-     ```
-
-     would append the following to the http URL:
-
-     ```
-     "fields.name[ne]=Happy%20Cat"
-     ```
-
-     Refer to the documentation for the various Query classes for more information.
-     */
+    /// Property-value query operations used for matching patterns on either "sys" or "fields" properties of assets and entries.
+    /// Each operation specifies a property name on the left-hand side, with a value to match on the right.
+    /// For instance, using the `.doesNotEqual` operation in an a concrete `Query` like:
+    ///
+    /// ```
+    /// Query(where:"fields.name", .doesNotEqual("Happy Cat"))
+    /// ```
+    ///
+    /// would append the following to the http URL:
+    ///
+    /// ```
+    /// "fields.name[ne]=Happy%20Cat"
+    /// ```
+    ///
+    /// Refer to the documentation for the various Query classes for more information.
     public enum Operation {
 
         /// The equality operator: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/equality-operator>
