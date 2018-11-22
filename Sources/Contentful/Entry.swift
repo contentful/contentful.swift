@@ -31,7 +31,7 @@ public extension EndpointAccessible where Self: EntryDecodable {
     }
 }
 
-/// An `Entr`y represents a typed collection of content by fields in Contentful.
+/// An `Entry` represents a typed collection of content, structured via fields, in Contentful.
 public class Entry: LocalizableResource {
 
     /// A convenience subscript operator to access the fields dictionary directly and return a String?

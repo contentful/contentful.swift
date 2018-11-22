@@ -56,7 +56,7 @@ public class Ordering {
     /// Initializes a new `Ordering` operator.
     ///
     /// - Parameters:
-    ///   - propertyKeyPath: The key path of the property you are performing the Query.Operation against. For instance,
+    ///   - propertyKeyPath: The key path of the property you are performing the Query.Operation` against. For instance,
     ///         `"sys.id"`
     ///   - inReverse: Specifies if the ordering by the sys parameter should be reversed or not. Defaults to `false`.
     /// - Throws: An error if the keypaths specified in the ordering are not valid.
@@ -70,7 +70,7 @@ public class Ordering {
     /// Initializes a new `Ordering` operator.
     ///
     /// - Parameters:
-    ///   - sys: The Sys.CodingKey of the system property you are performing the Query.Operation against. For instance,
+    ///   - sys: The `Sys.CodingKey` of the system property you are performing the `Query.Operation` against.
     ///   - inReverse: Specifies if the ordering by the sys parameter should be reversed or not. Defaults to `false`.
     /// - Throws: An error if the keypaths specified in the ordering are not valid.
     public convenience init(sys: Sys.CodingKeys, inReverse: Bool = false) throws {
@@ -96,7 +96,7 @@ public class Ordering {
 }
 
 /// A small class to create parameters used for ordering the responses when querying an endpoint
-/// that returns a colleciton of resources. This variation of an ordering takes a generic type parameter that
+/// that returns a collection of resources. This variation of an ordering takes a generic type parameter that
 /// conforms to `ResourceQueryable` in order to take advantage of the `FieldKeys` available on your type.
 /// See: `ChainableQuery.order(by order: Ordering...)`
 public class Ordered<EntryType>: Ordering where EntryType: FieldKeysQueryable {
@@ -207,20 +207,19 @@ public extension AbstractQuery {
     /// for more information and example usage.
     ///
     /// - Parameters:
-    ///   - key: The `Sys.CodingKeys` of the system property you are performing the Query.Operation against. For instance,
-    ///          `"sys.id"`
+    ///   - key: The `Sys.CodingKeys` of the system property you are performing the `Query.Operation` against. For instance, `.id`.
     ///   - operation: The query operation used in the query.
     /// - Returns: A newly initialized query.
     public static func `where`(sys key: Sys.CodingKeys, _ operation: Query.Operation) -> Self {
         return Self.where(valueAtKeyPath: "sys.\(key.stringValue)", operation)
     }
 
-    /// Static method for creating a Query with a Query.Operation. See concrete types Query, FilterQuery, AssetQuery, and QueryOn
+    /// Static method for creating a Query with a Query.Operation. See concrete types `Query`, `FilterQuery`, `AssetQuery`, and `QueryOn`
     /// for more information and example usage.
     ///
     /// - Parameters:
     ///   - keyPath: The key path of the property you are performing the Query.Operation against. For instance,
-    ///              `"sys.id"` or `"fields.yourFieldName"`
+    ///              `"sys.id"` or `"fields.yourFieldName"`.
     ///   - operation: The query operation used in the query.
     /// - Returns: A newly initialized query.
     public static func `where`(valueAtKeyPath keyPath: String, _ operation: Query.Operation) -> Self {
@@ -249,7 +248,7 @@ public extension ChainableQuery {
     /// for more information and example usage.
     ///
     /// - Parameters:
-    ///   - key: The `Sys.CodingKey` of the system property you are performing the Query.Operation against. For instance, "sys.id"
+    ///   - key: The `Sys.CodingKey` of the system property you are performing the Query.Operation against. For instance, `.id`.
     ///   - operation: The query operation used in the query.
     /// - Returns: A reference to the receiving query to enable chaining.
     public func `where`(sys key: Sys.CodingKeys, _ operation: Query.Operation) -> Self {
@@ -262,7 +261,7 @@ public extension ChainableQuery {
     /// for more information and example usage.
     ///
     /// - Parameters:
-    ///   - fieldName:  The string name of the field that the `Query.Operation` is matching against. For instance, "name"
+    ///   - fieldName:  The string name of the field that the `Query.Operation` is matching against. For instance, ".name"
     ///   - operation: The query operation used in the query.
     /// - Returns: A newly initialized query.
     public static func `where`(field fieldName: FieldName, _ operation: Query.Operation) -> Self {
@@ -282,7 +281,7 @@ public extension ChainableQuery {
         return self
     }
 
-    /// Instance method for appending more Query.Operation's to further filter results on the API. Example usage:
+    /// Instance method for appending more `Query.Operation`s to further filter results on the API. Example usage:
     ///
     /// ```
     /// let query = Query.where(contentTypeId: "cat").where("fields.color", .doesNotEqual("gray"))
@@ -293,7 +292,7 @@ public extension ChainableQuery {
     ///
     /// - Parameters:
     ///   - keyPath: The key path for the property you are performing the Query.Operation against. For instance,
-    ///              `"sys.id" or `"fields.yourFieldName"`
+    ///              `"sys.id" or `"fields.yourFieldName"`.
     ///   - operation: The query operation used in the query.
     /// - Returns: A reference to the receiving query to enable chaining.
     @discardableResult
@@ -326,7 +325,6 @@ public extension ChainableQuery {
     ///
     /// See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/full-text-search>
     ///
-    ///
     /// - Parameter text: The text string to match against.
     /// - Returns: A reference to the receiving query to enable chaining.
     /// - Throws: A `QueryError` if the text being searched for is 1 character in length or less.
@@ -339,7 +337,7 @@ public extension ChainableQuery {
 
     // MARK: - Response Manipulations.
 
-    /// Factory method for specifiying the level of includes to be resolved in the JSON response.
+    /// Static method for specifiying the level of includes to be resolved in the JSON response.
     /// The maximum permitted level of includes at the API level is 10; the SDK will limit the includes level at 10
     /// before the network request is made if the passed in value is too high in order to avoid
     /// hitting an error from the API.
@@ -372,7 +370,7 @@ public extension ChainableQuery {
         return self
     }
 
-    /// Factory method for creating a query that specifies that the first `n` items in a collection should be skipped
+    /// Static method for creating a query that specifies that the first `n` items in a collection should be skipped
     /// before returning the results.
     /// Use in conjunction with the `limit(to:)` and `order(by:)` methods to paginate responses.
     ///
@@ -408,7 +406,7 @@ public extension ChainableQuery {
     }
 
     /// Convenience initializer for a ordering responses by the values at the specified field. Field types that can be
-    /// specified are Strings, Numbers, or Booleans.
+    /// specified are strings, numbers, or booleans.
     ///
     /// Example usage:
     ///
@@ -428,7 +426,7 @@ public extension ChainableQuery {
     }
 
     /// Instance method for ordering responses by the values at the specified field. Field types that can be
-    /// specified are Strings, Numbers, or Booleans.
+    /// specified are strings, numbers, or booleans.
     ///
     /// Example usage:
     ///
@@ -458,7 +456,7 @@ public extension ChainableQuery {
         return self
     }
 
-    /// Factory method for creating a query that limits responses to a certain number of values. Use in conjunction with the `skip` method
+    /// Static method for creating a query that limits responses to a certain number of values. Use in conjunction with the `skip` method
     /// to paginate responses. The maximum number of items that can be returned by the API on one page is 1000. The SDK will limit your value
     /// to 1000 if you pass in something larger in order to avoid getting an error returned from the delivery API.
     ///
@@ -530,7 +528,7 @@ public extension AbstractResourceQuery {
 
     /// Initializes a select operation query in which only the fields specified
     /// in the fieldNames property will be returned in the JSON response.
-    /// The `"sys"` dictionary is always requested by the SDK.
+    /// The `"sys"` property is always requested by the SDK.
     /// Note that if you are using the select operator with an instance `QueryOn<EntryType>`
     /// that your model types must have optional types for properties that you are omitting in the response (by not including them in your selections array).
     /// If you are not using the `QueryOn` type while querying entries, make sure to specify the content type id.
@@ -556,7 +554,7 @@ public extension AbstractResourceQuery {
         return query
     }
 
-    /// Instance method for select operation in which only the fields specified in the fieldNames property will be returned in the JSON response.
+    /// Instance method for select operation in which only the fields specified in the `fieldNames` parameter will be returned in the JSON response.
     /// The `"sys"` dictionary is always requested by the SDK.
     /// Note that if you are using the select operator with an instance `QueryOn<EntryType>`
     /// that you must make properties that you are ommitting in the response (by not including them in your selections array) optional properties.

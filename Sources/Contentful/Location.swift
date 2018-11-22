@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// Small struct to store location coordinates. This is used in preferences over CoreLocation types to avoid
+/// Small class to store location coordinates. This is used in preferences over CoreLocation types to avoid
 /// extra linking requirements for the SDK.
 @objc
 public class Location: NSObject, Decodable, NSCoding {
@@ -40,14 +40,14 @@ public class Location: NSObject, Decodable, NSCoding {
 
     // MARK: NSCoding
 
-    /// Regquired initializer for NSCoding conformance.
+    /// Required initializer for NSCoding conformance.
     @objc
     public required init?(coder aDecoder: NSCoder) {
         self.latitude = aDecoder.decodeDouble(forKey: CodingKeys.latitude.rawValue)
         self.longitude = aDecoder.decodeDouble(forKey: CodingKeys.longitude.rawValue)
     }
 
-    /// Regquired encoding function for NSCoding conformance.
+    /// Required encoding function for NSCoding conformance.
     @objc
     public func encode(with aCoder: NSCoder) {
         aCoder.encode(latitude, forKey: CodingKeys.latitude.rawValue)
