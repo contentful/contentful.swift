@@ -8,20 +8,18 @@
 
 import Foundation
 
-/**
- Classes conforming to this protocol can be passed into your Client instance so that fetch methods
- asynchronously returning MappedCollection can be used and classes of your own definition can be returned.
-
- It's important to note that there is no special handling of locales so if using the locale=* query parameter,
- you will need to implement the special handing in your `init(from decoder: Decoder) throws` initializer for your class.
-
- Example:
-
- ```
- func fetchMappedEntries(with query: Query<Cat>,
- then completion: @escaping ResultsHandler<MappedArrayResponse<Cat>>) -> URLSessionDataTask?
- ```
- */
+/// Classes conforming to this protocol can be passed into your `Client` instance so that fetch methods
+/// returning may decode the JSON to your own classes before returning them in async callbacks.
+///
+/// It's important to note that there is no special handling of locales so if using the locale=* query parameter,
+/// you will need to implement the special handing in your `init(from decoder: Decoder) throws` initializer for your class.
+///
+/// Example:
+///
+/// ```
+/// func fetchArray(of: Cat.self, matching: QueryON<Cat>,
+/// then completion: @escaping ResultsHandler<MappedArrayResponse<Cat>>) -> URLSessionDataTask?
+/// ```
 public protocol EntryDecodable: FlatResource, Decodable, EndpointAccessible {
     /// The identifier of the Contentful content type that will map to this type of `EntryPersistable`
     static var contentTypeId: ContentTypeId { get }
@@ -33,7 +31,7 @@ public extension EndpointAccessible where Self: EntryDecodable {
     }
 }
 
-/// An Entry represents a typed collection of data in Contentful
+/// An `Entry` represents a typed collection of content, structured via fields, in Contentful.
 public class Entry: LocalizableResource {
 
     /// A convenience subscript operator to access the fields dictionary directly and return a String?

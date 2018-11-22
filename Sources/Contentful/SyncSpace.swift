@@ -38,7 +38,7 @@ public final class SyncSpace: Decodable {
         /// Sync only deleted assets.
         case deletedAssets
 
-        // Query parameters.
+        /// Query parameters.
         public var parameters: [String: String] {
 
             let typeParameter = "type"
@@ -67,6 +67,7 @@ public final class SyncSpace: Decodable {
 
     /// An array of identifiers for assets that were deleted after the last sync operations.
     public var deletedAssetIds = [String]()
+
     /// An array of identifiers for entries that were deleted after the last sync operations.
     public var deletedEntryIds = [String]()
 
@@ -85,13 +86,9 @@ public final class SyncSpace: Decodable {
         return Array(entriesMap.values)
     }
 
-    /**
-     Continue a synchronization with previous data.
-
-     - parameter syncToken: The sync token from a previous synchronization
-
-     - returns: An initialized synchronized space instance
-     */
+    /// The sync token from a previous synchronization
+    ///
+    /// - Parameter syncToken: The sync token from a previous synchronization.
     public init(syncToken: String = "") {
         self.hasMorePages = false
         self.syncToken = syncToken

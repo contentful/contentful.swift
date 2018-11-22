@@ -9,15 +9,14 @@
 import Foundation
 
 /// Implement this protocol in order to provide your own custom logger for the SDK to log messages to.
-/// Your CustomLogger instance will only be passed message it should log
+/// Your `CustomLogger` instance will only be passed message it should log according the set log level.
 public protocol CustomLogger {
     /// Logs a message if the message being logged has a log level less than the level configured on the Logger instance. Logging with LogType `none` does nothing.
     func log(message: String)
 }
 
-
 /// A logger for outputting status messages to the console from Contentful SDK.
-public class ContentfulLogger {
+public enum ContentfulLogger {
 
     #if os(iOS) || os(tvOS) || os(watchOS) || os(macOS)
     /// The type of logger used to log messages; defaults to `NSLog` on iOS, tvOS, watchOS, macOS. Defaults to `print` on other platforms.

@@ -12,9 +12,10 @@ import Foundation
 /// type `T` on success, or an error if the request was unsuccessful.
 public typealias ResultsHandler<T> = (_ result: Result<T>) -> Void
 
-/// Client object for performing requests against the Contentful API.
+/// Client object for performing requests against the Contentful Delivery and Preview APIs.
 open class Client {
 
+    /// The configuration for this instance of the client.
     public let clientConfiguration: ClientConfiguration
 
     /// The identifier of the space this Client is set to interface with.
@@ -42,12 +43,10 @@ open class Client {
     /// the fields dictionary of entries and assets.
     public private(set) var jsonDecoder: JSONDecoder
 
-    /**
-     The persistence integration which will receive delegate messages from the `Client` when new
-     `Entry` and `Asset` objects are created from data being sent over the network. Currently, these
-     messages are only sent for `client.initialSync()` and `client.nextSync`. The relevant
-     persistence integration lives at <https://github.com/contentful/contentful-persistence.swift>.
-     */
+    /// The persistence integration which will receive delegate messages from the `Client` when new
+    /// `Entry` and `Asset` objects are created from data being sent over the network. Currently, these
+    /// messages are only sent during the response hadling for `client.sync` calls. See a CoreData
+    /// persistence integration at <https://github.com/contentful/contentful-persistence.swift>.
     public var persistenceIntegration: PersistenceIntegration? {
         didSet {
             guard var headers = self.urlSession.configuration.httpAdditionalHeaders else {
@@ -67,24 +66,23 @@ open class Client {
 
     internal var urlSession: URLSession
 
-    fileprivate(set) var space: Space?
+    fileprivate(set) internal var space: Space?
 
     fileprivate var scheme: String { return clientConfiguration.secure ? "https": "http" }
 
-    /**
-     Initializes a new Contentful client instance
-
-     - Parameter spaceId: The space you want to perform requests against.
-     - Parameter accessToken: The access token used for authorization.
-     - Parameter clientConfiguration: Custom Configuration of the Client.
-     - Parameter sessionConfiguration: The configuration for the URLSession. Note that HTTP headers will be overwritten
-     interally by the SDK so that requests can be authorized correctly.
-     - Parameter persistenceIntegration: An object conforming to the `PersistenceIntegration` protocol
-     which will receive messages about created/deleted Resources when calling `sync()` methods.
-     - Parameter contentModel: the ContentModel which references the model classes to map responses with Contentful entries 
-                               to when using the relevant fetch methods.
-     - Returns: An initialized client instance.
-     */
+    /// Initializes a new Contentful client instance
+    ///
+    /// - Parameters:
+    ///   - spaceId: The identifier of the space to perform requests against.
+    ///   - environmentId: The identifier of the space environment to perform requests against. Defaults to "master".
+    ///   - accessToken: The access token used for authorization.
+    ///   - host: The domain host to perform requests against. Defaults to `Host.delivery` i.e. `"cdn.contentful.com"`.
+    ///   - clientConfiguration: Custom Configuration of the Client. Uses `ClientConfiguration.default` if omitted.
+    ///   - sessionConfiguration: The configuration for the URLSession. Note that HTTP headers will be overwritten
+    ///         internally by the SDK so that requests can be authorized correctly.
+    ///   - persistenceIntegration: An object conforming to the `PersistenceIntegration` protocol
+    ///         which will receive messages about created/deleted Resources when calling `sync` methods.
+    ///   - contentTypeClasses: An array of `EntryDecodable` classes to map Contentful entries to when using the relevant fetch methods.
     public init(spaceId: String,
                 environmentId: String = "master",
                 accessToken: String,
@@ -130,12 +128,12 @@ open class Client {
         urlSession.invalidateAndCancel()
     }
 
-    /// Returns an optional URL for the specified endpoint with it's query paramaters.
+    /// Returns an optional URL for the specified endpoint with its query paramaters.
     ///
     /// - Parameters:
-    ///   - endpoint: The delivery/preview API endpoint
+    ///   - endpoint: The delivery/preview API endpoint.
     ///   - parameters: A dictionary of query parameters which be appended at the end of the URL in a URL safe format.
-    /// - Returns: A valid URL for the Content delivery or preview API, or nil if the URL could not be constructed.
+    /// - Returns: A valid URL for the Content Delivery or Preview API, or nil if the URL could not be constructed.
     public func url(endpoint: Endpoint, parameters: [String: String]? = nil) -> URL {
         var components: URLComponents
 
@@ -146,12 +144,12 @@ open class Client {
             components = URLComponents(string: "\(scheme)://\(host)/spaces/\(spaceId)/environments/\(environmentId)/\(endpoint.pathComponent)")!
         }
 
-        let queryItems: [URLQueryItem]? = parameters?.map { (key, value) in
+        let queryItems: [URLQueryItem]? = parameters?.map { key, value in
             return URLQueryItem(name: key, value: value)
         }
         // Since Swift 4.2, the order of a dictionary's keys will vary accross executions so we must sort
         // the parameters so that the URL is consistent accross executions (so that all test recordings are found).
-        components.queryItems = queryItems?.sorted { (a, b) in
+        components.queryItems = queryItems?.sorted { a, b in
             return a.name > b.name
         }
 
@@ -159,13 +157,12 @@ open class Client {
         return url
     }
 
-    /// This is a generic fetch method which will decode the returned JSON from any URL and pass the
-    /// decoded result back in a completion handler wrapped in a `Result` instance. Use this method if you prefer
-    /// to specify your `Decodable` types and interfaces yourself rather than using the semantics provided by the SDK.
+    /// Fetches the JSON data at the specified URL, decoding the returned JSON and passing it back
+    /// as a `Result` in the completion handler.
     ///
     /// - Parameters:
-    ///   - url: The optional URL representing the endpoint & query parameters for returning JSON.
-    ///   - completion: The completion handler which takes in a result wrapping your decoded type.
+    ///   - url: The optional URL representing the endpoint with query parameters for returning JSON.
+    ///   - completion: The completion handler which takes in a `Result` wrapping a `Decodable` type.
     /// - Returns: Returns the URLSessionDataTask of the request which can be used for request cancellation.
     public func fetch<DecodableType: Decodable>(url: URL,
                                                 then completion: @escaping ResultsHandler<DecodableType>) -> URLSessionDataTask {
@@ -199,13 +196,13 @@ open class Client {
         return task
     }
 
-    /// This is the base fetch method which all other fetch methods delegate to. Use it if you want to
-    /// get back raw `Data` objects and handle JSON parsing completely on your own.
+    /// This is the base fetch method which all other fetch methods delegate to. Use it directly to
+    /// get back raw `Data` objects and bypass the JSON parsing provided by the SDK.
     ///
     /// - Parameters:
-    ///   - url: The URL representing the endpoint & query parameters for returning JSON.
-    ///   - completion: The completion handler which takes in a Result wrapping the Data returned by the API.
-    /// - Returns: Returns the URLSessionDataTask of the request which can be used for request cancellation.
+    ///   - url: The URL representing the endpoint with query parameters for returning JSON.
+    ///   - completion: The completion handler which takes a `Result` wrapping the `Data` returned by the API.
+    /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation.
     public func fetch(url: URL, then completion: @escaping ResultsHandler<Data>) -> URLSessionDataTask {
         let task = urlSession.dataTask(with: url) { data, response, error in
             if let data = data {
@@ -342,13 +339,13 @@ open class Client {
 
 extension Client {
 
-    /**
-     Fetch all the locales belonging to the environment that was configured with the client.
-
-     - Parameter completion: A handler being called on completion of the request.
-     - Returns: The data task being used, enables cancellation of requests.
-     */
-    @discardableResult public func fetchLocales(then completion: @escaping ResultsHandler<ArrayResponse<Contentful.Locale>>) -> URLSessionDataTask {
+    /// Fetches all the locales belonging to the space environment that this client is configured to interface with.
+    ///
+    /// - Parameters:
+    ///   - completion: A handler being called on completion of the request.
+    /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation.
+    @discardableResult
+    public func fetchLocales(then completion: @escaping ResultsHandler<ArrayResponse<Contentful.Locale>>) -> URLSessionDataTask {
 
         // The robust thing to do would be to fetch all pages of the `/locales` endpoint, however, pagination is not supported
         // at the moment. We also are not expecting any consumers to have > 1000 locales as Contentful subscriptions do not allow that.
@@ -380,7 +377,8 @@ extension Client {
         }
     }
 
-    @discardableResult internal func fetchLocalesIfNecessary(then completion: @escaping ResultsHandler<Array<Contentful.Locale>>) -> URLSessionDataTask? {
+    @discardableResult
+    internal func fetchLocalesIfNecessary(then completion: @escaping ResultsHandler<Array<Contentful.Locale>>) -> URLSessionDataTask? {
         if let locales = self.locales {
             let localeCodes = locales.map { $0.code }
             persistenceIntegration?.update(localeCodes: localeCodes)
@@ -400,15 +398,13 @@ extension Client {
 
 extension Client {
 
-    /**
-     Fetch the space this client is constrained to.
-
-     - Parameter completion: A handler being called on completion of the request.
-
-     - Returns: The data task being used, which enables cancellation of requests, or `nil` if the.
-     Space was already cached locally
-     */
-    @discardableResult public func fetchSpace(then completion: @escaping ResultsHandler<Space>) -> URLSessionDataTask? {
+    /// Fetches the space this client is configured to interface with.
+    ///
+    /// - Parameters:
+    ///   - completion: A handler being called on completion of the request.
+    /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation, or `nil` if the Space was already cached locally
+    @discardableResult
+    public func fetchSpace(then completion: @escaping ResultsHandler<Space>) -> URLSessionDataTask? {
         // Attempt to pull from cache first.
         if let space = self.space {
             completion(Result.success(space))
@@ -423,17 +419,16 @@ extension Client {
 
 extension Client {
 
-    /**
-     Fetch the underlying media file as `Data`.
-
-     - Parameter asset: The `Asset` which contains the relevant media file.
-     - Parameter imageOptions: An optional array of options for server side manipulations.
-     - Returns: The `Observable` for the `Data` result.
-
-     */
-    @discardableResult public func fetchData(for asset: AssetProtocol,
-                                             with imageOptions: [ImageOption] = [],
-                                             then completion: @escaping ResultsHandler<Data>) -> URLSessionDataTask? {
+    /// Fetches the underlying media file of a Contentful asset as `Data`.
+    ///
+    /// - Parameters:
+    ///   - asset: The instance of `AssetProtocol` which has the URL for media file.
+    ///   - imageOptions: An optional array of options for server side manipulations of image files.
+    /// - Returns: Returns the URLSessionDataTask of the request which can be used for request cancellation.
+    @discardableResult
+    public func fetchData(for asset: AssetProtocol,
+                          with imageOptions: [ImageOption] = [],
+                          then completion: @escaping ResultsHandler<Data>) -> URLSessionDataTask? {
         do {
             let url = try asset.url(with: imageOptions)
             return fetch(url: url, then: completion)
@@ -446,17 +441,18 @@ extension Client {
 
 extension Client {
 
-    /// Fetch a resource by id: available resource types that match this functions constraints are:
+    /// Fetches a resource by id: available resource types that match this function's constraints are:
     /// `Space`, `Asset`, `ContentType`, `Entry`, or any of your own types conforming to `EntryDecodable` or `AssetDecodable`.
     ///
     /// - Parameters:
     ///   - resourceType: A reference to the Swift type which conforms to `Decodable & EndpointAccessible`
     ///   - id: The identifier of the resource which should be fetched.
     ///   - completion: The handler being called on completion of the request with a Result wrapping your decoded type or an error.
-    /// - Returns: A reference to the URLSessionDataTask to enable cancelling the request.
-    @discardableResult public func fetch<ResourceType>(_ resourceType: ResourceType.Type,
-                                                       id: String,
-                                                       then completion: @escaping ResultsHandler<ResourceType>) -> URLSessionDataTask
+    /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation.
+    @discardableResult
+    public func fetch<ResourceType>(_ resourceType: ResourceType.Type,
+                                    id: String,
+                                    then completion: @escaping ResultsHandler<ResourceType>) -> URLSessionDataTask
         where ResourceType: Decodable & EndpointAccessible {
 
             // If the resource is not an entry, then don't worry about fetching with includes.
@@ -486,11 +482,12 @@ extension Client {
     /// - Parameters:
     ///   - resourceType: A reference to the concrete resource class which conforms to `Decodable & EndpointAccessible & ResourceQueryable`
     ///   - query: The query of type `ResourceType.QueryType` to be used to match results againtst.
-    ///   - completion: The handler being called on completion of the request with a Result wrapping an ArrayResponse of decoded type or an error.
-    /// - Returns: A reference to the URLSessionDataTask to enable cancelling the request.
-    @discardableResult public func fetchArray<ResourceType, QueryType>(of resourceType: ResourceType.Type,
-                                                                       matching query: QueryType? = nil,
-                                                                       then completion: @escaping ResultsHandler<ArrayResponse<ResourceType>>) -> URLSessionDataTask
+    ///   - completion: The handler being called on completion of the request with a `Result` wrapping an `ArrayResponse` of decoded type.
+    /// - Returns: Returns the` URLSessionDataTask` of the request which can be used for request cancellation.
+    @discardableResult
+    public func fetchArray<ResourceType, QueryType>(of resourceType: ResourceType.Type,
+                                                    matching query: QueryType? = nil,
+                                                    then completion: @escaping ResultsHandler<ArrayResponse<ResourceType>>) -> URLSessionDataTask
         where ResourceType: ResourceQueryable, QueryType == ResourceType.QueryType {
             return fetch(url: url(endpoint: ResourceType.endpoint, parameters: query?.parameters ?? [:]), then: completion)
     }
@@ -498,13 +495,14 @@ extension Client {
     /// This is a generic fetch method which can be used to fetch collections of `EntryDecodable` instances of your own definition.
     ///
     /// - Parameters:
-    ///   - entryType: A reference to the concrete Swift class conforming to `EntryDecodable` to be returned in the ArrayResponse.
+    ///   - entryType: A reference to a concrete Swift class conforming to `EntryDecodable` that will be fetched.
     ///   - query: The `QueryOn<EntryType>` to be used to match results againtst.
-    ///   - completion: The handler being called on completion of the request with a Result wrapping an ArrayResponse of decoded type or an error.
-    /// - Returns: A reference to the URLSessionDataTask to enable cancelling the request.
-    @discardableResult public func fetchArray<EntryType>(of entryType: EntryType.Type,
-                                                         matching query: QueryOn<EntryType> = QueryOn<EntryType>(),
-                                                         then completion: @escaping ResultsHandler<ArrayResponse<EntryType>>) -> URLSessionDataTask {
+    ///   - completion: The handler being called on completion of the request with a `Result` wrapping an `ArrayResponse`.
+    /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation.
+    @discardableResult
+    public func fetchArray<EntryType>(of entryType: EntryType.Type,
+                                      matching query: QueryOn<EntryType> = QueryOn<EntryType>(),
+                                      then completion: @escaping ResultsHandler<ArrayResponse<EntryType>>) -> URLSessionDataTask {
         let url = self.url(endpoint: .entries, parameters: query.parameters)
         return fetch(url: url, then: completion)
     }
@@ -515,9 +513,10 @@ extension Client {
     /// - Parameters:
     ///   - query: The `Query` with which to match the results against.
     ///   - completion: The handler being called on completion of the request with a Result wrapping your decoded type or an error.
-    /// - Returns: A reference to the URLSessionDataTask to enable cancelling the request.
-    @discardableResult public func fetchArray(matching query: Query? = nil,
-                                              then completion: @escaping ResultsHandler<MixedArrayResponse>) -> URLSessionDataTask {
+    /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation.
+    @discardableResult
+    public func fetchArray(matching query: Query? = nil,
+                          then completion: @escaping ResultsHandler<MixedArrayResponse>) -> URLSessionDataTask {
         let url = self.url(endpoint: .entries, parameters: query?.parameters ?? [:])
         return fetch(url: url, then: completion)
     }
@@ -527,24 +526,21 @@ extension Client {
 
 extension Client {
 
-    /**
-     Perform a synchronization operation, updating the passed in `SyncSpace` object with
-     latest content from Contentful. If the passed in `SyncSpace` is a new empty instance with an empty
-     sync token, a full synchronization will be done.
-
-     Calling this will mutate passed in SyncSpace and also return a reference to itself to the completion
-     handler in order to allow chaining of operations.
-
-     - Parameter syncSpace: the relevant `SyncSpace` to perform the subsequent sync on. Defaults to a new empty instance of sync space.
-     - Parameter syncableTypes: The types that can be synchronized.
-     - Parameter completion: A handler which will be called on completion of the operation
-
-     - Returns: The data task being used, enables cancellation of requests.
-     */
-
-    @discardableResult public func sync(for syncSpace: SyncSpace = SyncSpace(),
-                                        syncableTypes: SyncSpace.SyncableTypes = .all,
-                                        then completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
+    /// Performs a synchronization operation, updating the passed in `SyncSpace` object with
+    /// latest content from Contentful. If the passed in `SyncSpace` is a new empty instance with an empty
+    /// sync token, a full synchronization will be done.
+    /// Calling this will mutate passed in `SyncSpace `and also pass back  a reference to it in the completion
+    /// handler in order to allow chaining of operations.
+    ///
+    /// - Parameters:
+    ///   - syncSpace: The relevant `SyncSpace` to perform the subsequent sync on. Defaults to a new empty instance of `SyncSpace`.
+    ///   - syncableTypes: The types that can be synchronized.
+    ///   - completion: A handler which will be called on completion of the operation
+    /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation.
+    @discardableResult
+    public func sync(for syncSpace: SyncSpace = SyncSpace(),
+                     syncableTypes: SyncSpace.SyncableTypes = .all,
+                     then completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
 
         // Preview mode only supports `initialSync` not `nextSync`. The only reason `nextSync` should
         // be called while in preview mode, is internally by the SDK to finish a multiple page sync.

@@ -8,11 +8,9 @@
 
 import Foundation
 
-/** 
- A representation of Linked Resources that a field may point to in your content model.
- This stateful type safely highlights links that have been resolved to Entries, Assets, or if they are
- still unresolved.
-*/
+/// A representation of Linked Resources that a field may point to in your content model.
+/// This stateful type safely highlights links that have been resolved to entries, resolved to assets,
+/// or remain unresolved.
 public enum Link: Decodable {
 
     /// The system properties which describe the link.
@@ -28,16 +26,16 @@ public enum Link: Decodable {
         public let type: String
     }
 
-    /// The Link points to an `Asset`
+    /// The Link points to an `Asset`.
     case asset(Asset)
 
-    /// The Link points to an `Entry`
+    /// The Link points to an `Entry`.
     case entry(Entry)
 
     /// The Link is unresolved, and therefore contains a dictionary of metadata describing the linked resource.
     case unresolved(Link.Sys)
 
-    /// The unique identifier of the linked asset or entry
+    /// The unique identifier of the linked asset or entry.
     public var id: String {
         switch self {
         case .asset(let asset):     return asset.id
@@ -92,11 +90,11 @@ public enum Link: Decodable {
                     return Link.asset(asset)
                 }
             default:
-                fatalError()
+                fatalError("A serious error occured, attempted to resolve a Link that was not of type Entry or Asset")
             }
 
         default:
-            fatalError()
+            fatalError("A serious error occured, attempted to resolve an already resolved Link")
         }
         return self
     }

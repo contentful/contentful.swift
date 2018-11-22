@@ -25,13 +25,13 @@ public class Locale: Resource, FlatResource, Decodable {
     /// Linked list accessor for going to the next fallback locale
     public let fallbackLocaleCode: LocaleCode?
 
-    /// The unique identifier for this Locale
+    /// The unique identifier for this Locale.
     public let code: LocaleCode
-    /**
-     Whether this Locale is the default (if a Field is not translated in a given Locale, the value of
-     the default locale will be returned by the API)
-     */
+
+    /// Whether this Locale is the default (if a Field is not translated in a given Locale, the value of
+    /// the default locale will be returned by the API)
     public let isDefault: Bool
+
     /// The name of this Locale
     public let name: String
 
@@ -55,21 +55,24 @@ public class Locale: Resource, FlatResource, Decodable {
         if let sys = try container.decodeIfPresent(Sys.self, forKey: .sys) {
             self.sys = sys
         } else {
-            self.sys = Sys(id: code, type: "Locale", createdAt: nil, updatedAt: nil,
-                           locale: nil, revision: nil, contentTypeInfo: nil)
+            self.sys = Sys(id: code,
+                           type: "Locale",
+                           createdAt: nil,
+                           updatedAt: nil,
+                           locale: nil,
+                           revision: nil,
+                           contentTypeInfo: nil)
         }
     }
 }
 
-/**
- The `LocalizationContext` contains meta information about a Space about locales including
- information about which locale is the default, and what the fallback locale chain is.
- 
- This contextual information is necessary to intiialize `Entry` and `Asset` instances properly so that
- the correct data is displayed for the currently selected locale. For instance, if a particular field
- for an `Entry` does not have data for the currently selected locale, the SDK will walk the fallback
- chain for this field until a non-null value is found, or full chain has been walked.
- */
+/// The `LocalizationContext` contains meta information about a Spaces locales including
+/// information about which locale is the default, and what the fallback locale chain is.
+///
+/// This contextual information is necessary to intiialize `Entry` and `Asset` instances properly so that
+/// the correct data is displayed for the currently selected locale. For instance, if a particular field
+/// for an `Entry` does not have data for the currently selected locale, the SDK will walk the fallback
+/// chain for this field until a non-null value is found, or full chain has been walked.
 public class LocalizationContext {
 
     /// An ordered collection of locales representing the fallback chain.
@@ -81,7 +84,7 @@ public class LocalizationContext {
     /// Initialize a new LocalizationContext with the relevant locales.
     public init?(locales: [Locale]) {
 
-        guard let defaultLocale = locales.filter({ $0.isDefault }).first else {
+        guard let defaultLocale = locales.first(where: { $0.isDefault }) else {
             return nil
         }
         self.`default` = defaultLocale
@@ -93,7 +96,7 @@ public class LocalizationContext {
 
 }
 
-internal struct Localization {
+internal enum Localization {
 
     // Walks down the fallback chain and returns the field values for the specified locale.
     internal static func fields(forLocale locale: Locale?,

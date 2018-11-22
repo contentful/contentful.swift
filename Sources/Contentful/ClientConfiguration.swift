@@ -9,17 +9,15 @@
 import Foundation
 
 /// Some default values that the SDK uses.
-public struct Host {
+public enum Host {
     /// The path for the Contentful Delivery API.
     public static let delivery = "cdn.contentful.com"
     /// The path for the Contentful Preview API.
     public static let preview = "preview.contentful.com"
 }
 
-/**
- The `Integration` protocol describes the libary name and version number for external integrations
- to be used in conjunction with the contentful.swift SDK.
- */
+/// The `Integration` protocol describes the libary name and version number for external integrations
+/// to be used in conjunction with the contentful.swift SDK.
 public protocol Integration {
 
     /// The name of the integrated library.
@@ -29,20 +27,23 @@ public protocol Integration {
     var version: String { get }
 }
 
-/// ClientConfiguration parameters for a client instance
+/// ClientConfiguration parameters for a `Client` instance.
 public struct ClientConfiguration {
 
-    /// The default instance of ClientConfiguration which interfaces with the Content Delivery API.
+    /// An instance of `ClientConfiguration` with sane defaults. This is a singleton instance.
     public static let `default` = ClientConfiguration()
 
-    /// Whether or not to use HTTPS connections, defaults to `true`
+    /// Initializes a `ClientConfiguration` with default values
+    public init() {}
+
+    /// Whether or not to use HTTPS connections; defaults to `true`.
     public var secure = true
 
     /// An optional configuration to override the date decoding strategy that is provided by the the SDK.
     public var dateDecodingStrategy: JSONDecoder.DateDecodingStrategy?
 
-    /// An optional configuration to override the TimeZone the SDk will use to serialize Date instances. The SDK will
-    /// use a TimeZone with 0 seconds offset from GMT if this configuration is omitted.
+    /// An optional configuration to override the `TimeZone` the SDK will use to decode `Date` instances. The SDK will
+    /// use a `TimeZone` with 0 seconds offset from GMT if this configuration is omitted.
     public var timeZone: TimeZone?
 
     /// Computed version of the user agent, including OS name and version
@@ -75,6 +76,8 @@ public struct ClientConfiguration {
         return userAgentString
     }
 
+    // MARK: Private
+
     private func platformVersionString() -> String? {
         var swiftVersionString: String?
 
@@ -86,15 +89,6 @@ public struct ClientConfiguration {
         guard let swiftVersion = swiftVersionString else { return nil }
         return "Swift/\(swiftVersion)"
     }
-
-    /**
-     Initialize a clientConfiguration with default values
-
-     - returns: An initialized clientConfiguration instance
-     */
-    public init() {}
-
-    // MARK: Private
 
     private func operatingSystemVersionString() -> String? {
         guard let osName = operatingSystemPlatform() else { return nil }

@@ -17,9 +17,7 @@ import CoreGraphics
 
 public extension String {
 
-    /**
-     Will make a `URL` from the current `String` instance if possible.
-     */
+    // Will make a `URL` from the current `String` instance if possible.
     internal func toURL() throws -> URL {
         guard var urlComponents = URLComponents(string: self) else {
             throw ImageOptionError(message: "Invalid URL String: \(self)")
@@ -39,14 +37,13 @@ public extension String {
 
 public extension String {
 
-    /**
-     The URL for the underlying media file with additional options for server side manipulations
-     such as format changes, resizing, cropping, and focusing on different areas including on faces,
-     among others.
-
-     - Parameter imageOptions: An array of `ImageOption` that will be used for server side manipulations.
-     - Throws: Will throw an `ImageQueryError` if the SDK is unable to generate a valid URL with the desired ImageOptions.
-     */
+    /// The URL for the underlying media file with additional options for server side manipulations
+    /// such as format changes, resizing, cropping, and focusing on different areas including on faces,
+    /// among others.
+    ///
+    /// - Parameter imageOptions: The image options to transform the image on the server-side.
+    /// - Returns: A `URL` for the image with query parameters corresponding to server-side image transformations.
+    /// - Throws: An `ImageOptionError` if the SDK is unable to generate a valid URL with the desired ImageOptions.
     public func url(with imageOptions: [ImageOption]) throws -> URL {
 
         // Check that there are no two image options that specifiy the same query parameter.
@@ -58,7 +55,7 @@ public extension String {
             throw ImageOptionError(message: "Cannot specify two instances of ImageOption of the same case."
                 + "i.e. `[.formatAs(.png), .formatAs(.jpg(withQuality: .unspecified)]` is invalid.")
         }
-        guard imageOptions.count > 0 else {
+        guard !imageOptions.isEmpty else {
             return try toURL()
         }
 
@@ -81,11 +78,9 @@ public extension String {
         return url
     }
 }
-/**
- An enum-based API for specifying retrieval and server-side manipulation of images referenced by Contentful assets.
 
- See [Images API Reference](https://www.contentful.com/developers/docs/references/images-api/)
- */
+/// An enum-based API for specifying retrieval and server-side manipulation of images referenced by Contentful assets.
+/// See [Images API Reference](https://www.contentful.com/developers/docs/references/images-api/)
 public enum ImageOption: Equatable, Hashable {
 
     /// Specify the height of the image in pixels to be returned from the API. Valid ranges for height are between 0 and 4000.
@@ -159,14 +154,12 @@ public func == (lhs: ImageOption, rhs: ImageOption) -> Bool {
     }
 }
 
-/**
- Quality options for JPG images to be used when specifying `.jpg` as the desired image format.
- Example usage
- 
- ```
- let imageOptions = [.formatAs(.jpg(withQuality: .asPercent(50)))]
- ```
- */
+/// Quality options for JPG images to be used when specifying `.jpg` as the desired image format.
+/// Example usage
+///
+/// ```
+/// let imageOptions = [.formatAs(.jpg(withQuality: .asPercent(50)))]
+/// ```
 public enum JPGQuality {
 
     /// Don't specify any quality for the JPG image.
@@ -194,14 +187,12 @@ public enum JPGQuality {
     }
 }
 
-/**
- Quality options for PNG images to be used when specifying `.png` as the desired image format.
- Example usage
-
- ```
- let imageOptions = [.formatAs(.png(bits: .standard))]
- ```
- */
+/// Quality options for PNG images to be used when specifying `.png` as the desired image format.
+/// Example usage
+///
+/// ```
+/// let imageOptions = [.formatAs(.png(bits: .standard))]
+/// ```
 public enum PngBits {
 
     /// Specify that the PNG should be represented with standard bit-depth.
@@ -220,10 +211,9 @@ public enum PngBits {
     }
 }
 
-/**
- Use `Format` to specify the image file formats supported by Contentful's Images API.
- Supported formats are `jpg` `png` and `webp`.
- */
+
+/// Use `Format` to specify the image file formats supported by Contentful's Images API.
+/// Supported formats are `jpg` `png` and `webp`.
 public enum Format: URLImageQueryExtendable {
 
     internal var imageQueryParameter: String {
@@ -260,12 +250,10 @@ public enum Format: URLImageQueryExtendable {
     }
 }
 
-/**
- Use `Focus` to specify the focus area when resizing an image using either the `Fit.thumb`, `Fit.fill`
- and `Fit.crop` options.
- See [Contentful's Images API Reference Docs](https://www.contentful.com/developers/docs/references/images-api/#/reference/resizing-&-cropping/specify-focus-area-for-resizing)
- for more information.
- */
+/// Use `Focus` to specify the focus area when resizing an image using either the `Fit.thumb`, `Fit.fill`
+/// and `Fit.crop` options.
+/// See [Contentful's Images API Reference Docs](https://www.contentful.com/developers/docs/references/images-api/#/reference/resizing-&-cropping/specify-focus-area-for-///resizing)
+/// for more information.
 public enum Focus: String {
     /// Focus on the top of the image.
     case top
@@ -289,12 +277,10 @@ public enum Focus: String {
     case faces
 }
 
-/**
- The various options available within Fit specify different resizing behaviors for use in 
- conjunction with the `ImageOption.fit(for: Fit)` option. By default, images are resized to fit 
- inside the bounding box given by `w and `h while retaining their aspect ratio.
- Using the `Fit` options, you can change this behavior.
- */
+/// The various options available within Fit specify different resizing behaviors for use in
+/// conjunction with the `ImageOption.fit(for: Fit)` option. By default, images are resized to fit 
+/// inside the bounding box given by `w and `h while retaining their aspect ratio.
+/// Using the `Fit` options, you can change this behavior.
 public enum Fit: URLImageQueryExtendable {
 
     #if os(iOS) || os(tvOS) || os(watchOS)
@@ -307,11 +293,9 @@ public enum Fit: URLImageQueryExtendable {
     public typealias Color = NSColor
     #endif
 
-    /** 
-     If specifying an optional `UIColor` or `NSColor` make sure to also provide a custom width and height
-     or else you may receive an error from the server. If the color cannot be resolved to a hex string by the SDK,
-     an error will be thrown.
-     */
+    /// If specifying an optional `UIColor` or `NSColor` make sure to also provide a custom width and height
+    /// or else you may receive an error from the server. If the color cannot be resolved to a hex string by the SDK,
+    /// an error will be thrown.
     case pad(withBackgroundColor: Color?)
     /// Specify that the image should be cropped, with an optional focus parameter.
     case crop(focusingOn: Focus?)
@@ -360,9 +344,12 @@ public enum Fit: URLImageQueryExtendable {
     }
 }
 
+
+/// Error type thrown when ImageOptions are constructed in a way that makes them incompatible with the
+/// Contentful Images API
 public struct ImageOptionError: Error, CustomDebugStringConvertible {
 
-    let message: String
+    internal let message: String
 
     public var debugDescription: String {
         return message
@@ -396,7 +383,7 @@ extension URLImageQueryExtendable {
     }
 }
 
-private struct ImageParameters {
+private enum ImageParameters {
 
     static let width            = "w"
     static let height           = "h"

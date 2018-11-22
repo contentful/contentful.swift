@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 /// Helper methods for decoding instances of the various types in your content model.
 public extension Decoder {
 
@@ -16,7 +15,7 @@ public extension Decoder {
         return userInfo[.linkResolverContextKey] as! LinkResolver
     }
 
-    /// The `TimeZone` the Decoder is using to offset dates by.
+    /// The `TimeZone` the `Decoder` is using to offset dates by.
     /// Set through `ClientConfiguration`.
     public var timeZone: TimeZone? {
         return userInfo[.timeZoneContextKey] as? TimeZone
@@ -56,21 +55,17 @@ public extension Decoder {
 
 extension JSONDecoder {
 
-    /**
-     Returns the JSONDecoder owned by the Client. Until the first request to the CDA is made, this
-     decoder won't have the necessary localization content required to properly deserialize resources
-     returned in the multi-locale format.
-     */
+    /// Returns the JSONDecoder owned by the Client. Until the first request to the CDA is made, this
+    /// decoder won't have the necessary localization content required to properly deserialize resources
+    /// returned in the multi-locale format.
     public static func withoutLocalizationContext() -> JSONDecoder {
         let jsonDecoder = JSONDecoder()
         jsonDecoder.dateDecodingStrategy = .custom(Date.variableISO8601Strategy)
         return jsonDecoder
     }
 
-    /**
-     Updates the JSONDecoder provided by the client with the localization context necessary to deserialize
-     resources returned in the multi-locale format with the locale information provided by the space.
-     */
+    /// Updates the JSONDecoder provided by the client with the localization context necessary to deserialize
+    /// resources returned in the multi-locale format with the locale information provided by the space.
     public func update(with localizationContext: LocalizationContext) {
         userInfo[.localizationContextKey] = localizationContext
     }
@@ -80,21 +75,21 @@ internal extension Decodable where Self: EntryDecodable {
     // This is a magic workaround for the fact that dynamic metatypes cannot be passed into
     // initializers such as UnkeyedDecodingContainer.decode(Decodable.Type), yet static methods CAN
     // be called on metatypes.
-    static func popEntryDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
+    internal static func popEntryDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
         let entryDecodable = try container.decode(self)
         return entryDecodable
     }
 }
 
 internal extension Decodable where Self: AssetDecodable {
-    static func popAssetDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
+    internal static func popAssetDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
         let assetDecodable = try container.decode(self)
         return assetDecodable
     }
 }
 
 internal extension Decodable where Self: Node {
-    static func popNodeDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
+   internal static func popNodeDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
         let contentDecodable = try container.decode(self)
         return contentDecodable
     }
@@ -110,15 +105,13 @@ internal extension CodingUserInfoKey {
 // Fields JSON container.
 public extension KeyedDecodingContainer {
 
-    /**
-     Caches a link to be resolved once all resources in the response have been serialized.
-
-     - Parameter key: The KeyedDecodingContainer.Key representing the JSON key were the related resource is found
-     - Parameter localeCode: The locale of the link source to be used when caching the relationship for future resolving
-     - Parameter decoder: The Decoder being used to deserialize the JSON to a user-defined class
-     - Parameter callback: The callback used to assign the linked item at a later time.
-     - Throws: Forwards the error if no link object is in the JSON at the specified key.
-     */
+    /// Caches a link to be resolved once all resources in the response have been serialized.
+    ///
+    /// - Parameters:
+    ///   - key: The `KeyedDecodingContainer.Key` representing the JSON key where the related resource is found.
+    ///   - decoder: The `Decoder` being used to deserialize the JSON to user-defined classes.
+    ///   - callback: The callback used to assign the linked item at a later time.
+    /// - Throws: Forwards the error if no link object is in the JSON at the specified key.
     public func resolveLink(forKey key: KeyedDecodingContainer.Key,
                             decoder: Decoder,
                             callback: @escaping (AnyObject) -> Void) throws {
@@ -129,15 +122,13 @@ public extension KeyedDecodingContainer {
         }
     }
 
-    /**
-     Caches an array of linked entries to be resolved once all resources in the response have been serialized.
-
-     - Parameter key: The KeyedDecodingContainer.Key representing the JSON key were the related resources arem found
-     - Parameter localeCode: The locale of the link source to be used when caching the relationship for future resolving
-     - Parameter decoder: The Decoder being used to deserialize the JSON to a user-defined class
-     - Parameter callback: The callback used to assign the linked item at a later time.
-     - Throws: Forwards the error if no link object is in the JSON at the specified key.
-     */
+    /// Caches an array of linked resources to be resolved once all resources in the response have been deserialized.
+    ///
+    /// - Parameters:
+    ///   - key: The `KeyedDecodingContainer.Key` representing the JSON key where the related resources are found.
+    ///   - decoder: The `Decoder` being used to deserialize the JSON to user-defined classes.
+    ///   - callback: The callback used to assign the linked items at a later time.
+    /// - Throws: Forwards the error if no link object is in the JSON at the specified key.
     public func resolveLinksArray(forKey key: KeyedDecodingContainer.Key,
                                   decoder: Decoder,
                                   callback: @escaping (AnyObject) -> Void) throws {
@@ -177,7 +168,7 @@ internal class LinkResolver {
     }
 
     internal func resolve(_ links: [Link], callback: @escaping (AnyObject) -> Void) {
-        let linksIdentifier: String = links.reduce(into: LinkResolver.linksArrayPrefix) { (id, link) in
+        let linksIdentifier: String = links.reduce(into: LinkResolver.linksArrayPrefix) { id, link in
             id += "," + DataCache.cacheKey(for: link)
         }
         callbacks[linksIdentifier, default: []] += [callback]
