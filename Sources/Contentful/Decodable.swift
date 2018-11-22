@@ -75,21 +75,21 @@ internal extension Decodable where Self: EntryDecodable {
     // This is a magic workaround for the fact that dynamic metatypes cannot be passed into
     // initializers such as UnkeyedDecodingContainer.decode(Decodable.Type), yet static methods CAN
     // be called on metatypes.
-    static func popEntryDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
+    internal static func popEntryDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
         let entryDecodable = try container.decode(self)
         return entryDecodable
     }
 }
 
 internal extension Decodable where Self: AssetDecodable {
-    static func popAssetDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
+    internal static func popAssetDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
         let assetDecodable = try container.decode(self)
         return assetDecodable
     }
 }
 
 internal extension Decodable where Self: Node {
-    static func popNodeDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
+   internal static func popNodeDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
         let contentDecodable = try container.decode(self)
         return contentDecodable
     }
@@ -168,7 +168,7 @@ internal class LinkResolver {
     }
 
     internal func resolve(_ links: [Link], callback: @escaping (AnyObject) -> Void) {
-        let linksIdentifier: String = links.reduce(into: LinkResolver.linksArrayPrefix) { (id, link) in
+        let linksIdentifier: String = links.reduce(into: LinkResolver.linksArrayPrefix) { id, link in
             id += "," + DataCache.cacheKey(for: link)
         }
         callbacks[linksIdentifier, default: []] += [callback]

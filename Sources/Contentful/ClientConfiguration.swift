@@ -9,7 +9,7 @@
 import Foundation
 
 /// Some default values that the SDK uses.
-public struct Host {
+public enum Host {
     /// The path for the Contentful Delivery API.
     public static let delivery = "cdn.contentful.com"
     /// The path for the Contentful Preview API.

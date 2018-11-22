@@ -90,11 +90,11 @@ public enum Link: Decodable {
                     return Link.asset(asset)
                 }
             default:
-                fatalError()
+                fatalError("A serious error occured, attempted to resolve a Link that was not of type Entry or Asset")
             }
 
         default:
-            fatalError()
+            fatalError("A serious error occured, attempted to resolve an already resolved Link")
         }
         return self
     }

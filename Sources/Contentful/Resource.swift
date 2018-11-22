@@ -81,7 +81,7 @@ public class DeletedResource: Resource, FlatResource, Decodable {
 
     public let sys: Sys
 
-    init(sys: Sys) {
+    internal init(sys: Sys) {
         self.sys = sys
     }
 }
@@ -112,7 +112,8 @@ public class LocalizableResource: Resource, FlatResource, Decodable {
     ///
     /// - Parameter code: The string code for the Locale.
     /// - Returns: `false` if the locale code doesn't correspond to any locales in the space, `true`.
-    @discardableResult public func setLocale(withCode code: LocaleCode) -> Bool {
+    @discardableResult
+    public func setLocale(withCode code: LocaleCode) -> Bool {
         guard let newLocale = localizationContext.locales[code] else {
             return false
         }

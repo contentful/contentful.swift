@@ -114,9 +114,9 @@ public class APIError: Decodable, Error, CustomDebugStringConvertible {
     /// System fields for the error.
     public struct Sys: Decodable {
         /// A psuedo identifier for the error returned by the API(s).
-        let id: String
+        public let id: String
         /// Resource type ("Error").
-        let type: String
+        public let type: String
     }
 
     /// System fields.

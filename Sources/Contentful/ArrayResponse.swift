@@ -77,15 +77,15 @@ public struct ArrayResponse<ItemType>: HomogeneousArray where ItemType: Decodabl
     }
 
     internal struct Includes: Decodable {
-        let assets: [Asset]?
-        let entries: [Entry]?
+        internal let assets: [Asset]?
+        internal let entries: [Entry]?
 
         private enum CodingKeys: String, CodingKey {
             case assets     = "Asset"
             case entries    = "Entry"
         }
 
-        init(from decoder: Decoder) throws {
+        internal init(from decoder: Decoder) throws {
             let values  = try decoder.container(keyedBy: CodingKeys.self)
             assets      = try values.decodeIfPresent([Asset].self, forKey: .assets)
             entries     = try values.decodeIfPresent([Entry].self, forKey: .entries)
@@ -169,15 +169,15 @@ extension ArrayResponse: Decodable {
 }
 
 internal struct MappedIncludes: Decodable {
-    let assets: [Asset]?
-    let entries: [EntryDecodable]?
+    internal let assets: [Asset]?
+    internal let entries: [EntryDecodable]?
 
     private enum CodingKeys: String, CodingKey {
         case assets     = "Asset"
         case entries    = "Entry"
     }
 
-    init(from decoder: Decoder) throws {
+    internal init(from decoder: Decoder) throws {
         let container       = try decoder.container(keyedBy: CodingKeys.self)
         assets              = try container.decodeIfPresent([Asset].self, forKey: .assets)
         entries             = try container.decodeHeterogeneousEntries(forKey: .entries,
@@ -254,14 +254,14 @@ extension MixedArrayResponse: Decodable {
 // Convenience method for grabbing the content type information of a json item in an array of resources.
 internal extension Swift.Array where Element == Dictionary<String, Any> {
 
-    func contentTypeInfo(at index: Int) -> Link? {
+    internal func contentTypeInfo(at index: Int) -> Link? {
         guard let sys = self[index]["sys"] as? [String: Any], let contentTypeInfo = sys["contentType"] as? Link else {
             return nil
         }
         return contentTypeInfo
     }
 
-    func nodeType(at index: Int) -> NodeType? {
+    internal func nodeType(at index: Int) -> NodeType? {
         guard let nodeTypeString = self[index]["nodeType"] as? String, let nodeType = NodeType(rawValue: nodeTypeString) else {
             return nil
         }

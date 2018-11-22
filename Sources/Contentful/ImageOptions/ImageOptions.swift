@@ -55,7 +55,7 @@ public extension String {
             throw ImageOptionError(message: "Cannot specify two instances of ImageOption of the same case."
                 + "i.e. `[.formatAs(.png), .formatAs(.jpg(withQuality: .unspecified)]` is invalid.")
         }
-        guard imageOptions.count > 0 else {
+        guard !imageOptions.isEmpty else {
             return try toURL()
         }
 
@@ -383,7 +383,7 @@ extension URLImageQueryExtendable {
     }
 }
 
-private struct ImageParameters {
+private enum ImageParameters {
 
     static let width            = "w"
     static let height           = "h"

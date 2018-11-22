@@ -132,7 +132,7 @@ public class BlockNode: Node {
         nodeType = try container.decode(NodeType.self, forKey: .nodeType)
         content = try container.decodeContent(forKey: .content)
     }
-    init(nodeType: NodeType, content: [Node]) {
+    internal init(nodeType: NodeType, content: [Node]) {
         self.nodeType = nodeType
         self.content = content
     }
@@ -148,7 +148,7 @@ public class InlineNode: Node {
         nodeType = try container.decode(NodeType.self, forKey: .nodeType)
         content = try container.decodeContent(forKey: .content)
     }
-    init(nodeType: NodeType, content: [Node]) {
+    internal init(nodeType: NodeType, content: [Node]) {
         self.nodeType = nodeType
         self.content = content
     }
@@ -203,7 +203,7 @@ public final class Heading: BlockNode {
         case .h4: level = 4
         case .h5: level = 5
         case .h6: level = 6
-        default: fatalError()
+        default: fatalError("A serious error occured, attempted to initialize a Heading with an invalid heading level")
         }
     }
 }

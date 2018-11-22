@@ -10,7 +10,7 @@ import Foundation
 
 internal class DataCache {
 
-    static let cacheKeyDelimiter = "_"
+    private static let cacheKeyDelimiter = "_"
 
     internal static func cacheKey(for link: Link) -> String {
         let linkType: String
@@ -30,8 +30,8 @@ internal class DataCache {
         return cacheKey
     }
 
-    var assetCache = Dictionary<String, Asset>()
-    var entryCache = Dictionary<String, Any>()
+    private var assetCache = Dictionary<String, Asset>()
+    private var entryCache = Dictionary<String, Any>()
 
     internal func add(asset: Asset) {
         assetCache[DataCache.cacheKey(id: asset.id, linkType: "Asset")] = asset

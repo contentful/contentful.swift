@@ -11,7 +11,7 @@ import Foundation
 /// The available URL parameter names for queries; used internally by the various `Contentful.Query` types.
 /// Use these static variables to avoid making typos when constructing queries. It is recommended to take
 /// advantage of `Client` "fetch" methods that take `Query` types instead of constructing query dictionaries on your own.
-public struct QueryParameter {
+public enum QueryParameter {
 
     /// The parameter for specifying the content type of returned entries.
     public static let contentType      = "content_type"
@@ -112,7 +112,7 @@ public class Ordered<EntryType>: Ordering where EntryType: FieldKeysQueryable {
     }
 }
 
-internal struct QueryConstants {
+internal enum QueryConstants {
     internal static let maxLimit: UInt               = 1000
     internal static let maxSelectedProperties: UInt  = 99
     internal static let maxIncludes: UInt            = 10
@@ -296,7 +296,8 @@ public extension ChainableQuery {
     ///              `"sys.id" or `"fields.yourFieldName"`
     ///   - operation: The query operation used in the query.
     /// - Returns: A reference to the receiving query to enable chaining.
-    @discardableResult public func `where`(valueAtKeyPath keyPath: String, _ operation: Query.Operation) -> Self {
+    @discardableResult
+    public func `where`(valueAtKeyPath keyPath: String, _ operation: Query.Operation) -> Self {
 
         // Create parameter for this query operation.
         let parameter = keyPath + operation.string
@@ -329,7 +330,8 @@ public extension ChainableQuery {
     /// - Parameter text: The text string to match against.
     /// - Returns: A reference to the receiving query to enable chaining.
     /// - Throws: A `QueryError` if the text being searched for is 1 character in length or less.
-    @discardableResult public func searching(for text: String) throws -> Self {
+    @discardableResult
+    public func searching(for text: String) throws -> Self {
         guard text.count > 1 else { throw QueryError.textSearchTooShort }
         self.parameters[QueryParameter.fullTextSearch] = text
         return self
@@ -363,7 +365,8 @@ public extension ChainableQuery {
     ///
     /// - Parameter includesLevel: An unsigned integer specifying the level of includes to be resolved.
     /// - Returns: A reference to the receiving query to enable chaining.
-    @discardableResult public func include(_ includesLevel: UInt) -> Self {
+    @discardableResult
+    public func include(_ includesLevel: UInt) -> Self {
         let includes = min(includesLevel, QueryConstants.maxIncludes)
         self.parameters[QueryParameter.include] = String(includes)
         return self
@@ -398,7 +401,8 @@ public extension ChainableQuery {
     ///
     /// - Parameter numberOfResults: The number of results that will be skipped in the query.
     /// - Returns: A reference to the receiving query to enable chaining.
-    @discardableResult public func skip(theFirst numberOfResults: UInt) -> Self {
+    @discardableResult
+    public func skip(theFirst numberOfResults: UInt) -> Self {
         self.parameters[QueryParameter.skip] = String(numberOfResults)
         return self
     }
@@ -437,14 +441,16 @@ public extension ChainableQuery {
     ///
     /// - Parameter order: The specified Ordering.
     /// - Returns: A reference to the receiving query to enable chaining.
-    @discardableResult public func order(by order: Ordering...) -> Self {
+    @discardableResult
+    public func order(by order: Ordering...) -> Self {
         return self.order(by: order)
     }
 
     // Helper to workaround Swift bug/issue: Despite the fact that Variadic's can be passed into
     // to functions expecting an `Array`, instances of `Array`
     // cannot be passed into a function expecting a variadic parameter.
-    @discardableResult private func order(by order: [Ordering]) -> Self {
+    @discardableResult
+    private func order(by order: [Ordering]) -> Self {
         let propertyPathsWithReversals = order.map { return $0.parameterValue }
         let joinedPropertyNames = propertyPathsWithReversals.joined(separator: ",")
 
@@ -482,7 +488,8 @@ public extension ChainableQuery {
     ///
     /// - Parameter numberOfResults: The number of results the response will be limited to.
     /// - Returns: A reference to the receiving query to enable chaining.
-    @discardableResult public func limit(to numberOfResults: UInt) -> Self {
+    @discardableResult
+    public func limit(to numberOfResults: UInt) -> Self {
         let limit = min(numberOfResults, QueryConstants.maxLimit)
 
         self.parameters[QueryParameter.limit] = String(limit)
@@ -515,7 +522,8 @@ public extension AbstractResourceQuery {
     ///
     /// - Parameter localeCode: The code for the locale you would like to specify.
     /// - Returns: A reference to the receiving query to enable chaining.
-    @discardableResult public func localizeResults(withLocaleCode localeCode: LocaleCode) -> Self {
+    @discardableResult
+    public func localizeResults(withLocaleCode localeCode: LocaleCode) -> Self {
         self.parameters[QueryParameter.locale] = localeCode
         return self
     }
@@ -573,7 +581,8 @@ public extension AbstractResourceQuery {
     /// - Returns: A reference to the receiving query to enable chaining.
     /// - Throws: An error if selections go more than 1 level deep within the fields container ("bestFriend.sys" is not valid),
     ///           or if more than 99 properties are selected.
-    @discardableResult public func select(fieldsNamed fieldNames: [FieldName]) throws -> Self {
+    @discardableResult
+    public func select(fieldsNamed fieldNames: [FieldName]) throws -> Self {
 
         guard fieldNames.count <= Int(QueryConstants.maxSelectedProperties) else { throw QueryError.maxSelectionLimitExceeded }
 
@@ -613,7 +622,8 @@ public extension EntryQuery {
     ///
     /// - Parameter contentTypeId: The identifier of the content type which the query will be performed on.
     /// - Returns: A reference to the receiving query to enable chaining.
-    @discardableResult public func `where`(contentTypeId: ContentTypeId) -> Self {
+    @discardableResult
+    public func `where`(contentTypeId: ContentTypeId) -> Self {
         self.parameters[QueryParameter.contentType] = contentTypeId
         return self
     }
@@ -664,11 +674,12 @@ public extension EntryQuery {
     ///   - targetContentTypeId: The content type idenifier of the item(s) being linked to at the specified linking field name.
     ///   - operation: The `Query.Operation` used to match the value of at the target key path.
     /// - Returns: A reference to the receiving query to enable chaining.
-    @discardableResult public func `where`(linkAtFieldNamed linkingFieldName: String,
-                                           onSourceContentTypeWithId sourceContentTypeId: ContentTypeId,
-                                           hasValueAtKeyPath targetKeyPath: String,
-                                           withTargetContentTypeId targetContentTypeId: ContentTypeId,
-                                           that operation: Query.Operation) -> Self {
+    @discardableResult
+    public func `where`(linkAtFieldNamed linkingFieldName: String,
+                        onSourceContentTypeWithId sourceContentTypeId: ContentTypeId,
+                        hasValueAtKeyPath targetKeyPath: String,
+                        withTargetContentTypeId targetContentTypeId: ContentTypeId,
+                        that operation: Query.Operation) -> Self {
         self.parameters[QueryParameter.contentType] = sourceContentTypeId
         self.parameters["fields.\(linkingFieldName).sys.contentType.sys.id"] = targetContentTypeId
 
@@ -715,9 +726,10 @@ public extension EntryQuery {
     ///   - sourceContentTypeId: The content type identifier of the link source.
     ///   - targetId: The identifier of the entry or asset being linked to at the specified linking field.
     /// - Returns: A reference to the receiving query to enable chaining.
-    @discardableResult public func `where`(linkAtFieldNamed linkingFieldName: String,
-                                           onSourceContentTypeWithId sourceContentTypeId: ContentTypeId,
-                                           hasTargetId targetId: String) -> Self {
+    @discardableResult
+    public func `where`(linkAtFieldNamed linkingFieldName: String,
+                        onSourceContentTypeWithId sourceContentTypeId: ContentTypeId,
+                        hasTargetId targetId: String) -> Self {
         self.parameters[QueryParameter.contentType] = sourceContentTypeId
         self.parameters["fields.\(linkingFieldName).sys.id"] = targetId
 
@@ -740,7 +752,8 @@ public extension EntryQuery {
     ///
     /// - Parameter entryId: The identifier of the entry which you want to find incoming links for.
     /// - Returns: A reference to the receiving query to enable chaining.
-    @discardableResult public func `where`(linksToEntryWithId entryId: String) -> Self {
+    @discardableResult
+    public func `where`(linksToEntryWithId entryId: String) -> Self {
         self.parameters[QueryParameter.linksToEntry] = entryId
         return self
     }
@@ -761,7 +774,8 @@ public extension EntryQuery {
     ///
     /// - Parameter assetId: The identifier of the asset which you want to find incoming links for.
     /// - Returns: A reference to the receiving query to enable chaining.
-    @discardableResult public func `where`(linksToAssetWithId assetId: String) -> Self {
+    @discardableResult
+    public func `where`(linksToAssetWithId assetId: String) -> Self {
         self.parameters[QueryParameter.linksToAsset] = assetId
         return self
     }
@@ -804,7 +818,7 @@ public class ResourceQuery: AbstractResourceQuery {
 
 internal extension String {
 
-    func isValidSelection() -> Bool {
+    internal func isValidSelection() -> Bool {
         if split(separator: ".", maxSplits: 3, omittingEmptySubsequences: false).count > 2 {
             return false
         }

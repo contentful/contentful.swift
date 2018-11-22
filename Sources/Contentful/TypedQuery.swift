@@ -207,7 +207,8 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
     ///
     /// - Parameter fieldsKeys: An array of `FieldKeys` associated with the genery `EntryType` that you are performing your select operation against.
     /// - Returns: A reference to the receiving query to enable chaining.
-    @discardableResult public func select(fieldsNamed fieldsKeys: [EntryType.FieldKeys]) -> QueryOn<EntryType> {
+    @discardableResult
+    public func select(fieldsNamed fieldsKeys: [EntryType.FieldKeys]) -> QueryOn<EntryType> {
         let fieldPaths = fieldsKeys.map { $0.stringValue }
         try! self.select(fieldsNamed: fieldPaths)
         return self
@@ -268,7 +269,8 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
     ///   - fieldsKey: The `FieldKey` for the property which contains a link to another entry or asset.
     ///   - linkQuery: The filter query applied to the linked objects which are being searched.
     /// - Returns: A reference to the receiving query to enable chaining.
-    @discardableResult public func `where`<LinkType>(linkAtField fieldsKey: EntryType.FieldKeys,
+    @discardableResult
+    public func `where`<LinkType>(linkAtField fieldsKey: EntryType.FieldKeys,
                                                      matches linkQuery: LinkQuery<LinkType>) -> QueryOn<EntryType> {
 
         parameters["fields.\(fieldsKey.stringValue).sys.contentType.sys.id"] = LinkType.contentTypeId
@@ -334,8 +336,9 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
     ///   - fieldsKey: The `FieldKey` of the property which contains a link to another Entry.
     ///   - targetId: The identifier of the entry or asset being linked to at the specified linking field.
     /// - Returns: A reference to the receiving query to enable chaining.
-    @discardableResult public func `where`(linkAtField fieldsKey: EntryType.FieldKeys,
-                                           hasTargetId targetId: String) -> QueryOn<EntryType> {
+    @discardableResult
+    public func `where`(linkAtField fieldsKey: EntryType.FieldKeys,
+                        hasTargetId targetId: String) -> QueryOn<EntryType> {
 
         let filterParameterName = "fields.\(fieldsKey.stringValue).sys.id"
         parameters[filterParameterName] = targetId
@@ -365,7 +368,8 @@ public final class AssetQuery: ResourceQuery {
     ///
     /// - Parameter mimetypeGroup: The `mimetype_group` which all returned Assets will match.
     /// - Returns: A reference to the receiving query to enable chaining.
-    @discardableResult public func `where`(mimetypeGroup: MimetypeGroup) -> AssetQuery {
+    @discardableResult
+    public func `where`(mimetypeGroup: MimetypeGroup) -> AssetQuery {
         self.parameters[QueryParameter.mimetypeGroup] = mimetypeGroup.rawValue
         return self
     }
@@ -417,7 +421,8 @@ public final class AssetQuery: ResourceQuery {
     ///
     /// - Parameter fieldsKeys: An array of `Asset.FieldKeys` of the asset you are performing your select operation against.
     /// - Returns: A reference to the receiving query to enable chaining.
-    @discardableResult public func select(fields fieldsKeys: [Asset.Fields]) -> AssetQuery {
+    @discardableResult
+    public func select(fields fieldsKeys: [Asset.Fields]) -> AssetQuery {
         let fieldPaths = fieldsKeys.map { $0.stringValue }
         // Because we're guaranteed the keyPath doesn't have a "." in it, we can force try
         try! self.select(fieldsNamed: fieldPaths)

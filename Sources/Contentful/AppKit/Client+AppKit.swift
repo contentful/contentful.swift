@@ -19,9 +19,10 @@ extension Client {
     ///   - imageOptions: The image options to transform the image on the server-side.
     ///   - completion: The completion handler which takes a `Result` wrapping the `Data` returned by the API.
     /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation.
-    @discardableResult public func fetchImage(for asset: Asset,
-                                              with imageOptions: [ImageOption] = [],
-                                              then completion: @escaping ResultsHandler<NSImage>) -> URLSessionDataTask? {
+    @discardableResult
+    public func fetchImage(for asset: Asset,
+                           with imageOptions: [ImageOption] = [],
+                           then completion: @escaping ResultsHandler<NSImage>) -> URLSessionDataTask? {
         return fetchData(for: asset, with: imageOptions) { result in
             if let imageData = result.value, let image = NSImage(data: imageData) {
                 completion(Result.success(image))

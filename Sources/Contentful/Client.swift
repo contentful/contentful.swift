@@ -66,7 +66,7 @@ open class Client {
 
     internal var urlSession: URLSession
 
-    fileprivate(set) var space: Space?
+    fileprivate(set) internal var space: Space?
 
     fileprivate var scheme: String { return clientConfiguration.secure ? "https": "http" }
 
@@ -144,12 +144,12 @@ open class Client {
             components = URLComponents(string: "\(scheme)://\(host)/spaces/\(spaceId)/environments/\(environmentId)/\(endpoint.pathComponent)")!
         }
 
-        let queryItems: [URLQueryItem]? = parameters?.map { (key, value) in
+        let queryItems: [URLQueryItem]? = parameters?.map { key, value in
             return URLQueryItem(name: key, value: value)
         }
         // Since Swift 4.2, the order of a dictionary's keys will vary accross executions so we must sort
         // the parameters so that the URL is consistent accross executions (so that all test recordings are found).
-        components.queryItems = queryItems?.sorted { (a, b) in
+        components.queryItems = queryItems?.sorted { a, b in
             return a.name > b.name
         }
 
@@ -344,7 +344,8 @@ extension Client {
     /// - Parameters:
     ///   - completion: A handler being called on completion of the request.
     /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation.
-    @discardableResult public func fetchLocales(then completion: @escaping ResultsHandler<ArrayResponse<Contentful.Locale>>) -> URLSessionDataTask {
+    @discardableResult
+    public func fetchLocales(then completion: @escaping ResultsHandler<ArrayResponse<Contentful.Locale>>) -> URLSessionDataTask {
 
         // The robust thing to do would be to fetch all pages of the `/locales` endpoint, however, pagination is not supported
         // at the moment. We also are not expecting any consumers to have > 1000 locales as Contentful subscriptions do not allow that.
@@ -376,7 +377,8 @@ extension Client {
         }
     }
 
-    @discardableResult internal func fetchLocalesIfNecessary(then completion: @escaping ResultsHandler<Array<Contentful.Locale>>) -> URLSessionDataTask? {
+    @discardableResult
+    internal func fetchLocalesIfNecessary(then completion: @escaping ResultsHandler<Array<Contentful.Locale>>) -> URLSessionDataTask? {
         if let locales = self.locales {
             let localeCodes = locales.map { $0.code }
             persistenceIntegration?.update(localeCodes: localeCodes)
@@ -401,7 +403,8 @@ extension Client {
     /// - Parameters:
     ///   - completion: A handler being called on completion of the request.
     /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation, or `nil` if the Space was already cached locally
-    @discardableResult public func fetchSpace(then completion: @escaping ResultsHandler<Space>) -> URLSessionDataTask? {
+    @discardableResult
+    public func fetchSpace(then completion: @escaping ResultsHandler<Space>) -> URLSessionDataTask? {
         // Attempt to pull from cache first.
         if let space = self.space {
             completion(Result.success(space))
@@ -422,9 +425,10 @@ extension Client {
     ///   - asset: The instance of `AssetProtocol` which has the URL for media file.
     ///   - imageOptions: An optional array of options for server side manipulations of image files.
     /// - Returns: Returns the URLSessionDataTask of the request which can be used for request cancellation.
-    @discardableResult public func fetchData(for asset: AssetProtocol,
-                                             with imageOptions: [ImageOption] = [],
-                                             then completion: @escaping ResultsHandler<Data>) -> URLSessionDataTask? {
+    @discardableResult
+    public func fetchData(for asset: AssetProtocol,
+                          with imageOptions: [ImageOption] = [],
+                          then completion: @escaping ResultsHandler<Data>) -> URLSessionDataTask? {
         do {
             let url = try asset.url(with: imageOptions)
             return fetch(url: url, then: completion)
@@ -445,9 +449,10 @@ extension Client {
     ///   - id: The identifier of the resource which should be fetched.
     ///   - completion: The handler being called on completion of the request with a Result wrapping your decoded type or an error.
     /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation.
-    @discardableResult public func fetch<ResourceType>(_ resourceType: ResourceType.Type,
-                                                       id: String,
-                                                       then completion: @escaping ResultsHandler<ResourceType>) -> URLSessionDataTask
+    @discardableResult
+    public func fetch<ResourceType>(_ resourceType: ResourceType.Type,
+                                    id: String,
+                                    then completion: @escaping ResultsHandler<ResourceType>) -> URLSessionDataTask
         where ResourceType: Decodable & EndpointAccessible {
 
             // If the resource is not an entry, then don't worry about fetching with includes.
@@ -479,9 +484,10 @@ extension Client {
     ///   - query: The query of type `ResourceType.QueryType` to be used to match results againtst.
     ///   - completion: The handler being called on completion of the request with a `Result` wrapping an `ArrayResponse` of decoded type.
     /// - Returns: Returns the` URLSessionDataTask` of the request which can be used for request cancellation.
-    @discardableResult public func fetchArray<ResourceType, QueryType>(of resourceType: ResourceType.Type,
-                                                                       matching query: QueryType? = nil,
-                                                                       then completion: @escaping ResultsHandler<ArrayResponse<ResourceType>>) -> URLSessionDataTask
+    @discardableResult
+    public func fetchArray<ResourceType, QueryType>(of resourceType: ResourceType.Type,
+                                                    matching query: QueryType? = nil,
+                                                    then completion: @escaping ResultsHandler<ArrayResponse<ResourceType>>) -> URLSessionDataTask
         where ResourceType: ResourceQueryable, QueryType == ResourceType.QueryType {
             return fetch(url: url(endpoint: ResourceType.endpoint, parameters: query?.parameters ?? [:]), then: completion)
     }
@@ -493,9 +499,10 @@ extension Client {
     ///   - query: The `QueryOn<EntryType>` to be used to match results againtst.
     ///   - completion: The handler being called on completion of the request with a `Result` wrapping an `ArrayResponse`.
     /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation.
-    @discardableResult public func fetchArray<EntryType>(of entryType: EntryType.Type,
-                                                         matching query: QueryOn<EntryType> = QueryOn<EntryType>(),
-                                                         then completion: @escaping ResultsHandler<ArrayResponse<EntryType>>) -> URLSessionDataTask {
+    @discardableResult
+    public func fetchArray<EntryType>(of entryType: EntryType.Type,
+                                      matching query: QueryOn<EntryType> = QueryOn<EntryType>(),
+                                      then completion: @escaping ResultsHandler<ArrayResponse<EntryType>>) -> URLSessionDataTask {
         let url = self.url(endpoint: .entries, parameters: query.parameters)
         return fetch(url: url, then: completion)
     }
@@ -507,8 +514,9 @@ extension Client {
     ///   - query: The `Query` with which to match the results against.
     ///   - completion: The handler being called on completion of the request with a Result wrapping your decoded type or an error.
     /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation.
-    @discardableResult public func fetchArray(matching query: Query? = nil,
-                                              then completion: @escaping ResultsHandler<MixedArrayResponse>) -> URLSessionDataTask {
+    @discardableResult
+    public func fetchArray(matching query: Query? = nil,
+                          then completion: @escaping ResultsHandler<MixedArrayResponse>) -> URLSessionDataTask {
         let url = self.url(endpoint: .entries, parameters: query?.parameters ?? [:])
         return fetch(url: url, then: completion)
     }
@@ -529,9 +537,10 @@ extension Client {
     ///   - syncableTypes: The types that can be synchronized.
     ///   - completion: A handler which will be called on completion of the operation
     /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation.
-    @discardableResult public func sync(for syncSpace: SyncSpace = SyncSpace(),
-                                        syncableTypes: SyncSpace.SyncableTypes = .all,
-                                        then completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
+    @discardableResult
+    public func sync(for syncSpace: SyncSpace = SyncSpace(),
+                     syncableTypes: SyncSpace.SyncableTypes = .all,
+                     then completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
 
         // Preview mode only supports `initialSync` not `nextSync`. The only reason `nextSync` should
         // be called while in preview mode, is internally by the SDK to finish a multiple page sync.

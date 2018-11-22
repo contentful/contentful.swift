@@ -55,8 +55,13 @@ public class Locale: Resource, FlatResource, Decodable {
         if let sys = try container.decodeIfPresent(Sys.self, forKey: .sys) {
             self.sys = sys
         } else {
-            self.sys = Sys(id: code, type: "Locale", createdAt: nil, updatedAt: nil,
-                           locale: nil, revision: nil, contentTypeInfo: nil)
+            self.sys = Sys(id: code,
+                           type: "Locale",
+                           createdAt: nil,
+                           updatedAt: nil,
+                           locale: nil,
+                           revision: nil,
+                           contentTypeInfo: nil)
         }
     }
 }
@@ -79,7 +84,7 @@ public class LocalizationContext {
     /// Initialize a new LocalizationContext with the relevant locales.
     public init?(locales: [Locale]) {
 
-        guard let defaultLocale = locales.filter({ $0.isDefault }).first else {
+        guard let defaultLocale = locales.first(where: { $0.isDefault }) else {
             return nil
         }
         self.`default` = defaultLocale
@@ -91,7 +96,7 @@ public class LocalizationContext {
 
 }
 
-internal struct Localization {
+internal enum Localization {
 
     // Walks down the fallback chain and returns the field values for the specified locale.
     internal static func fields(forLocale locale: Locale?,

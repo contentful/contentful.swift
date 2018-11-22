@@ -11,7 +11,7 @@ import Foundation
 /// Utility method to add two dictionaries of the same time.
 public func +=<K, V> (left: [K: V], right: [K: V]) -> [K: V] {
     var result = left
-    right.forEach { (key, value) in result[key] = value }
+    right.forEach { key, value in result[key] = value }
     return result
 }
 
@@ -19,7 +19,6 @@ public func +=<K, V> (left: [K: V], right: [K: V]) -> [K: V] {
 public func +<K, V> (left: [K: V], right: [K: V]) -> [K: V] {
     return left += right
 }
-
 
 /// Convenience methods for reading from dictionaries without conditional casts.
 public extension Dictionary where Key: ExpressibleByStringLiteral {
