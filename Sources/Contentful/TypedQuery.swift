@@ -143,6 +143,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
     ///                that you are performing your select operation against.
     ///   - operation: The query operation used in the query.
     /// - Returns: A reference to the receiving query to enable chaining.
+    @discardableResult
     public func `where`(field fieldsKey: EntryType.FieldKeys, _ operation: Query.Operation) -> QueryOn<EntryType> {
         self.where(valueAtKeyPath: "fields.\(fieldsKey.stringValue)", operation)
         return self
@@ -494,6 +495,7 @@ public final class ContentTypeQuery: ChainableQuery {
     ///   - queryableCodingKey: The member of your `ContentType.QueryableCodingKey` that you are performing your operation against.
     ///   - operation: The query operation used in the query.
     /// - Returns: A reference to the receiving query to enable chaining.
+    @discardableResult
     public func `where`(queryableCodingKey: ContentType.QueryableCodingKey, _ operation: Query.Operation) -> ContentTypeQuery {
         self.where(valueAtKeyPath: "\(queryableCodingKey.stringValue)", operation)
         return self
