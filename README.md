@@ -238,7 +238,7 @@ final class Cat: EntryDecodable, FieldKeysQueryable {
         updatedAt       = sys.updatedAt
         createdAt       = sys.createdAt
 
-        let fields      = try decoder.contentfulFieldsContainer(keyedBy: Cat.Fields.self)
+        let fields      = try decoder.contentfulFieldsContainer(keyedBy: Cat.FieldKeys.self)
 
         self.name       = try fields.decodeIfPresent(String.self, forKey: .name)
         self.color      = try fields.decodeIfPresent(String.self, forKey: .color)
@@ -257,7 +257,7 @@ final class Cat: EntryDecodable, FieldKeysQueryable {
 }
 ```
 
-If you want to simplify the implementation of an `EntryDecodable`, declare conformance to resource and add `let sys: Sys` property to the class and assign via `sys = try decoder.sys()` during initialization. Then, `id`, `localeCode`, `updatedAt`, and `createdAt` are all provided via the `sys` property and don't need to be declared as class members. However, note that this style of implementation may make integration with local database frameworks like Realm and CoreData more cumbersome.
+If you want to simplify the implementation of an `EntryDecodable`, declare conformance to `Resource` and add `let sys: Sys` property to the class and assign via `sys = try decoder.sys()` during initialization. Then, `id`, `localeCode`, `updatedAt`, and `createdAt` are all provided via the `sys` property and don't need to be declared as class members. However, note that this style of implementation may make integration with local database frameworks like Realm and CoreData more cumbersome.
 
 ## Documentation & References
 
@@ -335,4 +335,3 @@ This repository is published under the [MIT](LICENSE) license.
 We want to provide a safe, inclusive, welcoming, and harassment-free space and experience for all participants, regardless of gender identity and expression, sexual orientation, disability, physical appearance, socioeconomic status, body size, ethnicity, nationality, level of experience, age, religion (or lack thereof), or other identity markers.
 
 [Read our full Code of Conduct](https://github.com/contentful-developer-relations/community-code-of-conduct).
-
