@@ -217,7 +217,12 @@ final class Cat: EntryDecodable, FieldKeysQueryable {
 
     static let contentTypeId: String = "cat"
 
-    let sys: Sys
+    // FlatResource members.
+    let id: String
+    let localeCode: String?
+    let updatedAt: Date?
+    let createdAt: Date?
+
     let color: String?
     let name: String?
     let lives: Int?
@@ -227,7 +232,12 @@ final class Cat: EntryDecodable, FieldKeysQueryable {
     var bestFriend: Cat?
 
     public required init(from decoder: Decoder) throws {
-        sys             = try decoder.sys()
+        let sys         = try decoder.sys()
+        id              = sys.id
+        localeCode      = sys.locale
+        updatedAt       = sys.updatedAt
+        createdAt       = sys.createdAt
+
         let fields      = try decoder.contentfulFieldsContainer(keyedBy: Cat.Fields.self)
 
         self.name       = try fields.decodeIfPresent(String.self, forKey: .name)
@@ -246,6 +256,8 @@ final class Cat: EntryDecodable, FieldKeysQueryable {
     }
 }
 ```
+
+If you want to simplify the implementation of an `EntryDecodable`, declare conformance to resource and add `let sys: Sys` property to the class and assign via `sys = try decoder.sys()` during initialization. Then, `id`, `localeCode`, `updatedAt`, and `createdAt` are all provided via the `sys` property and don't need to be declared as class members. However, note that this style of implementation may make integration with local database frameworks like Realm and CoreData more cumbersome.
 
 ## Documentation & References
 
