@@ -11,7 +11,7 @@ import XCTest
 import DVR
 
 // From Complex-Sync-Test-Space
-class LinkClass: FlatResource, EntryDecodable, FieldKeysQueryable {
+class LinkClass: EntryDecodable, FieldKeysQueryable {
 
     static let contentTypeId = "link"
 
