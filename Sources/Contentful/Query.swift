@@ -251,6 +251,7 @@ public extension ChainableQuery {
     ///   - key: The `Sys.CodingKey` of the system property you are performing the Query.Operation against. For instance, `.id`.
     ///   - operation: The query operation used in the query.
     /// - Returns: A reference to the receiving query to enable chaining.
+    @discardableResult
     public func `where`(sys key: Sys.CodingKeys, _ operation: Query.Operation) -> Self {
         self.where(valueAtKeyPath: "sys.\(key.stringValue)", operation)
         return self
@@ -276,6 +277,7 @@ public extension ChainableQuery {
     ///   - fieldName: The string name of the field that the `Query.Operation` is matching against. For instance, "name"
     ///   - operation: The query operation used in the query.
     /// - Returns: A reference to the receiving query to enable chaining.
+    @discardableResult
     public func `where`(field fieldName: FieldName, _ operation: Query.Operation) -> Self {
         self.where(valueAtKeyPath: "fields.\(fieldName)", operation)
         return self
