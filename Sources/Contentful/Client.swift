@@ -456,7 +456,7 @@ extension Client {
         where ResourceType: Decodable & EndpointAccessible {
 
             // If the resource is not an entry, then don't worry about fetching with includes.
-            if resourceType != EntryDecodable.self && resourceType != Entry.self {
+            if !(resourceType is EntryDecodable.Type) && resourceType != Entry.self {
                 var url = self.url(endpoint: ResourceType.endpoint)
                 url.appendPathComponent(id)
                 return fetch(url: url, then: completion)

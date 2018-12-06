@@ -185,21 +185,14 @@ class LinkResolverTests: XCTestCase {
     func testEntryLinkingToAssetsArrayDoesResolveLinks() {
         let expectation = self.expectation(description: "Entry linking to assets array can resolve link")
 
-
-        let query = QueryOn<SingleRecord>.where(sys: .id, .equals("2JFSeiPTZYm4goMSUeYSCU"))
-
-        LinkResolverTests.client.fetchArray(of: SingleRecord.self, matching: query) { result in
+        LinkResolverTests.client.fetch(SingleRecord.self, id: "2JFSeiPTZYm4goMSUeYSCU") { result in
             switch result {
-            case .success(let arrayResponse):
-                let records = arrayResponse.items
-                XCTAssertEqual(records.count, 1)
-                if let record = records.first, record.id == "2JFSeiPTZYm4goMSUeYSCU" {
-                    XCTAssertNotNil(record.assetsArrayLinkField)
-                    XCTAssertEqual(record.assetsArrayLinkField?.count, 4)
-                    XCTAssertEqual(record.assetsArrayLinkField?.first?.id, "6Wsz8owhtCGSICg44IUYAm")
-                } else {
-                    XCTFail("Expected an array of length 1 with a an entry with id '2JFSeiPTZYm4goMSUeYSCU'")
-                }
+            case .success(let record):
+
+                XCTAssertNotNil(record.assetsArrayLinkField)
+                XCTAssertEqual(record.assetsArrayLinkField?.count, 4)
+                XCTAssertEqual(record.assetsArrayLinkField?.first?.id, "6Wsz8owhtCGSICg44IUYAm")
+
             case .error(let error):
                 XCTFail("Should not throw an error \(error)")
             }

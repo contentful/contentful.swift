@@ -10,7 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 ## Table of contents
 
 #### 4.x Releases
-- `4.2.0` Releases - [4.2.0](#420) | [4.2.1](#421) | [4.2.2](#422)
+- `4.2.0` Releases - [4.2.0](#420) | [4.2.1](#421) | [4.2.2](#422) | [4.2.3](#423)
 - `4.1.0` Releases - [4.1.0](#410) | [4.1.3](#413)
 - `4.0.0` Releases - [4.0.0](#400) | [4.0.1](#401)
 
@@ -37,6 +37,14 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 - `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041)
 - `0.3.x` Releases - [0.3.0](#030) | [0.3.1](#031)
+
+---
+
+## [`4.2.3`](https://github.com/contentful/contentful.swift/releases/tag/4.2.3)
+Released on 2018-12-06
+
+#### Fixes
+- Check for protocol conformance when fetching an `EntryDecodable` by id that prevented links from being resolved.
 
 ---
 
