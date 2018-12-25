@@ -67,14 +67,13 @@ public class Entry: LocalizableResource {
                 // than a Swift object in the link body. The link will be resolved at a later time.
 
                 if let mixedLinks = fieldValueForLocaleCode as? [Link] {
-
-                    // The conversion from dictionary representation should only ever happen once
-                    let alreadyResolvedLinks = mixedLinks.filter { $0.isResolved == true }
-
-                    let unresolvedLinks = mixedLinks.filter { $0.isResolved == false }
-                    let newlyResolvedLinks = unresolvedLinks.map { $0.resolve(against: includedEntries, and: includedAssets) }
-
-                    let resolvedLinks = alreadyResolvedLinks + newlyResolvedLinks
+                    let resolvedLinks = mixedLinks.map { (link) -> Link in
+                        if link.isResolved {
+                            return link
+                        } else {
+                            return link.resolve(against: includedEntries, and: includedAssets)
+                        }
+                    }
                     resolvedLocalizableFieldMap[localeCode] = resolvedLinks
                 }
             }
