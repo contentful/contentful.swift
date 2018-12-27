@@ -124,7 +124,7 @@ pod 'Contentful'
 You can specify a specific version of Contentful depending on your needs. To learn more about operators for dependency versioning within a Podfile, see the [CocoaPods doc on the Podfile](https://guides.cocoapods.org/using/the-podfile.html).
 
 ```ruby
-pod 'Contentful', '~> 4.2.3'
+pod 'Contentful', '~> 4.2.4'
 ```
 
 #### Carthage installation
@@ -132,7 +132,7 @@ pod 'Contentful', '~> 4.2.3'
 You can also use [Carthage](https://github.com/Carthage/Carthage) for integration by adding the following to your `Cartfile`:
 
 ```
-github "contentful/contentful.swift" ~> 4.2.3
+github "contentful/contentful.swift" ~> 4.2.4
 ```
 
 #### Swift Package Manager [swift-tools-version 4.2]
@@ -140,7 +140,7 @@ github "contentful/contentful.swift" ~> 4.2.3
 Add the following line to your array of dependencies:
 
 ```swift
-.package(url: "https://github.com/contentful/contentful.swift", .upToNextMajor(from: "4.2.3"))
+.package(url: "https://github.com/contentful/contentful.swift", .upToNextMajor(from: "4.2.4"))
 ```
 
 ### Your first request
