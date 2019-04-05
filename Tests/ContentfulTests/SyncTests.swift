@@ -24,10 +24,12 @@ class SyncTests: XCTestCase {
         (client.urlSession as? DVR.Session)?.endRecording()
     }
 
-    func waitUntilSync(syncableTypes: SyncSpace.SyncableTypes, action: @escaping (_ space: SyncSpace) -> ()) {
+    func waitUntilSync(client: Client = SyncTests.client,
+                       syncableTypes: SyncSpace.SyncableTypes,
+                       action: @escaping (_ space: SyncSpace) -> ()) {
         let expectation = self.expectation(description: "Sync test expecation")
 
-        SyncTests.client.sync(syncableTypes: syncableTypes) { result in
+        client.sync(syncableTypes: syncableTypes) { result in
             switch result {
             case .success(let syncSpace):
                 action(syncSpace)
@@ -78,12 +80,16 @@ class SyncTests: XCTestCase {
     }
 
     func testSyncEntriesOfContentType() {
-        waitUntilSync(syncableTypes: .entriesOfContentType(withId: "cat")) {
-            XCTAssertEqual($0.assets.count, 0)
-            XCTAssertEqual($0.entries.count, 3)
+        let client = TestClientFactory.testClient(withCassetteNamed: "SyncWithPaginationTests")
+        (client.urlSession as? DVR.Session)?.beginRecording()
+        
+        waitUntilSync(client: client, syncableTypes: .all) {
+            XCTAssertEqual($0.assets.count, 5)
+            XCTAssertEqual($0.entries.count, 11)
         }
+        
+        (client.urlSession as? DVR.Session)?.endRecording()
     }
-
 }
 
 #if !API_COVERAGE
