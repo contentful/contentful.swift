@@ -80,11 +80,18 @@ class SyncTests: XCTestCase {
     }
 
     func testSyncEntriesOfContentType() {
+        waitUntilSync(syncableTypes: .entriesOfContentType(withId: "cat")) {
+            XCTAssertEqual($0.assets.count, 0)
+            XCTAssertEqual($0.entries.count, 3)
+        }
+    }
+    
+    func testSyncWithPagination() {
         let client = TestClientFactory.testClient(withCassetteNamed: "SyncWithPaginationTests")
         (client.urlSession as? DVR.Session)?.beginRecording()
         
         waitUntilSync(client: client, syncableTypes: .all) {
-            XCTAssertEqual($0.assets.count, 5)
+            XCTAssertEqual($0.assets.count, 4)
             XCTAssertEqual($0.entries.count, 11)
         }
         
