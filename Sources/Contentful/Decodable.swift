@@ -17,7 +17,7 @@ public extension Decoder {
 
     /// The `TimeZone` the `Decoder` is using to offset dates by.
     /// Set through `ClientConfiguration`.
-    public var timeZone: TimeZone? {
+    var timeZone: TimeZone? {
         return userInfo[.timeZoneContextKey] as? TimeZone
     }
 
@@ -34,19 +34,19 @@ public extension Decoder {
 
     /// The localization context of the connected Contentful space necessary to properly serialize
     /// entries and assets to Swift models from Contentful API responses.
-    public var localizationContext: LocalizationContext {
+    var localizationContext: LocalizationContext {
         return userInfo[.localizationContextKey] as! LocalizationContext
     }
 
     /// Helper method to extract the sys property of a Contentful resource.
-    public func sys() throws -> Sys {
+    func sys() throws -> Sys {
         let container = try self.container(keyedBy: LocalizableResource.CodingKeys.self)
         let sys = try container.decode(Sys.self, forKey: .sys)
         return sys
     }
 
     /// Extract the nested JSON container for the "fields" dictionary present in Entry and Asset resources.
-    public func contentfulFieldsContainer<NestedKey>(keyedBy keyType: NestedKey.Type) throws -> KeyedDecodingContainer<NestedKey> {
+    func contentfulFieldsContainer<NestedKey>(keyedBy keyType: NestedKey.Type) throws -> KeyedDecodingContainer<NestedKey> {
         let container = try self.container(keyedBy: LocalizableResource.CodingKeys.self)
         let fieldsContainer = try container.nestedContainer(keyedBy: keyType, forKey: .fields)
         return fieldsContainer
@@ -75,31 +75,31 @@ internal extension Decodable where Self: EntryDecodable {
     // This is a magic workaround for the fact that dynamic metatypes cannot be passed into
     // initializers such as UnkeyedDecodingContainer.decode(Decodable.Type), yet static methods CAN
     // be called on metatypes.
-    internal static func popEntryDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
+    static func popEntryDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
         let entryDecodable = try container.decode(self)
         return entryDecodable
     }
 }
 
 internal extension Decodable where Self: AssetDecodable {
-    internal static func popAssetDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
+    static func popAssetDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
         let assetDecodable = try container.decode(self)
         return assetDecodable
     }
 }
 
 internal extension Decodable where Self: Node {
-   internal static func popNodeDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
+    static func popNodeDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
         let contentDecodable = try container.decode(self)
         return contentDecodable
     }
 }
 
 internal extension CodingUserInfoKey {
-    internal static let linkResolverContextKey = CodingUserInfoKey(rawValue: "linkResolverContext")!
-    internal static let timeZoneContextKey = CodingUserInfoKey(rawValue: "timeZoneContext")!
-    internal static let contentTypesContextKey = CodingUserInfoKey(rawValue: "contentTypesContext")!
-    internal static let localizationContextKey = CodingUserInfoKey(rawValue: "localizationContext")!
+    static let linkResolverContextKey = CodingUserInfoKey(rawValue: "linkResolverContext")!
+    static let timeZoneContextKey = CodingUserInfoKey(rawValue: "timeZoneContext")!
+    static let contentTypesContextKey = CodingUserInfoKey(rawValue: "contentTypesContext")!
+    static let localizationContextKey = CodingUserInfoKey(rawValue: "localizationContext")!
 }
 
 // Fields JSON container.
@@ -112,7 +112,7 @@ public extension KeyedDecodingContainer {
     ///   - decoder: The `Decoder` being used to deserialize the JSON to user-defined classes.
     ///   - callback: The callback used to assign the linked item at a later time.
     /// - Throws: Forwards the error if no link object is in the JSON at the specified key.
-    public func resolveLink(forKey key: KeyedDecodingContainer.Key,
+    func resolveLink(forKey key: KeyedDecodingContainer.Key,
                             decoder: Decoder,
                             callback: @escaping (AnyObject) -> Void) throws {
 
@@ -129,7 +129,7 @@ public extension KeyedDecodingContainer {
     ///   - decoder: The `Decoder` being used to deserialize the JSON to user-defined classes.
     ///   - callback: The callback used to assign the linked items at a later time.
     /// - Throws: Forwards the error if no link object is in the JSON at the specified key.
-    public func resolveLinksArray(forKey key: KeyedDecodingContainer.Key,
+    func resolveLinksArray(forKey key: KeyedDecodingContainer.Key,
                                   decoder: Decoder,
                                   callback: @escaping (AnyObject) -> Void) throws {
 
@@ -218,29 +218,29 @@ internal struct JSONCodingKeys: CodingKey {
 
 internal extension KeyedDecodingContainer {
 
-    internal func decode(_ type: Dictionary<String, Any>.Type, forKey key: K) throws -> Dictionary<String, Any> {
+    func decode(_ type: Dictionary<String, Any>.Type, forKey key: K) throws -> Dictionary<String, Any> {
         let container = try self.nestedContainer(keyedBy: JSONCodingKeys.self, forKey: key)
         return try container.decode(type)
     }
 
-    internal func decodeIfPresent(_ type: Dictionary<String, Any>.Type, forKey key: K) throws -> Dictionary<String, Any>? {
+    func decodeIfPresent(_ type: Dictionary<String, Any>.Type, forKey key: K) throws -> Dictionary<String, Any>? {
         guard contains(key) else { return nil }
         guard try decodeNil(forKey: key) == false else { return nil }
         return try decode(type, forKey: key)
     }
 
-    internal func decode(_ type: Array<Any>.Type, forKey key: K) throws -> Array<Any> {
+    func decode(_ type: Array<Any>.Type, forKey key: K) throws -> Array<Any> {
         var container = try self.nestedUnkeyedContainer(forKey: key)
         return try container.decode(type)
     }
 
-    internal func decodeIfPresent(_ type: Array<Any>.Type, forKey key: K) throws -> Array<Any>? {
+    func decodeIfPresent(_ type: Array<Any>.Type, forKey key: K) throws -> Array<Any>? {
         guard contains(key) else { return nil }
         guard try decodeNil(forKey: key) == false else { return nil }
         return try decode(type, forKey: key)
     }
 
-    internal func decode(_ type: Dictionary<String, Any>.Type) throws -> Dictionary<String, Any> {
+    func decode(_ type: Dictionary<String, Any>.Type) throws -> Dictionary<String, Any> {
         var dictionary = Dictionary<String, Any>()
 
         for key in allKeys {
@@ -276,7 +276,7 @@ internal extension KeyedDecodingContainer {
 
 internal extension UnkeyedDecodingContainer {
 
-    internal mutating func decode(_ type: Array<Any>.Type) throws -> Array<Any> {
+    mutating func decode(_ type: Array<Any>.Type) throws -> Array<Any> {
         var array: [Any] = []
         while isAtEnd == false {
             if try decodeNil() {
@@ -309,7 +309,7 @@ internal extension UnkeyedDecodingContainer {
         return array
     }
 
-    internal mutating func decode(_ type: Dictionary<String, Any>.Type) throws -> Dictionary<String, Any> {
+    mutating func decode(_ type: Dictionary<String, Any>.Type) throws -> Dictionary<String, Any> {
 
         let nestedContainer = try self.nestedContainer(keyedBy: JSONCodingKeys.self)
         return try nestedContainer.decode(type)

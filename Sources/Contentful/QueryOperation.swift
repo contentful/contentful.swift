@@ -25,7 +25,7 @@ public extension Query {
     /// ```
     ///
     /// Refer to the documentation for the various Query classes for more information.
-    public enum Operation {
+    enum Operation {
 
         /// The equality operator: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/equality-operator>
         case equals(String)

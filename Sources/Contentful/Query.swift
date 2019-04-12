@@ -210,7 +210,7 @@ public extension AbstractQuery {
     ///   - key: The `Sys.CodingKeys` of the system property you are performing the `Query.Operation` against. For instance, `.id`.
     ///   - operation: The query operation used in the query.
     /// - Returns: A newly initialized query.
-    public static func `where`(sys key: Sys.CodingKeys, _ operation: Query.Operation) -> Self {
+    static func `where`(sys key: Sys.CodingKeys, _ operation: Query.Operation) -> Self {
         return Self.where(valueAtKeyPath: "sys.\(key.stringValue)", operation)
     }
 
@@ -222,7 +222,7 @@ public extension AbstractQuery {
     ///              `"sys.id"` or `"fields.yourFieldName"`.
     ///   - operation: The query operation used in the query.
     /// - Returns: A newly initialized query.
-    public static func `where`(valueAtKeyPath keyPath: String, _ operation: Query.Operation) -> Self {
+    static func `where`(valueAtKeyPath keyPath: String, _ operation: Query.Operation) -> Self {
         let parameter = keyPath + operation.string
 
         let query = Self()
@@ -252,7 +252,7 @@ public extension ChainableQuery {
     ///   - operation: The query operation used in the query.
     /// - Returns: A reference to the receiving query to enable chaining.
     @discardableResult
-    public func `where`(sys key: Sys.CodingKeys, _ operation: Query.Operation) -> Self {
+    func `where`(sys key: Sys.CodingKeys, _ operation: Query.Operation) -> Self {
         self.where(valueAtKeyPath: "sys.\(key.stringValue)", operation)
         return self
     }
@@ -265,7 +265,7 @@ public extension ChainableQuery {
     ///   - fieldName:  The string name of the field that the `Query.Operation` is matching against. For instance, ".name"
     ///   - operation: The query operation used in the query.
     /// - Returns: A newly initialized query.
-    public static func `where`(field fieldName: FieldName, _ operation: Query.Operation) -> Self {
+    static func `where`(field fieldName: FieldName, _ operation: Query.Operation) -> Self {
         return Self.where(valueAtKeyPath: "fields.\(fieldName)", operation)
     }
 
@@ -278,7 +278,7 @@ public extension ChainableQuery {
     ///   - operation: The query operation used in the query.
     /// - Returns: A reference to the receiving query to enable chaining.
     @discardableResult
-    public func `where`(field fieldName: FieldName, _ operation: Query.Operation) -> Self {
+    func `where`(field fieldName: FieldName, _ operation: Query.Operation) -> Self {
         self.where(valueAtKeyPath: "fields.\(fieldName)", operation)
         return self
     }
@@ -298,7 +298,7 @@ public extension ChainableQuery {
     ///   - operation: The query operation used in the query.
     /// - Returns: A reference to the receiving query to enable chaining.
     @discardableResult
-    public func `where`(valueAtKeyPath keyPath: String, _ operation: Query.Operation) -> Self {
+    func `where`(valueAtKeyPath keyPath: String, _ operation: Query.Operation) -> Self {
 
         // Create parameter for this query operation.
         let parameter = keyPath + operation.string
@@ -316,7 +316,7 @@ public extension ChainableQuery {
     /// - Parameter text: The text string to match against.
     /// - Returns: A newly initialized query.
     /// - Throws: A `QueryError` if the text being searched for is 1 character in length or less.
-    public static func searching(for text: String) throws -> Self {
+    static func searching(for text: String) throws -> Self {
         let query = Self()
         try query.searching(for: text)
         return query
@@ -331,7 +331,7 @@ public extension ChainableQuery {
     /// - Returns: A reference to the receiving query to enable chaining.
     /// - Throws: A `QueryError` if the text being searched for is 1 character in length or less.
     @discardableResult
-    public func searching(for text: String) throws -> Self {
+    func searching(for text: String) throws -> Self {
         guard text.count > 1 else { throw QueryError.textSearchTooShort }
         self.parameters[QueryParameter.fullTextSearch] = text
         return self
@@ -349,7 +349,7 @@ public extension ChainableQuery {
     ///
     /// - Parameter includesLevel: An unsigned integer specifying the level of includes to be resolved.
     /// - Returns: A newly constructed query object specifying the level of includes to be linked.
-    public static func include(_ includesLevel: UInt) -> Self {
+    static func include(_ includesLevel: UInt) -> Self {
         let query = Self()
         query.include(includesLevel)
         return query
@@ -366,7 +366,7 @@ public extension ChainableQuery {
     /// - Parameter includesLevel: An unsigned integer specifying the level of includes to be resolved.
     /// - Returns: A reference to the receiving query to enable chaining.
     @discardableResult
-    public func include(_ includesLevel: UInt) -> Self {
+    func include(_ includesLevel: UInt) -> Self {
         let includes = min(includesLevel, QueryConstants.maxIncludes)
         self.parameters[QueryParameter.include] = String(includes)
         return self
@@ -384,7 +384,7 @@ public extension ChainableQuery {
     ///
     /// - Parameter numberOfResults: The number of results that will be skipped in the query.
     /// - Returns: A newly constructed query object specifying the number of items to skip.
-    public static func skip(theFirst numberOfResults: UInt) -> Self {
+    static func skip(theFirst numberOfResults: UInt) -> Self {
         let query = Self()
         query.skip(theFirst: numberOfResults)
         return query
@@ -402,7 +402,7 @@ public extension ChainableQuery {
     /// - Parameter numberOfResults: The number of results that will be skipped in the query.
     /// - Returns: A reference to the receiving query to enable chaining.
     @discardableResult
-    public func skip(theFirst numberOfResults: UInt) -> Self {
+    func skip(theFirst numberOfResults: UInt) -> Self {
         self.parameters[QueryParameter.skip] = String(numberOfResults)
         return self
     }
@@ -421,7 +421,7 @@ public extension ChainableQuery {
     ///
     /// - Parameter order: The specified `Ordering`.
     /// - Returns: A newly constructed query object specifying the order of the results.
-    public static func order(by order: Ordering...) -> Self {
+    static func order(by order: Ordering...) -> Self {
         let query = Self()
         query.order(by: order)
         return query
@@ -442,7 +442,7 @@ public extension ChainableQuery {
     /// - Parameter order: The specified Ordering.
     /// - Returns: A reference to the receiving query to enable chaining.
     @discardableResult
-    public func order(by order: Ordering...) -> Self {
+    func order(by order: Ordering...) -> Self {
         return self.order(by: order)
     }
 
@@ -470,7 +470,7 @@ public extension ChainableQuery {
     ///
     /// - Parameter numberOfResults: The number of results the response will be limited to.
     /// - Returns: A newly constructed query object specifying the number of resuls to be returned.
-    public static func limit(to numberOfResults: UInt) -> Self {
+    static func limit(to numberOfResults: UInt) -> Self {
         let query = Self()
         query.limit(to: numberOfResults)
         return query
@@ -489,7 +489,7 @@ public extension ChainableQuery {
     /// - Parameter numberOfResults: The number of results the response will be limited to.
     /// - Returns: A reference to the receiving query to enable chaining.
     @discardableResult
-    public func limit(to numberOfResults: UInt) -> Self {
+    func limit(to numberOfResults: UInt) -> Self {
         let limit = min(numberOfResults, QueryConstants.maxLimit)
 
         self.parameters[QueryParameter.limit] = String(limit)
@@ -509,7 +509,7 @@ public extension AbstractResourceQuery {
     ///
     /// - Parameter localeCode: The code for the locale you would like to specify.
     /// - Returns: A newly created query with the results restricted to the specified locale.
-    public static func localizeResults(withLocaleCode localeCode: LocaleCode) -> Self {
+    static func localizeResults(withLocaleCode localeCode: LocaleCode) -> Self {
         let query = Self()
         query.localizeResults(withLocaleCode: localeCode)
         return query
@@ -523,7 +523,7 @@ public extension AbstractResourceQuery {
     /// - Parameter localeCode: The code for the locale you would like to specify.
     /// - Returns: A reference to the receiving query to enable chaining.
     @discardableResult
-    public func localizeResults(withLocaleCode localeCode: LocaleCode) -> Self {
+    func localizeResults(withLocaleCode localeCode: LocaleCode) -> Self {
         self.parameters[QueryParameter.locale] = localeCode
         return self
     }
@@ -550,7 +550,7 @@ public extension AbstractResourceQuery {
     /// - Returns: A newly initialized query selecting only certain fields to be returned in the response.
     /// - Throws: An error if selections go more than 1 level deep within the fields container ("bestFriend.sys" is not valid),
     ///           or if more than 99 properties are selected.
-    public static func select(fieldsNamed fieldNames: [FieldName]) throws -> Self {
+    static func select(fieldsNamed fieldNames: [FieldName]) throws -> Self {
         let query = Self()
         try query.select(fieldsNamed: fieldNames)
         return query
@@ -582,7 +582,7 @@ public extension AbstractResourceQuery {
     /// - Throws: An error if selections go more than 1 level deep within the fields container ("bestFriend.sys" is not valid),
     ///           or if more than 99 properties are selected.
     @discardableResult
-    public func select(fieldsNamed fieldNames: [FieldName]) throws -> Self {
+    func select(fieldsNamed fieldNames: [FieldName]) throws -> Self {
 
         guard fieldNames.count <= Int(QueryConstants.maxSelectedProperties) else { throw QueryError.maxSelectionLimitExceeded }
 
@@ -610,7 +610,7 @@ public extension EntryQuery {
     ///
     /// - Parameter contentTypeId: The identifier of the content type which the query will be performed on.
     /// - Returns: A new initialized Query narrowing the results to a specific content type.
-    public static func `where`(contentTypeId: ContentTypeId) -> Self {
+    static func `where`(contentTypeId: ContentTypeId) -> Self {
         let query = Self()
         query.where(contentTypeId: contentTypeId)
         return query
@@ -623,7 +623,7 @@ public extension EntryQuery {
     /// - Parameter contentTypeId: The identifier of the content type which the query will be performed on.
     /// - Returns: A reference to the receiving query to enable chaining.
     @discardableResult
-    public func `where`(contentTypeId: ContentTypeId) -> Self {
+    func `where`(contentTypeId: ContentTypeId) -> Self {
         self.parameters[QueryParameter.contentType] = contentTypeId
         return self
     }
@@ -648,7 +648,7 @@ public extension EntryQuery {
     ///   - targetContentTypeId:  The content type idenifier of the item(s) being linked to at the specified linking field name.
     ///   - operation: The `Query.Operation` used to match the value of at the target key path.
     /// - Returns: A newly initialized query for searching on references.
-    public static func `where`(linkAtFieldNamed linkingFieldName: String,
+    static func `where`(linkAtFieldNamed linkingFieldName: String,
                                onSourceContentTypeWithId sourceContentTypeId: ContentTypeId,
                                hasValueAtKeyPath targetKeyPath: String,
                                withTargetContentTypeId targetContentTypeId: ContentTypeId,
@@ -675,7 +675,7 @@ public extension EntryQuery {
     ///   - operation: The `Query.Operation` used to match the value of at the target key path.
     /// - Returns: A reference to the receiving query to enable chaining.
     @discardableResult
-    public func `where`(linkAtFieldNamed linkingFieldName: String,
+    func `where`(linkAtFieldNamed linkingFieldName: String,
                         onSourceContentTypeWithId sourceContentTypeId: ContentTypeId,
                         hasValueAtKeyPath targetKeyPath: String,
                         withTargetContentTypeId targetContentTypeId: ContentTypeId,
@@ -706,7 +706,7 @@ public extension EntryQuery {
     ///   - sourceContentTypeId: The content type identifier of the link source.
     ///   - targetId: The identifier of the entry or asset being linked to at the specified linking field.
     /// - Returns: A newly initialized query for searching on references.
-    public static func `where`(linkAtFieldNamed linkingFieldName: String,
+    static func `where`(linkAtFieldNamed linkingFieldName: String,
                                onSourceContentTypeWithId sourceContentTypeId: ContentTypeId,
                                hasTargetId targetId: String) -> Self {
         let query = Self()
@@ -727,7 +727,7 @@ public extension EntryQuery {
     ///   - targetId: The identifier of the entry or asset being linked to at the specified linking field.
     /// - Returns: A reference to the receiving query to enable chaining.
     @discardableResult
-    public func `where`(linkAtFieldNamed linkingFieldName: String,
+    func `where`(linkAtFieldNamed linkingFieldName: String,
                         onSourceContentTypeWithId sourceContentTypeId: ContentTypeId,
                         hasTargetId targetId: String) -> Self {
         self.parameters[QueryParameter.contentType] = sourceContentTypeId
@@ -741,7 +741,7 @@ public extension EntryQuery {
     ///
     /// - Parameter entryId: The identifier of the entry which you want to find incoming links for.
     /// - Returns: A newly initialized query which will search for incoming links on a specific entry.
-    public static func `where`(linksToEntryWithId entryId: String) -> Self {
+    static func `where`(linksToEntryWithId entryId: String) -> Self {
         let query = Self()
         query.where(linksToEntryWithId: entryId)
         return query
@@ -753,7 +753,7 @@ public extension EntryQuery {
     /// - Parameter entryId: The identifier of the entry which you want to find incoming links for.
     /// - Returns: A reference to the receiving query to enable chaining.
     @discardableResult
-    public func `where`(linksToEntryWithId entryId: String) -> Self {
+    func `where`(linksToEntryWithId entryId: String) -> Self {
         self.parameters[QueryParameter.linksToEntry] = entryId
         return self
     }
@@ -763,7 +763,7 @@ public extension EntryQuery {
     ///
     /// - Parameter assetId: The identifier of the asset which you want to find incoming links for
     /// - Returns:  A newly initialized query which will search for incoming links on a specific asset.
-    public static func `where`(linksToAssetWithId assetId: String) -> Self {
+    static func `where`(linksToAssetWithId assetId: String) -> Self {
         let query = Self()
         query.where(linksToAssetWithId: assetId)
         return query
@@ -775,7 +775,7 @@ public extension EntryQuery {
     /// - Parameter assetId: The identifier of the asset which you want to find incoming links for.
     /// - Returns: A reference to the receiving query to enable chaining.
     @discardableResult
-    public func `where`(linksToAssetWithId assetId: String) -> Self {
+    func `where`(linksToAssetWithId assetId: String) -> Self {
         self.parameters[QueryParameter.linksToAsset] = assetId
         return self
     }
@@ -818,7 +818,7 @@ public class ResourceQuery: AbstractResourceQuery {
 
 internal extension String {
 
-    internal func isValidSelection() -> Bool {
+    func isValidSelection() -> Bool {
         if split(separator: ".", maxSplits: 3, omittingEmptySubsequences: false).count > 2 {
             return false
         }
