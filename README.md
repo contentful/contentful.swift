@@ -259,6 +259,8 @@ final class Cat: EntryDecodable, FieldKeysQueryable {
 
 If you want to simplify the implementation of an `EntryDecodable`, declare conformance to `Resource` and add `let sys: Sys` property to the class and assign via `sys = try decoder.sys()` during initialization. Then, `id`, `localeCode`, `updatedAt`, and `createdAt` are all provided via the `sys` property and don't need to be declared as class members. However, note that this style of implementation may make integration with local database frameworks like Realm and CoreData more cumbersome.
 
+Additionally, the SDK requires that instances of a type representing an entry or asset must be a `class` instance, not a `struct`—this is because the SDK ensures that the in-memory object graph is complete, but also that it has no duplicates.
+
 ## Documentation & References
 
 ### Reference Documentation
