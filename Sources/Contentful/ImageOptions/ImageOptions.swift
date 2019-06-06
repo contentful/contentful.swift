@@ -44,7 +44,7 @@ public extension String {
     /// - Parameter imageOptions: The image options to transform the image on the server-side.
     /// - Returns: A `URL` for the image with query parameters corresponding to server-side image transformations.
     /// - Throws: An `ImageOptionError` if the SDK is unable to generate a valid URL with the desired ImageOptions.
-    public func url(with imageOptions: [ImageOption]) throws -> URL {
+    func url(with imageOptions: [ImageOption]) throws -> URL {
 
         // Check that there are no two image options that specifiy the same query parameter.
         // https://stackoverflow.com/a/27624476/4068264z
@@ -121,15 +121,14 @@ public enum ImageOption: Equatable, Hashable {
     }
 
     // MARK: <Hashable>
-
-    // Used to unique'ify an Array of ImageOption instances by converting to a Set.
-    public var hashValue: Int {
+    
+    public func hash(into hasher: inout Hasher) {
         switch self {
-        case .width:                return 0
-        case .height:               return 1
-        case .formatAs:             return 2
-        case .fit:                  return 3
-        case .withCornerRadius:     return 4
+        case .width:                hasher.combine(0)
+        case .height:               hasher.combine(1)
+        case .formatAs:             hasher.combine(2)
+        case .fit:                  hasher.combine(3)
+        case .withCornerRadius:     hasher.combine(4)
         }
     }
 }
@@ -402,7 +401,7 @@ internal extension CGColor {
 
     // If for some reason the following code fails to create a hex string, the color black will be
     // returned.
-    internal func hexRepresentation() -> String {
+    func hexRepresentation() -> String {
         let hexForBlack = "000000"
         guard let colorComponents = components else { return hexForBlack }
         guard let colorSpace = colorSpace else { return hexForBlack }

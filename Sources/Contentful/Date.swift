@@ -26,13 +26,13 @@ public extension Date {
     ]
 
     /// A small error type thrown when the date found in JSON cannot be deserialized.
-    public enum Error: String, Swift.Error {
+    enum Error: String, Swift.Error {
         /// The error thrown when a date string returned in an API response cannot be parsed by the SDK.
         case unsupportedDateFormat
     }
 
     /// A formatter ready to handle iso8601 dates: normalized string output to an offset of 0 from UTC.
-    public static func iso8601Formatter(timeZone: TimeZone? = nil) -> DateFormatter {
+    static func iso8601Formatter(timeZone: TimeZone? = nil) -> DateFormatter {
         let formatter = DateFormatter()
         formatter.calendar = Calendar(identifier: .iso8601)
         // The locale and timezone properties must be exactly as follows to have a true, time-zone agnostic (i.e. offset of 00:00 from UTC) ISO stamp.
@@ -49,7 +49,7 @@ public extension Date {
     /// - parameter decoder: The Decoder used to deserialize JSON from Contentful.
     /// - throws: Error.unsupportedDateFormat if the date isn't one of the three formats the web app supports
     ///           or the format used by Contentful `sys` properties.
-    public static func variableISO8601Strategy(_ decoder: Decoder) throws -> Date {
+    static func variableISO8601Strategy(_ decoder: Decoder) throws -> Date {
         let container = try decoder.singleValueContainer()
         let dateString = try container.decode(String.self)
 
@@ -66,7 +66,7 @@ public extension Date {
     }
 
     /// Returns a `String` in the ISO8601 format.
-    public var iso8601String: String {
+    var iso8601String: String {
         return Date.iso8601Formatter().string(from: self)
     }
 }
@@ -74,7 +74,7 @@ public extension Date {
 public extension String {
 
     /// Return a `Date` object if the current String is in the right format.
-    public var iso8601StringDate: Date? {
+    var iso8601StringDate: Date? {
         return Date.iso8601Formatter().date(from: self)
     }
 }

@@ -31,23 +31,23 @@ public protocol FlatResource {
 }
 
 public extension FlatResource where Self: Resource {
-    public var id: String {
+    var id: String {
         return sys.id
     }
 
-    public var type: String {
+    var type: String {
         return sys.type
     }
 
-    public var updatedAt: Date? {
+    var updatedAt: Date? {
         return sys.updatedAt
     }
 
-    public var createdAt: Date? {
+    var createdAt: Date? {
         return sys.createdAt
     }
 
-    public var localeCode: String? {
+    var localeCode: String? {
         return sys.locale
     }
 }
@@ -166,10 +166,9 @@ public class LocalizableResource: Resource, FlatResource, Decodable {
 
 // MARK: Internal
 
-extension LocalizableResource: Hashable {
-
-    public var hashValue: Int {
-        return id.hashValue
+extension LocalizableResource: Hashable {    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
 

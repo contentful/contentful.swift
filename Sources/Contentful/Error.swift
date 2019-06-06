@@ -20,7 +20,7 @@ public enum SDKError: Error, CustomDebugStringConvertible {
     case invalidURL(string: String)
 
     /// Thrown if the subsequent sync operations are executed in preview mode.
-    case previewAPIDoesNotSupportSync()
+    case previewAPIDoesNotSupportSync
 
     /// Thrown when receiving unparseable JSON responses.
     /// - Parameters:

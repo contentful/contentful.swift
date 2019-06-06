@@ -546,7 +546,7 @@ extension Client {
         // be called while in preview mode, is internally by the SDK to finish a multiple page sync.
         // We are doing a multi page sync only when syncSpace.hasMorePages is true.
         if !syncSpace.syncToken.isEmpty && host == Host.preview && syncSpace.hasMorePages == false {
-            completion(Result.error(SDKError.previewAPIDoesNotSupportSync()))
+            completion(Result.error(SDKError.previewAPIDoesNotSupportSync))
             return nil
         }
 
