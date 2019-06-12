@@ -89,7 +89,7 @@ internal extension Decodable where Self: AssetDecodable {
 }
 
 internal extension Decodable where Self: Node {
-   static func popNodeDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
+    static func popNodeDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
         let contentDecodable = try container.decode(self)
         return contentDecodable
     }
