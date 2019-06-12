@@ -77,6 +77,17 @@ public enum Link: Decodable {
         }
     }
 
+    /**
+     Returns a potentially resolved version (holding an `Entry` or `Asset`) of `self`.
+
+     Performs a greedy search in `includedEntries` and `includedAssets` for the first
+     `Entry` or `Asset` matching `self`'s `sys.linkType` and `sys.id`. If none
+     is found, returns `self`.
+
+     - parameters:
+     - includedEntries: `Entry` candidates that `self` _could_ point at.
+     - includedAssets: `Asset` candidates that `self` _could_ point at.
+     */
     internal func resolve(against includedEntries: [Entry]?, and includedAssets: [Asset]?) -> Link {
         switch self {
         case .unresolved(let sys):

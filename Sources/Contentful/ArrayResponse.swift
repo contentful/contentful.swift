@@ -157,7 +157,7 @@ extension ArrayResponse: Decodable {
 
             let allIncludedEntries = entries + (includedEntries ?? [])
 
-            // Rememember `Entry`s are classes (passed by reference) so we can change them in place
+            // Rememember `Entry`s are classes (passed by reference) so we can change them in place.
             for entry in allIncludedEntries {
                 entry.resolveLinks(against: allIncludedEntries, and: (includedAssets ?? []))
             }
