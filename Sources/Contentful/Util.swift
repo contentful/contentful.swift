@@ -27,7 +27,7 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
     ///
     /// - Parameter key: The name of the field to extract the `String` from.
     /// - Returns: The `String` value, or `nil` if data contained is not convertible to a `String`.
-    public func string(at key: Key) -> String? {
+    func string(at key: Key) -> String? {
         return self[key] as? String
     }
 
@@ -35,7 +35,7 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
     ///
     /// - Parameter key: The name of the field to extract the `[String]` from
     /// - Returns: The `[String]`, or nil if data contained is not convertible to an `[String]`.
-    public func strings(at key: Key) -> [String]? {
+    func strings(at key: Key) -> [String]? {
         return self[key] as? [String]
     }
 
@@ -43,7 +43,7 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
     ///
     /// - Parameter key: The name of the field to extract the `Int` value from.
     /// - Returns: The `Int` value, or `nil` if data contained is not convertible to an `Int`.
-    public func int(at key: Key) -> Int? {
+    func int(at key: Key) -> Int? {
         return self[key] as? Int
     }
 
@@ -51,7 +51,7 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
     ///
     /// - Parameter key: The name of the field to extract the `Date` value from.
     /// - Returns: The `Date` value, or `nil` if data contained is not convertible to a `Date`.
-    public func int(at key: Key) -> Date? {
+    func int(at key: Key) -> Date? {
         let dateString = self[key] as? String
         let date = dateString?.iso8601StringDate
         return date
@@ -61,7 +61,7 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
     ///
     /// - Parameter key: The name of the field to extract the `Entry` from.
     /// - Returns: The `Entry` value, or `nil` if data contained does not have contain a Link referencing an `Entry`.
-    public func linkedEntry(at key: Key) -> Entry? {
+    func linkedEntry(at key: Key) -> Entry? {
         let link = self[key] as? Link
         let entry = link?.entry
         return entry
@@ -71,7 +71,7 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
     ///
     /// - Parameter key: The name of the field to extract the `Asset` from.
     /// - Returns: The `Asset` value, or `nil` if data contained does not have contain a Link referencing an `Asset`.
-    public func linkedAsset(at key: Key) -> Asset? {
+    func linkedAsset(at key: Key) -> Asset? {
         let link = self[key] as? Link
         let asset = link?.asset
         return asset
@@ -81,7 +81,7 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
     ///
     /// - Parameter key: The name of the field to extract the `[Entry]` from.
     /// - Returns: The `[Entry]` value, or `nil` if data contained does not have contain a Link referencing an `Entry`.
-    public func linkedEntries(at key: Key) -> [Entry]? {
+    func linkedEntries(at key: Key) -> [Entry]? {
         let links = self[key] as? [Link]
         let entries = links?.compactMap { $0.entry }
         return entries
@@ -91,7 +91,7 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
     ///
     /// - Parameter key: The name of the field to extract the `[Asset]` from.
     /// - Returns: The `[Asset]` value, or `nil` if data contained does not have contain a Link referencing an `[Asset]`.
-    public func linkedAssets(at key: Key) -> [Asset]? {
+    func linkedAssets(at key: Key) -> [Asset]? {
         let links = self[key] as? [Link]
         let assets = links?.compactMap { $0.asset }
         return assets
@@ -101,7 +101,7 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
     ///
     /// - Parameter key: The name of the field to extract the `Bool` value from.
     /// - Returns: The `Bool` value, or `nil` if data contained is not convertible to a `Bool`.
-    public func bool(at key: Key) -> Bool? {
+    func bool(at key: Key) -> Bool? {
         return self[key] as? Bool
     }
 
@@ -110,7 +110,7 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
     ///
     /// - Parameter key: The name of the field to extract the `Contentful.Location` value from.
     /// - Returns: The `Contentful.Location` value, or `nil` if data contained is not convertible to a `Contentful.Location`.
-    public func location(at key: Key) -> Location? {
+    func location(at key: Key) -> Location? {
         let coordinateJSON = self[key] as? [String: Any]
         guard let longitude = coordinateJSON?["lon"] as? Double else { return nil }
         guard let latitude = coordinateJSON?["lat"] as? Double else { return nil }

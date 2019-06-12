@@ -68,7 +68,7 @@ public extension AssetProtocol {
     /// - Parameter imageOptions: An array of `ImageOption` that will be used for server side manipulations.
     /// - Returns: The URL for the image with the image manipulations, represented in the `imageOptions` parameter, applied.
     /// - Throws: Will throw `SDKError` if the SDK is unable to generate a valid URL with the desired ImageOptions.
-    public func url(with imageOptions: [ImageOption] = []) throws -> URL {
+    func url(with imageOptions: [ImageOption] = []) throws -> URL {
         guard let url = try urlString?.url(with: imageOptions) else {
             throw SDKError.invalidURL(string: urlString ?? "No url string is stored for Asset: \(id)")
         }

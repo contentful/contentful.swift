@@ -254,14 +254,14 @@ extension MixedArrayResponse: Decodable {
 // Convenience method for grabbing the content type information of a json item in an array of resources.
 internal extension Swift.Array where Element == Dictionary<String, Any> {
 
-    internal func contentTypeInfo(at index: Int) -> Link? {
+    func contentTypeInfo(at index: Int) -> Link? {
         guard let sys = self[index]["sys"] as? [String: Any], let contentTypeInfo = sys["contentType"] as? Link else {
             return nil
         }
         return contentTypeInfo
     }
 
-    internal func nodeType(at index: Int) -> NodeType? {
+    func nodeType(at index: Int) -> NodeType? {
         guard let nodeTypeString = self[index]["nodeType"] as? String, let nodeType = NodeType(rawValue: nodeTypeString) else {
             return nil
         }
