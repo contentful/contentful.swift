@@ -121,7 +121,8 @@ public enum ImageOption: Equatable, Hashable {
     }
 
     // MARK: <Hashable>
-    
+
+    // Used to unique'ify an Array of ImageOption instances by converting to a Set.
     public func hash(into hasher: inout Hasher) {
         switch self {
         case .width:                hasher.combine(0)
@@ -131,6 +132,7 @@ public enum ImageOption: Equatable, Hashable {
         case .withCornerRadius:     hasher.combine(4)
         }
     }
+
 }
 
 /// Equatable implementation for `ImageOption`
