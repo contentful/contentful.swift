@@ -32,15 +32,21 @@ public enum Link: Decodable {
     /// The Link points to an `Entry`.
     case entry(Entry)
 
+    /// The Link points to a not further specified `EntryDecodable`.
+    ///
+    /// Most likely, this is a type defined by the user.
+    case entryDecodable(EntryDecodable)
+
     /// The Link is unresolved, and therefore contains a dictionary of metadata describing the linked resource.
     case unresolved(Link.Sys)
 
     /// The unique identifier of the linked asset or entry.
     public var id: String {
         switch self {
-        case .asset(let asset):     return asset.id
-        case .entry(let entry):     return entry.id
-        case .unresolved(let sys):  return sys.id
+        case .asset(let asset):                     return asset.id
+        case .entry(let entry):                     return entry.id
+        case .entryDecodable(let entryDecodable):   return entryDecodable.id
+        case .unresolved(let sys):                  return sys.id
         }
     }
 
@@ -60,6 +66,14 @@ public enum Link: Decodable {
         }
     }
 
+    /// The linked EntryDecodable, if it exists.
+    public var entryDecodable: EntryDecodable? {
+        switch self {
+        case .entryDecodable(let entryDecodable):   return entryDecodable
+        default:                                    return nil
+        }
+    }
+
     /// The system properties which describe the link.
     public var sys: Link.Sys {
         switch self {
@@ -72,7 +86,7 @@ public enum Link: Decodable {
 
     internal var isResolved: Bool {
         switch self {
-        case .asset, .entry: return true
+        case .asset, .entry, .entryDecodable: return true
         case .unresolved: return false
         }
     }
@@ -108,6 +122,19 @@ public enum Link: Decodable {
             fatalError("A serious error occured, attempted to resolve an already resolved Link")
         }
         return self
+    }
+
+    internal func resolveWithCandidateObject(_ object: AnyObject) -> Link {
+        switch object {
+        case let entry as Entry where sys.id == entry.sys.id:
+            return Link.entry(entry)
+        case let asset as Asset where sys.id == asset.sys.id:
+            return Link.asset(asset)
+        case let entryDecodable as EntryDecodable where sys.id == entryDecodable.id:
+            return Link.entryDecodable(entryDecodable)
+        default:
+            return self
+        }
     }
 
     public init(from decoder: Decoder) throws {
