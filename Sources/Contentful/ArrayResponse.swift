@@ -66,14 +66,14 @@ public struct HomogeneousArrayResponse<ItemType>: HomogeneousArray where ItemTyp
     /// cannot be resolved.
     public let errors: [ArrayResponseError]?
 
-    internal let includes: Includes?
-    internal let mappedIncludes: HeterogeneousIncludes?
+    internal let homogeneousIncludes: Includes?
+    internal let heterogeneousIncludes: HeterogeneousIncludes?
 
     internal var includedAssets: [Asset]? {
-        return includes?.assets
+        return homogeneousIncludes?.assets
     }
     internal var includedEntries: [Entry]? {
-        return includes?.entries
+        return homogeneousIncludes?.entries
     }
 
     internal struct Includes: Decodable {
@@ -105,12 +105,22 @@ extension HomogeneousArrayResponse: Decodable {
         limit           = try container.decode(UInt.self, forKey: .limit)
         errors          = try container.decodeIfPresent([ArrayResponseError].self, forKey: .errors)
 
-        // First see if we can decode an array of user-defined types.
-        if ItemType.self is EntryDecodable.Type {
+        // If ItemType conforms to EntryDecodable, we can strongly assume that self
+        // contains items of a user-defined type.
+        let areItemsOfCustomType = ItemType.self is EntryDecodable.Type
+
+        if areItemsOfCustomType {
+
+            // Since self's items are of a custom (i.e. user-defined) type,
+            // we must accomodate the scenario that included Entries are
+            // heterogeneous, since items can link to whatever custom Entries
+            // the user defined.
+            // As a consequence, we have to use the LinkResolver in order to
+            // establish links among items and included Entries and/or Assets.
 
             // All items and includes.
-            includes = nil
-            mappedIncludes = try container.decodeIfPresent(HeterogeneousIncludes.self, forKey: .includes)
+            homogeneousIncludes = nil
+            heterogeneousIncludes = try container.decodeIfPresent(HeterogeneousIncludes.self, forKey: .includes)
 
             // A copy as an array of dictionaries just to extract "sys.type" field.
             guard let jsonItems = try container.decode(Swift.Array<Any>.self, forKey: .items) as? [[String: Any]] else {
@@ -151,9 +161,16 @@ extension HomogeneousArrayResponse: Decodable {
             // Resolve links.
             decoder.linkResolver.churnLinks()
         } else {
-            mappedIncludes  = nil
-            includes        = try container.decodeIfPresent(HomogeneousArrayResponse.Includes.self, forKey: .includes)
-            items           = try container.decode([ItemType].self, forKey: .items)
+
+            // Since self's items are NOT of a custom (i.e. user-defined) type,
+            // we can assume that they are of one of the known concrete types in this SDK.
+            // Consequently, the included/embedded contents are all either of type Entry
+            // or Asset, and links pointing to them can be resolved with a simpler
+            // approach than using the LinkResolver.
+
+            heterogeneousIncludes   = nil
+            homogeneousIncludes     = try container.decodeIfPresent(Includes.self, forKey: .includes)
+            items                   = try container.decode([ItemType].self, forKey: .items)
 
             // If the ItemType was Entry, filter those entries so we can resolve their links.
             let entries: [Entry] = items.compactMap { $0 as? Entry }
@@ -166,6 +183,7 @@ extension HomogeneousArrayResponse: Decodable {
             }
         }
     }
+
     fileprivate enum CodingKeys: String, CodingKey {
         case items, includes, skip, limit, total, errors
     }
@@ -201,7 +219,7 @@ internal struct HeterogeneousIncludes: Decodable {
 }
 
 /// A list of Contentful entries that have been mapped to types conforming to `EntryDecodable` instances.
-/// A `MixedArrayResponse` respresents a heterogeneous collection of `EntryDecodable` being returned,
+/// A `HeterogeneousArrayResponse` respresents a heterogeneous collection of `EntryDecodable` being returned,
 /// for instance, if hitting the base `/entries` endpoint with no additional query parameters. If there is no
 /// user-defined type for a particular entry, that entry will not be deserialized at all. It is up to you to
 /// introspect the type of each element in the items array to handle the response data properly.
