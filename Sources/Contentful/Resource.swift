@@ -167,12 +167,16 @@ public class LocalizableResource: Resource, FlatResource, Decodable {
 // MARK: Internal
 
 extension LocalizableResource: Hashable {    
+
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
+        hasher.combine(sys.updatedAt)
     }
 }
 
-/// Equatable implementation for `LocalizableResource`
-public func == (lhs: LocalizableResource, rhs: LocalizableResource) -> Bool {
-    return lhs.id == rhs.id && lhs.sys.updatedAt == rhs.sys.updatedAt
+extension LocalizableResource: Equatable {
+
+    public static func == (lhs: LocalizableResource, rhs: LocalizableResource) -> Bool {
+        return lhs.id == rhs.id && lhs.sys.updatedAt == rhs.sys.updatedAt
+    }
 }
