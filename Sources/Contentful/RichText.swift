@@ -17,28 +17,29 @@ public protocol Node: Decodable {
 
 /// The data describing the linked entry or asset for an `EmbeddedResouceNode`
 public class ResourceLinkData: Decodable {
+
     /// The raw link object which describes the target entry or asset.
-    public let target: Link
+    ///
+    /// If the linked content is `.unresolved`, but available via the `LinkResolver`,
+    /// it is replaced by `LinkResolver` with the resolved value *after*
+    /// `init(from:)`, but within the same runloop.
+    public var target: Link
 
     /// The optional title for the linked resource, to be displayed if desired.
     public let title: String?
-
-    /// When using the SDK in conjunction with your own `EntryDecodable` classes, this property will
-    /// be to the resolved `EntryDecodable` instance.
-    public var resolvedResource: FlatResource?
 
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: JSONCodingKeys.self)
         target = try container.decode(Link.self, forKey: JSONCodingKeys(stringValue: "target")!)
         title = try container.decodeIfPresent(String.self, forKey: JSONCodingKeys(stringValue: "title")!)
         try container.resolveLink(forKey: JSONCodingKeys(stringValue: "target")!, decoder: decoder) { [weak self] decodable in
-            // Workaroudn for bug in the Swift compiler: https://bugs.swift.org/browse/SR-3871
-            self?.resolvedResource = decodable as? FlatResource
+            guard let self = self else { return }
+            self.target = self.target.resolveWithCandidateObject(decodable)
         }
     }
+
     internal init(resolvedTarget: Link, title: String? = nil) {
         target = resolvedTarget
-        resolvedResource = nil
         self.title = title
     }
 }

@@ -18,16 +18,21 @@ final class RichTextContentType: Resource, EntryDecodable, FieldKeysQueryable {
     let sys: Sys
     let name: String
     let rich: RichTextDocument
+    var linkedEntry: RichTextContentType?
 
     public required init(from decoder: Decoder) throws {
         sys = try decoder.sys()
         let fields = try decoder.contentfulFieldsContainer(keyedBy: FieldKeys.self)
         name = try fields.decode(String.self, forKey: .name)
         rich = try fields.decode(RichTextDocument.self, forKey: .rich)
+
+        try fields.resolveLink(forKey: .linkedEntry, decoder: decoder) { [weak self] linkedEntry in
+            self?.linkedEntry = linkedEntry as? RichTextContentType
+        }
     }
 
     enum FieldKeys: String, CodingKey {
-        case name, rich
+        case name, rich, linkedEntry
     }
 }
 
@@ -53,7 +58,7 @@ class RichTextNodeDecodingTests: XCTestCase {
             let structuredTextData = JSONDecodingTests.jsonData("structured-text")
             let jsonDecoder = JSONDecoder.withoutLocalizationContext()
             let localesJSONData = JSONDecodingTests.jsonData("all-locales")
-            let localesResponse = try! jsonDecoder.decode(ArrayResponse<Contentful.Locale>.self, from: localesJSONData)
+            let localesResponse = try! jsonDecoder.decode(HomogeneousArrayResponse<Contentful.Locale>.self, from: localesJSONData)
             jsonDecoder.update(with: LocalizationContext(locales: localesResponse.items)!)
 
             jsonDecoder.userInfo[.linkResolverContextKey] = LinkResolver()
@@ -260,7 +265,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                 let model = arrayResponse.items.first!
 
                 let entryLinkBlock = model.rich.content.first as? ResourceLinkBlock
-                XCTAssertEqual((entryLinkBlock?.data.resolvedResource as! RichTextContentType).name, "simple_text")
+                XCTAssertEqual((entryLinkBlock?.data.target.entryDecodable as! RichTextContentType).name, "simple_text")
 
             case .error(let error):
                 XCTFail("\(error)")
@@ -280,7 +285,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                 let model = arrayResponse.items.first!
 
                 let entryLinkBlock = model.rich.content.first as? ResourceLinkBlock
-                XCTAssertEqual((entryLinkBlock?.data.resolvedResource as! Asset).title, "cat")
+                XCTAssertEqual(entryLinkBlock?.data.target.asset?.title, "cat")
 
             case .error(let error):
                 XCTFail("\(error)")
@@ -301,7 +306,7 @@ class RichTextNodeDecodingTests: XCTestCase {
 
                 let paragraph = model.rich.content.first as? Paragraph
                 let link = paragraph?.content[1] as? ResourceLinkInline
-                XCTAssertEqual((link?.data.resolvedResource as! RichTextContentType).name, "Hello World")
+                XCTAssertEqual((link?.data.target.entryDecodable as! RichTextContentType).name, "Hello World")
 
             case .error(let error):
                 XCTFail("\(error)")
@@ -344,7 +349,7 @@ class RichTextNodeDecodingTests: XCTestCase {
 
                 let paragraph = model.rich.content.first as? Paragraph
                 let hyperlink = paragraph?.content[1] as? ResourceLinkInline
-                XCTAssertEqual((hyperlink?.data.resolvedResource as! RichTextContentType).name, "Hello World")
+                XCTAssertEqual((hyperlink?.data.target.entryDecodable as! RichTextContentType).name, "Hello World")
                 XCTAssertEqual((hyperlink?.content.first as? Text)?.value, "Entry hyperlink to \"Hello World\"")
 
             case .error(let error):
@@ -366,7 +371,7 @@ class RichTextNodeDecodingTests: XCTestCase {
 
                 let paragraph = model.rich.content.first as? Paragraph
                 let hyperlink = paragraph?.content[1] as? ResourceLinkInline
-                XCTAssertEqual((hyperlink?.data.resolvedResource as! Asset).title, "cat")
+                XCTAssertEqual(hyperlink?.data.target.asset?.title, "cat")
                 XCTAssertEqual((hyperlink?.content.first as? Text)?.value, "Asset hyperlink to cat image")
 
             case .error(let error):
@@ -393,13 +398,13 @@ class RichTextNodeDecodingTests: XCTestCase {
                 XCTAssertEqual(hyperlink?.data.uri, "https://www.example.com/")
 
                 let entryHyperlink = paragraph?.content[3] as? ResourceLinkInline
-                XCTAssertEqual((entryHyperlink?.data.resolvedResource as! RichTextContentType).name, "simple_headline_1")
+                XCTAssertEqual((entryHyperlink?.data.target.entryDecodable as! RichTextContentType).name, "simple_headline_1")
 
                 let assetHyperlink = paragraph?.content[5] as? ResourceLinkInline
-                XCTAssertEqual((assetHyperlink?.data.resolvedResource as! Asset).title, "cat")
+                XCTAssertEqual(assetHyperlink?.data.target.asset?.title, "cat")
 
                 let entryInlineLink = paragraph?.content[7] as? ResourceLinkInline
-                XCTAssertEqual((entryInlineLink?.data.resolvedResource as! RichTextContentType).name, "Hello World")
+                XCTAssertEqual((entryInlineLink?.data.target.entryDecodable as! RichTextContentType).name, "Hello World")
 
             case .error(let error):
                 XCTFail("\(error)")
@@ -407,6 +412,29 @@ class RichTextNodeDecodingTests: XCTestCase {
             expectation.fulfill()
         }
         waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testDecodingNestedEntriesInlinedInRichText() {
+        let expectation = self.expectation(description: "")
+
+        RichTextNodeDecodingTests.client.fetchArray(
+            of: RichTextContentType.self,
+            matching: .where(field: .name, .equals("nested_included_entries"))) { result in
+                switch result {
+                case .success(let arrayResponse):
+                    let rootRichTextContentType = arrayResponse.items.first
+                    let paragraph = rootRichTextContentType?.rich.content.first as? Paragraph
+                    let link = paragraph?.content[1] as? ResourceLinkInline
+                    let inlinedRichTextContentType = link?.data.target.entryDecodable as? RichTextContentType
+                    let crossLinkedRichTextContentType = inlinedRichTextContentType?.linkedEntry
+
+                    XCTAssertNotNil(crossLinkedRichTextContentType)
+                case .error(let error):
+                    XCTFail("\(error)")
+                }
+                expectation.fulfill()
+        }
+        waitForExpectations(timeout: 10_000.0, handler: nil)
     }
 
 }

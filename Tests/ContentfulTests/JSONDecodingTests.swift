@@ -76,7 +76,7 @@ class JSONDecodingTests: XCTestCase {
         do {
             let jsonDecoder = JSONDecoder.withoutLocalizationContext()
             let localesJSONData = JSONDecodingTests.jsonData("all-locales")
-            let localesResponse = try! jsonDecoder.decode(ArrayResponse<Contentful.Locale>.self, from: localesJSONData)
+            let localesResponse = try! jsonDecoder.decode(HomogeneousArrayResponse<Contentful.Locale>.self, from: localesJSONData)
             jsonDecoder.update(with: LocalizationContext(locales: localesResponse.items)!)
 
 
@@ -116,7 +116,7 @@ class JSONDecodingTests: XCTestCase {
             // We must have a space first to pass in locale information.
             let jsonDecoder = JSONDecoder.withoutLocalizationContext()
             let localesJSONData = JSONDecodingTests.jsonData("all-locales")
-            let localesResponse = try! jsonDecoder.decode(ArrayResponse<Contentful.Locale>.self, from: localesJSONData)
+            let localesResponse = try! jsonDecoder.decode(HomogeneousArrayResponse<Contentful.Locale>.self, from: localesJSONData)
             jsonDecoder.update(with: LocalizationContext(locales: localesResponse.items)!)
 
             let localizedEntryJSONData = JSONDecodingTests.jsonData("localized")
@@ -137,7 +137,7 @@ class JSONDecodingTests: XCTestCase {
         do {
             let jsonDecoder = JSONDecoder.withoutLocalizationContext()
             let localesJSONData = JSONDecodingTests.jsonData("all-locales")
-            let localesResponse = try! jsonDecoder.decode(ArrayResponse<Contentful.Locale>.self, from: localesJSONData)
+            let localesResponse = try! jsonDecoder.decode(HomogeneousArrayResponse<Contentful.Locale>.self, from: localesJSONData)
             jsonDecoder.update(with: LocalizationContext(locales: localesResponse.items)!)
 
 

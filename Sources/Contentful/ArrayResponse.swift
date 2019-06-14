@@ -48,7 +48,7 @@ public struct ArrayResponseError: Decodable {
 /// A list of resources in Contentful
 /// This is the result type for any request of a collection of resources.
 /// See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/collection-resources-and-pagination>
-public struct ArrayResponse<ItemType>: HomogeneousArray where ItemType: Decodable & EndpointAccessible {
+public struct HomogeneousArrayResponse<ItemType>: HomogeneousArray where ItemType: Decodable & EndpointAccessible {
 
     /// The resources which are part of the array response.
     public let items: [ItemType]
@@ -66,14 +66,14 @@ public struct ArrayResponse<ItemType>: HomogeneousArray where ItemType: Decodabl
     /// cannot be resolved.
     public let errors: [ArrayResponseError]?
 
-    internal let includes: Includes?
-    internal let mappedIncludes: MappedIncludes?
+    internal let homogeneousIncludes: Includes?
+    internal let heterogeneousIncludes: HeterogeneousIncludes?
 
     internal var includedAssets: [Asset]? {
-        return includes?.assets
+        return homogeneousIncludes?.assets
     }
     internal var includedEntries: [Entry]? {
-        return includes?.entries
+        return homogeneousIncludes?.entries
     }
 
     internal struct Includes: Decodable {
@@ -93,7 +93,10 @@ public struct ArrayResponse<ItemType>: HomogeneousArray where ItemType: Decodabl
     }
 }
 
-extension ArrayResponse: Decodable {
+@available(*, deprecated, message: "Use HomogeneousArrayResponse instead")
+public typealias ArrayResponse = HomogeneousArrayResponse
+
+extension HomogeneousArrayResponse: Decodable {
     public init(from decoder: Decoder) throws {
         let container   = try decoder.container(keyedBy: ArrayCodingKeys.self)
 
@@ -102,12 +105,22 @@ extension ArrayResponse: Decodable {
         limit           = try container.decode(UInt.self, forKey: .limit)
         errors          = try container.decodeIfPresent([ArrayResponseError].self, forKey: .errors)
 
-        // First see if we can decode an array of user-defined types.
-        if ItemType.self is EntryDecodable.Type {
+        // If ItemType conforms to EntryDecodable, we can strongly assume that self
+        // contains items of a user-defined type.
+        let areItemsOfCustomType = ItemType.self is EntryDecodable.Type
+
+        if areItemsOfCustomType {
+
+            // Since self's items are of a custom (i.e. user-defined) type,
+            // we must accomodate the scenario that included Entries are
+            // heterogeneous, since items can link to whatever custom Entries
+            // the user defined.
+            // As a consequence, we have to use the LinkResolver in order to
+            // establish links among items and included Entries and/or Assets.
 
             // All items and includes.
-            includes = nil
-            mappedIncludes = try container.decodeIfPresent(MappedIncludes.self, forKey: .includes)
+            homogeneousIncludes = nil
+            heterogeneousIncludes = try container.decodeIfPresent(HeterogeneousIncludes.self, forKey: .includes)
 
             // A copy as an array of dictionaries just to extract "sys.type" field.
             guard let jsonItems = try container.decode(Swift.Array<Any>.self, forKey: .items) as? [[String: Any]] else {
@@ -148,27 +161,38 @@ extension ArrayResponse: Decodable {
             // Resolve links.
             decoder.linkResolver.churnLinks()
         } else {
-            mappedIncludes  = nil
-            includes        = try container.decodeIfPresent(ArrayResponse.Includes.self, forKey: .includes)
-            items           = try container.decode([ItemType].self, forKey: .items)
+
+            // Since self's items are NOT of a custom (i.e. user-defined) type,
+            // we can assume that they are of one of the known concrete types in this SDK.
+            // Consequently, the included/embedded contents are all either of type Entry
+            // or Asset, and links pointing to them can be resolved with a simpler
+            // approach than using the LinkResolver.
+
+            heterogeneousIncludes   = nil
+            homogeneousIncludes     = try container.decodeIfPresent(Includes.self, forKey: .includes)
+            items                   = try container.decode([ItemType].self, forKey: .items)
 
             // If the ItemType was Entry, filter those entries so we can resolve their links.
             let entries: [Entry] = items.compactMap { $0 as? Entry }
 
             let allIncludedEntries = entries + (includedEntries ?? [])
 
-            // Rememember `Entry`s are classes (passed by reference) so we can change them in place
+            // Rememember `Entry`s are classes (passed by reference) so we can change them in place.
             for entry in allIncludedEntries {
                 entry.resolveLinks(against: allIncludedEntries, and: (includedAssets ?? []))
             }
         }
     }
+
     fileprivate enum CodingKeys: String, CodingKey {
         case items, includes, skip, limit, total, errors
     }
 }
 
-internal struct MappedIncludes: Decodable {
+/**
+ Container for includes within a
+ */
+internal struct HeterogeneousIncludes: Decodable {
     internal let assets: [Asset]?
     internal let entries: [EntryDecodable]?
 
@@ -195,12 +219,12 @@ internal struct MappedIncludes: Decodable {
 }
 
 /// A list of Contentful entries that have been mapped to types conforming to `EntryDecodable` instances.
-/// A `MixedArrayResponse` respresents a heterogeneous collection of `EntryDecodable` being returned,
+/// A `HeterogeneousArrayResponse` respresents a heterogeneous collection of `EntryDecodable` being returned,
 /// for instance, if hitting the base `/entries` endpoint with no additional query parameters. If there is no
 /// user-defined type for a particular entry, that entry will not be deserialized at all. It is up to you to
 /// introspect the type of each element in the items array to handle the response data properly.
 /// See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/collection-resources-and-pagination>
-public struct MixedArrayResponse: Array {
+public struct HeterogeneousArrayResponse: Array {
 
     /// The resources which are part of the given array response.
     public let items: [EntryDecodable]
@@ -218,7 +242,7 @@ public struct MixedArrayResponse: Array {
     /// cannot be resolved.
     public let errors: [ArrayResponseError]?
 
-    internal let includes: MappedIncludes?
+    internal let includes: HeterogeneousIncludes?
 
     internal var includedAssets: [Asset]? {
         return includes?.assets
@@ -228,7 +252,10 @@ public struct MixedArrayResponse: Array {
     }
 }
 
-extension MixedArrayResponse: Decodable {
+@available(*, deprecated, message: "Use HeterogeneousArrayResponse instead")
+public typealias MixedArrayResponse = HeterogeneousArrayResponse
+
+extension HeterogeneousArrayResponse: Decodable {
 
     public init(from decoder: Decoder) throws {
         let container   = try decoder.container(keyedBy: ArrayCodingKeys.self)
@@ -238,7 +265,7 @@ extension MixedArrayResponse: Decodable {
         errors          = try container.decodeIfPresent([ArrayResponseError].self, forKey: .errors)
 
         // All items and includes.
-        includes        = try container.decodeIfPresent(MappedIncludes.self, forKey: .includes)
+        includes        = try container.decodeIfPresent(HeterogeneousIncludes.self, forKey: .includes)
         items           = try container.decodeHeterogeneousEntries(forKey: .items,
                                                                    contentTypes: decoder.contentTypes,
                                                                    throwIfNotPresent: true) ?? []

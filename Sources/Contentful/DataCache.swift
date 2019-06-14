@@ -15,9 +15,9 @@ internal class DataCache {
     internal static func cacheKey(for link: Link) -> String {
         let linkType: String
         switch link {
-        case .asset:                linkType = "asset"
-        case .entry:                linkType = "entry"
-        case .unresolved(let sys):  linkType = sys.linkType
+        case .asset:                    linkType = "asset"
+        case .entry, .entryDecodable:   linkType = "entry"
+        case .unresolved(let sys):      linkType = sys.linkType
         }
 
         let cacheKey = DataCache.cacheKey(id: link.id, linkType: linkType)

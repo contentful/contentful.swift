@@ -345,13 +345,13 @@ extension Client {
     ///   - completion: A handler being called on completion of the request.
     /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation.
     @discardableResult
-    public func fetchLocales(then completion: @escaping ResultsHandler<ArrayResponse<Contentful.Locale>>) -> URLSessionDataTask {
+    public func fetchLocales(then completion: @escaping ResultsHandler<HomogeneousArrayResponse<Contentful.Locale>>) -> URLSessionDataTask {
 
         // The robust thing to do would be to fetch all pages of the `/locales` endpoint, however, pagination is not supported
         // at the moment. We also are not expecting any consumers to have > 1000 locales as Contentful subscriptions do not allow that.
         let query = ResourceQuery.limit(to: QueryConstants.maxLimit)
         let url = self.url(endpoint: .locales, parameters: query.parameters)
-        return fetch(url: url) { (result: Result<ArrayResponse<Contentful.Locale>>) in
+        return fetch(url: url) { (result: Result<HomogeneousArrayResponse<Contentful.Locale>>) in
 
             if let error = result.error {
                 completion(Result.error(error))
@@ -462,7 +462,7 @@ extension Client {
                 return fetch(url: url, then: completion)
             }
 
-            let fetchCompletion: (Result<ArrayResponse<ResourceType>>) -> Void = { result in
+            let fetchCompletion: (Result<HomogeneousArrayResponse<ResourceType>>) -> Void = { result in
                 switch result {
                 case .success(let response) where response.items.first != nil:
                     completion(Result.success(response.items.first!))
@@ -487,7 +487,7 @@ extension Client {
     @discardableResult
     public func fetchArray<ResourceType, QueryType>(of resourceType: ResourceType.Type,
                                                     matching query: QueryType? = nil,
-                                                    then completion: @escaping ResultsHandler<ArrayResponse<ResourceType>>) -> URLSessionDataTask
+                                                    then completion: @escaping ResultsHandler<HomogeneousArrayResponse<ResourceType>>) -> URLSessionDataTask
         where ResourceType: ResourceQueryable, QueryType == ResourceType.QueryType {
             return fetch(url: url(endpoint: ResourceType.endpoint, parameters: query?.parameters ?? [:]), then: completion)
     }
@@ -502,7 +502,7 @@ extension Client {
     @discardableResult
     public func fetchArray<EntryType>(of entryType: EntryType.Type,
                                       matching query: QueryOn<EntryType> = QueryOn<EntryType>(),
-                                      then completion: @escaping ResultsHandler<ArrayResponse<EntryType>>) -> URLSessionDataTask {
+                                      then completion: @escaping ResultsHandler<HomogeneousArrayResponse<EntryType>>) -> URLSessionDataTask {
         let url = self.url(endpoint: .entries, parameters: query.parameters)
         return fetch(url: url, then: completion)
     }
@@ -516,7 +516,7 @@ extension Client {
     /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation.
     @discardableResult
     public func fetchArray(matching query: Query? = nil,
-                          then completion: @escaping ResultsHandler<MixedArrayResponse>) -> URLSessionDataTask {
+                          then completion: @escaping ResultsHandler<HeterogeneousArrayResponse>) -> URLSessionDataTask {
         let url = self.url(endpoint: .entries, parameters: query?.parameters ?? [:])
         return fetch(url: url, then: completion)
     }
