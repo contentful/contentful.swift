@@ -68,7 +68,7 @@
     - [Installation](#installation)
         - [CocoaPods installation](#cocoapods-installation)
       - [Carthage installation](#carthage-installation)
-      - [Swift Package Manager [swift-tools-version 4.2]](#swift-package-manager-swift-tools-version-42)
+      - [Swift Package Manager [swift-tools-version 5.0]](#swift-package-manager-swift-tools-version-5.0)
     - [Your first request](#your-first-request)
     - [Accessing the Preview API](#accessing-the-preview-api)
     - [Authorization](#authorization)
@@ -124,7 +124,7 @@ pod 'Contentful'
 You can specify a specific version of Contentful depending on your needs. To learn more about operators for dependency versioning within a Podfile, see the [CocoaPods doc on the Podfile](https://guides.cocoapods.org/using/the-podfile.html).
 
 ```ruby
-pod 'Contentful', '~> 4.2.4'
+pod 'Contentful', '~> 5.0.0'
 ```
 
 #### Carthage installation
@@ -132,15 +132,15 @@ pod 'Contentful', '~> 4.2.4'
 You can also use [Carthage](https://github.com/Carthage/Carthage) for integration by adding the following to your `Cartfile`:
 
 ```
-github "contentful/contentful.swift" ~> 4.2.4
+github "contentful/contentful.swift" ~> 5.0.0
 ```
 
-#### Swift Package Manager [swift-tools-version 4.2]
+#### Swift Package Manager [swift-tools-version 5.0]
 
 Add the following line to your array of dependencies:
 
 ```swift
-.package(url: "https://github.com/contentful/contentful.swift", .upToNextMajor(from: "4.2.4"))
+.package(url: "https://github.com/contentful/contentful.swift", .upToNextMajor(from: "5.0.0"))
 ```
 
 ### Your first request
@@ -294,10 +294,11 @@ We gathered all information related to migrating from older versions of the libr
 
 ## Swift Versioning
 
-It is recommended to use Swift 4.2, as older versions of the SDK will not have fixes backported. If you must use older Swift versions, see the compatible tags below.
+It is recommended to use Swift 5.0, as older versions of the SDK will not have fixes backported. If you must use older Swift versions, see the compatible tags below.
 
  Swift version | Compatible Contentful tag |
 | --- | --- |
+| Swift 5.0 | [ ≥ `5.0.0` ] |
 | Swift 4.2 | [ ≥ `4.0.0` ] |
 | Swift 4.1 | [`2.0.0` - `3.1.2`] |
 | Swift 4.0 | [`0.10.0` - `1.0.1`] |
