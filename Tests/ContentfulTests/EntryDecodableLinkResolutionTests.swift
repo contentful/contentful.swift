@@ -210,7 +210,7 @@ class LinkResolverTests: XCTestCase {
         LinkResolverTests.client.fetch(SingleRecord.self, id: "2JFSeiPTZYm4goMSUeYSCU", include: 0) { result in
             switch result {
             case .success(let record):
-                XCTAssertNil(record.assetsArrayLinkField)
+                XCTAssert(record.assetsArrayLinkField?.isEmpty ?? true)
             case .error(let error):
                 XCTFail("Should not throw an error \(error)")
             }
