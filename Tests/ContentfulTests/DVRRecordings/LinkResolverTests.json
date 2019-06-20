@@ -165,6 +165,47 @@
       }
     },
     {
+        "request" : {
+            "headers" : {
+                "Authorization" : "Bearer 14d305ad526d4487e21a99b5b9313a8877ce6fbf540f02b12189eea61550ef34",
+                "X-Contentful-User-Agent" : "sdk contentful.swift\/4.2.2; platform Swift\/4.0; os macOS\/10.13.6;"
+            },
+            "url" : "https:\/\/cdn.contentful.com\/spaces\/smf0sqiu0c5s\/environments\/master\/entries?sys.id=2JFSeiPTZYm4goMSUeYSCU&include=0",
+            "method" : "GET"
+        },
+        "recorded_at" : 1544085038.169528,
+        "response" : {
+            "url" : "https:\/\/cdn.contentful.com\/spaces\/smf0sqiu0c5s\/environments\/master\/entries?sys.id=2JFSeiPTZYm4goMSUeYSCU&include=0",
+            "status" : 200,
+            "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJBcnJheSIKICB9LAogICJ0b3RhbCI6IDEsCiAgInNraXAiOiAwLAogICJsaW1pdCI6IDEwMCwKICAiaXRlbXMiOiBbCiAgICB7CiAgICAgICJzeXMiOiB7CiAgICAgICAgInNwYWNlIjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICJsaW5rVHlwZSI6ICJTcGFjZSIsCiAgICAgICAgICAgICJpZCI6ICJzbWYwc3FpdTBjNXMiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAiaWQiOiAiMkpGU2VpUFRaWW00Z29NU1VlWVNDVSIsCiAgICAgICAgInR5cGUiOiAiRW50cnkiLAogICAgICAgICJjcmVhdGVkQXQiOiAiMjAxNy0xMS0yN1QwOTozMzo0Ny4yNTBaIiwKICAgICAgICAidXBkYXRlZEF0IjogIjIwMTgtMDgtMTRUMDk6NTQ6NDIuOTM2WiIsCiAgICAgICAgImVudmlyb25tZW50IjogewogICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgImlkIjogIm1hc3RlciIsCiAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAibGlua1R5cGUiOiAiRW52aXJvbm1lbnQiCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAicmV2aXNpb24iOiAyLAogICAgICAgICJjb250ZW50VHlwZSI6IHsKICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAibGlua1R5cGUiOiAiQ29udGVudFR5cGUiLAogICAgICAgICAgICAiaWQiOiAic2luZ2xlUmVjb3JkIgogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgImxvY2FsZSI6ICJlbi1VUyIKICAgICAgfSwKICAgICAgImZpZWxkcyI6IHsKICAgICAgICAidGV4dEJvZHkiOiAiUmVjb3JkIHdpdGggYXJyYXkgb2YgYXNzZXRzIiwKICAgICAgICAiYXNzZXRzQXJyYXlMaW5rRmllbGQiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJzeXMiOiB7CiAgICAgICAgICAgICAgInR5cGUiOiAiTGluayIsCiAgICAgICAgICAgICAgImxpbmtUeXBlIjogIkFzc2V0IiwKICAgICAgICAgICAgICAiaWQiOiAiNldzejhvd2h0Q0dTSUNnNDRJVVlBbSIKICAgICAgICAgICAgfQogICAgICAgICAgfSwKICAgICAgICAgIHsKICAgICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgICAibGlua1R5cGUiOiAiQXNzZXQiLAogICAgICAgICAgICAgICJpZCI6ICI2RzMwbjV3M3NXY1M2eUVXbzhxNkNJIgogICAgICAgICAgICB9CiAgICAgICAgICB9LAogICAgICAgICAgewogICAgICAgICAgICAic3lzIjogewogICAgICAgICAgICAgICJ0eXBlIjogIkxpbmsiLAogICAgICAgICAgICAgICJsaW5rVHlwZSI6ICJBc3NldCIsCiAgICAgICAgICAgICAgImlkIjogIjh5QnBXUjBlbjZVVXNPNFE2RWlPSyIKICAgICAgICAgICAgfQogICAgICAgICAgfSwKICAgICAgICAgIHsKICAgICAgICAgICAgInN5cyI6IHsKICAgICAgICAgICAgICAidHlwZSI6ICJMaW5rIiwKICAgICAgICAgICAgICAibGlua1R5cGUiOiAiQXNzZXQiLAogICAgICAgICAgICAgICJpZCI6ICI3aThUVUJiNGlJQW9XdVF1aVVHZ2cwIgogICAgICAgICAgICB9CiAgICAgICAgICB9CiAgICAgICAgXQogICAgICB9CiAgICB9CiAgXQp9Cg==",
+            "headers" : {
+                "Vary" : "Accept-Encoding",
+                "Date" : "Thu, 06 Dec 2018 08:30:38 GMT",
+                "x-cache-hits" : "1",
+                "access-control-max-age" : "86400",
+                "x-cache" : "HIT",
+                "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
+                "access-control-allow-methods" : "GET,HEAD,OPTIONS",
+                "x-content-type-options" : "nosniff",
+                "x-served-by" : "cache-bma1628-BMA",
+                "Age" : "210",
+                "access-control-expose-headers" : "Etag",
+                "Content-Length" : "1183",
+                "Access-Control-Allow-Origin" : "*",
+                "x-contentful-region" : "us-east-1",
+                "Etag" : "W\/\"14d8cbbace0e1781f6e3031018a67358\"",
+                "Server" : "Contentful",
+                "Cache-Control" : "max-age=0",
+                "x-contentful-request-id" : "6986b677c8ae08d777634757d3300dd9",
+                "Content-Encoding" : "gzip",
+                "Accept-Ranges" : "bytes",
+                "contentful-api" : "cda_cached",
+                "access-control-allow-headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent,X-Contentful-Enable-Alpha-Feature",
+                "Via" : "1.1 varnish"
+            }
+        }
+    },
+    {
       "request" : {
         "headers" : {
           "Authorization" : "Bearer 14d305ad526d4487e21a99b5b9313a8877ce6fbf540f02b12189eea61550ef34",

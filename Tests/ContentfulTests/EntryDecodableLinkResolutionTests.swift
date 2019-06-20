@@ -200,4 +200,22 @@ class LinkResolverTests: XCTestCase {
         }
         self.waitForExpectations(timeout: 10.0, handler: nil)
     }
+
+    /// This test exists mainly to check that the fetch URL does have the `include=0`
+    /// parameter (or else, the test JSON would not be found in the cassette), and
+    /// that parsing does still work.
+    func testFetchZeroIncludesOmitsLinkResolving() {
+        let expectation = self.expectation(description: "Fetching an Entry with include=0 prevents link resolution")
+
+        LinkResolverTests.client.fetch(SingleRecord.self, id: "2JFSeiPTZYm4goMSUeYSCU", include: 0) { result in
+            switch result {
+            case .success(let record):
+                XCTAssertNil(record.assetsArrayLinkField)
+            case .error(let error):
+                XCTFail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+        self.waitForExpectations(timeout: 10.0, handler: nil)
+    }
 }
