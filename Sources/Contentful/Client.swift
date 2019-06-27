@@ -447,33 +447,45 @@ extension Client {
     /// - Parameters:
     ///   - resourceType: A reference to the Swift type which conforms to `Decodable & EndpointAccessible`
     ///   - id: The identifier of the resource which should be fetched.
+    ///   - include: Specifies the level of includes to be resolved. Optional, because we leave it to the server
+    ///     to decide the optimal default value: [Retrieval of linked items]
     ///   - completion: The handler being called on completion of the request with a Result wrapping your decoded type or an error.
     /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation.
+    ///
+    /// [Retrieval of linked items]: https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/links/retrieval-of-linked-items
     @discardableResult
     public func fetch<ResourceType>(_ resourceType: ResourceType.Type,
                                     id: String,
+                                    include includesLevel: UInt? = nil,
                                     then completion: @escaping ResultsHandler<ResourceType>) -> URLSessionDataTask
         where ResourceType: Decodable & EndpointAccessible {
 
-            // If the resource is not an entry, then don't worry about fetching with includes.
+            // If the resource is not an entry, includes are not supported.
             if !(resourceType is EntryDecodable.Type) && resourceType != Entry.self {
                 var url = self.url(endpoint: ResourceType.endpoint)
                 url.appendPathComponent(id)
                 return fetch(url: url, then: completion)
             }
 
+            // Before `completion` is called, either the first item is extracted, and
+            // sent as `.success`, or an `.error` is sent.
             let fetchCompletion: (Result<HomogeneousArrayResponse<ResourceType>>) -> Void = { result in
                 switch result {
-                case .success(let response) where response.items.first != nil:
-                    completion(Result.success(response.items.first!))
+                case .success(let response):
+                    guard let firstItem = response.items.first else {
+                        completion(.error(SDKError.noResourceFoundFor(id: id)))
+                        break
+                    }
+                    completion(.success(firstItem))
                 case .error(let error):
-                    completion(Result.error(error))
-                default:
-                    completion(Result.error(SDKError.noResourceFoundFor(id: id)))
+                    completion(.error(error))
                 }
             }
 
-            let query = ResourceQuery.where(sys: .id, .equals(id))
+            var query = ResourceQuery.where(sys: .id, .equals(id))
+            if let includesLevel = includesLevel {
+                query = query.include(includesLevel)
+            }
             return fetch(url: url(endpoint: ResourceType.endpoint, parameters: query.parameters), then: fetchCompletion)
     }
 
