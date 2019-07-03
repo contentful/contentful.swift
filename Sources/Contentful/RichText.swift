@@ -15,6 +15,25 @@ public protocol Node: Decodable {
     var nodeType: NodeType { get }
 }
 
+public protocol RecursiveNode: Node {
+    var content: [Node] { get }
+    func resolveLinks(against includedEntries: [Entry]?, and includedAssets: [Asset]?)
+}
+
+private extension RecursiveNode {
+
+    func resolveLinksInChildNodes(against includedEntries: [Entry]?, and includedAssets: [Asset]?) {
+        self.content.forEach { node in
+            switch node {
+            case let recursiveNode as RecursiveNode:
+                recursiveNode.resolveLinks(against: includedEntries, and: includedAssets)
+            default:
+                break
+            }
+        }
+    }
+}
+
 /// The data describing the linked entry or asset for an `EmbeddedResouceNode`
 public class ResourceLinkData: Decodable {
 
@@ -124,7 +143,7 @@ public enum NodeType: String, Decodable {
 }
 
 /// BlockNode is the base class for all nodes which are rendered as a block (as opposed to an inline node).
-public class BlockNode: Node {
+public class BlockNode: RecursiveNode {
     public let nodeType: NodeType
     public internal(set) var content: [Node]
 
@@ -136,11 +155,15 @@ public class BlockNode: Node {
     internal init(nodeType: NodeType, content: [Node]) {
         self.nodeType = nodeType
         self.content = content
+    }
+
+    public func resolveLinks(against includedEntries: [Entry]?, and includedAssets: [Asset]?) {
+        resolveLinksInChildNodes(against: includedEntries, and: includedAssets)
     }
 }
 
 /// InlineNode is the base class for all nodes which are rendered as an inline string (as opposed to a block node).
-public class InlineNode: Node {
+public class InlineNode: RecursiveNode {
     public let nodeType: NodeType
     public internal(set) var content: [Node]
 
@@ -153,10 +176,14 @@ public class InlineNode: Node {
         self.nodeType = nodeType
         self.content = content
     }
+
+    public func resolveLinks(against includedEntries: [Entry]?, and includedAssets: [Asset]?) {
+        resolveLinksInChildNodes(against: includedEntries, and: includedAssets)
+    }
 }
 
 /// The top level node which contains all other nodes.
-public class RichTextDocument: Node {
+public class RichTextDocument: RecursiveNode {
     public let nodeType: NodeType
     public internal(set) var content: [Node]
 
@@ -169,6 +196,10 @@ public class RichTextDocument: Node {
         let container = try decoder.container(keyedBy: NodeContentCodingKeys.self)
         nodeType = try container.decode(NodeType.self, forKey: .nodeType)
         content = try container.decodeContent(forKey: .content)
+    }
+
+    public func resolveLinks(against includedEntries: [Entry]?, and includedAssets: [Asset]?) {
+        resolveLinksInChildNodes(against: includedEntries, and: includedAssets)
     }
 }
 
@@ -245,6 +276,28 @@ public class ResourceLinkBlock: BlockNode {
         data = try container.decode(ResourceLinkData.self, forKey: .data)
         try super.init(from: decoder)
     }
+
+    public override func resolveLinks(against includedEntries: [Entry]?, and includedAssets: [Asset]?) {
+        switch data.target {
+        case .asset, .entry, .entryDecodable:
+            return
+        case let .unresolved(sys):
+            switch sys.linkType.lowercased() {
+            case "entry":
+                guard let linkedEntry = includedEntries?.first(where: { $0.sys.id == sys.id }) else {
+                    return
+                }
+                data.target = Link.entry(linkedEntry)
+            case "asset":
+                guard let linkedAsset = includedAssets?.first(where: { $0.sys.id == sys.id }) else {
+                    return
+                }
+                data.target = Link.asset(linkedAsset)
+            default:
+                return
+            }
+        }
+    }
 }
 
 /// A inline containing data for a linked entry or asset.
@@ -262,6 +315,28 @@ public class ResourceLinkInline: InlineNode {
         let container = try decoder.container(keyedBy: NodeContentCodingKeys.self)
         data = try container.decode(ResourceLinkData.self, forKey: .data)
         try super.init(from: decoder)
+    }
+
+    public override func resolveLinks(against includedEntries: [Entry]?, and includedAssets: [Asset]?) {
+        switch data.target {
+        case .asset, .entry, .entryDecodable:
+            return
+        case let .unresolved(sys):
+            switch sys.linkType.lowercased() {
+            case "entry":
+                guard let linkedEntry = includedEntries?.first(where: { $0.sys.id == sys.id }) else {
+                    return
+                }
+                data.target = Link.entry(linkedEntry)
+            case "asset":
+                guard let linkedAsset = includedAssets?.first(where: { $0.sys.id == sys.id }) else {
+                    return
+                }
+                data.target = Link.asset(linkedAsset)
+            default:
+                return
+            }
+        }
     }
 }
 

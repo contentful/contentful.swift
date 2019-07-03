@@ -90,6 +90,8 @@ public class Entry: LocalizableResource {
                         }
                     }
                     resolvedLocalizableFieldMap[localeCode] = resolvedLinks
+                case let recursiveNode as RecursiveNode:
+                    recursiveNode.resolveLinks(against: includedEntries, and: includedAssets)
                 default:
                     continue
                 }
