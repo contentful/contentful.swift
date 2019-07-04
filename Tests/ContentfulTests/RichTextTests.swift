@@ -429,7 +429,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                 case .success(let arrayResponse):
                     let rootRichTextContentType = arrayResponse.items.first
                     let paragraph = rootRichTextContentType?.rich.content.first as? Paragraph
-                    let link = paragraph?.content[1] as? ResourceLinkBlock
+                    let link = paragraph?.content[1] as? ResourceLinkInline
                     let inlinedRichTextContentType = link?.data.target.entryDecodable as? RichTextContentType
                     let crossLinkedRichTextContentType = inlinedRichTextContentType?.linkedEntry
 
