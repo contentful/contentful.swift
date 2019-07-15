@@ -19,17 +19,17 @@ Pod::Spec.new do |spec|
                         :tag => spec.version.to_s }
   spec.requires_arc = true
 
-  spec.swift_version             = '4.2'
+  spec.swift_version             = '5.0'
   spec.source_files              = 'Sources/Contentful/*.swift'
-  
+
   spec.frameworks                = 'CoreLocation'
-  
+
   ## Platform specific source code.
   spec.ios.source_files          = 'Sources/Contentful/UIKit/*.swift'
   spec.watchos.source_files      = 'Sources/Contentful/UIKit/*.swift'
   spec.tvos.source_files         = 'Sources/Contentful/UIKit/*.swift'
   spec.osx.source_files          = 'Sources/Contentful/AppKit/*.swift'
- 
+
   spec.ios.deployment_target     = '8.0'
   spec.osx.deployment_target     = '10.10'
   spec.watchos.deployment_target = '2.0'
@@ -39,4 +39,3 @@ Pod::Spec.new do |spec|
     subspec.source_files = 'Sources/Contentful/ImageOptions/*.swift'
   end
 end
-
