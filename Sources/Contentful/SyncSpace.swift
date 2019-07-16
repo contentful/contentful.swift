@@ -71,7 +71,7 @@ public final class SyncSpace: Decodable {
     /// An array of identifiers for entries that were deleted after the last sync operations.
     public var deletedEntryIds = [String]()
 
-    internal var hasMorePages: Bool
+    internal(set) public var hasMorePages: Bool
 
     /// A token which needs to be present to perform a subsequent synchronization operation
     internal(set) public var syncToken = ""
