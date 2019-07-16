@@ -42,6 +42,11 @@ class RichTextNodeDecodingTests: XCTestCase {
                                                      spaceId: "pzlh94jb0ghw",
                                                      accessToken: "1859a86ac82f679e8436af5ed5202bdb45f96b1deed3b5d1e20275698b5184c9",
                                                      contentTypeClasses: [RichTextContentType.self])
+    static let clientWithoutContentTypeClasses = TestClientFactory.testClient(
+        withCassetteNamed: "RichTextNodeDecodingTests",
+        spaceId: "pzlh94jb0ghw",
+        accessToken: "1859a86ac82f679e8436af5ed5202bdb45f96b1deed3b5d1e20275698b5184c9"
+    )
 
     override class func setUp() {
         super.setUp()
@@ -436,5 +441,28 @@ class RichTextNodeDecodingTests: XCTestCase {
         }
         waitForExpectations(timeout: 10_000.0, handler: nil)
     }
+
+    func testDecodingNestedEntriesInlinedInRichTextWithoutContentTypeClasses() {
+        let expectation = self.expectation(description: "")
+
+        RichTextNodeDecodingTests.clientWithoutContentTypeClasses.fetchArray(
+            of: Entry.self,
+            matching: .where(field: "name", .equals("nested_included_entries"))) { result in
+                switch result {
+                case .success(let arrayResponse):
+                    let rootRichTextContentType = arrayResponse.items.first
+                    let paragraph = (rootRichTextContentType?.fields["rich"] as! RichTextDocument).content.first as? Paragraph
+                    let link = paragraph?.content[1] as? ResourceLinkBlock
+                    let inlinedEntry = link?.data.target.entry
+
+                    XCTAssertNotNil(inlinedEntry)
+                case .error(let error):
+                    XCTFail("\(error)")
+                }
+                expectation.fulfill()
+        }
+        waitForExpectations(timeout: 10_000.0, handler: nil)
+    }
+
 
 }
