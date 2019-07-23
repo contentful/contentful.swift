@@ -455,7 +455,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                     let link = paragraph?.content[1] as? ResourceLinkBlock
                     let inlinedEntry = link?.data.target.entry
 
-                    XCTAssertNotNil(inlinedEntry)
+                    XCTAssertNotNil(inlinedEntry, "inlined entry is nil")
                 case .error(let error):
                     XCTFail("\(error)")
                 }
