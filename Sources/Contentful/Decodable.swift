@@ -11,6 +11,10 @@ import Foundation
 /// Helper methods for decoding instances of the various types in your content model.
 public extension Decoder {
 
+    var canResolveLinks: Bool {
+        return userInfo[.linkResolverContextKey] is LinkResolver
+    }
+
     internal var linkResolver: LinkResolver {
         return userInfo[.linkResolverContextKey] as! LinkResolver
     }
@@ -116,6 +120,7 @@ public extension KeyedDecodingContainer {
                             decoder: Decoder,
                             callback: @escaping (AnyObject) -> Void) throws {
 
+        guard decoder.canResolveLinks  else { return }
         let linkResolver = decoder.linkResolver
         if let link = try decodeIfPresent(Link.self, forKey: key) {
             linkResolver.resolve(link, callback: callback)
