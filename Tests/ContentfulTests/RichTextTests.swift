@@ -455,7 +455,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                     let link = paragraph?.content[1] as? ResourceLinkBlock
                     let inlinedEntry = link?.data.target.entry
 
-                    XCTAssertNotNil(inlinedEntry)
+                    XCTAssertNotNil(inlinedEntry, "inlined entry is nil")
                 case .error(let error):
                     XCTFail("\(error)")
                 }
@@ -464,5 +464,203 @@ class RichTextNodeDecodingTests: XCTestCase {
         waitForExpectations(timeout: 10_000.0, handler: nil)
     }
 
+    func testRichTextDocumentCodableAndNSCodingConformance() {
+
+        let paragraphText1: Text = {
+            let bold = Text.Mark(type: Text.MarkType.bold)
+            let italic = Text.Mark(type: Text.MarkType.italic)
+            return Text(value: "paragraphText1", marks: [bold, italic])
+        }()
+
+        let paragraphText2: Text = {
+            let underline = Text.Mark(type: Text.MarkType.underline)
+            return Text(value: "paragraphText2", marks: [underline])
+        }()
+
+        let paragraph = Paragraph(nodeType: .paragraph, content: [paragraphText1, paragraphText2])
+
+        let headingText: Text = {
+            let bold = Text.Mark(type: Text.MarkType.bold)
+            let italic = Text.Mark(type: Text.MarkType.italic)
+            return Text(value: "headingText", marks: [bold, italic])
+        }()
+
+        let headingH1 = Heading(level: 1, content: [headingText])!
+        let headingH2 = Heading(level: 2, content: [headingText])! // test copy of headingText
+
+
+        let blockQuoteText: Text = {
+            let code = Text.Mark(type: Text.MarkType.code)
+            return Text(value: "blockQuoteText", marks: [code])
+        }()
+        let blockQuote = BlockQuote(nodeType: NodeType.blockquote, content: [blockQuoteText])
+
+        let horizontalRule = HorizontalRule(nodeType: NodeType.horizontalRule, content: [])
+
+        let listItem1 = ListItem(nodeType: .listItem, content: [paragraphText1])
+        let listItem2 = ListItem(nodeType: .listItem, content: [paragraphText2])
+        let listItem3 = ListItem(nodeType: .listItem, content: [paragraph])
+        let orderedList = OrderedList(nodeType: .orderedList, content: [listItem1, listItem2, listItem3])
+
+        // Use listItem2 twice:
+        let unorderedList = OrderedList(nodeType: .orderedList, content: [listItem1, listItem2, listItem2])
+
+        let link = Link.unresolved(Link.Sys(id: "unlinked-entry", linkType: "Entry", type: "Entry"))
+        let embeddedAssetBlock = ResourceLinkBlock(
+            resolvedData: ResourceLinkData(resolvedTarget: link, title: "linkTitle"),
+            nodeType: NodeType.embeddedAssetBlock,
+            content: []
+        )
+
+        let hyperlink = Hyperlink(
+            data: Hyperlink.Data(uri: "https://contentful.com", title: "Contentful"),
+            content: []
+        )
+
+        let document = RichTextDocument(
+            content: (
+                [
+                    paragraphText1,
+                    paragraph,
+                    headingH1,
+                    headingH2,
+                    blockQuote,
+                    horizontalRule,
+                    orderedList,
+                    unorderedList,
+                    embeddedAssetBlock,
+                    hyperlink
+                    ] as [Node?] // compiler needs this cast
+                ).compactMap { $0 }
+        )
+
+        guard let jsonData = try? JSONEncoder().encode(document) else {
+            XCTFail("RichTextDocument cannot be encoded to JSON")
+            return
+        }
+
+        let nsCodingData = NSKeyedArchiver.archivedData(withRootObject: document)
+
+        guard let nsCodingDecodedDocument = NSKeyedUnarchiver.unarchiveObject(with: nsCodingData) as? RichTextDocument else {
+            XCTFail("RichTextDocument could not be unarchived")
+            return
+        }
+
+        let decodedDocument: RichTextDocument
+        do {
+            decodedDocument = try JSONDecoder().decode(RichTextDocument.self, from: jsonData)
+        } catch {
+            XCTFail("RichTextDocument JSON cannot be decoded: \(error.localizedDescription)")
+            return
+        }
+
+        // Since adding `Equatable` conformance to `Node` would break a lot of existing code,
+        // we just compare the objects explicitly:
+
+        func assertDecodedNode<N: Node & Equatable>(original: N, decoded: Node) {
+            assertDecodedNode(original: original, decoded: decoded, equalIf: { $0 == $1 })
+        }
+
+        func assertDecodedNode<N: Node>(original: N, decoded: Node, equalIf: (N, N) -> Bool) {
+            if let castDecoded = decoded as? N {
+                XCTAssert(equalIf(original, castDecoded))
+            } else {
+                XCTFail(
+                    """
+                    Decoded node of type \(String(describing: type(of: decoded)))
+                    does not match \(String(describing: N.self))
+                    """
+                )
+            }
+        }
+
+        func areNodesEqual(lhs: [Node], rhs: [Node]) -> Bool {
+            var equals = true
+            lhs.enumerated().forEach { index, lhsNode in
+                guard rhs.count > index else { equals = false; return }
+                let rhsNode = rhs[index]
+                switch (lhsNode, rhsNode) {
+                case let (lhsText as Text, rhsText as Text):
+                    if lhsText != rhsText {
+                        equals = false
+                    }
+                case let (lhsListItem as ListItem, rhsListItem as ListItem):
+                    if areNodesEqual(lhs: lhsListItem.content, rhs: rhsListItem.content) == false {
+                        equals = false
+                    }
+                case let (lhsParagraph as Paragraph, rhsParagraph as Paragraph):
+                    if areNodesEqual(lhs: lhsParagraph.content, rhs: rhsParagraph.content) == false {
+                        equals = false
+                    }
+                default:
+                    XCTFail("""
+                        Unsupported sub nodes passed to areNodesEqual: \(String(describing: type(of: lhsNode))),
+                        \(String(describing: type(of: rhsNode)))
+                        """)
+                }
+            }
+            return equals
+        }
+
+        assertDecodedNode(original: paragraphText1, decoded: decodedDocument.content[0])
+        assertDecodedNode(original: paragraph, decoded: decodedDocument.content[1]) {
+            areNodesEqual(lhs: $0.content, rhs: $1.content)
+        }
+        assertDecodedNode(original: headingH1, decoded: decodedDocument.content[2]) {
+            areNodesEqual(lhs: $0.content, rhs: $1.content)
+        }
+        assertDecodedNode(original: headingH2, decoded: decodedDocument.content[3]) {
+            areNodesEqual(lhs: $0.content, rhs: $1.content)
+        }
+        assertDecodedNode(original: blockQuote, decoded: decodedDocument.content[4]) {
+            areNodesEqual(lhs: $0.content, rhs: $1.content)
+        }
+        assertDecodedNode(original: horizontalRule, decoded: decodedDocument.content[5]) {
+            areNodesEqual(lhs: $0.content, rhs: $1.content)
+        }
+        assertDecodedNode(original: orderedList, decoded: decodedDocument.content[6]) {
+            areNodesEqual(lhs: $0.content, rhs: $1.content)
+        }
+        assertDecodedNode(original: unorderedList, decoded: decodedDocument.content[7]) {
+            areNodesEqual(lhs: $0.content, rhs: $1.content)
+        }
+        assertDecodedNode(original: embeddedAssetBlock, decoded: decodedDocument.content[8]) {
+            areNodesEqual(lhs: $0.content, rhs: $1.content)
+        }
+        assertDecodedNode(original: hyperlink, decoded: decodedDocument.content[9]) {
+            areNodesEqual(lhs: $0.content, rhs: $1.content)
+        }
+
+        // NSCoding
+
+        assertDecodedNode(original: paragraphText1, decoded: nsCodingDecodedDocument.content[0])
+        assertDecodedNode(original: paragraph, decoded: nsCodingDecodedDocument.content[1]) {
+            areNodesEqual(lhs: $0.content, rhs: $1.content)
+        }
+        assertDecodedNode(original: headingH1, decoded: nsCodingDecodedDocument.content[2]) {
+            areNodesEqual(lhs: $0.content, rhs: $1.content)
+        }
+        assertDecodedNode(original: headingH2, decoded: nsCodingDecodedDocument.content[3]) {
+            areNodesEqual(lhs: $0.content, rhs: $1.content)
+        }
+        assertDecodedNode(original: blockQuote, decoded: nsCodingDecodedDocument.content[4]) {
+            areNodesEqual(lhs: $0.content, rhs: $1.content)
+        }
+        assertDecodedNode(original: horizontalRule, decoded: nsCodingDecodedDocument.content[5]) {
+            areNodesEqual(lhs: $0.content, rhs: $1.content)
+        }
+        assertDecodedNode(original: orderedList, decoded: nsCodingDecodedDocument.content[6]) {
+            areNodesEqual(lhs: $0.content, rhs: $1.content)
+        }
+        assertDecodedNode(original: unorderedList, decoded: nsCodingDecodedDocument.content[7]) {
+            areNodesEqual(lhs: $0.content, rhs: $1.content)
+        }
+        assertDecodedNode(original: embeddedAssetBlock, decoded: nsCodingDecodedDocument.content[8]) {
+            areNodesEqual(lhs: $0.content, rhs: $1.content)
+        }
+        assertDecodedNode(original: hyperlink, decoded: nsCodingDecodedDocument.content[9]) {
+            areNodesEqual(lhs: $0.content, rhs: $1.content)
+        }
+    }
 
 }
