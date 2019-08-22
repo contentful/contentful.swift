@@ -24,6 +24,12 @@ public enum Link: Codable {
 
         /// The content type identifier for the linked resource.
         public let type: String
+
+        public init(id: String, linkType: String, type: String) {
+            self.id = id
+            self.linkType = linkType
+            self.type = type
+        }
     }
 
     /// The Link points to an `Asset`.
