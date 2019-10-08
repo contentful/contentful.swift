@@ -562,7 +562,7 @@ extension Client {
             return nil
         }
 
-        let parameters = syncableTypes.parameters + syncSpace.parameters
+        let parameters = syncSpace.hasMorePages ? syncSpace.parameters : syncableTypes.parameters + syncSpace.parameters
         return fetch(url: url(endpoint: .sync, parameters: parameters)) { (result: Result<SyncSpace>) in
 
             var mutableResult = result
