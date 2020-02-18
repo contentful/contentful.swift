@@ -17,7 +17,7 @@ class PersistenceIntegrationTests: XCTestCase {
         do {
             let jsonDecoder = JSONDecoder.withoutLocalizationContext()
             let localesJSONData = JSONDecodingTests.jsonData("all-locales")
-            let localesResponse = try! jsonDecoder.decode(ArrayResponse<Contentful.Locale>.self, from: localesJSONData)
+            let localesResponse = try! jsonDecoder.decode(HomogeneousArrayResponse<Contentful.Locale>.self, from: localesJSONData)
             jsonDecoder.update(with: LocalizationContext(locales: localesResponse.items)!)
 
 

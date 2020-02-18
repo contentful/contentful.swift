@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 github "AliSoftware/OHHTTPStubs" "7.0.0"
+=======
+github "AliSoftware/OHHTTPStubs" "8.0.0"
+>>>>>>> master
 github "venmo/DVR" "v1.3.2"
