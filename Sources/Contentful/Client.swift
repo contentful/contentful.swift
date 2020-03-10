@@ -561,22 +561,20 @@ extension Client {
             completion(Result.error(SDKError.previewAPIDoesNotSupportSync))
             return nil
         }
-
+        
         let parameters = syncableTypes.parameters + syncSpace.parameters
         return fetch(url: url(endpoint: .sync, parameters: parameters)) { (result: Result<SyncSpace>) in
-
-            var mutableResult = result
-            if case .success(let newSyncSpace) = result {
-                // On each new page, update the original sync space and forward the diffs to the
-                // persistence integration.
+            switch result {
+            case.success(let newSyncSpace):
                 syncSpace.updateWithDiffs(from: newSyncSpace)
                 self.persistenceIntegration?.update(with: newSyncSpace)
-                mutableResult = .success(syncSpace)
-            }
-            if let syncSpace = result.value, syncSpace.hasMorePages == true {
-                self.sync(for: syncSpace, syncableTypes: syncableTypes, then: completion)
-            } else {
-                completion(mutableResult)
+                if newSyncSpace.hasMorePages {
+                    self.sync(for: syncSpace, syncableTypes: syncableTypes, then: completion)
+                } else {
+                    completion(.success(syncSpace))
+                }
+            case .error(let error):
+                completion(.error(error))
             }
         }
     }
