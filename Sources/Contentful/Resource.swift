@@ -91,7 +91,7 @@ public class DeletedResource: Resource, FlatResource, Decodable {
 /// for the locale paramater (i.e "locale=*") during a fetch, the SDK will cache returned values for
 /// all locales in moery. This class gives an interface to specify which locale should be used when
 /// reading content from `Resource` instances that are in memory.
-public class LocalizableResource: Resource, FlatResource, Decodable {
+public class LocalizableResource: Resource, FlatResource, Codable {
 
     /// System fields.
     public let sys: Sys
@@ -153,6 +153,10 @@ public class LocalizableResource: Resource, FlatResource, Decodable {
         localizableFields = try Localization.fieldsInMultiLocaleFormat(from: fieldsDictionary,
                                                                        selectedLocale: currentlySelectedLocale,
                                                                        wasSelectedOnAPILevel: sys.locale != nil)
+    }
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(sys, forKey: .sys)
     }
 
     /// The keys used when representing a resource in JSON.

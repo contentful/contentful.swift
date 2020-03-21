@@ -1292,7 +1292,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 5.0.7;
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-tvOS";
@@ -1327,7 +1327,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 5.0.7;
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-tvOS";
 				PRODUCT_NAME = Contentful;
@@ -1361,7 +1361,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 5.0.7;
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-tvOS";
 				PRODUCT_NAME = Contentful;
@@ -1585,6 +1585,7 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1595,7 +1596,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 5.0.7;
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.contentful.Contentful;
 				PRODUCT_NAME = Contentful;
@@ -1614,6 +1615,7 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1624,7 +1626,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 5.0.7;
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.contentful.Contentful;
 				PRODUCT_NAME = Contentful;
@@ -1750,6 +1752,7 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "";
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1758,7 +1761,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 5.0.7;
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-watchOS";
 				PRODUCT_NAME = Contentful;
@@ -1780,6 +1783,7 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "";
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1788,7 +1792,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 5.0.7;
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-watchOS";
 				PRODUCT_NAME = Contentful;
@@ -1811,6 +1815,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1821,7 +1826,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 5.0.7;
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-macOS";
 				PRODUCT_NAME = Contentful;
@@ -1842,6 +1847,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1852,7 +1858,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 5.0.7;
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-macOS";
 				PRODUCT_NAME = Contentful;
@@ -1938,6 +1944,7 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1951,7 +1958,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 5.0.7;
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.contentful.Contentful;
 				PRODUCT_NAME = Contentful;
@@ -1992,6 +1999,7 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "";
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -2003,7 +2011,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 5.0.7;
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-watchOS";
 				PRODUCT_NAME = Contentful;
@@ -2026,6 +2034,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -2039,7 +2048,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 5.0.7;
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-macOS";
 				PRODUCT_NAME = Contentful;
