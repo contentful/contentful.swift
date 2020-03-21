@@ -37,7 +37,7 @@ class EntryTests: XCTestCase {
         (client.urlSession as? DVR.Session)?.endRecording()
     }
 
-    func waitUntilMatchingEntries(_ query: Query, action: @escaping (_ entries: ArrayResponse<Entry>) -> ()) {
+    func waitUntilMatchingEntries(_ query: Query, action: @escaping (_ entries: HomogeneousArrayResponse<Entry>) -> ()) {
         let expecatation = self.expectation(description: "Entries matching query network expectation")
 
         EntryTests.client.fetchArray(of: Entry.self, matching: query) { result in
@@ -290,7 +290,7 @@ class EntryTests: XCTestCase {
     }
 
     func testFetchEntriesWithInclusionSearch() {
-        let action: (ArrayResponse<Entry>) -> () = {
+        let action: (HomogeneousArrayResponse<Entry>) -> () = {
             XCTAssertEqual($0.items.count, 2)
             let ids = $0.items.map { $0.sys.id }
             XCTAssertEqual(ids, ["jake", "finn"])

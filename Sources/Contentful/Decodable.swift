@@ -11,6 +11,10 @@ import Foundation
 /// Helper methods for decoding instances of the various types in your content model.
 public extension Decoder {
 
+    var canResolveLinks: Bool {
+        return userInfo[.linkResolverContextKey] is LinkResolver
+    }
+
     internal var linkResolver: LinkResolver {
         return userInfo[.linkResolverContextKey] as! LinkResolver
     }
@@ -74,28 +78,28 @@ extension JSONDecoder {
 extension Decodable where Self: EntryDecodable {
     // This is a magic workaround for the fact that dynamic metatypes cannot be passed into
     // initializers such as UnkeyedDecodingContainer.decode(Decodable.Type), yet static methods CAN
-    // be called on metatypes.
-    static func popEntryDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
+    // be called on metatypes. (Visitor pattern)
+   public static func popEntryDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
         let entryDecodable = try container.decode(self)
         return entryDecodable
     }
 }
 
-extension Decodable where Self: AssetDecodable {
+internal extension Decodable where Self: AssetDecodable {
     static func popAssetDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
         let assetDecodable = try container.decode(self)
         return assetDecodable
     }
 }
 
-extension Decodable where Self: Node {
-   static func popNodeDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
+internal extension Decodable where Self: Node {
+    static func popNodeDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
         let contentDecodable = try container.decode(self)
         return contentDecodable
     }
 }
 
-extension CodingUserInfoKey {
+internal extension CodingUserInfoKey {
     static let linkResolverContextKey = CodingUserInfoKey(rawValue: "linkResolverContext")!
     static let timeZoneContextKey = CodingUserInfoKey(rawValue: "timeZoneContext")!
     static let contentTypesContextKey = CodingUserInfoKey(rawValue: "contentTypesContext")!
@@ -116,6 +120,7 @@ public extension KeyedDecodingContainer {
                             decoder: Decoder,
                             callback: @escaping (AnyObject) -> Void) throws {
 
+        guard decoder.canResolveLinks  else { return }
         let linkResolver = decoder.linkResolver
         if let link = try decodeIfPresent(Link.self, forKey: key) {
             linkResolver.resolve(link, callback: callback)

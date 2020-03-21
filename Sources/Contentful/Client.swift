@@ -345,13 +345,13 @@ extension Client {
     ///   - completion: A handler being called on completion of the request.
     /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation.
     @discardableResult
-    public func fetchLocales(then completion: @escaping ResultsHandler<ArrayResponse<Contentful.Locale>>) -> URLSessionDataTask {
+    public func fetchLocales(then completion: @escaping ResultsHandler<HomogeneousArrayResponse<Contentful.Locale>>) -> URLSessionDataTask {
 
         // The robust thing to do would be to fetch all pages of the `/locales` endpoint, however, pagination is not supported
         // at the moment. We also are not expecting any consumers to have > 1000 locales as Contentful subscriptions do not allow that.
         let query = ResourceQuery.limit(to: QueryConstants.maxLimit)
         let url = self.url(endpoint: .locales, parameters: query.parameters)
-        return fetch(url: url) { (result: Result<ArrayResponse<Contentful.Locale>>) in
+        return fetch(url: url) { (result: Result<HomogeneousArrayResponse<Contentful.Locale>>) in
 
             if let error = result.error {
                 completion(Result.error(error))
@@ -447,33 +447,45 @@ extension Client {
     /// - Parameters:
     ///   - resourceType: A reference to the Swift type which conforms to `Decodable & EndpointAccessible`
     ///   - id: The identifier of the resource which should be fetched.
+    ///   - include: Specifies the level of includes to be resolved. Optional, because we leave it to the server
+    ///     to decide the optimal default value: [Retrieval of linked items]
     ///   - completion: The handler being called on completion of the request with a Result wrapping your decoded type or an error.
     /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation.
+    ///
+    /// [Retrieval of linked items]: https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/links/retrieval-of-linked-items
     @discardableResult
     public func fetch<ResourceType>(_ resourceType: ResourceType.Type,
                                     id: String,
+                                    include includesLevel: UInt? = nil,
                                     then completion: @escaping ResultsHandler<ResourceType>) -> URLSessionDataTask
         where ResourceType: Decodable & EndpointAccessible {
 
-            // If the resource is not an entry, then don't worry about fetching with includes.
+            // If the resource is not an entry, includes are not supported.
             if !(resourceType is EntryDecodable.Type) && resourceType != Entry.self {
                 var url = self.url(endpoint: ResourceType.endpoint)
                 url.appendPathComponent(id)
                 return fetch(url: url, then: completion)
             }
 
-            let fetchCompletion: (Result<ArrayResponse<ResourceType>>) -> Void = { result in
+            // Before `completion` is called, either the first item is extracted, and
+            // sent as `.success`, or an `.error` is sent.
+            let fetchCompletion: (Result<HomogeneousArrayResponse<ResourceType>>) -> Void = { result in
                 switch result {
-                case .success(let response) where response.items.first != nil:
-                    completion(Result.success(response.items.first!))
+                case .success(let response):
+                    guard let firstItem = response.items.first else {
+                        completion(.error(SDKError.noResourceFoundFor(id: id)))
+                        break
+                    }
+                    completion(.success(firstItem))
                 case .error(let error):
-                    completion(Result.error(error))
-                default:
-                    completion(Result.error(SDKError.noResourceFoundFor(id: id)))
+                    completion(.error(error))
                 }
             }
 
-            let query = ResourceQuery.where(sys: .id, .equals(id))
+            var query = ResourceQuery.where(sys: .id, .equals(id))
+            if let includesLevel = includesLevel {
+                query = query.include(includesLevel)
+            }
             return fetch(url: url(endpoint: ResourceType.endpoint, parameters: query.parameters), then: fetchCompletion)
     }
 
@@ -487,7 +499,7 @@ extension Client {
     @discardableResult
     public func fetchArray<ResourceType, QueryType>(of resourceType: ResourceType.Type,
                                                     matching query: QueryType? = nil,
-                                                    then completion: @escaping ResultsHandler<ArrayResponse<ResourceType>>) -> URLSessionDataTask
+                                                    then completion: @escaping ResultsHandler<HomogeneousArrayResponse<ResourceType>>) -> URLSessionDataTask
         where ResourceType: ResourceQueryable, QueryType == ResourceType.QueryType {
             return fetch(url: url(endpoint: ResourceType.endpoint, parameters: query?.parameters ?? [:]), then: completion)
     }
@@ -502,7 +514,7 @@ extension Client {
     @discardableResult
     public func fetchArray<EntryType>(of entryType: EntryType.Type,
                                       matching query: QueryOn<EntryType> = QueryOn<EntryType>(),
-                                      then completion: @escaping ResultsHandler<ArrayResponse<EntryType>>) -> URLSessionDataTask {
+                                      then completion: @escaping ResultsHandler<HomogeneousArrayResponse<EntryType>>) -> URLSessionDataTask {
         let url = self.url(endpoint: .entries, parameters: query.parameters)
         return fetch(url: url, then: completion)
     }
@@ -516,7 +528,7 @@ extension Client {
     /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation.
     @discardableResult
     public func fetchArray(matching query: Query? = nil,
-                          then completion: @escaping ResultsHandler<MixedArrayResponse>) -> URLSessionDataTask {
+                          then completion: @escaping ResultsHandler<HeterogeneousArrayResponse>) -> URLSessionDataTask {
         let url = self.url(endpoint: .entries, parameters: query?.parameters ?? [:])
         return fetch(url: url, then: completion)
     }
@@ -546,7 +558,7 @@ extension Client {
         // be called while in preview mode, is internally by the SDK to finish a multiple page sync.
         // We are doing a multi page sync only when syncSpace.hasMorePages is true.
         if !syncSpace.syncToken.isEmpty && host == Host.preview && syncSpace.hasMorePages == false {
-            completion(Result.error(SDKError.previewAPIDoesNotSupportSync()))
+            completion(Result.error(SDKError.previewAPIDoesNotSupportSync))
             return nil
         }
 

@@ -155,7 +155,7 @@ class QueryTests: XCTestCase {
     func testQueryReturningClientDefinedModelUsingFields() {
         let expectation = self.expectation(description: "Select operator expectation")
 
-        QueryTests.client.fetchArray(of: Cat.self, matching: .select(fieldsNamed: [.bestFriend, .color, .name])) { (result: Result<ArrayResponse<Cat>>) in
+        QueryTests.client.fetchArray(of: Cat.self, matching: .select(fieldsNamed: [.bestFriend, .color, .name])) { (result: Result<HomogeneousArrayResponse<Cat>>) in
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
@@ -181,7 +181,7 @@ class QueryTests: XCTestCase {
         let expectation = self.expectation(description: "Fetch all entries expectation")
 
         let query = try! Query.order(by: Ordering(sys: .updatedAt))
-        QueryTests.client.fetchArray(matching: query) { (result: Result<MixedArrayResponse>) in
+        QueryTests.client.fetchArray(matching: query) { (result: Result<HeterogeneousArrayResponse>) in
 
             switch result {
             case .success(let response):
@@ -218,7 +218,7 @@ class QueryTests: XCTestCase {
         let query = try! QueryOn<Dog>.select(fieldsNamed: selections)
         try! query.order(by: Ordering(sys: .id))
 
-        QueryTests.client.fetchArray(of: Dog.self, matching: query) { (result: Result<ArrayResponse<Dog>>) in
+        QueryTests.client.fetchArray(of: Dog.self, matching: query) { (result: Result<HomogeneousArrayResponse<Dog>>) in
 
             switch result {
             case .success(let dogsResponse):

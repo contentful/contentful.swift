@@ -10,35 +10,61 @@ import Foundation
 
 /// The base protocol which all node types that may be present in a tree of Structured text.
 /// See: <https://www.contentful.com/developers/docs/tutorials/general/structured-text-field-type-alpha/> for more information.
-public protocol Node: Decodable {
+public protocol Node: Codable {
     /// The type of node which should be rendered.
     var nodeType: NodeType { get }
 }
 
+public protocol RecursiveNode: Node {
+    var content: [Node] { get }
+    func resolveLinks(against includedEntries: [Entry]?, and includedAssets: [Asset]?)
+}
+
+private extension RecursiveNode {
+
+    func resolveLinksInChildNodes(against includedEntries: [Entry]?, and includedAssets: [Asset]?) {
+        self.content.forEach { node in
+            switch node {
+            case let recursiveNode as RecursiveNode:
+                recursiveNode.resolveLinks(against: includedEntries, and: includedAssets)
+            default:
+                break
+            }
+        }
+    }
+}
+
 /// The data describing the linked entry or asset for an `EmbeddedResouceNode`
-public class ResourceLinkData: Decodable {
+public class ResourceLinkData: Codable {
+
     /// The raw link object which describes the target entry or asset.
-    public let target: Link
+    ///
+    /// If the linked content is `.unresolved`, but available via the `LinkResolver`,
+    /// it is replaced by `LinkResolver` with the resolved value *after*
+    /// `init(from:)`, but within the same runloop.
+    public var target: Link
 
     /// The optional title for the linked resource, to be displayed if desired.
     public let title: String?
-
-    /// When using the SDK in conjunction with your own `EntryDecodable` classes, this property will
-    /// be to the resolved `EntryDecodable` instance.
-    public var resolvedResource: FlatResource?
 
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: JSONCodingKeys.self)
         target = try container.decode(Link.self, forKey: JSONCodingKeys(stringValue: "target")!)
         title = try container.decodeIfPresent(String.self, forKey: JSONCodingKeys(stringValue: "title")!)
         try container.resolveLink(forKey: JSONCodingKeys(stringValue: "target")!, decoder: decoder) { [weak self] decodable in
-            // Workaroudn for bug in the Swift compiler: https://bugs.swift.org/browse/SR-3871
-            self?.resolvedResource = decodable as? FlatResource
+            guard let self = self else { return }
+            self.target = self.target.resolveWithCandidateObject(decodable)
         }
     }
-    internal init(resolvedTarget: Link, title: String? = nil) {
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: JSONCodingKeys.self)
+        try container.encode(target, forKey: JSONCodingKeys(stringValue: "target")!)
+        try container.encodeIfPresent(title, forKey: JSONCodingKeys(stringValue: "title")!)
+    }
+
+    public init(resolvedTarget: Link, title: String? = nil) {
         target = resolvedTarget
-        resolvedResource = nil
         self.title = title
     }
 }
@@ -48,7 +74,7 @@ internal enum NodeContentCodingKeys: String, CodingKey {
 }
 
 /// A descriptor of the node's type, which can be used to determine rendering heuristics.
-public enum NodeType: String, Decodable {
+public enum NodeType: String, Codable {
     /// The top-level node type.
     case document
     /// A block of text, the parent node for inline text nodes.
@@ -123,7 +149,7 @@ public enum NodeType: String, Decodable {
 }
 
 /// BlockNode is the base class for all nodes which are rendered as a block (as opposed to an inline node).
-public class BlockNode: Node {
+public class BlockNode: RecursiveNode {
     public let nodeType: NodeType
     public internal(set) var content: [Node]
 
@@ -132,14 +158,25 @@ public class BlockNode: Node {
         nodeType = try container.decode(NodeType.self, forKey: .nodeType)
         content = try container.decodeContent(forKey: .content)
     }
-    internal init(nodeType: NodeType, content: [Node]) {
+
+    public init(nodeType: NodeType, content: [Node]) {
         self.nodeType = nodeType
         self.content = content
+    }
+
+    public func resolveLinks(against includedEntries: [Entry]?, and includedAssets: [Asset]?) {
+        resolveLinksInChildNodes(against: includedEntries, and: includedAssets)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: NodeContentCodingKeys.self)
+        try container.encode(nodeType, forKey: .nodeType)
+        try container.encodeNodes(content, forKey: .content)
     }
 }
 
 /// InlineNode is the base class for all nodes which are rendered as an inline string (as opposed to a block node).
-public class InlineNode: Node {
+public class InlineNode: RecursiveNode {
     public let nodeType: NodeType
     public internal(set) var content: [Node]
 
@@ -148,18 +185,32 @@ public class InlineNode: Node {
         nodeType = try container.decode(NodeType.self, forKey: .nodeType)
         content = try container.decodeContent(forKey: .content)
     }
-    internal init(nodeType: NodeType, content: [Node]) {
+
+    public init(nodeType: NodeType, content: [Node]) {
         self.nodeType = nodeType
         self.content = content
+    }
+
+    public func resolveLinks(against includedEntries: [Entry]?, and includedAssets: [Asset]?) {
+        resolveLinksInChildNodes(against: includedEntries, and: includedAssets)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: NodeContentCodingKeys.self)
+        try container.encode(nodeType, forKey: .nodeType)
+        try container.encodeNodes(content, forKey: .content)
     }
 }
 
 /// The top level node which contains all other nodes.
-public class RichTextDocument: Node {
+/// @objc declaration, NSObject inheritance, and NSCoding conformance
+/// are required so `RichTextDocument` can be used as a
+/// transformable Core Data field.
+@objc public class RichTextDocument: NSObject, RecursiveNode, NSCoding {
     public let nodeType: NodeType
     public internal(set) var content: [Node]
 
-    internal init(content: [Node]) {
+    public init(content: [Node]) {
         self.content = content
         self.nodeType = .document
     }
@@ -169,6 +220,36 @@ public class RichTextDocument: Node {
         nodeType = try container.decode(NodeType.self, forKey: .nodeType)
         content = try container.decodeContent(forKey: .content)
     }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: NodeContentCodingKeys.self)
+        try container.encode(nodeType, forKey: .nodeType)
+        try container.encodeNodes(content, forKey: .content)
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        guard let data = try? JSONEncoder().encode(self) else { return }
+        aCoder.encode(data)
+    }
+
+    public required init?(coder aDecoder: NSCoder) {
+        guard let data = aDecoder.decodeData() else {
+            return nil
+        }
+        do {
+            let decoded = try JSONDecoder().decode(RichTextDocument.self, from: data)
+            self.content = decoded.content
+            self.nodeType = .document
+        } catch {
+            print(error)
+            return nil
+        }
+    }
+
+    public func resolveLinks(against includedEntries: [Entry]?, and includedAssets: [Asset]?) {
+        resolveLinksInChildNodes(against: includedEntries, and: includedAssets)
+    }
+
 }
 
 /// A block of text, containing child `Text` nodes.
@@ -193,6 +274,21 @@ public final class HorizontalRule: BlockNode {}
 public final class Heading: BlockNode {
     /// The level of the heading, between 1 an 6.
     public var level: UInt!
+
+    public init?(level: UInt, content: [Node]) {
+        guard let nodeType: NodeType = {
+            switch level {
+            case 1: return .h1
+            case 2: return .h2
+            case 3: return .h3
+            case 4: return .h4
+            case 5: return .h5
+            case 6: return .h6
+            default: return nil
+            }
+            }() else { return nil }
+        super.init(nodeType: nodeType, content: content)
+    }
 
     required public init(from decoder: Decoder) throws {
         try super.init(from: decoder)
@@ -220,11 +316,29 @@ public class Hyperlink: InlineNode {
         public let uri: String
         /// The text which should be displayed for the hyperlink.
         public let title: String?
+
+        public init(uri: String, title: String?) {
+            self.uri = uri
+            self.title = title
+        }
     }
+
+    public init(data: Hyperlink.Data, content: [Node]) {
+        self.data = data
+        super.init(nodeType: .hyperlink, content: content)
+    }
+
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: NodeContentCodingKeys.self)
         data = try container.decode(Data.self, forKey: .data)
         try super.init(from: decoder)
+    }
+
+    public override func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: NodeContentCodingKeys.self)
+        try container.encode(nodeType, forKey: .nodeType)
+        try container.encode(data, forKey: .data)
+        try container.encodeNodes(content, forKey: .content)
     }
 }
 
@@ -234,7 +348,7 @@ public class ResourceLinkBlock: BlockNode {
     /// The container with the link information and the resolved, linked resource.
     public let data: ResourceLinkData
 
-    internal init(resolvedData: ResourceLinkData, nodeType: NodeType, content: [Node]) {
+    public init(resolvedData: ResourceLinkData, nodeType: NodeType, content: [Node]) {
         self.data = resolvedData
         super.init(nodeType: nodeType, content: content)
     }
@@ -243,6 +357,34 @@ public class ResourceLinkBlock: BlockNode {
         let container = try decoder.container(keyedBy: NodeContentCodingKeys.self)
         data = try container.decode(ResourceLinkData.self, forKey: .data)
         try super.init(from: decoder)
+    }
+
+    public override func resolveLinks(against includedEntries: [Entry]?, and includedAssets: [Asset]?) {
+        switch data.target {
+        case .asset, .entry, .entryDecodable:
+            return
+        case let .unresolved(sys):
+            switch sys.linkType.lowercased() {
+            case "entry":
+                guard let linkedEntry = includedEntries?.first(where: { $0.sys.id == sys.id }) else {
+                    return
+                }
+                data.target = Link.entry(linkedEntry)
+            case "asset":
+                guard let linkedAsset = includedAssets?.first(where: { $0.sys.id == sys.id }) else {
+                    return
+                }
+                data.target = Link.asset(linkedAsset)
+            default:
+                return
+            }
+        }
+    }
+
+    public override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: NodeContentCodingKeys.self)
+        try container.encode(data, forKey: .data)
     }
 }
 
@@ -252,7 +394,7 @@ public class ResourceLinkInline: InlineNode {
     /// The container with the link information and the resolved, linked resource.
     public let data: ResourceLinkData
 
-    internal init(resolvedData: ResourceLinkData, nodeType: NodeType, content: [Node]) {
+    public init(resolvedData: ResourceLinkData, nodeType: NodeType, content: [Node]) {
         self.data = resolvedData
         super.init(nodeType: nodeType, content: content)
     }
@@ -262,10 +404,32 @@ public class ResourceLinkInline: InlineNode {
         data = try container.decode(ResourceLinkData.self, forKey: .data)
         try super.init(from: decoder)
     }
+
+    public override func resolveLinks(against includedEntries: [Entry]?, and includedAssets: [Asset]?) {
+        switch data.target {
+        case .asset, .entry, .entryDecodable:
+            return
+        case let .unresolved(sys):
+            switch sys.linkType.lowercased() {
+            case "entry":
+                guard let linkedEntry = includedEntries?.first(where: { $0.sys.id == sys.id }) else {
+                    return
+                }
+                data.target = Link.entry(linkedEntry)
+            case "asset":
+                guard let linkedAsset = includedAssets?.first(where: { $0.sys.id == sys.id }) else {
+                    return
+                }
+                data.target = Link.asset(linkedAsset)
+            default:
+                return
+            }
+        }
+    }
 }
 
 /// A node containing text with marks.
-public struct Text: Node {
+public struct Text: Node, Equatable {
     public let nodeType: NodeType
 
     /// The string value of the text.
@@ -273,13 +437,23 @@ public struct Text: Node {
     /// An array of the markup styles which should be applied to the text.
     public let marks: [Mark]
 
+    public init(value: String, marks: [Mark]) {
+        self.nodeType = .text
+        self.value = value
+        self.marks = marks
+    }
+
     /// THe markup styling which should be applied to the text.
-    public struct Mark: Decodable {
+    public struct Mark: Codable, Equatable {
         public let type: MarkType
+
+        public init(type: MarkType) {
+            self.type = type
+        }
     }
 
     /// A type of the markup styling which should be applied to the text.
-    public enum MarkType: String, Decodable {
+    public enum MarkType: String, Codable, Equatable {
         /// Bold text.
         case bold
         /// Italicized text.
@@ -291,9 +465,9 @@ public struct Text: Node {
     }
 }
 
-extension KeyedDecodingContainer {
+private extension KeyedDecodingContainer {
 
-    internal func decodeContent(forKey key: K) throws -> [Node] {
+    func decodeContent(forKey key: K) throws -> [Node] {
 
         // A copy as an array of dictionaries just to extract "nodeType" field.
         guard let jsonContent = try decode(Swift.Array<Any>.self, forKey: key) as? [[String: Any]] else {
@@ -312,5 +486,33 @@ extension KeyedDecodingContainer {
             content.append(element)
         }
         return content
+    }
+}
+
+private extension KeyedEncodingContainer {
+
+    mutating func encodeNodes(_ nodes: [Node], forKey key: K) throws {
+        var contentContainer = nestedUnkeyedContainer(forKey: key)
+        try nodes.forEach { node in
+            try contentContainer.encode(AnyEncodable(value: node))
+        }
+    }
+}
+
+/// This wrapper allows arbitrary objects or structs conforming to `Node`
+/// to be encoded _without_ casting to their static types.
+/// See http://yourfriendlyioscoder.com/blog/2019/04/27/any-encodable/
+private struct AnyEncodable: Encodable {
+    let value: Encodable
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try value.encode(to: &container)
+    }
+}
+
+private extension Encodable {
+    func encode(to container: inout SingleValueEncodingContainer) throws {
+        try container.encode(self)
     }
 }
