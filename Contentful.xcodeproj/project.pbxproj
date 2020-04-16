@@ -123,6 +123,9 @@
 		5DD410EB21918E84003FC01E /* RichTextNodeDecodingTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DD410E421918E62003FC01E /* RichTextNodeDecodingTests.json */; };
 		5DFE08DB2189D6AC00B0D68E /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DFE08DA2189D6AC00B0D68E /* EntryTests.json */; };
 		5DFE08DC2189D6AC00B0D68E /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DFE08DA2189D6AC00B0D68E /* EntryTests.json */; };
+		757C0AD32257D955008F91BD /* SyncWithPaginationTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 757C0AD12257D94E008F91BD /* SyncWithPaginationTests.json */; };
+		757C0AD42257D955008F91BD /* SyncWithPaginationTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 757C0AD12257D94E008F91BD /* SyncWithPaginationTests.json */; };
+		757C0AD52257D956008F91BD /* SyncWithPaginationTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 757C0AD12257D94E008F91BD /* SyncWithPaginationTests.json */; };
 		A10FF9D21BBB2E5F001AA4E9 /* JSONDecodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2E3661BBAD06000814D63 /* JSONDecodingTests.swift */; };
 		A10FF9D31BBB32FD001AA4E9 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15193AD1BB9236300FB83CD /* Asset.swift */; };
 		A10FF9D51BBB3676001AA4E9 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10FF9D41BBB3676001AA4E9 /* Error.swift */; };
@@ -299,6 +302,7 @@
 		5DD410462190BC8B003FC01E /* RichText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichText.swift; sourceTree = "<group>"; };
 		5DD410E421918E62003FC01E /* RichTextNodeDecodingTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RichTextNodeDecodingTests.json; sourceTree = "<group>"; };
 		5DFE08DA2189D6AC00B0D68E /* EntryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EntryTests.json; sourceTree = "<group>"; };
+		757C0AD12257D94E008F91BD /* SyncWithPaginationTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SyncWithPaginationTests.json; sourceTree = "<group>"; };
 		A10FF9D41BBB3676001AA4E9 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Error.swift; sourceTree = "<group>"; };
 		A10FF9DB1BBB4692001AA4E9 /* Field.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Field.swift; sourceTree = "<group>"; };
 		A114BBBF1C4FD3C300DE6679 /* SyncSpace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SyncSpace.swift; sourceTree = "<group>"; };
@@ -608,6 +612,7 @@
 		ED9102671E65AE880076FDBD /* DVRRecordings */ = {
 			isa = PBXGroup;
 			children = (
+				757C0AD12257D94E008F91BD /* SyncWithPaginationTests.json */,
 				5D73EE3821B915C60091DB67 /* LinkResolverTests.json */,
 				5DD410E421918E62003FC01E /* RichTextNodeDecodingTests.json */,
 				5DFE08DA2189D6AC00B0D68E /* EntryTests.json */,
@@ -899,6 +904,7 @@
 				5D73EE3B21B915C60091DB67 /* LinkResolverTests.json in Resources */,
 				5D52E2802193381F00C88FC9 /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */,
 				5D52E2812193381F00C88FC9 /* testFetchSpace.json in Resources */,
+				757C0AD52257D956008F91BD /* SyncWithPaginationTests.json in Resources */,
 				5D52E2822193381F00C88FC9 /* Fixtures in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -930,6 +936,7 @@
 				5D73EE3921B915C60091DB67 /* LinkResolverTests.json in Resources */,
 				ED02DC9F20E12405005EC57B /* Fixtures in Resources */,
 				5D09C24B21870C27006B83F4 /* testFetchSpace.json in Resources */,
+				757C0AD32257D955008F91BD /* SyncWithPaginationTests.json in Resources */,
 				5D09C24521870C27006B83F4 /* ErrorTests.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -954,6 +961,7 @@
 				5D73EE3A21B915C60091DB67 /* LinkResolverTests.json in Resources */,
 				5D09C25E21870C27006B83F4 /* ContentTypeTests.json in Resources */,
 				5D09C24921870C27006B83F4 /* RateLimitTests.json in Resources */,
+				757C0AD42257D955008F91BD /* SyncWithPaginationTests.json in Resources */,
 				5D09C24321870C27006B83F4 /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1284,7 +1292,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 5.0.7;
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-tvOS";
@@ -1319,7 +1327,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 5.0.7;
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-tvOS";
 				PRODUCT_NAME = Contentful;
@@ -1353,7 +1361,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 5.0.7;
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-tvOS";
 				PRODUCT_NAME = Contentful;
@@ -1577,6 +1585,7 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1587,7 +1596,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 5.0.7;
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.contentful.Contentful;
 				PRODUCT_NAME = Contentful;
@@ -1606,6 +1615,7 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1616,7 +1626,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 5.0.7;
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.contentful.Contentful;
 				PRODUCT_NAME = Contentful;
@@ -1742,6 +1752,7 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "";
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1750,7 +1761,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 5.0.7;
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-watchOS";
 				PRODUCT_NAME = Contentful;
@@ -1772,6 +1783,7 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "";
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1780,7 +1792,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 5.0.7;
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-watchOS";
 				PRODUCT_NAME = Contentful;
@@ -1803,6 +1815,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1813,7 +1826,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 5.0.7;
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-macOS";
 				PRODUCT_NAME = Contentful;
@@ -1834,6 +1847,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1844,7 +1858,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 5.0.7;
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-macOS";
 				PRODUCT_NAME = Contentful;
@@ -1930,6 +1944,7 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1943,7 +1958,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 5.0.7;
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.contentful.Contentful;
 				PRODUCT_NAME = Contentful;
@@ -1984,6 +1999,7 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "";
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1995,7 +2011,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 5.0.7;
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-watchOS";
 				PRODUCT_NAME = Contentful;
@@ -2018,6 +2034,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -2031,7 +2048,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 5.0.7;
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-macOS";
 				PRODUCT_NAME = Contentful;
