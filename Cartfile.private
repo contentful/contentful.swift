@@ -1,6 +1,2 @@
 github "venmo/DVR" ~> 1.3.2
-<<<<<<< HEAD
-github "AliSoftware/OHHTTPStubs" ~> 7.0.0
-=======
 github "AliSoftware/OHHTTPStubs" ~> 8.0.0
->>>>>>> master
