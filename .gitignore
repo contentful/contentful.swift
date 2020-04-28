@@ -17,5 +17,5 @@ Packages
 *.xcscmblueprint
 
 # Carthage
-Carthage/Build/
+Carthage
 *.framework.zip
