@@ -157,9 +157,6 @@ extension HomogeneousArrayResponse: Decodable {
 
             // Cache to enable link resolution.
             decoder.linkResolver.cache(entryDecodables: self.items as! [EntryDecodable])
-
-            // Resolve links.
-            decoder.linkResolver.churnLinks()
         } else {
 
             // Since self's items are NOT of a custom (i.e. user-defined) type,
@@ -272,9 +269,6 @@ extension HeterogeneousArrayResponse: Decodable {
 
         // Cache to enable link resolution.
         decoder.linkResolver.cache(entryDecodables: self.items)
-
-        // Resolve links.
-        decoder.linkResolver.churnLinks()
     }
 }
 

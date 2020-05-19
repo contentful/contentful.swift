@@ -43,6 +43,9 @@ open class Client {
     /// the fields dictionary of entries and assets.
     public private(set) var jsonDecoder: JSONDecoder
 
+    // Single instance of the link resolver. It is used among multiple fetch* method calls.
+    private var linkResolver: LinkResolver
+
     /// The persistence integration which will receive delegate messages from the `Client` when new
     /// `Entry` and `Asset` objects are created from data being sent over the network. Currently, these
     /// messages are only sent during the response hadling for `client.sync` calls. See a CoreData
@@ -114,7 +117,8 @@ open class Client {
             jsonDecoder.userInfo[.contentTypesContextKey] = contentTypes
         }
 
-        jsonDecoder.userInfo[.linkResolverContextKey] = LinkResolver()
+        linkResolver = LinkResolver()
+        jsonDecoder.userInfo[.linkResolverContextKey] = linkResolver
         self.persistenceIntegration = persistenceIntegration
         let contentfulHTTPHeaders = [
             "Authorization": "Bearer \(accessToken)",
@@ -325,15 +329,26 @@ open class Client {
             completion(Result.success(rateLimitError))
     }
 
-    fileprivate func handleJSON<DecodableType: Decodable>(_ data: Data, _ completion: ResultsHandler<DecodableType>) {
-        do {
-            let decodedObject = try jsonDecoder.decode(DecodableType.self, from: data)
-            completion(Result.success(decodedObject))
-        } catch let error {
-            let sdkError = SDKError.unparseableJSON(data: data, errorMessage: "\(error)")
-            ContentfulLogger.log(.error, message: sdkError.message)
-            completion(Result.error(sdkError))
-        }
+    fileprivate func handleJSON<DecodableType: Decodable>(_ data: Data, _ completion: @escaping ResultsHandler<DecodableType>) {
+        var decodedObject: DecodableType!
+
+        // Workaround: Sometimes a race condition was noticable when the object has been decoded but
+        // links were not fully resolved yet in the fetched objects. The link resolver calls the completion
+        // block of this method when it finished resolving all the links (meaning, all the callbacks have been
+        // called).
+        linkResolver.perform(decoding: { [weak self] in
+            guard let self = self else { return }
+
+            do {
+                decodedObject = try self.jsonDecoder.decode(DecodableType.self, from: data)
+            } catch let error {
+                let sdkError = SDKError.unparseableJSON(data: data, errorMessage: "\(error)")
+                ContentfulLogger.log(.error, message: sdkError.message)
+                completion(Result.error(sdkError))
+            }
+        }, completion: {
+            completion(.success(decodedObject))
+        })
     }
 }
 
