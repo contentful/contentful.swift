@@ -153,6 +153,13 @@ class LinkResolver {
 
     private static let linksArrayPrefix = "linksArrayPrefix"
 
+    /// Perform data decoding in the `decoding` block. The link resolver will call completion block
+    /// when all the links are resolved.
+    internal func perform(decoding: @escaping () -> Void, completion: @escaping () -> Void) {
+        decoding()
+        churnLinks(completion: completion)
+    }
+
     func cache(assets: [Asset]) {
         for asset in assets {
             dataCache.add(asset: asset)
@@ -181,7 +188,7 @@ class LinkResolver {
 
     // Executes all cached callbacks to resolve links and then clears the callback cache and the data cache
     // where resources are cached before being resolved.
-    func churnLinks() {
+    private func churnLinks(completion: @escaping () -> Void) {
         for (linkKey, callbacksList) in callbacks {
             if linkKey.hasPrefix(LinkResolver.linksArrayPrefix) {
                 let firstKeyIndex = linkKey.index(linkKey.startIndex, offsetBy: LinkResolver.linksArrayPrefix.count)
@@ -192,15 +199,21 @@ class LinkResolver {
                 for callback in callbacksList {
                     callback(items as AnyObject)
                 }
+                callbacks[linkKey] = nil
             } else {
                 let item = dataCache.item(for: linkKey)
                 for callback in callbacksList {
                     callback(item as AnyObject)
                 }
+                callbacks[linkKey] = nil
             }
         }
-        self.callbacks = [:]
-        self.dataCache = DataCache()
+
+        if callbacks.isEmpty == true {
+            self.dataCache = DataCache()
+        }
+
+        completion()
     }
 }
 
