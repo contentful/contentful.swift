@@ -121,7 +121,7 @@ class LinkResolverTests: XCTestCase {
                 } else {
                     XCTFail("There shoudl be at least one entry in the array of records")
                 }
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
             }
 
@@ -150,7 +150,7 @@ class LinkResolverTests: XCTestCase {
                 } else {
                     XCTFail("There should be at least one entry in the array of records")
                 }
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -174,7 +174,7 @@ class LinkResolverTests: XCTestCase {
                         XCTFail("There should be a link")
                     }
                 }
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -193,7 +193,7 @@ class LinkResolverTests: XCTestCase {
                 XCTAssertEqual(record.assetsArrayLinkField?.count, 4)
                 XCTAssertEqual(record.assetsArrayLinkField?.first?.id, "6Wsz8owhtCGSICg44IUYAm")
 
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -211,7 +211,7 @@ class LinkResolverTests: XCTestCase {
             switch result {
             case .success(let record):
                 XCTAssert(record.assetsArrayLinkField?.isEmpty ?? true)
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()

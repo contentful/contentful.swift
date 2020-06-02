@@ -87,7 +87,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                 XCTAssertEqual(headingNode.level, 1)
                 XCTAssertEqual((headingNode.content.first as! Text).value, "This is some simple text")
 
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -108,7 +108,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                 XCTAssertEqual((headingNode.content.first as! Text).value, "This is some simple text")
 
 
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -128,7 +128,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                 let text = paragraph.content.first as! Text
                 XCTAssertEqual(text.value, "This is some simple text")
 
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -157,7 +157,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                 XCTAssert(markTypes.contains(.italic))
                 XCTAssert(markTypes.contains(.underline))
                 XCTAssert(markTypes.contains(.code))
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -177,7 +177,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                 let hr = model.rich.content.first as? HorizontalRule
                 XCTAssertNotNil(hr)
 
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -200,7 +200,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                 let text = paragraph?.content.first as? Text
                 XCTAssertEqual(text?.value, "This is some simple blockquote")
 
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -225,7 +225,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                 let lastParagraphItem = listItems?.last?.content.first as? Paragraph
                 XCTAssertEqual((lastParagraphItem?.content.first as? Text)?.value, "text")
 
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -250,7 +250,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                 let lastParagraphItem = listItems?.last?.content.first as? Paragraph
                 XCTAssertEqual((lastParagraphItem?.content.first as? Text)?.value, "list")
 
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -272,7 +272,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                 let entryLinkBlock = model.rich.content.first as? ResourceLinkBlock
                 XCTAssertEqual((entryLinkBlock?.data.target.entryDecodable as! RichTextContentType).name, "simple_text")
 
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -292,7 +292,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                 let entryLinkBlock = model.rich.content.first as? ResourceLinkBlock
                 XCTAssertEqual(entryLinkBlock?.data.target.asset?.title, "cat")
 
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -313,7 +313,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                 let link = paragraph?.content[1] as? ResourceLinkInline
                 XCTAssertEqual((link?.data.target.entryDecodable as! RichTextContentType).name, "Hello World")
 
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -335,7 +335,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                 XCTAssertEqual(hyperlink?.data.uri, "https://www.example.com/")
                 XCTAssertEqual((hyperlink?.content.first as? Text)?.value, "Regular hyperlink to example.com")
 
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -357,7 +357,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                 XCTAssertEqual((hyperlink?.data.target.entryDecodable as! RichTextContentType).name, "Hello World")
                 XCTAssertEqual((hyperlink?.content.first as? Text)?.value, "Entry hyperlink to \"Hello World\"")
 
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -379,7 +379,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                 XCTAssertEqual(hyperlink?.data.target.asset?.title, "cat")
                 XCTAssertEqual((hyperlink?.content.first as? Text)?.value, "Asset hyperlink to cat image")
 
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -411,7 +411,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                 let entryInlineLink = paragraph?.content[7] as? ResourceLinkInline
                 XCTAssertEqual((entryInlineLink?.data.target.entryDecodable as! RichTextContentType).name, "Hello World")
 
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -434,7 +434,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                     let crossLinkedRichTextContentType = inlinedRichTextContentType?.linkedEntry
 
                     XCTAssertNotNil(crossLinkedRichTextContentType)
-                case .error(let error):
+                case .failure(let error):
                     XCTFail("\(error)")
                 }
                 expectation.fulfill()
@@ -456,7 +456,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                     let inlinedEntry = link?.data.target.entry
 
                     XCTAssertNotNil(inlinedEntry, "inlined entry is nil")
-                case .error(let error):
+                case .failure(let error):
                     XCTFail("\(error)")
                 }
                 expectation.fulfill()

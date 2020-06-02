@@ -63,7 +63,7 @@ class SpaceTests: XCTestCase {
                 XCTAssertEqual(space.id, "dumri3ebknon")
                 XCTAssertEqual(space.type, "Space")
                 XCTAssertEqual(space.name, "Swift `cfexampleapi` copy")
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
             }
             networkExpectation.fulfill()
@@ -82,7 +82,7 @@ class SpaceTests: XCTestCase {
             case .success:
                 XCTFail("Should not succeed")
                 networkExpectation.fulfill()
-            case .error:
+            case .failure:
                 XCTAssert(true)
             }
             networkExpectation.fulfill()
@@ -111,7 +111,7 @@ class PreviewAPITests: XCTestCase {
             switch result {
             case .success(let space):
                 XCTAssertEqual(space.id, "dumri3ebknon")
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
             }
             networkExpectation.fulfill()
@@ -134,7 +134,7 @@ class PreviewAPITests: XCTestCase {
             switch result {
             case .success:
                 XCTFail("expected error not received")
-            case .error(let error):
+            case .failure(let error):
                 if let error = error as? APIError {
                     XCTAssertEqual(error.id, "AccessTokenInvalid")
                 } else {

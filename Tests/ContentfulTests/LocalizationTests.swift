@@ -83,7 +83,7 @@ class LocalizationTests: XCTestCase {
                 // fields with no value for "tlh" should fallback.
                 XCTAssertEqual(entry.fields["likes"] as? [String], ["rainbows", "fish"])
 
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
             }
             expecatation.fulfill()
@@ -122,7 +122,7 @@ class LocalizationTests: XCTestCase {
                     XCTAssertEqual(cat.name, "Nyan vIghro'")
                     XCTAssertEqual(cat.likes, ["rainbows", "fish"])
 
-                case .error(let error):
+                case .failure(let error):
                     XCTFail("\(error)")
                 }
                 expecatation.fulfill()

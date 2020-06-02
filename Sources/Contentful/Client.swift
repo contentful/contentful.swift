@@ -10,7 +10,7 @@ import Foundation
 
 /// The completion callback for an API request with a `Result<T>` containing the requested object of
 /// type `T` on success, or an error if the request was unsuccessful.
-public typealias ResultsHandler<T> = (_ result: Result<T>) -> Void
+public typealias ResultsHandler<T> = (_ result: Result<T, Error>) -> Void
 
 /// Client object for performing requests against the Contentful Delivery and Preview APIs.
 open class Client {
@@ -175,8 +175,8 @@ open class Client {
             switch result {
             case .success(let mappableData):
                 self.handleJSON(mappableData, completion)
-            case .error(let error):
-                completion(Result.error(error))
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
 
@@ -190,9 +190,9 @@ open class Client {
                     case .success:
                         // Trigger chain with data we're currently interested in.
                         finishDataFetch(dataResult)
-                    case .error(let error):
+                    case .failure(let error):
                         // Return the current error.
-                        finishDataFetch(Result.error(error))
+                        finishDataFetch(.failure(error))
                     }
                 }
             }
@@ -226,7 +226,7 @@ open class Client {
                             Message: \(apiError.message!)"
                             """
                             ContentfulLogger.log(.error, message: errorMessage)
-                            completion(Result.error(apiError))
+                            completion(.failure(apiError))
                         } else {
                             // In case there is an error returned by the API that has an unexpected format, return a custom error.
                             let errorMessage = "An API error was returned that the SDK was unable to parse"
@@ -236,7 +236,7 @@ open class Client {
                             """
                             ContentfulLogger.log(.error, message: logMessage)
                             let error = SDKError.unparseableJSON(data: data, errorMessage: errorMessage)
-                            completion(Result.error(error))
+                            completion(.failure(error))
                         }
                         return
                     }
@@ -254,7 +254,7 @@ open class Client {
                 Message: \(error.localizedDescription)
                 """
                 ContentfulLogger.log(.error, message: errorMessage)
-                completion(Result.error(error))
+                completion(.failure(error))
                 return
             }
 
@@ -264,7 +264,7 @@ open class Client {
             Message: Request returned invalid HTTP response: \(sdkError.localizedDescription)"
             """
             ContentfulLogger.log(.error, message: errorMessage)
-            completion(Result.error(sdkError))
+            completion(.failure(sdkError))
         }
 
         let logMessage = "Request: 'GET' \(url.absoluteString)"
@@ -297,13 +297,13 @@ open class Client {
             // At this point, We know for sure that the type returned by the API can be mapped to an `APIError` instance.
             // Directly handle JSON and exit.
             let statusCode = (response as! HTTPURLResponse).statusCode
-            self.handleRateLimitJSON(data, timeUntilLimitReset: timeUntilLimitReset, statusCode: statusCode) { (_ result: Result<RateLimitError>) in
+            self.handleRateLimitJSON(data, timeUntilLimitReset: timeUntilLimitReset, statusCode: statusCode) { (_ result: Result<RateLimitError, Error>) in
                 switch result {
                 case .success(let rateLimitError):
-                    completion(Result.error(rateLimitError))
-                case .error(let auxillaryError):
+                    completion(.failure(rateLimitError))
+                case .failure(let auxillaryError):
                     // We should never get here, but we'll bubble up what should be a `SDKError.unparseableJSON` error just in case.
-                    completion(Result.error(auxillaryError))
+                    completion(.failure(auxillaryError))
                 }
             }
             return true
@@ -314,7 +314,7 @@ open class Client {
     fileprivate func handleRateLimitJSON(_ data: Data, timeUntilLimitReset: Int, statusCode: Int, _ completion: ResultsHandler<RateLimitError>) {
 
             guard let rateLimitError = try? jsonDecoder.decode(RateLimitError.self, from: data) else {
-                completion(Result.error(SDKError.unparseableJSON(data: data, errorMessage: "SDK unable to parse RateLimitError payload")))
+                completion(.failure(SDKError.unparseableJSON(data: data, errorMessage: "SDK unable to parse RateLimitError payload")))
                 return
             }
             rateLimitError.statusCode = statusCode
@@ -344,7 +344,7 @@ open class Client {
             } catch let error {
                 let sdkError = SDKError.unparseableJSON(data: data, errorMessage: "\(error)")
                 ContentfulLogger.log(.error, message: sdkError.message)
-                completion(Result.error(sdkError))
+                completion(.failure(sdkError))
             }
         }, completion: {
             completion(.success(decodedObject))
@@ -366,29 +366,26 @@ extension Client {
         // at the moment. We also are not expecting any consumers to have > 1000 locales as Contentful subscriptions do not allow that.
         let query = ResourceQuery.limit(to: QueryConstants.maxLimit)
         let url = self.url(endpoint: .locales, parameters: query.parameters)
-        return fetch(url: url) { (result: Result<HomogeneousArrayResponse<Contentful.Locale>>) in
+        return fetch(url: url) { (result: Result<HomogeneousArrayResponse<Contentful.Locale>, Error>) in
+            switch result {
+            case .success(let localesArray):
+                let locales = localesArray.items
+                self.locales = locales
 
-            if let error = result.error {
-                completion(Result.error(error))
-                return
-            }
-            guard let locales = result.value?.items else {
-                let error = SDKError.localeHandlingError(message: "Unable to parse locales from JSON")
-                completion(Result.error(error))
-                return
-            }
-            self.locales = locales
+                let localeCodes = locales.map { $0.code }
+                self.persistenceIntegration?.update(localeCodes: localeCodes)
 
-            let localeCodes = locales.map { $0.code }
-            self.persistenceIntegration?.update(localeCodes: localeCodes)
+                guard let localizationContext = LocalizationContext(locales: locales) else {
+                    let error = SDKError.localeHandlingError(message: "Locale with default == true not found in Environment!")
+                    completion(.failure(error))
+                    return
+                }
+                self.localizationContext = localizationContext
+                completion(result)
 
-            guard let localizationContext = LocalizationContext(locales: locales) else {
-                let error = SDKError.localeHandlingError(message: "Locale with default == true not found in Environment!")
-                completion(Result.error(error))
-                return
+            case .failure(let error):
+                completion(.failure(error))
             }
-            self.localizationContext = localizationContext
-            completion(result)
         }
     }
 
@@ -404,8 +401,8 @@ extension Client {
             switch result {
             case .success(let localesResponse):
                 completion(Result.success(localesResponse.items))
-            case .error(let error):
-                completion(Result.error(error))
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }
@@ -422,11 +419,18 @@ extension Client {
     public func fetchSpace(then completion: @escaping ResultsHandler<Space>) -> URLSessionDataTask? {
         // Attempt to pull from cache first.
         if let space = self.space {
-            completion(Result.success(space))
+            completion(.success(space))
             return nil
         }
-        return fetch(url: url(endpoint: .spaces)) { (result: Result<Space>) in
-            self.space = result.value
+
+        return fetch(url: url(endpoint: .spaces)) { (result: Result<Space, Error>) in
+            switch result {
+            case .success(let space):
+                self.space = space
+            default:
+                break
+            }
+
             completion(result)
         }
     }
@@ -448,7 +452,7 @@ extension Client {
             let url = try asset.url(with: imageOptions)
             return fetch(url: url, then: completion)
         } catch let error {
-            completion(Result.error(error))
+            completion(.failure(error))
             return nil
         }
     }
@@ -484,16 +488,16 @@ extension Client {
 
             // Before `completion` is called, either the first item is extracted, and
             // sent as `.success`, or an `.error` is sent.
-            let fetchCompletion: (Result<HomogeneousArrayResponse<ResourceType>>) -> Void = { result in
+            let fetchCompletion: (Result<HomogeneousArrayResponse<ResourceType>, Error>) -> Void = { result in
                 switch result {
                 case .success(let response):
                     guard let firstItem = response.items.first else {
-                        completion(.error(SDKError.noResourceFoundFor(id: id)))
+                        completion(.failure(SDKError.noResourceFoundFor(id: id)))
                         break
                     }
                     completion(.success(firstItem))
-                case .error(let error):
-                    completion(.error(error))
+                case .failure(let error):
+                    completion(.failure(error))
                 }
             }
 
@@ -573,14 +577,14 @@ extension Client {
         // be called while in preview mode, is internally by the SDK to finish a multiple page sync.
         // We are doing a multi page sync only when syncSpace.hasMorePages is true.
         if !syncSpace.syncToken.isEmpty && host == Host.preview && syncSpace.hasMorePages == false {
-            completion(Result.error(SDKError.previewAPIDoesNotSupportSync))
+            completion(.failure(SDKError.previewAPIDoesNotSupportSync))
             return nil
         }
         
         let parameters = syncableTypes.parameters + syncSpace.parameters
-        return fetch(url: url(endpoint: .sync, parameters: parameters)) { (result: Result<SyncSpace>) in
+        return fetch(url: url(endpoint: .sync, parameters: parameters)) { (result: Result<SyncSpace, Error>) in
             switch result {
-            case.success(let newSyncSpace):
+            case .success(let newSyncSpace):
                 syncSpace.updateWithDiffs(from: newSyncSpace)
                 self.persistenceIntegration?.update(with: newSyncSpace)
                 if newSyncSpace.hasMorePages {
@@ -588,8 +592,8 @@ extension Client {
                 } else {
                     completion(.success(syncSpace))
                 }
-            case .error(let error):
-                completion(.error(error))
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }
