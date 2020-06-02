@@ -306,7 +306,7 @@ class ImageTests: XCTestCase {
             case .success(let image):
                 XCTAssertEqual(image.size.width, 100.0)
                 XCTAssertEqual(image.size.height, 100.0)
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()

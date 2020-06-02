@@ -8,15 +8,24 @@ import AppKit
 //: We again create an instance of `Client` connected to the space of interest.
 let client = Client(spaceId: "cfexampleapi", accessToken: "b4c0n73n7fu1")
 //: Assets represent any kind of media you are storing in Contentful. The API is similar to fetching entries.
-client.fetchAssets { (result: Result<ArrayResponse<Asset>>) in
-    guard let assetsArrayResponse = result.value else { return }
-    let total = assetsArrayResponse.total
-    guard let assetTitle = assetsArrayResponse.items.first?.fields["title"] as? String else { return }
-    print("The first asset in the response has a 'title' of '\(assetTitle)'")
+client.fetchAssets { (result: Result<ArrayResponse<Asset>, Error>) in
+    switch result {
+    case .success(let assets):
+        guard let assetTitle = assets.items.first?.fields["title"] as? String else { return }
+        print("The first asset in the response has a 'title' of '\(assetTitle)'")
+
+    case .failure:
+        break
+    }
 }
 //: Also similar to entries, assets can be queried using IDs or search parameters.
-client.fetchAsset(id: "nyancat") { (result: Result<Asset>) in
-    guard let asset = result.value else { return }
+client.fetchAsset(id: "nyancat") { (result: Result<Asset, Error>) in
+    switch result {
+    case .success(let asset):
+        // ...
+    case .failure:
+        // ...
+    }
 //: Fetching the underlying binary data of an asset is simple.
     client.fetchData(for: asset).then { data in
         let base64EncodedString = data.base64EncodedString()

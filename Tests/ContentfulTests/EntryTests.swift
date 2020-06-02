@@ -44,7 +44,7 @@ class EntryTests: XCTestCase {
             switch result {
             case .success(let collection):
                 action(collection)
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
             }
             expecatation.fulfill()
@@ -148,7 +148,7 @@ class EntryTests: XCTestCase {
                 XCTAssertEqual(entry.sys.id, "nyancat")
                 XCTAssertEqual(entry.sys.type, "Entry")
                 XCTAssertEqual(entry.fields["name"] as? String, "Nyan Cat")
-            case let .error(error):
+            case let .failure(error):
                 XCTFail("\(error)")
             }
 
@@ -175,7 +175,7 @@ class EntryTests: XCTestCase {
                 } else {
                     XCTFail("Expected entry with linked array to resolve links")
                 }
-            case .error:
+            case .failure:
                 XCTFail("Expected fetching entry to succeed")
             }
             expectation.fulfill()
@@ -220,7 +220,7 @@ class EntryTests: XCTestCase {
                 XCTAssertEqual(array.limit, 100)
                 XCTAssertEqual(array.skip, 0)
                 XCTAssertEqual(array.items.count, 10)
-            case let .error(error):
+            case let .failure(error):
                 XCTFail("\(error)")
             }
 
@@ -237,7 +237,7 @@ class EntryTests: XCTestCase {
             case .success(let array):
                 let cats = array.items.filter { $0.sys.contentTypeId == "cat" }
                 XCTAssertEqual(cats.count, array.items.count)
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -262,7 +262,7 @@ class EntryTests: XCTestCase {
                 } else {
                     XCTFail("Linked asset should exist.")
                 }
-            case let .error(error):
+            case let .failure(error):
                 XCTFail("\(error)")
             }
 
@@ -394,7 +394,7 @@ class EntryTests: XCTestCase {
                 XCTAssertEqual(entriesArrayResponse.items.count, 1)
                 XCTAssertEqual(entriesArrayResponse.items.first?.fields["name"] as? String, "Happy Cat")
                 XCTAssertEqual((entriesArrayResponse.items.first?.fields["image"] as? Link)?.asset?.id, "happycat")
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("Should not return an error \(error)")
             }
             expectation.fulfill()
@@ -413,7 +413,7 @@ class EntryTests: XCTestCase {
                 XCTAssertEqual(entriesArrayResponse.items.count, 1)
                 XCTAssertEqual(entriesArrayResponse.items.first?.fields["name"] as? String, "Nyan Cat")
                 XCTAssertEqual((entriesArrayResponse.items.first?.fields["bestFriend"] as? Link)?.entry?.id, "happycat")
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("Should not return an error \(error)")
             }
             expectation.fulfill()

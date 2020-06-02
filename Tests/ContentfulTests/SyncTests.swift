@@ -33,7 +33,7 @@ class SyncTests: XCTestCase {
             switch result {
             case .success(let syncSpace):
                 action(syncSpace)
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -55,15 +55,16 @@ class SyncTests: XCTestCase {
             case .success(let syncSpace):
 
                 SyncTests.client.sync(for: syncSpace) { nextSyncResult in
-                    if let nextSyncSpace = nextSyncResult.value {
+                    switch result {
+                    case .success(let nextSyncSpace):
                         XCTAssertEqual(nextSyncSpace.assets.count, 5)
                         XCTAssertEqual(nextSyncSpace.entries.count, 10)
-                    } else if let error = nextSyncResult.error {
+                        expectation.fulfill()
+                    case .failure(let error):
                         XCTFail("\(error)")
                     }
-                    expectation.fulfill()
                 }
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
                 expectation.fulfill()
             }
@@ -128,7 +129,7 @@ class PreviewSyncTests: XCTestCase {
                 XCTAssertGreaterThan(syncSpace.entries.count, 0)
                 XCTAssertGreaterThan(syncSpace.assets.count, 0)
 
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -146,14 +147,15 @@ class PreviewSyncTests: XCTestCase {
                 XCTAssertGreaterThan(syncSpace.assets.count, 0)
 
                 PreviewSyncTests.client.sync(for: syncSpace) { nextSyncResult in
-                    if let _ = nextSyncResult.value  {
+                    switch nextSyncResult {
+                    case .success:
                         XCTFail("Should not be able to do subsequent sync")
-                    } else if let error = nextSyncResult.error {
+                    case .failure(let error):
                         XCTAssert(error is SDKError)
+                        expectation.fulfill()
                     }
-                    expectation.fulfill()
                 }
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
                 expectation.fulfill()
             }

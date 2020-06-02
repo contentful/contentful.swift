@@ -47,7 +47,7 @@ public final class LinkQuery<EntryType>: AbstractQuery where EntryType: EntryDec
     ///     case .success(let arrayResponse):
     ///         let cats = arrayResponse.items
     ///         // Do stuff with cats.
-    ///     case .error(let error):
+    ///     case .failure(let error):
     ///         print(error)
     ///     }
     /// }
@@ -100,7 +100,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
     ///     case .success(let arrayResponse):
     ///         let cats = arrayResponse.items
     ///         // Do stuff with cats.
-    ///     case .error(let error):
+    ///     case .failure(let error):
     ///         print(error)
     ///     }
     /// }
@@ -130,7 +130,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
     ///     case .success(let arrayResponse):
     ///         let cats = arrayResponse.items
     ///         // Do stuff with cats.
-    ///     case .error(let error):
+    ///     case .failure(let error):
     ///         print(error)
     ///     }
     /// }
@@ -165,7 +165,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
     ///     case .success(let arrayResponse):
     ///         let cats = arrayResponse.items
     ///         // Do stuff with cats.
-    ///     case .error(let error):
+    ///     case .failure(let error):
     ///         print(error)
     ///     }
     /// }
@@ -198,7 +198,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
     ///     case .success(let arrayResponse):
     ///         let cats = arrayResponse.items
     ///         // Do stuff with cats.
-    ///     case .error(let error):
+    ///     case .failure(let error):
     ///         print(error)
     ///     }
     /// }
@@ -227,7 +227,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
     ///     case .success(let arrayResponse):
     ///         let cats = arrayResponse.items
     ///         // Do stuff with cats.
-    ///     case .error(let error):
+    ///     case .failure(let error):
     ///         print(error)
     ///     }
     /// }
@@ -258,7 +258,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
     ///     case .success(let arrayResponse):
     ///         let cats = arrayResponse.items
     ///         // Do stuff with cats.
-    ///     case .error(let error):
+    ///     case .failure(let error):
     ///         print(error)
     ///     }
     /// }
@@ -295,7 +295,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
     ///     case .success(let arrayResponse):
     ///         let cats = arrayResponse.items
     ///         // Do stuff with cats.
-    ///     case .error(let error):
+    ///     case .failure(let error):
     ///         print(error)
     ///     }
     /// }
@@ -325,7 +325,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
     ///     case .success(let arrayResponse):
     ///         let cats = arrayResponse.items
     ///         // Do stuff with cats.
-    ///     case .error(let error):
+    ///     case .failure(let error):
     ///         print(error)
     ///     }
     /// }
@@ -389,7 +389,7 @@ public final class AssetQuery: ResourceQuery {
     ///     case .success(let arrayResponse):
     ///         let assets = arrayResponse.items
     ///         // Do stuff with assets.
-    ///     case .error(let error):
+    ///     case .failure(let error):
     ///         print(error)
     ///     }
     /// }
@@ -454,7 +454,7 @@ public final class ContentTypeQuery: ChainableQuery {
     ///     case .success(let arrayResponse):
     ///         let contentTypes = arrayResponse.items
     ///         // Do stuff with contentTypes.
-    ///     case .error(let error):
+    ///     case .failure(let error):
     ///         print(error)
     ///     }
     /// }
@@ -484,7 +484,7 @@ public final class ContentTypeQuery: ChainableQuery {
     ///     case .success(let arrayResponse):
     ///         let contentTypes = arrayResponse.items
     ///         // Do stuff with contentTypes.
-    ///     case .error(let error):
+    ///     case .failure(let error):
     ///         print(error)
     ///     }
     /// }

@@ -41,17 +41,15 @@ class RateLimitTests: XCTestCase {
                                     RateLimitTests.client.fetchArray(of: Asset.self, matching: .limit(to: 17)) { _ in
                                         RateLimitTests.client.fetchArray(of: Asset.self, matching: .limit(to: 18)) { _ in
                                             RateLimitTests.client.fetchArray(of: Asset.self, matching: .limit(to:19)) { result in
-
-                                                guard let error = result.error as? RateLimitError else {
-                                                    XCTFail("Should have hit rate limit error")
+                                                switch result {
+                                                case .failure(let error as RateLimitError):
+                                                    XCTAssertEqual(error.id, "RateLimitExceeded")
+                                                    XCTAssertNotNil(error.timeBeforeLimitReset)
+                                                    XCTAssertGreaterThan(error.timeBeforeLimitReset!, 0)
                                                     networkExpectation.fulfill()
-                                                    return
+                                                case .success, .failure:
+                                                    XCTFail("Should have hit rate limit error")
                                                 }
-                                                XCTAssertEqual(error.id, "RateLimitExceeded")
-                                                XCTAssertNotNil(error.timeBeforeLimitReset)
-                                                XCTAssertGreaterThan(error.timeBeforeLimitReset!, 0)
-                                                networkExpectation.fulfill()
-
                                             }
                                         }
                                     }

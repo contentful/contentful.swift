@@ -569,7 +569,7 @@ public extension AbstractResourceQuery {
     ///     case .success(let arrayResponse):
     ///         let cats = arrayResponse.items
     ///         // Do stuff with cats.
-    ///     case .error(let error):
+    ///     case .failure(let error):
     ///         print(error)
     ///     }
     /// }

@@ -55,7 +55,7 @@ class ContentTypeTests: XCTestCase {
 
                 let field = type.fields[0]
                 XCTAssertEqual(field.id, "name")
-            case let .error(error):
+            case let .failure(error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -75,7 +75,7 @@ class ContentTypeTests: XCTestCase {
                 XCTAssertEqual(array.skip, 0)
                 XCTAssertEqual(array.items.count, 4)
 
-            case let .error(error):
+            case let .failure(error):
                 XCTFail("\(error)")
             }
 
@@ -100,7 +100,7 @@ class ContentTypeTests: XCTestCase {
                 let _ = array.items.first.flatMap { (type: ContentType) in
                     XCTAssertEqual(type.name, "City")
                 }
-            case let .error(error):
+            case let .failure(error):
                 XCTFail("\(error)")
             }
 
@@ -121,7 +121,7 @@ class ContentTypeTests: XCTestCase {
                 let _ = array.items.first.flatMap { (type: ContentType) in
                     XCTAssertEqual(type.name, "Cat")
                 }
-            case let .error(error):
+            case let .failure(error):
                 XCTFail("\(error)")
             }
 

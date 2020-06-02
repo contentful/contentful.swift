@@ -29,7 +29,7 @@ let urlTask = client.fetchEntries { result in
         let secondEntry = entriesArrayResponse.items[1]
         guard let entryName = secondEntry.fields.string(at: "name") else { return }
         print("The second entry in the response has a 'name' of '\(entryName)' and it is of type '\(secondEntry.sys.contentTypeId!)'")
-    case .error(let error):
+    case .failure(let error):
         print("Oh no, an error: \(error)!")
     }
 }
