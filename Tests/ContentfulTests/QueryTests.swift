@@ -10,88 +10,7 @@
 import XCTest
 import DVR
 
-final class Cat: Resource, EntryDecodable, FieldKeysQueryable {
-
-    static let contentTypeId: String = "cat"
-
-    let sys: Sys
-    let color: String?
-    let name: String?
-    let lives: Int?
-    let likes: [String]?
-
-    // Relationship fields.
-    var bestFriend: Cat?
-    var image: Asset?
-
-    public required init(from decoder: Decoder) throws {
-        sys             = try decoder.sys()
-        let fields      = try decoder.contentfulFieldsContainer(keyedBy: Cat.FieldKeys.self)
-
-        self.name       = try fields.decodeIfPresent(String.self, forKey: .name)
-        self.color      = try fields.decodeIfPresent(String.self, forKey: .color)
-        self.likes      = try fields.decodeIfPresent(Array<String>.self, forKey: .likes)
-        self.lives      = try fields.decodeIfPresent(Int.self, forKey: .lives)
-
-        try fields.resolveLink(forKey: .bestFriend, decoder: decoder) { [weak self] linkedCat in
-            self?.bestFriend = linkedCat as? Cat
-        }
-        try fields.resolveLink(forKey: .image, decoder: decoder) { [weak self ] image in
-            self?.image = image as? Asset
-        }
-    }
-    
-    enum FieldKeys: String, CodingKey {
-        case bestFriend, image
-        case name, color, likes, lives
-    }
-}
-
-final class City: Resource, EntryDecodable, FieldKeysQueryable {
-
-    static let contentTypeId: String = "1t9IbcfdCk6m04uISSsaIK"
-
-    let sys: Sys
-    var location: Location?
-
-    public required init(from decoder: Decoder) throws {
-        sys             = try decoder.sys()
-        let fields      = try decoder.contentfulFieldsContainer(keyedBy: City.FieldKeys.self)
-
-        self.location   = try fields.decode(Location.self, forKey: .location)
-    }
-
-    enum FieldKeys: String, CodingKey {
-        case location = "center"
-    }
-}
-
-final class Dog: Resource, EntryDecodable, FieldKeysQueryable {
-
-    static let contentTypeId: String = "dog"
-
-    let sys: Sys
-    let name: String!
-    let description: String?
-    var image: Asset?
-
-    public required init(from decoder: Decoder) throws {
-        sys             = try decoder.sys()
-        let fields      = try decoder.contentfulFieldsContainer(keyedBy: Dog.FieldKeys.self)
-        name            = try fields.decode(String.self, forKey: .name)
-        description     = try fields.decodeIfPresent(String.self, forKey: .description)
-
-        try fields.resolveLink(forKey: .image, decoder: decoder) { [weak self] linkedImage in
-            self?.image = linkedImage as? Asset
-        }
-    }
-
-    enum FieldKeys: String, CodingKey {
-        case image, name, description
-    }
-}
-
-class QueryTests: XCTestCase {
+final class QueryTests: XCTestCase {
 
     static let client: Client = {
         let contentTypeClasses: [EntryDecodable.Type] = [
@@ -135,14 +54,19 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
-                let nyanCat = cats.first!
-                XCTAssertNotNil(nyanCat.color)
-                XCTAssertEqual(nyanCat.name, "Happy Cat")
+
+                guard let cat = cats.first(where: { $0.id == "nyancat" }) else {
+                    XCTFail("Couldn't find Nyan Cat.")
+                    return
+                }
+
+                XCTAssertNotNil(cat.color)
+                XCTAssertEqual(cat.name, "Nyan Cat")
                 // Test links
-                XCTAssertEqual(nyanCat.bestFriend?.name, "Nyan Cat")
+                XCTAssertEqual(cat.bestFriend?.name, "Happy Cat")
 
                 // Test uniqueness in memory.
-                XCTAssert(nyanCat === nyanCat.bestFriend?.bestFriend)
+                XCTAssert(cat === cat.bestFriend?.bestFriend)
             case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
             }
@@ -159,14 +83,19 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
-                let nyanCat = cats.first!
-                XCTAssertNotNil(nyanCat.color)
-                XCTAssertEqual(nyanCat.name, "Happy Cat")
+
+                guard let cat = cats.first(where: { $0.id == "happycat" }) else {
+                    XCTFail("Couldn't find Happy Cat.")
+                    return
+                }
+
+                XCTAssertNotNil(cat.color)
+                XCTAssertEqual(cat.name, "Happy Cat")
                 // Test links
-                XCTAssertEqual(nyanCat.bestFriend?.name, "Nyan Cat")
+                XCTAssertEqual(cat.bestFriend?.name, "Nyan Cat")
 
                 // Test uniqueness in memory.
-                XCTAssert(nyanCat === nyanCat.bestFriend?.bestFriend)
+                XCTAssert(cat === cat.bestFriend?.bestFriend)
             case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
             }
@@ -384,7 +313,13 @@ class QueryTests: XCTestCase {
             case .success(let catsResponse):
                 let cats = catsResponse.items
                 XCTAssertGreaterThan(cats.count, 0)
-                XCTAssertEqual(cats.first?.color, "gray")
+
+                guard let cat = cats.first(where: { $0.id == "happycat" }) else {
+                    XCTFail("Couldn't find Happy Cat.")
+                    return
+                }
+
+                XCTAssertEqual(cat.color, "gray")
             case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
             }
@@ -716,7 +651,13 @@ class QueryTests: XCTestCase {
                 let catEntries = entries.filter { $0.sys.contentTypeId == "cat" }
                 XCTAssertNotNil(catEntries.first)
                 // Let's just assert link is unresolved
-                if let link = catEntries.first?.fields["image"] as? Link {
+
+                guard let catEntry = catEntries.first(where: { $0.id == "happycat" }) else {
+                    XCTFail("Couldn't find Happy Cat.")
+                    return
+                }
+
+                if let link = catEntry.fields["image"] as? Link {
                     switch link {
                     case .unresolved: XCTAssert(true)
                     default: XCTFail("link should not be resolved when includes are 0:")
