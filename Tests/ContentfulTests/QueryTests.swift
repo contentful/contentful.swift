@@ -10,7 +10,7 @@
 import XCTest
 import DVR
 
-class QueryTests: XCTestCase {
+final class QueryTests: XCTestCase {
 
     static let client: Client = {
         let contentTypeClasses: [EntryDecodable.Type] = [
@@ -54,14 +54,19 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
-                let nyanCat = cats.first!
-                XCTAssertNotNil(nyanCat.color)
-                XCTAssertEqual(nyanCat.name, "Happy Cat")
+
+                guard let cat = cats.first(where: { $0.id == "nyancat" }) else {
+                    XCTFail("Couldn't find Nyan Cat.")
+                    return
+                }
+
+                XCTAssertNotNil(cat.color)
+                XCTAssertEqual(cat.name, "Nyan Cat")
                 // Test links
-                XCTAssertEqual(nyanCat.bestFriend?.name, "Nyan Cat")
+                XCTAssertEqual(cat.bestFriend?.name, "Happy Cat")
 
                 // Test uniqueness in memory.
-                XCTAssert(nyanCat === nyanCat.bestFriend?.bestFriend)
+                XCTAssert(cat === cat.bestFriend?.bestFriend)
             case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
             }
@@ -78,14 +83,19 @@ class QueryTests: XCTestCase {
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
-                let nyanCat = cats.first!
-                XCTAssertNotNil(nyanCat.color)
-                XCTAssertEqual(nyanCat.name, "Happy Cat")
+
+                guard let cat = cats.first(where: { $0.id == "happycat" }) else {
+                    XCTFail("Couldn't find Happy Cat.")
+                    return
+                }
+
+                XCTAssertNotNil(cat.color)
+                XCTAssertEqual(cat.name, "Happy Cat")
                 // Test links
-                XCTAssertEqual(nyanCat.bestFriend?.name, "Nyan Cat")
+                XCTAssertEqual(cat.bestFriend?.name, "Nyan Cat")
 
                 // Test uniqueness in memory.
-                XCTAssert(nyanCat === nyanCat.bestFriend?.bestFriend)
+                XCTAssert(cat === cat.bestFriend?.bestFriend)
             case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
             }
@@ -303,7 +313,13 @@ class QueryTests: XCTestCase {
             case .success(let catsResponse):
                 let cats = catsResponse.items
                 XCTAssertGreaterThan(cats.count, 0)
-                XCTAssertEqual(cats.first?.color, "gray")
+
+                guard let cat = cats.first(where: { $0.id == "happycat" }) else {
+                    XCTFail("Couldn't find Happy Cat.")
+                    return
+                }
+
+                XCTAssertEqual(cat.color, "gray")
             case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
             }
@@ -635,7 +651,13 @@ class QueryTests: XCTestCase {
                 let catEntries = entries.filter { $0.sys.contentTypeId == "cat" }
                 XCTAssertNotNil(catEntries.first)
                 // Let's just assert link is unresolved
-                if let link = catEntries.first?.fields["image"] as? Link {
+
+                guard let catEntry = catEntries.first(where: { $0.id == "happycat" }) else {
+                    XCTFail("Couldn't find Happy Cat.")
+                    return
+                }
+
+                if let link = catEntry.fields["image"] as? Link {
                     switch link {
                     case .unresolved: XCTAssert(true)
                     default: XCTFail("link should not be resolved when includes are 0:")
