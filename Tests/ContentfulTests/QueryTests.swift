@@ -831,6 +831,25 @@ final class QueryTests: XCTestCase {
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
+    func testLinksToEntryWithSysId() {
+        let expectation = self.expectation(description: "Search on sys id")
+
+        let constraints = LinkQuery<Cat>.where(sys: .id, .matches("happycat"))
+        let query = QueryOn<Cat>.where(linkAtField: .bestFriend, matches: constraints)
+
+        QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
+            switch result {
+            case .success(let catsResponse):
+                let cats = catsResponse.items
+                XCTAssertEqual(cats.count, 1)
+            case .failure(let error):
+                XCTFail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
     // MARK: - Asset mimetype
 
     func testFilterAssetsByMIMETypeGroup() {
