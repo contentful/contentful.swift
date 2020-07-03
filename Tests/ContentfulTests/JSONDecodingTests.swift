@@ -71,6 +71,38 @@ class JSONDecodingTests: XCTestCase {
         XCTAssertEqual((wrapper.dict["array"] as! [Any])[1] as? Double, 3.3)
         XCTAssertNil(wrapper.dict["key1"])
     }
+    
+    func testHandlingNestedArrayValues() {
+        
+        struct Klass: Decodable {
+            let dict: [String: Any]
+            
+            init(from decoder: Decoder) throws {
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                dict = try container.decode([String: Any].self)
+            }
+            enum CodingKeys: String, CodingKey {
+                case key1, array
+            }
+        }
+        
+        let json = """
+        {
+            "key1": null,
+            "array": [
+                [1, 2],
+                [3, 4]
+            ]
+        }
+        """.data(using: .utf8)!
+        
+        let jsonDecoder = JSONDecoder.withoutLocalizationContext()
+        let wrapper = try! jsonDecoder.decode(Klass.self, from: json)
+        XCTAssertEqual(wrapper.dict.keys.count, 1)
+        XCTAssertEqual((wrapper.dict["array"] as! [Any])[0] as? Array<Int>, [1, 2])
+        XCTAssertEqual((wrapper.dict["array"] as! [Any])[1] as? Array<Int>, [3, 4])
+        XCTAssertNil(wrapper.dict["key1"])
+    }
 
     func testDecodeAsset() {
         do {

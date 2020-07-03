@@ -8,9 +8,10 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 ---
 
 ## Table of contents
-
+#### 5.x Releases
+- `5.0.0` Releases - [5.0.7](#507) | [5.0.8](#261)
 #### 4.x Releases
-- `4.2.0` Releases - [4.2.0](#420) | [4.2.1](#421) | [4.2.2](#422) | [4.2.3](#423) | [4.2.4](#424)
+- `4.2.0` Releases - [4.2.0](#420) | [4.2.1](#421) | [4.2.2](#422) | [4.2.3](#423) | [4.2.4](#424) | [4.2.5](#425)
 - `4.1.0` Releases - [4.1.0](#410) | [4.1.3](#413)
 - `4.0.0` Releases - [4.0.0](#400) | [4.0.1](#401)
 
@@ -38,6 +39,12 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041)
 - `0.3.x` Releases - [0.3.0](#030) | [0.3.1](#031)
 
+---
+## [`5.0.7`](https://github.com/contentful/contentful.swift/releases/tag/5.0.7)
+Released on 2020-02-18
+
+#### Fixes
+ - Setting build for external distribution
 ---
 
 ## [`4.2.4`](https://github.com/contentful/contentful.swift/releases/tag/4.2.4)

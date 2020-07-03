@@ -36,7 +36,6 @@
 		5D09C26C21870C27006B83F4 /* testClientCanAccessPreviewAPI.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23E21870C27006B83F4 /* testClientCanAccessPreviewAPI.json */; };
 		5D09C26D21870C27006B83F4 /* testClientCanAccessPreviewAPI.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23E21870C27006B83F4 /* testClientCanAccessPreviewAPI.json */; };
 		5D52E2462193375300C88FC9 /* RichText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD410462190BC8B003FC01E /* RichText.swift */; };
-		5D52E2472193375300C88FC9 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02DC1120E11D0A005EC57B /* Result.swift */; };
 		5D52E2482193375300C88FC9 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02DC1220E11D0A005EC57B /* Util.swift */; };
 		5D52E2492193375300C88FC9 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3DF1B836F2500A0EFCD /* Client.swift */; };
 		5D52E24A2193375300C88FC9 /* ClientConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E11B8386CC00A0EFCD /* ClientConfiguration.swift */; };
@@ -123,6 +122,18 @@
 		5DD410EB21918E84003FC01E /* RichTextNodeDecodingTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DD410E421918E62003FC01E /* RichTextNodeDecodingTests.json */; };
 		5DFE08DB2189D6AC00B0D68E /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DFE08DA2189D6AC00B0D68E /* EntryTests.json */; };
 		5DFE08DC2189D6AC00B0D68E /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DFE08DA2189D6AC00B0D68E /* EntryTests.json */; };
+		6D5EEB482487D72500C4BF9F /* Cat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5EEB432487D70300C4BF9F /* Cat.swift */; };
+		6D5EEB492487D72500C4BF9F /* Cat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5EEB432487D70300C4BF9F /* Cat.swift */; };
+		6D5EEB4A2487D72600C4BF9F /* Cat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5EEB432487D70300C4BF9F /* Cat.swift */; };
+		6D5EEB4C2487D77B00C4BF9F /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5EEB4B2487D77B00C4BF9F /* City.swift */; };
+		6D5EEB4D2487D77B00C4BF9F /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5EEB4B2487D77B00C4BF9F /* City.swift */; };
+		6D5EEB4E2487D77B00C4BF9F /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5EEB4B2487D77B00C4BF9F /* City.swift */; };
+		6D5EEB502487D79300C4BF9F /* Dog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5EEB4F2487D79300C4BF9F /* Dog.swift */; };
+		6D5EEB512487D79300C4BF9F /* Dog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5EEB4F2487D79300C4BF9F /* Dog.swift */; };
+		6D5EEB522487D79300C4BF9F /* Dog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5EEB4F2487D79300C4BF9F /* Dog.swift */; };
+		757C0AD32257D955008F91BD /* SyncWithPaginationTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 757C0AD12257D94E008F91BD /* SyncWithPaginationTests.json */; };
+		757C0AD42257D955008F91BD /* SyncWithPaginationTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 757C0AD12257D94E008F91BD /* SyncWithPaginationTests.json */; };
+		757C0AD52257D956008F91BD /* SyncWithPaginationTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 757C0AD12257D94E008F91BD /* SyncWithPaginationTests.json */; };
 		A10FF9D21BBB2E5F001AA4E9 /* JSONDecodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2E3661BBAD06000814D63 /* JSONDecodingTests.swift */; };
 		A10FF9D31BBB32FD001AA4E9 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15193AD1BB9236300FB83CD /* Asset.swift */; };
 		A10FF9D51BBB3676001AA4E9 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10FF9D41BBB3676001AA4E9 /* Error.swift */; };
@@ -142,9 +153,6 @@
 		A19CA3E81B83890D00A0EFCD /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19CA3E71B83890D00A0EFCD /* Resource.swift */; };
 		A1B2E3651BBACF2C00814D63 /* Locale.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2E3641BBACF2C00814D63 /* Locale.swift */; };
 		ED02BC611E7047B900BAB2CA /* QueryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02BC5F1E7047AE00BAB2CA /* QueryTests.swift */; };
-		ED02DC1320E11D0A005EC57B /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02DC1120E11D0A005EC57B /* Result.swift */; };
-		ED02DC1420E11D0A005EC57B /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02DC1120E11D0A005EC57B /* Result.swift */; };
-		ED02DC1620E11D0A005EC57B /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02DC1120E11D0A005EC57B /* Result.swift */; };
 		ED02DC1720E11D0A005EC57B /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02DC1220E11D0A005EC57B /* Util.swift */; };
 		ED02DC1820E11D0A005EC57B /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02DC1220E11D0A005EC57B /* Util.swift */; };
 		ED02DC1A20E11D0A005EC57B /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02DC1220E11D0A005EC57B /* Util.swift */; };
@@ -299,6 +307,10 @@
 		5DD410462190BC8B003FC01E /* RichText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichText.swift; sourceTree = "<group>"; };
 		5DD410E421918E62003FC01E /* RichTextNodeDecodingTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RichTextNodeDecodingTests.json; sourceTree = "<group>"; };
 		5DFE08DA2189D6AC00B0D68E /* EntryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EntryTests.json; sourceTree = "<group>"; };
+		6D5EEB432487D70300C4BF9F /* Cat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cat.swift; sourceTree = "<group>"; };
+		6D5EEB4B2487D77B00C4BF9F /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
+		6D5EEB4F2487D79300C4BF9F /* Dog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dog.swift; sourceTree = "<group>"; };
+		757C0AD12257D94E008F91BD /* SyncWithPaginationTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SyncWithPaginationTests.json; sourceTree = "<group>"; };
 		A10FF9D41BBB3676001AA4E9 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Error.swift; sourceTree = "<group>"; };
 		A10FF9DB1BBB4692001AA4E9 /* Field.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Field.swift; sourceTree = "<group>"; };
 		A114BBBF1C4FD3C300DE6679 /* SyncSpace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SyncSpace.swift; sourceTree = "<group>"; };
@@ -322,7 +334,6 @@
 		A1B2E3641BBACF2C00814D63 /* Locale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Locale.swift; sourceTree = "<group>"; };
 		A1B2E3661BBAD06000814D63 /* JSONDecodingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = JSONDecodingTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		ED02BC5F1E7047AE00BAB2CA /* QueryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryTests.swift; sourceTree = "<group>"; };
-		ED02DC1120E11D0A005EC57B /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		ED02DC1220E11D0A005EC57B /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		ED02DC9E20E12405005EC57B /* Fixtures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fixtures; sourceTree = "<group>"; };
 		ED0876D91E1D07B3008E1A06 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
@@ -423,6 +434,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6D5EEB412487D6D900C4BF9F /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				6D5EEB422487D6EC00C4BF9F /* Models */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		6D5EEB422487D6EC00C4BF9F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6D5EEB432487D70300C4BF9F /* Cat.swift */,
+				6D5EEB4B2487D77B00C4BF9F /* City.swift */,
+				6D5EEB4F2487D79300C4BF9F /* Dog.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		A19CA3BA1B836EDD00A0EFCD = {
 			isa = PBXGroup;
 			children = (
@@ -460,6 +489,7 @@
 		A19CA3D21B836EDD00A0EFCD /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				6D5EEB412487D6D900C4BF9F /* Helpers */,
 				ED07C0161F3DD0DC004449FC /* ContentfulTests */,
 			);
 			path = Tests;
@@ -503,7 +533,6 @@
 				ED68BD711E6DC47A00939F6D /* Query.swift */,
 				ED5F8F9E1F94D52200C86411 /* QueryOperation.swift */,
 				A19CA3E71B83890D00A0EFCD /* Resource.swift */,
-				ED02DC1120E11D0A005EC57B /* Result.swift */,
 				5DD410462190BC8B003FC01E /* RichText.swift */,
 				A15193A91BB91DE700FB83CD /* Space.swift */,
 				A114BBBF1C4FD3C300DE6679 /* SyncSpace.swift */,
@@ -608,6 +637,7 @@
 		ED9102671E65AE880076FDBD /* DVRRecordings */ = {
 			isa = PBXGroup;
 			children = (
+				757C0AD12257D94E008F91BD /* SyncWithPaginationTests.json */,
 				5D73EE3821B915C60091DB67 /* LinkResolverTests.json */,
 				5DD410E421918E62003FC01E /* RichTextNodeDecodingTests.json */,
 				5DFE08DA2189D6AC00B0D68E /* EntryTests.json */,
@@ -899,6 +929,7 @@
 				5D73EE3B21B915C60091DB67 /* LinkResolverTests.json in Resources */,
 				5D52E2802193381F00C88FC9 /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */,
 				5D52E2812193381F00C88FC9 /* testFetchSpace.json in Resources */,
+				757C0AD52257D956008F91BD /* SyncWithPaginationTests.json in Resources */,
 				5D52E2822193381F00C88FC9 /* Fixtures in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -930,6 +961,7 @@
 				5D73EE3921B915C60091DB67 /* LinkResolverTests.json in Resources */,
 				ED02DC9F20E12405005EC57B /* Fixtures in Resources */,
 				5D09C24B21870C27006B83F4 /* testFetchSpace.json in Resources */,
+				757C0AD32257D955008F91BD /* SyncWithPaginationTests.json in Resources */,
 				5D09C24521870C27006B83F4 /* ErrorTests.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -954,6 +986,7 @@
 				5D73EE3A21B915C60091DB67 /* LinkResolverTests.json in Resources */,
 				5D09C25E21870C27006B83F4 /* ContentTypeTests.json in Resources */,
 				5D09C24921870C27006B83F4 /* RateLimitTests.json in Resources */,
+				757C0AD42257D955008F91BD /* SyncWithPaginationTests.json in Resources */,
 				5D09C24321870C27006B83F4 /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1025,7 +1058,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D52E2462193375300C88FC9 /* RichText.swift in Sources */,
-				5D52E2472193375300C88FC9 /* Result.swift in Sources */,
 				5D52E2482193375300C88FC9 /* Util.swift in Sources */,
 				5D52E2492193375300C88FC9 /* Client.swift in Sources */,
 				5D52E24A2193375300C88FC9 /* ClientConfiguration.swift in Sources */,
@@ -1072,13 +1104,16 @@
 				5D52E28B2193384100C88FC9 /* ImageTests.swift in Sources */,
 				5D52E28C2193384100C88FC9 /* ISO801DateTests.swift in Sources */,
 				5D52E28D2193384100C88FC9 /* JSONDecodingTests.swift in Sources */,
+				6D5EEB492487D72500C4BF9F /* Cat.swift in Sources */,
 				5D52E28E2193384100C88FC9 /* LocalizationTests.swift in Sources */,
 				5D52E28F2193384100C88FC9 /* PersistenceIntegrationTests.swift in Sources */,
 				5D52E2902193384100C88FC9 /* QueryTests.swift in Sources */,
+				6D5EEB522487D79300C4BF9F /* Dog.swift in Sources */,
 				5D52E2912193384100C88FC9 /* RateLimitTests.swift in Sources */,
 				5D52E2922193384100C88FC9 /* RichTextTests.swift in Sources */,
 				5D52E2932193384100C88FC9 /* SyncTests.swift in Sources */,
 				5D52E2942193384100C88FC9 /* UtilityTests.swift in Sources */,
+				6D5EEB4E2487D77B00C4BF9F /* City.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1094,7 +1129,6 @@
 				A10FF9DA1BBB4680001AA4E9 /* ContentType.swift in Sources */,
 				5DBCEA7821A6DA5A00BA055C /* Location.swift in Sources */,
 				5DD410472190BC8B003FC01E /* RichText.swift in Sources */,
-				ED02DC1320E11D0A005EC57B /* Result.swift in Sources */,
 				ED02DC1720E11D0A005EC57B /* Util.swift in Sources */,
 				ED535E641F5E8E1300886D93 /* Decodable.swift in Sources */,
 				ED1D789A1F2F96260048E169 /* DataCache.swift in Sources */,
@@ -1134,13 +1168,16 @@
 				ED88B7DA1EF7CD3800538D1F /* ClientConfigurationTests.swift in Sources */,
 				ED882E9320484BF100D372BF /* EnvironmentTests.swift in Sources */,
 				ED307F231EE6E5DF00633390 /* LocalizationTests.swift in Sources */,
+				6D5EEB482487D72500C4BF9F /* Cat.swift in Sources */,
 				ED4A6E512132FEC100690EA4 /* RichTextTests.swift in Sources */,
 				ED5F8F981F94B8C400C86411 /* EntryTests.swift in Sources */,
 				A10FF9D21BBB2E5F001AA4E9 /* JSONDecodingTests.swift in Sources */,
+				6D5EEB502487D79300C4BF9F /* Dog.swift in Sources */,
 				EDE087E3207CE2E000CB1287 /* ISO801DateTests.swift in Sources */,
 				EDA7D96D1F8E6D660020EE86 /* ErrorTests.swift in Sources */,
 				A19C74431C47A812005334AD /* AssetTests.swift in Sources */,
 				A19CA3D41B836EDD00A0EFCD /* ContentfulTests.swift in Sources */,
+				6D5EEB4C2487D77B00C4BF9F /* City.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1160,13 +1197,16 @@
 				EDA690951F43187B00581FC6 /* ContentTypeTests.swift in Sources */,
 				ED882E9420484BF100D372BF /* EnvironmentTests.swift in Sources */,
 				EDA690911F43187B00581FC6 /* RateLimitTests.swift in Sources */,
+				6D5EEB4A2487D72600C4BF9F /* Cat.swift in Sources */,
 				ED4A6E522132FEC100690EA4 /* RichTextTests.swift in Sources */,
 				ED5F8F961F94B8C400C86411 /* EntryTests.swift in Sources */,
 				EDA690961F43187B00581FC6 /* LocalizationTests.swift in Sources */,
+				6D5EEB512487D79300C4BF9F /* Dog.swift in Sources */,
 				EDE087E2207CE2E000CB1287 /* ISO801DateTests.swift in Sources */,
 				EDA7D96E1F8E6D660020EE86 /* ErrorTests.swift in Sources */,
 				EDA690991F43187B00581FC6 /* QueryTests.swift in Sources */,
 				EDA690931F43187B00581FC6 /* ContentfulTests.swift in Sources */,
+				6D5EEB4D2487D77B00C4BF9F /* City.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1182,7 +1222,6 @@
 				ED1D789B1F2F96260048E169 /* DataCache.swift in Sources */,
 				5DBCEA7921A6DA5A00BA055C /* Location.swift in Sources */,
 				5DD410482190BC8B003FC01E /* RichText.swift in Sources */,
-				ED02DC1420E11D0A005EC57B /* Result.swift in Sources */,
 				ED02DC1820E11D0A005EC57B /* Util.swift in Sources */,
 				ED535E651F5E8E1300886D93 /* Decodable.swift in Sources */,
 				ED36B7031E3BD052005581FD /* Space.swift in Sources */,
@@ -1218,7 +1257,6 @@
 				ED1D789D1F2F96260048E169 /* DataCache.swift in Sources */,
 				5DBCEA7B21A6DA5A00BA055C /* Location.swift in Sources */,
 				5DD4104A2190BC8B003FC01E /* RichText.swift in Sources */,
-				ED02DC1620E11D0A005EC57B /* Result.swift in Sources */,
 				ED02DC1A20E11D0A005EC57B /* Util.swift in Sources */,
 				ED535E671F5E8E1300886D93 /* Decodable.swift in Sources */,
 				ED36B7201E3BD053005581FD /* Field.swift in Sources */,
@@ -1266,6 +1304,7 @@
 		5D52E2432193374100C88FC9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1283,6 +1322,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-tvOS";
@@ -1299,6 +1339,7 @@
 		5D52E2442193374100C88FC9 /* API_Coverage */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1316,6 +1357,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-tvOS";
 				PRODUCT_NAME = Contentful;
@@ -1331,6 +1373,7 @@
 		5D52E2452193374100C88FC9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1348,6 +1391,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-tvOS";
 				PRODUCT_NAME = Contentful;
@@ -1568,8 +1612,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1580,6 +1626,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.contentful.Contentful;
 				PRODUCT_NAME = Contentful;
@@ -1595,8 +1642,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1607,6 +1656,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.contentful.Contentful;
 				PRODUCT_NAME = Contentful;
@@ -1728,9 +1778,11 @@
 			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "";
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1739,6 +1791,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-watchOS";
 				PRODUCT_NAME = Contentful;
@@ -1756,9 +1809,11 @@
 			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "";
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1767,6 +1822,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-watchOS";
 				PRODUCT_NAME = Contentful;
@@ -1784,10 +1840,12 @@
 			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1798,6 +1856,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-macOS";
 				PRODUCT_NAME = Contentful;
@@ -1813,10 +1872,12 @@
 			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1827,6 +1888,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-macOS";
 				PRODUCT_NAME = Contentful;
@@ -1909,8 +1971,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1924,6 +1988,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.contentful.Contentful;
 				PRODUCT_NAME = Contentful;
@@ -1960,9 +2025,11 @@
 			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "";
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1974,6 +2041,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info_watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-watchOS";
 				PRODUCT_NAME = Contentful;
@@ -1991,10 +2059,12 @@
 			baseConfigurationReference = ED4937DC1ECB8A5B008E6860 /* Config.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				CONTENTFUL_SDK_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -2008,6 +2078,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.Contentful-macOS";
 				PRODUCT_NAME = Contentful;

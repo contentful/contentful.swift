@@ -18,9 +18,9 @@ Create a `Client` object using those credentials, this type is used to make all 
 let client = Client(spaceId: spaceId, accessToken: accessToken)
 
 //: To request an entry with the specified ID:
-client.fetchEntry(id: "5PeGS2SoZGSa4GuiQsigQu") { (result: Result<Entry>) in
+client.fetchEntry(id: "5PeGS2SoZGSa4GuiQsigQu") { (result: Result<Entry, Error>) in
     switch result {
-    case .error(let error):
+    case .failure(let error):
         print("Oh no an error: \(error)!")
 
     case .success(let entry):
@@ -44,9 +44,9 @@ This structure is maintained by content types, which define what data fields are
     }
 }
 //: This is a link to the content type which defines the structure of "book" entries. Being API-first, we can of course fetch this content type from the API and inspect it to understand what it contains.
-client.fetchContentType(id: "book") { (result: Result<ContentType>) in
+client.fetchContentType(id: "book") { (result: Result<ContentType, Error>) in
     switch result {
-    case .error(let error):
+    case .failure(let error):
         print("Oh no an error: \(error)!")
 
     case .success(let contentType):

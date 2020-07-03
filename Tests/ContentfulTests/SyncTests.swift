@@ -24,14 +24,16 @@ class SyncTests: XCTestCase {
         (client.urlSession as? DVR.Session)?.endRecording()
     }
 
-    func waitUntilSync(syncableTypes: SyncSpace.SyncableTypes, action: @escaping (_ space: SyncSpace) -> ()) {
+    func waitUntilSync(client: Client = SyncTests.client,
+                       syncableTypes: SyncSpace.SyncableTypes,
+                       action: @escaping (_ space: SyncSpace) -> ()) {
         let expectation = self.expectation(description: "Sync test expecation")
 
-        SyncTests.client.sync(syncableTypes: syncableTypes) { result in
+        client.sync(syncableTypes: syncableTypes) { result in
             switch result {
             case .success(let syncSpace):
                 action(syncSpace)
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -53,15 +55,16 @@ class SyncTests: XCTestCase {
             case .success(let syncSpace):
 
                 SyncTests.client.sync(for: syncSpace) { nextSyncResult in
-                    if let nextSyncSpace = nextSyncResult.value {
+                    switch result {
+                    case .success(let nextSyncSpace):
                         XCTAssertEqual(nextSyncSpace.assets.count, 5)
                         XCTAssertEqual(nextSyncSpace.entries.count, 10)
-                    } else if let error = nextSyncResult.error {
+                        expectation.fulfill()
+                    case .failure(let error):
                         XCTFail("\(error)")
                     }
-                    expectation.fulfill()
                 }
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
                 expectation.fulfill()
             }
@@ -83,7 +86,18 @@ class SyncTests: XCTestCase {
             XCTAssertEqual($0.entries.count, 3)
         }
     }
-
+    
+    func testSyncWithPagination() {
+        let client = TestClientFactory.testClient(withCassetteNamed: "SyncWithPaginationTests")
+        (client.urlSession as? DVR.Session)?.beginRecording()
+        
+        waitUntilSync(client: client, syncableTypes: .all) {
+            XCTAssertEqual($0.assets.count, 4)
+            XCTAssertEqual($0.entries.count, 11)
+        }
+        
+        (client.urlSession as? DVR.Session)?.endRecording()
+    }
 }
 
 #if !API_COVERAGE
@@ -115,7 +129,7 @@ class PreviewSyncTests: XCTestCase {
                 XCTAssertGreaterThan(syncSpace.entries.count, 0)
                 XCTAssertGreaterThan(syncSpace.assets.count, 0)
 
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -133,14 +147,15 @@ class PreviewSyncTests: XCTestCase {
                 XCTAssertGreaterThan(syncSpace.assets.count, 0)
 
                 PreviewSyncTests.client.sync(for: syncSpace) { nextSyncResult in
-                    if let _ = nextSyncResult.value  {
+                    switch nextSyncResult {
+                    case .success:
                         XCTFail("Should not be able to do subsequent sync")
-                    } else if let error = nextSyncResult.error {
+                    case .failure(let error):
                         XCTAssert(error is SDKError)
+                        expectation.fulfill()
                     }
-                    expectation.fulfill()
                 }
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
                 expectation.fulfill()
             }

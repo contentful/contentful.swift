@@ -24,11 +24,18 @@ extension Client {
                            with imageOptions: [ImageOption] = [],
                            then completion: @escaping ResultsHandler<NSImage>) -> URLSessionDataTask? {
         return fetchData(for: asset, with: imageOptions) { result in
-            if let imageData = result.value, let image = NSImage(data: imageData) {
-                completion(Result.success(image))
-                return
+            switch result {
+            case .success(let data):
+                guard let image = NSImage(data: data) else {
+                    completion(.failure(SDKError.unableToDecodeImageData))
+                    return
+                }
+
+                completion(.success(image))
+
+            case .failure(let error):
+                completion(.failure(error))
             }
-            completion(Result.error(SDKError.unableToDecodeImageData))
         }
     }
 }

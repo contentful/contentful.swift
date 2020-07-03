@@ -61,7 +61,7 @@ class EnvironmentsTests: XCTestCase {
                     XCTFail("The last entry in the heterogenous array should be a dog with an image with named 'jake'")
                 }
 
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -82,7 +82,7 @@ class EnvironmentsTests: XCTestCase {
                 XCTAssertEqual(entries.first?.fields["name"] as? String, "Berlin")
                 XCTAssertEqual(entries[2].fields["name"] as? String, "Doge")
 
-            case .error(let error):
+            case .failure(let error):
                  XCTFail("Failed to sync on a non-master environment \(error)")
             }
             expectation.fulfill()

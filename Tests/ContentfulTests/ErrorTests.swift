@@ -32,7 +32,7 @@ class ErrorTests: XCTestCase {
             switch result {
             case .success:
                 XCTFail("Request should not succeed")
-            case .error(let error as APIError):
+            case .failure(let error as APIError):
                 // The DVR recorder fails to record not 200 status codes, so using a regex to check the status code intead (it returns 0 since the recorder is plugging it as nil).
                 let expectedRegexString =
                 """
@@ -43,7 +43,7 @@ class ErrorTests: XCTestCase {
                 let regex = try! NSRegularExpression(pattern: expectedRegexString, options: [])
                 let matches = regex.matches(in: error.debugDescription, options: [], range: NSRange(location: 0, length: error.debugDescription.count))
                 XCTAssertEqual(matches.count, 1)
-            case .error:
+            case .failure:
                 XCTFail("Error returned should be an APIError")
             }
             expectation.fulfill()
@@ -69,7 +69,7 @@ class UnparsableErrorTests: XCTestCase {
             switch result {
             case .success:
                 XCTFail("Error should have been returned")
-            case .error(let error):
+            case .failure(let error):
                 XCTAssert(error is SDKError)
             }
             expectation.fulfill()
