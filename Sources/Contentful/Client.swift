@@ -571,7 +571,7 @@ extension Client {
     @discardableResult
     public func sync(for syncSpace: SyncSpace = SyncSpace(),
                      syncableTypes: SyncSpace.SyncableTypes = .all,
-                     then completion: @escaping ResultsHandler<SyncSpace>) -> URLSessionDataTask? {
+                     then completion: @escaping ResultsHandler<SyncSpace>, hasMore: Bool = false) -> URLSessionDataTask? {
 
         // Preview mode only supports `initialSync` not `nextSync`. The only reason `nextSync` should
         // be called while in preview mode, is internally by the SDK to finish a multiple page sync.
@@ -581,14 +581,14 @@ extension Client {
             return nil
         }
         //let parameters = syncableTypes.parameters + syncSpace.parameters
-        let parameters = syncSpace.hasMorePages ? syncSpace.parameters : syncableTypes.parameters + syncSpace.parameters
+        let parameters = hasMore ? syncSpace.parameters : syncableTypes.parameters + syncSpace.parameters
 	return fetch(url: url(endpoint: .sync, parameters: parameters)) { (result: Result<SyncSpace, Error>) in
             switch result {
             case .success(let newSyncSpace):
                 syncSpace.updateWithDiffs(from: newSyncSpace)
                 self.persistenceIntegration?.update(with: newSyncSpace)
                 if newSyncSpace.hasMorePages {
-                    self.sync(for: syncSpace, syncableTypes: syncableTypes, then: completion)
+                    self.sync(for: syncSpace, syncableTypes: syncableTypes, then: completion, hasMore: newSyncSpace.hasMorePages)
                 } else {
                     completion(.success(syncSpace))
                 }
