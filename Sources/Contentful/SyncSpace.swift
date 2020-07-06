@@ -179,6 +179,7 @@ public final class SyncSpace: Decodable {
         }
 
         syncToken = syncSpace.syncToken
+        hasMorePages = syncSpace.hasMorePages
     }
 
     internal func cache(resources: [Resource]) {
