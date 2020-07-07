@@ -580,8 +580,15 @@ extension Client {
             completion(.failure(SDKError.previewAPIDoesNotSupportSync))
             return nil
         }
-        
-        let parameters = syncableTypes.parameters + syncSpace.parameters
+
+        // Send only sync space parameters when accessing another page.
+        let parameters: [String: String]
+        if syncSpace.hasMorePages {
+            parameters = syncSpace.parameters
+        } else {
+            parameters = syncableTypes.parameters + syncSpace.parameters
+        }
+
         return fetch(url: url(endpoint: .sync, parameters: parameters)) { (result: Result<SyncSpace, Error>) in
             switch result {
             case .success(let newSyncSpace):
