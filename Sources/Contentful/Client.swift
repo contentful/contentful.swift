@@ -330,7 +330,7 @@ open class Client {
     }
 
     fileprivate func handleJSON<DecodableType: Decodable>(_ data: Data, _ completion: @escaping ResultsHandler<DecodableType>) {
-        var decodedObject: DecodableType!
+        var decodedObject: DecodableType?
 
         // Workaround: Sometimes a race condition was noticable when the object has been decoded but
         // links were not fully resolved yet in the fetched objects. The link resolver calls the completion
@@ -347,7 +347,12 @@ open class Client {
                 completion(.failure(sdkError))
             }
         }, completion: {
-            completion(.success(decodedObject))
+            // Make sure decoded object is not nil before calling success completion block.
+            if let decodedObject = decodedObject {
+                completion(.success(decodedObject))
+            } else {
+                completion(.failure(SDKError.unparseableJSON(data: data, errorMessage: "Unknown error occured during decoding.")))
+            }
         })
     }
 }
