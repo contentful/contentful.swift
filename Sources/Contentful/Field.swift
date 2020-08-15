@@ -65,7 +65,7 @@ public struct Field: Decodable {
     /// The item type of this Field (a subtype if `type` is `Array` or `Link`)
     /// For `Array`s, itemType is inferred via items.type.
     /// For `Link`s, itemType is inferred via "linkType".
-    public let itemType: FieldType?
+    public let itemType: FieldType
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -89,7 +89,7 @@ public struct Field: Decodable {
         } else if type == FieldType.link {
             itemTypeString = try container.decode(String.self, forKey: .linkType)
         }
-        self.itemType = FieldType(rawValue: itemTypeString ?? FieldType.none.rawValue) ?? .none
+        self.itemType = FieldType(rawValue: itemTypeString ?? FieldType.none.rawValue) ?? FieldType.none
     }
 
     private enum CodingKeys: String, CodingKey {
