@@ -1,48 +1,23 @@
 //
-//  Field.swift
-//  Contentful
-//
-//  Created by Boris Bügling on 30/09/15.
 //  Copyright © 2015 Contentful GmbH. All rights reserved.
 //
 
 /// An alias for String representing the id for a field to improve expressiveness.
 public typealias FieldName = String
 
-/// The possible Field types in a Contentful content type.
-public enum FieldType: String, Decodable {
-    /// An array of links or symbols
-    case array                          = "Array"
-    /// A link to an Asset
-    case asset                          = "Asset"
-    /// A boolean value, true or false
-    case boolean                        = "Boolean"
-    /// A date value with optional time component
-    case date                           = "Date"
-    /// A link to an Entry
-    case entry                          = "Entry"
-    /// A numeric integer value
-    case integer                        = "Integer"
-    /// A link to an Asset or Entry
-    case link                           = "Link"
-    /// A location value, consists of latitude and longitude
-    case location                       = "Location"
-    /// A floating point number value
-    case number                         = "Number"
-    /// A JSON object value
-    case object                         = "Object"
-    /// A short text string, can be part of an array
-    case symbol                         = "Symbol"
-    /// A longer text string
-    case text                           = "Text"
-    /// An unknown kind of value
-    case none                           = "None"
-    /// The rich text field type.
-    case richText                       = "RichText"
-}
-
 /// A Field describes a single value inside an Entry.
 public struct Field: Decodable {
+
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case disabled
+        case localized
+        case required
+        case type
+        case items
+        case linkType
+    }
 
     /// The unique identifier of this Field
     public let id: String
@@ -62,10 +37,12 @@ public struct Field: Decodable {
     /// The type of this Field
     public let type: FieldType
 
-    /// The item type of this Field (a subtype if `type` is `Array` or `Link`)
-    /// For `Array`s, itemType is inferred via items.type.
-    /// For `Link`s, itemType is inferred via "linkType".
-    public let itemType: FieldType?
+    /**
+        The item type of this Field (a subtype if `type` is `Array` or `Link`)
+        For `Array`s, itemType is inferred via items.type.
+        For `Link`s, itemType is inferred via "linkType".
+    */
+    public let itemType: FieldType
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -74,28 +51,22 @@ public struct Field: Decodable {
         disabled = try container.decode(Bool.self, forKey: .disabled)
         localized = try container.decode(Bool.self, forKey: .localized)
         required = try container.decode(Bool.self, forKey: .required)
-
         type = try container.decode(FieldType.self, forKey: .type)
 
-        var itemTypeString: String?
+        switch type {
+        case .array:
+            let items = try container.decodeIfPresent([String: Any].self, forKey: .items) ?? [:]
+            let itemType = FieldType(rawValue: items["type"] as? String ?? "") ?? .none
 
-        if type == FieldType.array {
-            if let items = try container.decodeIfPresent([String: Any].self, forKey: .items) {
-                itemTypeString = items["type"] as? String
-                if itemTypeString == FieldType.link.rawValue {
-                    itemTypeString = items["linkType"] as? String
-                }
+            if case .link = itemType {
+                self.itemType = FieldType(rawValue: items["linkType"] as? String ?? "") ?? .none
+            } else {
+                self.itemType = itemType
             }
-        } else if type == FieldType.link {
-            itemTypeString = try container.decode(String.self, forKey: .linkType)
+        case .link:
+            self.itemType = try container.decode(FieldType.self, forKey: .linkType)
+        default:
+            self.itemType = .none
         }
-        self.itemType = FieldType(rawValue: itemTypeString ?? FieldType.none.rawValue) ?? .none
-    }
-
-    private enum CodingKeys: String, CodingKey {
-        case id, name, disabled, localized, required
-        case type
-        case items
-        case linkType
     }
 }
