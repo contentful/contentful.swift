@@ -20,7 +20,7 @@ import Foundation
 /// func fetchArray(of: Cat.self, matching: QueryON<Cat>,
 /// then completion: @escaping ResultsHandler<MappedArrayResponse<Cat>>) -> URLSessionDataTask?
 /// ```
-public protocol EntryDecodable: FlatResource, Decodable, EndpointAccessible {
+public protocol EntryDecodable: AnyObject, FlatResource, Decodable, EndpointAccessible {
     /// The identifier of the Contentful content type that will map to this type of `EntryPersistable`
     static var contentTypeId: ContentTypeId { get }
 }
