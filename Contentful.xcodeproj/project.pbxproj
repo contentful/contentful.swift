@@ -452,14 +452,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6D48E752251F5D9F0037B278 /* LinkResolver */ = {
-			isa = PBXGroup;
-			children = (
-				6D48E753251F5DAF0037B278 /* LinkResolver.swift */,
-			);
-			path = LinkResolver;
-			sourceTree = "<group>";
-		};
 		6D5EEB412487D6D900C4BF9F /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -536,7 +528,6 @@
 		ED07C0151F3DCE47004449FC /* Contentful */ = {
 			isa = PBXGroup;
 			children = (
-				6D48E752251F5D9F0037B278 /* LinkResolver */,
 				ED91C1461EDCB1DE00F0FC0A /* AppKit */,
 				ED1A7200215A4D69009355FD /* ImageOptions */,
 				ED2C99781ECDD0990039056E /* UIKit */,
@@ -555,6 +546,7 @@
 				A10FF9DB1BBB4692001AA4E9 /* Field.swift */,
 				6DEB233724E84365009D5879 /* FieldType.swift */,
 				ED3CBF1E1E7AD58100E5B02E /* Link.swift */,
+				6D48E753251F5DAF0037B278 /* LinkResolver.swift */,
 				A1B2E3641BBACF2C00814D63 /* Locale.swift */,
 				5DBCEA7721A6DA5A00BA055C /* Location.swift */,
 				ED737C931EF1785A00ECB3F1 /* Persistence.swift */,
