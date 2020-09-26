@@ -40,7 +40,7 @@ internal class LinkResolver {
 
     // Executes all cached callbacks to resolve links and then clears the callback cache and the data cache
     // where resources are cached before being resolved.
-    func churnLinks() {
+    internal func churnLinks() {
         for (linkKey, callbacksList) in callbacks {
             if linkKey.hasPrefix(Constant.linksArrayPrefix) {
                 let firstKeyIndex = linkKey.index(linkKey.startIndex, offsetBy: Constant.linksArrayPrefix.count)

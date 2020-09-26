@@ -395,17 +395,13 @@ open class Client {
             completion(.failure(sdkError))
         }
 
-        // Workaround: Sometimes a race condition was noticable when the object has been decoded but
-        // links were not fully resolved yet in the fetched objects. The link resolver calls the completion
-        // block of this method when it finished resolving all the links (meaning, all the callbacks have been
-        // called).
         guard let linkResolver = jsonDecoder.userInfo[.linkResolverContextKey] as? LinkResolver else {
-            completion(.failure(
-                SDKError.unparseableJSON(
-                    data: data,
-                    errorMessage: "Missing Link Resolver."
-                )
-            ))
+            let error = SDKError.unparseableJSON(
+                data: data,
+                errorMessage: "Couldn't find link resolver instance."
+            )
+            ContentfulLogger.log(.error, message: error.message)
+            completion(.failure(error))
             return
         }
 
@@ -415,12 +411,12 @@ open class Client {
         if let decodedObject = decodedObject {
             completion(.success(decodedObject))
         } else {
-            completion(.failure(
-                SDKError.unparseableJSON(
-                    data: data,
-                    errorMessage: "Unknown error occured during decoding."
-                )
-            ))
+            let error = SDKError.unparseableJSON(
+                data: data,
+                errorMessage: "Unknown error occured during decoding."
+            )
+            ContentfulLogger.log(.error, message: error.message)
+            completion(.failure(error))
         }
     }
 }
