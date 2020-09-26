@@ -5,6 +5,8 @@
 //  Copyright © 2020 Contentful GmbH. All rights reserved.
 //
 
+import Foundation
+
 public extension Client {
 
     /**
