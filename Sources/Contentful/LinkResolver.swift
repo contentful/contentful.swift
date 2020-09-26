@@ -16,16 +16,6 @@ internal class LinkResolver {
     private var dataCache = DataCache()
     private var callbacks: [String: [(AnyObject) -> Void]] = [:]
 
-    /// Perform data decoding in the `decoding` block. The link resolver will call completion block
-    /// when all the links are resolved.
-    internal func perform(
-        decoding: @escaping () -> Void,
-        completion: @escaping () -> Void
-    ) {
-        decoding()
-        churnLinks(completion: completion)
-    }
-
     internal func cache(assets: [Asset]) {
         assets.forEach { dataCache.add(asset: $0) }
     }
@@ -50,7 +40,7 @@ internal class LinkResolver {
 
     // Executes all cached callbacks to resolve links and then clears the callback cache and the data cache
     // where resources are cached before being resolved.
-    private func churnLinks(completion: @escaping () -> Void) {
+    func churnLinks() {
         for (linkKey, callbacksList) in callbacks {
             if linkKey.hasPrefix(Constant.linksArrayPrefix) {
                 let firstKeyIndex = linkKey.index(linkKey.startIndex, offsetBy: Constant.linksArrayPrefix.count)
@@ -74,7 +64,5 @@ internal class LinkResolver {
         if callbacks.isEmpty == true {
             self.dataCache = DataCache()
         }
-
-        completion()
     }
 }

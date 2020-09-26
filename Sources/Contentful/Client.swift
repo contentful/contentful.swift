@@ -29,22 +29,20 @@ open class Client {
 
     /// Context for holding information about the fallback chain of locales for the Space.
     public private(set) var localizationContext: LocalizationContext! {
-        didSet {
-            // Inject locale information to JSONDecoder.
-            jsonDecoder.update(with: localizationContext)
-        }
+        set { jsonDecoderBuilder.localizationContext = newValue }
+        get { jsonDecoderBuilder.localizationContext }
     }
 
     /// The base domain that all URIs have for each request the client makes.
     public let host: String
 
-    /// The JSONDecoder that the receiving client instance uses to deserialize JSON. The SDK will
-    /// inject information about the locales to this decoder and use this information to normalize
-    /// the fields dictionary of entries and assets.
-    public private(set) var jsonDecoder: JSONDecoder
+    /**
+    Builder for `JSONDecoder` instance that is used to deserialize JSONs.
 
-    // Single instance of the link resolver. It is used among multiple fetch* method calls.
-    private var linkResolver: LinkResolver
+    `Client` will inject information about the locales to the builder and use this information
+    to normalize the fields dictionary of entries and assets.
+     */
+    internal let jsonDecoderBuilder = JSONDecoderBuilder()
 
     /// The persistence integration which will receive delegate messages from the `Client` when new
     /// `Entry` and `Asset` objects are created from data being sent over the network. Currently, these
@@ -100,13 +98,12 @@ open class Client {
         self.host = host
         self.clientConfiguration = clientConfiguration
 
-        self.jsonDecoder = JSONDecoder.withoutLocalizationContext()
         if let dateDecodingStrategy = clientConfiguration.dateDecodingStrategy {
             // Override default date decoding strategy if present
-            jsonDecoder.dateDecodingStrategy = dateDecodingStrategy
+            jsonDecoderBuilder.dateDecodingStrategy = dateDecodingStrategy
         }
         if let timeZone = clientConfiguration.timeZone {
-            jsonDecoder.userInfo[.timeZoneContextKey] = timeZone
+            jsonDecoderBuilder.timeZone = timeZone
         }
 
         if let contentTypeClasses = contentTypeClasses {
@@ -114,11 +111,10 @@ open class Client {
             for type in contentTypeClasses {
                 contentTypes[type.contentTypeId] = type
             }
-            jsonDecoder.userInfo[.contentTypesContextKey] = contentTypes
+
+            jsonDecoderBuilder.contentTypes = contentTypes
         }
 
-        linkResolver = LinkResolver()
-        jsonDecoder.userInfo[.linkResolverContextKey] = linkResolver
         self.persistenceIntegration = persistenceIntegration
         let contentfulHTTPHeaders = [
             "Authorization": "Bearer \(accessToken)",
@@ -168,19 +164,32 @@ open class Client {
     ///   - url: The optional URL representing the endpoint with query parameters for returning JSON.
     ///   - completion: The completion handler which takes in a `Result` wrapping a `Decodable` type.
     /// - Returns: Returns the URLSessionDataTask of the request which can be used for request cancellation.
-    public func fetch<DecodableType: Decodable>(url: URL,
-                                                then completion: @escaping ResultsHandler<DecodableType>) -> URLSessionDataTask {
+    public func fetch<DecodableType: Decodable>(
+        url: URL,
+        then completion: @escaping ResultsHandler<DecodableType>
+    ) -> URLSessionDataTask {
+        fetchDecodable(
+            url: url,
+            jsonDecoder: jsonDecoderBuilder.build(),
+            completion: completion
+        )
+    }
 
+    private func fetchDecodable<DecodableType: Decodable>(
+        url: URL,
+        jsonDecoder: JSONDecoder,
+        completion: @escaping ResultsHandler<DecodableType>
+    ) -> URLSessionDataTask {
         let finishDataFetch: (ResultsHandler<Data>) = { result in
             switch result {
             case .success(let mappableData):
-                self.handleJSON(mappableData, completion)
+                self.handleJSON(data: mappableData, completion: completion)
             case .failure(let error):
                 completion(.failure(error))
             }
         }
 
-        let task = fetch(url: url) { dataResult in
+        let task = fetchData(url: url, jsonDecoder: jsonDecoder) { dataResult in
             if url.lastPathComponent == "locales" || url.lastPathComponent == self.spaceId {
                 // Now that we have all the locale information, start callback chain.
                 finishDataFetch(dataResult)
@@ -208,9 +217,18 @@ open class Client {
     ///   - completion: The completion handler which takes a `Result` wrapping the `Data` returned by the API.
     /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation.
     public func fetch(url: URL, then completion: @escaping ResultsHandler<Data>) -> URLSessionDataTask {
+        fetchData(url: url, jsonDecoder: jsonDecoderBuilder.build(), completion: completion)
+    }
+
+    private func fetchData(url: URL, jsonDecoder: JSONDecoder, completion: @escaping ResultsHandler<Data>) -> URLSessionDataTask {
         let task = urlSession.dataTask(with: url) { data, response, error in
             if let data = data {
-                if self.didHandleRateLimitError(data: data, response: response, completion: completion) == true {
+                if self.didHandleRateLimitError(
+                    data: data,
+                    response: response,
+                    jsonDecoder: jsonDecoder,
+                    completion: completion
+                ) == true {
                     return // Exit if there was a RateLimitError.
                 }
 
@@ -218,7 +236,7 @@ open class Client {
                 // because failure to find an error in the JSON should error should not throw an error that JSON is not parseable.
                 if let response = response as? HTTPURLResponse {
                     if response.statusCode != 200 {
-                        if let apiError = APIError.error(with: self.jsonDecoder,
+                        if let apiError = APIError.error(with: jsonDecoder,
                                                          data: data,
                                                          statusCode: response.statusCode) {
                             let errorMessage = """
@@ -292,12 +310,22 @@ open class Client {
     }
 
     // Returns true if a rate limit error was returned by the API.
-    fileprivate func didHandleRateLimitError(data: Data, response: URLResponse?, completion: ResultsHandler<Data>) -> Bool {
+    fileprivate func didHandleRateLimitError(
+        data: Data,
+        response: URLResponse?,
+        jsonDecoder: JSONDecoder,
+        completion: ResultsHandler<Data>
+    ) -> Bool {
         if let timeUntilLimitReset = self.readRateLimitHeaderIfPresent(response: response) {
             // At this point, We know for sure that the type returned by the API can be mapped to an `APIError` instance.
             // Directly handle JSON and exit.
             let statusCode = (response as! HTTPURLResponse).statusCode
-            self.handleRateLimitJSON(data, timeUntilLimitReset: timeUntilLimitReset, statusCode: statusCode) { (_ result: Result<RateLimitError, Error>) in
+            self.handleRateLimitJSON(
+                data: data,
+                timeUntilLimitReset: timeUntilLimitReset,
+                statusCode: statusCode,
+                jsonDecoder: jsonDecoder
+            ) { (_ result: Result<RateLimitError, Error>) in
                 switch result {
                 case .success(let rateLimitError):
                     completion(.failure(rateLimitError))
@@ -311,8 +339,13 @@ open class Client {
         return false
     }
 
-    fileprivate func handleRateLimitJSON(_ data: Data, timeUntilLimitReset: Int, statusCode: Int, _ completion: ResultsHandler<RateLimitError>) {
-
+    fileprivate func handleRateLimitJSON(
+        data: Data,
+        timeUntilLimitReset: Int,
+        statusCode: Int,
+        jsonDecoder: JSONDecoder,
+        completion: ResultsHandler<RateLimitError>
+    ) {
             guard let rateLimitError = try? jsonDecoder.decode(RateLimitError.self, from: data) else {
                 completion(.failure(SDKError.unparseableJSON(data: data, errorMessage: "SDK unable to parse RateLimitError payload")))
                 return
@@ -329,31 +362,48 @@ open class Client {
             completion(Result.success(rateLimitError))
     }
 
-    fileprivate func handleJSON<DecodableType: Decodable>(_ data: Data, _ completion: @escaping ResultsHandler<DecodableType>) {
+    private func handleJSON<DecodableType: Decodable>(
+        data: Data,
+        completion: @escaping ResultsHandler<DecodableType>
+    ) {
+        let jsonDecoder = jsonDecoderBuilder.build()
+
         var decodedObject: DecodableType?
+        do {
+            decodedObject = try jsonDecoder.decode(DecodableType.self, from: data)
+        } catch let error {
+            let sdkError = SDKError.unparseableJSON(data: data, errorMessage: "\(error)")
+            ContentfulLogger.log(.error, message: sdkError.message)
+            completion(.failure(sdkError))
+        }
 
         // Workaround: Sometimes a race condition was noticable when the object has been decoded but
         // links were not fully resolved yet in the fetched objects. The link resolver calls the completion
         // block of this method when it finished resolving all the links (meaning, all the callbacks have been
         // called).
-        linkResolver.perform(decoding: { [weak self] in
-            guard let self = self else { return }
+        guard let linkResolver = jsonDecoder.userInfo[.linkResolverContextKey] as? LinkResolver else {
+            completion(.failure(
+                SDKError.unparseableJSON(
+                    data: data,
+                    errorMessage: "Missing Link Resolver."
+                )
+            ))
+            return
+        }
 
-            do {
-                decodedObject = try self.jsonDecoder.decode(DecodableType.self, from: data)
-            } catch let error {
-                let sdkError = SDKError.unparseableJSON(data: data, errorMessage: "\(error)")
-                ContentfulLogger.log(.error, message: sdkError.message)
-                completion(.failure(sdkError))
-            }
-        }, completion: {
-            // Make sure decoded object is not nil before calling success completion block.
-            if let decodedObject = decodedObject {
-                completion(.success(decodedObject))
-            } else {
-                completion(.failure(SDKError.unparseableJSON(data: data, errorMessage: "Unknown error occured during decoding.")))
-            }
-        })
+        linkResolver.churnLinks()
+
+        // Make sure decoded object is not nil before calling success completion block.
+        if let decodedObject = decodedObject {
+            completion(.success(decodedObject))
+        } else {
+            completion(.failure(
+                SDKError.unparseableJSON(
+                    data: data,
+                    errorMessage: "Unknown error occured during decoding."
+                )
+            ))
+        }
     }
 }
 
