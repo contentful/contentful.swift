@@ -268,7 +268,7 @@ open class Client {
         return task
     }
 
-    private func fetchResource<ResourceType>(
+    internal func fetchResource<ResourceType>(
         resourceType: ResourceType.Type,
         id: String,
         include includesLevel: UInt? = nil,
@@ -308,6 +308,87 @@ open class Client {
             url: url(endpoint: ResourceType.endpoint, parameters: query.parameters),
             completion: fetchCompletion
         )
+    }
+
+    /// Fetches the space this client is configured to interface with.
+
+    /**
+    Fetches the `Space` the client is configured to interface with.
+
+    If there is a space in the cache, it will be returned and no request will be performed.
+    Otherwise, the space will be fetched and stored.
+     */
+    @discardableResult
+    internal func fetchCurrentSpace(then completion: @escaping ResultsHandler<Space>) -> URLSessionDataTask? {
+        // Attempt to pull from cache first.
+        if let space = self.space {
+            completion(.success(space))
+            return nil
+        }
+
+        return fetchDecodable(url: url(endpoint: .spaces)) { (result: Result<Space, Error>) in
+            switch result {
+            case .success(let space):
+                self.space = space
+            default:
+                break
+            }
+
+            completion(result)
+        }
+    }
+
+    /// Fetches all the locales belonging to the space environment that this client is configured to interface with.
+    ///
+    /// - Parameters:
+    ///   - completion: A handler being called on completion of the request.
+    /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation.
+    @discardableResult
+    internal func fetchCurrentSpaceLocales(then completion: @escaping ResultsHandler<HomogeneousArrayResponse<Contentful.Locale>>) -> URLSessionDataTask {
+
+        // The robust thing to do would be to fetch all pages of the `/locales` endpoint, however, pagination is not supported
+        // at the moment. We also are not expecting any consumers to have > 1000 locales as Contentful subscriptions do not allow that.
+        let query = ResourceQuery.limit(to: QueryConstants.maxLimit)
+        let url = self.url(endpoint: .locales, parameters: query.parameters)
+        return fetchDecodable(url: url) { (result: Result<HomogeneousArrayResponse<Contentful.Locale>, Error>) in
+            switch result {
+            case .success(let localesArray):
+                let locales = localesArray.items
+                self.locales = locales
+
+                let localeCodes = locales.map { $0.code }
+                self.persistenceIntegration?.update(localeCodes: localeCodes)
+
+                guard let localizationContext = LocalizationContext(locales: locales) else {
+                    let error = SDKError.localeHandlingError(message: "Locale with default == true not found in Environment!")
+                    completion(.failure(error))
+                    return
+                }
+                self.localizationContext = localizationContext
+                completion(result)
+
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+
+    @discardableResult
+    private func fetchLocalesIfNecessary(then completion: @escaping ResultsHandler<Array<Contentful.Locale>>) -> URLSessionDataTask? {
+        if let locales = self.locales {
+            let localeCodes = locales.map { $0.code }
+            persistenceIntegration?.update(localeCodes: localeCodes)
+            completion(Result.success(locales))
+            return nil
+        }
+        return fetchCurrentSpaceLocales { result in
+            switch result {
+            case .success(let localesResponse):
+                completion(Result.success(localesResponse.items))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
 
     // Returns the rate limit reset.
@@ -418,224 +499,5 @@ open class Client {
             ContentfulLogger.log(.error, message: error.message)
             completion(.failure(error))
         }
-    }
-}
-
-extension Client {
-
-    /// Fetches all the locales belonging to the space environment that this client is configured to interface with.
-    ///
-    /// - Parameters:
-    ///   - completion: A handler being called on completion of the request.
-    /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation.
-    @discardableResult
-    public func fetchLocales(then completion: @escaping ResultsHandler<HomogeneousArrayResponse<Contentful.Locale>>) -> URLSessionDataTask {
-
-        // The robust thing to do would be to fetch all pages of the `/locales` endpoint, however, pagination is not supported
-        // at the moment. We also are not expecting any consumers to have > 1000 locales as Contentful subscriptions do not allow that.
-        let query = ResourceQuery.limit(to: QueryConstants.maxLimit)
-        let url = self.url(endpoint: .locales, parameters: query.parameters)
-        return fetchDecodable(url: url) { (result: Result<HomogeneousArrayResponse<Contentful.Locale>, Error>) in
-            switch result {
-            case .success(let localesArray):
-                let locales = localesArray.items
-                self.locales = locales
-
-                let localeCodes = locales.map { $0.code }
-                self.persistenceIntegration?.update(localeCodes: localeCodes)
-
-                guard let localizationContext = LocalizationContext(locales: locales) else {
-                    let error = SDKError.localeHandlingError(message: "Locale with default == true not found in Environment!")
-                    completion(.failure(error))
-                    return
-                }
-                self.localizationContext = localizationContext
-                completion(result)
-
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-
-    @discardableResult
-    internal func fetchLocalesIfNecessary(then completion: @escaping ResultsHandler<Array<Contentful.Locale>>) -> URLSessionDataTask? {
-        if let locales = self.locales {
-            let localeCodes = locales.map { $0.code }
-            persistenceIntegration?.update(localeCodes: localeCodes)
-            completion(Result.success(locales))
-            return nil
-        }
-        return fetchLocales { result in
-            switch result {
-            case .success(let localesResponse):
-                completion(Result.success(localesResponse.items))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-}
-
-extension Client {
-
-    /// This is the base fetch method which all other fetch methods delegate to. Use it directly to
-    /// get back raw `Data` objects and bypass the JSON parsing provided by the SDK.
-    ///
-    /// - Parameters:
-    ///   - url: The URL representing the endpoint with query parameters for returning JSON.
-    ///   - completion: The completion handler which takes a `Result` wrapping the `Data` returned by the API.
-    /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation.
-    public func fetch(
-        url: URL,
-        then completion: @escaping ResultsHandler<Data>
-    ) -> URLSessionDataTask {
-        fetchData(url: url, completion: completion)
-    }
-
-    /// Fetches the JSON data at the specified URL, decoding the returned JSON and passing it back
-    /// as a `Result` in the completion handler.
-    ///
-    /// - Parameters:
-    ///   - url: The optional URL representing the endpoint with query parameters for returning JSON.
-    ///   - completion: The completion handler which takes in a `Result` wrapping a `Decodable` type.
-    /// - Returns: Returns the URLSessionDataTask of the request which can be used for request cancellation.
-    public func fetch<DecodableType: Decodable>(
-        url: URL,
-        then completion: @escaping ResultsHandler<DecodableType>
-    ) -> URLSessionDataTask {
-        fetchDecodable(
-            url: url,
-            completion: completion
-        )
-    }
-
-    /// Fetches the underlying media file of a Contentful asset as `Data`.
-    ///
-    /// - Parameters:
-    ///   - asset: The instance of `AssetProtocol` which has the URL for media file.
-    ///   - imageOptions: An optional array of options for server side manipulations of image files.
-    /// - Returns: Returns the URLSessionDataTask of the request which can be used for request cancellation.
-    @discardableResult
-    public func fetchData(
-        for asset: AssetProtocol,
-        with imageOptions: [ImageOption] = [],
-        then completion: @escaping ResultsHandler<Data>
-    ) -> URLSessionDataTask? {
-        do {
-            let url = try asset.url(with: imageOptions)
-            return fetchData(url: url, completion: completion)
-        } catch let error {
-            completion(.failure(error))
-            return nil
-        }
-    }
-
-    /// Fetches the space this client is configured to interface with.
-    ///
-    /// - Parameters:
-    ///   - completion: A handler being called on completion of the request.
-    /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation, or `nil` if the Space was already cached locally
-    @discardableResult
-    public func fetchSpace(then completion: @escaping ResultsHandler<Space>) -> URLSessionDataTask? {
-        // Attempt to pull from cache first.
-        if let space = self.space {
-            completion(.success(space))
-            return nil
-        }
-
-        return fetchDecodable(url: url(endpoint: .spaces)) { (result: Result<Space, Error>) in
-            switch result {
-            case .success(let space):
-                self.space = space
-            default:
-                break
-            }
-
-            completion(result)
-        }
-    }
-
-    /// Fetches a resource by id: available resource types that match this function's constraints are:
-    /// `Space`, `Asset`, `ContentType`, `Entry`, or any of your own types conforming to `EntryDecodable` or `AssetDecodable`.
-    ///
-    /// - Parameters:
-    ///   - resourceType: A reference to the Swift type which conforms to `Decodable & EndpointAccessible`
-    ///   - id: The identifier of the resource which should be fetched.
-    ///   - include: Specifies the level of includes to be resolved. Optional, because we leave it to the server
-    ///     to decide the optimal default value: [Retrieval of linked items]
-    ///   - completion: The handler being called on completion of the request with a Result wrapping your decoded type or an error.
-    /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation.
-    ///
-    /// [Retrieval of linked items]: https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/links/retrieval-of-linked-items
-    @discardableResult
-    public func fetch<ResourceType>(
-        _ resourceType: ResourceType.Type,
-        id: String,
-        include includesLevel: UInt? = nil,
-        then completion: @escaping ResultsHandler<ResourceType>
-    ) -> URLSessionDataTask where ResourceType: Decodable & EndpointAccessible {
-        fetchResource(
-            resourceType: resourceType,
-            id: id,
-            include: includesLevel,
-            completion: completion
-        )
-    }
-
-    /// This is a generic fetch method which can be used to fetch collections of `ContentType`, `Entry`, and `Asset` instances.
-    ///
-    /// - Parameters:
-    ///   - resourceType: A reference to the concrete resource class which conforms to `Decodable & EndpointAccessible & ResourceQueryable`
-    ///   - query: The query of type `ResourceType.QueryType` to be used to match results againtst.
-    ///   - completion: The handler being called on completion of the request with a `Result` wrapping an `ArrayResponse` of decoded type.
-    /// - Returns: Returns the` URLSessionDataTask` of the request which can be used for request cancellation.
-    @discardableResult
-    public func fetchArray<ResourceType, QueryType>(
-        of resourceType: ResourceType.Type,
-        matching query: QueryType? = nil,
-        then completion: @escaping ResultsHandler<HomogeneousArrayResponse<ResourceType>>
-    ) -> URLSessionDataTask where ResourceType: ResourceQueryable, QueryType == ResourceType.QueryType {
-        fetchDecodable(
-            url: url(endpoint: ResourceType.endpoint, parameters: query?.parameters ?? [:]),
-            completion: completion
-        )
-    }
-
-    /// This is a generic fetch method which can be used to fetch collections of `EntryDecodable` instances of your own definition.
-    ///
-    /// - Parameters:
-    ///   - entryType: A reference to a concrete Swift class conforming to `EntryDecodable` that will be fetched.
-    ///   - query: The `QueryOn<EntryType>` to be used to match results againtst.
-    ///   - completion: The handler being called on completion of the request with a `Result` wrapping an `ArrayResponse`.
-    /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation.
-    @discardableResult
-    public func fetchArray<EntryType>(
-        of entryType: EntryType.Type,
-        matching query: QueryOn<EntryType> = QueryOn<EntryType>(),
-        then completion: @escaping ResultsHandler<HomogeneousArrayResponse<EntryType>>
-    ) -> URLSessionDataTask {
-        fetchDecodable(
-            url: url(endpoint: .entries, parameters: query.parameters),
-            completion: completion
-        )
-    }
-
-    /// This is a fetch method that is capable of returning heterogenous collections in the callback. The result returned
-    /// the completion callback will be a `MixedArrayResponse` in which each element in the `items` array may be a different `EntryDecodable` type.
-    ///
-    /// - Parameters:
-    ///   - query: The `Query` with which to match the results against.
-    ///   - completion: The handler being called on completion of the request with a Result wrapping your decoded type or an error.
-    /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation.
-    @discardableResult
-    public func fetchArray(
-        matching query: Query? = nil,
-        then completion: @escaping ResultsHandler<HeterogeneousArrayResponse>
-    ) -> URLSessionDataTask {
-        fetchDecodable(
-            url: url(endpoint: .entries, parameters: query?.parameters ?? [:]),
-            completion: completion
-        )
     }
 }
