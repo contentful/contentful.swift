@@ -41,6 +41,6 @@ class ISO8601DateTests: XCTestCase {
         let timeZone = TimeZone.current
         clientConfig.timeZone = timeZone
         let client = Client(spaceId: "", accessToken: "", clientConfiguration: clientConfig)
-        XCTAssertEqual(client.jsonDecoderBuilder.build().userInfo[.timeZoneContextKey] as! TimeZone, timeZone)
+        XCTAssertEqual(client.jsonDecoder.userInfo[.timeZoneContextKey] as! TimeZone, timeZone)
     }
 }

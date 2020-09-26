@@ -42,7 +42,7 @@ extension Client {
             parameters = syncableTypes.parameters + syncSpace.parameters
         }
 
-        return fetch(url: url(endpoint: .sync, parameters: parameters)) { (result: Result<SyncSpace, Error>) in
+        return fetchDecodable(url: url(endpoint: .sync, parameters: parameters)) { (result: Result<SyncSpace, Error>) in
             switch result {
             case .success(let newSyncSpace):
                 syncSpace.updateWithDiffs(from: newSyncSpace)
