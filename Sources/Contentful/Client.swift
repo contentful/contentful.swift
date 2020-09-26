@@ -44,7 +44,7 @@ open class Client {
      */
     private let jsonDecoderBuilder = JSONDecoderBuilder()
 
-    // Always return new instance of the decoder. For legacy code support.
+    // Always returns new instance of the decoder. For legacy code support.
     public var jsonDecoder: JSONDecoder {
         jsonDecoderBuilder.build()
     }
