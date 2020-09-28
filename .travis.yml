@@ -10,13 +10,13 @@ branches:
 
 matrix:
   include:
-    - osx_image: xcode10.2
+    - osx_image: xcode11.3
       env: SDK=iphonesimulator PLATFORM="iOS Simulator,name=iPhone X,OS=12.2" SCHEME=Contentful_iOS
-    - osx_image: xcode10.2
+    - osx_image: xcode11.3
       env: SDK=appletvsimulator PLATFORM="tvOS Simulator,name=Apple TV,OS=12.2" SCHEME=Contentful_tvOS
-    - osx_image: xcode10.2
+    - osx_image: xcode11.3
       env: SDK=macosx PLATFORM="macOS" SCHEME=Contentful_macOS
-    - osx_image: xcode10.2
+    - osx_image: xcode11.3
       env: SWIFT_BUILD=true
       
 script:
