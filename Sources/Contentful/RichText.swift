@@ -17,12 +17,12 @@ public protocol Node: Codable {
 
 public protocol RecursiveNode: Node {
     var content: [Node] { get }
-    func resolveLinks(against includedEntries: [Entry]?, and includedAssets: [Asset]?)
+    func resolveLinks(against includedEntries: [String: Entry], and includedAssets: [String: Asset])
 }
 
 private extension RecursiveNode {
 
-    func resolveLinksInChildNodes(against includedEntries: [Entry]?, and includedAssets: [Asset]?) {
+    func resolveLinksInChildNodes(against includedEntries: [String: Entry], and includedAssets: [String: Asset]) {
         self.content.forEach { node in
             switch node {
             case let recursiveNode as RecursiveNode:
@@ -164,7 +164,7 @@ public class BlockNode: RecursiveNode {
         self.content = content
     }
 
-    public func resolveLinks(against includedEntries: [Entry]?, and includedAssets: [Asset]?) {
+    public func resolveLinks(against includedEntries: [String: Entry], and includedAssets: [String: Asset]) {
         resolveLinksInChildNodes(against: includedEntries, and: includedAssets)
     }
 
@@ -191,7 +191,7 @@ public class InlineNode: RecursiveNode {
         self.content = content
     }
 
-    public func resolveLinks(against includedEntries: [Entry]?, and includedAssets: [Asset]?) {
+    public func resolveLinks(against includedEntries: [String: Entry], and includedAssets: [String: Asset]) {
         resolveLinksInChildNodes(against: includedEntries, and: includedAssets)
     }
 
@@ -246,7 +246,7 @@ public class InlineNode: RecursiveNode {
         }
     }
 
-    public func resolveLinks(against includedEntries: [Entry]?, and includedAssets: [Asset]?) {
+    public func resolveLinks(against includedEntries: [String: Entry], and includedAssets: [String: Asset]) {
         resolveLinksInChildNodes(against: includedEntries, and: includedAssets)
     }
 
@@ -359,19 +359,19 @@ public class ResourceLinkBlock: BlockNode {
         try super.init(from: decoder)
     }
 
-    public override func resolveLinks(against includedEntries: [Entry]?, and includedAssets: [Asset]?) {
+    public override func resolveLinks(against includedEntries: [String: Entry], and includedAssets: [String: Asset]) {
         switch data.target {
         case .asset, .entry, .entryDecodable:
             return
         case let .unresolved(sys):
             switch sys.linkType.lowercased() {
             case "entry":
-                guard let linkedEntry = includedEntries?.first(where: { $0.sys.id == sys.id }) else {
+                guard let linkedEntry = includedEntries[sys.id] else {
                     return
                 }
                 data.target = Link.entry(linkedEntry)
             case "asset":
-                guard let linkedAsset = includedAssets?.first(where: { $0.sys.id == sys.id }) else {
+                guard let linkedAsset = includedAssets[sys.id] else {
                     return
                 }
                 data.target = Link.asset(linkedAsset)
@@ -405,19 +405,19 @@ public class ResourceLinkInline: InlineNode {
         try super.init(from: decoder)
     }
 
-    public override func resolveLinks(against includedEntries: [Entry]?, and includedAssets: [Asset]?) {
+    public override func resolveLinks(against includedEntries: [String: Entry], and includedAssets: [String: Asset]) {
         switch data.target {
         case .asset, .entry, .entryDecodable:
             return
         case let .unresolved(sys):
             switch sys.linkType.lowercased() {
             case "entry":
-                guard let linkedEntry = includedEntries?.first(where: { $0.sys.id == sys.id }) else {
+                guard let linkedEntry = includedEntries[sys.id] else {
                     return
                 }
                 data.target = Link.entry(linkedEntry)
             case "asset":
-                guard let linkedAsset = includedAssets?.first(where: { $0.sys.id == sys.id }) else {
+                guard let linkedAsset = includedAssets[sys.id] else {
                     return
                 }
                 data.target = Link.asset(linkedAsset)

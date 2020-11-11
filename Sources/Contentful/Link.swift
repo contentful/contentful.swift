@@ -108,16 +108,16 @@ public enum Link: Codable {
      - includedEntries: `Entry` candidates that `self` _could_ point at.
      - includedAssets: `Asset` candidates that `self` _could_ point at.
      */
-    internal func resolve(against includedEntries: [Entry]?, and includedAssets: [Asset]?) -> Link {
+    internal func resolve(against includedEntries: [String: Entry], and includedAssets: [String: Asset]) -> Link {
         switch self {
         case .unresolved(let sys):
             switch sys.linkType {
             case "Entry":
-                if let entry = (includedEntries?.filter { $0.sys.id == sys.id })?.first {
+                if let entry = includedEntries[sys.id] {
                     return Link.entry(entry)
                 }
             case "Asset":
-                if let asset = (includedAssets?.filter { return $0.sys.id == sys.id })?.first {
+                if let asset = includedAssets[sys.id] {
                     return Link.asset(asset)
                 }
             default:

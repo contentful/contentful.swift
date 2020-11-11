@@ -156,6 +156,11 @@ public final class SyncSpace: Decodable {
 
     internal func updateWithDiffs(from syncSpace: SyncSpace) {
 
+        // Resolve all entries in-memory.
+        for entry in entries {
+            entry.resolveLinks(against: entriesMap, and: assetsMap)
+        }
+        
         for asset in syncSpace.assets {
             assetsMap[asset.sys.id] = asset
         }
@@ -163,11 +168,6 @@ public final class SyncSpace: Decodable {
         // Update and deduplicate all entries.
         for entry in syncSpace.entries {
             entriesMap[entry.sys.id] = entry
-        }
-
-        // Resolve all entries in-memory.
-        for entry in entries {
-            entry.resolveLinks(against: entries, and: assets)
         }
 
         for deletedAssetId in syncSpace.deletedAssetIds {

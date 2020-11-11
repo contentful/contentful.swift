@@ -66,7 +66,7 @@ public class Entry: LocalizableResource {
          - includedEntries: `Entry` candidates that `self` _could_ link to.
          - includedAssets: `Asset` candidates that `self` _could_ link to.
     */
-    internal func resolveLinks(against includedEntries: [Entry]?, and includedAssets: [Asset]?) {
+    internal func resolveLinks(against includedEntries: [String: Entry], and includedAssets: [String: Asset]) {
         var localizableFields = [FieldName: [LocaleCode: Any]]()
 
         for (fieldName, localizableFieldMap) in self.localizableFields {
