@@ -178,12 +178,12 @@ extension HomogeneousArrayResponse: Decodable {
             for asset in (includedAssets ?? []) {
                 assetsMap[asset.sys.id] = asset
             }
-            
+
             var entriesMap = [String: Entry]()
             for entry in allIncludedEntries {
                 entriesMap[entry.sys.id] = entry
             }
-            
+
             // Rememember `Entry`s are classes (passed by reference) so we can change them in place.
             for entry in allIncludedEntries {
                 entry.resolveLinks(against: entriesMap, and: assetsMap)

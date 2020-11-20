@@ -160,7 +160,7 @@ public final class SyncSpace: Decodable {
         for entry in entries {
             entry.resolveLinks(against: entriesMap, and: assetsMap)
         }
-        
+
         for asset in syncSpace.assets {
             assetsMap[asset.sys.id] = asset
         }
