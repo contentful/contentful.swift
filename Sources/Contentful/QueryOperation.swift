@@ -43,7 +43,7 @@ public extension Query {
         /// Full text search on a field.
         case matches(String)
 
-        /// MARK: Ranges
+        // MARK: Ranges
 
         /// Less-than operator: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/ranges>
         case isLessThan(QueryableRange)

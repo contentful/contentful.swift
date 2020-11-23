@@ -170,7 +170,7 @@ public class LocalizableResource: Resource, FlatResource, Codable {
 
 // MARK: Internal
 
-extension LocalizableResource: Hashable {    
+extension LocalizableResource: Hashable {
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)

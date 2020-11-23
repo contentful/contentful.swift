@@ -174,9 +174,19 @@ extension HomogeneousArrayResponse: Decodable {
 
             let allIncludedEntries = entries + (includedEntries ?? [])
 
+            var assetsMap = [String: Asset]()
+            for asset in (includedAssets ?? []) {
+                assetsMap[asset.sys.id] = asset
+            }
+
+            var entriesMap = [String: Entry]()
+            for entry in allIncludedEntries {
+                entriesMap[entry.sys.id] = entry
+            }
+
             // Rememember `Entry`s are classes (passed by reference) so we can change them in place.
             for entry in allIncludedEntries {
-                entry.resolveLinks(against: allIncludedEntries, and: (includedAssets ?? []))
+                entry.resolveLinks(against: entriesMap, and: assetsMap)
             }
         }
     }
