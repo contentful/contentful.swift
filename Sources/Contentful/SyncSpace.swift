@@ -15,7 +15,14 @@ public final class SyncSpace: Decodable {
     public var parameters: [String: String] {
 
         if syncToken.isEmpty {
-            return ["initial": true.description]
+            var parameters = [String: String]()
+            parameters["initial"] = true.description
+
+            if let limit = limit {
+                parameters["limit"] = limit.description
+            }
+
+            return parameters
         } else {
             return ["sync_token": syncToken]
         }
@@ -76,6 +83,9 @@ public final class SyncSpace: Decodable {
     /// A token which needs to be present to perform a subsequent synchronization operation
     internal(set) public var syncToken = ""
 
+    /// Number of entities per page in a sync operation. See documentation for details.
+    internal(set) public var limit: Int?
+
     /// List of Assets currently published on the Space being synchronized
     public var assets: [Asset] {
         return Array(assetsMap.values)
@@ -89,9 +99,10 @@ public final class SyncSpace: Decodable {
     /// The sync token from a previous synchronization
     ///
     /// - Parameter syncToken: The sync token from a previous synchronization.
-    public init(syncToken: String = "") {
+    public init(syncToken: String = "", limit: Int? = nil) {
         self.hasMorePages = false
         self.syncToken = syncToken
+        self.limit = limit
     }
 
     internal static func syncToken(from urlString: String) -> String {
