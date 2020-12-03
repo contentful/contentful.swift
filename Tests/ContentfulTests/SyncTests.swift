@@ -92,8 +92,8 @@ class SyncTests: XCTestCase {
         (client.urlSession as? DVR.Session)?.beginRecording()
         
         waitUntilSync(client: client, syncableTypes: .all) {
-            XCTAssertEqual($0.assets.count, 4)
-            XCTAssertEqual($0.entries.count, 11)
+            XCTAssertEqual($0.assets.count, 5)
+            XCTAssertEqual($0.entries.count, 10)
         }
         
         (client.urlSession as? DVR.Session)?.endRecording()
