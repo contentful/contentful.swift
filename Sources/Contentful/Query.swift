@@ -44,12 +44,12 @@ public enum QueryParameter {
     /// of the referenced binary file
     public static let mimetypeGroup    = "mimetype_group"
 
-    /// Use this to pass in a query to search accross all text and symbol fields in your space. See [Full-text search](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/full-text-search)
+    /// Use this to pass in a query to search across all text and symbol fields in your space. See [Full-text search](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/full-text-search)
     public static let fullTextSearch   = "query"
 }
 
 /// A small class to create parameters used for ordering the responses when querying an endpoint
-/// that returns a colleciton of resources.
+/// that returns a collection of resources.
 /// See: `ChainableQuery.order(by order: Ordering...)`
 public class Ordering {
 
@@ -158,7 +158,7 @@ public enum Bounds {
 }
 
 //  Developer note: Cases in String backed Swift enums have a raw value equal to the case name.
-//  i.e. MimetypeGroup.attachement.rawValue = "attachment"
+//  i.e. MimetypeGroup.attachment.rawValue = "attachment"
 /// All the possible MIME types that are supported by Contentful. \
 public enum MimetypeGroup: String {
     /// The attachment mimetype.
@@ -187,7 +187,7 @@ public enum MimetypeGroup: String {
     case markup
 }
 
-/// A base abtract type which holds the bare essentials shared by all query types in the SDK which enable
+/// A base abstract type which holds the bare essentials shared by all query types in the SDK which enable
 /// querying against content types, entries and assets.
 public protocol AbstractQuery: class {
 
@@ -307,7 +307,7 @@ public extension ChainableQuery {
         return self
     }
 
-    /// Static method for creating a Query with a Query.Operation. This variation for creating a query guarantees correct query contruction
+    /// Static method for creating a Query with a Query.Operation. This variation for creating a query guarantees correct query construction
     /// when performing operations on "sys" members. See concrete types Query, FilterQuery, AssetQuery, and QueryOn
     /// for more information and example usage.
     ///
@@ -319,7 +319,7 @@ public extension ChainableQuery {
         return Self.where(valueAtKeyPath: "fields.\(fieldName)", operation)
     }
 
-    /// Instance method for appending a Query.Operation to a Query. This variation for creating a query guarantees correct query contruction
+    /// Instance method for appending a Query.Operation to a Query. This variation for creating a query guarantees correct query construction
     /// when performing operations on "field" members. See concrete types Query, FilterQuery, AssetQuery, and QueryOn
     /// for more information and example usage.
     ///
@@ -389,7 +389,7 @@ public extension ChainableQuery {
 
     // MARK: - Response Manipulations.
 
-    /// Static method for specifiying the level of includes to be resolved in the JSON response.
+    /// Static method for specifying the level of includes to be resolved in the JSON response.
     /// The maximum permitted level of includes at the API level is 10; the SDK will limit the includes level at 10
     /// before the network request is made if the passed in value is too high in order to avoid
     /// hitting an error from the API.
@@ -519,7 +519,7 @@ public extension ChainableQuery {
     /// ```
     ///
     /// - Parameter numberOfResults: The number of results the response will be limited to.
-    /// - Returns: A newly constructed query object specifying the number of resuls to be returned.
+    /// - Returns: A newly constructed query object specifying the number of results to be returned.
     static func limit(to numberOfResults: UInt) -> Self {
         let query = Self()
         query.limit(to: numberOfResults)
@@ -547,7 +547,7 @@ public extension ChainableQuery {
     }
 }
 
-/// A base abtract type which holds methods and constructors for all valid queries against resource: i.e. Contentful entries and assets.
+/// A base abstract type which holds methods and constructors for all valid queries against resource: i.e. Contentful entries and assets.
 public protocol AbstractResourceQuery: ChainableQuery {}
 public extension AbstractResourceQuery {
 
@@ -609,7 +609,7 @@ public extension AbstractResourceQuery {
     /// Instance method for select operation in which only the fields specified in the `fieldNames` parameter will be returned in the JSON response.
     /// The `"sys"` dictionary is always requested by the SDK.
     /// Note that if you are using the select operator with an instance `QueryOn<EntryType>`
-    /// that you must make properties that you are ommitting in the response (by not including them in your selections array) optional properties.
+    /// that you must make properties that you are omitting in the response (by not including them in your selections array) optional properties.
     /// Example usage:
     ///
     /// ```
@@ -695,7 +695,7 @@ public extension EntryQuery {
     ///   - linkingFieldName: The field name which holds a reference to a link.
     ///   - sourceContentTypeId: The content type identifier of the link source.
     ///   - targetKeyPath:  The member path for the value you would like to search on for the link destination resource.
-    ///   - targetContentTypeId:  The content type idenifier of the item(s) being linked to at the specified linking field name.
+    ///   - targetContentTypeId:  The content type identifier of the item(s) being linked to at the specified linking field name.
     ///   - operation: The `Query.Operation` used to match the value of at the target key path.
     /// - Returns: A newly initialized query for searching on references.
     static func `where`(linkAtFieldNamed linkingFieldName: String,
@@ -721,7 +721,7 @@ public extension EntryQuery {
     ///   - linkingFieldName: The field name which holds a reference to a link.
     ///   - sourceContentTypeId: The content type identifier of the link source.
     ///   - targetKeyPath: The member path for the value you would like to search on for the link destination resource.
-    ///   - targetContentTypeId: The content type idenifier of the item(s) being linked to at the specified linking field name.
+    ///   - targetContentTypeId: The content type identifier of the item(s) being linked to at the specified linking field name.
     ///   - operation: The `Query.Operation` used to match the value of at the target key path.
     /// - Returns: A reference to the receiving query to enable chaining.
     @discardableResult
@@ -837,7 +837,7 @@ public class ResourceQuery: AbstractResourceQuery {
     /// The parameters dictionary that are converted to `URLComponents` (HTTP parameters/arguments) on the HTTP URL. Useful for debugging.
     public var parameters: [String: String] = [String: String]()
 
-    /// Designated initalizer for Query.
+    /// Designated initializer for Query.
     public required init() {
         self.parameters = [String: String]()
     }
@@ -866,9 +866,9 @@ public class ResourceQuery: AbstractResourceQuery {
     }
 }
 
-internal extension String {
+extension String {
 
-    func isValidSelection() -> Bool {
+    internal func isValidSelection() -> Bool {
         if split(separator: ".", maxSplits: 3, omittingEmptySubsequences: false).count > 2 {
             return false
         }

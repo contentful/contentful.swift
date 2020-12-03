@@ -11,7 +11,7 @@ import Foundation
 import XCTest
 import DVR
 
-// TODO: Use this in the main target...or seperate dependency.
+// TODO: Use this in the main target...or separate dependency.
 extension Date {
     static func fromComponents(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int) -> Date {
         var components = DateComponents()
@@ -38,7 +38,7 @@ class EntryTests: XCTestCase {
     }
 
     func waitUntilMatchingEntries(_ query: Query, action: @escaping (_ entries: HomogeneousArrayResponse<Entry>) -> ()) {
-        let expecatation = self.expectation(description: "Entries matching query network expectation")
+        let expectation = self.expectation(description: "Entries matching query network expectation")
 
         EntryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
@@ -47,7 +47,7 @@ class EntryTests: XCTestCase {
             case .failure(let error):
                 XCTFail("\(error)")
             }
-            expecatation.fulfill()
+            expectation.fulfill()
         }
 
 
@@ -231,7 +231,7 @@ class EntryTests: XCTestCase {
     }
 
     func testFetchEntriesOfContentType() {
-        let expectation = self.expectation(description: "Fetch entires of content type expectation")
+        let expectation = self.expectation(description: "Fetch entries of content type expectation")
         EntryTests.client.fetchArray(of: Entry.self, matching: .where(contentTypeId: "cat")) { result in
             switch result {
             case .success(let array):
@@ -405,7 +405,7 @@ class EntryTests: XCTestCase {
     func testIncomingLinksToEntry() {
         let query = Query.where(linksToEntryWithId: "happycat")
 
-        let expectation = self.expectation(description: "Will return entries likning to happy cat ")
+        let expectation = self.expectation(description: "Will return entries linking to happy cat ")
 
         EntryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {

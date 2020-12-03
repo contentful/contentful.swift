@@ -121,11 +121,11 @@ public enum Link: Codable {
                     return Link.asset(asset)
                 }
             default:
-                fatalError("A serious error occured, attempted to resolve a Link that was not of type Entry or Asset")
+                fatalError("A serious error occurred, attempted to resolve a Link that was not of type Entry or Asset")
             }
 
         default:
-            fatalError("A serious error occured, attempted to resolve an already resolved Link")
+            fatalError("A serious error occurred, attempted to resolve an already resolved Link")
         }
         return self
     }

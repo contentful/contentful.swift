@@ -63,7 +63,7 @@ class LocalizationTests: XCTestCase {
 
     func testWalkingFallbackChain() {
 
-        let expecatation = self.expectation(description: "Entries matching query network expectation")
+        let expectation = self.expectation(description: "Entries matching query network expectation")
 
         LocalizationTests.client.fetchArray(of: Entry.self, matching: Query.where(sys: .id, .equals("nyancat")).localizeResults(withLocaleCode: "*")) { result in
             switch result {
@@ -86,13 +86,13 @@ class LocalizationTests: XCTestCase {
             case .failure(let error):
                 XCTFail("\(error)")
             }
-            expecatation.fulfill()
+            expectation.fulfill()
         }
 
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
-    func testWalkingFallbackchainOnAsset() {
+    func testWalkingFallbackChainOnAsset() {
         let jsonDecoder = JSONDecoder.withoutLocalizationContext()
         let localesJSONData = JSONDecodingTests.jsonData("all-locales")
         let localesResponse = try! jsonDecoder.decode(HomogeneousArrayResponse<Contentful.Locale>.self, from: localesJSONData)
@@ -108,27 +108,27 @@ class LocalizationTests: XCTestCase {
         XCTAssertEqual(asset.urlString, "https://images.ctfassets.net/cfexampleapi/1x0xpXu4pSGS4OukSyWGUK/cc1239c6385428ef26f4180190532818/doge.jpg")
     }
 
-        func testLocalizationForEntryDecodableWorks() {
-            let expecatation = self.expectation(description: "")
+    func testLocalizationForEntryDecodableWorks() {
+        let expectation = self.expectation(description: "")
 
-            let query = QueryOn<Cat>.where(sys: .id, .equals("nyancat")).localizeResults(withLocaleCode: "tlh")
-            LocalizationTests.client.fetchArray(of: Cat.self, matching: query) { result in
-                switch result {
-                case .success(let entriesCollection):
-                    let cat = entriesCollection.items.first!
+        let query = QueryOn<Cat>.where(sys: .id, .equals("nyancat")).localizeResults(withLocaleCode: "tlh")
+        LocalizationTests.client.fetchArray(of: Cat.self, matching: query) { result in
+            switch result {
+            case .success(let entriesCollection):
+                let cat = entriesCollection.items.first!
 
-                    XCTAssertEqual(cat.localeCode, "tlh")
-                    XCTAssertEqual(cat.sys.id, "nyancat")
-                    XCTAssertEqual(cat.name, "Nyan vIghro'")
-                    XCTAssertEqual(cat.likes, ["rainbows", "fish"])
+                XCTAssertEqual(cat.localeCode, "tlh")
+                XCTAssertEqual(cat.sys.id, "nyancat")
+                XCTAssertEqual(cat.name, "Nyan vIghro'")
+                XCTAssertEqual(cat.likes, ["rainbows", "fish"])
 
-                case .failure(let error):
-                    XCTFail("\(error)")
-                }
-                expecatation.fulfill()
+            case .failure(let error):
+                XCTFail("\(error)")
             }
-
-            waitForExpectations(timeout: 10.0, handler: nil)
+            expectation.fulfill()
         }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
 }
 

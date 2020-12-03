@@ -29,8 +29,8 @@ open class Client {
 
     /// Context for holding information about the fallback chain of locales for the Space.
     public private(set) var localizationContext: LocalizationContext! {
-        set { jsonDecoderBuilder.localizationContext = newValue }
         get { jsonDecoderBuilder.localizationContext }
+        set { jsonDecoderBuilder.localizationContext = newValue }
     }
 
     /// The base domain that all URIs have for each request the client makes.
@@ -51,7 +51,7 @@ open class Client {
 
     /// The persistence integration which will receive delegate messages from the `Client` when new
     /// `Entry` and `Asset` objects are created from data being sent over the network. Currently, these
-    /// messages are only sent during the response hadling for `client.sync` calls. See a CoreData
+    /// messages are only sent during the response handling for `client.sync` calls. See a CoreData
     /// persistence integration at <https://github.com/contentful/contentful-persistence.swift>.
     public var persistenceIntegration: PersistenceIntegration? {
         didSet {
@@ -133,7 +133,7 @@ open class Client {
         urlSession.invalidateAndCancel()
     }
 
-    /// Returns an optional URL for the specified endpoint with its query paramaters.
+    /// Returns an optional URL for the specified endpoint with its query parameters.
     ///
     /// - Parameters:
     ///   - endpoint: The delivery/preview API endpoint.
@@ -152,8 +152,8 @@ open class Client {
         let queryItems: [URLQueryItem]? = parameters?.map { key, value in
             return URLQueryItem(name: key, value: value)
         }
-        // Since Swift 4.2, the order of a dictionary's keys will vary accross executions so we must sort
-        // the parameters so that the URL is consistent accross executions (so that all test recordings are found).
+        // Since Swift 4.2, the order of a dictionary's keys will vary across executions so we must sort
+        // the parameters so that the URL is consistent across executions (so that all test recordings are found).
         components.queryItems = queryItems?.sorted { a, b in
             return a.name > b.name
         }
@@ -205,7 +205,7 @@ open class Client {
                     response: response,
                     jsonDecoder: jsonDecoder,
                     completion: completion
-                ) == true {
+                ) {
                     return // Exit if there was a RateLimitError.
                 }
 
@@ -494,7 +494,7 @@ open class Client {
         } else {
             let error = SDKError.unparseableJSON(
                 data: data,
-                errorMessage: "Unknown error occured during decoding."
+                errorMessage: "Unknown error occurred during decoding."
             )
             ContentfulLogger.log(.error, message: error.message)
             completion(.failure(error))

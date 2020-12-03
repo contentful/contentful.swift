@@ -925,11 +925,11 @@
 			};
 			buildConfigurationList = A19CA3BE1B836EDD00A0EFCD /* Build configuration list for PBXProject "Contentful" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
+				Base,
 			);
 			mainGroup = A19CA3BA1B836EDD00A0EFCD;
 			productRefGroup = A19CA3C51B836EDD00A0EFCD /* Products */;

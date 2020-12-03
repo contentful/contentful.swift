@@ -27,7 +27,7 @@ class SyncTests: XCTestCase {
     func waitUntilSync(client: Client = SyncTests.client,
                        syncableTypes: SyncSpace.SyncableTypes,
                        action: @escaping (_ space: SyncSpace) -> ()) {
-        let expectation = self.expectation(description: "Sync test expecation")
+        let expectation = self.expectation(description: "Sync test expectation")
 
         client.sync(syncableTypes: syncableTypes) { result in
             switch result {
@@ -49,7 +49,7 @@ class SyncTests: XCTestCase {
     }
 
     func testPerformSubsequentSync() {
-        let expectation = self.expectation(description: "Subsequent Sync test expecation")
+        let expectation = self.expectation(description: "Subsequent Sync test expectation")
         SyncTests.client.sync { result in
             switch result {
             case .success(let syncSpace):
@@ -121,7 +121,7 @@ class PreviewSyncTests: XCTestCase {
     }
 
     func testDoInitialSyncWithPreviewAPI() {
-        let expectation = self.expectation(description: "Can do initial sync with preview API Sync test expecation")
+        let expectation = self.expectation(description: "Can do initial sync with preview API Sync test expectation")
 
         PreviewSyncTests.client.sync { result in
             switch result {
@@ -138,7 +138,7 @@ class PreviewSyncTests: XCTestCase {
     }
 
     func testSubsequentSyncWithPreviewAPIReturnsSDKError() {
-        let expectation = self.expectation(description: "Can do initial sync with preview API Sync test expecation")
+        let expectation = self.expectation(description: "Can do initial sync with preview API Sync test expectation")
 
         PreviewSyncTests.client.sync { result in
             switch result {

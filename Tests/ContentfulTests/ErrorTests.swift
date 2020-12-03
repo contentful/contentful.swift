@@ -33,7 +33,7 @@ class ErrorTests: XCTestCase {
             case .success:
                 XCTFail("Request should not succeed")
             case .failure(let error as APIError):
-                // The DVR recorder fails to record not 200 status codes, so using a regex to check the status code intead (it returns 0 since the recorder is plugging it as nil).
+                // The DVR recorder fails to record not 200 status codes, so using a regex to check the status code instead (it returns 0 since the recorder is plugging it as nil).
                 let expectedRegexString =
                 """
                 HTTP status code \\d+: The query you sent was invalid. Probably a filter or ordering specification is not applicable to the type of a field.

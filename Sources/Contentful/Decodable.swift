@@ -29,7 +29,7 @@ public extension Decoder {
         guard let contentTypes = userInfo[.contentTypesContextKey] as? [ContentTypeId: EntryDecodable.Type] else {
             fatalError(
             """
-            Make sure to pass your content types into the Client intializer
+            Make sure to pass your content types into the Client initializer
             so the SDK can properly deserializer your own types if you are using the `fetchMappedEntries` methods
             """)
         }
@@ -91,25 +91,25 @@ extension Decodable where Self: EntryDecodable {
     }
 }
 
-internal extension Decodable where Self: AssetDecodable {
-    static func popAssetDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
+extension Decodable where Self: AssetDecodable {
+    internal static func popAssetDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
         let assetDecodable = try container.decode(self)
         return assetDecodable
     }
 }
 
-internal extension Decodable where Self: Node {
-    static func popNodeDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
+extension Decodable where Self: Node {
+    internal static func popNodeDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
         let contentDecodable = try container.decode(self)
         return contentDecodable
     }
 }
 
-internal extension CodingUserInfoKey {
-    static let linkResolverContextKey = CodingUserInfoKey(rawValue: "linkResolverContext")!
-    static let timeZoneContextKey = CodingUserInfoKey(rawValue: "timeZoneContext")!
-    static let contentTypesContextKey = CodingUserInfoKey(rawValue: "contentTypesContext")!
-    static let localizationContextKey = CodingUserInfoKey(rawValue: "localizationContext")!
+extension CodingUserInfoKey {
+    internal static let linkResolverContextKey = CodingUserInfoKey(rawValue: "linkResolverContext")!
+    internal static let timeZoneContextKey = CodingUserInfoKey(rawValue: "timeZoneContext")!
+    internal static let contentTypesContextKey = CodingUserInfoKey(rawValue: "contentTypesContext")!
+    internal static let localizationContextKey = CodingUserInfoKey(rawValue: "localizationContext")!
 }
 
 // Fields JSON container.
@@ -152,16 +152,16 @@ public extension KeyedDecodingContainer {
 }
 
 // Inspired by https://gist.github.com/mbuchetics/c9bc6c22033014aa0c550d3b4324411a
-struct JSONCodingKeys: CodingKey {
-    var stringValue: String
+internal struct JSONCodingKeys: CodingKey {
+    internal var stringValue: String
 
-    init?(stringValue: String) {
+    internal init?(stringValue: String) {
         self.stringValue = stringValue
     }
 
-    var intValue: Int?
+    internal var intValue: Int?
 
-    init?(intValue: Int) {
+    internal init?(intValue: Int) {
         self.init(stringValue: "\(intValue)")
         self.intValue = intValue
     }
@@ -169,29 +169,29 @@ struct JSONCodingKeys: CodingKey {
 
 extension KeyedDecodingContainer {
 
-    func decode(_ type: Dictionary<String, Any>.Type, forKey key: K) throws -> Dictionary<String, Any> {
+    internal func decode(_ type: Dictionary<String, Any>.Type, forKey key: K) throws -> Dictionary<String, Any> {
         let container = try self.nestedContainer(keyedBy: JSONCodingKeys.self, forKey: key)
         return try container.decode(type)
     }
 
-    func decodeIfPresent(_ type: Dictionary<String, Any>.Type, forKey key: K) throws -> Dictionary<String, Any>? {
+    internal func decodeIfPresent(_ type: Dictionary<String, Any>.Type, forKey key: K) throws -> Dictionary<String, Any>? {
         guard contains(key) else { return nil }
         guard try decodeNil(forKey: key) == false else { return nil }
         return try decode(type, forKey: key)
     }
 
-    func decode(_ type: Array<Any>.Type, forKey key: K) throws -> Array<Any> {
+    internal func decode(_ type: Array<Any>.Type, forKey key: K) throws -> Array<Any> {
         var container = try self.nestedUnkeyedContainer(forKey: key)
         return try container.decode(type)
     }
 
-    func decodeIfPresent(_ type: Array<Any>.Type, forKey key: K) throws -> Array<Any>? {
+    internal func decodeIfPresent(_ type: Array<Any>.Type, forKey key: K) throws -> Array<Any>? {
         guard contains(key) else { return nil }
         guard try decodeNil(forKey: key) == false else { return nil }
         return try decode(type, forKey: key)
     }
 
-    func decode(_ type: Dictionary<String, Any>.Type) throws -> Dictionary<String, Any> {
+    internal func decode(_ type: Dictionary<String, Any>.Type) throws -> Dictionary<String, Any> {
         var dictionary = Dictionary<String, Any>()
 
         for key in allKeys {
@@ -227,7 +227,7 @@ extension KeyedDecodingContainer {
 
 extension UnkeyedDecodingContainer {
 
-    mutating func decode(_ type: Array<Any>.Type) throws -> Array<Any> {
+    internal mutating func decode(_ type: Array<Any>.Type) throws -> Array<Any> {
         var array: [Any] = []
         while isAtEnd == false {
             if try decodeNil() {
@@ -260,7 +260,7 @@ extension UnkeyedDecodingContainer {
         return array
     }
 
-    mutating func decode(_ type: Dictionary<String, Any>.Type) throws -> Dictionary<String, Any> {
+    internal mutating func decode(_ type: Dictionary<String, Any>.Type) throws -> Dictionary<String, Any> {
         let nestedContainer = try self.nestedContainer(keyedBy: JSONCodingKeys.self)
         return try nestedContainer.decode(type)
     }

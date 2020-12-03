@@ -25,7 +25,7 @@ public enum SDKError: Error, CustomDebugStringConvertible {
     /// Thrown when receiving unparseable JSON responses.
     /// - Parameters:
     ///   - data: The data being parsed.
-    ///   - errorMessage: The message from the error which occured during parsing.
+    ///   - errorMessage: The message from the error which occurred during parsing.
     case unparseableJSON(data: Data?, errorMessage: String)
 
     /// Thrown when no resource is found matching a specified id
@@ -35,7 +35,7 @@ public enum SDKError: Error, CustomDebugStringConvertible {
     case unableToDecodeImageData
 
     /// Thrown when the SDK has issues mapping responses with the necessary locale information.
-    /// - Parameter message: The message from the erorr which occured during parsing.
+    /// - Parameter message: The message from the error which occurred during parsing.
     case localeHandlingError(message: String)
 
     public var debugDescription: String {
@@ -76,7 +76,7 @@ public enum QueryError: Error, CustomDebugStringConvertible {
         case .maxSelectionLimitExceeded:
             return "Can select at most 99 key paths when using the select operator on a content type."
         case .invalidOrderProperty:
-            return "Either 'sys' or 'fields' properties must be specified. Prefix your propety name with 'fields.' or 'sys.'."
+            return "Either 'sys' or 'fields' properties must be specified. Prefix your property name with 'fields.' or 'sys.'."
         case .textSearchTooShort:
             return "Full text search must have a string with more than 1 character."
         }
@@ -113,7 +113,7 @@ public class APIError: Decodable, Error, CustomDebugStringConvertible {
 
     /// System fields for the error.
     public struct Sys: Decodable {
-        /// A psuedo identifier for the error returned by the API(s).
+        /// A pseudo identifier for the error returned by the API(s).
         public let id: String
         /// Resource type ("Error").
         public let type: String
@@ -151,7 +151,7 @@ public class APIError: Decodable, Error, CustomDebugStringConvertible {
         }
     }
 
-    /// A psuedo identifier for the error returned by the API(s).
+    /// A pseudo identifier for the error returned by the API(s).
     /// "BadRequest", "InvalidQuery" and "InvalidEntry" are all examples.
     public var id: String {
         return sys.id

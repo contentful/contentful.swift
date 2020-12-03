@@ -88,8 +88,8 @@ public class DeletedResource: Resource, FlatResource, Decodable {
 
 /// Base class for any Resource that has the capability of carrying information for multiple locales.
 /// If more than one locale is fetched using either `/sync` endpoint, or specifying the wildcard value
-/// for the locale paramater (i.e "locale=*") during a fetch, the SDK will cache returned values for
-/// all locales in moery. This class gives an interface to specify which locale should be used when
+/// for the locale parameter (i.e "locale=*") during a fetch, the SDK will cache returned values for
+/// all locales in memory. This class gives an interface to specify which locale should be used when
 /// reading content from `Resource` instances that are in memory.
 public class LocalizableResource: Resource, FlatResource, Codable {
 

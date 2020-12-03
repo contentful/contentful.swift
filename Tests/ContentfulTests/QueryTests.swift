@@ -121,14 +121,14 @@ final class QueryTests: XCTestCase {
                 if let cat = entries.first as? Cat, let bestFriend = cat.bestFriend {
                     XCTAssertEqual(bestFriend.name, "Nyan Cat")
                 } else {
-                    XCTFail("The first entry in the heterogenous array should be a cat with a best friend named 'Nyan Cat'")
+                    XCTFail("The first entry in the heterogeneous array should be a cat with a best friend named 'Nyan Cat'")
                 }
 
                 if let dog = entries[4] as? Dog, let image = dog.image {
                     XCTAssertEqual(dog.description, "Bacon pancakes, makin' bacon pancakes!")
                     XCTAssertEqual(image.id, "jake")
                 } else {
-                    XCTFail("The 4th entry in the heterogenous array should be a dog with an image with named 'jake'")
+                    XCTFail("The 4th entry in the heterogeneous array should be a dog with an image with named 'jake'")
                 }
 
             case .failure(let error):
@@ -496,7 +496,7 @@ final class QueryTests: XCTestCase {
     }
 
     func testFetchEntriesInReverseOrder() {
-        let expectation = self.expectation(description: "Reverese order search")
+        let expectation = self.expectation(description: "Reverse order search")
 
         let query = try! Query.order(by: Ordering("sys.createdAt", inReverse: true))
 
@@ -537,7 +537,7 @@ final class QueryTests: XCTestCase {
     }
 
     func testFetchEntriesOrderedByMultipleAttributes() {
-        let expectation = self.expectation(description: "Reverese order search")
+        let expectation = self.expectation(description: "Reverse order search")
 
         let query = try! Query.order(by: Ordering("sys.id"), Ordering(sys: .id))
 

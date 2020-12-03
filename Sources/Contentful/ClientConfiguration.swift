@@ -16,14 +16,14 @@ public enum Host {
     public static let preview = "preview.contentful.com"
 }
 
-/// The `Integration` protocol describes the libary name and version number for external integrations
+/// The `Integration` protocol describes the library name and version number for external integrations
 /// to be used in conjunction with the contentful.swift SDK.
 public protocol Integration {
 
     /// The name of the integrated library.
     var name: String { get }
 
-    /// The version number for the intergrated library.
+    /// The version number for the integrated library.
     var version: String { get }
 }
 

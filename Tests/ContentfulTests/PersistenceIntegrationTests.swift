@@ -13,7 +13,7 @@ import XCTest
 class PersistenceIntegrationTests: XCTestCase {
     
 
-    func testSerializingLocationWithNSCdoing() {
+    func testSerializingLocationWithNSCoding() {
         do {
             let jsonDecoder = JSONDecoder.withoutLocalizationContext()
             let localesJSONData = JSONDecodingTests.jsonData("all-locales")
