@@ -405,6 +405,12 @@ public class ResourceLinkInline: InlineNode {
         try super.init(from: decoder)
     }
 
+    public override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: NodeContentCodingKeys.self)
+        try container.encode(data, forKey: .data)
+    }
+    
     public override func resolveLinks(against includedEntries: [String: Entry], and includedAssets: [String: Asset]) {
         switch data.target {
         case .asset, .entry, .entryDecodable:
