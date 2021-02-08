@@ -24,6 +24,9 @@ open class Client {
     /// The identifier of the environment within the space that this Client is set to interface with.
     public let environmentId: String
 
+    /// Override all the default Asset.FileMetadata.url domains that are returned within any response. If provided this will replace `"images.ctfassets.com"` to `"images.<assetsHost>"` and the same for all other asset types like `images`, `video` etc. If not set defaults to the url returned by the contentful api
+    public static var assetsHost: String?
+
     /// Available Locales for this environment
     public var locales: [Contentful.Locale]?
 

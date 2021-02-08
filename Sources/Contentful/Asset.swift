@@ -138,8 +138,11 @@ extension Asset {
             details         = try container.decode(Details.self, forKey: .details)
             // Decodable handles URL's automatically but we need to prepend the https protocol.
             let urlString   = try container.decode(String.self, forKey: .url)
-            guard let url = URL(string: "https:" + urlString) else {
+            guard var url = URL(string: "https:" + urlString) else {
                 throw SDKError.invalidURL(string: "Asset had urlString incapable of being made into a Foundation.URL object \(urlString)")
+            }
+            if let assetsHostOverride = Client.assetsHost {
+                url = try url.replacingBaseAssetHostNameWith(hostName: assetsHostOverride)
             }
             self.url = url
         }

@@ -27,6 +27,7 @@ class AssetTests: XCTestCase {
 
     override class func tearDown() {
         super.tearDown()
+        Client.assetsHost = nil
         (client.urlSession as? DVR.Session)?.endRecording()
     }
 
@@ -36,6 +37,7 @@ class AssetTests: XCTestCase {
 
         let expectation = self.expectation(description: "Fetch single asset network expectation")
 
+        Client.assetsHost = nil
         AssetTests.client.fetch(Asset.self, id: "nyancat") { (result) in
             switch result {
             case let .success(asset):
@@ -124,6 +126,49 @@ class AssetTests: XCTestCase {
                 let assets = assetsResponse.items
                 XCTAssertEqual(assets.count, 1)
                 XCTAssertEqual(assets.first?.urlString, "https://videos.ctfassets.net/dumri3ebknon/Gluj9lzquYcK0agoCkMUs/1104fffefa098062fd9f888a0a571edd/Cute_Cat_-_3092.mp4")
+            case .failure(let error):
+                XCTFail("\(error)")
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+    
+    func testFetchingSingleImageAssetWithUrlOverride() {
+
+        let expectation = self.expectation(description: "Fetch single asset with url override network expectation")
+        
+        let overrideHost = "test.host.com"
+        Client.assetsHost = overrideHost
+        AssetTests.client.fetch(Asset.self, id: "nyancat") { (result) in
+            switch result {
+            case let .success(asset):
+                XCTAssertEqual(asset.sys.id, "nyancat")
+                XCTAssertEqual(asset.sys.type, "Asset")
+                XCTAssertEqual(url(asset).absoluteString, "https://images.\(overrideHost)/dumri3ebknon/nyancat/c78aa97bf55b7de229ee5a5f88261aa4/Nyan_cat_250px_frame.png")
+            case let .failure(error):
+                XCTFail("\(error)")
+            }
+            
+            Client.assetsHost = nil
+
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 10.0)
+    }
+    
+    func testFetchingSingleVideoAssetWithUrlOverride() {
+        let expectation = self.expectation(description: "Fetch video asset network expectation")
+
+        let overrideHost = "different.domain.co"
+        Client.assetsHost = overrideHost
+        AssetTests.client.fetchArray(of: Asset.self, matching: .where(mimetypeGroup: .video)) { result in
+            switch result {
+            case .success(let assetsResponse):
+                let assets = assetsResponse.items
+                XCTAssertEqual(assets.count, 1)
+                XCTAssertEqual(assets.first?.urlString, "https://videos.\(overrideHost)/dumri3ebknon/Gluj9lzquYcK0agoCkMUs/1104fffefa098062fd9f888a0a571edd/Cute_Cat_-_3092.mp4")
             case .failure(let error):
                 XCTFail("\(error)")
             }

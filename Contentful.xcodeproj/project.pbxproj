@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		404778D225D1650900D64609 /* URL+AssetParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404778D125D1650900D64609 /* URL+AssetParsing.swift */; };
+		404778D325D1650F00D64609 /* URL+AssetParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404778D125D1650900D64609 /* URL+AssetParsing.swift */; };
+		404778D425D1650F00D64609 /* URL+AssetParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404778D125D1650900D64609 /* URL+AssetParsing.swift */; };
+		404778D525D1651000D64609 /* URL+AssetParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404778D125D1650900D64609 /* URL+AssetParsing.swift */; };
 		5D001E60200423C700AC5A4C /* PersistenceIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D001E5F200423C700AC5A4C /* PersistenceIntegrationTests.swift */; };
 		5D001E61200423C700AC5A4C /* PersistenceIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D001E5F200423C700AC5A4C /* PersistenceIntegrationTests.swift */; };
 		5D09C24221870C27006B83F4 /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23021870C26006B83F4 /* testClientCantAccessPreviewAPIWithProductionToken.json */; };
@@ -301,6 +305,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		404778D125D1650900D64609 /* URL+AssetParsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+AssetParsing.swift"; sourceTree = "<group>"; };
 		5D001E5F200423C700AC5A4C /* PersistenceIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceIntegrationTests.swift; sourceTree = "<group>"; };
 		5D09C23021870C26006B83F4 /* testClientCantAccessPreviewAPIWithProductionToken.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testClientCantAccessPreviewAPIWithProductionToken.json; sourceTree = "<group>"; };
 		5D09C23121870C26006B83F4 /* ErrorTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ErrorTests.json; sourceTree = "<group>"; };
@@ -577,6 +582,7 @@
 				ED3CBF191E7AD57100E5B02E /* Sys.swift */,
 				ED5F8F901F8F9EA200C86411 /* TypedQuery.swift */,
 				ED02DC1220E11D0A005EC57B /* Util.swift */,
+				404778D125D1650900D64609 /* URL+AssetParsing.swift */,
 			);
 			path = Contentful;
 			sourceTree = "<group>";
@@ -1124,6 +1130,7 @@
 				5D52E25A2193375300C88FC9 /* Date.swift in Sources */,
 				6DEB233A24E84365009D5879 /* FieldType.swift in Sources */,
 				5D52E25B2193375300C88FC9 /* SyncSpace.swift in Sources */,
+				404778D425D1650F00D64609 /* URL+AssetParsing.swift in Sources */,
 				5D52E25C2193375300C88FC9 /* Locale.swift in Sources */,
 				6D48E75C251F615D0037B278 /* JSONDecoderBuilder.swift in Sources */,
 				5D52E25D2193375300C88FC9 /* Error.swift in Sources */,
@@ -1195,6 +1202,7 @@
 				A19CA3E81B83890D00A0EFCD /* Resource.swift in Sources */,
 				6DEB233824E84365009D5879 /* FieldType.swift in Sources */,
 				A1B2E3651BBACF2C00814D63 /* Locale.swift in Sources */,
+				404778D225D1650900D64609 /* URL+AssetParsing.swift in Sources */,
 				ED2C997B1ECDD0AF0039056E /* Client+UIKit.swift in Sources */,
 				6D48E75A251F615D0037B278 /* JSONDecoderBuilder.swift in Sources */,
 				ED68BD721E6DC47A00939F6D /* Query.swift in Sources */,
@@ -1297,6 +1305,7 @@
 				ED36B6F61E3BD052005581FD /* Date.swift in Sources */,
 				6DEB233924E84365009D5879 /* FieldType.swift in Sources */,
 				ED36B6FC1E3BD052005581FD /* Locale.swift in Sources */,
+				404778D325D1650F00D64609 /* URL+AssetParsing.swift in Sources */,
 				ED68BD731E6DC47F00939F6D /* Query.swift in Sources */,
 				6D48E75B251F615D0037B278 /* JSONDecoderBuilder.swift in Sources */,
 				ED3CBF201E7AD58100E5B02E /* Link.swift in Sources */,
@@ -1337,6 +1346,7 @@
 				ED36B7161E3BD053005581FD /* Date.swift in Sources */,
 				6DEB233B24E84365009D5879 /* FieldType.swift in Sources */,
 				ED36B71C1E3BD053005581FD /* Locale.swift in Sources */,
+				404778D525D1651000D64609 /* URL+AssetParsing.swift in Sources */,
 				ED68BD751E6DC48000939F6D /* Query.swift in Sources */,
 				6D48E75D251F615D0037B278 /* JSONDecoderBuilder.swift in Sources */,
 				ED3CBF221E7AD58100E5B02E /* Link.swift in Sources */,

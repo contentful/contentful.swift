@@ -71,6 +71,7 @@
       - [Swift Package Manager [swift-tools-version 5.0]](#swift-package-manager-swift-tools-version-5.0)
     - [Your first request](#your-first-request)
     - [Accessing the Preview API](#accessing-the-preview-api)
+    - [Overriding assets host](#overriding-assets-host)
     - [Authorization](#authorization)
     - [Map Contentful entries to Swift classes via `EntryDecodable`](#map-contentful-entries-to-swift-classes-via-entrydecodable)
   - [Documentation & References](#documentation--references)
@@ -109,6 +110,7 @@ In order to get started with the Contentful Swift SDK you'll need not only to in
 - [Installation](#installation)
 - [Your first request](#your-first-request)
 - [Accessing Preview API](#accessing-the-preview-api)
+- [Overriding assets host](#overriding-assets-host)
 - [Authorization](#authorization)
 
 ### Installation
@@ -174,6 +176,33 @@ let client = Client(spaceId: "cfexampleapi",
                     accessToken: "e5e8d4c5c122cf28fc1af3ff77d28bef78a3952957f15067bbc29f2f0dde0b50",
                     host: Host.preview) // Defaults to Host.delivery if omitted.
 ```
+
+### Overriding assets host
+
+When doing a fetch request, response may contain urls to the different kind of assets like images, videos etc. Here is an example of how to override host of each of those urls when parsing:
+
+```swift
+Client.assetsHost = "my.custom.assets.override.com"
+// Call fetch or sync afterwards
+```
+
+After setting the custom host, any responses from fetches or syncs that contains URLs to the assets would get them modified.
+
+As an example lets assume that above assets host override was set. If we do a fetch and contentful response contains an asset image with the url:
+
+```swift
+"//image.ctfassets.com/path/to/the/image.png"
+```
+
+It will be modified into:
+
+```swift
+"//image.my.custom.assets.override.com/path/to/the/image.png"
+```
+
+Same goes for all asset types like images, videos etc.
+
+Make sure to set `Client.assetHost` override to `nil`, when no longer needed.
 
 ### Authorization
 
