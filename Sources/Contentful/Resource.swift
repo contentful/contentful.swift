@@ -99,6 +99,8 @@ public class LocalizableResource: Resource, FlatResource, Codable {
     /// The currently selected locale to use when reading data from the `fields` dictionary.
     public var currentlySelectedLocale: Locale
 
+    public var metadata: [FieldName: Any]?
+    
     /// The fields with content. If there is no value for a field associated with the currently selected `Locale`,
     /// the SDK will walk down fallback chain until a value is found. If there is still no value after
     /// walking the full chain, the field will be omitted from the `fields` dictionary.
@@ -153,6 +155,8 @@ public class LocalizableResource: Resource, FlatResource, Codable {
         localizableFields = try Localization.fieldsInMultiLocaleFormat(from: fieldsDictionary,
                                                                        selectedLocale: currentlySelectedLocale,
                                                                        wasSelectedOnAPILevel: sys.locale != nil)
+        self.metadata = try? container.decode(Dictionary<FieldName, Any>.self, forKey: .metadata)
+        
     }
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
@@ -165,6 +169,8 @@ public class LocalizableResource: Resource, FlatResource, Codable {
         case sys
         /// The JSON key for the fields object.
         case fields
+        /// The JSON key for the metadata object
+        case metadata
     }
 }
 
