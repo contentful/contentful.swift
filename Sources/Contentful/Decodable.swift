@@ -55,6 +55,13 @@ public extension Decoder {
         let fieldsContainer = try container.nestedContainer(keyedBy: keyType, forKey: .fields)
         return fieldsContainer
     }
+    
+    /// Extract the nested JSON container for the "metadata" dictionary if present in Entry and Asset resources.
+    func contentfulMetadataContainer<NestedKey>(keyedBy keyType: NestedKey.Type) throws -> KeyedDecodingContainer<NestedKey>? {
+        let container = try self.container(keyedBy: LocalizableResource.CodingKeys.self)
+        let metadataContainer = try? container.nestedContainer(keyedBy: keyType, forKey: .metadata)
+        return metadataContainer
+    }
 }
 
 extension JSONDecoder {

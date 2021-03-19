@@ -99,7 +99,8 @@ public class LocalizableResource: Resource, FlatResource, Codable {
     /// The currently selected locale to use when reading data from the `fields` dictionary.
     public var currentlySelectedLocale: Locale
 
-    public var metadata: [FieldName: Any]?
+    /// The metadata linking to additional content like tags.
+    public var metadata: [String: Any]?
     
     /// The fields with content. If there is no value for a field associated with the currently selected `Locale`,
     /// the SDK will walk down fallback chain until a value is found. If there is still no value after

@@ -132,4 +132,55 @@ class AssetTests: XCTestCase {
 
         waitForExpectations(timeout: 10.0, handler: nil)
     }
+    
+    func testMetadataExistsWithEmptyTagsArray() {
+        
+        let expectation = self.expectation(description: "Will return empty tags within metadata ")
+
+        AssetTests.client.fetch(Asset.self, id: "happycat") { (result) in
+            switch result {
+            case let .success(entry):
+                XCTAssertEqual(entry.sys.id, "happycat")
+                XCTAssertEqual(entry.sys.type, "Asset")
+                guard let tags = entry.metadata?["tags"] as? [Any] else {
+                    XCTAssert(false, "Tags array could not be parsed")
+                    return
+                }
+                XCTAssertEqual(tags.count, 0)
+            case let .failure(error):
+                XCTFail("\(error)")
+            }
+
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+    
+    func testMetadataExistsOneTag() {
+        let expectation = self.expectation(description: "Will return 1 tag within tags array in metadata ")
+
+        AssetTests.client.fetch(Asset.self, id: "nyancat") { (result) in
+            switch result {
+            case let .success(entry):
+                XCTAssertEqual(entry.sys.id, "nyancat")
+                XCTAssertEqual(entry.sys.type, "Asset")
+                guard let tags = entry.metadata?["tags"] as? [Any] else {
+                    XCTAssert(false, "Tags array could not be parsed")
+                    return
+                }
+                guard let tag = tags.first as? Link else {
+                    XCTAssert(false, "Tag within metadata is wrong format")
+                    return
+                }
+                XCTAssertEqual(tag.id, "nyanCatAssetTag")
+            case let .failure(error):
+                XCTFail("\(error)")
+            }
+
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
 }

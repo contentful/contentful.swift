@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		406789A32605346B00C77930 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 406789A22605346B00C77930 /* QueryTests.json */; };
+		406789A42605346B00C77930 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 406789A22605346B00C77930 /* QueryTests.json */; };
+		406789A52605346B00C77930 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 406789A22605346B00C77930 /* QueryTests.json */; };
+		40C86140260512A600B9C26D /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 40C8613F260512A600B9C26D /* EntryTests.json */; };
+		40C86141260512A600B9C26D /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 40C8613F260512A600B9C26D /* EntryTests.json */; };
+		40C86142260512A600B9C26D /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 40C8613F260512A600B9C26D /* EntryTests.json */; };
+		40C861522605151000B9C26D /* AssetTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 40C861512605150F00B9C26D /* AssetTests.json */; };
+		40C861532605151000B9C26D /* AssetTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 40C861512605150F00B9C26D /* AssetTests.json */; };
+		40C861542605151000B9C26D /* AssetTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 40C861512605150F00B9C26D /* AssetTests.json */; };
 		5D001E60200423C700AC5A4C /* PersistenceIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D001E5F200423C700AC5A4C /* PersistenceIntegrationTests.swift */; };
 		5D001E61200423C700AC5A4C /* PersistenceIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D001E5F200423C700AC5A4C /* PersistenceIntegrationTests.swift */; };
 		5D09C24221870C27006B83F4 /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23021870C26006B83F4 /* testClientCantAccessPreviewAPIWithProductionToken.json */; };
@@ -23,16 +32,12 @@
 		5D09C25221870C27006B83F4 /* ImageTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23521870C27006B83F4 /* ImageTests.json */; };
 		5D09C25421870C27006B83F4 /* LocalizationTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23621870C27006B83F4 /* LocalizationTests.json */; };
 		5D09C25521870C27006B83F4 /* LocalizationTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23621870C27006B83F4 /* LocalizationTests.json */; };
-		5D09C25721870C27006B83F4 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23721870C27006B83F4 /* QueryTests.json */; };
-		5D09C25821870C27006B83F4 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23721870C27006B83F4 /* QueryTests.json */; };
 		5D09C25D21870C27006B83F4 /* ContentTypeTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23921870C27006B83F4 /* ContentTypeTests.json */; };
 		5D09C25E21870C27006B83F4 /* ContentTypeTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23921870C27006B83F4 /* ContentTypeTests.json */; };
 		5D09C26021870C27006B83F4 /* SyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23A21870C27006B83F4 /* SyncTests.json */; };
 		5D09C26121870C27006B83F4 /* SyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23A21870C27006B83F4 /* SyncTests.json */; };
 		5D09C26321870C27006B83F4 /* PreviewSyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23B21870C27006B83F4 /* PreviewSyncTests.json */; };
 		5D09C26421870C27006B83F4 /* PreviewSyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23B21870C27006B83F4 /* PreviewSyncTests.json */; };
-		5D09C26621870C27006B83F4 /* AssetTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23C21870C27006B83F4 /* AssetTests.json */; };
-		5D09C26721870C27006B83F4 /* AssetTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23C21870C27006B83F4 /* AssetTests.json */; };
 		5D09C26C21870C27006B83F4 /* testClientCanAccessPreviewAPI.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23E21870C27006B83F4 /* testClientCanAccessPreviewAPI.json */; };
 		5D09C26D21870C27006B83F4 /* testClientCanAccessPreviewAPI.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23E21870C27006B83F4 /* testClientCanAccessPreviewAPI.json */; };
 		5D52E2462193375300C88FC9 /* RichText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD410462190BC8B003FC01E /* RichText.swift */; };
@@ -62,15 +67,12 @@
 		5D52E25F2193375300C88FC9 /* ImageOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED91C13F1EDCB03600F0FC0A /* ImageOptions.swift */; };
 		5D52E2612193375300C88FC9 /* Client+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2C99791ECDD0AF0039056E /* Client+UIKit.swift */; };
 		5D52E2722193381F00C88FC9 /* RichTextNodeDecodingTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DD410E421918E62003FC01E /* RichTextNodeDecodingTests.json */; };
-		5D52E2732193381F00C88FC9 /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DFE08DA2189D6AC00B0D68E /* EntryTests.json */; };
-		5D52E2742193381F00C88FC9 /* AssetTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23C21870C27006B83F4 /* AssetTests.json */; };
 		5D52E2752193381F00C88FC9 /* ContentTypeTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23921870C27006B83F4 /* ContentTypeTests.json */; };
 		5D52E2762193381F00C88FC9 /* EnvironmentsTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23421870C27006B83F4 /* EnvironmentsTests.json */; };
 		5D52E2772193381F00C88FC9 /* ErrorTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23121870C26006B83F4 /* ErrorTests.json */; };
 		5D52E2782193381F00C88FC9 /* ImageTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23521870C27006B83F4 /* ImageTests.json */; };
 		5D52E27A2193381F00C88FC9 /* LocalizationTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23621870C27006B83F4 /* LocalizationTests.json */; };
 		5D52E27B2193381F00C88FC9 /* PreviewSyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23B21870C27006B83F4 /* PreviewSyncTests.json */; };
-		5D52E27C2193381F00C88FC9 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23721870C27006B83F4 /* QueryTests.json */; };
 		5D52E27D2193381F00C88FC9 /* RateLimitTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23221870C26006B83F4 /* RateLimitTests.json */; };
 		5D52E27E2193381F00C88FC9 /* SyncTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23A21870C27006B83F4 /* SyncTests.json */; };
 		5D52E27F2193381F00C88FC9 /* testClientCanAccessPreviewAPI.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D09C23E21870C27006B83F4 /* testClientCanAccessPreviewAPI.json */; };
@@ -120,8 +122,6 @@
 		5DD4104A2190BC8B003FC01E /* RichText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD410462190BC8B003FC01E /* RichText.swift */; };
 		5DD410EA21918E84003FC01E /* RichTextNodeDecodingTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DD410E421918E62003FC01E /* RichTextNodeDecodingTests.json */; };
 		5DD410EB21918E84003FC01E /* RichTextNodeDecodingTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DD410E421918E62003FC01E /* RichTextNodeDecodingTests.json */; };
-		5DFE08DB2189D6AC00B0D68E /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DFE08DA2189D6AC00B0D68E /* EntryTests.json */; };
-		5DFE08DC2189D6AC00B0D68E /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DFE08DA2189D6AC00B0D68E /* EntryTests.json */; };
 		6D48E754251F5DAF0037B278 /* LinkResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D48E753251F5DAF0037B278 /* LinkResolver.swift */; };
 		6D48E755251F5DAF0037B278 /* LinkResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D48E753251F5DAF0037B278 /* LinkResolver.swift */; };
 		6D48E756251F5DAF0037B278 /* LinkResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D48E753251F5DAF0037B278 /* LinkResolver.swift */; };
@@ -301,6 +301,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		406789A22605346B00C77930 /* QueryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = QueryTests.json; path = "../../../../../../../../Library/Developer/CoreSimulator/Devices/37CB14AE-596F-41E2-9599-8BD732423F44/data/Desktop/DVR/QueryTests.json"; sourceTree = "<group>"; };
+		40C8613F260512A600B9C26D /* EntryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EntryTests.json; sourceTree = "<group>"; };
+		40C861512605150F00B9C26D /* AssetTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AssetTests.json; sourceTree = "<group>"; };
 		5D001E5F200423C700AC5A4C /* PersistenceIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceIntegrationTests.swift; sourceTree = "<group>"; };
 		5D09C23021870C26006B83F4 /* testClientCantAccessPreviewAPIWithProductionToken.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testClientCantAccessPreviewAPIWithProductionToken.json; sourceTree = "<group>"; };
 		5D09C23121870C26006B83F4 /* ErrorTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ErrorTests.json; sourceTree = "<group>"; };
@@ -309,11 +312,9 @@
 		5D09C23421870C27006B83F4 /* EnvironmentsTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EnvironmentsTests.json; sourceTree = "<group>"; };
 		5D09C23521870C27006B83F4 /* ImageTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ImageTests.json; sourceTree = "<group>"; };
 		5D09C23621870C27006B83F4 /* LocalizationTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LocalizationTests.json; sourceTree = "<group>"; };
-		5D09C23721870C27006B83F4 /* QueryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QueryTests.json; sourceTree = "<group>"; };
 		5D09C23921870C27006B83F4 /* ContentTypeTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ContentTypeTests.json; sourceTree = "<group>"; };
 		5D09C23A21870C27006B83F4 /* SyncTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SyncTests.json; sourceTree = "<group>"; };
 		5D09C23B21870C27006B83F4 /* PreviewSyncTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PreviewSyncTests.json; sourceTree = "<group>"; };
-		5D09C23C21870C27006B83F4 /* AssetTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AssetTests.json; sourceTree = "<group>"; };
 		5D09C23E21870C27006B83F4 /* testClientCanAccessPreviewAPI.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testClientCanAccessPreviewAPI.json; sourceTree = "<group>"; };
 		5D52E23D2193374100C88FC9 /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D52E266219337AF00C88FC9 /* ContentfulTests_tvOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContentfulTests_tvOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -332,7 +333,6 @@
 		5DC635CE219AC0B0001E3174 /* LoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerTests.swift; sourceTree = "<group>"; };
 		5DD410462190BC8B003FC01E /* RichText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichText.swift; sourceTree = "<group>"; };
 		5DD410E421918E62003FC01E /* RichTextNodeDecodingTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RichTextNodeDecodingTests.json; sourceTree = "<group>"; };
-		5DFE08DA2189D6AC00B0D68E /* EntryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EntryTests.json; sourceTree = "<group>"; };
 		6D48E753251F5DAF0037B278 /* LinkResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkResolver.swift; sourceTree = "<group>"; };
 		6D48E759251F615D0037B278 /* JSONDecoderBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecoderBuilder.swift; sourceTree = "<group>"; };
 		6D48E75E251F7BBC0037B278 /* Client+Sync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Client+Sync.swift"; sourceTree = "<group>"; };
@@ -677,18 +677,18 @@
 		ED9102671E65AE880076FDBD /* DVRRecordings */ = {
 			isa = PBXGroup;
 			children = (
+				406789A22605346B00C77930 /* QueryTests.json */,
+				40C861512605150F00B9C26D /* AssetTests.json */,
+				40C8613F260512A600B9C26D /* EntryTests.json */,
 				757C0AD12257D94E008F91BD /* SyncWithPaginationTests.json */,
 				5D73EE3821B915C60091DB67 /* LinkResolverTests.json */,
 				5DD410E421918E62003FC01E /* RichTextNodeDecodingTests.json */,
-				5DFE08DA2189D6AC00B0D68E /* EntryTests.json */,
-				5D09C23C21870C27006B83F4 /* AssetTests.json */,
 				5D09C23921870C27006B83F4 /* ContentTypeTests.json */,
 				5D09C23421870C27006B83F4 /* EnvironmentsTests.json */,
 				5D09C23121870C26006B83F4 /* ErrorTests.json */,
 				5D09C23521870C27006B83F4 /* ImageTests.json */,
 				5D09C23621870C27006B83F4 /* LocalizationTests.json */,
 				5D09C23B21870C27006B83F4 /* PreviewSyncTests.json */,
-				5D09C23721870C27006B83F4 /* QueryTests.json */,
 				5D09C23221870C26006B83F4 /* RateLimitTests.json */,
 				5D09C23A21870C27006B83F4 /* SyncTests.json */,
 				5D09C23E21870C27006B83F4 /* testClientCanAccessPreviewAPI.json */,
@@ -954,22 +954,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D52E2722193381F00C88FC9 /* RichTextNodeDecodingTests.json in Resources */,
-				5D52E2732193381F00C88FC9 /* EntryTests.json in Resources */,
-				5D52E2742193381F00C88FC9 /* AssetTests.json in Resources */,
 				5D52E2752193381F00C88FC9 /* ContentTypeTests.json in Resources */,
 				5D52E2762193381F00C88FC9 /* EnvironmentsTests.json in Resources */,
 				5D52E2772193381F00C88FC9 /* ErrorTests.json in Resources */,
 				5D52E2782193381F00C88FC9 /* ImageTests.json in Resources */,
 				5D52E27A2193381F00C88FC9 /* LocalizationTests.json in Resources */,
 				5D52E27B2193381F00C88FC9 /* PreviewSyncTests.json in Resources */,
-				5D52E27C2193381F00C88FC9 /* QueryTests.json in Resources */,
 				5D52E27D2193381F00C88FC9 /* RateLimitTests.json in Resources */,
 				5D52E27E2193381F00C88FC9 /* SyncTests.json in Resources */,
 				5D52E27F2193381F00C88FC9 /* testClientCanAccessPreviewAPI.json in Resources */,
 				5D73EE3B21B915C60091DB67 /* LinkResolverTests.json in Resources */,
+				40C86142260512A600B9C26D /* EntryTests.json in Resources */,
 				5D52E2802193381F00C88FC9 /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */,
+				40C861542605151000B9C26D /* AssetTests.json in Resources */,
 				5D52E2812193381F00C88FC9 /* testFetchSpace.json in Resources */,
 				757C0AD52257D956008F91BD /* SyncWithPaginationTests.json in Resources */,
+				406789A52605346B00C77930 /* QueryTests.json in Resources */,
 				5D52E2822193381F00C88FC9 /* Fixtures in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -991,17 +991,17 @@
 				5D09C24E21870C27006B83F4 /* EnvironmentsTests.json in Resources */,
 				5D09C24821870C27006B83F4 /* RateLimitTests.json in Resources */,
 				5D09C26C21870C27006B83F4 /* testClientCanAccessPreviewAPI.json in Resources */,
-				5D09C25721870C27006B83F4 /* QueryTests.json in Resources */,
 				5D09C26321870C27006B83F4 /* PreviewSyncTests.json in Resources */,
 				5DD410EB21918E84003FC01E /* RichTextNodeDecodingTests.json in Resources */,
 				5D09C26021870C27006B83F4 /* SyncTests.json in Resources */,
-				5D09C26621870C27006B83F4 /* AssetTests.json in Resources */,
 				5D09C24221870C27006B83F4 /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */,
-				5DFE08DB2189D6AC00B0D68E /* EntryTests.json in Resources */,
 				5D73EE3921B915C60091DB67 /* LinkResolverTests.json in Resources */,
+				40C86140260512A600B9C26D /* EntryTests.json in Resources */,
 				ED02DC9F20E12405005EC57B /* Fixtures in Resources */,
+				40C861522605151000B9C26D /* AssetTests.json in Resources */,
 				5D09C24B21870C27006B83F4 /* testFetchSpace.json in Resources */,
 				757C0AD32257D955008F91BD /* SyncWithPaginationTests.json in Resources */,
+				406789A32605346B00C77930 /* QueryTests.json in Resources */,
 				5D09C24521870C27006B83F4 /* ErrorTests.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1012,21 +1012,21 @@
 			files = (
 				5D09C24621870C27006B83F4 /* ErrorTests.json in Resources */,
 				5D09C24C21870C27006B83F4 /* testFetchSpace.json in Resources */,
-				5D09C26721870C27006B83F4 /* AssetTests.json in Resources */,
 				5D09C26D21870C27006B83F4 /* testClientCanAccessPreviewAPI.json in Resources */,
 				5D09C26121870C27006B83F4 /* SyncTests.json in Resources */,
 				5D09C24F21870C27006B83F4 /* EnvironmentsTests.json in Resources */,
 				5D09C26421870C27006B83F4 /* PreviewSyncTests.json in Resources */,
 				5DD410EA21918E84003FC01E /* RichTextNodeDecodingTests.json in Resources */,
-				5D09C25821870C27006B83F4 /* QueryTests.json in Resources */,
 				ED02DCA020E12405005EC57B /* Fixtures in Resources */,
 				5D09C25521870C27006B83F4 /* LocalizationTests.json in Resources */,
-				5DFE08DC2189D6AC00B0D68E /* EntryTests.json in Resources */,
 				5D09C25221870C27006B83F4 /* ImageTests.json in Resources */,
 				5D73EE3A21B915C60091DB67 /* LinkResolverTests.json in Resources */,
+				40C86141260512A600B9C26D /* EntryTests.json in Resources */,
 				5D09C25E21870C27006B83F4 /* ContentTypeTests.json in Resources */,
+				40C861532605151000B9C26D /* AssetTests.json in Resources */,
 				5D09C24921870C27006B83F4 /* RateLimitTests.json in Resources */,
 				757C0AD42257D955008F91BD /* SyncWithPaginationTests.json in Resources */,
+				406789A42605346B00C77930 /* QueryTests.json in Resources */,
 				5D09C24321870C27006B83F4 /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
