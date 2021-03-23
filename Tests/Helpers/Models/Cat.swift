@@ -11,7 +11,7 @@ final class Cat: Resource, EntryDecodable, FieldKeysQueryable {
     let name: String?
     let lives: Int?
     let likes: [String]?
-    var tags: [Link]?
+    var metadata: Metadata?
 
     // Relationship fields.
     var bestFriend: Cat?
@@ -20,9 +20,7 @@ final class Cat: Resource, EntryDecodable, FieldKeysQueryable {
     public required init(from decoder: Decoder) throws {
         sys             = try decoder.sys()
         let fields      = try decoder.contentfulFieldsContainer(keyedBy: Cat.FieldKeys.self)
-        if let metadata = try decoder.contentfulMetadataContainer(keyedBy: Cat.MetadataKeys.self) {
-            self.tags       = try metadata.decodeIfPresent([Link].self, forKey: .tags)
-        }
+        self.metadata   = try decoder.metadata()
         self.name       = try fields.decodeIfPresent(String.self, forKey: .name)
         self.color      = try fields.decodeIfPresent(String.self, forKey: .color)
         self.likes      = try fields.decodeIfPresent(Array<String>.self, forKey: .likes)
@@ -39,9 +37,5 @@ final class Cat: Resource, EntryDecodable, FieldKeysQueryable {
     enum FieldKeys: String, CodingKey {
         case bestFriend, image
         case name, color, likes, lives
-    }
-    
-    enum MetadataKeys: String, CodingKey {
-        case tags
     }
 }

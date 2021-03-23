@@ -142,11 +142,11 @@ class AssetTests: XCTestCase {
             case let .success(entry):
                 XCTAssertEqual(entry.sys.id, "happycat")
                 XCTAssertEqual(entry.sys.type, "Asset")
-                guard let tags = entry.metadata?["tags"] as? [Any] else {
-                    XCTAssert(false, "Tags array could not be parsed")
+                guard let metadata = entry.metadata else {
+                    XCTAssert(false, "Metadata is nil")
                     return
                 }
-                XCTAssertEqual(tags.count, 0)
+                XCTAssertEqual(metadata.tags.count, 0)
             case let .failure(error):
                 XCTFail("\(error)")
             }
@@ -165,14 +165,16 @@ class AssetTests: XCTestCase {
             case let .success(entry):
                 XCTAssertEqual(entry.sys.id, "nyancat")
                 XCTAssertEqual(entry.sys.type, "Asset")
-                guard let tags = entry.metadata?["tags"] as? [Any] else {
-                    XCTAssert(false, "Tags array could not be parsed")
+                guard let metadata = entry.metadata else {
+                    XCTAssert(false, "Metadata is nil")
                     return
                 }
-                guard let tag = tags.first as? Link else {
-                    XCTAssert(false, "Tag within metadata is wrong format")
+                
+                guard let tag = metadata.tags.first else {
+                    XCTAssert(false, "Tags should not be empty here")
                     return
                 }
+                
                 XCTAssertEqual(tag.id, "nyanCatAssetTag")
             case let .failure(error):
                 XCTFail("\(error)")

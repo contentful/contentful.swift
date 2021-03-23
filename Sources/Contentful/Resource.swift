@@ -100,7 +100,7 @@ public class LocalizableResource: Resource, FlatResource, Codable {
     public var currentlySelectedLocale: Locale
 
     /// The metadata linking to additional content like tags.
-    public var metadata: [String: Any]?
+    public var metadata: Metadata?
     
     /// The fields with content. If there is no value for a field associated with the currently selected `Locale`,
     /// the SDK will walk down fallback chain until a value is found. If there is still no value after
@@ -156,9 +156,9 @@ public class LocalizableResource: Resource, FlatResource, Codable {
         localizableFields = try Localization.fieldsInMultiLocaleFormat(from: fieldsDictionary,
                                                                        selectedLocale: currentlySelectedLocale,
                                                                        wasSelectedOnAPILevel: sys.locale != nil)
-        self.metadata = try? container.decode(Dictionary<FieldName, Any>.self, forKey: .metadata)
-        
+        self.metadata = try? container.decode(Metadata.self, forKey: .metadata)
     }
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(sys, forKey: .sys)

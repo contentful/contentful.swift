@@ -884,7 +884,7 @@ final class QueryTests: XCTestCase {
                     return
                 }
 
-                guard let tags = cat.tags else {
+                guard let tags = cat.metadata?.tags else {
                     XCTAssert(false, "Tags array could not be parsed")
                     return
                 }
@@ -911,7 +911,7 @@ final class QueryTests: XCTestCase {
                     return
                 }
 
-                guard let tags = cat.tags else {
+                guard let tags = cat.metadata?.tags else {
                     XCTAssert(false, "Tags array could not be parsed")
                     return
                 }
@@ -941,7 +941,7 @@ final class QueryTests: XCTestCase {
                     return
                 }
                 
-                guard let tags = cat.tags else {
+                guard let tags = cat.metadata?.tags else {
                     XCTFail("Could not find tags")
                     return
                 }
@@ -967,7 +967,7 @@ final class QueryTests: XCTestCase {
                 let cats = catsResponse.items
                 XCTAssertEqual(cats.count, 2)
                 for cat in cats {
-                    XCTAssertTrue(cat.tags?.count == .some(0))
+                    XCTAssertTrue(cat.metadata?.tags.count == .some(0))
                 }
             case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
@@ -994,7 +994,7 @@ final class QueryTests: XCTestCase {
                     return
                 }
                 
-                let allTagsIds = garfield.tags?.map { $0.id } ?? []
+                let allTagsIds = garfield.metadata?.tags.map { $0.id } ?? []
                 
                 guard !allTagsIds.isEmpty else {
                     XCTFail("Tags array should not be empty")
@@ -1027,7 +1027,7 @@ final class QueryTests: XCTestCase {
                     return
                 }
                 
-                let allTagsIds = garfield.tags?.map { $0.id } ?? []
+                let allTagsIds = garfield.metadata?.tags.map { $0.id } ?? []
                 
                 guard !allTagsIds.isEmpty else {
                     XCTFail("Tags array should not be empty")
