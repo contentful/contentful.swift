@@ -940,6 +940,13 @@ final class QueryTests: XCTestCase {
                     XCTFail("Couldn't find Garfield.")
                     return
                 }
+                
+                guard let tags = cat.tags else {
+                    XCTFail("Could not find tags")
+                    return
+                }
+                
+                XCTAssertTrue(tags.count > 0)
             case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
             }
@@ -959,6 +966,9 @@ final class QueryTests: XCTestCase {
             case .success(let catsResponse):
                 let cats = catsResponse.items
                 XCTAssertEqual(cats.count, 2)
+                for cat in cats {
+                    XCTAssertTrue(cat.tags?.count == .some(0))
+                }
             case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
             }
@@ -979,10 +989,19 @@ final class QueryTests: XCTestCase {
                 let cats = catsResponse.items
                 XCTAssertEqual(cats.count, 1)
 
-                guard let _ = cats.first(where: { $0.id == "garfield" }) else {
+                guard let garfield = cats.first(where: { $0.id == "garfield" }) else {
                     XCTFail("Couldn't find Garfield.")
                     return
                 }
+                
+                let allTagsIds = garfield.tags?.map { $0.id } ?? []
+                
+                guard !allTagsIds.isEmpty else {
+                    XCTFail("Tags array should not be empty")
+                    return
+                }
+                
+                XCTAssertTrue(allTagsIds.contains("garfieldTag"))
             case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
             }
@@ -1003,10 +1022,19 @@ final class QueryTests: XCTestCase {
                 let cats = catsResponse.items
                 XCTAssertEqual(cats.count, 1)
 
-                guard let _ = cats.first(where: { $0.id == "garfield" }) else {
+                guard let garfield = cats.first(where: { $0.id == "garfield" }) else {
                     XCTFail("Couldn't find Garfield.")
                     return
                 }
+                
+                let allTagsIds = garfield.tags?.map { $0.id } ?? []
+                
+                guard !allTagsIds.isEmpty else {
+                    XCTFail("Tags array should not be empty")
+                    return
+                }
+                
+                XCTAssertTrue(allTagsIds.contains("garfieldTag"))
             case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
             }
