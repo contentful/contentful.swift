@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		40904F10260A166200C01E61 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 40904F0F260A166200C01E61 /* QueryTests.json */; };
-		40904F11260A166200C01E61 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 40904F0F260A166200C01E61 /* QueryTests.json */; };
-		40904F12260A166200C01E61 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 40904F0F260A166200C01E61 /* QueryTests.json */; };
 		40904F3A260A22ED00C01E61 /* Metadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40904F1A260A1DB600C01E61 /* Metadata.swift */; };
 		40904F42260A22ED00C01E61 /* Metadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40904F1A260A1DB600C01E61 /* Metadata.swift */; };
 		40904F4A260A22EE00C01E61 /* Metadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40904F1A260A1DB600C01E61 /* Metadata.swift */; };
 		40904F52260A22EE00C01E61 /* Metadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40904F1A260A1DB600C01E61 /* Metadata.swift */; };
+		40904F84260A5EBE00C01E61 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 40904F83260A5EBE00C01E61 /* QueryTests.json */; };
+		40904F85260A5EBE00C01E61 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 40904F83260A5EBE00C01E61 /* QueryTests.json */; };
+		40904F86260A5EBE00C01E61 /* QueryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 40904F83260A5EBE00C01E61 /* QueryTests.json */; };
 		40C86140260512A600B9C26D /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 40C8613F260512A600B9C26D /* EntryTests.json */; };
 		40C86141260512A600B9C26D /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 40C8613F260512A600B9C26D /* EntryTests.json */; };
 		40C86142260512A600B9C26D /* EntryTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 40C8613F260512A600B9C26D /* EntryTests.json */; };
@@ -305,8 +305,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		40904F0F260A166200C01E61 /* QueryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QueryTests.json; sourceTree = "<group>"; };
 		40904F1A260A1DB600C01E61 /* Metadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metadata.swift; sourceTree = "<group>"; };
+		40904F83260A5EBE00C01E61 /* QueryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QueryTests.json; sourceTree = "<group>"; };
 		40C8613F260512A600B9C26D /* EntryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EntryTests.json; sourceTree = "<group>"; };
 		40C861512605150F00B9C26D /* AssetTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AssetTests.json; sourceTree = "<group>"; };
 		5D001E5F200423C700AC5A4C /* PersistenceIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceIntegrationTests.swift; sourceTree = "<group>"; };
@@ -683,7 +683,7 @@
 		ED9102671E65AE880076FDBD /* DVRRecordings */ = {
 			isa = PBXGroup;
 			children = (
-				40904F0F260A166200C01E61 /* QueryTests.json */,
+				40904F83260A5EBE00C01E61 /* QueryTests.json */,
 				40C861512605150F00B9C26D /* AssetTests.json */,
 				40C8613F260512A600B9C26D /* EntryTests.json */,
 				757C0AD12257D94E008F91BD /* SyncWithPaginationTests.json */,
@@ -975,7 +975,7 @@
 				40C861542605151000B9C26D /* AssetTests.json in Resources */,
 				5D52E2812193381F00C88FC9 /* testFetchSpace.json in Resources */,
 				757C0AD52257D956008F91BD /* SyncWithPaginationTests.json in Resources */,
-				40904F12260A166200C01E61 /* QueryTests.json in Resources */,
+				40904F86260A5EBE00C01E61 /* QueryTests.json in Resources */,
 				5D52E2822193381F00C88FC9 /* Fixtures in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1007,7 +1007,7 @@
 				40C861522605151000B9C26D /* AssetTests.json in Resources */,
 				5D09C24B21870C27006B83F4 /* testFetchSpace.json in Resources */,
 				757C0AD32257D955008F91BD /* SyncWithPaginationTests.json in Resources */,
-				40904F10260A166200C01E61 /* QueryTests.json in Resources */,
+				40904F84260A5EBE00C01E61 /* QueryTests.json in Resources */,
 				5D09C24521870C27006B83F4 /* ErrorTests.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1032,7 +1032,7 @@
 				40C861532605151000B9C26D /* AssetTests.json in Resources */,
 				5D09C24921870C27006B83F4 /* RateLimitTests.json in Resources */,
 				757C0AD42257D955008F91BD /* SyncWithPaginationTests.json in Resources */,
-				40904F11260A166200C01E61 /* QueryTests.json in Resources */,
+				40904F85260A5EBE00C01E61 /* QueryTests.json in Resources */,
 				5D09C24321870C27006B83F4 /* testClientCantAccessPreviewAPIWithProductionToken.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1702,7 +1702,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
+				MARKETING_VERSION = 5.5.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.contentful.Contentful;
 				PRODUCT_NAME = Contentful;
@@ -1732,7 +1732,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
+				MARKETING_VERSION = 5.5.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.contentful.Contentful;
 				PRODUCT_NAME = Contentful;
@@ -2064,7 +2064,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = "${CONTENTFUL_SDK_VERSION}";
+				MARKETING_VERSION = 5.5.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.contentful.Contentful;
 				PRODUCT_NAME = Contentful;
