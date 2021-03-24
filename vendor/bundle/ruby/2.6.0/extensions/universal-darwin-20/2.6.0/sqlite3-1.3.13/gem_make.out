@@ -1,0 +1,50 @@
+current directory: /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/sqlite3-1.3.13/ext/sqlite3
+/System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/bin/ruby -I /System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/lib/ruby/2.6.0 -r ./siteconf20210401-21613-bj5b69.rb extconf.rb
+checking for sqlite3.h... yes
+checking for pthread_create() in -lpthread... yes
+checking for sqlite3_libversion_number() in -lsqlite3... yes
+checking for rb_proc_arity()... yes
+checking for rb_integer_pack()... yes
+checking for sqlite3_initialize()... yes
+checking for sqlite3_backup_init()... yes
+checking for sqlite3_column_database_name()... yes
+checking for sqlite3_enable_load_extension()... no
+checking for sqlite3_load_extension()... no
+checking for sqlite3_open_v2()... yes
+checking for sqlite3_prepare_v2()... yes
+checking for sqlite3_int64 in sqlite3.h... yes
+checking for sqlite3_uint64 in sqlite3.h... yes
+creating Makefile
+
+current directory: /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/sqlite3-1.3.13/ext/sqlite3
+make "DESTDIR=" clean
+
+current directory: /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/sqlite3-1.3.13/ext/sqlite3
+make "DESTDIR="
+compiling backup.c
+compiling database.c
+database.c:233:3: warning: 'sqlite3_trace' is deprecated: first deprecated in macOS 10.12 [-Wdeprecated-declarations]
+  sqlite3_trace(ctx->db, NIL_P(block) ? NULL : tracefunc, (void *)self);
+  ^~~~~~~~~~~~~
+  sqlite3_trace_v2
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sqlite3.h:3122:36: note: 'sqlite3_trace' has been explicitly marked deprecated here
+SQLITE_API SQLITE_DEPRECATED void *sqlite3_trace(
+                                   ^
+1 warning generated.
+compiling exception.c
+compiling sqlite3.c
+compiling statement.c
+linking shared-object sqlite3/sqlite3_native.bundle
+ld: warning: directory not found for option '-L/usr/local/opt/sqlite/lib'
+ld: warning: directory not found for option '-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.2.Internal.sdk/usr/local/lib'
+ld: warning: ignoring file backup.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file database.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file exception.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file sqlite3.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file statement.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: directory not found for option '-L/usr/local/opt/sqlite/lib'
+ld: warning: directory not found for option '-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.2.Internal.sdk/usr/local/lib'
+
+current directory: /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/sqlite3-1.3.13/ext/sqlite3
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 sqlite3_native.bundle ./.gem.20210401-21613-hukdbp/sqlite3

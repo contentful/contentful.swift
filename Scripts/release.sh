@@ -16,4 +16,4 @@ git add .
 git commit --amend --no-edit
 git push -f
 
-echo "Contentful v$CONTENTFUL_SDK_VERSION is officially released! Attach the binary found at Contentful.framework.zip to the release on Github"
+echo "Contentful v$CONTENTFUL_SDK_VERSION is officially released! Archive and attach the binary found at Carthage/Build/Contentful.xcframework to the release on Github"

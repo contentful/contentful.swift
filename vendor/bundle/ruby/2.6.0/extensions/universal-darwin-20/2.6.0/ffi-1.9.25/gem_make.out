@@ -1,0 +1,192 @@
+current directory: /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c
+/System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/bin/ruby -I /System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/lib/ruby/2.6.0 -r ./siteconf20210401-21613-1hsaa81.rb extconf.rb
+checking for ffi.h... no
+checking for ffi.h in /usr/local/include,/usr/include/ffi... no
+checking for shlwapi.h... no
+checking for ruby/thread.h... yes
+checking for rb_thread_blocking_region()... no
+checking for rb_thread_call_with_gvl()... yes
+checking for rb_thread_call_without_gvl()... yes
+creating extconf.h
+creating Makefile
+
+current directory: /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c
+make "DESTDIR=" clean
+
+current directory: /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c
+make "DESTDIR="
+Configuring libffi
+clang: error: unsupported option '-print-multi-os-directory'
+clang: error: no input files
+cd "/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi-universal-darwin20" && /Applications/Xcode.app/Contents/Developer/usr/bin/make
+/Applications/Xcode.app/Contents/Developer/usr/bin/make 'AR_FLAGS=' 'CC_FOR_BUILD=' 'CFLAGS=-Wall -fexceptions' 'CXXFLAGS=-g -O2' 'CFLAGS_FOR_BUILD=' 'CFLAGS_FOR_TARGET=' 'INSTALL=/usr/bin/install -c' 'INSTALL_DATA=/usr/bin/install -c -m 644' 'INSTALL_PROGRAM=/usr/bin/install -c' 'INSTALL_SCRIPT=/usr/bin/install -c' 'JC1FLAGS=' 'LDFLAGS=' 'LIBCFLAGS=' 'LIBCFLAGS_FOR_TARGET=' 'MAKE=/Applications/Xcode.app/Contents/Developer/usr/bin/make' 'MAKEINFO=/bin/sh /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/missing makeinfo ' 'PICFLAG=' 'PICFLAG_FOR_TARGET=' 'RUNTESTFLAGS=' 'SHELL=/bin/sh' 'exec_prefix=/usr/local' 'infodir=/usr/local/share/info' 'libdir=/usr/local/lib' 'mandir=/usr/local/share/man' 'prefix=/usr/local' 'AR=ar' 'AS=as' 'CC=xcrun clang' 'CXX=g++' 'LD=ld' 'NM=/usr/bin/nm -B' 'RANLIB=ranlib' 'DESTDIR=' all-recursive
+Making all in include
+make[3]: Nothing to be done for `all'.
+Making all in testsuite
+make[3]: Nothing to be done for `all'.
+Making all in man
+make[3]: Nothing to be done for `all'.
+/bin/sh ./libtool  --tag=CC   --mode=compile xcrun clang -DHAVE_CONFIG_H -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi  -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/include -Iinclude -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src   -Wall -fexceptions -c -o src/prep_cif.lo /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src/prep_cif.c
+libtool: compile:  xcrun clang -DHAVE_CONFIG_H -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/include -Iinclude -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src -Wall -fexceptions -c /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src/prep_cif.c  -fno-common -DPIC -o src/.libs/prep_cif.o
+/bin/sh ./libtool  --tag=CC   --mode=compile xcrun clang -DHAVE_CONFIG_H -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi  -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/include -Iinclude -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src   -Wall -fexceptions -c -o src/types.lo /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src/types.c
+libtool: compile:  xcrun clang -DHAVE_CONFIG_H -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/include -Iinclude -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src -Wall -fexceptions -c /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src/types.c  -fno-common -DPIC -o src/.libs/types.o
+/bin/sh ./libtool  --tag=CC   --mode=compile xcrun clang -DHAVE_CONFIG_H -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi  -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/include -Iinclude -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src   -Wall -fexceptions -c -o src/raw_api.lo /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src/raw_api.c
+libtool: compile:  xcrun clang -DHAVE_CONFIG_H -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/include -Iinclude -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src -Wall -fexceptions -c /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src/raw_api.c  -fno-common -DPIC -o src/.libs/raw_api.o
+/bin/sh ./libtool  --tag=CC   --mode=compile xcrun clang -DHAVE_CONFIG_H -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi  -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/include -Iinclude -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src   -Wall -fexceptions -c -o src/java_raw_api.lo /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src/java_raw_api.c
+libtool: compile:  xcrun clang -DHAVE_CONFIG_H -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/include -Iinclude -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src -Wall -fexceptions -c /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src/java_raw_api.c  -fno-common -DPIC -o src/.libs/java_raw_api.o
+/bin/sh ./libtool  --tag=CC   --mode=compile xcrun clang -DHAVE_CONFIG_H -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi  -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/include -Iinclude -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src   -Wall -fexceptions -c -o src/closures.lo /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src/closures.c
+libtool: compile:  xcrun clang -DHAVE_CONFIG_H -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/include -Iinclude -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src -Wall -fexceptions -c /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src/closures.c  -fno-common -DPIC -o src/.libs/closures.o
+/bin/sh ./libtool  --tag=CC   --mode=compile xcrun clang -DHAVE_CONFIG_H -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi  -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/include -Iinclude -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src   -Wall -fexceptions -c -o src/x86/ffi64.lo /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src/x86/ffi64.c
+libtool: compile:  xcrun clang -DHAVE_CONFIG_H -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/include -Iinclude -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src -Wall -fexceptions -c /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src/x86/ffi64.c  -fno-common -DPIC -o src/x86/.libs/ffi64.o
+/bin/sh ./libtool    --mode=compile xcrun clang -DHAVE_CONFIG_H -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi  -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/include -Iinclude -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src  -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/include -Iinclude -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src  -c -o src/x86/unix64.lo /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src/x86/unix64.S
+libtool: compile:  xcrun clang -DHAVE_CONFIG_H -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/include -Iinclude -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/include -Iinclude -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src -c /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src/x86/unix64.S  -fno-common -DPIC -o src/x86/.libs/unix64.o
+/bin/sh ./libtool  --tag=CC   --mode=compile xcrun clang -DHAVE_CONFIG_H -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi  -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/include -Iinclude -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src   -Wall -fexceptions -c -o src/x86/ffiw64.lo /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src/x86/ffiw64.c
+libtool: compile:  xcrun clang -DHAVE_CONFIG_H -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/include -Iinclude -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src -Wall -fexceptions -c /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src/x86/ffiw64.c  -fno-common -DPIC -o src/x86/.libs/ffiw64.o
+/bin/sh ./libtool    --mode=compile xcrun clang -DHAVE_CONFIG_H -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi  -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/include -Iinclude -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src  -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/include -Iinclude -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src  -c -o src/x86/win64.lo /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src/x86/win64.S
+libtool: compile:  xcrun clang -DHAVE_CONFIG_H -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/include -Iinclude -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src -I. -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/include -Iinclude -I/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src -c /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/src/x86/win64.S  -fno-common -DPIC -o src/x86/.libs/win64.o
+/bin/sh ./libtool  --tag=CC   --mode=link xcrun clang  -Wall -fexceptions   -o libffi_convenience.la  src/prep_cif.lo src/types.lo src/raw_api.lo src/java_raw_api.lo src/closures.lo   src/x86/ffi64.lo src/x86/unix64.lo src/x86/ffiw64.lo src/x86/win64.lo 
+libtool: link: ar cru .libs/libffi_convenience.a src/.libs/prep_cif.o src/.libs/types.o src/.libs/raw_api.o src/.libs/java_raw_api.o src/.libs/closures.o src/x86/.libs/ffi64.o src/x86/.libs/unix64.o src/x86/.libs/ffiw64.o src/x86/.libs/win64.o 
+libtool: link: ranlib .libs/libffi_convenience.a
+libtool: link: ( cd ".libs" && rm -f "libffi_convenience.la" && ln -s "../libffi_convenience.la" "libffi_convenience.la" )
+/bin/sh ./libtool  --tag=CC   --mode=link xcrun clang  -Wall -fexceptions -no-undefined -version-info `grep -v '^#' /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/libtool-version`     -o libffi.la -rpath /usr/local/lib src/prep_cif.lo src/types.lo src/raw_api.lo src/java_raw_api.lo src/closures.lo  src/x86/ffi64.lo src/x86/unix64.lo src/x86/ffiw64.lo src/x86/win64.lo 
+libtool: link: xcrun clang -dynamiclib  -o .libs/libffi.7.dylib  src/.libs/prep_cif.o src/.libs/types.o src/.libs/raw_api.o src/.libs/java_raw_api.o src/.libs/closures.o src/x86/.libs/ffi64.o src/x86/.libs/unix64.o src/x86/.libs/ffiw64.o src/x86/.libs/win64.o      -install_name  /usr/local/lib/libffi.7.dylib -compatibility_version 9 -current_version 9.0 -Wl,-single_module
+ld: warning: could not create compact unwind for _ffi_call_unix64: does not use RBP or RSP based frame
+libtool: link: (cd ".libs" && rm -f "libffi.dylib" && ln -s "libffi.7.dylib" "libffi.dylib")
+libtool: link: ( cd ".libs" && rm -f "libffi.la" && ln -s "../libffi.la" "libffi.la" )
+compiling AbstractMemory.c
+compiling ArrayType.c
+compiling Buffer.c
+compiling Call.c
+compiling ClosurePool.c
+compiling DataConverter.c
+compiling DynamicLibrary.c
+compiling Function.c
+Function.c:951:17: warning: 'ffi_prep_closure' is deprecated [-Wdeprecated-declarations]
+    ffiStatus = ffi_prep_closure(code, &fnInfo->ffi_cif, callback_invoke, closure);
+                ^
+/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi-universal-darwin20/include/ffi.h:339:18: note: 'ffi_prep_closure' has been explicitly marked deprecated here
+  __attribute__((deprecated))
+                 ^
+1 warning generated.
+compiling FunctionInfo.c
+compiling LastError.c
+compiling LongDouble.c
+compiling MappedType.c
+compiling MemoryPointer.c
+compiling MethodHandle.c
+compiling Platform.c
+compiling Pointer.c
+compiling Struct.c
+compiling StructByReference.c
+compiling StructByValue.c
+compiling StructLayout.c
+compiling Thread.c
+compiling Type.c
+compiling Types.c
+compiling Variadic.c
+compiling ffi.c
+linking shared-object ffi_c.bundle
+ld: warning: directory not found for option '-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.2.Internal.sdk/usr/local/lib'
+ld: warning: ignoring file ArrayType.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file AbstractMemory.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file Buffer.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file Call.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file DataConverter.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file ClosurePool.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file DynamicLibrary.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file Function.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file LastError.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file LongDouble.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file FunctionInfo.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file MethodHandle.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file MemoryPointer.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64ld: warning: ignoring file MappedType.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file Pointer.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file Struct.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file Platform.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file StructByReference.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64ld: warning: ignoring file Types.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file Type.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file StructLayout.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file Thread.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64ld: warning: ignoring file Variadic.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+
+
+ld: warning: ignoring file ffi.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file StructByValue.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+
+ld: warning: ignoring file /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi-universal-darwin20/.libs/libffi_convenience.a, building for macOS-arm64e but attempting to link with file built for macOS-x86_64
+ld: warning: directory not found for option '-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.2.Internal.sdk/usr/local/lib'
+ld: warning: could not create compact unwind for _ffi_call_unix64: does not use RBP or RSP based frame
+
+current directory: /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c
+make "DESTDIR=" install
+cd "/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi-universal-darwin20" && /Applications/Xcode.app/Contents/Developer/usr/bin/make
+/Applications/Xcode.app/Contents/Developer/usr/bin/make 'AR_FLAGS=' 'CC_FOR_BUILD=' 'CFLAGS=-Wall -fexceptions' 'CXXFLAGS=-g -O2' 'CFLAGS_FOR_BUILD=' 'CFLAGS_FOR_TARGET=' 'INSTALL=/usr/bin/install -c' 'INSTALL_DATA=/usr/bin/install -c -m 644' 'INSTALL_PROGRAM=/usr/bin/install -c' 'INSTALL_SCRIPT=/usr/bin/install -c' 'JC1FLAGS=' 'LDFLAGS=' 'LIBCFLAGS=' 'LIBCFLAGS_FOR_TARGET=' 'MAKE=/Applications/Xcode.app/Contents/Developer/usr/bin/make' 'MAKEINFO=/bin/sh /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi/missing makeinfo ' 'PICFLAG=' 'PICFLAG_FOR_TARGET=' 'RUNTESTFLAGS=' 'SHELL=/bin/sh' 'exec_prefix=/usr/local' 'infodir=/usr/local/share/info' 'libdir=/usr/local/lib' 'mandir=/usr/local/share/man' 'prefix=/usr/local' 'AR=ar' 'AS=as' 'CC=xcrun clang' 'CXX=g++' 'LD=ld' 'NM=/usr/bin/nm -B' 'RANLIB=ranlib' 'DESTDIR=' all-recursive
+Making all in include
+make[3]: Nothing to be done for `all'.
+Making all in testsuite
+make[3]: Nothing to be done for `all'.
+Making all in man
+make[3]: Nothing to be done for `all'.
+make[3]: Nothing to be done for `all-am'.
+compiling AbstractMemory.c
+compiling ArrayType.c
+compiling Buffer.c
+compiling Call.c
+compiling ClosurePool.c
+compiling DataConverter.c
+compiling DynamicLibrary.c
+compiling Function.c
+Function.c:951:17: warning: 'ffi_prep_closure' is deprecated [-Wdeprecated-declarations]
+    ffiStatus = ffi_prep_closure(code, &fnInfo->ffi_cif, callback_invoke, closure);
+                ^
+/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi-universal-darwin20/include/ffi.h:339:18: note: 'ffi_prep_closure' has been explicitly marked deprecated here
+  __attribute__((deprecated))
+                 ^
+1 warning generated.
+compiling FunctionInfo.c
+compiling LastError.c
+compiling LongDouble.c
+compiling MappedType.c
+compiling MemoryPointer.c
+compiling MethodHandle.c
+compiling Platform.c
+compiling Pointer.c
+compiling Struct.c
+compiling StructByReference.c
+compiling StructByValue.c
+compiling StructLayout.c
+compiling Thread.c
+compiling Type.c
+compiling Types.c
+compiling Variadic.c
+compiling ffi.c
+linking shared-object ffi_c.bundle
+ld: warning: directory not found for option '-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.2.Internal.sdk/usr/local/lib'
+ld: warning: ignoring file AbstractMemory.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file ArrayType.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file Buffer.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file Call.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file ClosurePool.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file DynamicLibrary.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file DataConverter.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file Function.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file FunctionInfo.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file LongDouble.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file MemoryPointer.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ld: warning: ignoring file MethodHandle.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64ignoring file LastError.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+
+ld: warning: ignoring file MappedType.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file Pointer.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file Struct.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file Platform.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file StructByValue.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file StructByReference.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file Thread.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64ld: warning: ignoring file Types.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file StructLayout.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+
+ld: warning: ignoring file ffi.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file Variadic.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: ignoring file /Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift/vendor/bundle/ruby/2.6.0/gems/ffi-1.9.25/ext/ffi_c/libffi-universal-darwin20/.libs/libffi_convenience.a, building for macOS-arm64e but attempting to link with file built for macOS-x86_64
+ld: warning: ignoring file Type.o, building for macOS-arm64e but attempting to link with file built for unknown-x86_64
+ld: warning: directory not found for option '-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.2.Internal.sdk/usr/local/lib'
+ld: warning: could not create compact unwind for _ffi_call_unix64: does not use RBP or RSP based frame
+/usr/bin/install -c -m 0755 ffi_c.bundle ./.gem.20210401-21613-e933e4
