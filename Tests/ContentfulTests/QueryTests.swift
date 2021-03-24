@@ -434,7 +434,7 @@ final class QueryTests: XCTestCase {
     func testFetchEntriesOfAnyTypeWithRangeSearch() {
 
         let expectation = self.expectation(description: "Range query")
-        let date = Date.fromComponents(year: 2019, month: 1, day: 1, hour: 2, minute: 0, second: 0)
+        let date = Date.fromComponents(year: 2021, month: 3, day: 20, hour: 0, minute: 0, second: 0)
 
         let query = Query.where(valueAtKeyPath: "sys.updatedAt", .isLessThanOrEqualTo(date))
 
@@ -442,7 +442,7 @@ final class QueryTests: XCTestCase {
             switch result {
             case .success(let entriesResponse):
                 let entries = entriesResponse.items
-                XCTAssertEqual(entries.count, 10)
+                XCTAssertEqual(entries.count, 9)
             case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
             }
@@ -459,13 +459,13 @@ final class QueryTests: XCTestCase {
 
         let expectation = self.expectation(description: "Range query")
 
-        let query = QueryOn<Cat>.where(valueAtKeyPath: "sys.updatedAt", .isLessThanOrEqualTo("2019-01-01T00:00:00Z"))
+        let query = QueryOn<Cat>.where(valueAtKeyPath: "sys.updatedAt", .isLessThanOrEqualTo("2021-03-20T00:00:00Z"))
 
         QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
-                XCTAssertEqual(cats.count, 3)
+                XCTAssertEqual(cats.count, 2)
             case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
             }
@@ -539,7 +539,7 @@ final class QueryTests: XCTestCase {
     func testFetchEntriesOrderedByMultipleAttributes() {
         let expectation = self.expectation(description: "Reverese order search")
 
-        let query = try! Query.order(by: Ordering("sys.revision"), Ordering(sys: .id))
+        let query = try! Query.order(by: Ordering("sys.id"), Ordering(sys: .id))
 
         QueryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
@@ -862,6 +862,366 @@ final class QueryTests: XCTestCase {
             case .success(let assetsResponse):
                 let assets = assetsResponse.items
                 XCTAssertEqual(assets.count, 4)
+            case .failure(let error):
+                XCTFail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+    
+    func testQueryReturningClientDefinedModelWithMetadata() {
+        let expectation = self.expectation(description: "Select operator expectation")
+
+        QueryTests.client.fetchArray(of: Cat.self, matching: .where(field: .name, .equals("Nyan Cat"))) { result in
+            switch result {
+            case .success(let catsResponse):
+                let cats = catsResponse.items
+
+                guard let cat = cats.first(where: { $0.id == "nyancat" }) else {
+                    XCTFail("Couldn't find Nyan Cat.")
+                    return
+                }
+
+                guard let tags = cat.metadata?.tags else {
+                    XCTAssert(false, "Tags array could not be parsed")
+                    return
+                }
+                XCTAssertEqual(tags.count, 0)
+            case .failure(let error):
+                XCTFail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+    
+    func testQueryReturningClientDefinedModelWithMetadataAndTags() {
+        let expectation = self.expectation(description: "Select operator expectation")
+
+        QueryTests.client.fetchArray(of: Cat.self, matching: .where(field: .name, .equals("Garfield"))) { result in
+            switch result {
+            case .success(let catsResponse):
+                let cats = catsResponse.items
+
+                guard let cat = cats.first(where: { $0.id == "garfield" }) else {
+                    XCTFail("Couldn't find Garfield.")
+                    return
+                }
+
+                guard let tags = cat.metadata?.tags else {
+                    XCTAssert(false, "Tags array could not be parsed")
+                    return
+                }
+                XCTAssertEqual(tags.count, 1)
+            case .failure(let error):
+                XCTFail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+    
+    func testTagsExistence() {
+        let expectation = self.expectation(description: "Existence operator expectation")
+
+        let query = QueryOn<Cat>.where(valueAtKeyPath: "metadata.tags", .exists(true))
+
+        QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
+            switch result {
+            case .success(let catsResponse):
+                let cats = catsResponse.items
+                XCTAssertEqual(cats.count, 1)
+
+                guard let cat = cats.first(where: { $0.id == "garfield" }) else {
+                    XCTFail("Couldn't find Garfield.")
+                    return
+                }
+                
+                guard let tags = cat.metadata?.tags else {
+                    XCTFail("Could not find tags")
+                    return
+                }
+                
+                XCTAssertTrue(tags.count > 0)
+            case .failure(let error):
+                XCTFail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+    
+    func testTagsNotExistence() {
+        let expectation = self.expectation(description: "Existence operator expectation")
+
+        let query = QueryOn<Cat>.where(valueAtKeyPath: "metadata.tags", .exists(false))
+
+        QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
+            switch result {
+            case .success(let catsResponse):
+                let cats = catsResponse.items
+                XCTAssertEqual(cats.count, 2)
+                for cat in cats {
+                    XCTAssertTrue(cat.metadata?.tags.count == .some(0))
+                }
+            case .failure(let error):
+                XCTFail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+    
+    func testFetchEntriesContainingSpecificTags() {
+        let expectation = self.expectation(description: "Existence operator expectation")
+
+        let query = QueryOn<Cat>.where(valueAtKeyPath: "metadata.tags.sys.id", .hasAll(["garfieldTag"]))
+
+        QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
+            switch result {
+            case .success(let catsResponse):
+                let cats = catsResponse.items
+                XCTAssertEqual(cats.count, 1)
+
+                guard let garfield = cats.first(where: { $0.id == "garfield" }) else {
+                    XCTFail("Couldn't find Garfield.")
+                    return
+                }
+                
+                let allTagsIds = garfield.metadata?.tags.map { $0.id } ?? []
+                
+                guard !allTagsIds.isEmpty else {
+                    XCTFail("Tags array should not be empty")
+                    return
+                }
+                
+                XCTAssertTrue(allTagsIds.contains("garfieldTag"))
+            case .failure(let error):
+                XCTFail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+    
+    func testFetchEntriesContainingSpecificTags2() {
+        let expectation = self.expectation(description: "Existence operator expectation")
+
+        let query = QueryOn<Cat>.where(valueAtKeyPath: "metadata.tags.sys.id", .includes(["garfieldTag"]))
+
+        QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
+            switch result {
+            case .success(let catsResponse):
+                let cats = catsResponse.items
+                XCTAssertEqual(cats.count, 1)
+
+                guard let garfield = cats.first(where: { $0.id == "garfield" }) else {
+                    XCTFail("Couldn't find Garfield.")
+                    return
+                }
+                
+                let allTagsIds = garfield.metadata?.tags.map { $0.id } ?? []
+                
+                guard !allTagsIds.isEmpty else {
+                    XCTFail("Tags array should not be empty")
+                    return
+                }
+                
+                XCTAssertTrue(allTagsIds.contains("garfieldTag"))
+            case .failure(let error):
+                XCTFail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+    
+    func testTagsExistence2() {
+        let expectation = self.expectation(description: "Existence operator expectation")
+
+        let query = QueryOn<Cat>.where(metadata: .tags, .exists(true))
+
+        QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
+            switch result {
+            case .success(let catsResponse):
+                let cats = catsResponse.items
+                XCTAssertEqual(cats.count, 1)
+
+                guard let cat = cats.first(where: { $0.id == "garfield" }) else {
+                    XCTFail("Couldn't find Garfield.")
+                    return
+                }
+                
+                guard let tags = cat.metadata?.tags else {
+                    XCTFail("Could not find tags")
+                    return
+                }
+                
+                XCTAssertTrue(tags.count > 0)
+            case .failure(let error):
+                XCTFail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+    
+    func testTagsNotExistence2() {
+        let expectation = self.expectation(description: "Existence operator expectation")
+
+        let query = QueryOn<Cat>.where(metadata: .tags, .exists(false))
+
+        QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
+            switch result {
+            case .success(let catsResponse):
+                let cats = catsResponse.items
+                XCTAssertEqual(cats.count, 2)
+                for cat in cats {
+                    XCTAssertTrue(cat.metadata?.tags.count == .some(0))
+                }
+            case .failure(let error):
+                XCTFail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testFetchEntriesContainingSpecificTags3() {
+        let expectation = self.expectation(description: "Existence operator expectation")
+
+        let query = QueryOn<Cat>.where(metadataTagsIds: .hasAll(["garfieldTag"]))
+
+        QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
+            switch result {
+            case .success(let catsResponse):
+                let cats = catsResponse.items
+                XCTAssertEqual(cats.count, 1)
+
+                guard let garfield = cats.first(where: { $0.id == "garfield" }) else {
+                    XCTFail("Couldn't find Garfield.")
+                    return
+                }
+
+                let allTagsIds = garfield.metadata?.tags.map { $0.id } ?? []
+
+                guard !allTagsIds.isEmpty else {
+                    XCTFail("Tags array should not be empty")
+                    return
+                }
+
+                XCTAssertTrue(allTagsIds.contains("garfieldTag"))
+            case .failure(let error):
+                XCTFail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testFetchEntriesContainingSpecificTags4() {
+        let expectation = self.expectation(description: "Existence operator expectation")
+
+        let query = QueryOn<Cat>.where(metadataTagsIds: .includes(["garfieldTag"]))
+
+        QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
+            switch result {
+            case .success(let catsResponse):
+                let cats = catsResponse.items
+                XCTAssertEqual(cats.count, 1)
+
+                guard let garfield = cats.first(where: { $0.id == "garfield" }) else {
+                    XCTFail("Couldn't find Garfield.")
+                    return
+                }
+
+                let allTagsIds = garfield.metadata?.tags.map { $0.id } ?? []
+
+                guard !allTagsIds.isEmpty else {
+                    XCTFail("Tags array should not be empty")
+                    return
+                }
+
+                XCTAssertTrue(allTagsIds.contains("garfieldTag"))
+            case .failure(let error):
+                XCTFail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testFetchEntriesContainingSpecificTagsChaining() {
+        let expectation = self.expectation(description: "Existence operator expectation")
+
+        let query = QueryOn<Cat>.where(field: .name, .includes(["Garfield"]))
+            .where(metadataTagsIds: .hasAll(["garfieldTag"]))
+
+        QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
+            switch result {
+            case .success(let catsResponse):
+                let cats = catsResponse.items
+                XCTAssertEqual(cats.count, 1)
+
+                guard let garfield = cats.first(where: { $0.id == "garfield" }) else {
+                    XCTFail("Couldn't find Garfield.")
+                    return
+                }
+
+                let allTagsIds = garfield.metadata?.tags.map { $0.id } ?? []
+
+                guard !allTagsIds.isEmpty else {
+                    XCTFail("Tags array should not be empty")
+                    return
+                }
+
+                XCTAssertTrue(allTagsIds.contains("garfieldTag"))
+            case .failure(let error):
+                XCTFail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testFetchEntriesContainingSpecificTags2Chaining() {
+        let expectation = self.expectation(description: "Existence operator expectation")
+
+        let query = QueryOn<Cat>.where(field: .name, .includes(["Garfield"]))
+            .where(metadataTagsIds: .includes(["garfieldTag"]))
+
+        QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
+            switch result {
+            case .success(let catsResponse):
+                let cats = catsResponse.items
+                XCTAssertEqual(cats.count, 1)
+
+                guard let garfield = cats.first(where: { $0.id == "garfield" }) else {
+                    XCTFail("Couldn't find Garfield.")
+                    return
+                }
+
+                let allTagsIds = garfield.metadata?.tags.map { $0.id } ?? []
+
+                guard !allTagsIds.isEmpty else {
+                    XCTFail("Tags array should not be empty")
+                    return
+                }
+
+                XCTAssertTrue(allTagsIds.contains("garfieldTag"))
             case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
             }

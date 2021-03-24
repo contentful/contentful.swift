@@ -213,6 +213,29 @@ public extension AbstractQuery {
     static func `where`(sys key: Sys.CodingKeys, _ operation: Query.Operation) -> Self {
         return Self.where(valueAtKeyPath: "sys.\(key.stringValue)", operation)
     }
+    
+    /// Static method for creating a `Query` with a `Query.Operation`. This variation for initialization guarantees correct query construction
+    /// when performing operations on "metadata" members. See the concrete types `Query`, `FilterQuery`, `AssetQuery`, and `QueryOn`
+    /// for more information and example usage.
+    ///
+    /// - Parameters:
+    ///   - key: The `Metadata.CodingKeys` of the system property you are performing the `Query.Operation` against. For instance, `.tags`.
+    ///   - operation: The query operation used in the query.
+    /// - Returns: A newly initialized query.
+    static func `where`(metadata key: Metadata.CodingKeys, _ operation: Query.Operation) -> Self {
+        return Self.where(valueAtKeyPath: "metadata.\(key.stringValue)", operation)
+    }
+    
+    /// Static method for creating a `Query` with a `Query.Operation`. This variation for initialization guarantees correct query construction
+    /// when performing operations on "metadata" members. See the concrete types `Query`, `FilterQuery`, `AssetQuery`, and `QueryOn`
+    /// for more information and example usage.
+    ///
+    /// - Parameters:
+    ///   - metadataTagsIds: The query operation used in the query against metadata tags ids.
+    /// - Returns: A newly initialized query.
+    static func `where`(metadataTagsIds operation: Query.Operation) -> Self {
+        return Self.where(valueAtKeyPath: "metadata.tags.sys.id", operation)
+    }
 
     /// Static method for creating a Query with a Query.Operation. See concrete types `Query`, `FilterQuery`, `AssetQuery`, and `QueryOn`
     /// for more information and example usage.
@@ -254,6 +277,33 @@ public extension ChainableQuery {
     @discardableResult
     func `where`(sys key: Sys.CodingKeys, _ operation: Query.Operation) -> Self {
         self.where(valueAtKeyPath: "sys.\(key.stringValue)", operation)
+        return self
+    }
+    
+    /// Instance method for appending a `Query.Operation` to a `Query`. This variation for creating a query guarantees correct query construction
+    /// when performing operations on "metadata" members. See concrete types `Query`, `FilterQuery`, `AssetQuery`, and `QueryOn`
+    /// for more information and example usage.
+    ///
+    /// - Parameters:
+    ///   - key: The `Metadata.CodingKey` of the system property you are performing the Query.Operation against. For instance, `.tags`.
+    ///   - operation: The query operation used in the query.
+    /// - Returns: A reference to the receiving query to enable chaining.
+    @discardableResult
+    func `where`(metadata key: Metadata.CodingKeys, _ operation: Query.Operation) -> Self {
+        self.where(valueAtKeyPath: "metadata.\(key.stringValue)", operation)
+        return self
+    }
+    
+    /// Instance method for appending a `Query.Operation` to a `Query`. This variation for creating a query guarantees correct query construction
+    /// when performing operations on "metadata" members. See concrete types `Query`, `FilterQuery`, `AssetQuery`, and `QueryOn`
+    /// for more information and example usage.
+    ///
+    /// - Parameters:
+    ///   - metadataTagsIds: The query operation used in the query against metadata tags ids.
+    /// - Returns: A reference to the receiving query to enable chaining.
+    @discardableResult
+    func `where`(metadataTagsIds operation: Query.Operation) -> Self {
+        self.where(valueAtKeyPath: "metadata.tags.sys.id", operation)
         return self
     }
 

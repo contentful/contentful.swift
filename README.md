@@ -154,11 +154,11 @@ let client = Client(spaceId: "cfexampleapi",
                     environmentId: "master", // Defaults to "master" if omitted.
                     accessToken: "b4c0n73n7fu1")
 
-client.fetch(Entry.self, id: "nyancat") { (result: Result<Entry>) in
+client.fetch(Entry.self, id: "nyancat") { (result: Result<Entry, Error>) in
     switch result {
     case .success(let entry):
         print(entry)
-    case .error(let error):
+    case .failure(let error):
         print("Error \(error)!")
     }
 }
@@ -227,6 +227,9 @@ final class Cat: EntryDecodable, FieldKeysQueryable {
     let name: String?
     let lives: Int?
     let likes: [String]?
+  
+    // Metadata object if available
+    let metadata: Metadata?
 
     // Relationship fields.
     var bestFriend: Cat?
@@ -239,7 +242,7 @@ final class Cat: EntryDecodable, FieldKeysQueryable {
         createdAt       = sys.createdAt
 
         let fields      = try decoder.contentfulFieldsContainer(keyedBy: Cat.FieldKeys.self)
-
+        self.metadata   = try decoder.metadata()
         self.name       = try fields.decodeIfPresent(String.self, forKey: .name)
         self.color      = try fields.decodeIfPresent(String.self, forKey: .color)
         self.likes      = try fields.decodeIfPresent(Array<String>.self, forKey: .likes)
@@ -258,6 +261,8 @@ final class Cat: EntryDecodable, FieldKeysQueryable {
 ```
 
 If you want to simplify the implementation of an `EntryDecodable`, declare conformance to `Resource` and add `let sys: Sys` property to the class and assign via `sys = try decoder.sys()` during initialization. Then, `id`, `localeCode`, `updatedAt`, and `createdAt` are all provided via the `sys` property and don't need to be declared as class members. However, note that this style of implementation may make integration with local database frameworks like Realm and CoreData more cumbersome.
+
+Optionally, decoder has a helper function to decode metadata. 
 
 Additionally, the SDK requires that instances of a type representing an entry or asset must be a `class` instance, not a `struct`—this is because the SDK ensures that the in-memory object graph is complete, but also that it has no duplicates.
 

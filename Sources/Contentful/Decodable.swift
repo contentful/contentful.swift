@@ -48,6 +48,12 @@ public extension Decoder {
         let sys = try container.decode(Sys.self, forKey: .sys)
         return sys
     }
+    
+    /// Helper method to extract the metadata property of a Contentful resource if it exists.
+    func metadata() throws -> Metadata? {
+        let container = try self.container(keyedBy: LocalizableResource.CodingKeys.self)
+        return try? container.decode(Metadata.self, forKey: .metadata)
+    }
 
     /// Extract the nested JSON container for the "fields" dictionary present in Entry and Asset resources.
     func contentfulFieldsContainer<NestedKey>(keyedBy keyType: NestedKey.Type) throws -> KeyedDecodingContainer<NestedKey> {

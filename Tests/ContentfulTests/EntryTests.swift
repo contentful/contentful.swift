@@ -131,7 +131,7 @@ class EntryTests: XCTestCase {
     }
 
     func testFetchEntriesOrderedByMultipleAttributes() {
-        let query = try! Query.order(by: Ordering(sys: .revision), Ordering(sys: .id))
+        let query = try! Query.order(by: Ordering(sys: .id), Ordering(sys: .id))
         self.waitUntilMatchingEntries(query) {
             let ids = $0.items.map { $0.sys.id }
             XCTAssertEqual(ids, EntryTests.orderedEntriesByMultiple)
@@ -317,12 +317,12 @@ class EntryTests: XCTestCase {
     }
 
     func testFetchEntriesWithRangeSearch() {
-        let date = Date.fromComponents(year: 2018, month: 3, day: 1, hour: 0, minute: 0, second: 0)
+        let date = Date.fromComponents(year: 2021, month: 3, day: 20, hour: 0, minute: 0, second: 0)
         waitUntilMatchingEntries(Query.where(sys: .updatedAt, .isBefore(date))) {
             XCTAssertEqual($0.items.count, 10)
         }
 
-        waitUntilMatchingEntries(Query.where(sys: .updatedAt, .isBefore("2018-03-01T00:00:00Z"))) {
+        waitUntilMatchingEntries(Query.where(sys: .updatedAt, .isBefore("2021-03-20T00:00:00Z"))) {
             XCTAssertEqual($0.items.count, 10)
         }
     }
@@ -418,6 +418,56 @@ class EntryTests: XCTestCase {
             }
             expectation.fulfill()
         }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+    
+    func testMetadataExistsWithEmptyTagsArray() {
+        let expectation = self.expectation(description: "Will return empty tags within metadata ")
+
+        EntryTests.client.fetch(Entry.self, id: "happycat") { (result) in
+            switch result {
+            case let .success(entry):
+                XCTAssertEqual(entry.sys.id, "happycat")
+                XCTAssertEqual(entry.sys.type, "Entry")
+                guard let metadata = entry.metadata else {
+                    XCTAssert(false, "Metadata is nil")
+                    return
+                }
+                XCTAssertEqual(metadata.tags.count, 0)
+            case let .failure(error):
+                XCTFail("\(error)")
+            }
+
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+    
+    func testMetadataExistsOneTag() {
+        let expectation = self.expectation(description: "Will return 1 tag within tags array in metadata ")
+
+        EntryTests.client.fetch(Entry.self, id: "garfield") { (result) in
+            switch result {
+            case let .success(entry):
+                XCTAssertEqual(entry.sys.id, "garfield")
+                XCTAssertEqual(entry.sys.type, "Entry")
+                guard let metadata = entry.metadata else {
+                    XCTAssert(false, "Metadata is nil")
+                    return
+                }
+                guard let tag = metadata.tags.first else {
+                    XCTAssert(false, "Tags are empty")
+                    return
+                }
+                XCTAssertEqual(tag.id, "garfieldTag")
+            case let .failure(error):
+                XCTFail("\(error)")
+            }
+
+            expectation.fulfill()
+        }
+        
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 }
