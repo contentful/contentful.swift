@@ -34,8 +34,7 @@ coverage:
 	bundle exec slather coverage -s  
 
 carthage:
-	carthage build Contentful --no-skip-current --platform all
-	carthage archive Contentful
+	carthage build Contentful --no-skip-current --platform all --use-xcframeworks
 
 docs:
 	./Scripts/reference-docs.sh
