@@ -89,6 +89,25 @@ public enum Link: Codable {
             fatalError("Should not try to access sys properties on links that are resolved.")
         }
     }
+    
+    // Because sys can not be accessed in already resolved link even through it is for storing
+    // we attempt extracting sys from entity that it was resolved to.
+    // Otherwise we fall back to trying to use sys directly
+    
+    internal var persistableSys: Link.Sys {
+        switch self {
+        case .entry(let entry):
+            if let contentType = entry.sys.contentTypeId {
+                 return Link.Sys(id: entry.sys.id,
+                                  linkType: entry.sys.type,
+                                  type: contentType)
+            }
+        default:
+            break
+        }
+        
+        return sys
+    }
 
     internal var isResolved: Bool {
         switch self {
@@ -151,7 +170,8 @@ public enum Link: Codable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(sys, forKey: .sys)
+        // In case of already resolved link - attempt to access sys indirectly if possible
+        try container.encode(persistableSys, forKey: .sys)
     }
 
     private enum CodingKeys: String, CodingKey {
