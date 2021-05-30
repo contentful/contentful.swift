@@ -189,7 +189,7 @@ public enum MimetypeGroup: String {
 
 /// A base abtract type which holds the bare essentials shared by all query types in the SDK which enable
 /// querying against content types, entries and assets.
-public protocol AbstractQuery: class {
+public protocol AbstractQuery: AnyObject {
 
     /// A compiler-forced, required, and designated initializer. Creates affordance that the default implementation
     /// of AbstractQuery guarantees an object is constructed before doing additional mutations in convenience initializers.
