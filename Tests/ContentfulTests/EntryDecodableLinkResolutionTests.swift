@@ -145,7 +145,7 @@ class LinkResolverTests: XCTestCase {
                     if let unresolvableLink = arrayResponse.errors?.first {
                         XCTAssertEqual(unresolvableLink.details.id, "2bQUUwIT3mk6GaKqgo40cu")
                     } else {
-                        XCTFail("There should be an unresolveable link error in the array response")
+                        XCTFail("There should be an unresolvable link error in the array response")
                     }
                 } else {
                     XCTFail("There should be at least one entry in the array of records")

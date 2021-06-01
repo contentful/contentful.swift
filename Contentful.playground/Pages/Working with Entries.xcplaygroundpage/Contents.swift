@@ -84,7 +84,7 @@ client.fetchEntries(matching: wildcardLocaleQuery).next { catsArrayResponse in
     currentLocale = cat?.currentlySelectedLocale
     print("Now the locale for reading data has been set to: '\(currentLocale!.code)'")
     name = cat?.fields.string(at: "name")
-//: For fields which do not have a value for the currenlty selected locale, the "fallback chain" will be walked by the SDK until a value is found, or until the default locale is reached. This is similar to the behaviour of the API itself when using queries that don't specify the wildcard locale "*".
+//: For fields which do not have a value for the currently selected locale, the "fallback chain" will be walked by the SDK until a value is found, or until the default locale is reached. This is similar to the behaviour of the API itself when using queries that don't specify the wildcard locale "*".
     likes = cat?.fields.strings(at: "likes")?.joined(separator: " and" ) ?? ""
     print("The cat's likes for the 'tlh' locale are \(likes)")
 }

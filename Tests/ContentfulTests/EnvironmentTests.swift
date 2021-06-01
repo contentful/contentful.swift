@@ -51,14 +51,14 @@ class EnvironmentsTests: XCTestCase {
                 if let cat = entries.first as? Cat, let bestFriend = cat.bestFriend {
                     XCTAssertEqual(bestFriend.name, "Nyan Cat")
                 } else {
-                    XCTFail("The first entry in the heterogenous array should be a cat wiht a best friend named 'Nyan Cat'")
+                    XCTFail("The first entry in the heterogeneous array should be a cat with a best friend named 'Nyan Cat'")
                 }
 
                 if let dog = entries[4] as? Dog, let image = dog.image {
                     XCTAssertEqual(dog.description, "Bacon pancakes, makin' bacon pancakes!")
                     XCTAssertEqual(image.id, "jake")
                 } else {
-                    XCTFail("The last entry in the heterogenous array should be a dog with an image with named 'jake'")
+                    XCTFail("The last entry in the heterogeneous array should be a dog with an image with named 'jake'")
                 }
 
             case .failure(let error):
@@ -71,7 +71,7 @@ class EnvironmentsTests: XCTestCase {
 
     // Copy of tests from SyncTests but using a different environment.
     func testInitialSyncOnNonMasterEnvironment() {
-        let expectation = self.expectation(description: "Sync test expecation")
+        let expectation = self.expectation(description: "Sync test expectation")
 
         EnvironmentsTests.client.sync { result in
             switch result {

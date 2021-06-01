@@ -115,7 +115,7 @@ public extension Client {
     }
 
     /**
-    Fetches heterogenous collections of types conforming to `EntryDecodable`.
+    Fetches heterogeneous collections of types conforming to `EntryDecodable`.
 
     - Parameters:
         - query: Query to match results against.
@@ -161,7 +161,7 @@ public extension Client {
     Fetches the space this client is configured to interface with.
 
     - Parameters:
-        - completion: The completion handler to call when the reqeust is complete.
+        - completion: The completion handler to call when the request is complete.
      */
     @discardableResult
     func fetchSpace(then completion: @escaping ResultsHandler<Space>) -> URLSessionDataTask? {

@@ -18,7 +18,7 @@ extension Client {
     in order to allow chaining of operations.
 
     - Parameters:
-        - syncSpace: Instance to perform subsqeuent sync on. Empty instance by default.
+        - syncSpace: Instance to perform subsequent sync on. Empty instance by default.
         - syncableTypes: The types that can be synchronized.
         - completion: The completion handler to call when the operation is complete.
      */

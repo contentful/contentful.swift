@@ -34,7 +34,7 @@ private extension RecursiveNode {
     }
 }
 
-/// The data describing the linked entry or asset for an `EmbeddedResouceNode`
+/// The data describing the linked entry or asset for an `EmbeddedResourceNode`
 public class ResourceLinkData: Codable {
 
     /// The raw link object which describes the target entry or asset.
@@ -97,7 +97,7 @@ public enum NodeType: String, Codable {
     case blockquote
     /// A horizontal rule break.
     case horizontalRule = "hr"
-    /// An orderered list.
+    /// An ordered list.
     case orderedList = "ordered-list"
     /// An unordered list.
     case unorderedList = "unordered-list"
@@ -107,7 +107,7 @@ public enum NodeType: String, Codable {
     // Links
     /// A block node with a Contentful entry embedded inside.
     case embeddedEntryBlock = "embedded-entry-block"
-    /// A block node with a Contentful aset embedded inside.
+    /// A block node with a Contentful asset embedded inside.
     case embeddedAssetBlock = "embedded-asset-block"
     /// An inline node with a Contentful entry embedded inside.
     case embeddedEntryInline = "embedded-entry-inline"
@@ -206,7 +206,8 @@ public class InlineNode: RecursiveNode {
 /// @objc declaration, NSObject inheritance, and NSCoding conformance
 /// are required so `RichTextDocument` can be used as a
 /// transformable Core Data field.
-@objc public class RichTextDocument: NSObject, RecursiveNode, NSCoding {
+@objc
+public class RichTextDocument: NSObject, RecursiveNode, NSCoding {
     public let nodeType: NodeType
     public internal(set) var content: [Node]
 
@@ -299,7 +300,7 @@ public final class Heading: BlockNode {
         case .h4: level = 4
         case .h5: level = 5
         case .h6: level = 6
-        default: fatalError("A serious error occured, attempted to initialize a Heading with an invalid heading level")
+        default: fatalError("A serious error occurred, attempted to initialize a Heading with an invalid heading level")
         }
     }
 }
@@ -342,7 +343,7 @@ public class Hyperlink: InlineNode {
     }
 }
 
-/// A bblock containing data for a linked entry or asset.
+/// A block containing data for a linked entry or asset.
 public class ResourceLinkBlock: BlockNode {
 
     /// The container with the link information and the resolved, linked resource.

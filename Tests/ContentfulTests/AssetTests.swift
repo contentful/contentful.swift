@@ -56,10 +56,10 @@ class AssetTests: XCTestCase {
 
         AssetTests.client.fetchArray(of: Asset.self) { result in
             switch result {
-            case .success(let assetsReponse):
-                XCTAssertEqual(assetsReponse.items.count, 5)
+            case .success(let assetsResponse):
+                XCTAssertEqual(assetsResponse.items.count, 5)
 
-                if let asset = (assetsReponse.items.filter { $0.sys.id == "nyancat" }).first {
+                if let asset = (assetsResponse.items.filter { $0.sys.id == "nyancat" }).first {
                     XCTAssertEqual(asset.sys.id, "nyancat")
                     XCTAssertEqual(asset.sys.type, "Asset")
                     XCTAssertEqual(url(asset).absoluteString, "https://images.ctfassets.net/dumri3ebknon/nyancat/c78aa97bf55b7de229ee5a5f88261aa4/Nyan_cat_250px_frame.png")

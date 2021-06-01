@@ -25,8 +25,8 @@ internal class DataCache {
     }
 
     private static func cacheKey(id: String, linkType: String) -> String {
-        let delimeter = DataCache.cacheKeyDelimiter
-        let cacheKey = id + delimeter + linkType.lowercased() + delimeter
+        let delimiter = DataCache.cacheKeyDelimiter
+        let cacheKey = id + delimiter + linkType.lowercased() + delimiter
         return cacheKey
     }
 

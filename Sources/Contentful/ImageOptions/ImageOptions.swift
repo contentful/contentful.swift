@@ -46,7 +46,7 @@ public extension String {
     /// - Throws: An `ImageOptionError` if the SDK is unable to generate a valid URL with the desired ImageOptions.
     func url(with imageOptions: [ImageOption]) throws -> URL {
 
-        // Check that there are no two image options that specifiy the same query parameter.
+        // Check that there are no two image options that specify the same query parameter.
         // https://stackoverflow.com/a/27624476/4068264z
         // A Set is a collection of unique elements, so constructing them will invoke the Equatable implementation
         // and unique'ify the elements in the array.
@@ -399,11 +399,11 @@ private enum ImageParameters {
 
 
 // Use CGColor instead of UIColor to enable cross-platform compatibility: macOS, iOS, tvOS, watchOS.
-internal extension CGColor {
+extension CGColor {
 
     // If for some reason the following code fails to create a hex string, the color black will be
     // returned.
-    func hexRepresentation() -> String {
+    internal func hexRepresentation() -> String {
         let hexForBlack = "000000"
         guard let colorComponents = components else { return hexForBlack }
         guard let colorSpace = colorSpace else { return hexForBlack }

@@ -1,5 +1,5 @@
 //
-//  DecondingTests.swift
+//  JSONDecodingTests.swift
 //  Contentful
 //
 //  Created by Boris Bügling on 29/09/15.
@@ -27,7 +27,7 @@ class JSONDecodingTests: XCTestCase {
             // Reset userInfo state since it's a static var that exists through the test cycle.
             jsonDecoder.userInfo = [CodingUserInfoKey: Any]()
             let _ = try jsonDecoder.decode(Asset.self, from: assetData)
-            XCTFail("Mapping without a localizatoin context should throw an error")
+            XCTFail("Mapping without a localization context should throw an error")
         } catch let error as SDKError  {
             switch error {
             case .localeHandlingError:
@@ -199,7 +199,7 @@ class JSONDecodingTests: XCTestCase {
         }
     }
 
-    func testDecodeSyncResponsesWithdeletedEntryIds() {
+    func testDecodeSyncResponsesWithDeletedEntryIds() {
         do {
 
             let jsonDecoder = JSONDecoder.withoutLocalizationContext()
