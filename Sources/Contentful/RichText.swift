@@ -287,6 +287,7 @@ public final class Heading: BlockNode {
             default: return nil
             }
             }() else { return nil }
+        self.level = level
         super.init(nodeType: nodeType, content: content)
     }
 
@@ -299,7 +300,7 @@ public final class Heading: BlockNode {
         case .h4: level = 4
         case .h5: level = 5
         case .h6: level = 6
-        default: fatalError("A serious error occured, attempted to initialize a Heading with an invalid heading level")
+        default: fatalError("A serious error occurred, attempted to initialize a Heading with an invalid heading level")
         }
     }
 }
