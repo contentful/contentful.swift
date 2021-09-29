@@ -128,7 +128,6 @@ open class Client {
         if let additionalHeaders = sessionConfiguration.httpAdditionalHeaders {
             contentfulHTTPHeaders.merge(additionalHeaders) { (currentPair, _) in currentPair }
         }
-        sessionConfiguration.httpAdditionalHeaders = contentfulHTTPHeaders
 
         sessionConfiguration.httpAdditionalHeaders = contentfulHTTPHeaders
         self.urlSession = URLSession(configuration: sessionConfiguration)
