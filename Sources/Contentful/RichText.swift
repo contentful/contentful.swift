@@ -77,6 +77,14 @@ internal enum NodeContentCodingKeys: String, CodingKey {
 public enum NodeType: String, Codable {
     /// The top-level node type.
     case document
+    /// Table container
+    case table
+    /// A table container row
+    case tableRow = "table-row"
+    /// A table row header cell
+    case tableRowHeaderCell = "table-header-cell"
+    /// A table row regular cell
+    case tableRowCell = "table-cell"
     /// A block of text, the parent node for inline text nodes.
     case paragraph
     /// A string of text which may contain marks.
@@ -120,6 +128,14 @@ public enum NodeType: String, Codable {
 
     internal var type: Node.Type {
         switch self {
+        case .table:
+            return Table.self
+        case .tableRow:
+            return TableRow.self
+        case .tableRowHeaderCell:
+            return TableRowHeaderCell.self
+        case .tableRowCell:
+            return TableRowCell.self
         case .paragraph:
             return Paragraph.self
         case .text:
@@ -251,6 +267,18 @@ public class InlineNode: RecursiveNode {
     }
 
 }
+
+/// Content contained in a table
+public final class Table: BlockNode {}
+
+/// Content contained in a table row
+public final class TableRow: BlockNode {}
+
+/// Content contained in a table row header cell
+public final class TableRowHeaderCell: BlockNode {}
+
+/// Content contained in a table row cell
+public final class TableRowCell: BlockNode {}
 
 /// A block of text, containing child `Text` nodes.
 public final class Paragraph: BlockNode {}
