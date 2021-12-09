@@ -15,7 +15,7 @@ public protocol AssetProtocol: FlatResource {
     var urlString: String? { get }
 }
 
-/// Classes conforming to this protocol can be decoded during JSON deserialization as reprsentations
+/// Classes conforming to this protocol can be decoded during JSON deserialization as representations
 /// of Contentful assets. 
 public protocol AssetDecodable: AssetProtocol, Decodable {}
 

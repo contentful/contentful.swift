@@ -43,7 +43,7 @@ class ImageTests: XCTestCase {
         (client.urlSession as? DVR.Session)?.endRecording()
     }
 
-    func testColorHexRepresenations() {
+    func testColorHexRepresentations() {
 
         #if os(iOS) || os(tvOS) || os(watchOS)
             let blueColor = UIColor.blue
@@ -206,7 +206,7 @@ class ImageTests: XCTestCase {
         let thumbURLWithTopFocusOption = try! nyanCatAsset.url(with: thumbFitWithFocusOptions)
         XCTAssertEqual(thumbURLWithTopFocusOption.absoluteString, "https://images.ctfassets.net/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png?fit=thumb&f=top")
 
-        // Since we tested all focus options in the test above, we can be satisficed with this.
+        // Since we tested all focus options in the test above, we can be satisfied with this.
         let fillFitOptions = [ImageOption.fit(for: .fill(focusingOn: nil))]
         let fillURL = try! nyanCatAsset.url(with: fillFitOptions)
         XCTAssertEqual(fillURL.absoluteString, "https://images.ctfassets.net/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png?fit=fill")

@@ -35,7 +35,7 @@ public final class LinkQuery<EntryType>: AbstractQuery where EntryType: EntryDec
     }
 
     /// Static method for creating a new LinkQuery with an operation. This variation for initializing guarantees
-    /// correct query contruction by utilizing the associated Fields CodingKeys type required by ResourceQueryable on the type you are linking to.
+    /// correct query construction by utilizing the associated Fields CodingKeys type required by ResourceQueryable on the type you are linking to.
     ///
     /// Example usage:
     ///
@@ -65,7 +65,7 @@ public final class LinkQuery<EntryType>: AbstractQuery where EntryType: EntryDec
 
     /**
      Static method for creating a new LinkQuery with an operation. This variation for initializing guarantees
-     correct query contruction by utilizing the associated Sys CodingKeys type required by ResourceQueryable on
+     correct query construction by utilizing the associated Sys CodingKeys type required by ResourceQueryable on
      the type you are linking to.
 
      Example usage:
@@ -150,7 +150,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
     }
 
     /// Instance method for appending a query operation to the receiving `QueryOn`.
-    /// This variation for initialization guarantees correct query contruction by utilizing the associated
+    /// This variation for initialization guarantees correct query construction by utilizing the associated
     /// `FieldKeys` type required by `ResourceQueryable`.
     ///
     /// Example usage:
@@ -182,7 +182,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
     }
 
     /// Static method for creating a new QueryOn with a select operation: an operation in which only
-    /// the fields specified in the fieldNames property will be returned in the JSON response. This variation for initializing guarantees correct query contruction
+    /// the fields specified in the fieldNames property will be returned in the JSON response. This variation for initializing guarantees correct query construction
     /// by utilizing the Fields CodingKeys required by ResourceQueryable.
     /// The "sys" dictionary is always requested by the SDK.
     /// Note that if you are using the select operator with an instance `QueryOn<EntryType>`
@@ -205,7 +205,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
     ///
     /// See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/select-operator>
     ///
-    /// - Parameter fieldsKeys: An array of `FieldKeys` associated with the genery `EntryType` that you are performing your select operation against.
+    /// - Parameter fieldsKeys: An array of `FieldKeys` associated with the generic `EntryType` that you are performing your select operation against.
     /// - Returns: A newly initialized QueryOn query.
     public static func select(fieldsNamed fieldsKeys: [EntryType.FieldKeys]) -> QueryOn<EntryType> {
         let query = QueryOn<EntryType>()
@@ -214,7 +214,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
     }
 
     /// Instance method for creating a new QueryOn with a select operation: an operation in which only
-    /// the fields specified in the fieldNames property will be returned in the JSON response. This variation for initializing guarantees correct query contruction
+    /// the fields specified in the fieldNames property will be returned in the JSON response. This variation for initializing guarantees correct query construction
     /// by utilizing the Fields type associated with your type conforming to ResourceQueryable.
     /// The "sys" dictionary is always requested by the SDK.
     /// Note that if you are using the select operator with an instance `QueryOn<EntryType>`
@@ -238,7 +238,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
     ///
     /// See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/select-operator>
     ///
-    /// - Parameter fieldsKeys: An array of `FieldKeys` associated with the genery `EntryType` that you are performing your select operation against.
+    /// - Parameter fieldsKeys: An array of `FieldKeys` associated with the generic `EntryType` that you are performing your select operation against.
     /// - Returns: A reference to the receiving query to enable chaining.
     @discardableResult
     public func select(fieldsNamed fieldsKeys: [EntryType.FieldKeys]) -> QueryOn<EntryType> {
@@ -308,7 +308,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
 
         parameters["fields.\(fieldsKey.stringValue).sys.contentType.sys.id"] = LinkType.contentTypeId
 
-        // If propertyName isn't unrwrapped, the string isn't constructed correctly for some reason.
+        // If propertyName isn't unwrapped, the string isn't constructed correctly for some reason.
         if let propertyName = linkQuery.propertyName {
             let filterParameterName = "fields.\(fieldsKey.stringValue).\(propertyName)\(linkQuery.operation.string)"
             parameters[filterParameterName] = linkQuery.operation.values
@@ -409,7 +409,7 @@ public final class AssetQuery: ResourceQuery {
 
     /// Static method for creating a new `AssetQuery` with a select operation: an operation in which only
     /// the fields specified in the fieldNames parameter will be returned in the JSON response.
-    /// This variation for initialization guarantees correct query contruction by utilizing the typesafe `Asset.FieldKeys`.
+    /// This variation for initialization guarantees correct query construction by utilizing the typesafe `Asset.FieldKeys`.
     /// The "sys" dictionary is always requested by the SDK.
     ///
     /// Example usage:
@@ -439,7 +439,7 @@ public final class AssetQuery: ResourceQuery {
 
     /// Instance method for mutating an `AssetQuery` with a select operation: an operation in which only
     /// the fields specified in the fieldNames parameter will be returned in the JSON response.
-    /// This variation for initialization guarantees correct query contruction by utilizing the typesafe `Asset.FieldKeys`.
+    /// This variation for initialization guarantees correct query construction by utilizing the typesafe `Asset.FieldKeys`.
     /// The "sys" dictionary is always requested by the SDK.
     ///
     /// ```
@@ -468,14 +468,14 @@ public final class ContentTypeQuery: ChainableQuery {
     /// The parameters dictionary that is converted to `URLComponents` (HTTP parameters/arguments) on the HTTP URL. Useful for debugging.
     public var parameters: [String: String] = [String: String]()
 
-    /// Designated initalizer for Query.
+    /// Designated initializer for Query.
     public required init() {
         self.parameters = [String: String]()
     }
 
 
     /// Static method for creating a ContentTypeQuery with an operation.
-    /// This variation for initializing guarantees correct query contruction by utilizing the ContentType.QueryableCodingKey CodingKeys.
+    /// This variation for initializing guarantees correct query construction by utilizing the ContentType.QueryableCodingKey CodingKeys.
     ///
     /// Example usage:
     ///

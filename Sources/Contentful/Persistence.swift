@@ -9,7 +9,7 @@
 import Foundation
 
 /// Conform to this protocol and initialize your `Client` instance with the `persistenceIntegration`
-/// initialization parameter set to recieve messages about creation and deletion of `Entry`s and `Asset`s
+/// initialization parameter set to receive messages about creation and deletion of `Entry`s and `Asset`s
 /// in your space when doing sync operations using the `Client.initialSync()` and Client.nextSync()` methods.
 /// Proper conformance to this protocol should enable persisting the state changes that happen in your Contentful
 /// space to a persistent store such as `CoreData`.
@@ -73,8 +73,8 @@ public protocol PersistenceIntegration: Integration {
     ///  this method, to execute on whatever thread your local datastore may require operations to be executed on.
     func resolveRelationships()
 
-    /// This method is called after all assets and entries have been tranformed to persistable data
-    /// structures. The implementation should actually perform the save operation to the persisent database.
+    /// This method is called after all assets and entries have been transformed to persistable data
+    /// structures. The implementation should actually perform the save operation to the persistent database.
     ///
     /// There is no guarantee which thread this will be called from, so it is your responsibility when implementing
     /// this method, to execute on whatever thread your local datastore may require operations to be executed on.
