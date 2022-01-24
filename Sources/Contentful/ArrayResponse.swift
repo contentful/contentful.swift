@@ -65,16 +65,19 @@ public struct HomogeneousArrayResponse<ItemType>: HomogeneousArray where ItemTyp
     /// An array of errors, or partial errors, which describe links which were returned in the response that
     /// cannot be resolved.
     public let errors: [ArrayResponseError]?
+    
+    /// Access to included assets
+    public var includedAssets: [Asset]? {
+        return homogeneousIncludes?.assets
+    }
+    
+    /// Access to included entries
+    public var includedEntries: [Entry]? {
+        return homogeneousIncludes?.entries
+    }
 
     internal let homogeneousIncludes: Includes?
     internal let heterogeneousIncludes: HeterogeneousIncludes?
-
-    internal var includedAssets: [Asset]? {
-        return homogeneousIncludes?.assets
-    }
-    internal var includedEntries: [Entry]? {
-        return homogeneousIncludes?.entries
-    }
 
     internal struct Includes: Decodable {
         internal let assets: [Asset]?
@@ -248,15 +251,18 @@ public struct HeterogeneousArrayResponse: Array {
     /// An array of errors, or partial errors, which describe links which were returned in the response that
     /// cannot be resolved.
     public let errors: [ArrayResponseError]?
-
-    internal let includes: HeterogeneousIncludes?
-
-    internal var includedAssets: [Asset]? {
+    
+    /// Access to assets includes
+    public var includedAssets: [Asset]? {
         return includes?.assets
     }
-    internal var includedEntries: [EntryDecodable]? {
+    
+    /// Access to entries includes
+    public var includedEntries: [EntryDecodable]? {
         return includes?.entries
     }
+
+    internal let includes: HeterogeneousIncludes?
 }
 
 @available(*, deprecated, message: "Use HeterogeneousArrayResponse instead")
