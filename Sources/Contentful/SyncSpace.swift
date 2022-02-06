@@ -77,6 +77,9 @@ public final class SyncSpace: Decodable {
 
     /// An array of identifiers for entries that were deleted after the last sync operations.
     public var deletedEntryIds = [String]()
+    
+    /// the content types of the entries
+    public var types = [ContentType]()
 
     internal(set) public var hasMorePages: Bool
 

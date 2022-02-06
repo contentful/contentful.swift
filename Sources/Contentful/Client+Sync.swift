@@ -44,15 +44,23 @@ extension Client {
             parameters = syncableTypes.parameters + syncSpace.parameters
         }
 
-        return fetchDecodable(url: url(endpoint: .sync, parameters: parameters)) { (result: Result<SyncSpace, Error>) in
+        return fetchDecodable(url: url(endpoint: .contentTypes)){ (result: Result<HomogeneousArrayResponse<Contentful.ContentType>, Error>) in
             switch result {
-            case .success(let newSyncSpace):
-                syncSpace.updateWithDiffs(from: newSyncSpace)
-                self.persistenceIntegration?.update(with: newSyncSpace)
-                if newSyncSpace.hasMorePages {
-                    self.sync(for: syncSpace, syncableTypes: syncableTypes, then: completion)
-                } else {
-                    completion(.success(syncSpace))
+            case .success(let contents):
+                self.fetchDecodable(url: self.url(endpoint: .sync, parameters: parameters)) { (result: Result<SyncSpace, Error>) in
+                    switch result {
+                    case .success(let newSyncSpace):
+                        newSyncSpace.types = contents.items
+                        syncSpace.updateWithDiffs(from: newSyncSpace)
+                        self.persistenceIntegration?.update(with: newSyncSpace)
+                        if newSyncSpace.hasMorePages {
+                            self.sync(for: syncSpace, syncableTypes: syncableTypes, then: completion)
+                        } else {
+                            completion(.success(syncSpace))
+                        }
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
                 }
             case .failure(let error):
                 completion(.failure(error))
