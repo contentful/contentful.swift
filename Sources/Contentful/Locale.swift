@@ -124,13 +124,7 @@ internal enum Localization {
                 }
             }
             // Assign the value, if it exists.
-            //If not, check if the field is actually localized or not
-            //If field not localized, it should have the default value
-            //Value should be nil only if field localized, but value for specific locale is empty
             if let fieldValue = localesToFieldValues[currentLocale.code] {
-                fields[fieldName] = fieldValue
-            }else if !localesToFieldValues.keys.contains(currentLocale.code),
-                     let fieldValue = localesToFieldValues.values.first{
                 fields[fieldName] = fieldValue
             }
         }
