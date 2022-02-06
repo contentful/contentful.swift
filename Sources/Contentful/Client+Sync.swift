@@ -47,10 +47,14 @@ extension Client {
         return fetchDecodable(url: url(endpoint: .contentTypes)){ (result: Result<HomogeneousArrayResponse<Contentful.ContentType>, Error>) in
             switch result {
             case .success(let contents):
-                self.fetchDecodable(url: self.url(endpoint: .sync, parameters: parameters)) { (result: Result<SyncSpace, Error>) in
+                _ = self.fetchDecodable(url: self.url(endpoint: .sync, parameters: parameters)) { (result: Result<SyncSpace, Error>) in
                     switch result {
                     case .success(let newSyncSpace):
                         newSyncSpace.types = contents.items
+                        for entry in newSyncSpace.entries {
+                            let type = syncSpace.types.first { $0.name == entry.sys.type}
+                            entry.type = type
+                        }
                         syncSpace.updateWithDiffs(from: newSyncSpace)
                         self.persistenceIntegration?.update(with: newSyncSpace)
                         if newSyncSpace.hasMorePages {
