@@ -130,7 +130,7 @@ internal enum Localization {
             //Value should be nil only if field localized, but value for specific locale is empty
             if let fieldValue = localesToFieldValues[currentLocale.code] {
                 fields[fieldName] = fieldValue
-            }else if let fieldType = fieldTypes.first(where: { $0.name == fieldName }),
+            }else if let fieldType = fieldTypes.first(where: { $0.id == fieldName }),
                      !fieldType.localized{
                 let fieldValue = localesToFieldValues.values.first
                 fields[fieldName] = fieldValue

@@ -50,9 +50,8 @@ extension Client {
                 _ = self.fetchDecodable(url: self.url(endpoint: .sync, parameters: parameters)) { (result: Result<SyncSpace, Error>) in
                     switch result {
                     case .success(let newSyncSpace):
-                        newSyncSpace.types = contents.items
                         for entry in newSyncSpace.entries {
-                            let type = syncSpace.types.first { $0.name == entry.sys.type}
+                            let type = contents.items.first { $0.sys.id == entry.sys.contentTypeId}
                             entry.type = type
                         }
                         syncSpace.updateWithDiffs(from: newSyncSpace)
