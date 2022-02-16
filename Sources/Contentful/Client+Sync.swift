@@ -59,17 +59,17 @@ extension Client {
                 } else {
                     _ = self.fetchContentTypes{ contentTypeResult in
                         switch contentTypeResult {
-                            case .success(let contentTypes):
-                                for entry in syncSpace.entries {
-                                    let type = contentTypes.first { $0.sys.id == entry.sys.contentTypeId}
-                                    entry.type = type
-                                }
+                        case .success(let contentTypes):
+                            for entry in syncSpace.entries {
+                                let type = contentTypes.first { $0.sys.id == entry.sys.contentTypeId}
+                                entry.type = type
+                            }
                             self.persistenceIntegration?.update(with: syncSpace)
                             completion(.success(syncSpace))
-                            case .failure(let error):
-                                completion(.failure(error))
-                            }
+                        case .failure(let error):
+                            completion(.failure(error))
                         }
+                    }
                 }
             case .failure(let error):
                 completion(.failure(error))
@@ -81,10 +81,10 @@ extension Client {
     ) -> URLSessionDataTask {
         return fetchDecodable(url: url(endpoint: .contentTypes)){ (result: Result<HomogeneousArrayResponse<Contentful.ContentType>, Error>) in
             switch result {
-                case .success(let contents):
-                    completion(.success(contents.items))
-                case .failure(let error):
-                    completion(.failure(error))
+            case .success(let contents):
+                completion(.success(contents.items))
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }
