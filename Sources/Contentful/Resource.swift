@@ -102,11 +102,13 @@ public class LocalizableResource: Resource, FlatResource, Codable {
     /// The metadata linking to additional content like tags.
     public var metadata: Metadata?
     
+    /// type of resource
+    public var type: ContentType?
     /// The fields with content. If there is no value for a field associated with the currently selected `Locale`,
     /// the SDK will walk down fallback chain until a value is found. If there is still no value after
     /// walking the full chain, the field will be omitted from the `fields` dictionary.
     public var fields: [FieldName: Any] {
-        return Localization.fields(forLocale: currentlySelectedLocale, localizableFields: localizableFields, localizationContext: localizationContext)
+        return Localization.fields(forLocale: currentlySelectedLocale, localizableFields: localizableFields, localizationContext: localizationContext, fieldTypes: type?.fields ?? [])
     }
 
     /// Sets the locale on the Localizable Resource (i.e. an instance of `Asset` or `Entry`)
