@@ -11,6 +11,10 @@ import Foundation
 /// A container for the synchronized state of a Space
 public final class SyncSpace: Decodable {
 
+    public enum DatabaseMigrationVersion: Int { case
+        `default` = 1
+    }
+    
     /// The url parameters relevant for the next sync operation that this `SyncSpace` can perform.
     public var parameters: [String: String] {
 
@@ -82,6 +86,9 @@ public final class SyncSpace: Decodable {
 
     /// A token which needs to be present to perform a subsequent synchronization operation
     internal(set) public var syncToken = ""
+    
+    /// A token which needs to be present to perform a subsequent synchronization operation.
+    internal(set) public var dbVersion = DatabaseMigrationVersion.default.rawValue
 
     /// Number of entities per page in a sync operation. See documentation for details.
     internal(set) public var limit: Int?
@@ -99,10 +106,12 @@ public final class SyncSpace: Decodable {
     /// The sync token from a previous synchronization
     ///
     /// - Parameter syncToken: The sync token from a previous synchronization.
-    public init(syncToken: String = "", limit: Int? = nil) {
+    /// - Parameter dbVersion: The version of the database to migrate to. Warning - increasing this number will wipe the data.
+    public init(syncToken: String = "", limit: Int? = nil, dbVersion: Int = DatabaseMigrationVersion.default.rawValue) {
         self.hasMorePages = false
         self.syncToken = syncToken
         self.limit = limit
+        self.dbVersion = dbVersion
     }
 
     internal static func syncToken(from urlString: String) -> String {
@@ -191,6 +200,10 @@ public final class SyncSpace: Decodable {
 
         syncToken = syncSpace.syncToken
         hasMorePages = syncSpace.hasMorePages
+        
+        if dbVersion < syncSpace.dbVersion {
+            dbVersion = syncSpace.dbVersion
+        }
     }
 
     internal func cache(resources: [Resource]) {
