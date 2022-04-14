@@ -5,19 +5,6 @@ orbs:
   carthage: ngs/carthage@0.0.3
 
 jobs:
-  carthage:
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v{{ .Environment.CACHE_VERSION }}-carthage-{{ checksum "Cartfile.resolved" }}
-      - run:
-          name: Carthage build
-          command:
-      - save_cache:
-          key: v{{ .Environment.CACHE_VERSION }}-carthage-{{ checksum "Cartfile.resolved" }}
-          paths:
-            - Carthage
   test:
     macos:
       xcode: 13.3.1
@@ -49,4 +36,4 @@ jobs:
 workflows:
   test-workflow:
     jobs:
-      - carthage
+      - test
