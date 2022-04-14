@@ -5,8 +5,6 @@ orbs:
 
 jobs:
   test:
-    docker:
-      - image: cimg/base:stable
     macos:
       xcode: 13.3.1
     steps:
@@ -28,4 +26,4 @@ jobs:
 workflows:
   test-workflow:
     jobs:
-      - test:
+      - test
