@@ -6,3 +6,6 @@ gem 'jazzy'
 gem 'dotenv'
 gem 'cocoapods', '~> 1.8.4'
 
+
+
+gem "fastlane"
