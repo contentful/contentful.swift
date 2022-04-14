@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   ruby-orbs: sue445/ruby-orbs@1.6.2
+  carthage: ngs/carthage@0.0.3
 
 jobs:
   test:
@@ -19,6 +20,7 @@ jobs:
           bundle_without: development test
           cache_key_prefix: v1-bundle
           restore_bundled_with: true
+      - run: carthage build Contentful --no-skip-current --platform all --use-xcframeworks
       - run: fastlane test
       - run: bundle exec slather coverage -s --coveralls
       - run: bundle exec pod lib lint Contentful.podspec
