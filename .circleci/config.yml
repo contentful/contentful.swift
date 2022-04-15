@@ -3,6 +3,7 @@ version: 2.1
 orbs:
   ruby-orbs: sue445/ruby-orbs@1.6.2
   carthage: ngs/carthage@0.0.3
+  coveralls: coveralls/coveralls@1.0.6
 
 jobs:
   test:
@@ -30,8 +31,6 @@ jobs:
             - vendor/bundle
             - Carthage
       - run: fastlane test
-      - run: bundle exec slather coverage -s --coveralls
-      - run: bundle exec pod lib lint Contentful.podspec
 
 workflows:
   test-workflow:
