@@ -3,7 +3,6 @@ version: 2.1
 orbs:
   ruby-orbs: sue445/ruby-orbs@1.6.2
   carthage: ngs/carthage@0.0.3
-  coveralls: coveralls/coveralls@1.0.6
 
 jobs:
   test:
