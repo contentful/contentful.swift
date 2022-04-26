@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="fastlane.lanes">
+    
+    
+    
+      
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000338">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="1: clear_derived_data" time="0.290308">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="2: cd .. &amp;&amp; xcodebuild -jobs `sysctl -n hw.ncpu` test -workspace Contentful.xcworkspace -scheme Contentful_iOS -sdk iphonesimulator -destination &quot;platform=iOS Simulator,name=iPhone 13,OS=15.4&quot; ONLY_ACTIVE_ARCH=YES CODE_SIGNING_IDENTITY= CODE_SIGNING_REQUIRED=NO" time="57.366411">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="3: clear_derived_data" time="0.241939">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="4: cd .. &amp;&amp; xcodebuild -jobs `sysctl -n hw.ncpu` test -workspace Contentful.xcworkspace -scheme Contentful_tvOS -sdk appletvsimulator -destination &quot;platform=tvOS Simulator,name=Apple TV,OS=15.4&quot; ONLY_ACTIVE_ARCH=YES CODE_SIGNING_IDENTITY= CODE_SIGNING_REQUIRED=NO" time="20.241081">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="5: clear_derived_data" time="0.267034">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="6: cd .. &amp;&amp; xcodebuild -jobs `sysctl -n hw.ncpu` test -workspace Contentful.xcworkspace -scheme Contentful_macOS -sdk macosx -destination &quot;platform=macOS&quot; ONLY_ACTIVE_ARCH=YES CODE_SIGNING_IDENTITY= CODE_SIGNING_REQUIRED=NO" time="14.736389">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="7: cd .. &amp;&amp; swift build" time="0.840672">
+        
+      </testcase>
+    
+  </testsuite>
+</testsuites>

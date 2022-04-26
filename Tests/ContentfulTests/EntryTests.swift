@@ -319,11 +319,11 @@ class EntryTests: XCTestCase {
     func testFetchEntriesWithRangeSearch() {
         let date = Date.fromComponents(year: 2021, month: 3, day: 20, hour: 0, minute: 0, second: 0)
         waitUntilMatchingEntries(Query.where(sys: .updatedAt, .isBefore(date))) {
-            XCTAssertEqual($0.items.count, 10)
+            XCTAssertEqual($0.items.count, 8)
         }
 
         waitUntilMatchingEntries(Query.where(sys: .updatedAt, .isBefore("2021-03-20T00:00:00Z"))) {
-            XCTAssertEqual($0.items.count, 10)
+            XCTAssertEqual($0.items.count, 8)
         }
     }
 

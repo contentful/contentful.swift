@@ -1,0 +1,215 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites name='ContentfulTests_macOS.xctest' tests='162' failures='0'>
+  <testsuite name='ContentfulTests_macOS.AssetTests' tests='7' failures='0'>
+    <testcase classname='ContentfulTests_macOS.AssetTests' name='testDeserializingVideoAssetURL' time='0.006'/>
+    <testcase classname='ContentfulTests_macOS.AssetTests' name='testFetchAllAssetsInSpace' time='0.004'/>
+    <testcase classname='ContentfulTests_macOS.AssetTests' name='testFetchImageForAsset' time='0.006'/>
+    <testcase classname='ContentfulTests_macOS.AssetTests' name='testFetchSingleAsset' time='0.003'/>
+    <testcase classname='ContentfulTests_macOS.AssetTests' name='testFilterAssetsByMIMETypeGroup' time='0.004'/>
+    <testcase classname='ContentfulTests_macOS.AssetTests' name='testMetadataExistsOneTag' time='0.003'/>
+    <testcase classname='ContentfulTests_macOS.AssetTests' name='testMetadataExistsWithEmptyTagsArray' time='0.002'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_macOS.ClientConfigurationTests' tests='2' failures='0'>
+    <testcase classname='ContentfulTests_macOS.ClientConfigurationTests' name='testDefaultConfiguration' time='0.000'/>
+    <testcase classname='ContentfulTests_macOS.ClientConfigurationTests' name='testUserAgentString' time='0.001'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_macOS.ContentTypeTests' tests='4' failures='0'>
+    <testcase classname='ContentfulTests_macOS.ContentTypeTests' name='testFetchAllContentTypesInSpace' time='0.004'/>
+    <testcase classname='ContentfulTests_macOS.ContentTypeTests' name='testFetchAllContentTypesInSpaceWithOrder' time='0.003'/>
+    <testcase classname='ContentfulTests_macOS.ContentTypeTests' name='testFetchContentType' time='0.002'/>
+    <testcase classname='ContentfulTests_macOS.ContentTypeTests' name='testFetchContentTypeMatchingQuery' time='0.002'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_macOS.EntryTests' tests='29' failures='0'>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testFetchAllEntriesInSpace' time='0.018'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testFetchEntriesForAllLocales' time='0.009'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testFetchEntriesForSpecificLocale' time='0.008'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testFetchEntriesInReverseOrder' time='0.011'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testFetchEntriesInSpecifiedOrder' time='0.011'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testFetchEntriesOfContentType' time='0.009'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testFetchEntriesOrderedByMultipleAttributes' time='0.011'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testFetchEntriesWithBoundingBoxLocationsSearch' time='0.007'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testFetchEntriesWithEqualitySearchForArrays' time='0.007'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testFetchEntriesWithExclusionSearch' time='0.008'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testFetchEntriesWithExistenceSearch' time='0.008'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testFetchEntriesWithFullTextSearch' time='0.007'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testFetchEntriesWithFullTextSearchOnSpecificField' time='0.007'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testFetchEntriesWithInclusionSearch' time='0.015'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testFetchEntriesWithInequalitySearch' time='0.011'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testFetchEntriesWithLocationProximitySearch' time='0.008'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testFetchEntriesWithRangeSearch' time='0.022'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testFetchEntryWithArrayOfLinkedEntries' time='0.169'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testFetchSingleEntry' time='0.012'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testFetchSpecificEntryMatchingSysId' time='0.011'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testFilterEntriesByLinkedEntriesSearch' time='0.010'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testIncomingLinksToAsset' time='0.009'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testIncomingLinksToEntry' time='0.008'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testLimitNumberOfEntriesBeingFetched' time='0.010'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testMetadataExistsOneTag' time='0.007'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testMetadataExistsWithEmptyTagsArray' time='0.008'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testMultiLevelIncludesAreResolved' time='0.008'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testSearchOnReferences' time='0.008'/>
+    <testcase classname='ContentfulTests_macOS.EntryTests' name='testSkipEntriesInAQuery' time='0.007'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_macOS.EnvironmentsTests' tests='2' failures='0'>
+    <testcase classname='ContentfulTests_macOS.EnvironmentsTests' name='testInitialSyncOnNonMasterEnvironment' time='0.015'/>
+    <testcase classname='ContentfulTests_macOS.EnvironmentsTests' name='testQueryReturningHeterogeneousArray' time='0.008'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_macOS.ErrorTests' tests='1' failures='0'>
+    <testcase classname='ContentfulTests_macOS.ErrorTests' name='testErrorMessageForInvalidPath' time='0.002'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_macOS.FieldTests' tests='2' failures='0'>
+    <testcase classname='ContentfulTests_macOS.FieldTests' name='testFieldTypeArray' time='0.001'/>
+    <testcase classname='ContentfulTests_macOS.FieldTests' name='testFieldTypeLink' time='0.000'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_macOS.FieldTypeTests' tests='1' failures='0'>
+    <testcase classname='ContentfulTests_macOS.FieldTypeTests' name='testFieldTypes' time='0.000'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_macOS.ISO8601DateTests' tests='2' failures='0'>
+    <testcase classname='ContentfulTests_macOS.ISO8601DateTests' name='testConfiguringTimeZone' time='0.000'/>
+    <testcase classname='ContentfulTests_macOS.ISO8601DateTests' name='testDateFormatter' time='0.003'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_macOS.ImageTests' tests='12' failures='0'>
+    <testcase classname='ContentfulTests_macOS.ImageTests' name='testAllCropFitOptionsThatUseFocusParameters' time='0.001'/>
+    <testcase classname='ContentfulTests_macOS.ImageTests' name='testAllImageFormatOptions' time='0.000'/>
+    <testcase classname='ContentfulTests_macOS.ImageTests' name='testColorHexRepresenations' time='0.000'/>
+    <testcase classname='ContentfulTests_macOS.ImageTests' name='testComplexURLIsProperlyConstructed' time='0.000'/>
+    <testcase classname='ContentfulTests_macOS.ImageTests' name='testFetchingImageWithComplexOptionSet' time='0.000'/>
+    <testcase classname='ContentfulTests_macOS.ImageTests' name='testInvalidJPGQualityThrowsError' time='0.001'/>
+    <testcase classname='ContentfulTests_macOS.ImageTests' name='testInvalidWidthAndHeightThrowsError' time='0.000'/>
+    <testcase classname='ContentfulTests_macOS.ImageTests' name='testMakingURLWithPaddingAndBackgroundColor' time='0.000'/>
+    <testcase classname='ContentfulTests_macOS.ImageTests' name='testMultipleImageOptionsOfSameTypeAreInvalid' time='0.000'/>
+    <testcase classname='ContentfulTests_macOS.ImageTests' name='testThumbFillAndScaleFitOptions' time='0.000'/>
+    <testcase classname='ContentfulTests_macOS.ImageTests' name='testURLIsPropertyConstructedForJPGWithQuality' time='0.000'/>
+    <testcase classname='ContentfulTests_macOS.ImageTests' name='testURLsWithFormatFlagsAreProperlyConstructed' time='0.000'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_macOS.JSONDecodingTests' tests='9' failures='0'>
+    <testcase classname='ContentfulTests_macOS.JSONDecodingTests' name='testDecodeAsset' time='0.001'/>
+    <testcase classname='ContentfulTests_macOS.JSONDecodingTests' name='testDecodeLocalizedEntries' time='0.001'/>
+    <testcase classname='ContentfulTests_macOS.JSONDecodingTests' name='testDecodeSpaces' time='0.000'/>
+    <testcase classname='ContentfulTests_macOS.JSONDecodingTests' name='testDecodeSyncResponses' time='0.013'/>
+    <testcase classname='ContentfulTests_macOS.JSONDecodingTests' name='testDecodeSyncResponsesWithDeletedAssetIds' time='0.001'/>
+    <testcase classname='ContentfulTests_macOS.JSONDecodingTests' name='testDecodeSyncResponsesWithdeletedEntryIds' time='0.001'/>
+    <testcase classname='ContentfulTests_macOS.JSONDecodingTests' name='testDecodingWithoutLocalizationContextThrows' time='0.001'/>
+    <testcase classname='ContentfulTests_macOS.JSONDecodingTests' name='testHandlingNestedArrayValues' time='0.001'/>
+    <testcase classname='ContentfulTests_macOS.JSONDecodingTests' name='testHandlingNullJSONValues' time='0.000'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_macOS.LinkResolverTests' tests='5' failures='0'>
+    <testcase classname='ContentfulTests_macOS.LinkResolverTests' name='testDecoderCanResolveArrayOfLinks' time='0.008'/>
+    <testcase classname='ContentfulTests_macOS.LinkResolverTests' name='testEntriesLinkingToSameLinkCanResolveLinks' time='0.003'/>
+    <testcase classname='ContentfulTests_macOS.LinkResolverTests' name='testEntryLinkingToAssetsArrayDoesResolveLinks' time='0.004'/>
+    <testcase classname='ContentfulTests_macOS.LinkResolverTests' name='testFetchZeroIncludesOmitsLinkResolving' time='0.002'/>
+    <testcase classname='ContentfulTests_macOS.LinkResolverTests' name='testUnresolvableLinkDoesNotResolve' time='0.002'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_macOS.LocalizationTests' tests='4' failures='0'>
+    <testcase classname='ContentfulTests_macOS.LocalizationTests' name='testLocalizationForEntryDecodableWorks' time='0.004'/>
+    <testcase classname='ContentfulTests_macOS.LocalizationTests' name='testNormalizingFieldsDictionaryFormat' time='0.001'/>
+    <testcase classname='ContentfulTests_macOS.LocalizationTests' name='testWalkingFallbackChain' time='0.003'/>
+    <testcase classname='ContentfulTests_macOS.LocalizationTests' name='testWalkingFallbackchainOnAsset' time='0.001'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_macOS.LoggerTests' tests='1' failures='0'>
+    <testcase classname='ContentfulTests_macOS.LoggerTests' name='testLoggerRespectsLogLevel' time='0.000'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_macOS.PersistenceIntegrationTests' tests='1' failures='0'>
+    <testcase classname='ContentfulTests_macOS.PersistenceIntegrationTests' name='testSerializingLocationWithNSCdoing' time='0.002'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_macOS.PreviewAPITests' tests='2' failures='0'>
+    <testcase classname='ContentfulTests_macOS.PreviewAPITests' name='testClientCanAccessPreviewAPI' time='0.001'/>
+    <testcase classname='ContentfulTests_macOS.PreviewAPITests' name='testClientCantAccessPreviewAPIWithProductionToken' time='0.001'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_macOS.PreviewSyncTests' tests='2' failures='0'>
+    <testcase classname='ContentfulTests_macOS.PreviewSyncTests' name='testDoInitialSyncWithPreviewAPI' time='0.016'/>
+    <testcase classname='ContentfulTests_macOS.PreviewSyncTests' name='testSubsequentSyncWithPreviewAPIReturnsSDKError' time='0.015'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_macOS.QueryTests' tests='49' failures='0'>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testChainingQueries' time='0.018'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testChainingQueriesWithUntypedQuery' time='0.009'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testEqualityQuery' time='0.011'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testExclusionQuery' time='0.012'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testExistenceQuery' time='0.012'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testFetchCatsWithRangeSearch' time='0.011'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testFetchEntriesContainingSpecificTags' time='0.010'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testFetchEntriesContainingSpecificTags2' time='0.010'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testFetchEntriesContainingSpecificTags2Chaining' time='0.010'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testFetchEntriesContainingSpecificTags3' time='0.010'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testFetchEntriesContainingSpecificTags4' time='0.010'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testFetchEntriesContainingSpecificTagsChaining' time='0.010'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testFetchEntriesInReverseOrder' time='0.014'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testFetchEntriesInSpecifiedOrder' time='0.013'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testFetchEntriesOfAnyTypeWithRangeSearch' time='0.014'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testFetchEntriesOrderedByMultipleAttributes' time='0.014'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testFetchEntriesWithBoundingBoxLocationsSearch' time='0.010'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testFetchEntriesWithFullTextSearch' time='0.010'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testFetchEntriesWithFullTextSearchOnSpecificField' time='0.010'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testFetchEntriesWithLocationProximitySearch' time='0.011'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testFetchEntriesWithTypeInOrder' time='0.012'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testFetchingEntriesOfContentType' time='0.011'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testFilterAssetsByMIMETypeGroup' time='0.010'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testIncludeParameter' time='0.013'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testInclusionQuery' time='0.011'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testInequalityQuery' time='0.011'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testLimitNumberOfEntriesBeingFetched' time='0.012'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testLinksToEntryWithField' time='0.011'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testLinksToEntryWithSysId' time='0.011'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testMultipleValuesQuery' time='0.011'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testQueryAssetsWithSelect' time='0.009'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testQueryAssetsWithSelectUsingFields' time='0.009'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testQueryClientDefinedModelResolvesIncludes' time='0.010'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testQueryConstruction' time='0.000'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testQueryReturningClientDefinedModel' time='0.011'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testQueryReturningClientDefinedModelUsingFields' time='0.011'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testQueryReturningClientDefinedModelWithMetadata' time='0.011'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testQueryReturningClientDefinedModelWithMetadataAndTags' time='0.010'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testQueryReturningHeterogeneousArray' time='0.015'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testQueryValidation' time='0.000'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testSearchOnReferences' time='0.011'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testSkipEntries' time='0.009'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testSkipEntriesInAQueryWithOrder' time='0.009'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testTagsExistence' time='0.010'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testTagsExistence2' time='0.010'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testTagsNotExistence' time='0.011'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testTagsNotExistence2' time='0.011'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testUnTypedLinksToEntryWithField' time='0.010'/>
+    <testcase classname='ContentfulTests_macOS.QueryTests' name='testUntypedSearchOnReferences' time='0.011'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_macOS.RateLimitTests' tests='1' failures='0'>
+    <testcase classname='ContentfulTests_macOS.RateLimitTests' name='testRateLimit' time='0.000'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_macOS.RichTextNodeDecodingTests' tests='19' failures='0'>
+    <testcase classname='ContentfulTests_macOS.RichTextNodeDecodingTests' name='testDecodingBlockQuote' time='0.009'/>
+    <testcase classname='ContentfulTests_macOS.RichTextNodeDecodingTests' name='testDecodingH1' time='0.005'/>
+    <testcase classname='ContentfulTests_macOS.RichTextNodeDecodingTests' name='testDecodingH6' time='0.005'/>
+    <testcase classname='ContentfulTests_macOS.RichTextNodeDecodingTests' name='testDecodingHorizontalRule' time='0.005'/>
+    <testcase classname='ContentfulTests_macOS.RichTextNodeDecodingTests' name='testDecodingNestedEntriesInlinedInRichText' time='0.008'/>
+    <testcase classname='ContentfulTests_macOS.RichTextNodeDecodingTests' name='testDecodingNestedEntriesInlinedInRichTextWithoutContentTypeClasses' time='0.009'/>
+    <testcase classname='ContentfulTests_macOS.RichTextNodeDecodingTests' name='testDecodingOrderedListAndListItems' time='0.010'/>
+    <testcase classname='ContentfulTests_macOS.RichTextNodeDecodingTests' name='testDecodingParagraphWithAllInlineAndHyperlinkNodes' time='0.012'/>
+    <testcase classname='ContentfulTests_macOS.RichTextNodeDecodingTests' name='testDecodingParagraphWithTextOnly' time='0.004'/>
+    <testcase classname='ContentfulTests_macOS.RichTextNodeDecodingTests' name='testDecodingStructuredText' time='0.006'/>
+    <testcase classname='ContentfulTests_macOS.RichTextNodeDecodingTests' name='testDecodingTextWithAssetHyperlink' time='0.006'/>
+    <testcase classname='ContentfulTests_macOS.RichTextNodeDecodingTests' name='testDecodingTextWithAssetLinkBlock' time='0.005'/>
+    <testcase classname='ContentfulTests_macOS.RichTextNodeDecodingTests' name='testDecodingTextWithEntryHyperlink' time='0.008'/>
+    <testcase classname='ContentfulTests_macOS.RichTextNodeDecodingTests' name='testDecodingTextWithEntryLinkBlock' time='0.006'/>
+    <testcase classname='ContentfulTests_macOS.RichTextNodeDecodingTests' name='testDecodingTextWithEntryLinkInline' time='0.007'/>
+    <testcase classname='ContentfulTests_macOS.RichTextNodeDecodingTests' name='testDecodingTextWithHyperlink' time='0.006'/>
+    <testcase classname='ContentfulTests_macOS.RichTextNodeDecodingTests' name='testDecodingTextWithMarks' time='0.008'/>
+    <testcase classname='ContentfulTests_macOS.RichTextNodeDecodingTests' name='testDecodingUnorderedListAndListItems' time='0.011'/>
+    <testcase classname='ContentfulTests_macOS.RichTextNodeDecodingTests' name='testRichTextDocumentCodableAndNSCodingConformance' time='0.014'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_macOS.SpaceTests' tests='2' failures='0'>
+    <testcase classname='ContentfulTests_macOS.SpaceTests' name='testErrorWhenFetchingSpaceIsCalled' time='0.162'/>
+    <testcase classname='ContentfulTests_macOS.SpaceTests' name='testFetchSpace' time='0.002'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_macOS.StringExtensionTests' tests='1' failures='0'>
+    <testcase classname='ContentfulTests_macOS.StringExtensionTests' name='testValidKeyPathSelection' time='0.001'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_macOS.SyncTests' tests='1' failures='0'>
+    <testcase classname='ContentfulTests_macOS.SyncTests' name='testDummy' time='0.001'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_macOS.UnparsableErrorTests' tests='1' failures='0'>
+    <testcase classname='ContentfulTests_macOS.UnparsableErrorTests' name='testUnparsableErrorPassesSDKError' time='0.002'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_macOS.UtilityTests' tests='2' failures='0'>
+    <testcase classname='ContentfulTests_macOS.UtilityTests' name='testMergeTwoDictionaries' time='0.001'/>
+    <testcase classname='ContentfulTests_macOS.UtilityTests' name='testPutsTheCorrectValuesIntoMergedDictionary' time='0.000'/>
+  </testsuite>
+</testsuites>

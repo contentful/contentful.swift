@@ -1,0 +1,2208 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Test Results | xcpretty</title>
+    <style type="text/css">
+      body { font-family:Avenir Next, Helvetica Neue, sans-serif; color: #4A4A4A; background-color: #F0F3FB; margin:0;}
+      h1 { font-weight: normal; font-size: 24px; margin: 10px 0 0 0;}
+      h3 { font-weight: normal; margin: 2px; font-size: 1.1em;}
+      header { position: fixed;width: 100%;background: rgba(249, 254, 255, 0.9);margin: 0;padding: 10px;}
+      header:before, header:after { content:""; display:table;}
+      header:after { clear:both;}
+      a:link { color: #A1D761;}
+      footer { clear: both;position: relative;z-index: 10;height: 40px;margin-top: -10px; margin-left:30px; font-size:12px;}
+      table { width:100%; border-collapse: collapse;}
+      tr td:first-child { width:7%}
+      .left { float: left; margin-left:30px;}
+      .right { float: right; margin-right: 40px; margin-top: 0; margin-bottom:0;}
+      .test-suite { margin: 0 0 30px 0;}
+      .test-suite > .heading { font-family:Menlo, Monaco, monospace; font-weight: bold; border-color: #A1D761; background-color: #B8E986; border-width: 1px;}
+      .test-suite.failing > .heading { border-color: #C84F5E; background-color: #E58591;}
+      .test-suite > .heading > .title { margin-top: 4px; margin-left: 10px;}
+      .tests { overflow: scroll;margin: 0 30px 0 60px;}
+      .test, .test-suite > .heading { height: 30px; overflow: hidden; margin: 0 30px;}
+      .test, .test-suite > .heading { border-width: 1px; border-collapse: collapse; border-style: solid; }
+      .test { margin-left: 30px; border-top:none;}
+      .test.failing { border-color: #C84F5E; background-color: #F4DDE0;}
+      .test.passing { border-color: #A1D761;}
+      .test.failing { background-color: #E7A1AA;}
+      .test.passing { background-color: #CAF59F;}
+      .test.failing.odd { background-color: #EEC7CC;}
+      .test.passing.odd { background-color: #E5FBCF;}
+      .details.failing { background-color: #F4DDE0; border: 1px solid #C84F5E;}
+      .details.passing { background-color: #E5F4DC; border: 1px solid #A1D761;}
+      .test .test-detail:last-child { padding-bottom: 8px;}
+      .test .title { float: left; font-size: 0.9em; margin-top: 8px; font-family: Menlo, Monaco, monospace;}
+      .test .time { float: left;margin: 4px 10px 0 20px;}
+      .test-detail { font-family:Menlo, Monaco, monospace; font-size: 0.9em; margin: 5px 0 5px 0px;}
+      .screenshots { height: auto; overflow: hidden; padding: 4px 4px 0 4px; background-color: #B8E986; border: #A1D761; border-width: 0 1px; border-style: solid; }
+      .screenshots.failing { border-color: #C84F5E; background-color: #E58591; }
+      .screenshot { max-height: 60px; float: left; transition: max-height 0.2s; margin: 0 4px 4px 0 }
+      .screenshot.selected { max-height: 568px; }
+      #test-suites { display: inline-block; width: 100%;margin-top:100px;}
+      #segment-bar { margin-top: 10px;margin-left: 14px;float:right;}
+      #segment-bar a:first-child { border-radius: 9px 0 0 9px; border-right: none;}
+      #segment-bar a:last-child { border-radius: 0 9px 9px 0; border-left: none;}
+      #segment-bar > a { color: #565656; border: 2px solid  #7B7B7B; width: 80px; font-weight: bold; display:inline-block;text-align:center; font-weight: normal;}
+      #segment-bar > a.selected { background-color: #979797; color: #F0F3FB;}
+      #counters { float: left;margin: 10px;text-align: right;}
+      #counters h2 { font-size: 16px; font-family: Avenir, sans-serif; font-weight: lighter; display:inline;}
+      #counters .number { font-size: 20px;}
+      #fail-count { color: #D0021B; margin-left:10px;}
+      @media (max-width: 640px) {
+        h1, #counters, #segment-bar { margin: 5px auto; text-align:center;}
+        header, #segment-bar { width: 100%; position: relative; background:none;}
+        .left, .right { float:none; margin:0;}
+        #test-suites { margin-top: 0;}
+        #counters { float:none;}
+      }
+    </style>
+    <script type="text/javascript">
+      var hide = function(element) { element.style.display = 'none';}
+      var show = function(element) { element.style.display = '';}
+      var isHidden = function(element) { return element.style.display == 'none';}
+      var isSelected = function(element) { return element.classList.contains("selected");}
+      var deselect = function(element) { return element.classList.remove("selected");}
+      var select = function(element) { return element.classList.add("selected");}
+      var toggle = function(element) { isHidden(element) ? show(element) : hide(element);};
+      var toggleTests = function(heading) { toggle(heading.parentNode.children[1]);};
+      var toggleDetails = function(detailClass) {
+        var details = document.querySelectorAll('.' + detailClass);
+        for (var i = details.length - 1; i >= 0; i--) { toggle(details[i]);};
+      };
+      var hideAll = function(collection) {
+        for (var i = collection.length - 1; i >= 0; i--) { hide(collection[i]); };
+      }
+      var showAll = function(collection) {
+        for (var i = collection.length - 1; i >= 0; i--) { show(collection[i]); };
+      }
+      var selectSegment = function(segment) {
+        if (isSelected(segment)) return;
+        var segments = document.querySelectorAll('#segment-bar > a');
+        for (var i = segments.length - 1; i >= 0; i--) { deselect(segments[i]);};
+        select(segment);
+        if (segment.id == "all-segment") {
+          showAll(document.querySelectorAll('.test-suite'));
+          showAll(document.querySelectorAll('.test'));
+        } else if (segment.id == "failing-segment") {
+          hideAll(document.querySelectorAll('.test.passing'));
+          showAll(document.querySelectorAll('.test.failing'));
+          hideAll(document.querySelectorAll('.test-suite.passing'));
+          showAll(document.querySelectorAll('.test-suite.failing'));
+        } else if (segment.id == "passing-segment") {
+          hideAll(document.querySelectorAll('.test.failing'));
+          showAll(document.querySelectorAll('.test.passing'));
+          hideAll(document.querySelectorAll('.test-suite.failing'));
+          showAll(document.querySelectorAll('.test-suite.passing'));
+        }
+      }
+      var toggleScreenshot = function(suiteName, index) {
+        var screenshot = document.getElementById("screenshot-" + suiteName + "-" + index);
+        isSelected(screenshot) ? deselect(screenshot) : select(screenshot);
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <section class="left">
+        <h1>Test Results</h1>
+      </section>
+      <section class="right">
+        <section id="counters">
+          <h2 id="test-count"><span class="number">162</span> tests</h2>
+          
+        </section>
+        <section id="segment-bar">
+          <a id="all-segment" onclick="selectSegment(this);" class="selected">All</a><a id="failing-segment" onclick="selectSegment(this);">Failing</a><a id="passing-segment" onclick="selectSegment(this);">Passing</a>
+        </section>
+      </section>
+    </header>
+    <section id="test-suites">
+      
+        
+        <section class="test-suite passing" id="ContentfulTests_macOS.AssetTests">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">ContentfulTests_macOS.AssetTests</h3>
+          </section>
+          <section class="tests">
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testDeserializingVideoAssetURL');">
+                <td>
+                  
+                    <h3 class="time">0.006s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDeserializingVideoAssetURL</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testFetchAllAssetsInSpace');">
+                <td>
+                  
+                    <h3 class="time">0.004s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchAllAssetsInSpace</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testFetchImageForAsset');">
+                <td>
+                  
+                    <h3 class="time">0.006s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchImageForAsset</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testFetchSingleAsset');">
+                <td>
+                  
+                    <h3 class="time">0.003s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchSingleAsset</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testFilterAssetsByMIMETypeGroup');">
+                <td>
+                  
+                    <h3 class="time">0.004s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFilterAssetsByMIMETypeGroup</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testMetadataExistsOneTag');">
+                <td>
+                  
+                    <h3 class="time">0.003s</h3>
+                  
+                </td>
+                <td><h3 class="title">testMetadataExistsOneTag</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testMetadataExistsWithEmptyTagsArray');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">testMetadataExistsWithEmptyTagsArray</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="ContentfulTests_macOS.ClientConfigurationTests">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">ContentfulTests_macOS.ClientConfigurationTests</h3>
+          </section>
+          <section class="tests">
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testDefaultConfiguration');">
+                <td>
+                  
+                    <h3 class="time">0.000s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDefaultConfiguration</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testUserAgentString');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">testUserAgentString</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="ContentfulTests_macOS.ContentTypeTests">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">ContentfulTests_macOS.ContentTypeTests</h3>
+          </section>
+          <section class="tests">
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testFetchAllContentTypesInSpace');">
+                <td>
+                  
+                    <h3 class="time">0.004s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchAllContentTypesInSpace</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testFetchAllContentTypesInSpaceWithOrder');">
+                <td>
+                  
+                    <h3 class="time">0.003s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchAllContentTypesInSpaceWithOrder</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testFetchContentType');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchContentType</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testFetchContentTypeMatchingQuery');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchContentTypeMatchingQuery</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="ContentfulTests_macOS.EntryTests">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">ContentfulTests_macOS.EntryTests</h3>
+          </section>
+          <section class="tests">
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testFetchAllEntriesInSpace');">
+                <td>
+                  
+                    <h3 class="time">0.018s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchAllEntriesInSpace</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testFetchEntriesForAllLocales');">
+                <td>
+                  
+                    <h3 class="time">0.009s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesForAllLocales</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testFetchEntriesForSpecificLocale');">
+                <td>
+                  
+                    <h3 class="time">0.008s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesForSpecificLocale</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testFetchEntriesInReverseOrder');">
+                <td>
+                  
+                    <h3 class="time">0.011s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesInReverseOrder</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testFetchEntriesInSpecifiedOrder');">
+                <td>
+                  
+                    <h3 class="time">0.011s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesInSpecifiedOrder</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testFetchEntriesOfContentType');">
+                <td>
+                  
+                    <h3 class="time">0.009s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesOfContentType</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testFetchEntriesOrderedByMultipleAttributes');">
+                <td>
+                  
+                    <h3 class="time">0.011s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesOrderedByMultipleAttributes</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testFetchEntriesWithBoundingBoxLocationsSearch');">
+                <td>
+                  
+                    <h3 class="time">0.007s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesWithBoundingBoxLocationsSearch</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testFetchEntriesWithEqualitySearchForArrays');">
+                <td>
+                  
+                    <h3 class="time">0.007s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesWithEqualitySearchForArrays</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testFetchEntriesWithExclusionSearch');">
+                <td>
+                  
+                    <h3 class="time">0.008s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesWithExclusionSearch</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testFetchEntriesWithExistenceSearch');">
+                <td>
+                  
+                    <h3 class="time">0.008s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesWithExistenceSearch</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testFetchEntriesWithFullTextSearch');">
+                <td>
+                  
+                    <h3 class="time">0.007s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesWithFullTextSearch</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testFetchEntriesWithFullTextSearchOnSpecificField');">
+                <td>
+                  
+                    <h3 class="time">0.007s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesWithFullTextSearchOnSpecificField</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testFetchEntriesWithInclusionSearch');">
+                <td>
+                  
+                    <h3 class="time">0.015s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesWithInclusionSearch</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testFetchEntriesWithInequalitySearch');">
+                <td>
+                  
+                    <h3 class="time">0.011s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesWithInequalitySearch</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testFetchEntriesWithLocationProximitySearch');">
+                <td>
+                  
+                    <h3 class="time">0.008s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesWithLocationProximitySearch</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testFetchEntriesWithRangeSearch');">
+                <td>
+                  
+                    <h3 class="time">0.022s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesWithRangeSearch</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testFetchEntryWithArrayOfLinkedEntries');">
+                <td>
+                  
+                    <h3 class="time">0.169s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntryWithArrayOfLinkedEntries</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testFetchSingleEntry');">
+                <td>
+                  
+                    <h3 class="time">0.012s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchSingleEntry</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testFetchSpecificEntryMatchingSysId');">
+                <td>
+                  
+                    <h3 class="time">0.011s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchSpecificEntryMatchingSysId</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testFilterEntriesByLinkedEntriesSearch');">
+                <td>
+                  
+                    <h3 class="time">0.010s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFilterEntriesByLinkedEntriesSearch</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testIncomingLinksToAsset');">
+                <td>
+                  
+                    <h3 class="time">0.009s</h3>
+                  
+                </td>
+                <td><h3 class="title">testIncomingLinksToAsset</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testIncomingLinksToEntry');">
+                <td>
+                  
+                    <h3 class="time">0.008s</h3>
+                  
+                </td>
+                <td><h3 class="title">testIncomingLinksToEntry</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testLimitNumberOfEntriesBeingFetched');">
+                <td>
+                  
+                    <h3 class="time">0.010s</h3>
+                  
+                </td>
+                <td><h3 class="title">testLimitNumberOfEntriesBeingFetched</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testMetadataExistsOneTag');">
+                <td>
+                  
+                    <h3 class="time">0.007s</h3>
+                  
+                </td>
+                <td><h3 class="title">testMetadataExistsOneTag</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testMetadataExistsWithEmptyTagsArray');">
+                <td>
+                  
+                    <h3 class="time">0.008s</h3>
+                  
+                </td>
+                <td><h3 class="title">testMetadataExistsWithEmptyTagsArray</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testMultiLevelIncludesAreResolved');">
+                <td>
+                  
+                    <h3 class="time">0.008s</h3>
+                  
+                </td>
+                <td><h3 class="title">testMultiLevelIncludesAreResolved</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testSearchOnReferences');">
+                <td>
+                  
+                    <h3 class="time">0.008s</h3>
+                  
+                </td>
+                <td><h3 class="title">testSearchOnReferences</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testSkipEntriesInAQuery');">
+                <td>
+                  
+                    <h3 class="time">0.007s</h3>
+                  
+                </td>
+                <td><h3 class="title">testSkipEntriesInAQuery</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="ContentfulTests_macOS.EnvironmentsTests">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">ContentfulTests_macOS.EnvironmentsTests</h3>
+          </section>
+          <section class="tests">
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testInitialSyncOnNonMasterEnvironment');">
+                <td>
+                  
+                    <h3 class="time">0.015s</h3>
+                  
+                </td>
+                <td><h3 class="title">testInitialSyncOnNonMasterEnvironment</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testQueryReturningHeterogeneousArray');">
+                <td>
+                  
+                    <h3 class="time">0.008s</h3>
+                  
+                </td>
+                <td><h3 class="title">testQueryReturningHeterogeneousArray</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="ContentfulTests_macOS.ErrorTests">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">ContentfulTests_macOS.ErrorTests</h3>
+          </section>
+          <section class="tests">
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testErrorMessageForInvalidPath');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">testErrorMessageForInvalidPath</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="ContentfulTests_macOS.FieldTests">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">ContentfulTests_macOS.FieldTests</h3>
+          </section>
+          <section class="tests">
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testFieldTypeArray');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFieldTypeArray</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testFieldTypeLink');">
+                <td>
+                  
+                    <h3 class="time">0.000s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFieldTypeLink</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="ContentfulTests_macOS.FieldTypeTests">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">ContentfulTests_macOS.FieldTypeTests</h3>
+          </section>
+          <section class="tests">
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testFieldTypes');">
+                <td>
+                  
+                    <h3 class="time">0.000s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFieldTypes</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="ContentfulTests_macOS.ISO8601DateTests">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">ContentfulTests_macOS.ISO8601DateTests</h3>
+          </section>
+          <section class="tests">
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testConfiguringTimeZone');">
+                <td>
+                  
+                    <h3 class="time">0.000s</h3>
+                  
+                </td>
+                <td><h3 class="title">testConfiguringTimeZone</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testDateFormatter');">
+                <td>
+                  
+                    <h3 class="time">0.003s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDateFormatter</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="ContentfulTests_macOS.ImageTests">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">ContentfulTests_macOS.ImageTests</h3>
+          </section>
+          <section class="tests">
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testAllCropFitOptionsThatUseFocusParameters');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">testAllCropFitOptionsThatUseFocusParameters</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testAllImageFormatOptions');">
+                <td>
+                  
+                    <h3 class="time">0.000s</h3>
+                  
+                </td>
+                <td><h3 class="title">testAllImageFormatOptions</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testColorHexRepresenations');">
+                <td>
+                  
+                    <h3 class="time">0.000s</h3>
+                  
+                </td>
+                <td><h3 class="title">testColorHexRepresenations</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testComplexURLIsProperlyConstructed');">
+                <td>
+                  
+                    <h3 class="time">0.000s</h3>
+                  
+                </td>
+                <td><h3 class="title">testComplexURLIsProperlyConstructed</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testFetchingImageWithComplexOptionSet');">
+                <td>
+                  
+                    <h3 class="time">0.000s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchingImageWithComplexOptionSet</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testInvalidJPGQualityThrowsError');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">testInvalidJPGQualityThrowsError</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testInvalidWidthAndHeightThrowsError');">
+                <td>
+                  
+                    <h3 class="time">0.000s</h3>
+                  
+                </td>
+                <td><h3 class="title">testInvalidWidthAndHeightThrowsError</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testMakingURLWithPaddingAndBackgroundColor');">
+                <td>
+                  
+                    <h3 class="time">0.000s</h3>
+                  
+                </td>
+                <td><h3 class="title">testMakingURLWithPaddingAndBackgroundColor</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testMultipleImageOptionsOfSameTypeAreInvalid');">
+                <td>
+                  
+                    <h3 class="time">0.000s</h3>
+                  
+                </td>
+                <td><h3 class="title">testMultipleImageOptionsOfSameTypeAreInvalid</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testThumbFillAndScaleFitOptions');">
+                <td>
+                  
+                    <h3 class="time">0.000s</h3>
+                  
+                </td>
+                <td><h3 class="title">testThumbFillAndScaleFitOptions</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testURLIsPropertyConstructedForJPGWithQuality');">
+                <td>
+                  
+                    <h3 class="time">0.000s</h3>
+                  
+                </td>
+                <td><h3 class="title">testURLIsPropertyConstructedForJPGWithQuality</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testURLsWithFormatFlagsAreProperlyConstructed');">
+                <td>
+                  
+                    <h3 class="time">0.000s</h3>
+                  
+                </td>
+                <td><h3 class="title">testURLsWithFormatFlagsAreProperlyConstructed</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="ContentfulTests_macOS.JSONDecodingTests">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">ContentfulTests_macOS.JSONDecodingTests</h3>
+          </section>
+          <section class="tests">
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testDecodeAsset');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDecodeAsset</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testDecodeLocalizedEntries');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDecodeLocalizedEntries</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testDecodeSpaces');">
+                <td>
+                  
+                    <h3 class="time">0.000s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDecodeSpaces</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testDecodeSyncResponses');">
+                <td>
+                  
+                    <h3 class="time">0.013s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDecodeSyncResponses</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testDecodeSyncResponsesWithDeletedAssetIds');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDecodeSyncResponsesWithDeletedAssetIds</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testDecodeSyncResponsesWithdeletedEntryIds');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDecodeSyncResponsesWithdeletedEntryIds</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testDecodingWithoutLocalizationContextThrows');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDecodingWithoutLocalizationContextThrows</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testHandlingNestedArrayValues');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">testHandlingNestedArrayValues</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testHandlingNullJSONValues');">
+                <td>
+                  
+                    <h3 class="time">0.000s</h3>
+                  
+                </td>
+                <td><h3 class="title">testHandlingNullJSONValues</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="ContentfulTests_macOS.LinkResolverTests">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">ContentfulTests_macOS.LinkResolverTests</h3>
+          </section>
+          <section class="tests">
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testDecoderCanResolveArrayOfLinks');">
+                <td>
+                  
+                    <h3 class="time">0.008s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDecoderCanResolveArrayOfLinks</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testEntriesLinkingToSameLinkCanResolveLinks');">
+                <td>
+                  
+                    <h3 class="time">0.003s</h3>
+                  
+                </td>
+                <td><h3 class="title">testEntriesLinkingToSameLinkCanResolveLinks</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testEntryLinkingToAssetsArrayDoesResolveLinks');">
+                <td>
+                  
+                    <h3 class="time">0.004s</h3>
+                  
+                </td>
+                <td><h3 class="title">testEntryLinkingToAssetsArrayDoesResolveLinks</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testFetchZeroIncludesOmitsLinkResolving');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchZeroIncludesOmitsLinkResolving</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testUnresolvableLinkDoesNotResolve');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">testUnresolvableLinkDoesNotResolve</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="ContentfulTests_macOS.LocalizationTests">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">ContentfulTests_macOS.LocalizationTests</h3>
+          </section>
+          <section class="tests">
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testLocalizationForEntryDecodableWorks');">
+                <td>
+                  
+                    <h3 class="time">0.004s</h3>
+                  
+                </td>
+                <td><h3 class="title">testLocalizationForEntryDecodableWorks</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testNormalizingFieldsDictionaryFormat');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">testNormalizingFieldsDictionaryFormat</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testWalkingFallbackChain');">
+                <td>
+                  
+                    <h3 class="time">0.003s</h3>
+                  
+                </td>
+                <td><h3 class="title">testWalkingFallbackChain</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testWalkingFallbackchainOnAsset');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">testWalkingFallbackchainOnAsset</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="ContentfulTests_macOS.LoggerTests">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">ContentfulTests_macOS.LoggerTests</h3>
+          </section>
+          <section class="tests">
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testLoggerRespectsLogLevel');">
+                <td>
+                  
+                    <h3 class="time">0.000s</h3>
+                  
+                </td>
+                <td><h3 class="title">testLoggerRespectsLogLevel</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="ContentfulTests_macOS.PersistenceIntegrationTests">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">ContentfulTests_macOS.PersistenceIntegrationTests</h3>
+          </section>
+          <section class="tests">
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testSerializingLocationWithNSCdoing');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">testSerializingLocationWithNSCdoing</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="ContentfulTests_macOS.PreviewAPITests">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">ContentfulTests_macOS.PreviewAPITests</h3>
+          </section>
+          <section class="tests">
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testClientCanAccessPreviewAPI');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">testClientCanAccessPreviewAPI</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testClientCantAccessPreviewAPIWithProductionToken');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">testClientCantAccessPreviewAPIWithProductionToken</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="ContentfulTests_macOS.PreviewSyncTests">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">ContentfulTests_macOS.PreviewSyncTests</h3>
+          </section>
+          <section class="tests">
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testDoInitialSyncWithPreviewAPI');">
+                <td>
+                  
+                    <h3 class="time">0.016s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDoInitialSyncWithPreviewAPI</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testSubsequentSyncWithPreviewAPIReturnsSDKError');">
+                <td>
+                  
+                    <h3 class="time">0.015s</h3>
+                  
+                </td>
+                <td><h3 class="title">testSubsequentSyncWithPreviewAPIReturnsSDKError</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="ContentfulTests_macOS.QueryTests">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">ContentfulTests_macOS.QueryTests</h3>
+          </section>
+          <section class="tests">
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testChainingQueries');">
+                <td>
+                  
+                    <h3 class="time">0.018s</h3>
+                  
+                </td>
+                <td><h3 class="title">testChainingQueries</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testChainingQueriesWithUntypedQuery');">
+                <td>
+                  
+                    <h3 class="time">0.009s</h3>
+                  
+                </td>
+                <td><h3 class="title">testChainingQueriesWithUntypedQuery</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testEqualityQuery');">
+                <td>
+                  
+                    <h3 class="time">0.011s</h3>
+                  
+                </td>
+                <td><h3 class="title">testEqualityQuery</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testExclusionQuery');">
+                <td>
+                  
+                    <h3 class="time">0.012s</h3>
+                  
+                </td>
+                <td><h3 class="title">testExclusionQuery</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testExistenceQuery');">
+                <td>
+                  
+                    <h3 class="time">0.012s</h3>
+                  
+                </td>
+                <td><h3 class="title">testExistenceQuery</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testFetchCatsWithRangeSearch');">
+                <td>
+                  
+                    <h3 class="time">0.011s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchCatsWithRangeSearch</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testFetchEntriesContainingSpecificTags');">
+                <td>
+                  
+                    <h3 class="time">0.010s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesContainingSpecificTags</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testFetchEntriesContainingSpecificTags2');">
+                <td>
+                  
+                    <h3 class="time">0.010s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesContainingSpecificTags2</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testFetchEntriesContainingSpecificTags2Chaining');">
+                <td>
+                  
+                    <h3 class="time">0.010s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesContainingSpecificTags2Chaining</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testFetchEntriesContainingSpecificTags3');">
+                <td>
+                  
+                    <h3 class="time">0.010s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesContainingSpecificTags3</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testFetchEntriesContainingSpecificTags4');">
+                <td>
+                  
+                    <h3 class="time">0.010s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesContainingSpecificTags4</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testFetchEntriesContainingSpecificTagsChaining');">
+                <td>
+                  
+                    <h3 class="time">0.010s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesContainingSpecificTagsChaining</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testFetchEntriesInReverseOrder');">
+                <td>
+                  
+                    <h3 class="time">0.014s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesInReverseOrder</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testFetchEntriesInSpecifiedOrder');">
+                <td>
+                  
+                    <h3 class="time">0.013s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesInSpecifiedOrder</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testFetchEntriesOfAnyTypeWithRangeSearch');">
+                <td>
+                  
+                    <h3 class="time">0.014s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesOfAnyTypeWithRangeSearch</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testFetchEntriesOrderedByMultipleAttributes');">
+                <td>
+                  
+                    <h3 class="time">0.014s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesOrderedByMultipleAttributes</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testFetchEntriesWithBoundingBoxLocationsSearch');">
+                <td>
+                  
+                    <h3 class="time">0.010s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesWithBoundingBoxLocationsSearch</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testFetchEntriesWithFullTextSearch');">
+                <td>
+                  
+                    <h3 class="time">0.010s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesWithFullTextSearch</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testFetchEntriesWithFullTextSearchOnSpecificField');">
+                <td>
+                  
+                    <h3 class="time">0.010s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesWithFullTextSearchOnSpecificField</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testFetchEntriesWithLocationProximitySearch');">
+                <td>
+                  
+                    <h3 class="time">0.011s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesWithLocationProximitySearch</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testFetchEntriesWithTypeInOrder');">
+                <td>
+                  
+                    <h3 class="time">0.012s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchEntriesWithTypeInOrder</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testFetchingEntriesOfContentType');">
+                <td>
+                  
+                    <h3 class="time">0.011s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchingEntriesOfContentType</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testFilterAssetsByMIMETypeGroup');">
+                <td>
+                  
+                    <h3 class="time">0.010s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFilterAssetsByMIMETypeGroup</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testIncludeParameter');">
+                <td>
+                  
+                    <h3 class="time">0.013s</h3>
+                  
+                </td>
+                <td><h3 class="title">testIncludeParameter</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testInclusionQuery');">
+                <td>
+                  
+                    <h3 class="time">0.011s</h3>
+                  
+                </td>
+                <td><h3 class="title">testInclusionQuery</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testInequalityQuery');">
+                <td>
+                  
+                    <h3 class="time">0.011s</h3>
+                  
+                </td>
+                <td><h3 class="title">testInequalityQuery</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testLimitNumberOfEntriesBeingFetched');">
+                <td>
+                  
+                    <h3 class="time">0.012s</h3>
+                  
+                </td>
+                <td><h3 class="title">testLimitNumberOfEntriesBeingFetched</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testLinksToEntryWithField');">
+                <td>
+                  
+                    <h3 class="time">0.011s</h3>
+                  
+                </td>
+                <td><h3 class="title">testLinksToEntryWithField</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testLinksToEntryWithSysId');">
+                <td>
+                  
+                    <h3 class="time">0.011s</h3>
+                  
+                </td>
+                <td><h3 class="title">testLinksToEntryWithSysId</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testMultipleValuesQuery');">
+                <td>
+                  
+                    <h3 class="time">0.011s</h3>
+                  
+                </td>
+                <td><h3 class="title">testMultipleValuesQuery</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testQueryAssetsWithSelect');">
+                <td>
+                  
+                    <h3 class="time">0.009s</h3>
+                  
+                </td>
+                <td><h3 class="title">testQueryAssetsWithSelect</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testQueryAssetsWithSelectUsingFields');">
+                <td>
+                  
+                    <h3 class="time">0.009s</h3>
+                  
+                </td>
+                <td><h3 class="title">testQueryAssetsWithSelectUsingFields</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testQueryClientDefinedModelResolvesIncludes');">
+                <td>
+                  
+                    <h3 class="time">0.010s</h3>
+                  
+                </td>
+                <td><h3 class="title">testQueryClientDefinedModelResolvesIncludes</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testQueryConstruction');">
+                <td>
+                  
+                    <h3 class="time">0.000s</h3>
+                  
+                </td>
+                <td><h3 class="title">testQueryConstruction</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testQueryReturningClientDefinedModel');">
+                <td>
+                  
+                    <h3 class="time">0.011s</h3>
+                  
+                </td>
+                <td><h3 class="title">testQueryReturningClientDefinedModel</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testQueryReturningClientDefinedModelUsingFields');">
+                <td>
+                  
+                    <h3 class="time">0.011s</h3>
+                  
+                </td>
+                <td><h3 class="title">testQueryReturningClientDefinedModelUsingFields</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testQueryReturningClientDefinedModelWithMetadata');">
+                <td>
+                  
+                    <h3 class="time">0.011s</h3>
+                  
+                </td>
+                <td><h3 class="title">testQueryReturningClientDefinedModelWithMetadata</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testQueryReturningClientDefinedModelWithMetadataAndTags');">
+                <td>
+                  
+                    <h3 class="time">0.010s</h3>
+                  
+                </td>
+                <td><h3 class="title">testQueryReturningClientDefinedModelWithMetadataAndTags</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testQueryReturningHeterogeneousArray');">
+                <td>
+                  
+                    <h3 class="time">0.015s</h3>
+                  
+                </td>
+                <td><h3 class="title">testQueryReturningHeterogeneousArray</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testQueryValidation');">
+                <td>
+                  
+                    <h3 class="time">0.000s</h3>
+                  
+                </td>
+                <td><h3 class="title">testQueryValidation</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testSearchOnReferences');">
+                <td>
+                  
+                    <h3 class="time">0.011s</h3>
+                  
+                </td>
+                <td><h3 class="title">testSearchOnReferences</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testSkipEntries');">
+                <td>
+                  
+                    <h3 class="time">0.009s</h3>
+                  
+                </td>
+                <td><h3 class="title">testSkipEntries</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testSkipEntriesInAQueryWithOrder');">
+                <td>
+                  
+                    <h3 class="time">0.009s</h3>
+                  
+                </td>
+                <td><h3 class="title">testSkipEntriesInAQueryWithOrder</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testTagsExistence');">
+                <td>
+                  
+                    <h3 class="time">0.010s</h3>
+                  
+                </td>
+                <td><h3 class="title">testTagsExistence</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testTagsExistence2');">
+                <td>
+                  
+                    <h3 class="time">0.010s</h3>
+                  
+                </td>
+                <td><h3 class="title">testTagsExistence2</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testTagsNotExistence');">
+                <td>
+                  
+                    <h3 class="time">0.011s</h3>
+                  
+                </td>
+                <td><h3 class="title">testTagsNotExistence</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testTagsNotExistence2');">
+                <td>
+                  
+                    <h3 class="time">0.011s</h3>
+                  
+                </td>
+                <td><h3 class="title">testTagsNotExistence2</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testUnTypedLinksToEntryWithField');">
+                <td>
+                  
+                    <h3 class="time">0.010s</h3>
+                  
+                </td>
+                <td><h3 class="title">testUnTypedLinksToEntryWithField</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testUntypedSearchOnReferences');">
+                <td>
+                  
+                    <h3 class="time">0.011s</h3>
+                  
+                </td>
+                <td><h3 class="title">testUntypedSearchOnReferences</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="ContentfulTests_macOS.RateLimitTests">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">ContentfulTests_macOS.RateLimitTests</h3>
+          </section>
+          <section class="tests">
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testRateLimit');">
+                <td>
+                  
+                    <h3 class="time">0.000s</h3>
+                  
+                </td>
+                <td><h3 class="title">testRateLimit</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="ContentfulTests_macOS.RichTextNodeDecodingTests">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">ContentfulTests_macOS.RichTextNodeDecodingTests</h3>
+          </section>
+          <section class="tests">
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testDecodingBlockQuote');">
+                <td>
+                  
+                    <h3 class="time">0.009s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDecodingBlockQuote</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testDecodingH1');">
+                <td>
+                  
+                    <h3 class="time">0.005s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDecodingH1</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testDecodingH6');">
+                <td>
+                  
+                    <h3 class="time">0.005s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDecodingH6</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testDecodingHorizontalRule');">
+                <td>
+                  
+                    <h3 class="time">0.005s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDecodingHorizontalRule</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testDecodingNestedEntriesInlinedInRichText');">
+                <td>
+                  
+                    <h3 class="time">0.008s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDecodingNestedEntriesInlinedInRichText</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testDecodingNestedEntriesInlinedInRichTextWithoutContentTypeClasses');">
+                <td>
+                  
+                    <h3 class="time">0.009s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDecodingNestedEntriesInlinedInRichTextWithoutContentTypeClasses</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testDecodingOrderedListAndListItems');">
+                <td>
+                  
+                    <h3 class="time">0.010s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDecodingOrderedListAndListItems</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testDecodingParagraphWithAllInlineAndHyperlinkNodes');">
+                <td>
+                  
+                    <h3 class="time">0.012s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDecodingParagraphWithAllInlineAndHyperlinkNodes</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testDecodingParagraphWithTextOnly');">
+                <td>
+                  
+                    <h3 class="time">0.004s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDecodingParagraphWithTextOnly</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testDecodingStructuredText');">
+                <td>
+                  
+                    <h3 class="time">0.006s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDecodingStructuredText</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testDecodingTextWithAssetHyperlink');">
+                <td>
+                  
+                    <h3 class="time">0.006s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDecodingTextWithAssetHyperlink</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testDecodingTextWithAssetLinkBlock');">
+                <td>
+                  
+                    <h3 class="time">0.005s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDecodingTextWithAssetLinkBlock</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testDecodingTextWithEntryHyperlink');">
+                <td>
+                  
+                    <h3 class="time">0.008s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDecodingTextWithEntryHyperlink</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testDecodingTextWithEntryLinkBlock');">
+                <td>
+                  
+                    <h3 class="time">0.006s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDecodingTextWithEntryLinkBlock</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testDecodingTextWithEntryLinkInline');">
+                <td>
+                  
+                    <h3 class="time">0.007s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDecodingTextWithEntryLinkInline</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testDecodingTextWithHyperlink');">
+                <td>
+                  
+                    <h3 class="time">0.006s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDecodingTextWithHyperlink</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testDecodingTextWithMarks');">
+                <td>
+                  
+                    <h3 class="time">0.008s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDecodingTextWithMarks</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testDecodingUnorderedListAndListItems');">
+                <td>
+                  
+                    <h3 class="time">0.011s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDecodingUnorderedListAndListItems</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testRichTextDocumentCodableAndNSCodingConformance');">
+                <td>
+                  
+                    <h3 class="time">0.014s</h3>
+                  
+                </td>
+                <td><h3 class="title">testRichTextDocumentCodableAndNSCodingConformance</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="ContentfulTests_macOS.SpaceTests">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">ContentfulTests_macOS.SpaceTests</h3>
+          </section>
+          <section class="tests">
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testErrorWhenFetchingSpaceIsCalled');">
+                <td>
+                  
+                    <h3 class="time">0.162s</h3>
+                  
+                </td>
+                <td><h3 class="title">testErrorWhenFetchingSpaceIsCalled</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testFetchSpace');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">testFetchSpace</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="ContentfulTests_macOS.StringExtensionTests">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">ContentfulTests_macOS.StringExtensionTests</h3>
+          </section>
+          <section class="tests">
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testValidKeyPathSelection');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">testValidKeyPathSelection</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="ContentfulTests_macOS.SyncTests">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">ContentfulTests_macOS.SyncTests</h3>
+          </section>
+          <section class="tests">
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testDummy');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">testDummy</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="ContentfulTests_macOS.UnparsableErrorTests">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">ContentfulTests_macOS.UnparsableErrorTests</h3>
+          </section>
+          <section class="tests">
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testUnparsableErrorPassesSDKError');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">testUnparsableErrorPassesSDKError</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="ContentfulTests_macOS.UtilityTests">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">ContentfulTests_macOS.UtilityTests</h3>
+          </section>
+          <section class="tests">
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('testMergeTwoDictionaries');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">testMergeTwoDictionaries</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('testPutsTheCorrectValuesIntoMergedDictionary');">
+                <td>
+                  
+                    <h3 class="time">0.000s</h3>
+                  
+                </td>
+                <td><h3 class="title">testPutsTheCorrectValuesIntoMergedDictionary</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+    </section>
+    <footer>Report generated with <a href="https://github.com/supermarin/xcpretty">xcpretty</a></footer>
+  </body>
+</html>

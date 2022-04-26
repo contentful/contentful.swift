@@ -192,10 +192,12 @@ public final class SyncSpace: Decodable {
 
         for deletedAssetId in syncSpace.deletedAssetIds {
             assetsMap.removeValue(forKey: deletedAssetId)
+            deletedAssetIds.append(contentsOf: syncSpace.deletedAssetIds)
         }
 
         for deletedEntryId in syncSpace.deletedEntryIds {
             entriesMap.removeValue(forKey: deletedEntryId)
+            deletedEntryIds.append(contentsOf: syncSpace.deletedEntryIds)
         }
 
         syncToken = syncSpace.syncToken
