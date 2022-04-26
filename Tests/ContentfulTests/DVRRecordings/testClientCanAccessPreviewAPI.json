@@ -1,38 +1,41 @@
 {
   "interactions" : [
     {
+      "recorded_at" : 1649952561.3401949,
+      "request" : {
+        "method" : "GET",
+        "url" : "https:\/\/preview.contentful.com\/spaces\/dumri3ebknon\/",
+        "headers" : {
+          "X-Contentful-User-Agent" : "app com.apple.dt.xctest.tool\/13.3.1; sdk contentful.swift\/5.5.1; platform Swift\/4.0; os iOS\/15.4.0;",
+          "Authorization" : "Bearer fd53c0a7a0a9bdd930efe1ec9d1f1bcc9b29628d5d4a7a409b160d00b1b2910b"
+        }
+      },
       "response" : {
+        "url" : "https:\/\/preview.contentful.com\/spaces\/dumri3ebknon\/",
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJTcGFjZSIsCiAgICAiaWQiOiAiZHVtcmkzZWJrbm9uIgogIH0sCiAgIm5hbWUiOiAiU3dpZnQgYGNmZXhhbXBsZWFwaWAgY29weSIsCiAgImxvY2FsZXMiOiBbCiAgICB7CiAgICAgICJjb2RlIjogImVuLVVTIiwKICAgICAgImRlZmF1bHQiOiB0cnVlLAogICAgICAibmFtZSI6ICJFbmdsaXNoIiwKICAgICAgImZhbGxiYWNrQ29kZSI6IG51bGwKICAgIH0sCiAgICB7CiAgICAgICJjb2RlIjogInRsaCIsCiAgICAgICJkZWZhdWx0IjogZmFsc2UsCiAgICAgICJuYW1lIjogIktsaW5nb24iLAogICAgICAiZmFsbGJhY2tDb2RlIjogImVuLVVTIgogICAgfQogIF0KfQo=",
         "status" : 200,
         "headers" : {
-          "Content-Length" : "347",
-          "Access-Control-Expose-Headers" : "Etag",
-          "Access-Control-Max-Age" : "1728000",
-          "Contentful-Api" : "cpa",
-          "Etag" : "\"c403045dd22472265d85cbc924182e45\"",
-          "Access-Control-Allow-Headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent,X-Contentful-Enable-Alpha-Feature",
-          "CF-Organization-Id" : "3ubGFD1MWA6VgVYbIwSBg8",
           "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
-          "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
-          "Connection" : "keep-alive",
-          "X-Contentful-Request-Id" : "501c7e6907d447f65a711cec5da7903e",
-          "X-Content-Type-Options" : "nosniff",
-          "CF-Cache-Name" : "content_delivery",
+          "Content-Length" : "347",
           "Access-Control-Allow-Origin" : "*",
-          "CF-Space-Id" : "dumri3ebknon",
-          "Date" : "Fri, 22 Jun 2018 12:29:08 GMT",
-          "Server" : "Contentful"
-        },
-        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJTcGFjZSIsCiAgICAiaWQiOiAiZHVtcmkzZWJrbm9uIgogIH0sCiAgIm5hbWUiOiAiU3dpZnQgYGNmZXhhbXBsZWFwaWAgY29weSIsCiAgImxvY2FsZXMiOiBbCiAgICB7CiAgICAgICJjb2RlIjogImVuLVVTIiwKICAgICAgImRlZmF1bHQiOiB0cnVlLAogICAgICAibmFtZSI6ICJFbmdsaXNoIiwKICAgICAgImZhbGxiYWNrQ29kZSI6IG51bGwKICAgIH0sCiAgICB7CiAgICAgICJjb2RlIjogInRsaCIsCiAgICAgICJkZWZhdWx0IjogZmFsc2UsCiAgICAgICJuYW1lIjogIktsaW5nb24iLAogICAgICAiZmFsbGJhY2tDb2RlIjogImVuLVVTIgogICAgfQogIF0KfQo=",
-        "url" : "https:\/\/preview.contentful.com\/spaces\/dumri3ebknon\/"
-      },
-      "recorded_at" : 1529670547.1906152,
-      "request" : {
-        "headers" : {
-          "X-Contentful-User-Agent" : "sdk contentful.swift\/3.0.0; platform Swift\/4.0; os macOS\/10.13.5;",
-          "Authorization" : "Bearer fd53c0a7a0a9bdd930efe1ec9d1f1bcc9b29628d5d4a7a409b160d00b1b2910b"
-        },
-        "method" : "GET",
-        "url" : "https:\/\/preview.contentful.com\/spaces\/dumri3ebknon\/"
+          "cf-organization-id" : "3ubGFD1MWA6VgVYbIwSBg8",
+          "access-control-expose-headers" : "Etag",
+          "access-control-allow-headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent,X-Contentful-Enable-Alpha-Feature",
+          "x-content-type-options" : "nosniff",
+          "contentful-upstream" : "content-api",
+          "x-contentful-route" : "\/spaces\/:id",
+          "contentful-api" : "cpa",
+          "Server" : "Contentful",
+          "cf-environment-id" : "master",
+          "cf-space-id" : "dumri3ebknon",
+          "cf-environment-uuid" : "16636ca4-edd1-4d3b-a75c-446953e37408",
+          "access-control-allow-methods" : "GET,HEAD,OPTIONS",
+          "Date" : "Thu, 14 Apr 2022 16:09:21 GMT",
+          "Accept-Ranges" : "bytes",
+          "x-contentful-request-id" : "1affda6f-9748-4b62-aace-f2054da43b8c",
+          "Etag" : "\"16015829056760573629\"",
+          "access-control-max-age" : "1728000"
+        }
       }
     }
   ],
