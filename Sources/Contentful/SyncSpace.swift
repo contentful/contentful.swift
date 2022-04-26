@@ -11,7 +11,7 @@ import Foundation
 /// A container for the synchronized state of a Space
 public final class SyncSpace: Decodable {
 
-    public enum DatabaseMigrationVersion: Int { case
+    public enum DBVersions: Int { case
         `default` = 1
     }
     
@@ -87,9 +87,9 @@ public final class SyncSpace: Decodable {
     /// A token which needs to be present to perform a subsequent synchronization operation
     internal(set) public var syncToken = ""
     
-    /// A token which needs to be present to perform a subsequent synchronization operation.
-    internal(set) public var dbVersion = DatabaseMigrationVersion.default.rawValue
-
+    /// Current database version for migrations. Default is 1
+    internal(set) public var dbVersion = DBVersions.default.rawValue
+    
     /// Number of entities per page in a sync operation. See documentation for details.
     internal(set) public var limit: Int?
 
@@ -106,8 +106,7 @@ public final class SyncSpace: Decodable {
     /// The sync token from a previous synchronization
     ///
     /// - Parameter syncToken: The sync token from a previous synchronization.
-    /// - Parameter dbVersion: The version of the database to migrate to. Warning - increasing this number will wipe the data.
-    public init(syncToken: String = "", limit: Int? = nil, dbVersion: Int = DatabaseMigrationVersion.default.rawValue) {
+    public init(syncToken: String = "", dbVersion: Int = DBVersions.default.rawValue, limit: Int? = nil) {
         self.hasMorePages = false
         self.syncToken = syncToken
         self.limit = limit
@@ -192,18 +191,15 @@ public final class SyncSpace: Decodable {
 
         for deletedAssetId in syncSpace.deletedAssetIds {
             assetsMap.removeValue(forKey: deletedAssetId)
-            deletedAssetIds.append(contentsOf: syncSpace.deletedAssetIds)
         }
 
         for deletedEntryId in syncSpace.deletedEntryIds {
             entriesMap.removeValue(forKey: deletedEntryId)
-            deletedEntryIds.append(contentsOf: syncSpace.deletedEntryIds)
         }
 
         syncToken = syncSpace.syncToken
         hasMorePages = syncSpace.hasMorePages
-        
-        if dbVersion < syncSpace.dbVersion {
+        if (dbVersion < syncSpace.dbVersion) {
             dbVersion = syncSpace.dbVersion
         }
     }
