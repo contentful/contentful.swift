@@ -317,8 +317,11 @@ extension KeyedDecodingContainer {
 
 
         guard let itemsAsDictionaries = try self.decodeIfPresent(Swift.Array<Any>.self, forKey: key) as? [[String: Any]] else {
-            // We can not just ignore this as it failed to parse the whole data - not only a single entry
-            throw SDKError.unparseableJSON(data: nil, errorMessage: "SDK was unable to deserialize returned resources")
+            if throwIfNotPresent {
+                throw SDKError.unparseableJSON(data: nil, errorMessage: "SDK was unable to deserialize returned resources")
+            } else {
+                return nil
+            }
         }
         var entriesJSONContainer = try self.nestedUnkeyedContainer(forKey: key)
 
