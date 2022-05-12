@@ -468,12 +468,14 @@ open class Client {
         let jsonDecoder = jsonDecoderBuilder.build()
 
         var decodedObject: DecodableType?
+        var initialDecodeFailed: Bool = false
         do {
             decodedObject = try jsonDecoder.decode(DecodableType.self, from: data)
         } catch let error {
             let sdkError = SDKError.unparseableJSON(data: data, errorMessage: "\(error)")
             ContentfulLogger.log(.error, message: sdkError.message)
             completion(.failure(sdkError))
+            initialDecodeFailed = true
         }
 
         guard let linkResolver = jsonDecoder.userInfo[.linkResolverContextKey] as? LinkResolver else {
@@ -497,6 +499,8 @@ open class Client {
                 errorMessage: "Unknown error occured during decoding."
             )
             ContentfulLogger.log(.error, message: error.message)
+            
+            guard !initialDecodeFailed else { return }
             completion(.failure(error))
         }
     }
