@@ -329,21 +329,45 @@ extension KeyedDecodingContainer {
         while !entriesJSONContainer.isAtEnd {
 
             guard let contentTypeInfo = itemsAsDictionaries.contentTypeInfo(at: entriesJSONContainer.currentIndex) else {
-                let errorMessage = "SDK was unable to parse the `sys.contentType` property necessary to finish resource serialization."
-                throw SDKError.unparseableJSON(data: nil, errorMessage: errorMessage)
+                if throwIfNotPresent {
+                    let errorMessage = "SDK was unable to parse the `sys.contentType` property necessary to finish resource serialization."
+                    throw SDKError.unparseableJSON(data: nil, errorMessage: errorMessage)
+                } else {
+                    print("******* WARNING ******** Could not decode an element from Contentful API response. Skipping the element and continuing.")
+                    entriesJSONContainer.incrementCurrentIndex()
+                    continue
+                }
             }
 
             // For includes, if the type of this entry isn't defined by the user, we skip serialization.
             if let type = contentTypes[contentTypeInfo.id] {
-                let entryModellable = try type.popEntryDecodable(from: &entriesJSONContainer)
-                entries.append(entryModellable)
+                do {
+                    let entryModellable = try type.popEntryDecodable(from: &entriesJSONContainer)
+                    entries.append(entryModellable)
+                }
+                catch {
+                    if throwIfNotPresent {
+                        throw error
+                    } else {
+                        print("******* WARNING ******** Could not decode an element from Contentful API response. Skipping the element and continuing.")
+                        entriesJSONContainer.incrementCurrentIndex()
+                    }
+                }
             } else {
-                // Another annoying workaround: there is no mechanism for incrementing the `currentIndex` of an
-                // UnkeyedCodingContainer other than actually decoding an item
-                _ = try? entriesJSONContainer.decode(EmptyDecodable.self)
+                entriesJSONContainer.incrementCurrentIndex()
             }
         }
         return entries
+    }
+
+}
+
+private extension UnkeyedDecodingContainer {
+
+    mutating func incrementCurrentIndex() {
+        // Another annoying workaround: there is no mechanism for incrementing the `currentIndex` of an
+        // UnkeyedCodingContainer other than actually decoding an item
+        _ = try? decode(EmptyDecodable.self)
     }
 
 }
