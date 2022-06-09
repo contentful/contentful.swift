@@ -474,6 +474,7 @@ open class Client {
             let sdkError = SDKError.unparseableJSON(data: data, errorMessage: "\(error)")
             ContentfulLogger.log(.error, message: sdkError.message)
             completion(.failure(sdkError))
+            return
         }
 
         guard let linkResolver = jsonDecoder.userInfo[.linkResolverContextKey] as? LinkResolver else {
@@ -497,6 +498,7 @@ open class Client {
                 errorMessage: "Unknown error occured during decoding."
             )
             ContentfulLogger.log(.error, message: error.message)
+            
             completion(.failure(error))
         }
     }
