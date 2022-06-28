@@ -121,10 +121,13 @@ open class Client {
         }
 
         self.persistenceIntegration = persistenceIntegration
-        let contentfulHTTPHeaders = [
+        var contentfulHTTPHeaders: [AnyHashable: Any] = [
             "Authorization": "Bearer \(accessToken)",
             "X-Contentful-User-Agent": clientConfiguration.userAgentString(with: persistenceIntegration)
         ]
+        if let additionalHeaders = sessionConfiguration.httpAdditionalHeaders {
+            contentfulHTTPHeaders.merge(additionalHeaders) { (currentPair, _) in currentPair }
+        }
         sessionConfiguration.httpAdditionalHeaders = contentfulHTTPHeaders
         self.urlSession = URLSession(configuration: sessionConfiguration)
     }
