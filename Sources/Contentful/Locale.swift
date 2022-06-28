@@ -101,7 +101,8 @@ internal enum Localization {
     // Walks down the fallback chain and returns the field values for the specified locale.
     internal static func fields(forLocale locale: Locale?,
                                 localizableFields: [FieldName: [LocaleCode: Any]],
-                                localizationContext: LocalizationContext) -> [FieldName: Any] {
+                                localizationContext: LocalizationContext,
+                                fieldTypes: [Field]) -> [FieldName: Any] {
 
         // If no locale passed in, use the default.
         let originalLocale = locale ?? localizationContext.default
@@ -124,7 +125,14 @@ internal enum Localization {
                 }
             }
             // Assign the value, if it exists.
+            //If not, check if the field is actually localized or not
+            //If field not localized, it should have the default value
+            //Value should be nil only if field localized, but value for specific locale is empty
             if let fieldValue = localesToFieldValues[currentLocale.code] {
+                fields[fieldName] = fieldValue
+            }else if let fieldType = fieldTypes.first(where: { $0.id == fieldName }),
+                     !fieldType.localized{
+                let fieldValue = localesToFieldValues.values.first
                 fields[fieldName] = fieldValue
             }
         }
