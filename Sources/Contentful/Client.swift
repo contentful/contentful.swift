@@ -160,6 +160,10 @@ open class Client {
         components.queryItems = queryItems?.sorted { a, b in
             return a.name > b.name
         }
+        
+        // Encode a + sign just in case
+        components.percentEncodedQuery = components.percentEncodedQuery?
+            .replacingOccurrences(of: "+", with: "%2B")
 
         let url = components.url!
         return url
