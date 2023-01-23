@@ -23,7 +23,6 @@ script:
   - ./Scripts/travis-build-test.sh
 after_success:
   - ./Scripts/integration-test.sh
-  - bundle exec slather coverage -s --coveralls
   - bundle exec pod lib lint Contentful.podspec
 
 env:
