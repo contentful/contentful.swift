@@ -496,6 +496,10 @@ public struct Text: Node, Equatable {
         case underline
         /// Text formatted as code; presumably with monospaced font.
         case code
+        /// Text formatted as superscript
+        case superscript
+        /// Text formatted as subscript
+        case `subscript`
     }
 }
 
