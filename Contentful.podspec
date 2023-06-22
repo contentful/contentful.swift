@@ -14,24 +14,24 @@ Pod::Spec.new do |spec|
       :file => 'LICENSE'
   }
 
-  spec.authors      = { "JP Wright" => "jp@contentful.com", "Boris Bügling" => "boris@buegling.com" }
+  spec.authors      = { "JP Wright" => "jp@contentful.com" }
   spec.source       = { :git => "https://github.com/contentful/contentful.swift.git",
                         :tag => spec.version.to_s }
   spec.requires_arc = true
 
   spec.swift_version             = '5'
   spec.source_files              = 'Sources/Contentful/*.swift'
-  
+
   ## Platform specific source code.
   spec.ios.source_files          = 'Sources/Contentful/UIKit/*.swift'
   spec.watchos.source_files      = 'Sources/Contentful/UIKit/*.swift'
   spec.tvos.source_files         = 'Sources/Contentful/UIKit/*.swift'
   spec.osx.source_files          = 'Sources/Contentful/AppKit/*.swift'
- 
-  spec.ios.deployment_target     = '8.0'
-  spec.osx.deployment_target     = '10.10'
-  spec.watchos.deployment_target = '2.0'
-  spec.tvos.deployment_target    = '9.0'
+
+  spec.ios.deployment_target     = '10.0'
+  spec.osx.deployment_target     = '10.12'
+  spec.watchos.deployment_target = '3.0'
+  spec.tvos.deployment_target    = '10.0'
 
   spec.subspec 'ImageOptions' do |subspec|
     subspec.source_files = 'Sources/Contentful/ImageOptions/*.swift'
