@@ -1,11 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'xcpretty'
-gem 'slather'
-gem 'jazzy'
-gem 'dotenv'
 gem 'cocoapods'
-
-
-
-gem "fastlane"
+gem 'dotenv'
+gem 'jazzy'
+gem 'slather'
+gem 'xcpretty'
+gem 'fastlane'
