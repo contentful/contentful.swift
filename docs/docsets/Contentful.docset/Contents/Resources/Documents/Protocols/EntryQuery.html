@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>EntryQuery Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Protocol/EntryQuery" class="dashAnchor"></a>
+    <a title="EntryQuery Protocol Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">Contentful 5.5.14 Docs</a> (94% documented)</p>
+        <p class="header-right"><a href="https://github.com/contentful/contentful.swift"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
+        <div class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">Contentful Reference</a>
+        <img id="carat" src="../img/carat.png" alt=""/>
+        EntryQuery Protocol Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/APIError.html">APIError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/APIError/Sys.html">– Sys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/APIError/Details.html">– Details</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Asset.html">Asset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Asset/Fields.html">– Fields</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Asset/FileMetadata.html">– FileMetadata</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AssetQuery.html">AssetQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/BlockNode.html">BlockNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful10BlockQuoteC">BlockQuote</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Client.html">Client</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ContentType.html">ContentType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ContentType/QueryableCodingKey.html">– QueryableCodingKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ContentTypeQuery.html">ContentTypeQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DeletedResource.html">DeletedResource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Entry.html">Entry</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Heading.html">Heading</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful14HorizontalRuleC">HorizontalRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Hyperlink.html">Hyperlink</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Hyperlink/Data.html">– Data</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/InlineNode.html">InlineNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LinkQuery.html">LinkQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful8ListItemC">ListItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Locale.html">Locale</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocalizableResource.html">LocalizableResource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocalizableResource/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocalizationContext.html">LocalizationContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Location.html">Location</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Ordered.html">Ordered</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful11OrderedListC">OrderedList</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Ordering.html">Ordering</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful9ParagraphC">Paragraph</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Query.html">Query</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Query/Operation.html">– Operation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/QueryOn.html">QueryOn</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RateLimitError.html">RateLimitError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ResourceLinkBlock.html">ResourceLinkBlock</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ResourceLinkData.html">ResourceLinkData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ResourceLinkInline.html">ResourceLinkInline</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ResourceQuery.html">ResourceQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RichTextDocument.html">RichTextDocument</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Space.html">Space</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SyncSpace.html">SyncSpace</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SyncSpace/SyncableTypes.html">– SyncableTypes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful5TableC">Table</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful8TableRowC">TableRow</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful12TableRowCellC">TableRowCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful18TableRowHeaderCellC">TableRowHeaderCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful13UnorderedListC">UnorderedList</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/Bounds.html">Bounds</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ContentfulLogger.html">ContentfulLogger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ContentfulLogger/LogLevel.html">– LogLevel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ContentfulLogger/LogType.html">– LogType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Endpoint.html">Endpoint</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/FieldType.html">FieldType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Fit.html">Fit</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Focus.html">Focus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Format.html">Format</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Host.html">Host</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ImageOption.html">ImageOption</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/JPGQuality.html">JPGQuality</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Link.html">Link</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Link/Sys.html">– Sys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MimetypeGroup.html">MimetypeGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/NodeType.html">NodeType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PngBits.html">PngBits</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/QueryError.html">QueryError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/QueryParameter.html">QueryParameter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SDKError.html">SDKError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/Date.html">Date</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Date/Error.html">– Error</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Decoder.html">Decoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Dictionary.html">Dictionary</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Int.html">Int</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/JSONDecoder.html">JSONDecoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/KeyedDecodingContainer.html">KeyedDecodingContainer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/String.html">String</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:10Contentful1poiySDyxq_GAC_ACtSHRzr0_lF">+(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:10Contentful2peoiySDyxq_GAC_ACtSHRzr0_lF">+=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:10Contentful2eeoiySbAA11ImageOptionO_ADtF">==(_:_:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/AbstractQuery.html">AbstractQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AbstractResourceQuery.html">AbstractResourceQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:10Contentful14AssetDecodableP">AssetDecodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AssetProtocol.html">AssetProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ChainableQuery.html">ChainableQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/CustomLogger.html">CustomLogger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EndpointAccessible.html">EndpointAccessible</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EntryDecodable.html">EntryDecodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EntryQuery.html">EntryQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/FieldKeysQueryable.html">FieldKeysQueryable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/FlatResource.html">FlatResource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Integration.html">Integration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Node.html">Node</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PersistenceIntegration.html">PersistenceIntegration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/QueryableRange.html">QueryableRange</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RecursiveNode.html">RecursiveNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Resource.html">Resource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ResourceQueryable.html">ResourceQueryable</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/ArrayResponseError.html">ArrayResponseError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ArrayResponseError/Sys.html">– Sys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ClientConfiguration.html">ClientConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Field.html">Field</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/HeterogeneousArrayResponse.html">HeterogeneousArrayResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/HomogeneousArrayResponse.html">HomogeneousArrayResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ImageOptionError.html">ImageOptionError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Metadata.html">Metadata</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Metadata/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Sys.html">Sys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Sys/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Text.html">Text</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Text/Mark.html">– Mark</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Text/MarkType.html">– MarkType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Contentful13ArrayResponsea">ArrayResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Contentful13ContentTypeIda">ContentTypeId</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Contentful9FieldNamea">FieldName</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Contentful10LocaleCodea">LocaleCode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Contentful18MixedArrayResponsea">MixedArrayResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Contentful14ResultsHandlera">ResultsHandler</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>EntryQuery</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">EntryQuery</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/AbstractResourceQuery.html">AbstractResourceQuery</a></span></code></pre>
+
+                </div>
+              </div>
+            <p>The base abstract type for querying Contentful entries. The contained operations in the default implementation
+of this protocol can only be used when querying against the `/entries/ endpoint of the Content Delivery and Content Preview APIs.
+See: <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters">https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters</a></p>
+
+              <div class="slightly-smaller">
+                <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Query.swift#L641">Show on GitHub</a>
+              </div>
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/KeyPath%2FValue%20operations."></a>
+                <a name="//apple_ref/swift/Section/KeyPath/Value operations." class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/KeyPath%2FValue%20operations."></a>
+                  <h3 class="section-name"><span>KeyPath/Value operations.</span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Contentful10EntryQueryPAAE5where13contentTypeIdxSS_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/where(contentTypeId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Contentful10EntryQueryPAAE5where13contentTypeIdxSS_tFZ">where(contentTypeId:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initializes a new query specifying the <code>content_type</code> parameter to narrow the results to
+entries that have that content type identifier.</p>
+
+<p>See: <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters">https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters</a></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="err">`</span><span class="k">where</span><span class="err">`</span><span class="p">(</span><span class="nv">contentTypeId</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:10Contentful13ContentTypeIda">ContentTypeId</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>contentTypeId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The identifier of the content type which the query will be performed on.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A new initialized Query narrowing the results to a specific content type.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Query.swift#L650-L654">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Contentful10EntryQueryPAAE5where13contentTypeIdxSS_tF"></a>
+                    <a name="//apple_ref/swift/Method/where(contentTypeId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Contentful10EntryQueryPAAE5where13contentTypeIdxSS_tF">where(contentTypeId:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Appends the <code>content_type</code> parameter to narrow the results to entries that have that content type identifier.</p>
+
+<p>See: <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters">https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters</a></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">func</span> <span class="err">`</span><span class="k">where</span><span class="err">`</span><span class="p">(</span><span class="nv">contentTypeId</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:10Contentful13ContentTypeIda">ContentTypeId</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>contentTypeId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The identifier of the content type which the query will be performed on.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A reference to the receiving query to enable chaining.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Query.swift#L663-L666">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Contentful10EntryQueryPAAE5where16linkAtFieldNamed25onSourceContentTypeWithId08hasValueF7KeyPath010withTargetklN04thatxSS_S3SAA0C0C9OperationOtFZ"></a>
+                    <a name="//apple_ref/swift/Method/where(linkAtFieldNamed:onSourceContentTypeWithId:hasValueAtKeyPath:withTargetContentTypeId:that:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Contentful10EntryQueryPAAE5where16linkAtFieldNamed25onSourceContentTypeWithId08hasValueF7KeyPath010withTargetklN04thatxSS_S3SAA0C0C9OperationOtFZ">where(linkAtFieldNamed:<wbr>onSourceContentTypeWithId:<wbr>hasValueAtKeyPath:<wbr>withTargetContentTypeId:<wbr>that:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initialize a query to do a <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references">&ldquo;Search on References&rdquo;</a>
+which enables searching for entries based on value&rsquo;s for members of referenced entries.</p>
+
+<p>Example usage:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Query</span><span class="o">.</span><span class="nf">where</span><span class="p">(</span><span class="nv">linkAtFieldNamed</span><span class="p">:</span> <span class="s">"bestFriend"</span><span class="p">,</span>
+                        <span class="nv">onSourceContentTypeWithId</span><span class="p">:</span> <span class="s">"cat"</span><span class="p">,</span>
+                        <span class="nv">hasValueAtKeyPath</span><span class="p">:</span> <span class="s">"fields.name"</span><span class="p">,</span>
+                        <span class="nv">withTargetContentTypeId</span><span class="p">:</span> <span class="s">"cat"</span><span class="p">,</span>
+                        <span class="nv">that</span><span class="p">:</span> <span class="o">.</span><span class="nf">matches</span><span class="p">(</span><span class="s">"Happy Cat"</span><span class="p">))</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="err">`</span><span class="k">where</span><span class="err">`</span><span class="p">(</span><span class="n">linkAtFieldNamed</span> <span class="nv">linkingFieldName</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+                    <span class="n">onSourceContentTypeWithId</span> <span class="nv">sourceContentTypeId</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:10Contentful13ContentTypeIda">ContentTypeId</a></span><span class="p">,</span>
+                    <span class="n">hasValueAtKeyPath</span> <span class="nv">targetKeyPath</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+                    <span class="n">withTargetContentTypeId</span> <span class="nv">targetContentTypeId</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:10Contentful13ContentTypeIda">ContentTypeId</a></span><span class="p">,</span>
+                    <span class="n">that</span> <span class="nv">operation</span><span class="p">:</span> <span class="kt"><a href="../Classes/Query.html">Query</a></span><span class="o">.</span><span class="kt">Operation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>linkingFieldName</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The field name which holds a reference to a link.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sourceContentTypeId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The content type identifier of the link source.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>targetKeyPath</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The member path for the value you would like to search on for the link destination resource.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>targetContentTypeId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The content type idenifier of the item(s) being linked to at the specified linking field name.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>operation</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The <code><a href="../Classes/Query/Operation.html">Query.Operation</a></code> used to match the value of at the target key path.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A newly initialized query for searching on references.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Query.swift#L688-L701">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Contentful10EntryQueryPAAE5where16linkAtFieldNamed25onSourceContentTypeWithId08hasValueF7KeyPath010withTargetklN04thatxSS_S3SAA0C0C9OperationOtF"></a>
+                    <a name="//apple_ref/swift/Method/where(linkAtFieldNamed:onSourceContentTypeWithId:hasValueAtKeyPath:withTargetContentTypeId:that:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Contentful10EntryQueryPAAE5where16linkAtFieldNamed25onSourceContentTypeWithId08hasValueF7KeyPath010withTargetklN04thatxSS_S3SAA0C0C9OperationOtF">where(linkAtFieldNamed:<wbr>onSourceContentTypeWithId:<wbr>hasValueAtKeyPath:<wbr>withTargetContentTypeId:<wbr>that:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Use this method to do a <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references">&ldquo;Search on References&rdquo;</a>
+which enables searching for entries based on value&rsquo;s for members of referenced entries.</p>
+
+<p>Example usage:</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">func</span> <span class="err">`</span><span class="k">where</span><span class="err">`</span><span class="p">(</span><span class="n">linkAtFieldNamed</span> <span class="nv">linkingFieldName</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+             <span class="n">onSourceContentTypeWithId</span> <span class="nv">sourceContentTypeId</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:10Contentful13ContentTypeIda">ContentTypeId</a></span><span class="p">,</span>
+             <span class="n">hasValueAtKeyPath</span> <span class="nv">targetKeyPath</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+             <span class="n">withTargetContentTypeId</span> <span class="nv">targetContentTypeId</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:10Contentful13ContentTypeIda">ContentTypeId</a></span><span class="p">,</span>
+             <span class="n">that</span> <span class="nv">operation</span><span class="p">:</span> <span class="kt"><a href="../Classes/Query.html">Query</a></span><span class="o">.</span><span class="kt">Operation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>linkingFieldName</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The field name which holds a reference to a link.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sourceContentTypeId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The content type identifier of the link source.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>targetKeyPath</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The member path for the value you would like to search on for the link destination resource.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>targetContentTypeId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The content type idenifier of the item(s) being linked to at the specified linking field name.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>operation</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The <code><a href="../Classes/Query/Operation.html">Query.Operation</a></code> used to match the value of at the target key path.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A reference to the receiving query to enable chaining.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Query.swift#L716-L728">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Contentful10EntryQueryPAAE5where16linkAtFieldNamed25onSourceContentTypeWithId09hasTargetN0xSS_S2StFZ"></a>
+                    <a name="//apple_ref/swift/Method/where(linkAtFieldNamed:onSourceContentTypeWithId:hasTargetId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Contentful10EntryQueryPAAE5where16linkAtFieldNamed25onSourceContentTypeWithId09hasTargetN0xSS_S2StFZ">where(linkAtFieldNamed:<wbr>onSourceContentTypeWithId:<wbr>hasTargetId:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Static method creating a query that requires that an specific field of an entry
+holds a reference to another specific entry.</p>
+
+<p>Example usage:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Query</span><span class="o">.</span><span class="nf">where</span><span class="p">(</span><span class="nv">linkAtFieldNamed</span><span class="p">:</span> <span class="s">"bestFriend"</span><span class="p">,</span>
+<span class="nv">onSourceContentTypeWithId</span><span class="p">:</span> <span class="s">"cat"</span><span class="p">,</span>
+<span class="nv">hasValueAtKeyPath</span><span class="p">:</span> <span class="s">"fields.name"</span><span class="p">,</span>
+<span class="nv">withTargetContentTypeId</span><span class="p">:</span> <span class="s">"cat"</span><span class="p">,</span>
+<span class="nv">that</span><span class="p">:</span> <span class="o">.</span><span class="nf">matches</span><span class="p">(</span><span class="s">"Happy Cat"</span><span class="p">))</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="err">`</span><span class="k">where</span><span class="err">`</span><span class="p">(</span><span class="n">linkAtFieldNamed</span> <span class="nv">linkingFieldName</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+                    <span class="n">onSourceContentTypeWithId</span> <span class="nv">sourceContentTypeId</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:10Contentful13ContentTypeIda">ContentTypeId</a></span><span class="p">,</span>
+                    <span class="n">hasTargetId</span> <span class="nv">targetId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>linkingFieldName</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The field name which holds a reference to a link.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sourceContentTypeId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The content type identifier of the link source.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>targetId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The identifier of the entry or asset being linked to at the specified linking field.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A newly initialized query for searching on references.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Query.swift#L748-L757">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Contentful10EntryQueryPAAE5where16linkAtFieldNamed25onSourceContentTypeWithId09hasTargetN0xSS_S2StF"></a>
+                    <a name="//apple_ref/swift/Method/where(linkAtFieldNamed:onSourceContentTypeWithId:hasTargetId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Contentful10EntryQueryPAAE5where16linkAtFieldNamed25onSourceContentTypeWithId09hasTargetN0xSS_S2StF">where(linkAtFieldNamed:<wbr>onSourceContentTypeWithId:<wbr>hasTargetId:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Instance method creating a query that requires that an specific field of an entry
+holds a reference to another specific entry.</p>
+
+<p>Example usage:</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">func</span> <span class="err">`</span><span class="k">where</span><span class="err">`</span><span class="p">(</span><span class="n">linkAtFieldNamed</span> <span class="nv">linkingFieldName</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+             <span class="n">onSourceContentTypeWithId</span> <span class="nv">sourceContentTypeId</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:10Contentful13ContentTypeIda">ContentTypeId</a></span><span class="p">,</span>
+             <span class="n">hasTargetId</span> <span class="nv">targetId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>linkingFieldName</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The field name which holds a reference to a link.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sourceContentTypeId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The content type identifier of the link source.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>targetId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The identifier of the entry or asset being linked to at the specified linking field.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A reference to the receiving query to enable chaining.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Query.swift#L770-L778">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Contentful10EntryQueryPAAE5where07linksToB6WithIdxSS_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/where(linksToEntryWithId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Contentful10EntryQueryPAAE5where07linksToB6WithIdxSS_tFZ">where(linksToEntryWithId:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Static method for creating a query that will search for entries that have a field linking to
+another entry with a specific id.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="err">`</span><span class="k">where</span><span class="err">`</span><span class="p">(</span><span class="n">linksToEntryWithId</span> <span class="nv">entryId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>entryId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The identifier of the entry which you want to find incoming links for.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A newly initialized query which will search for incoming links on a specific entry.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Query.swift#L785-L789">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Contentful10EntryQueryPAAE5where07linksToB6WithIdxSS_tF"></a>
+                    <a name="//apple_ref/swift/Method/where(linksToEntryWithId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Contentful10EntryQueryPAAE5where07linksToB6WithIdxSS_tF">where(linksToEntryWithId:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Instance method for creating a query that will search for entries that have a field linking to
+another entry with a specific id.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">func</span> <span class="err">`</span><span class="k">where</span><span class="err">`</span><span class="p">(</span><span class="n">linksToEntryWithId</span> <span class="nv">entryId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>entryId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The identifier of the entry which you want to find incoming links for.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A reference to the receiving query to enable chaining.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Query.swift#L797-L800">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Contentful10EntryQueryPAAE5where18linksToAssetWithIdxSS_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/where(linksToAssetWithId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Contentful10EntryQueryPAAE5where18linksToAssetWithIdxSS_tFZ">where(linksToAssetWithId:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Static method for creating a query that will search for entries that have a field linking to
+an asset with a specific id.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="err">`</span><span class="k">where</span><span class="err">`</span><span class="p">(</span><span class="n">linksToAssetWithId</span> <span class="nv">assetId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>assetId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The identifier of the asset which you want to find incoming links for</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A newly initialized query which will search for incoming links on a specific asset.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Query.swift#L807-L811">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Contentful10EntryQueryPAAE5where18linksToAssetWithIdxSS_tF"></a>
+                    <a name="//apple_ref/swift/Method/where(linksToAssetWithId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Contentful10EntryQueryPAAE5where18linksToAssetWithIdxSS_tF">where(linksToAssetWithId:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Static method for creating a query that will search for entries that have a field linking to
+an asset with a specific id.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">func</span> <span class="err">`</span><span class="k">where</span><span class="err">`</span><span class="p">(</span><span class="n">linksToAssetWithId</span> <span class="nv">assetId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>assetId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The identifier of the asset which you want to find incoming links for.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A reference to the receiving query to enable chaining.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Query.swift#L819-L822">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2025 <a class="link" href="https://www.contentful.com" target="_blank" rel="external noopener">Contentful</a>. All rights reserved. (Last updated: 2025-07-29)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>

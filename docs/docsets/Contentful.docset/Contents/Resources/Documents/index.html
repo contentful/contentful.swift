@@ -8,25 +8,419 @@
     <script src="js/jquery.min.js" defer></script>
     <script src="js/jazzy.js" defer></script>
     
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
   </head>
   <body>
     <a title="Contentful  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">Contentful Docs</a> (0% documented)</p>
-        <p class="header-right"><a href="https://github.com/contentful/contentful.swift"><img src="img/gh.png"/>View on GitHub</a></p>
+        <p><a href="index.html">Contentful 5.5.14 Docs</a> (94% documented)</p>
+        <p class="header-right"><a href="https://github.com/contentful/contentful.swift"><img src="img/gh.png" alt="GitHub"/>View on GitHub</a></p>
+        <div class="header-right">
+          <form role="search" action="search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
       </div>
     </header>
     <div class="content-wrapper">
       <p id="breadcrumbs">
         <a href="index.html">Contentful Reference</a>
-        <img id="carat" src="img/carat.png" />
+        <img id="carat" src="img/carat.png" alt=""/>
         Contentful  Reference
       </p>
     </div>
     <div class="content-wrapper">
       <nav class="sidebar">
         <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/APIError.html">APIError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/APIError/Sys.html">– Sys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/APIError/Details.html">– Details</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/Asset.html">Asset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/Asset/Fields.html">– Fields</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/Asset/FileMetadata.html">– FileMetadata</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/AssetQuery.html">AssetQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/BlockNode.html">BlockNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes.html#/s:10Contentful10BlockQuoteC">BlockQuote</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/Client.html">Client</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/ContentType.html">ContentType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/ContentType/QueryableCodingKey.html">– QueryableCodingKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/ContentTypeQuery.html">ContentTypeQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/DeletedResource.html">DeletedResource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/Entry.html">Entry</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/Heading.html">Heading</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes.html#/s:10Contentful14HorizontalRuleC">HorizontalRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/Hyperlink.html">Hyperlink</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/Hyperlink/Data.html">– Data</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/InlineNode.html">InlineNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/LinkQuery.html">LinkQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes.html#/s:10Contentful8ListItemC">ListItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/Locale.html">Locale</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/LocalizableResource.html">LocalizableResource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/LocalizableResource/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/LocalizationContext.html">LocalizationContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/Location.html">Location</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/Ordered.html">Ordered</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes.html#/s:10Contentful11OrderedListC">OrderedList</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/Ordering.html">Ordering</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes.html#/s:10Contentful9ParagraphC">Paragraph</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/Query.html">Query</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/Query/Operation.html">– Operation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/QueryOn.html">QueryOn</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/RateLimitError.html">RateLimitError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/ResourceLinkBlock.html">ResourceLinkBlock</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/ResourceLinkData.html">ResourceLinkData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/ResourceLinkInline.html">ResourceLinkInline</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/ResourceQuery.html">ResourceQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/RichTextDocument.html">RichTextDocument</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/Space.html">Space</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SyncSpace.html">SyncSpace</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SyncSpace/SyncableTypes.html">– SyncableTypes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes.html#/s:10Contentful5TableC">Table</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes.html#/s:10Contentful8TableRowC">TableRow</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes.html#/s:10Contentful12TableRowCellC">TableRowCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes.html#/s:10Contentful18TableRowHeaderCellC">TableRowHeaderCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes.html#/s:10Contentful13UnorderedListC">UnorderedList</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Enums/Bounds.html">Bounds</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/ContentfulLogger.html">ContentfulLogger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/ContentfulLogger/LogLevel.html">– LogLevel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/ContentfulLogger/LogType.html">– LogType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/Endpoint.html">Endpoint</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/FieldType.html">FieldType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/Fit.html">Fit</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/Focus.html">Focus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/Format.html">Format</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/Host.html">Host</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/ImageOption.html">ImageOption</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/JPGQuality.html">JPGQuality</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/Link.html">Link</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/Link/Sys.html">– Sys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/MimetypeGroup.html">MimetypeGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/NodeType.html">NodeType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/PngBits.html">PngBits</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/QueryError.html">QueryError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/QueryParameter.html">QueryParameter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/SDKError.html">SDKError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Extensions/Date.html">Date</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/Date/Error.html">– Error</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/Decoder.html">Decoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/Dictionary.html">Dictionary</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/Int.html">Int</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/JSONDecoder.html">JSONDecoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/KeyedDecodingContainer.html">KeyedDecodingContainer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/String.html">String</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Functions.html#/s:10Contentful1poiySDyxq_GAC_ACtSHRzr0_lF">+(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Functions.html#/s:10Contentful2peoiySDyxq_GAC_ACtSHRzr0_lF">+=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Functions.html#/s:10Contentful2eeoiySbAA11ImageOptionO_ADtF">==(_:_:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/AbstractQuery.html">AbstractQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/AbstractResourceQuery.html">AbstractResourceQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols.html#/s:10Contentful14AssetDecodableP">AssetDecodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/AssetProtocol.html">AssetProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/ChainableQuery.html">ChainableQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/CustomLogger.html">CustomLogger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/EndpointAccessible.html">EndpointAccessible</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/EntryDecodable.html">EntryDecodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/EntryQuery.html">EntryQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/FieldKeysQueryable.html">FieldKeysQueryable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/FlatResource.html">FlatResource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/Integration.html">Integration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/Node.html">Node</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/PersistenceIntegration.html">PersistenceIntegration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/QueryableRange.html">QueryableRange</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/RecursiveNode.html">RecursiveNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/Resource.html">Resource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/ResourceQueryable.html">ResourceQueryable</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/ArrayResponseError.html">ArrayResponseError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/ArrayResponseError/Sys.html">– Sys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/ClientConfiguration.html">ClientConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Field.html">Field</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/HeterogeneousArrayResponse.html">HeterogeneousArrayResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/HomogeneousArrayResponse.html">HomogeneousArrayResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/ImageOptionError.html">ImageOptionError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Metadata.html">Metadata</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Metadata/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Sys.html">Sys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Sys/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Text.html">Text</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Text/Mark.html">– Mark</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Text/MarkType.html">– MarkType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Typealiases.html#/s:10Contentful13ArrayResponsea">ArrayResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Typealiases.html#/s:10Contentful13ContentTypeIda">ContentTypeId</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Typealiases.html#/s:10Contentful9FieldNamea">FieldName</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Typealiases.html#/s:10Contentful10LocaleCodea">LocaleCode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Typealiases.html#/s:10Contentful18MixedArrayResponsea">MixedArrayResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Typealiases.html#/s:10Contentful14ResultsHandlera">ResultsHandler</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <article class="main-content">
@@ -45,10 +439,10 @@
       alt="Join Contentful Community Forum">
   </a>
 </p>
-<h1 id='contentful-swift-swift-delivery-sdk-for-contentful' class='heading'>contentful.swift - Swift Delivery SDK for Contentful</h1>
+<h1 id='contentful-swift-swift-content-delivery-library-for-contentful' class='heading'>contentful.swift - Swift Content Delivery Library for Contentful</h1>
 
 <blockquote>
-<p>Swift SDK for the Contentful <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/">Content Delivery API</a> and <a href="https://www.contentful.com/developers/docs/references/content-preview-api/">Content Preview API</a>. It helps you to easily access your Content stored in Contentful with your Swift applications.</p>
+<p>Swift library for the Contentful <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/">Content Delivery API</a> and <a href="https://www.contentful.com/developers/docs/references/content-preview-api/">Content Preview API</a>. It helps you to easily access your Content stored in Contentful with your Swift applications.</p>
 </blockquote>
 
 <p align="center">
@@ -94,7 +488,7 @@
 <summary>Table of contents</summary>
 <!-- TOC -->
 
-- [contentful.swift - Swift Delivery SDK for Contentful](#contentfulswift&mdash;swift-delivery-sdk-for-contentful)
+- [contentful.swift - Swift Delivery library for Contentful](#contentfulswift&mdash;swift-delivery-library-for-contentful)
   - [Core Features](#core-features)
   - [Getting started](#getting-started)
     - [Installation](#installation)
@@ -137,7 +531,7 @@
 ## Getting started</li>
 </ul>
 
-<p>In order to get started with the Contentful Swift SDK you&rsquo;ll need not only to install it, but also to get credentials which will allow you to have access to your content in Contentful.</p>
+<p>In order to get started with the Contentful Swift library you&rsquo;ll need not only to install it, but also to get credentials which will allow you to have access to your content in Contentful.</p>
 
 <ul>
 <li><a href="#installation">Installation</a></li>
@@ -167,7 +561,7 @@
 </code></pre>
 <h3 id='your-first-request' class='heading'>Your first request</h3>
 
-<p>The following code snippet is the most basic one you can use to fetch content from Contentful with this SDK:</p>
+<p>The following code snippet is the most basic one you can use to fetch content from Contentful with this library:</p>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">Contentful</span>
 
 <span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="kt">Client</span><span class="p">(</span><span class="nv">spaceId</span><span class="p">:</span> <span class="s">"cfexampleapi"</span><span class="p">,</span>
@@ -193,12 +587,12 @@
 </code></pre>
 <h3 id='authorization' class='heading'>Authorization</h3>
 
-<p>Grab credentials for your Contentful space by <a href="https://app.contentful.com/deeplink?link=api">navigating to the <q>APIs</q> section of the Contentful Web App</a>.
+<p>Grab credentials for your Contentful space by <a href="https://app.contentful.com/deeplink?link=api">navigating to the &ldquo;APIs&rdquo; section of the Contentful Web App</a>.
 If you don&rsquo;t have access tokens for your app, create a new set for the Delivery and Preview APIs.
 Next, pass the id of your space and delivery access token into the initializer like so:</p>
-<h3 id='map-contentful-entries-to-swift-classes-via-code-entrydecodable-code' class='heading'>Map Contentful entries to Swift classes via <code>EntryDecodable</code></h3>
+<h3 id='map-contentful-entries-to-swift-classes-via-code-entrydecodable-code' class='heading'>Map Contentful entries to Swift classes via <code><a href="Protocols/EntryDecodable.html">EntryDecodable</a></code></h3>
 
-<p>The <code>EntryDecodable</code> protocol allows you to define a mapping between your content types and your Swift classes that entries will be serialized to. When using methods such as:</p>
+<p>The <code><a href="Protocols/EntryDecodable.html">EntryDecodable</a></code> protocol allows you to define a mapping between your content types and your Swift classes that entries will be serialized to. When using methods such as:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">QueryOn</span><span class="o">&lt;</span><span class="kt">Cat</span><span class="o">&gt;.</span><span class="nf">where</span><span class="p">(</span><span class="nv">field</span><span class="p">:</span> <span class="o">.</span><span class="n">color</span><span class="p">,</span> <span class="o">.</span><span class="nf">equals</span><span class="p">(</span><span class="s">"gray"</span><span class="p">))</span>
 
 <span class="n">client</span><span class="o">.</span><span class="nf">fetchArray</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="kt">Cat</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">matching</span><span class="p">:</span> <span class="n">query</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="nv">result</span><span class="p">:</span> <span class="kt">Result</span><span class="o">&lt;</span><span class="kt">ArrayResponse</span><span class="o">&lt;</span><span class="kt">Cat</span><span class="o">&gt;&gt;</span><span class="p">)</span> <span class="k">in</span>
@@ -207,9 +601,9 @@ Next, pass the id of your space and delivery access token into the initializer l
 <span class="p">}</span>
 </code></pre>
 
-<p>The asynchronously returned result will be an instance of <code>ArrayResponse</code> in which the generic type parameter is the same type you&rsquo;ve passed into the <code>fetch</code> method. If you are using a <code>Query</code> that does not restrict the response to contain entries of one content type, you will use methods that return <code>MixedArrayResponse</code> instead of <code>ArrayResponse</code>. The <code>EntryDecodable</code> protocol extends the <code>Decodable</code> protocol in Swift 4&rsquo;s Foundation standard library. The SDK provides helper methods for resolving relationships between <code>EntryDecodable</code>s and also for grabbing values from the fields container in the JSON for each resource.</p>
+<p>The asynchronously returned result will be an instance of <code><a href="Typealiases.html#/s:10Contentful13ArrayResponsea">ArrayResponse</a></code> in which the generic type parameter is the same type you&rsquo;ve passed into the <code>fetch</code> method. If you are using a <code><a href="Classes/Query.html">Query</a></code> that does not restrict the response to contain entries of one content type, you will use methods that return <code><a href="Typealiases.html#/s:10Contentful18MixedArrayResponsea">MixedArrayResponse</a></code> instead of <code><a href="Typealiases.html#/s:10Contentful13ArrayResponsea">ArrayResponse</a></code>. The <code><a href="Protocols/EntryDecodable.html">EntryDecodable</a></code> protocol extends the <code>Decodable</code> protocol in Swift 4&rsquo;s Foundation standard SDK. The library provides helper methods for resolving relationships between <code><a href="Protocols/EntryDecodable.html">EntryDecodable</a></code>s and also for grabbing values from the fields container in the JSON for each resource.</p>
 
-<p>In the example above, <code>Cat</code> is a type of our own definition conforming to <code>EntryDecodable</code> and <code>FieldKeysQueryable</code>. In order for the SDK to properly create your model types when receiving JSON, you must pass in these types to your <code>Client</code> instance:</p>
+<p>In the example above, <code>Cat</code> is a type of our own definition conforming to <code><a href="Protocols/EntryDecodable.html">EntryDecodable</a></code> and <code><a href="Protocols/FieldKeysQueryable.html">FieldKeysQueryable</a></code>. In order for the library to properly create your model types when receiving JSON, you must pass in these types to your <code><a href="Classes/Client.html">Client</a></code> instance:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">contentTypeClasses</span><span class="p">:</span> <span class="p">[</span><span class="kt">EntryDecodable</span><span class="o">.</span><span class="k">Type</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
     <span class="kt">Cat</span><span class="o">.</span><span class="k">self</span>
     <span class="kt">Dog</span><span class="o">.</span><span class="k">self</span><span class="p">,</span>
@@ -221,7 +615,7 @@ Next, pass the id of your space and delivery access token into the initializer l
                     <span class="nv">contentTypeClasses</span><span class="p">:</span> <span class="n">contentTypeClasses</span><span class="p">)</span>
 </code></pre>
 
-<p>The source for the <code>Cat</code> model class is below; note the helper methods the SDK adds to Swift 4&rsquo;s <code>Decoder</code> type to simplify for parsing JSON returned by Contentful. You also need to pass in these types to your <code>Client</code> instance in order to use the fetch methods which take <code>EntryDecodable</code> type references:</p>
+<p>The source for the <code>Cat</code> model class is below; note the helper methods the library adds to Swift 4&rsquo;s <code>Decoder</code> type to simplify for parsing JSON returned by Contentful. You also need to pass in these types to your <code><a href="Classes/Client.html">Client</a></code> instance in order to use the fetch methods which take <code><a href="Protocols/EntryDecodable.html">EntryDecodable</a></code> type references:</p>
 <pre class="highlight swift"><code><span class="kd">final</span> <span class="kd">class</span> <span class="kt">Cat</span><span class="p">:</span> <span class="kt">EntryDecodable</span><span class="p">,</span> <span class="kt">FieldKeysQueryable</span> <span class="p">{</span>
 
     <span class="kd">static</span> <span class="k">let</span> <span class="nv">contentTypeId</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"cat"</span>
@@ -269,15 +663,15 @@ Next, pass the id of your space and delivery access token into the initializer l
 <span class="p">}</span>
 </code></pre>
 
-<p>If you want to simplify the implementation of an <code>EntryDecodable</code>, declare conformance to <code>Resource</code> and add <code>let sys: Sys</code> property to the class and assign via <code>sys = try decoder.sys()</code> during initialization. Then, <code>id</code>, <code>localeCode</code>, <code>updatedAt</code>, and <code>createdAt</code> are all provided via the <code>sys</code> property and don&rsquo;t need to be declared as class members. However, note that this style of implementation may make integration with local database frameworks like Realm and CoreData more cumbersome.</p>
+<p>If you want to simplify the implementation of an <code><a href="Protocols/EntryDecodable.html">EntryDecodable</a></code>, declare conformance to <code><a href="Protocols/Resource.html">Resource</a></code> and add <code>let sys: Sys</code> property to the class and assign via <code>sys = try decoder.sys()</code> during initialization. Then, <code>id</code>, <code>localeCode</code>, <code>updatedAt</code>, and <code>createdAt</code> are all provided via the <code>sys</code> property and don&rsquo;t need to be declared as class members. However, note that this style of implementation may make integration with local database frameworks like Realm and CoreData more cumbersome.</p>
 
 <p>Optionally, decoder has a helper function to decode metadata. </p>
 
-<p>Additionally, the SDK requires that instances of a type representing an entry or asset must be a <code>class</code> instance, not a <code>struct</code>—this is because the SDK ensures that the in-memory object graph is complete, but also that it has no duplicates.</p>
+<p>Additionally, the library requires that instances of a type representing an entry or asset must be a <code>class</code> instance, not a <code>struct</code>—this is because the library ensures that the in-memory object graph is complete, but also that it has no duplicates.</p>
 <h2 id='documentation-amp-references' class='heading'>Documentation &amp; References</h2>
 <h3 id='reference-documentation' class='heading'>Reference Documentation</h3>
 
-<p>The SDK has 100% documentation coverage of all public variables, types, and functions. You can view the docs on the <a href="https://contentful.github.io/contentful.swift/docs/index.html">web</a> or browse them in Xcode. For further information about the Content Delivery API, check out the <a href="https://www.contentful.com/developers/documentation/content-delivery-api/">Content Delivery API Reference Documentation</a>.</p>
+<p>The library has 100% documentation coverage of all public variables, types, and functions. You can view the docs on the <a href="https://contentful.github.io/contentful.swift/docs/index.html">web</a> or browse them in Xcode. For further information about the Content Delivery API, check out the <a href="https://www.contentful.com/developers/documentation/content-delivery-api/">Content Delivery API Reference Documentation</a>.</p>
 <h3 id='tutorials-amp-other-resources' class='heading'>Tutorials &amp; other resources</h3>
 
 <ul>
@@ -292,7 +686,7 @@ Next, pass the id of your space and delivery access token into the initializer l
 make open
 </code></pre>
 
-<p>Then build the <q>Contentful_macOS</q> scheme, open the playground file and go! Note: make sure the <q>Render Documentation</q> button is switched on in the Utilities menu on the right of Xcode, and also open up the console to see the outputs of the calls to <code>print</code>.</p>
+<p>Then build the &ldquo;Contentful_macOS&rdquo; scheme, open the playground file and go! Note: make sure the &ldquo;Render Documentation&rdquo; button is switched on in the Utilities menu on the right of Xcode, and also open up the console to see the outputs of the calls to <code>print</code>.</p>
 <h4 id='example-application' class='heading'>Example application</h4>
 
 <p>See the <a href="https://github.com/contentful/the-example-app.swift">Swift iOS app on Github</a> and follow the instructions on the README to get a copy of the space so you can see how changing content in Contentful affects the presentation of the app.</p>
@@ -301,7 +695,7 @@ make open
 <p>We gathered all information related to migrating from older versions of the library in our <a href="Migrations.md">Migrations.md</a> document.</p>
 <h2 id='swift-versioning' class='heading'>Swift Versioning</h2>
 
-<p>It is recommended to use Swift 5.0, as older versions of the SDK will not have fixes backported. If you must use older Swift versions, see the compatible tags below.</p>
+<p>It is recommended to use Swift 5.0, as older versions of the library will not have fixes backported. If you must use older Swift versions, see the compatible tags below.</p>
 
 <table><thead>
 <tr>
@@ -372,11 +766,10 @@ make open
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2021 <a class="link" href="https://www.contentful.com" target="_blank" rel="external">Contentful</a>. All rights reserved. (Last updated: 2021-04-06)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2025 <a class="link" href="https://www.contentful.com" target="_blank" rel="external noopener">Contentful</a>. All rights reserved. (Last updated: 2025-07-29)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>
   </body>
-</div>
 </html>

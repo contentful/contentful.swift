@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>LocalizableResource Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/LocalizableResource" class="dashAnchor"></a>
+    <a title="LocalizableResource Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">Contentful 5.5.14 Docs</a> (94% documented)</p>
+        <p class="header-right"><a href="https://github.com/contentful/contentful.swift"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
+        <div class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">Contentful Reference</a>
+        <img id="carat" src="../img/carat.png" alt=""/>
+        LocalizableResource Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/APIError.html">APIError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/APIError/Sys.html">– Sys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/APIError/Details.html">– Details</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Asset.html">Asset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Asset/Fields.html">– Fields</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Asset/FileMetadata.html">– FileMetadata</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AssetQuery.html">AssetQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/BlockNode.html">BlockNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful10BlockQuoteC">BlockQuote</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Client.html">Client</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ContentType.html">ContentType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ContentType/QueryableCodingKey.html">– QueryableCodingKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ContentTypeQuery.html">ContentTypeQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DeletedResource.html">DeletedResource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Entry.html">Entry</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Heading.html">Heading</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful14HorizontalRuleC">HorizontalRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Hyperlink.html">Hyperlink</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Hyperlink/Data.html">– Data</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/InlineNode.html">InlineNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LinkQuery.html">LinkQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful8ListItemC">ListItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Locale.html">Locale</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocalizableResource.html">LocalizableResource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocalizableResource/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocalizationContext.html">LocalizationContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Location.html">Location</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Ordered.html">Ordered</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful11OrderedListC">OrderedList</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Ordering.html">Ordering</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful9ParagraphC">Paragraph</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Query.html">Query</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Query/Operation.html">– Operation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/QueryOn.html">QueryOn</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RateLimitError.html">RateLimitError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ResourceLinkBlock.html">ResourceLinkBlock</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ResourceLinkData.html">ResourceLinkData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ResourceLinkInline.html">ResourceLinkInline</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ResourceQuery.html">ResourceQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RichTextDocument.html">RichTextDocument</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Space.html">Space</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SyncSpace.html">SyncSpace</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SyncSpace/SyncableTypes.html">– SyncableTypes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful5TableC">Table</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful8TableRowC">TableRow</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful12TableRowCellC">TableRowCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful18TableRowHeaderCellC">TableRowHeaderCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful13UnorderedListC">UnorderedList</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/Bounds.html">Bounds</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ContentfulLogger.html">ContentfulLogger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ContentfulLogger/LogLevel.html">– LogLevel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ContentfulLogger/LogType.html">– LogType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Endpoint.html">Endpoint</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/FieldType.html">FieldType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Fit.html">Fit</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Focus.html">Focus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Format.html">Format</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Host.html">Host</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ImageOption.html">ImageOption</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/JPGQuality.html">JPGQuality</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Link.html">Link</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Link/Sys.html">– Sys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MimetypeGroup.html">MimetypeGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/NodeType.html">NodeType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PngBits.html">PngBits</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/QueryError.html">QueryError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/QueryParameter.html">QueryParameter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SDKError.html">SDKError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/Date.html">Date</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Date/Error.html">– Error</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Decoder.html">Decoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Dictionary.html">Dictionary</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Int.html">Int</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/JSONDecoder.html">JSONDecoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/KeyedDecodingContainer.html">KeyedDecodingContainer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/String.html">String</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:10Contentful1poiySDyxq_GAC_ACtSHRzr0_lF">+(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:10Contentful2peoiySDyxq_GAC_ACtSHRzr0_lF">+=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:10Contentful2eeoiySbAA11ImageOptionO_ADtF">==(_:_:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/AbstractQuery.html">AbstractQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AbstractResourceQuery.html">AbstractResourceQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:10Contentful14AssetDecodableP">AssetDecodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AssetProtocol.html">AssetProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ChainableQuery.html">ChainableQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/CustomLogger.html">CustomLogger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EndpointAccessible.html">EndpointAccessible</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EntryDecodable.html">EntryDecodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EntryQuery.html">EntryQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/FieldKeysQueryable.html">FieldKeysQueryable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/FlatResource.html">FlatResource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Integration.html">Integration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Node.html">Node</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PersistenceIntegration.html">PersistenceIntegration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/QueryableRange.html">QueryableRange</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RecursiveNode.html">RecursiveNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Resource.html">Resource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ResourceQueryable.html">ResourceQueryable</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/ArrayResponseError.html">ArrayResponseError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ArrayResponseError/Sys.html">– Sys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ClientConfiguration.html">ClientConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Field.html">Field</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/HeterogeneousArrayResponse.html">HeterogeneousArrayResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/HomogeneousArrayResponse.html">HomogeneousArrayResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ImageOptionError.html">ImageOptionError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Metadata.html">Metadata</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Metadata/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Sys.html">Sys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Sys/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Text.html">Text</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Text/Mark.html">– Mark</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Text/MarkType.html">– MarkType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Contentful13ArrayResponsea">ArrayResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Contentful13ContentTypeIda">ContentTypeId</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Contentful9FieldNamea">FieldName</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Contentful10LocaleCodea">LocaleCode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Contentful18MixedArrayResponsea">MixedArrayResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Contentful14ResultsHandlera">ResultsHandler</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>LocalizableResource</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">LocalizableResource</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/Resource.html">Resource</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/FlatResource.html">FlatResource</a></span><span class="p">,</span> <span class="kt">Codable</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">LocalizableResource</span><span class="p">:</span> <span class="kt">Hashable</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">LocalizableResource</span><span class="p">:</span> <span class="kt">Equatable</span></code></pre>
+
+                </div>
+              </div>
+            <p>Base class for any Resource that has the capability of carrying information for multiple locales.
+If more than one locale is fetched using either <code>/sync</code> endpoint, or specifying the wildcard value
+for the locale paramater (i.e &ldquo;locale=*&rdquo;) during a fetch, the SDK will cache returned values for
+all locales in moery. This class gives an interface to specify which locale should be used when
+reading content from <code><a href="../Protocols/Resource.html">Resource</a></code> instances that are in memory.</p>
+
+              <div class="slightly-smaller">
+                <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Resource.swift#L90-L172">Show on GitHub</a>
+              </div>
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Contentful19LocalizableResourceC3sysAA3SysVvp"></a>
+                    <a name="//apple_ref/swift/Property/sys" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Contentful19LocalizableResourceC3sysAA3SysVvp">sys</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>System fields.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">sys</span><span class="p">:</span> <span class="kt"><a href="../Structs/Sys.html">Sys</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Resource.swift#L92">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Contentful19LocalizableResourceC23currentlySelectedLocaleAA0F0Cvp"></a>
+                    <a name="//apple_ref/swift/Property/currentlySelectedLocale" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Contentful19LocalizableResourceC23currentlySelectedLocaleAA0F0Cvp">currentlySelectedLocale</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The currently selected locale to use when reading data from the <code><a href="../Classes/LocalizableResource.html#/s:10Contentful19LocalizableResourceC6fieldsSDySSypGvp">fields</a></code> dictionary.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">currentlySelectedLocale</span><span class="p">:</span> <span class="kt"><a href="../Classes/Locale.html">Locale</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Resource.swift#L95">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Contentful19LocalizableResourceC8metadataAA8MetadataVSgvp"></a>
+                    <a name="//apple_ref/swift/Property/metadata" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Contentful19LocalizableResourceC8metadataAA8MetadataVSgvp">metadata</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The metadata linking to additional content like tags.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">metadata</span><span class="p">:</span> <span class="kt"><a href="../Structs/Metadata.html">Metadata</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Resource.swift#L98">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Contentful19LocalizableResourceC4typeAA11ContentTypeCSgvp"></a>
+                    <a name="//apple_ref/swift/Property/type" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Contentful19LocalizableResourceC4typeAA11ContentTypeCSgvp">type</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>type of resource</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">type</span><span class="p">:</span> <span class="kt"><a href="../Classes/ContentType.html">ContentType</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Resource.swift#L101">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Contentful19LocalizableResourceC6fieldsSDySSypGvp"></a>
+                    <a name="//apple_ref/swift/Property/fields" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Contentful19LocalizableResourceC6fieldsSDySSypGvp">fields</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The fields with content. If there is no value for a field associated with the currently selected <code><a href="../Classes/Locale.html">Locale</a></code>,
+the SDK will walk down fallback chain until a value is found. If there is still no value after
+walking the full chain, the field will be omitted from the <code>fields</code> dictionary.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">fields</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Typealiases.html#/s:10Contentful9FieldNamea">FieldName</a></span> <span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Resource.swift#L105-L107">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Contentful19LocalizableResourceC9setLocale8withCodeSbSS_tF"></a>
+                    <a name="//apple_ref/swift/Method/setLocale(withCode:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Contentful19LocalizableResourceC9setLocale8withCodeSbSS_tF">setLocale(withCode:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Sets the locale on the Localizable Resource (i.e. an instance of <code><a href="../Classes/Asset.html">Asset</a></code> or <code><a href="../Classes/Entry.html">Entry</a></code>)
+so that future reads from the <code><a href="../Classes/LocalizableResource.html#/s:10Contentful19LocalizableResourceC6fieldsSDySSypGvp">fields</a></code> property will return data corresponding
+to the specified locale code.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">setLocale</span><span class="p">(</span><span class="n">withCode</span> <span class="nv">code</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:10Contentful10LocaleCodea">LocaleCode</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>code</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The string code for the Locale.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>false</code> if the locale code doesn&rsquo;t correspond to any locales in the space, <code>true</code>.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Resource.swift#L116-L122">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:Se4fromxs7Decoder_p_tKcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(from:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:Se4fromxs7Decoder_p_tKcfc">init(from:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">required</span> <span class="nf">init</span><span class="p">(</span><span class="n">from</span> <span class="nv">decoder</span><span class="p">:</span> <span class="kt">Decoder</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Resource.swift#L130-L156">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SE6encode2toys7Encoder_p_tKF"></a>
+                    <a name="//apple_ref/swift/Method/encode(to:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SE6encode2toys7Encoder_p_tKF">encode(to:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">encode</span><span class="p">(</span><span class="n">to</span> <span class="nv">encoder</span><span class="p">:</span> <span class="kt">Encoder</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Resource.swift#L158-L161">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Contentful19LocalizableResourceC10CodingKeysO"></a>
+                    <a name="//apple_ref/swift/Enum/CodingKeys" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Contentful19LocalizableResourceC10CodingKeysO">CodingKeys</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The keys used when representing a resource in JSON.</p>
+
+                        <a href="../Classes/LocalizableResource/CodingKeys.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">CodingKeys</span> <span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="kt">CodingKey</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Resource.swift#L164-L171">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Internal"></a>
+                <a name="//apple_ref/swift/Section/Internal" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Internal"></a>
+                  <h3 class="section-name"><span>Internal</span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SH4hash4intoys6HasherVz_tF"></a>
+                    <a name="//apple_ref/swift/Method/hash(into:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SH4hash4intoys6HasherVz_tF">hash(into:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">hash</span><span class="p">(</span><span class="n">into</span> <span class="nv">hasher</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Hasher</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Resource.swift#L177-L180">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SQ2eeoiySbx_xtFZ"></a>
+                    <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SQ2eeoiySbx_xtFZ">==(_:<wbr>_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">LocalizableResource</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">LocalizableResource</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Resource.swift#L184-L186">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2025 <a class="link" href="https://www.contentful.com" target="_blank" rel="external noopener">Contentful</a>. All rights reserved. (Last updated: 2025-07-29)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>

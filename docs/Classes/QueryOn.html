@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>QueryOn Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/QueryOn" class="dashAnchor"></a>
+    <a title="QueryOn Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">Contentful 5.5.14 Docs</a> (94% documented)</p>
+        <p class="header-right"><a href="https://github.com/contentful/contentful.swift"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
+        <div class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">Contentful Reference</a>
+        <img id="carat" src="../img/carat.png" alt=""/>
+        QueryOn Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/APIError.html">APIError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/APIError/Sys.html">– Sys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/APIError/Details.html">– Details</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Asset.html">Asset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Asset/Fields.html">– Fields</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Asset/FileMetadata.html">– FileMetadata</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AssetQuery.html">AssetQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/BlockNode.html">BlockNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful10BlockQuoteC">BlockQuote</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Client.html">Client</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ContentType.html">ContentType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ContentType/QueryableCodingKey.html">– QueryableCodingKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ContentTypeQuery.html">ContentTypeQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DeletedResource.html">DeletedResource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Entry.html">Entry</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Heading.html">Heading</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful14HorizontalRuleC">HorizontalRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Hyperlink.html">Hyperlink</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Hyperlink/Data.html">– Data</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/InlineNode.html">InlineNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LinkQuery.html">LinkQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful8ListItemC">ListItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Locale.html">Locale</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocalizableResource.html">LocalizableResource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocalizableResource/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocalizationContext.html">LocalizationContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Location.html">Location</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Ordered.html">Ordered</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful11OrderedListC">OrderedList</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Ordering.html">Ordering</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful9ParagraphC">Paragraph</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Query.html">Query</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Query/Operation.html">– Operation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/QueryOn.html">QueryOn</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RateLimitError.html">RateLimitError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ResourceLinkBlock.html">ResourceLinkBlock</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ResourceLinkData.html">ResourceLinkData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ResourceLinkInline.html">ResourceLinkInline</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ResourceQuery.html">ResourceQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RichTextDocument.html">RichTextDocument</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Space.html">Space</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SyncSpace.html">SyncSpace</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SyncSpace/SyncableTypes.html">– SyncableTypes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful5TableC">Table</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful8TableRowC">TableRow</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful12TableRowCellC">TableRowCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful18TableRowHeaderCellC">TableRowHeaderCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful13UnorderedListC">UnorderedList</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/Bounds.html">Bounds</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ContentfulLogger.html">ContentfulLogger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ContentfulLogger/LogLevel.html">– LogLevel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ContentfulLogger/LogType.html">– LogType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Endpoint.html">Endpoint</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/FieldType.html">FieldType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Fit.html">Fit</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Focus.html">Focus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Format.html">Format</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Host.html">Host</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ImageOption.html">ImageOption</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/JPGQuality.html">JPGQuality</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Link.html">Link</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Link/Sys.html">– Sys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MimetypeGroup.html">MimetypeGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/NodeType.html">NodeType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PngBits.html">PngBits</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/QueryError.html">QueryError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/QueryParameter.html">QueryParameter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SDKError.html">SDKError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/Date.html">Date</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Date/Error.html">– Error</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Decoder.html">Decoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Dictionary.html">Dictionary</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Int.html">Int</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/JSONDecoder.html">JSONDecoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/KeyedDecodingContainer.html">KeyedDecodingContainer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/String.html">String</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:10Contentful1poiySDyxq_GAC_ACtSHRzr0_lF">+(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:10Contentful2peoiySDyxq_GAC_ACtSHRzr0_lF">+=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:10Contentful2eeoiySbAA11ImageOptionO_ADtF">==(_:_:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/AbstractQuery.html">AbstractQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AbstractResourceQuery.html">AbstractResourceQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:10Contentful14AssetDecodableP">AssetDecodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AssetProtocol.html">AssetProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ChainableQuery.html">ChainableQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/CustomLogger.html">CustomLogger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EndpointAccessible.html">EndpointAccessible</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EntryDecodable.html">EntryDecodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EntryQuery.html">EntryQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/FieldKeysQueryable.html">FieldKeysQueryable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/FlatResource.html">FlatResource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Integration.html">Integration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Node.html">Node</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PersistenceIntegration.html">PersistenceIntegration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/QueryableRange.html">QueryableRange</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RecursiveNode.html">RecursiveNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Resource.html">Resource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ResourceQueryable.html">ResourceQueryable</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/ArrayResponseError.html">ArrayResponseError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ArrayResponseError/Sys.html">– Sys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ClientConfiguration.html">ClientConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Field.html">Field</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/HeterogeneousArrayResponse.html">HeterogeneousArrayResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/HomogeneousArrayResponse.html">HomogeneousArrayResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ImageOptionError.html">ImageOptionError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Metadata.html">Metadata</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Metadata/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Sys.html">Sys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Sys/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Text.html">Text</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Text/Mark.html">– Mark</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Text/MarkType.html">– MarkType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Contentful13ArrayResponsea">ArrayResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Contentful13ContentTypeIda">ContentTypeId</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Contentful9FieldNamea">FieldName</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Contentful10LocaleCodea">LocaleCode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Contentful18MixedArrayResponsea">MixedArrayResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Contentful14ResultsHandlera">ResultsHandler</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>QueryOn</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">QueryOn</span><span class="o">&lt;</span><span class="kt">EntryType</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/EntryQuery.html">EntryQuery</a></span> <span class="k">where</span> <span class="kt">EntryType</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/EntryDecodable.html">EntryDecodable</a></span><span class="p">,</span> <span class="kt">EntryType</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/FieldKeysQueryable.html">FieldKeysQueryable</a></span></code></pre>
+
+                </div>
+              </div>
+            <p>A concrete implementation of EntryQuery which requires that a model class conforming to <code>EntryType</code>
+be passed in as a generic parameter.
+The &ldquo;content_type&rdquo; parameter of the query will be set using the <code>contentTypeID</code> of the generic parameter conforming
+to <code><a href="../Protocols/EntryDecodable.html">EntryDecodable</a></code>. You must also implement <code><a href="../Protocols/ResourceQueryable.html">ResourceQueryable</a></code> in order to utilize these generic queries.</p>
+
+              <div class="slightly-smaller">
+                <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/TypedQuery.swift#L111-L380">Show on GitHub</a>
+              </div>
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Contentful7QueryOnC10parametersSDyS2SGvp"></a>
+                    <a name="//apple_ref/swift/Property/parameters" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Contentful7QueryOnC10parametersSDyS2SGvp">parameters</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The parameters dictionary that are converted to <code>URLComponents</code> (HTTP parameters/arguments) on the HTTP URL. Useful for debugging.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">parameters</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">String</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/TypedQuery.swift#L113">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Contentful7QueryOnCACyxGycfc"></a>
+                    <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Contentful7QueryOnCACyxGycfc">init()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Designated initializer for <code>QueryOn&lt;EntryType&gt;</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/TypedQuery.swift#L116-L118">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Contentful7QueryOnC5where5field_ACyxG9FieldKeysAA0fG9QueryablePQz_AA0B0C9OperationOtFZ"></a>
+                    <a name="//apple_ref/swift/Method/where(field:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Contentful7QueryOnC5where5field_ACyxG9FieldKeysAA0fG9QueryablePQz_AA0B0C9OperationOtFZ">where(field:<wbr>_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Static method for creating a new <code>QueryOn</code> with an operation. This variation for initialization guarantees correct query construction
+by utilizing the associated <code>FieldKeys</code> type required by <code><a href="../Protocols/ResourceQueryable.html">ResourceQueryable</a></code>.</p>
+
+<p>Example usage:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">QueryOn</span><span class="o">&lt;</span><span class="kt">Cat</span><span class="o">&gt;.</span><span class="nf">where</span><span class="p">(</span><span class="nv">field</span><span class="p">:</span> <span class="o">.</span><span class="n">color</span><span class="p">,</span> <span class="o">.</span><span class="nf">equals</span><span class="p">(</span><span class="s">"gray"</span><span class="p">))</span>
+<span class="n">client</span><span class="o">.</span><span class="nf">fetchArray</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="kt">Cat</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">matching</span><span class="p">:</span> <span class="n">query</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="nv">result</span><span class="p">:</span> <span class="kt">Result</span><span class="o">&lt;</span><span class="kt">ArrayResponse</span><span class="o">&lt;</span><span class="kt">Cat</span><span class="o">&gt;&gt;</span><span class="p">)</span> <span class="k">in</span>
+    <span class="k">switch</span> <span class="n">result</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">arrayResponse</span><span class="p">):</span>
+        <span class="k">let</span> <span class="nv">cats</span> <span class="o">=</span> <span class="n">arrayResponse</span><span class="o">.</span><span class="n">items</span>
+        <span class="c1">// Do stuff with cats.</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="k">let</span> <span class="nv">error</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>See: <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters">https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters</a></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="err">`</span><span class="k">where</span><span class="err">`</span><span class="p">(</span><span class="n">field</span> <span class="nv">fieldsKey</span><span class="p">:</span> <span class="kt">EntryType</span><span class="o">.</span><span class="kt">FieldKeys</span><span class="p">,</span> <span class="n">_</span> <span class="nv">operation</span><span class="p">:</span> <span class="kt"><a href="../Classes/Query.html">Query</a></span><span class="o">.</span><span class="kt">Operation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">QueryOn</span><span class="o">&lt;</span><span class="kt">EntryType</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>field</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The member of the <code>FieldKeys</code> type associated with your type conforming to <code>EntryDecodable &amp; ResourceQueryable</code>
+   that you are performing your select operation against.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>operation</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The query operation used in the query.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A newly initialized <code>QueryOn</code> query.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/TypedQuery.swift#L144-L147">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Contentful7QueryOnC5where5field_ACyxG9FieldKeysAA0fG9QueryablePQz_AA0B0C9OperationOtF"></a>
+                    <a name="//apple_ref/swift/Method/where(field:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Contentful7QueryOnC5where5field_ACyxG9FieldKeysAA0fG9QueryablePQz_AA0B0C9OperationOtF">where(field:<wbr>_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Instance method for appending a query operation to the receiving <code>QueryOn</code>.
+This variation for initialization guarantees correct query contruction by utilizing the associated
+<code>FieldKeys</code> type required by <code><a href="../Protocols/ResourceQueryable.html">ResourceQueryable</a></code>.</p>
+
+<p>Example usage:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">QueryOn</span><span class="o">&lt;</span><span class="kt">Cat</span><span class="o">&gt;</span><span class="p">()</span><span class="o">.</span><span class="nf">where</span><span class="p">(</span><span class="nv">field</span><span class="p">:</span> <span class="o">.</span><span class="n">color</span><span class="p">,</span> <span class="o">.</span><span class="nf">equals</span><span class="p">(</span><span class="s">"gray"</span><span class="p">))</span>
+<span class="n">client</span><span class="o">.</span><span class="nf">fetchArray</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="kt">Cat</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">matching</span><span class="p">:</span> <span class="n">query</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="nv">result</span><span class="p">:</span> <span class="kt">Result</span><span class="o">&lt;</span><span class="kt">ArrayResponse</span><span class="o">&lt;</span><span class="kt">Cat</span><span class="o">&gt;&gt;</span><span class="p">)</span> <span class="k">in</span>
+    <span class="k">switch</span> <span class="n">result</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">arrayResponse</span><span class="p">):</span>
+        <span class="k">let</span> <span class="nv">cats</span> <span class="o">=</span> <span class="n">arrayResponse</span><span class="o">.</span><span class="n">items</span>
+        <span class="c1">// Do stuff with cats.</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="k">let</span> <span class="nv">error</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>See: <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters">https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters</a></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">where</span><span class="err">`</span><span class="p">(</span><span class="n">field</span> <span class="nv">fieldsKey</span><span class="p">:</span> <span class="kt">EntryType</span><span class="o">.</span><span class="kt">FieldKeys</span><span class="p">,</span> <span class="n">_</span> <span class="nv">operation</span><span class="p">:</span> <span class="kt"><a href="../Classes/Query.html">Query</a></span><span class="o">.</span><span class="kt">Operation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">QueryOn</span><span class="o">&lt;</span><span class="kt">EntryType</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>fieldsKey</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The member of your <code>FieldKeys</code> type associated with your type conforming to <code>EntryDecodable &amp; ResourceQueryable</code>
+       that you are performing your select operation against.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>operation</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The query operation used in the query.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A reference to the receiving query to enable chaining.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/TypedQuery.swift#L176-L179">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Contentful7QueryOnC6select11fieldsNamedACyxGSay9FieldKeysAA0gH9QueryablePQzG_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/select(fieldsNamed:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Contentful7QueryOnC6select11fieldsNamedACyxGSay9FieldKeysAA0gH9QueryablePQzG_tFZ">select(fieldsNamed:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Static method for creating a new QueryOn with a select operation: an operation in which only
+the fields specified in the fieldNames property will be returned in the JSON response. This variation for initializing guarantees correct query contruction
+by utilizing the Fields CodingKeys required by ResourceQueryable.
+The &ldquo;sys&rdquo; dictionary is always requested by the SDK.
+Note that if you are using the select operator with an instance <code>QueryOn&lt;EntryType&gt;</code>
+that your model types must have optional types for properties that you are omitting in the response (by not including them in your selections array).
+If you are not using the <code>QueryOn</code> type while querying entries, make sure to specify the content type id.
+Example usage:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">QueryOn</span><span class="o">&lt;</span><span class="kt">Cat</span><span class="o">&gt;.</span><span class="nf">select</span><span class="p">(</span><span class="nv">fieldsNamed</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="n">bestFriend</span><span class="p">,</span> <span class="o">.</span><span class="n">color</span><span class="p">,</span> <span class="o">.</span><span class="n">name</span><span class="p">])</span>
+<span class="n">client</span><span class="o">.</span><span class="nf">fetchArray</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="kt">Cat</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">matching</span><span class="p">:</span> <span class="n">query</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="nv">result</span><span class="p">:</span> <span class="kt">Result</span><span class="o">&lt;</span><span class="kt">ArrayResponse</span><span class="o">&lt;</span><span class="kt">Cat</span><span class="o">&gt;&gt;</span><span class="p">)</span> <span class="k">in</span>
+    <span class="k">switch</span> <span class="n">result</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">arrayResponse</span><span class="p">):</span>
+        <span class="k">let</span> <span class="nv">cats</span> <span class="o">=</span> <span class="n">arrayResponse</span><span class="o">.</span><span class="n">items</span>
+        <span class="c1">// Do stuff with cats.</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="k">let</span> <span class="nv">error</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>See: <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/select-operator">https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/select-operator</a></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">select</span><span class="p">(</span><span class="n">fieldsNamed</span> <span class="nv">fieldsKeys</span><span class="p">:</span> <span class="p">[</span><span class="kt">EntryType</span><span class="o">.</span><span class="kt">FieldKeys</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt">QueryOn</span><span class="o">&lt;</span><span class="kt">EntryType</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>fieldsKeys</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An array of <code>FieldKeys</code> associated with the genery <code>EntryType</code> that you are performing your select operation against.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A newly initialized QueryOn query.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/TypedQuery.swift#L207-L211">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Contentful7QueryOnC6select11fieldsNamedACyxGSay9FieldKeysAA0gH9QueryablePQzG_tF"></a>
+                    <a name="//apple_ref/swift/Method/select(fieldsNamed:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Contentful7QueryOnC6select11fieldsNamedACyxGSay9FieldKeysAA0gH9QueryablePQzG_tF">select(fieldsNamed:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Instance method for creating a new QueryOn with a select operation: an operation in which only
+the fields specified in the fieldNames property will be returned in the JSON response. This variation for initializing guarantees correct query contruction
+by utilizing the Fields type associated with your type conforming to ResourceQueryable.
+The &ldquo;sys&rdquo; dictionary is always requested by the SDK.
+Note that if you are using the select operator with an instance <code>QueryOn&lt;EntryType&gt;</code>
+that your model types must have optional types for properties that you are omitting in the response (by not including them in your selections array).
+If you are not using the <code>QueryOn</code> type while querying entries, make sure to specify the content type id.</p>
+
+<p>Example usage:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">QueryOn</span><span class="o">&lt;</span><span class="kt">Cat</span><span class="o">&gt;</span><span class="p">()</span><span class="o">.</span><span class="nf">select</span><span class="p">(</span><span class="nv">fieldsNamed</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="n">bestFriend</span><span class="p">,</span> <span class="o">.</span><span class="n">color</span><span class="p">,</span> <span class="o">.</span><span class="n">name</span><span class="p">])</span>
+<span class="n">client</span><span class="o">.</span><span class="nf">fetchArray</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="kt">Cat</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">matching</span><span class="p">:</span> <span class="n">query</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="nv">result</span><span class="p">:</span> <span class="kt">Result</span><span class="o">&lt;</span><span class="kt">ArrayResponse</span><span class="o">&lt;</span><span class="kt">Cat</span><span class="o">&gt;&gt;</span><span class="p">)</span> <span class="k">in</span>
+    <span class="k">switch</span> <span class="n">result</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">arrayResponse</span><span class="p">):</span>
+        <span class="k">let</span> <span class="nv">cats</span> <span class="o">=</span> <span class="n">arrayResponse</span><span class="o">.</span><span class="n">items</span>
+        <span class="c1">// Do stuff with cats.</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="k">let</span> <span class="nv">error</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>See: <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/select-operator">https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/select-operator</a></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">select</span><span class="p">(</span><span class="n">fieldsNamed</span> <span class="nv">fieldsKeys</span><span class="p">:</span> <span class="p">[</span><span class="kt">EntryType</span><span class="o">.</span><span class="kt">FieldKeys</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt">QueryOn</span><span class="o">&lt;</span><span class="kt">EntryType</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>fieldsKeys</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An array of <code>FieldKeys</code> associated with the genery <code>EntryType</code> that you are performing your select operation against.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A reference to the receiving query to enable chaining.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/TypedQuery.swift#L241-L245">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Contentful7QueryOnC5where11linkAtField7matchesACyxG0G4KeysAA0gI9QueryablePQz_AA04LinkB0Cyqd__GtAA14EntryDecodableRd__AaIRd__lFZ"></a>
+                    <a name="//apple_ref/swift/Method/where(linkAtField:matches:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Contentful7QueryOnC5where11linkAtField7matchesACyxG0G4KeysAA0gI9QueryablePQz_AA04LinkB0Cyqd__GtAA14EntryDecodableRd__AaIRd__lFZ">where(linkAtField:<wbr>matches:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Static method for performing searches where linked entries or assets at the specified linking field match the filtering query.
+For instance, if you want to query all entries of type &ldquo;cat&rdquo; where the &ldquo;bestFriend&rdquo; field links to cats with name matching &ldquo;Happy Cat&rdquo;
+the code would look like the following:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">linkQuery</span> <span class="o">=</span> <span class="kt">LinkQuery</span><span class="o">&lt;</span><span class="kt">Cat</span><span class="o">&gt;.</span><span class="nf">where</span><span class="p">(</span><span class="nv">field</span><span class="p">:</span> <span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="o">.</span><span class="nf">matches</span><span class="p">(</span><span class="s">"Happy Cat"</span><span class="p">))</span>
+<span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">QueryOn</span><span class="o">&lt;</span><span class="kt">Cat</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">whereLinkAtField</span><span class="p">:</span> <span class="o">.</span><span class="n">bestFriend</span><span class="p">,</span> <span class="nv">matches</span><span class="p">:</span> <span class="n">linkQuery</span><span class="p">)</span>
+<span class="n">client</span><span class="o">.</span><span class="nf">fetchArray</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="kt">Cat</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">matching</span><span class="p">:</span> <span class="n">query</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="nv">result</span><span class="p">:</span> <span class="kt">Result</span><span class="o">&lt;</span><span class="kt">ArrayResponse</span><span class="o">&lt;</span><span class="kt">Cat</span><span class="o">&gt;&gt;</span><span class="p">)</span> <span class="k">in</span>
+    <span class="k">switch</span> <span class="n">result</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">arrayResponse</span><span class="p">):</span>
+        <span class="k">let</span> <span class="nv">cats</span> <span class="o">=</span> <span class="n">arrayResponse</span><span class="o">.</span><span class="n">items</span>
+        <span class="c1">// Do stuff with cats.</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="k">let</span> <span class="nv">error</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>See: <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references">https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references</a></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="err">`</span><span class="k">where</span><span class="err">`</span><span class="o">&lt;</span><span class="kt">LinkType</span><span class="o">&gt;</span><span class="p">(</span><span class="n">linkAtField</span> <span class="nv">fieldsKey</span><span class="p">:</span> <span class="kt">EntryType</span><span class="o">.</span><span class="kt">FieldKeys</span><span class="p">,</span>
+                                     <span class="n">matches</span> <span class="nv">linkQuery</span><span class="p">:</span> <span class="kt"><a href="../Classes/LinkQuery.html">LinkQuery</a></span><span class="o">&lt;</span><span class="kt">LinkType</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">QueryOn</span><span class="o">&lt;</span><span class="kt">EntryType</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>fieldsKey</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The <code>FieldKey</code> for the property which contains a link to another entry.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>linkQuery</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The filter query applied to the linked objects which are being searched.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A newly initialized <code>QueryOn</code> query.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/TypedQuery.swift#L271-L277">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Contentful7QueryOnC5where11linkAtField7matchesACyxG0G4KeysAA0gI9QueryablePQz_AA04LinkB0Cyqd__GtAA14EntryDecodableRd__AaIRd__lF"></a>
+                    <a name="//apple_ref/swift/Method/where(linkAtField:matches:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Contentful7QueryOnC5where11linkAtField7matchesACyxG0G4KeysAA0gI9QueryablePQz_AA04LinkB0Cyqd__GtAA14EntryDecodableRd__AaIRd__lF">where(linkAtField:<wbr>matches:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Instance method for for performing searches where Linked objects at the specified linking field match the filtering query.
+For instance, if you want to query all entries of type &ldquo;cat&rdquo; where the &ldquo;bestFriend&rdquo; field links to cats with name matching &ldquo;Happy Cat&rdquo;
+the code would look like the following:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">linkQuery</span> <span class="o">=</span> <span class="kt">LinkQuery</span><span class="o">&lt;</span><span class="kt">Cat</span><span class="o">&gt;.</span><span class="nf">where</span><span class="p">(</span><span class="nv">field</span><span class="p">:</span> <span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="o">.</span><span class="nf">matches</span><span class="p">(</span><span class="s">"Happy Cat"</span><span class="p">))</span>
+<span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">QueryOn</span><span class="o">&lt;</span><span class="kt">Cat</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">whereLinkAtField</span><span class="p">:</span> <span class="o">.</span><span class="n">bestFriend</span><span class="p">,</span> <span class="nv">matches</span><span class="p">:</span> <span class="n">linkQuery</span><span class="p">)</span><span class="c1">///</span>
+<span class="n">client</span><span class="o">.</span><span class="nf">fetchArray</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="kt">Cat</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">matching</span><span class="p">:</span> <span class="n">query</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="nv">result</span><span class="p">:</span> <span class="kt">Result</span><span class="o">&lt;</span><span class="kt">ArrayResponse</span><span class="o">&lt;</span><span class="kt">Cat</span><span class="o">&gt;&gt;</span><span class="p">)</span> <span class="k">in</span>
+    <span class="k">switch</span> <span class="n">result</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">arrayResponse</span><span class="p">):</span>
+        <span class="k">let</span> <span class="nv">cats</span> <span class="o">=</span> <span class="n">arrayResponse</span><span class="o">.</span><span class="n">items</span>
+        <span class="c1">// Do stuff with cats.</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="k">let</span> <span class="nv">error</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>See: <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references">https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references</a></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">where</span><span class="err">`</span><span class="o">&lt;</span><span class="kt">LinkType</span><span class="o">&gt;</span><span class="p">(</span><span class="n">linkAtField</span> <span class="nv">fieldsKey</span><span class="p">:</span> <span class="kt">EntryType</span><span class="o">.</span><span class="kt">FieldKeys</span><span class="p">,</span>
+                              <span class="n">matches</span> <span class="nv">linkQuery</span><span class="p">:</span> <span class="kt"><a href="../Classes/LinkQuery.html">LinkQuery</a></span><span class="o">&lt;</span><span class="kt">LinkType</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">QueryOn</span><span class="o">&lt;</span><span class="kt">EntryType</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>fieldsKey</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The <code>FieldKey</code> for the property which contains a link to another entry or asset.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>linkQuery</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The filter query applied to the linked objects which are being searched.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A reference to the receiving query to enable chaining.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/TypedQuery.swift#L304-L315">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Contentful7QueryOnC5where11linkAtField11hasTargetIdACyxG0G4KeysAA0gK9QueryablePQz_SStFZ"></a>
+                    <a name="//apple_ref/swift/Method/where(linkAtField:hasTargetId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Contentful7QueryOnC5where11linkAtField11hasTargetIdACyxG0G4KeysAA0gK9QueryablePQz_SStFZ">where(linkAtField:<wbr>hasTargetId:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Static method fore creating a query requiring that a specific field of an entry
+contains a reference to another specific entry.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">QueryOn</span><span class="o">&lt;</span><span class="kt">Cat</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">whereLinkAtField</span><span class="p">:</span> <span class="o">.</span><span class="n">bestFriend</span><span class="p">,</span> <span class="nv">hasTargetId</span><span class="p">:</span> <span class="s">"nyancat"</span><span class="p">)</span>
+
+<span class="n">client</span><span class="o">.</span><span class="nf">fetchArray</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="kt">Cat</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">matching</span><span class="p">:</span> <span class="n">query</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="nv">result</span><span class="p">:</span> <span class="kt">Result</span><span class="o">&lt;</span><span class="kt">ArrayResponse</span><span class="o">&lt;</span><span class="kt">Cat</span><span class="o">&gt;&gt;</span><span class="p">)</span> <span class="k">in</span>
+    <span class="k">switch</span> <span class="n">result</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">arrayResponse</span><span class="p">):</span>
+        <span class="k">let</span> <span class="nv">cats</span> <span class="o">=</span> <span class="n">arrayResponse</span><span class="o">.</span><span class="n">items</span>
+        <span class="c1">// Do stuff with cats.</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="k">let</span> <span class="nv">error</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>See: <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references">https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references</a></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="err">`</span><span class="k">where</span><span class="err">`</span><span class="p">(</span><span class="n">linkAtField</span> <span class="nv">fieldsKey</span><span class="p">:</span> <span class="kt">EntryType</span><span class="o">.</span><span class="kt">FieldKeys</span><span class="p">,</span>
+                           <span class="n">hasTargetId</span> <span class="nv">targetId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">QueryOn</span><span class="o">&lt;</span><span class="kt">EntryType</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>fieldsKey</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The <code>FieldKey</code> of the property which contains a link to another Entry.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>targetId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The identifier of the entry or asset being linked to at the specified linking field.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A newly initialized <code>QueryOn</code> query.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/TypedQuery.swift#L340-L346">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Contentful7QueryOnC5where11linkAtField11hasTargetIdACyxG0G4KeysAA0gK9QueryablePQz_SStF"></a>
+                    <a name="//apple_ref/swift/Method/where(linkAtField:hasTargetId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Contentful7QueryOnC5where11linkAtField11hasTargetIdACyxG0G4KeysAA0gK9QueryablePQz_SStF">where(linkAtField:<wbr>hasTargetId:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Instance method creating a query that requires that an specific field of an entry
+holds a reference to another specific entry.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">QueryOn</span><span class="o">&lt;</span><span class="kt">Cat</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">whereLinkAtField</span><span class="p">:</span> <span class="o">.</span><span class="n">bestFriend</span><span class="p">,</span> <span class="nv">hasTargetId</span><span class="p">:</span> <span class="s">"nyancat"</span><span class="p">)</span>
+
+<span class="n">client</span><span class="o">.</span><span class="nf">fetchArray</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="kt">Cat</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">matching</span><span class="p">:</span> <span class="n">query</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="nv">result</span><span class="p">:</span> <span class="kt">Result</span><span class="o">&lt;</span><span class="kt">ArrayResponse</span><span class="o">&lt;</span><span class="kt">Cat</span><span class="o">&gt;&gt;</span><span class="p">)</span> <span class="k">in</span>
+    <span class="k">switch</span> <span class="n">result</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">arrayResponse</span><span class="p">):</span>
+        <span class="k">let</span> <span class="nv">cats</span> <span class="o">=</span> <span class="n">arrayResponse</span><span class="o">.</span><span class="n">items</span>
+        <span class="c1">// Do stuff with cats.</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="k">let</span> <span class="nv">error</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>See: <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references">https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references</a></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">where</span><span class="err">`</span><span class="p">(</span><span class="n">linkAtField</span> <span class="nv">fieldsKey</span><span class="p">:</span> <span class="kt">EntryType</span><span class="o">.</span><span class="kt">FieldKeys</span><span class="p">,</span>
+                    <span class="n">hasTargetId</span> <span class="nv">targetId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">QueryOn</span><span class="o">&lt;</span><span class="kt">EntryType</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>fieldsKey</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The <code>FieldKey</code> of the property which contains a link to another Entry.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>targetId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The identifier of the entry or asset being linked to at the specified linking field.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A reference to the receiving query to enable chaining.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/TypedQuery.swift#L372-L379">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2025 <a class="link" href="https://www.contentful.com" target="_blank" rel="external noopener">Contentful</a>. All rights reserved. (Last updated: 2025-07-29)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>

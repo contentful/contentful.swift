@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Dictionary Extension Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Extension/Dictionary" class="dashAnchor"></a>
+    <a title="Dictionary Extension Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">Contentful 5.5.14 Docs</a> (94% documented)</p>
+        <p class="header-right"><a href="https://github.com/contentful/contentful.swift"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
+        <div class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">Contentful Reference</a>
+        <img id="carat" src="../img/carat.png" alt=""/>
+        Dictionary Extension Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/APIError.html">APIError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/APIError/Sys.html">– Sys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/APIError/Details.html">– Details</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Asset.html">Asset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Asset/Fields.html">– Fields</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Asset/FileMetadata.html">– FileMetadata</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AssetQuery.html">AssetQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/BlockNode.html">BlockNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful10BlockQuoteC">BlockQuote</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Client.html">Client</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ContentType.html">ContentType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ContentType/QueryableCodingKey.html">– QueryableCodingKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ContentTypeQuery.html">ContentTypeQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DeletedResource.html">DeletedResource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Entry.html">Entry</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Heading.html">Heading</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful14HorizontalRuleC">HorizontalRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Hyperlink.html">Hyperlink</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Hyperlink/Data.html">– Data</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/InlineNode.html">InlineNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LinkQuery.html">LinkQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful8ListItemC">ListItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Locale.html">Locale</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocalizableResource.html">LocalizableResource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocalizableResource/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocalizationContext.html">LocalizationContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Location.html">Location</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Ordered.html">Ordered</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful11OrderedListC">OrderedList</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Ordering.html">Ordering</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful9ParagraphC">Paragraph</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Query.html">Query</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Query/Operation.html">– Operation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/QueryOn.html">QueryOn</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RateLimitError.html">RateLimitError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ResourceLinkBlock.html">ResourceLinkBlock</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ResourceLinkData.html">ResourceLinkData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ResourceLinkInline.html">ResourceLinkInline</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ResourceQuery.html">ResourceQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RichTextDocument.html">RichTextDocument</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Space.html">Space</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SyncSpace.html">SyncSpace</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SyncSpace/SyncableTypes.html">– SyncableTypes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful5TableC">Table</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful8TableRowC">TableRow</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful12TableRowCellC">TableRowCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful18TableRowHeaderCellC">TableRowHeaderCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:10Contentful13UnorderedListC">UnorderedList</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/Bounds.html">Bounds</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ContentfulLogger.html">ContentfulLogger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ContentfulLogger/LogLevel.html">– LogLevel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ContentfulLogger/LogType.html">– LogType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Endpoint.html">Endpoint</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/FieldType.html">FieldType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Fit.html">Fit</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Focus.html">Focus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Format.html">Format</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Host.html">Host</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ImageOption.html">ImageOption</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/JPGQuality.html">JPGQuality</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Link.html">Link</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Link/Sys.html">– Sys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MimetypeGroup.html">MimetypeGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/NodeType.html">NodeType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PngBits.html">PngBits</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/QueryError.html">QueryError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/QueryParameter.html">QueryParameter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SDKError.html">SDKError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/Date.html">Date</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Date/Error.html">– Error</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Decoder.html">Decoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Dictionary.html">Dictionary</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Int.html">Int</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/JSONDecoder.html">JSONDecoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/KeyedDecodingContainer.html">KeyedDecodingContainer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/String.html">String</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:10Contentful1poiySDyxq_GAC_ACtSHRzr0_lF">+(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:10Contentful2peoiySDyxq_GAC_ACtSHRzr0_lF">+=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:10Contentful2eeoiySbAA11ImageOptionO_ADtF">==(_:_:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/AbstractQuery.html">AbstractQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AbstractResourceQuery.html">AbstractResourceQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:10Contentful14AssetDecodableP">AssetDecodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AssetProtocol.html">AssetProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ChainableQuery.html">ChainableQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/CustomLogger.html">CustomLogger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EndpointAccessible.html">EndpointAccessible</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EntryDecodable.html">EntryDecodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EntryQuery.html">EntryQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/FieldKeysQueryable.html">FieldKeysQueryable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/FlatResource.html">FlatResource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Integration.html">Integration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Node.html">Node</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PersistenceIntegration.html">PersistenceIntegration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/QueryableRange.html">QueryableRange</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RecursiveNode.html">RecursiveNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Resource.html">Resource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ResourceQueryable.html">ResourceQueryable</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/ArrayResponseError.html">ArrayResponseError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ArrayResponseError/Sys.html">– Sys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ClientConfiguration.html">ClientConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Field.html">Field</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/HeterogeneousArrayResponse.html">HeterogeneousArrayResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/HomogeneousArrayResponse.html">HomogeneousArrayResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ImageOptionError.html">ImageOptionError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Metadata.html">Metadata</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Metadata/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Sys.html">Sys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Sys/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Text.html">Text</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Text/Mark.html">– Mark</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Text/MarkType.html">– MarkType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Contentful13ArrayResponsea">ArrayResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Contentful13ContentTypeIda">ContentTypeId</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Contentful9FieldNamea">FieldName</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Contentful10LocaleCodea">LocaleCode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Contentful18MixedArrayResponsea">MixedArrayResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:10Contentful14ResultsHandlera">ResultsHandler</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Dictionary</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">extension</span> <span class="kt">Dictionary</span> <span class="k">where</span> <span class="kt">Key</span><span class="p">:</span> <span class="kt">ExpressibleByStringLiteral</span></code></pre>
+
+                </div>
+              </div>
+            <p>Convenience methods for reading from dictionaries without conditional casts.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Available%20where%20%60Key%60%3A%20%60ExpressibleByStringLiteral%60"></a>
+                <a name="//apple_ref/swift/Section/Available where `Key`: `ExpressibleByStringLiteral`" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Available%20where%20%60Key%60%3A%20%60ExpressibleByStringLiteral%60"></a>
+                  <h3 class="section-name"><span>Available where <code>Key</code>: <code>ExpressibleByStringLiteral</code></span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SD10Contentfuls26ExpressibleByStringLiteralRzrlE6string2atSSSgx_tF"></a>
+                    <a name="//apple_ref/swift/Method/string(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SD10Contentfuls26ExpressibleByStringLiteralRzrlE6string2atSSSgx_tF">string(at:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Extract the String at the specified fieldName.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">string</span><span class="p">(</span><span class="n">at</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">Key</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the field to extract the <code>String</code> from.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code>String</code> value, or <code>nil</code> if data contained is not convertible to a <code>String</code>.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Util.swift#L29-L31">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SD10Contentfuls26ExpressibleByStringLiteralRzrlE7strings2atSaySSGSgx_tF"></a>
+                    <a name="//apple_ref/swift/Method/strings(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SD10Contentfuls26ExpressibleByStringLiteralRzrlE7strings2atSaySSGSgx_tF">strings(at:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Extracts the array of <code>String</code> at the specified fieldName.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">strings</span><span class="p">(</span><span class="n">at</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">Key</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">String</span><span class="p">]?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the field to extract the <code>[String]</code> from</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code>[String]</code>, or nil if data contained is not convertible to an <code>[String]</code>.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Util.swift#L37-L39">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SD10Contentfuls26ExpressibleByStringLiteralRzrlE3int2atSiSgx_tF"></a>
+                    <a name="//apple_ref/swift/Method/int(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SD10Contentfuls26ExpressibleByStringLiteralRzrlE3int2atSiSgx_tF">int(at:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Extracts the <code>Int</code> at the specified fieldName.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">int</span><span class="p">(</span><span class="n">at</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">Key</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the field to extract the <code>Int</code> value from.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code>Int</code> value, or <code>nil</code> if data contained is not convertible to an <code>Int</code>.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Util.swift#L45-L47">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SD10Contentfuls26ExpressibleByStringLiteralRzrlE3int2at10Foundation4DateVSgx_tF"></a>
+                    <a name="//apple_ref/swift/Method/int(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SD10Contentfuls26ExpressibleByStringLiteralRzrlE3int2at10Foundation4DateVSgx_tF">int(at:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Extracts the <code>Date</code> at the specified fieldName.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">int</span><span class="p">(</span><span class="n">at</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">Key</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Date</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the field to extract the <code>Date</code> value from.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code>Date</code> value, or <code>nil</code> if data contained is not convertible to a <code>Date</code>.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Util.swift#L53-L57">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SD10Contentfuls26ExpressibleByStringLiteralRzrlE11linkedEntry2atAA0G0CSgx_tF"></a>
+                    <a name="//apple_ref/swift/Method/linkedEntry(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SD10Contentfuls26ExpressibleByStringLiteralRzrlE11linkedEntry2atAA0G0CSgx_tF">linkedEntry(at:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Extracts the <code><a href="../Classes/Entry.html">Entry</a></code> at the specified fieldName.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">linkedEntry</span><span class="p">(</span><span class="n">at</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">Key</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Entry.html">Entry</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the field to extract the <code><a href="../Classes/Entry.html">Entry</a></code> from.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Classes/Entry.html">Entry</a></code> value, or <code>nil</code> if data contained does not have contain a Link referencing an <code><a href="../Classes/Entry.html">Entry</a></code>.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Util.swift#L63-L67">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SD10Contentfuls26ExpressibleByStringLiteralRzrlE11linkedAsset2atAA0G0CSgx_tF"></a>
+                    <a name="//apple_ref/swift/Method/linkedAsset(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SD10Contentfuls26ExpressibleByStringLiteralRzrlE11linkedAsset2atAA0G0CSgx_tF">linkedAsset(at:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Extracts the <code><a href="../Classes/Asset.html">Asset</a></code> at the specified fieldName.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">linkedAsset</span><span class="p">(</span><span class="n">at</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">Key</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Asset.html">Asset</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the field to extract the <code><a href="../Classes/Asset.html">Asset</a></code> from.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Classes/Asset.html">Asset</a></code> value, or <code>nil</code> if data contained does not have contain a Link referencing an <code><a href="../Classes/Asset.html">Asset</a></code>.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Util.swift#L73-L77">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SD10Contentfuls26ExpressibleByStringLiteralRzrlE13linkedEntries2atSayAA5EntryCGSgx_tF"></a>
+                    <a name="//apple_ref/swift/Method/linkedEntries(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SD10Contentfuls26ExpressibleByStringLiteralRzrlE13linkedEntries2atSayAA5EntryCGSgx_tF">linkedEntries(at:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Extracts the <code>[Entry]</code> at the specified fieldName.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">linkedEntries</span><span class="p">(</span><span class="n">at</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">Key</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/Entry.html">Entry</a></span><span class="p">]?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the field to extract the <code>[Entry]</code> from.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code>[Entry]</code> value, or <code>nil</code> if data contained does not have contain a Link referencing an <code><a href="../Classes/Entry.html">Entry</a></code>.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Util.swift#L83-L87">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SD10Contentfuls26ExpressibleByStringLiteralRzrlE12linkedAssets2atSayAA5AssetCGSgx_tF"></a>
+                    <a name="//apple_ref/swift/Method/linkedAssets(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SD10Contentfuls26ExpressibleByStringLiteralRzrlE12linkedAssets2atSayAA5AssetCGSgx_tF">linkedAssets(at:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Extracts the <code>[Asset]</code> at the specified fieldName.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">linkedAssets</span><span class="p">(</span><span class="n">at</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">Key</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/Asset.html">Asset</a></span><span class="p">]?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the field to extract the <code>[Asset]</code> from.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code>[Asset]</code> value, or <code>nil</code> if data contained does not have contain a Link referencing an <code>[Asset]</code>.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Util.swift#L93-L97">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SD10Contentfuls26ExpressibleByStringLiteralRzrlE4bool2atSbSgx_tF"></a>
+                    <a name="//apple_ref/swift/Method/bool(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SD10Contentfuls26ExpressibleByStringLiteralRzrlE4bool2atSbSgx_tF">bool(at:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Extracts the <code>Bool</code> at the specified fieldName.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">bool</span><span class="p">(</span><span class="n">at</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">Key</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the field to extract the <code>Bool</code> value from.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code>Bool</code> value, or <code>nil</code> if data contained is not convertible to a <code>Bool</code>.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Util.swift#L103-L105">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SD10Contentfuls26ExpressibleByStringLiteralRzrlE8location2atAA8LocationCSgx_tF"></a>
+                    <a name="//apple_ref/swift/Method/location(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SD10Contentfuls26ExpressibleByStringLiteralRzrlE8location2atAA8LocationCSgx_tF">location(at:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Extracts the <code>Contentful.Location</code> at the specified fieldName.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">location</span><span class="p">(</span><span class="n">at</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">Key</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Location.html">Location</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the field to extract the <code>Contentful.Location</code> value from.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code>Contentful.Location</code> value, or <code>nil</code> if data contained is not convertible to a <code>Contentful.Location</code>.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful.swift/tree/5.5.14/Sources/Contentful/Util.swift#L111-L117">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2025 <a class="link" href="https://www.contentful.com" target="_blank" rel="external noopener">Contentful</a>. All rights reserved. (Last updated: 2025-07-29)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>

@@ -1,6 +1,271 @@
 {
   "warnings": [
-
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/ArrayResponse.swift",
+      "line": 97,
+      "symbol": "ArrayResponse",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/ArrayResponse.swift",
+      "line": 263,
+      "symbol": "MixedArrayResponse",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/Client.swift",
+      "line": 47,
+      "symbol": "Client.jsonDecoder",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/Decodable.swift",
+      "line": 13,
+      "symbol": "Decoder.canResolveLinks",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/Decodable.swift",
+      "line": 27,
+      "symbol": "Decoder.contentTypes",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/Link.swift",
+      "line": 26,
+      "symbol": "Link.Sys.init(id:linkType:type:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/Resource.swift",
+      "line": 37,
+      "symbol": "FlatResource.type",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 18,
+      "symbol": "RecursiveNode",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 19,
+      "symbol": "RecursiveNode.content",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 20,
+      "symbol": "RecursiveNode.resolveLinks(against:and:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 64,
+      "symbol": "ResourceLinkData.init(resolvedTarget:title:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 168,
+      "symbol": "BlockNode.content",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 176,
+      "symbol": "BlockNode.init(nodeType:content:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 181,
+      "symbol": "BlockNode.resolveLinks(against:and:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 195,
+      "symbol": "InlineNode.content",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 203,
+      "symbol": "InlineNode.init(nodeType:content:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 208,
+      "symbol": "InlineNode.resolveLinks(against:and:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 225,
+      "symbol": "RichTextDocument.content",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 227,
+      "symbol": "RichTextDocument.init(content:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 244,
+      "symbol": "RichTextDocument.encode(with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 249,
+      "symbol": "RichTextDocument.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 263,
+      "symbol": "RichTextDocument.resolveLinks(against:and:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 303,
+      "symbol": "Heading.init(level:content:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 319,
+      "symbol": "Heading.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 345,
+      "symbol": "Hyperlink.Data.init(uri:title:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 351,
+      "symbol": "Hyperlink.init(data:content:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 356,
+      "symbol": "Hyperlink.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 375,
+      "symbol": "ResourceLinkBlock.init(resolvedData:nodeType:content:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 380,
+      "symbol": "ResourceLinkBlock.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 386,
+      "symbol": "ResourceLinkBlock.resolveLinks(against:and:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 420,
+      "symbol": "ResourceLinkInline.init(resolvedData:nodeType:content:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 425,
+      "symbol": "ResourceLinkInline.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 437,
+      "symbol": "ResourceLinkInline.resolveLinks(against:and:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 469,
+      "symbol": "Text.init(value:marks:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 477,
+      "symbol": "Text.Mark.type",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 479,
+      "symbol": "Text.Mark.init(type:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/SyncSpace.swift",
+      "line": 78,
+      "symbol": "SyncSpace.hasMorePages",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift/Sources/Contentful/TypedQuery.swift",
+      "line": 14,
+      "symbol": "Query.any",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    }
   ],
-  "source_directory": "/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift"
+  "source_directory": "/Users/marius.kurgonas/Desktop/Contentful/contentful.swift"
 }
