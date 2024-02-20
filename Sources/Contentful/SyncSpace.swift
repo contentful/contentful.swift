@@ -114,15 +114,15 @@ public final class SyncSpace: Decodable {
         }
         return ""
     }
-
+    
     public required init(from decoder: Decoder) throws {
-        let container   = try decoder.container(keyedBy: CodingKeys.self)
-        var syncUrl     = try container.decodeIfPresent(String.self, forKey: .nextPageUrl)
-
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        var syncUrl = try container.decodeIfPresent(String.self, forKey: .nextPageUrl)
         var hasMorePages = true
+
         if syncUrl == nil {
             hasMorePages = false
-            syncUrl     = try container.decodeIfPresent(String.self, forKey: .nextSyncUrl)
+            syncUrl = try container.decodeIfPresent(String.self, forKey: .nextSyncUrl)
         }
 
         guard let nextSyncUrl = syncUrl else {
@@ -132,32 +132,44 @@ public final class SyncSpace: Decodable {
         self.syncToken = SyncSpace.syncToken(from: nextSyncUrl)
         self.hasMorePages = hasMorePages
 
-        // A copy as an array of dictionaries just to extract "sys.type" field.
-        guard let items = try container.decode(Array<Any>.self, forKey: .items) as? [[String: Any]] else {
-            throw SDKError.unparseableJSON(data: nil, errorMessage: "SDK was unable to serialize returned resources")
-        }
         var itemsArrayContainer = try container.nestedUnkeyedContainer(forKey: .items)
-
         var resources = [Resource]()
-        while itemsArrayContainer.isAtEnd == false {
 
-            guard let sys = items[itemsArrayContainer.currentIndex]["sys"] as? [String: Any], let type = sys["type"] as? String else {
-                let errorMessage = "SDK was unable to parse sys.type property necessary to finish resource serialization."
-                throw SDKError.unparseableJSON(data: nil, errorMessage: errorMessage)
-            }
-            let item: Resource
+        // Decode items directly, avoiding intermediate Any or [String: Any] representations
+        while !itemsArrayContainer.isAtEnd {
+            let itemDecoder = try itemsArrayContainer.superDecoder()
+            let sysContainer = try itemDecoder.container(keyedBy: SysContainerKeys.self).nestedContainer(keyedBy: SysKeys.self, forKey: .sys)
+            let type = try sysContainer.decode(String.self, forKey: .type)
+
             switch type {
-            case "Asset":           item = try itemsArrayContainer.decode(Asset.self)
-            case "Entry":           item = try itemsArrayContainer.decode(Entry.self)
-            case "DeletedAsset":    item = try itemsArrayContainer.decode(DeletedResource.self)
-            case "DeletedEntry":    item = try itemsArrayContainer.decode(DeletedResource.self)
-            default: fatalError("Unsupported resource type '\(type)'")
+            case "Asset":
+                let item = try Asset(from: itemDecoder)
+                resources.append(item)
+            case "Entry":
+                let item = try Entry(from: itemDecoder)
+                resources.append(item)
+            case "DeletedAsset":
+                let item = try DeletedResource(from: itemDecoder)
+                resources.append(item)
+            case "DeletedEntry":
+                let item = try DeletedResource(from: itemDecoder)
+                resources.append(item)
+            default:
+                fatalError("Unsupported resource type '\(type)'")
             }
-            resources.append(item)
         }
 
         cache(resources: resources)
     }
+
+    private enum SysContainerKeys: String, CodingKey {
+        case sys
+    }
+
+    private enum SysKeys: String, CodingKey {
+        case type
+    }
+
 
     private enum CodingKeys: String, CodingKey {
         case nextSyncUrl
