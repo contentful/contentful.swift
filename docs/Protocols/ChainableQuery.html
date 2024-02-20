@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ChainableQuery Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Protocol/ChainableQuery" class="dashAnchor"></a>
+    <a title="ChainableQuery Protocol Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">Contentful 5.5.8 Docs</a> (0% documented)</p>
+        <p class="header-right"><a href="https://github.com/contentful/contentful.swift"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
+        <div class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">Contentful Reference</a>
+        <img id="carat" src="../img/carat.png" alt=""/>
+        ChainableQuery Protocol Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/APIError.html">APIError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/APIError/Sys.html">– Sys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/APIError/Details.html">– Details</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Asset.html">Asset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Asset/Fields.html">– Fields</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Asset/FileMetadata.html">– FileMetadata</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AssetQuery.html">AssetQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/BlockNode.html">BlockNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/BlockQuote">BlockQuote</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Client.html">Client</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ContentType.html">ContentType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ContentType/QueryableCodingKey.html">– QueryableCodingKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ContentTypeQuery.html">ContentTypeQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DeletedResource.html">DeletedResource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Entry.html">Entry</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Heading.html">Heading</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/HorizontalRule">HorizontalRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Hyperlink.html">Hyperlink</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Hyperlink/Data.html">– Data</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/InlineNode.html">InlineNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LinkQuery.html">LinkQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/ListItem">ListItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Locale.html">Locale</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocalizableResource.html">LocalizableResource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocalizableResource/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocalizationContext.html">LocalizationContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Location.html">Location</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Ordered.html">Ordered</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/OrderedList">OrderedList</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Ordering.html">Ordering</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/Paragraph">Paragraph</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Query.html">Query</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Query/Operation.html">– Operation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/QueryOn.html">QueryOn</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RateLimitError.html">RateLimitError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ResourceLinkBlock.html">ResourceLinkBlock</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ResourceLinkData.html">ResourceLinkData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ResourceLinkInline.html">ResourceLinkInline</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ResourceQuery.html">ResourceQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RichTextDocument.html">RichTextDocument</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Space.html">Space</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SyncSpace.html">SyncSpace</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SyncSpace/SyncableTypes.html">– SyncableTypes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/Table">Table</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/TableRow">TableRow</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/TableRowCell">TableRowCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/TableRowHeaderCell">TableRowHeaderCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/UnorderedList">UnorderedList</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/Bounds.html">Bounds</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ContentfulLogger.html">ContentfulLogger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ContentfulLogger/LogLevel.html">– LogLevel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ContentfulLogger/LogType.html">– LogType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Endpoint.html">Endpoint</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/FieldType.html">FieldType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Fit.html">Fit</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Focus.html">Focus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Format.html">Format</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Host.html">Host</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ImageOption.html">ImageOption</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/JPGQuality.html">JPGQuality</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Link.html">Link</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Link/Sys.html">– Sys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MimetypeGroup.html">MimetypeGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/NodeType.html">NodeType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PngBits.html">PngBits</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/QueryError.html">QueryError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/QueryParameter.html">QueryParameter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SDKError.html">SDKError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/Date.html">Date</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Date/Error.html">– Error</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Decodable.html">Decodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Decoder.html">Decoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Dictionary.html">Dictionary</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Int.html">Int</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/JSONDecoder.html">JSONDecoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/KeyedDecodingContainer.html">KeyedDecodingContainer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/String.html">String</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Functions.html#/+(_:_:)">+(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/+=(_:_:)">+=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/==(_:_:)">==(_:_:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/AbstractQuery.html">AbstractQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AbstractResourceQuery.html">AbstractResourceQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/AssetDecodable">AssetDecodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AssetProtocol.html">AssetProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ChainableQuery.html">ChainableQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/CustomLogger.html">CustomLogger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EndpointAccessible.html">EndpointAccessible</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EntryDecodable.html">EntryDecodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EntryQuery.html">EntryQuery</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/FieldKeysQueryable.html">FieldKeysQueryable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/FlatResource.html">FlatResource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Integration.html">Integration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Node.html">Node</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PersistenceIntegration.html">PersistenceIntegration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/QueryableRange.html">QueryableRange</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RecursiveNode.html">RecursiveNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Resource.html">Resource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ResourceQueryable.html">ResourceQueryable</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/ArrayResponseError.html">ArrayResponseError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ArrayResponseError/Sys.html">– Sys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ClientConfiguration.html">ClientConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Field.html">Field</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/HeterogeneousArrayResponse.html">HeterogeneousArrayResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/HomogeneousArrayResponse.html">HomogeneousArrayResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ImageOptionError.html">ImageOptionError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Metadata.html">Metadata</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Metadata/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Sys.html">Sys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Sys/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Text.html">Text</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Text/Mark.html">– Mark</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Text/MarkType.html">– MarkType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/ContentTypeId">ContentTypeId</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/FieldName">FieldName</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/LocaleCode">LocaleCode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/ResultsHandler">ResultsHandler</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>ChainableQuery</h1>
+            <p>Protocol which enables concrete query implementations to be &lsquo;chained&rsquo; together so that results
+can be filtered by more than one <code><a href="../Classes/Query/Operation.html">Query.Operation</a></code> or other query. Protocol extensions give default implementation
+so that all concrete types, <code><a href="../Classes/Query.html">Query</a></code>, <code><a href="../Classes/AssetQuery.html">AssetQuery</a></code>, <code>FilterQuery</code>, and <code><a href="../Classes/QueryOn.html">QueryOn&lt;EntryType&gt;</a></code>, can use the same implementation.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/KeyPath%2FValue%20operations."></a>
+                <a name="//apple_ref/swift/Section/KeyPath/Value operations." class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/KeyPath%2FValue%20operations."></a>
+                  <h3 class="section-name"><span>KeyPath/Value operations.</span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/where(sys:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">where(sys:<wbr>_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Instance method for appending a <code><a href="../Classes/Query/Operation.html">Query.Operation</a></code> to a <code><a href="../Classes/Query.html">Query</a></code>. This variation for creating a query guarantees correct query construction
+when performing operations on &ldquo;sys&rdquo; members. See concrete types <code><a href="../Classes/Query.html">Query</a></code>, <code>FilterQuery</code>, <code><a href="../Classes/AssetQuery.html">AssetQuery</a></code>, and <code><a href="../Classes/QueryOn.html">QueryOn</a></code>
+for more information and example usage.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/where(metadata:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">where(metadata:<wbr>_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Instance method for appending a <code><a href="../Classes/Query/Operation.html">Query.Operation</a></code> to a <code><a href="../Classes/Query.html">Query</a></code>. This variation for creating a query guarantees correct query construction
+when performing operations on &ldquo;metadata&rdquo; members. See concrete types <code><a href="../Classes/Query.html">Query</a></code>, <code>FilterQuery</code>, <code><a href="../Classes/AssetQuery.html">AssetQuery</a></code>, and <code><a href="../Classes/QueryOn.html">QueryOn</a></code>
+for more information and example usage.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/where(metadataTagsIds:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">where(metadataTagsIds:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Instance method for appending a <code><a href="../Classes/Query/Operation.html">Query.Operation</a></code> to a <code><a href="../Classes/Query.html">Query</a></code>. This variation for creating a query guarantees correct query construction
+when performing operations on &ldquo;metadata&rdquo; members. See concrete types <code><a href="../Classes/Query.html">Query</a></code>, <code>FilterQuery</code>, <code><a href="../Classes/AssetQuery.html">AssetQuery</a></code>, and <code><a href="../Classes/QueryOn.html">QueryOn</a></code>
+for more information and example usage.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/where(field:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">where(field:<wbr>_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Static method for creating a Query with a Query.Operation. This variation for creating a query guarantees correct query contruction
+when performing operations on &ldquo;sys&rdquo; members. See concrete types Query, FilterQuery, AssetQuery, and QueryOn
+for more information and example usage.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/where(field:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">where(field:<wbr>_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Instance method for appending a Query.Operation to a Query. This variation for creating a query guarantees correct query contruction
+when performing operations on &ldquo;field&rdquo; members. See concrete types Query, FilterQuery, AssetQuery, and QueryOn
+for more information and example usage.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/where(valueAtKeyPath:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">where(valueAtKeyPath:<wbr>_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Instance method for appending more <code><a href="../Classes/Query/Operation.html">Query.Operation</a></code>s to further filter results on the API. Example usage:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Query</span><span class="o">.</span><span class="nf">where</span><span class="p">(</span><span class="nv">contentTypeId</span><span class="p">:</span> <span class="s">"cat"</span><span class="p">)</span><span class="o">.</span><span class="nf">where</span><span class="p">(</span><span class="s">"fields.color"</span><span class="p">,</span> <span class="o">.</span><span class="nf">doesNotEqual</span><span class="p">(</span><span class="s">"gray"</span><span class="p">))</span>
+
+<span class="c1">// Mutate the query further.</span>
+<span class="n">query</span><span class="o">.</span><span class="nf">where</span><span class="p">(</span><span class="nv">valueAtKeyPath</span><span class="p">:</span> <span class="s">"fields.lives"</span><span class="p">,</span> <span class="o">.</span><span class="nf">equals</span><span class="p">(</span><span class="s">"9"</span><span class="p">))</span>
+</code></pre>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Full-text%20search"></a>
+                <a name="//apple_ref/swift/Section/Full-text search" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Full-text%20search"></a>
+                  <h3 class="section-name"><span>Full-text search</span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/searching(for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">searching(for:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Convenience initializer for querying entries or assets in which all text and symbol fields contain
+the specified, case-insensitive text parameter.</p>
+
+<p>See: <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/full-text-search">https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/full-text-search</a></p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    A <code><a href="../Enums/QueryError.html">QueryError</a></code> if the text being searched for is 1 character in length or less.
+
+</div>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/searching(for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">searching(for:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Instance method for appending a full-text search query to an existing query. Returned results will contain
+either entries or assets in which all text and symbol fields contain the specified, case-insensitive text parameter.</p>
+
+<p>See: <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/full-text-search">https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/full-text-search</a></p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    A <code><a href="../Enums/QueryError.html">QueryError</a></code> if the text being searched for is 1 character in length or less.
+
+</div>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Response%20Manipulations."></a>
+                <a name="//apple_ref/swift/Section/Response Manipulations." class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Response%20Manipulations."></a>
+                  <h3 class="section-name"><span>Response Manipulations.</span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/include(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">include(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Static method for specifiying the level of includes to be resolved in the JSON response.
+The maximum permitted level of includes at the API level is 10; the SDK will limit the includes level at 10
+before the network request is made if the passed in value is too high in order to avoid
+hitting an error from the API.
+To omit all linked items, specify an include level of 0.</p>
+
+<p>See: <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/links/retrieval-of-linked-items">https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/links/retrieval-of-linked-items</a></p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/include(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">include(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Specify the level of includes to be resolved in the JSON response.
+The maximum permitted level of includes at the API level is 10; the SDK will round down to the 10
+before the network request is made if the passed in value is too high in order to avoid
+hitting an error from the API.
+To omit all linked items, specify an include level of 0.</p>
+
+<p>See: <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/links/retrieval-of-linked-items">https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/links/retrieval-of-linked-items</a></p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/skip(theFirst:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">skip(theFirst:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Static method for creating a query that specifies that the first <code>n</code> items in a collection should be skipped
+before returning the results.
+Use in conjunction with the <code><a href="../Protocols/ChainableQuery.html#/limit(to:)">limit(to:)</a></code> and <code><a href="../Protocols/ChainableQuery.html#/order(by:)">order(by:)</a></code> methods to paginate responses.</p>
+
+<p>Example usage:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Query</span><span class="o">.</span><span class="nf">skip</span><span class="p">(</span><span class="nv">theFirst</span><span class="p">:</span> <span class="mi">9</span><span class="p">)</span>
+</code></pre>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/skip(theFirst:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">skip(theFirst:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Instance method for further mutating a query to skip the first <code>n</code> items in a response.
+Use in conjunction with the <code><a href="../Protocols/ChainableQuery.html#/limit(to:)">limit(to:)</a></code> and <code><a href="../Protocols/ChainableQuery.html#/order(by:)">order(by:)</a></code> methods to paginate responses.</p>
+
+<p>Example usage:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Query</span><span class="p">()</span><span class="o">.</span><span class="nf">skip</span><span class="p">(</span><span class="nv">theFirst</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>
+</code></pre>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/order(by:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">order(by:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Convenience initializer for a ordering responses by the values at the specified field. Field types that can be
+specified are strings, numbers, or booleans.</p>
+
+<p>Example usage:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">Query</span><span class="p">(</span><span class="nv">orderBy</span><span class="p">:</span> <span class="kt">OrderParameter</span><span class="p">(</span><span class="s">"sys.createdAt"</span><span class="p">))</span>
+</code></pre>
+
+<p>See: <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/order">https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/order</a>
+and: <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/order-with-multiple-parameters">https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/order-with-multiple-parameters</a></p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/order(by:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">order(by:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Instance method for ordering responses by the values at the specified field. Field types that can be
+specified are strings, numbers, or booleans.</p>
+
+<p>Example usage:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">Query</span><span class="p">()</span><span class="o">.</span><span class="nf">order</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="kt">Ordering</span><span class="p">(</span><span class="nv">sys</span><span class="p">:</span> <span class="o">.</span><span class="n">createdAt</span><span class="p">))</span>
+</code></pre>
+
+<p>See: <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/order">https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/order</a>
+and: <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/order-with-multiple-parameters">https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/order-with-multiple-parameters</a></p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/limit(to:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">limit(to:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Static method for creating a query that limits responses to a certain number of values. Use in conjunction with the <code>skip</code> method
+to paginate responses. The maximum number of items that can be returned by the API on one page is 1000. The SDK will limit your value
+to 1000 if you pass in something larger in order to avoid getting an error returned from the delivery API.</p>
+
+<p>Example usage:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Query</span><span class="o">.</span><span class="nf">limit</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>
+</code></pre>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/limit(to:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">limit(to:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Instance method for further mutating a query to limit responses to a certain number of values. Use in conjunction with the <code>skip</code> method
+to paginate responses. The maximum number of items that can be returned by the API on one page is 1000. The SDK will truncate your value
+to 1000 if you pass in something larger in order to avoid getting an error returned from the delivery API.
+Use in conjunction with the <code><a href="../Protocols/ChainableQuery.html#/skip(theFirst:)">skip(theFirst:)</a></code> and <code><a href="../Protocols/ChainableQuery.html#/order(by:)">order(by:)</a></code> methods to paginate responses.
+Example usage:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">Query</span><span class="p">()</span><span class="o">.</span><span class="nf">limit</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>
+</code></pre>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2024 <a class="link" href="https://www.contentful.com" target="_blank" rel="external noopener">Contentful</a>. All rights reserved. (Last updated: 2024-02-20)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>
