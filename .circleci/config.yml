@@ -31,28 +31,28 @@ commands:
 jobs:
   test-ios:
     macos:
-      xcode: 13.3.1
+      xcode: 15.2.0
     steps:
       - setup-deps
       - run: fastlane test_ios
 
   test-macos:
     macos:
-      xcode: 13.3.1
+      xcode: 15.2.0
     steps:
       - setup-deps
       - run: fastlane test_macos
 
   test-tvos:
     macos:
-      xcode: 13.3.1
+      xcode: 15.2.0
     steps:
       - setup-deps
       - run: fastlane test_tvos
 
   build:
     macos:
-      xcode: 13.3.1
+      xcode: 15.2.0
     steps:
       - setup-deps
       - run: fastlane build
