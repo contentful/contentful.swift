@@ -11,7 +11,7 @@ commands:
       - checkout
       - run:
           name: Set Ruby Version
-          command: rbenv global 3.0.5 && rbenv rehash
+          command: rbenv install 3.0.5 && rbenv global 3.0.5 && rbenv rehash
       - restore_cache:
           keys:
             - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-dep-{{ checksum "Cartfile.resolved" }}
