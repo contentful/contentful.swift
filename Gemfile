@@ -5,6 +5,7 @@ gem 'slather'
 gem 'jazzy'
 gem 'dotenv'
 gem 'cocoapods'
+gem 'xcodeproj'
 
 
 

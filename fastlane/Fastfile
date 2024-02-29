@@ -16,11 +16,59 @@
 default_platform(:ios)
 
 platform :ios do
+  desc "Increase minimum deployment target version" 
+  lane :update_all_deployment_targets do
+    require 'xcodeproj'
+  
+    workspace_path = '../Contentful.xcworkspace'
+    
+    # Define new deployment targets for each platform
+    deployment_targets = {
+      'iOS' => '15.0',
+      'macOS' => '13.0',
+      'tvOS' => '15.0',
+      'watchOS' => '11.0'
+    }
+    
+    workspace = Xcodeproj::Workspace.new_from_xcworkspace(workspace_path)
+    project_paths = workspace.file_references.map(&:path).select { |path| path.end_with?('.xcodeproj') }
+    
+    project_paths.each do |project_path|
+      full_project_path = File.expand_path(project_path, File.dirname(workspace_path))
+      next unless File.exist?(full_project_path) # Ensure the project file exists
+      project = Xcodeproj::Project.open(full_project_path)
+    
+      project.targets.each do |target|
+        target.build_configurations.each do |config|
+          platform = config.build_settings['SDKROOT']
+          case platform
+          when /iphoneos/
+            config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = deployment_targets['iOS']
+          when /macosx/
+            config.build_settings['MACOSX_DEPLOYMENT_TARGET'] = deployment_targets['macOS']
+          when /appletvos/
+            config.build_settings['TVOS_DEPLOYMENT_TARGET'] = deployment_targets['tvOS']
+          when /watchos/
+            config.build_settings['WATCHOS_DEPLOYMENT_TARGET'] = deployment_targets['watchOS']
+          end
+        end
+      end
+    
+      project.save
+    end
+  
+    message = deployment_targets.map { |k, v| "#{k} #{v}" }.join(", ")
+    UI.message("Updated deployment targets for all projects in the workspace: #{message}.")
+  end
+
   desc "Description of what the lane does"
   lane :test_ios do
     # test ios
     clear_derived_data
-    sh("cd .. && xcodebuild -jobs `sysctl -n hw.ncpu` test -workspace Contentful.xcworkspace -scheme Contentful_iOS -sdk iphonesimulator -destination \"platform=iOS Simulator,name=iPhone 13,OS=15.4\" ONLY_ACTIVE_ARCH=YES CODE_SIGNING_IDENTITY="" CODE_SIGNING_REQUIRED=NO")
+
+    # Update minimum deployment target for testing
+    update_all_deployment_targets
+    sh("cd .. && xcodebuild -jobs `sysctl -n hw.ncpu` test -workspace Contentful.xcworkspace -scheme Contentful_iOS -sdk iphonesimulator -destination \"platform=iOS Simulator,name=iPhone 15,OS=17.2\" ONLY_ACTIVE_ARCH=YES CODE_SIGNING_IDENTITY="" CODE_SIGNING_REQUIRED=NO")    
   end
 
   desc "Description of what the lane does"
@@ -34,7 +82,7 @@ platform :ios do
   lane :test_tvos do
     # test tvos
     clear_derived_data
-    sh("cd .. && xcodebuild -jobs `sysctl -n hw.ncpu` test -workspace Contentful.xcworkspace -scheme Contentful_tvOS -sdk appletvsimulator -destination \"platform=tvOS Simulator,name=Apple TV,OS=15.4\" ONLY_ACTIVE_ARCH=YES CODE_SIGNING_IDENTITY="" CODE_SIGNING_REQUIRED=NO")
+    sh("cd .. && xcodebuild -jobs `sysctl -n hw.ncpu` test -workspace Contentful.xcworkspace -scheme Contentful_tvOS -sdk appletvsimulator -destination \"platform=tvOS Simulator,name=Apple TV,OS=17.2\" ONLY_ACTIVE_ARCH=YES CODE_SIGNING_IDENTITY="" CODE_SIGNING_REQUIRED=NO")
   end
 
   desc "Description of what the lane does"
