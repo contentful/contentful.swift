@@ -75,6 +75,8 @@ platform :ios do
   lane :test_macos do
     # test macos
     clear_derived_data
+    # Update minimum deployment target for testing
+    update_all_deployment_targets
     sh("cd .. && xcodebuild -jobs `sysctl -n hw.ncpu` test -workspace Contentful.xcworkspace -scheme Contentful_macOS -sdk macosx -destination \"platform=macOS\" ONLY_ACTIVE_ARCH=YES CODE_SIGNING_IDENTITY="" CODE_SIGNING_REQUIRED=NO")
   end
 
@@ -82,11 +84,15 @@ platform :ios do
   lane :test_tvos do
     # test tvos
     clear_derived_data
+    # Update minimum deployment target for testing
+    update_all_deployment_targets
     sh("cd .. && xcodebuild -jobs `sysctl -n hw.ncpu` test -workspace Contentful.xcworkspace -scheme Contentful_tvOS -sdk appletvsimulator -destination \"platform=tvOS Simulator,name=Apple TV,OS=17.2\" ONLY_ACTIVE_ARCH=YES CODE_SIGNING_IDENTITY="" CODE_SIGNING_REQUIRED=NO")
   end
 
   desc "Description of what the lane does"
   lane :build do
+    # Update minimum deployment target for testing
+    update_all_deployment_targets
     # verify project builds
     sh("cd .. && swift build")
   end
