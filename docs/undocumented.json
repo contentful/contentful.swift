@@ -1,6 +1,299 @@
 {
   "warnings": [
-
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/ArrayResponse.swift",
+      "line": 100,
+      "symbol": "ArrayResponse",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/ArrayResponse.swift",
+      "line": 269,
+      "symbol": "MixedArrayResponse",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/Client.swift",
+      "line": 48,
+      "symbol": "Client.jsonDecoder",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/Decodable.swift",
+      "line": 14,
+      "symbol": "Decoder.canResolveLinks",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/Decodable.swift",
+      "line": 28,
+      "symbol": "Decoder.contentTypes",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/Decodable.swift",
+      "line": 88,
+      "symbol": "Decodable.popEntryDecodable(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/Link.swift",
+      "line": 28,
+      "symbol": "Link.Sys.init(id:linkType:type:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/Resource.swift",
+      "line": 38,
+      "symbol": "FlatResource.type",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 18,
+      "symbol": "RecursiveNode",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 19,
+      "symbol": "RecursiveNode.content",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 20,
+      "symbol": "RecursiveNode.resolveLinks(against:and:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 66,
+      "symbol": "ResourceLinkData.init(resolvedTarget:title:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 170,
+      "symbol": "BlockNode.content",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 178,
+      "symbol": "BlockNode.init(nodeType:content:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 183,
+      "symbol": "BlockNode.resolveLinks(against:and:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 197,
+      "symbol": "InlineNode.content",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 205,
+      "symbol": "InlineNode.init(nodeType:content:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 210,
+      "symbol": "InlineNode.resolveLinks(against:and:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 227,
+      "symbol": "RichTextDocument.content",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 229,
+      "symbol": "RichTextDocument.init(content:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 246,
+      "symbol": "RichTextDocument.encode(with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 251,
+      "symbol": "RichTextDocument.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 265,
+      "symbol": "RichTextDocument.resolveLinks(against:and:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 306,
+      "symbol": "Heading.init(level:content:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 321,
+      "symbol": "Heading.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 348,
+      "symbol": "Hyperlink.Data.init(uri:title:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 354,
+      "symbol": "Hyperlink.init(data:content:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 359,
+      "symbol": "Hyperlink.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 365,
+      "symbol": "Hyperlink.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 379,
+      "symbol": "ResourceLinkBlock.init(resolvedData:nodeType:content:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 384,
+      "symbol": "ResourceLinkBlock.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 390,
+      "symbol": "ResourceLinkBlock.resolveLinks(against:and:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 412,
+      "symbol": "ResourceLinkBlock.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 425,
+      "symbol": "ResourceLinkInline.init(resolvedData:nodeType:content:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 430,
+      "symbol": "ResourceLinkInline.init(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 436,
+      "symbol": "ResourceLinkInline.encode(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 442,
+      "symbol": "ResourceLinkInline.resolveLinks(against:and:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 474,
+      "symbol": "Text.init(value:marks:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 482,
+      "symbol": "Text.Mark.type",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/RichText.swift",
+      "line": 484,
+      "symbol": "Text.Mark.init(type:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/SyncSpace.swift",
+      "line": 81,
+      "symbol": "SyncSpace.hasMorePages",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift/Sources/Contentful/TypedQuery.swift",
+      "line": 15,
+      "symbol": "Query.any",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    }
   ],
-  "source_directory": "/Users/mariuskurgonas/Desktop/Dev/Contentful/ContentfulTests/contentful_swift"
+  "source_directory": "/Volumes/Extreme_SSD/Dev/Contentful/contentful.swift"
 }
