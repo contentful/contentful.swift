@@ -3,11 +3,15 @@ version: 2.1
 orbs:
   ruby-orbs: sue445/ruby-orbs@1.6.2
   carthage: ngs/carthage@0.0.3
+  macos: circleci/macos@2
 
 commands:
   setup-deps:
     steps:
       - checkout
+      - run:
+          name: Set Ruby Version
+          command: rbenv global 3.0.5 && rbenv rehash
       - restore_cache:
           keys:
             - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-dep-{{ checksum "Cartfile.resolved" }}
