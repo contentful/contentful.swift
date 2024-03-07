@@ -5,7 +5,7 @@
 # This is a template file with a number of fields that need to be filled before merging this to the default branch
 apiVersion: backstage.io/v1alpha1
 # Component, API, Template, Group, User, Resource, System, Domain, Location
-kind: unknown
+kind: Component
 metadata:
   name: contentful.swift 
   description: unknown
@@ -22,9 +22,9 @@ metadata:
     - tier-unknown
 spec:
   #cli, component, contentful.com/template, documentation, function, library, service, template, website
-  type: unknown 
+  type: library 
   #deprecated, experimental, production, unknown
   lifecycle: unknown  
   system: unknown #optional
   # your team name as it appears in github when tagging them for reviews
-  owner: group:team-unknown 
+  owner: group:team-developer-experience 
