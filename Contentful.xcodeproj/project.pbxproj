@@ -46,6 +46,10 @@
 		40279AB22808826D004358B1 /* RichTextNodeDecodingTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 40279AB12808826D004358B1 /* RichTextNodeDecodingTests.json */; };
 		40279AB32808826D004358B1 /* RichTextNodeDecodingTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 40279AB12808826D004358B1 /* RichTextNodeDecodingTests.json */; };
 		40279AB42808826E004358B1 /* RichTextNodeDecodingTests.json in Resources */ = {isa = PBXBuildFile; fileRef = 40279AB12808826D004358B1 /* RichTextNodeDecodingTests.json */; };
+		40754A292BDFEAC700EF4006 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 40754A282BDFEAC700EF4006 /* PrivacyInfo.xcprivacy */; };
+		40754A2A2BDFEAC700EF4006 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 40754A282BDFEAC700EF4006 /* PrivacyInfo.xcprivacy */; };
+		40754A2B2BDFEAC700EF4006 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 40754A282BDFEAC700EF4006 /* PrivacyInfo.xcprivacy */; };
+		40754A2C2BDFEAC700EF4006 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 40754A282BDFEAC700EF4006 /* PrivacyInfo.xcprivacy */; };
 		40904F3A260A22ED00C01E61 /* Metadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40904F1A260A1DB600C01E61 /* Metadata.swift */; };
 		40904F42260A22ED00C01E61 /* Metadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40904F1A260A1DB600C01E61 /* Metadata.swift */; };
 		40904F4A260A22EE00C01E61 /* Metadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40904F1A260A1DB600C01E61 /* Metadata.swift */; };
@@ -315,6 +319,7 @@
 		40279AA528088044004358B1 /* PreviewSyncTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PreviewSyncTests.json; sourceTree = "<group>"; };
 		40279AA9280880B1004358B1 /* QueryTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QueryTests.json; sourceTree = "<group>"; };
 		40279AB12808826D004358B1 /* RichTextNodeDecodingTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RichTextNodeDecodingTests.json; sourceTree = "<group>"; };
+		40754A282BDFEAC700EF4006 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = SOURCE_ROOT; };
 		40904F1A260A1DB600C01E61 /* Metadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metadata.swift; sourceTree = "<group>"; };
 		40C31BB728089F1B0011B242 /* testFetchSpace.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testFetchSpace.json; sourceTree = "<group>"; };
 		40C31BBB28089F620011B242 /* SyncWithPaginationTests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SyncWithPaginationTests.json; sourceTree = "<group>"; };
@@ -532,6 +537,7 @@
 		A19CA3DE1B836EF800A0EFCD /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				40754A282BDFEAC700EF4006 /* PrivacyInfo.xcprivacy */,
 				EDBEC9491E3F51FE0040FC56 /* Contentful.h */,
 				EDBEC9371E3F4ADE0040FC56 /* Info_macOS.plist */,
 				EDBEC9381E3F4ADE0040FC56 /* Info_tvOS.plist */,
@@ -947,6 +953,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40754A2B2BDFEAC700EF4006 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -978,6 +985,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40754A292BDFEAC700EF4006 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1033,6 +1041,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40754A2A2BDFEAC700EF4006 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1040,6 +1049,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40754A2C2BDFEAC700EF4006 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
