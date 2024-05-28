@@ -27,4 +27,4 @@ spec:
   lifecycle: unknown  
   system: unknown #optional
   # your team name as it appears in github when tagging them for reviews
-  owner: group:team-developer-experience 
+  owner: group:team-tundra
