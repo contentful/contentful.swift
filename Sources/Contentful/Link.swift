@@ -99,7 +99,7 @@ public enum Link: Codable {
         case .entry(let entry):
             if let contentType = entry.sys.contentTypeId {
                  return Link.Sys(id: entry.sys.id,
-                                  linkType: entry.sys.type,
+                                  linkType: "Entry",
                                   type: contentType)
             }
         default:

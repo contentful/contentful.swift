@@ -21,7 +21,7 @@ public class Space: Resource, FlatResource, Decodable {
     public let name: String
 
     /// Resource type ("Space").
-    public var type: String {
+    public var type: String? {
         return sys.type
     }
 

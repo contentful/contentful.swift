@@ -27,7 +27,7 @@ public class ContentType: Resource, FlatResource, Decodable, ResourceQueryable {
     public let description: String?
 
     /// Resource type ("ContentType").
-    public var type: String {
+    public var type: String? {
         return sys.type
     }
 

@@ -35,7 +35,7 @@ public extension FlatResource where Self: Resource {
         return sys.id
     }
 
-    var type: String {
+    var type: String? {
         return sys.type
     }
 
