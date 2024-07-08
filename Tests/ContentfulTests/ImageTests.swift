@@ -11,7 +11,7 @@ import Foundation
 @testable import Contentful
 import XCTest
 import DVR
-#if os(iOS) || os(tvOS) || os(watchOS)
+#if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
     import UIKit
 #elseif os(macOS)
     import Cocoa
@@ -45,28 +45,28 @@ class ImageTests: XCTestCase {
 
     func testColorHexRepresenations() {
 
-        #if os(iOS) || os(tvOS) || os(watchOS)
+        #if os(iOS) || os(tvOS) || os(watchOS) || os(vivsionOS)
             let blueColor = UIColor.blue
         #elseif os(macOS)
             let blueColor = NSColor.blue
         #endif
         XCTAssertEqual(blueColor.cgColor.hexRepresentation(), "0000FF")
 
-        #if os(iOS) || os(tvOS) || os(watchOS)
+        #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
             let redColor = UIColor.red
         #elseif os(macOS)
             let redColor = NSColor.red
         #endif
         XCTAssertEqual(redColor.cgColor.hexRepresentation(), "FF0000")
 
-        #if os(iOS) || os(tvOS) || os(watchOS)
+        #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
             let darkViolet = UIColor(red: 0.580, green: 0.00, blue: 0.830, alpha: 1.0)
         #elseif os(macOS)
             let darkViolet = NSColor(red: 0.580, green: 0.00, blue: 0.830, alpha: 1.0)
         #endif
         XCTAssertEqual(darkViolet.cgColor.hexRepresentation(), "9400D4")
 
-        #if os(iOS) || os(tvOS) || os(watchOS)
+        #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
             let carmine = UIColor(red: 0.66274, green: 0.12549, blue: 0.243137, alpha: 1.0)
         #elseif os(macOS)
             let carmine = NSColor(red: 0.66274, green: 0.12549, blue: 0.243137, alpha: 1.0)

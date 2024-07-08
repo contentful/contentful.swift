@@ -9,7 +9,7 @@
 import Foundation
 import CoreGraphics
 
-#if os(iOS) || os(tvOS) || os(watchOS)
+#if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
     import UIKit
 #elseif os(macOS)
     import Cocoa
@@ -284,7 +284,7 @@ public enum Focus: String {
 /// Using the `Fit` options, you can change this behavior.
 public enum Fit: URLImageQueryExtendable {
 
-    #if os(iOS) || os(tvOS) || os(watchOS)
+    #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
     /// If building for iOS, tvOS, or watchOS, `Color` aliases to `UIColor`. If building for macOS
     /// `Color` aliases to `NSColor`
     public typealias Color = UIColor

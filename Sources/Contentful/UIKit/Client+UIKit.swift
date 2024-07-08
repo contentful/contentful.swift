@@ -6,7 +6,7 @@
 //  Copyright © 2017 Contentful GmbH. All rights reserved.
 //
 
-#if os(iOS) || os(tvOS) || os(watchOS)
+#if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
 import Foundation
 import UIKit
 

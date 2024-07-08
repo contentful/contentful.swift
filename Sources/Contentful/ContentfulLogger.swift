@@ -18,7 +18,7 @@ public protocol CustomLogger {
 /// A logger for outputting status messages to the console from Contentful SDK.
 public enum ContentfulLogger {
 
-    #if os(iOS) || os(tvOS) || os(watchOS) || os(macOS)
+#if os(iOS) || os(tvOS) || os(watchOS) || os(macOS) || os(visionOS)
     /// The type of logger used to log messages; defaults to `NSLog` on iOS, tvOS, watchOS, macOS. Defaults to `print` on other platforms.
     public static var logType: LogType = .nsLog
     #else

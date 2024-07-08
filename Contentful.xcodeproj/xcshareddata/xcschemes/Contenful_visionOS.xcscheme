@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0930"
-   version = "1.3">
+   LastUpgradeVersion = "1540"
+   version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
-      buildImplicitDependencies = "YES">
+      buildImplicitDependencies = "YES"
+      buildArchitectures = "Automatic">
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
@@ -14,9 +15,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A19CA3C31B836EDD00A0EFCD"
+               BlueprintIdentifier = "C928DDE72C3B881B00944586"
                BuildableName = "Contentful.framework"
-               BlueprintName = "Contentful_iOS"
+               BlueprintName = "Contentful_visionOS"
                ReferencedContainer = "container:Contentful.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -27,28 +28,7 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
-      codeCoverageEnabled = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A19CA3C31B836EDD00A0EFCD"
-            BuildableName = "Contentful.framework"
-            BlueprintName = "Contentful_iOS"
-            ReferencedContainer = "container:Contentful.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
-      <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A19CA3CD1B836EDD00A0EFCD"
-               BuildableName = "ContentfulTests_iOS.xctest"
-               BlueprintName = "ContentfulTests_iOS"
-               ReferencedContainer = "container:Contentful.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-      </Testables>
+      shouldAutocreateTestPlan = "YES">
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -60,15 +40,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A19CA3C31B836EDD00A0EFCD"
-            BuildableName = "Contentful.framework"
-            BlueprintName = "Contentful_iOS"
-            ReferencedContainer = "container:Contentful.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -79,9 +50,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A19CA3C31B836EDD00A0EFCD"
+            BlueprintIdentifier = "C928DDE72C3B881B00944586"
             BuildableName = "Contentful.framework"
-            BlueprintName = "Contentful_iOS"
+            BlueprintName = "Contentful_visionOS"
             ReferencedContainer = "container:Contentful.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
