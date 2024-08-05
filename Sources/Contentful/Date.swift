@@ -56,7 +56,7 @@ public extension Date {
         let formatter = Date.iso8601Formatter(timeZone: timeZone)
 
         for format in Date.supportedFormats {
-            formatter.dateFormat = format
+            let formatter = DateFormatterCache.shared.get(format, timeZone: timeZone)
             if let date = formatter.date(from: dateString) {
                 return date
             }
