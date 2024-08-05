@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class DateFormatterCache {
+class DateFormatterCache {
     public static let shared = DateFormatterCache()
     
     private let queue = DispatchQueue(label: "com.contentful.formattercache")
