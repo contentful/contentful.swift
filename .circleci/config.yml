@@ -3,11 +3,14 @@ version: 2.1
 orbs:
   ruby-orbs: sue445/ruby-orbs@1.6.2
   carthage: ngs/carthage@0.0.3
+  ruby: circleci/ruby@1.1.0
 
 commands:
   setup-deps:
     steps:
       - checkout
+      - ruby/install-deps:
+          ruby-version: '3.0.5'
       - restore_cache:
           keys:
             - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-dep-{{ checksum "Cartfile.resolved" }}
@@ -31,28 +34,28 @@ commands:
 jobs:
   test-ios:
     macos:
-      xcode: 13.4.1
+      xcode: 15.4
     steps:
       - setup-deps
       - run: fastlane test_ios
 
   test-macos:
     macos:
-      xcode: 13.4.1
+      xcode: 15.4
     steps:
       - setup-deps
       - run: fastlane test_macos
 
   test-tvos:
     macos:
-      xcode: 13.4.1
+      xcode: 15.4
     steps:
       - setup-deps
       - run: fastlane test_tvos
 
   build:
     macos:
-      xcode: 13.4.1
+      xcode: 15.4
     steps:
       - setup-deps
       - run: fastlane build
