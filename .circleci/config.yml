@@ -14,7 +14,7 @@ jobs:
           command: brew install carthage
       - run:
           name: Bootstrap Carthage Dependencies
-          command: carthage bootstrap --platform iOS --cache-builds
+          command: carthage checkout
       - run: bundle install
       - run:
           name: Run Tests with Fastlane
@@ -33,7 +33,7 @@ jobs:
           command: brew install carthage
       - run:
           name: Bootstrap Carthage Dependencies
-          command: carthage bootstrap --platform macOS --cache-builds
+          command: carthage checkout
       - run: bundle install
       - run:
           name: Run Tests with Fastlane
@@ -52,7 +52,7 @@ jobs:
           command: brew install carthage
       - run:
           name: Bootstrap Carthage Dependencies
-          command: carthage bootstrap --platform tvOS --cache-builds
+          command: carthage checkout
       - run: bundle install
       - run:
           name: Run Tests with Fastlane
@@ -71,7 +71,7 @@ jobs:
           command: brew install carthage
       - run:
           name: Bootstrap Carthage Dependencies
-          command: carthage bootstrap --cache-builds
+          command: carthage checkout
       - run: bundle install
       - run:
           name: Run Tests with Fastlane
