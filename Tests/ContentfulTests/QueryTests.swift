@@ -703,7 +703,7 @@ final class QueryTests: XCTestCase {
             switch result {
             case .success(let entriesResponse):
                 let entries = entriesResponse.items
-                XCTAssertEqual(entries.count, 1)
+                XCTAssertEqual(entries.count, 2)
                 XCTAssertEqual(entries.first?.sys.id, "garfield")
             case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
@@ -716,13 +716,13 @@ final class QueryTests: XCTestCase {
     func testSkipEntries() {
         let expectation = self.expectation(description: "Skip results")
 
-        let query = Query.skip(theFirst: 9)
+        let query = Query.skip(theFirst: 10)
 
         QueryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
             case .success(let entriesResponse):
                 let entries = entriesResponse.items
-                XCTAssertEqual(entriesResponse.skip, 9)
+                XCTAssertEqual(entriesResponse.skip, 10)
                 XCTAssertEqual(entries.count, 1)
             case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
