@@ -4,9 +4,6 @@ jobs:
   test-ios:
     macos:
       xcode: 15.4
-    environment:
-      FL_OUTPUT_DIR: output
-      FASTLANE_LANE: test_ios
     steps:
       - checkout
       - run:
@@ -18,14 +15,11 @@ jobs:
       - run: bundle install
       - run:
           name: Run Tests with Fastlane
-          command: bundle exec fastlane $FASTLANE_LANE
+          command: bundle exec fastlane test_ios
 
   test-macos:
     macos:
       xcode: 15.4
-    environment:
-      FL_OUTPUT_DIR: output
-      FASTLANE_LANE: test_macos
     steps:
       - checkout
       - run:
@@ -37,14 +31,11 @@ jobs:
       - run: bundle install
       - run:
           name: Run Tests with Fastlane
-          command: bundle exec fastlane $FASTLANE_LANE
+          command: bundle exec fastlane test_macos
 
   test-tvos:
     macos:
       xcode: 15.4
-    environment:
-      FL_OUTPUT_DIR: output
-      FASTLANE_LANE: test_tvos
     steps:
       - checkout
       - run:
@@ -56,14 +47,11 @@ jobs:
       - run: bundle install
       - run:
           name: Run Tests with Fastlane
-          command: bundle exec fastlane $FASTLANE_LANE
+          command: bundle exec fastlane test_tvos
 
   build:
     macos:
       xcode: 15.4
-    environment:
-      FL_OUTPUT_DIR: output
-      FASTLANE_LANE: build
     steps:
       - checkout
       - run:
@@ -75,7 +63,7 @@ jobs:
       - run: bundle install
       - run:
           name: Run Tests with Fastlane
-          command: bundle exec fastlane $FASTLANE_LANE
+          command: bundle exec fastlane build
 workflows:
   test-workflow:
     jobs:
