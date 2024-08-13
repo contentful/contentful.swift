@@ -3,14 +3,14 @@ version: 2.1
 orbs:
   ruby-orbs: sue445/ruby-orbs@1.6.2
   carthage: ngs/carthage@0.0.3
-  ruby: circleci/ruby@1.1.0
+  ruby: circleci/ruby@2.1.4
 
 commands:
   setup-deps:
     steps:
       - checkout
-      - ruby/install-deps:
-          ruby-version: '3.0.5'
+      - ruby/install:
+          version: '3.0.5'
       - restore_cache:
           keys:
             - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-dep-{{ checksum "Cartfile.resolved" }}
