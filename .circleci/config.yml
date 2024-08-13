@@ -13,6 +13,7 @@ jobs:
           name: Bootstrap Carthage Dependencies
           command: carthage checkout
       - run: bundle install
+      - run: bundle update
       - run:
           name: Run Tests with Fastlane
           command: bundle exec fastlane test_ios
@@ -29,6 +30,7 @@ jobs:
           name: Bootstrap Carthage Dependencies
           command: carthage checkout
       - run: bundle install
+      - run: bundle update
       - run:
           name: Run Tests with Fastlane
           command: bundle exec fastlane test_macos
@@ -45,6 +47,7 @@ jobs:
           name: Bootstrap Carthage Dependencies
           command: carthage checkout
       - run: bundle install
+      - run: bundle update
       - run:
           name: Run Tests with Fastlane
           command: bundle exec fastlane test_tvos
@@ -61,6 +64,7 @@ jobs:
           name: Bootstrap Carthage Dependencies
           command: carthage checkout
       - run: bundle install
+      - run: bundle update
       - run:
           name: Run Tests with Fastlane
           command: bundle exec fastlane build
