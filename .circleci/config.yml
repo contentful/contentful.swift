@@ -9,6 +9,9 @@ commands:
   setup-deps:
     steps:
       - checkout
+      - run:
+          name: Install gpg
+          command: brew install gnupg
       - ruby/install:
           version: '3.0.5'
       - restore_cache:
