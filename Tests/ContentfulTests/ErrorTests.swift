@@ -59,7 +59,7 @@ class UnparsableErrorTests: XCTestCase {
 
         let expectation = self.expectation(description: "Error is passed into callback")
 
-        stub(condition: isPath("/spaces/cfexampleapi")) { request -> OHHTTPStubsResponse in
+        stub(condition: isPath("/spaces/cfexampleapi")) { _ in
             let stubPath = OHPathForFile("Fixtures/unparsable-error.json", UnparsableErrorTests.self)
             return fixture(filePath: stubPath!, status: 401, headers: ["Content-Type": "application/json"])
         }.name = "UnparsableError stub"
