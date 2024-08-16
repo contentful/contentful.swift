@@ -7,10 +7,4 @@
    <FileRef
       location = "group:Contentful.playground">
    </FileRef>
-   <FileRef
-      location = "group:Carthage/Checkouts/Nimble/../DVR/DVR.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Carthage/Checkouts/OHHTTPStubs/OHHTTPStubs/OHHTTPStubs.xcodeproj">
-   </FileRef>
 </Workspace>

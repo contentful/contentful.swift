@@ -1,61 +1,69 @@
 version: 2.1
 
-orbs:
-  ruby-orbs: sue445/ruby-orbs@1.6.2
-  carthage: ngs/carthage@0.0.3
-
-commands:
-  setup-deps:
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-dep-{{ checksum "Cartfile.resolved" }}
-      - ruby-orbs/bundle-install:
-          bundle_clean: true
-          bundle_extra_args: ""
-          bundle_gemfile: Gemfile
-          bundle_jobs: 4
-          bundle_path: vendor/bundle
-          bundle_retry: 3
-          bundle_without: development test
-          cache_key_prefix: v1-bundle
-          restore_bundled_with: true
-      - run: carthage checkout
-      - save_cache:
-          key: v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-dep-{{ checksum "Cartfile.resolved" }}
-          paths:
-            - vendor/bundle
-            - Carthage
-
 jobs:
   test-ios:
     macos:
-      xcode: 13.4.1
+      xcode: 15.4
     steps:
-      - setup-deps
-      - run: fastlane test_ios
+      - checkout
+      - run:
+          name: Install Carthage
+          command: brew install carthage
+      - run:
+          name: Update Carthage Dependencies
+          command: carthage update --use-xcframeworks
+      - run: bundle install
+      - run:
+          name: Run Tests with Fastlane
+          command: bundle exec fastlane test_ios
 
   test-macos:
     macos:
-      xcode: 13.4.1
+      xcode: 15.4
     steps:
-      - setup-deps
-      - run: fastlane test_macos
+      - checkout
+      - run:
+          name: Install Carthage
+          command: brew install carthage
+      - run:
+          name: Update Carthage Dependencies
+          command: carthage update --use-xcframeworks
+      - run: bundle install
+      - run:
+          name: Run Tests with Fastlane
+          command: bundle exec fastlane test_macos
 
   test-tvos:
     macos:
-      xcode: 13.4.1
+      xcode: 15.4
     steps:
-      - setup-deps
-      - run: fastlane test_tvos
+      - checkout
+      - run:
+          name: Install Carthage
+          command: brew install carthage
+      - run:
+          name: Update Carthage Dependencies
+          command: carthage update --use-xcframeworks
+      - run: bundle install
+      - run:
+          name: Run Tests with Fastlane
+          command: bundle exec fastlane test_tvos
 
   build:
     macos:
-      xcode: 13.4.1
+      xcode: 15.4
     steps:
-      - setup-deps
-      - run: fastlane build
+      - checkout
+      - run:
+          name: Install Carthage
+          command: brew install carthage
+      - run:
+          name: Update Carthage Dependencies
+          command: carthage update --use-xcframeworks
+      - run: bundle install
+      - run:
+          name: Run Tests with Fastlane
+          command: bundle exec fastlane build
 workflows:
   test-workflow:
     jobs:
