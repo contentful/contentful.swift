@@ -175,7 +175,7 @@ open class Client {
         let finishDataFetch: ResultsHandler<Data> = { result in
             switch result {
             case let .success(mappableData):
-                self.handleJSON(data: mappableData, completion: completion)
+                completion(self.handleJSON(data: mappableData))
             case let .failure(error):
                 completion(.failure(error))
             }
@@ -388,12 +388,7 @@ open class Client {
             return nil
         }
         return fetchCurrentSpaceLocales { result in
-            switch result {
-            case let .success(localesResponse):
-                completion(Result.success(localesResponse.items))
-            case let .failure(error):
-                completion(.failure(error))
-            }
+            completion(result.map { $0.items })
         }
     }
 
@@ -425,20 +420,21 @@ open class Client {
         // At this point, We know for sure that the type returned by the API can be mapped to an `APIError` instance.
         // Directly handle JSON and exit.
         let statusCode = (response as! HTTPURLResponse).statusCode
-        handleRateLimitJSON(
+        let result = handleRateLimitJSON(
             data: data,
             timeUntilLimitReset: timeUntilLimitReset,
             statusCode: statusCode,
             jsonDecoder: jsonDecoder
-        ) { (_ result: Result<RateLimitError, Error>) in
-            switch result {
-            case let .success(rateLimitError):
-                completion(.failure(rateLimitError))
-            case let .failure(auxillaryError):
-                // We should never get here, but we'll bubble up what should be a `SDKError.unparseableJSON` error just in case.
-                completion(.failure(auxillaryError))
-            }
+        )
+
+        switch result {
+        case let .success(rateLimitError):
+            completion(.failure(rateLimitError))
+        case let .failure(auxillaryError):
+            // We should never get here, but we'll bubble up what should be a `SDKError.unparseableJSON` error just in case.
+            completion(.failure(auxillaryError))
         }
+
         return true
     }
 
@@ -446,12 +442,10 @@ open class Client {
         data: Data,
         timeUntilLimitReset: Int,
         statusCode: Int,
-        jsonDecoder: JSONDecoder,
-        completion: ResultsHandler<RateLimitError>
-    ) {
+        jsonDecoder: JSONDecoder
+    ) -> Result<RateLimitError, Error> {
         guard let rateLimitError = try? jsonDecoder.decode(RateLimitError.self, from: data) else {
-            completion(.failure(SDKError.unparseableJSON(data: data, errorMessage: "SDK unable to parse RateLimitError payload")))
-            return
+            return .failure(SDKError.unparseableJSON(data: data, errorMessage: "SDK unable to parse RateLimitError payload"))
         }
         rateLimitError.statusCode = statusCode
         rateLimitError.timeBeforeLimitReset = timeUntilLimitReset
@@ -462,13 +456,10 @@ open class Client {
         """
         ContentfulLogger.log(.error, message: errorMessage)
         // In this case, .success means that a RateLimitError was successfully initialized.
-        completion(Result.success(rateLimitError))
+        return .success(rateLimitError)
     }
 
-    private func handleJSON<DecodableType: Decodable>(
-        data: Data,
-        completion: @escaping ResultsHandler<DecodableType>
-    ) {
+    private func handleJSON<DecodableType: Decodable>(data: Data) -> Result<DecodableType, Error> {
         let jsonDecoder = jsonDecoderBuilder.build()
 
         var decodedObject: DecodableType?
@@ -477,8 +468,7 @@ open class Client {
         } catch {
             let sdkError = SDKError.unparseableJSON(data: data, errorMessage: "\(error)")
             ContentfulLogger.log(.error, message: sdkError.message)
-            completion(.failure(sdkError))
-            return
+            return .failure(sdkError)
         }
 
         guard let linkResolver = jsonDecoder.userInfo[.linkResolverContextKey] as? LinkResolver else {
@@ -487,22 +477,21 @@ open class Client {
                 errorMessage: "Couldn't find link resolver instance."
             )
             ContentfulLogger.log(.error, message: error.message)
-            completion(.failure(error))
-            return
+            return .failure(error)
         }
 
         linkResolver.churnLinks()
 
         // Make sure decoded object is not nil before calling success completion block.
         if let decodedObject = decodedObject {
-            completion(.success(decodedObject))
+            return .success(decodedObject)
         } else {
             let error = SDKError.unparseableJSON(
                 data: data,
                 errorMessage: "Unknown error occured during decoding."
             )
             ContentfulLogger.log(.error, message: error.message)
-            completion(.failure(error))
+            return .failure(error)
         }
     }
 }
