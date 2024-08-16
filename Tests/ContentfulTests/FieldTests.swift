@@ -6,7 +6,6 @@ import Contentful
 import XCTest
 
 class FieldTests: XCTestCase {
-
     func testFieldTypeArray() {
         let itemType = FieldType.entry
         let json: [String: Any] = [
@@ -18,8 +17,8 @@ class FieldTests: XCTestCase {
             "type": FieldType.array.rawValue,
             "items": [
                 "type": FieldType.link.rawValue,
-                "linkType": itemType.rawValue
-            ]
+                "linkType": itemType.rawValue,
+            ],
         ]
 
         let data = try! JSONSerialization.data(withJSONObject: json, options: [])
@@ -37,7 +36,7 @@ class FieldTests: XCTestCase {
             "localized": false,
             "required": true,
             "type": FieldType.link.rawValue,
-            "linkType": itemType.rawValue
+            "linkType": itemType.rawValue,
         ]
 
         let data = try! JSONSerialization.data(withJSONObject: json, options: [])

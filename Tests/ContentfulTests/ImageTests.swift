@@ -9,8 +9,8 @@
 import Foundation
 
 @testable import Contentful
-import XCTest
 import DVR
+import XCTest
 #if os(iOS) || os(tvOS) || os(watchOS)
     import UIKit
 #elseif os(macOS)
@@ -18,7 +18,6 @@ import DVR
 #endif
 
 class ImageTests: XCTestCase {
-
     let nyanCatAsset: Asset = {
         let jsonDecoder = JSONDecoder.withoutLocalizationContext()
         let localesJSONData = JSONDecodingTests.jsonData("all-locales")
@@ -31,7 +30,7 @@ class ImageTests: XCTestCase {
         return asset
     }()
 
-    static let client = TestClientFactory.testClient(withCassetteNamed:  "ImageTests")
+    static let client = TestClientFactory.testClient(withCassetteNamed: "ImageTests")
 
     override class func setUp() {
         super.setUp()
@@ -44,7 +43,6 @@ class ImageTests: XCTestCase {
     }
 
     func testColorHexRepresenations() {
-
         #if os(iOS) || os(tvOS) || os(watchOS)
             let blueColor = UIColor.blue
         #elseif os(macOS)
@@ -77,20 +75,18 @@ class ImageTests: XCTestCase {
     // MARK: URL construction tests.
 
     func testURLIsPropertyConstructedForJPGWithQuality() {
-
         let imageOptions: [ImageOption] = [
-            .formatAs(.jpg(withQuality: .asPercent(50)))
+            .formatAs(.jpg(withQuality: .asPercent(50))),
         ]
 
         let urlWithOptions = try! nyanCatAsset.url(with: imageOptions)
         XCTAssertEqual(urlWithOptions.absoluteString, "https://images.ctfassets.net/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png?fm=jpg&q=50")
     }
 
-
     func testMultipleImageOptionsOfSameTypeAreInvalid() {
         let formatImageOptions: [ImageOption] = [
             .formatAs(.png(bits: .standard)),
-            .formatAs(.jpg(withQuality: .unspecified))
+            .formatAs(.jpg(withQuality: .unspecified)),
         ]
         do {
             let _ = try nyanCatAsset.url(with: formatImageOptions)
@@ -99,11 +95,10 @@ class ImageTests: XCTestCase {
             XCTAssert(true)
         }
 
-
         let fitImageOptions: [ImageOption] = [
             .fit(for: .crop(focusingOn: nil)),
             .fit(for: .thumb(focusingOn: nil)),
-            .withCornerRadius(4.0)
+            .withCornerRadius(4.0),
         ]
         do {
             let _ = try nyanCatAsset.url(with: fitImageOptions)
@@ -112,25 +107,22 @@ class ImageTests: XCTestCase {
             XCTAssert(true)
         }
     }
-    
-    func testComplexURLIsProperlyConstructed() {
 
+    func testComplexURLIsProperlyConstructed() {
         let imageOptions: [ImageOption] = [
             .width(100), .height(100),
             .formatAs(.jpg(withQuality: .unspecified)),
             .fit(for: .fill(focusingOn: nil)),
-            .withCornerRadius(4.0)
+            .withCornerRadius(4.0),
         ]
 
         let urlWithOptions = try! nyanCatAsset.url(with: imageOptions)
         XCTAssertEqual(urlWithOptions.absoluteString, "https://images.ctfassets.net/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png?w=100&h=100&fm=jpg&fit=fill&r=4.0")
     }
 
-
     // MARK: Test all Fit i.e. Resizing options
 
     func testAllCropFitOptionsThatUseFocusParameters() {
-
         // No focus
         let fitToCropWithNoFocusOptions = [ImageOption.fit(for: .crop(focusingOn: nil))]
         let noFocusURLWithOptions = try! nyanCatAsset.url(with: fitToCropWithNoFocusOptions)
@@ -189,9 +181,9 @@ class ImageTests: XCTestCase {
 
     func testMakingURLWithPaddingAndBackgroundColor() {
         #if os(macOS)
-        let options = [ImageOption.fit(for: .pad(withBackgroundColor: NSColor.blue))]
+            let options = [ImageOption.fit(for: .pad(withBackgroundColor: NSColor.blue))]
         #else
-        let options = [ImageOption.fit(for: .pad(withBackgroundColor: UIColor.blue))]
+            let options = [ImageOption.fit(for: .pad(withBackgroundColor: UIColor.blue))]
         #endif
         let urlWithOptions = try! nyanCatAsset.url(with: options)
         XCTAssertEqual(urlWithOptions.absoluteString, "https://images.ctfassets.net/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png?fit=pad&bg=rgb:0000FF")
@@ -222,7 +214,7 @@ class ImageTests: XCTestCase {
 
     func testInvalidWidthAndHeightThrowsError() {
         let imageOptions: [ImageOption] = [
-            .width(4001), .height(100)
+            .width(4001), .height(100),
         ]
         do {
             let _ = try nyanCatAsset.url(with: imageOptions)
@@ -276,12 +268,9 @@ class ImageTests: XCTestCase {
         let progressiveJPGURL = try! nyanCatAsset.url(with: progressiveJPQQualityOptions)
         XCTAssertEqual(progressiveJPGURL.absoluteString, "https://images.ctfassets.net/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png?fm=jpg&fl=progressive")
 
-
         let eightBitPngImageOptions: [ImageOption] = [.formatAs(.png(bits: .eight))]
         let urlWithEightBitPngOptions = try! nyanCatAsset.url(with: eightBitPngImageOptions)
         XCTAssertEqual(urlWithEightBitPngOptions.absoluteString, "https://images.ctfassets.net/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png?fm=png&fl=png8")
-
-
 
         let standardPngImageOptions: [ImageOption] = [.formatAs(.png(bits: .standard))]
         let standardBitPngOptions = try! nyanCatAsset.url(with: standardPngImageOptions)
@@ -289,9 +278,9 @@ class ImageTests: XCTestCase {
     }
 
     // MARK: Test fetching images.
-// TODO: fix
-    func testFetchingImageWithComplexOptionSet() {
 
+    // TODO: fix
+    func testFetchingImageWithComplexOptionSet() {
 //        let expectation = self.expectation(description: "Fetch image network expectation")
 //
 //        let imageOptions: [ImageOption] = [
@@ -315,4 +304,3 @@ class ImageTests: XCTestCase {
 //        waitForExpectations(timeout: 10.0, handler: nil)
     }
 }
-

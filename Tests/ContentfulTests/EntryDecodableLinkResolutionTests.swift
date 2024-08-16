@@ -7,12 +7,11 @@
 //
 
 @testable import Contentful
-import XCTest
 import DVR
+import XCTest
 
 // From Complex-Sync-Test-Space
 class LinkClass: EntryDecodable, FieldKeysQueryable {
-
     static let contentTypeId = "link"
 
     let id: String
@@ -23,7 +22,7 @@ class LinkClass: EntryDecodable, FieldKeysQueryable {
 
     public required init(from decoder: Decoder) throws {
         let sys = try decoder.sys()
-        
+
         id = sys.id
         localeCode = sys.locale
         updatedAt = sys.updatedAt
@@ -38,9 +37,7 @@ class LinkClass: EntryDecodable, FieldKeysQueryable {
     }
 }
 
-
 class SingleRecord: FlatResource, EntryDecodable, FieldKeysQueryable {
-
     static let contentTypeId = "singleRecord"
 
     let id: String
@@ -101,15 +98,13 @@ class LinkResolverTests: XCTestCase {
     }
 
     func testDecoderCanResolveArrayOfLinks() {
-
         let expectation = self.expectation(description: "CanResolveArrayOfLinksTests")
 
         let query = QueryOn<SingleRecord>.where(sys: .id, .equals("7BwFiM0nxCS4EGYaIAIkyU"))
-        LinkResolverTests.client.fetchArray(of: SingleRecord.self,  matching: query) { result in
-
+        LinkResolverTests.client.fetchArray(of: SingleRecord.self, matching: query) { result in
 
             switch result {
-            case .success(let arrayResponse):
+            case let .success(arrayResponse):
                 let records = arrayResponse.items
 
                 XCTAssertEqual(records.count, 1)
@@ -121,13 +116,13 @@ class LinkResolverTests: XCTestCase {
                 } else {
                     XCTFail("There shoudl be at least one entry in the array of records")
                 }
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
 
             expectation.fulfill()
         }
-        self.waitForExpectations(timeout: 10.0, handler: nil)
+        waitForExpectations(timeout: 10.0, handler: nil)
     }
 
     func testUnresolvableLinkDoesNotResolve() {
@@ -136,7 +131,7 @@ class LinkResolverTests: XCTestCase {
         let query = QueryOn<SingleRecord>.where(sys: .id, .equals("1k7s1gNcQA8WoUWiqcYaMO"))
         LinkResolverTests.client.fetchArray(of: SingleRecord.self, matching: query) { result in
             switch result {
-            case .success(let arrayResponse):
+            case let .success(arrayResponse):
                 let records = arrayResponse.items
                 XCTAssertEqual(records.count, 1)
                 if let singleRecord = records.first {
@@ -150,12 +145,12 @@ class LinkResolverTests: XCTestCase {
                 } else {
                     XCTFail("There should be at least one entry in the array of records")
                 }
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
-        self.waitForExpectations(timeout: 10.0, handler: nil)
+        waitForExpectations(timeout: 10.0, handler: nil)
     }
 
     func testEntriesLinkingToSameLinkCanResolveLinks() {
@@ -164,7 +159,7 @@ class LinkResolverTests: XCTestCase {
         let query = QueryOn<SingleRecord>.where(sys: .id, .includes(["1wFgajHSpWOoIgS8UAk2ow", "7rUM7Pr16M2gEwiI02WAoI"]))
         LinkResolverTests.client.fetchArray(of: SingleRecord.self, matching: query) { result in
             switch result {
-            case .success(let arrayResponse):
+            case let .success(arrayResponse):
                 let records = arrayResponse.items
                 XCTAssertEqual(records.count, 2)
                 for record in records {
@@ -174,12 +169,12 @@ class LinkResolverTests: XCTestCase {
                         XCTFail("There should be a link")
                     }
                 }
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
-        self.waitForExpectations(timeout: 10.0, handler: nil)
+        waitForExpectations(timeout: 10.0, handler: nil)
     }
 
     func testEntryLinkingToAssetsArrayDoesResolveLinks() {
@@ -187,18 +182,18 @@ class LinkResolverTests: XCTestCase {
 
         LinkResolverTests.client.fetch(SingleRecord.self, id: "2JFSeiPTZYm4goMSUeYSCU") { result in
             switch result {
-            case .success(let record):
+            case let .success(record):
 
                 XCTAssertNotNil(record.assetsArrayLinkField)
                 XCTAssertEqual(record.assetsArrayLinkField?.count, 4)
                 XCTAssertEqual(record.assetsArrayLinkField?.first?.id, "6Wsz8owhtCGSICg44IUYAm")
 
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
-        self.waitForExpectations(timeout: 10.0, handler: nil)
+        waitForExpectations(timeout: 10.0, handler: nil)
     }
 
     /// This test exists mainly to check that the fetch URL does have the `include=0`
@@ -209,13 +204,13 @@ class LinkResolverTests: XCTestCase {
 
         LinkResolverTests.client.fetch(SingleRecord.self, id: "2JFSeiPTZYm4goMSUeYSCU", include: 0) { result in
             switch result {
-            case .success(let record):
+            case let .success(record):
                 XCTAssert(record.assetsArrayLinkField?.isEmpty ?? true)
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
-        self.waitForExpectations(timeout: 10.0, handler: nil)
+        waitForExpectations(timeout: 10.0, handler: nil)
     }
 }

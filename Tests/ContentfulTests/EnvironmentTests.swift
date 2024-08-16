@@ -7,16 +7,15 @@
 //
 
 @testable import Contentful
-import XCTest
 import DVR
+import XCTest
 
 class EnvironmentsTests: XCTestCase {
-
     static let client: Client = {
         let contentTypeClasses: [EntryDecodable.Type] = [
             Cat.self,
             Dog.self,
-            City.self
+            City.self,
         ]
         return TestClientFactory.testClient(withCassetteNamed: "EnvironmentsTests",
                                             environmentId: "test-env",
@@ -35,14 +34,13 @@ class EnvironmentsTests: XCTestCase {
 
     // A copy of the a test from QueryTests, but using a different environment.
     func testQueryReturningHeterogeneousArray() {
-
         let expectation = self.expectation(description: "Fetch all entries expectation")
 
         let query = try! Query.order(by: Ordering(sys: .createdAt))
         EnvironmentsTests.client.fetchArray(matching: query) { result in
 
             switch result {
-            case .success(let response):
+            case let .success(response):
                 let entries = response.items
                 // We didn't decode the "human" content type so only 9 decoded entries should be returned instead of 10
                 // THere is one less entry in this environment than the other environment.
@@ -61,7 +59,7 @@ class EnvironmentsTests: XCTestCase {
                     XCTFail("The last entry in the heterogenous array should be a dog with an image with named 'jake'")
                 }
 
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -75,15 +73,15 @@ class EnvironmentsTests: XCTestCase {
 
         EnvironmentsTests.client.sync { result in
             switch result {
-            case .success(let syncSpace):
+            case let .success(syncSpace):
                 XCTAssertEqual(syncSpace.entries.count, 9)
                 // Sort the entries since they are otherwise in a non-determinant order with Swift 4.2.
                 let entries = syncSpace.entries.sorted { $0.sys.id < $1.sys.id }
                 XCTAssertEqual(entries.first?.fields["name"] as? String, "Berlin")
                 XCTAssertEqual(entries[2].fields["name"] as? String, "Doge")
 
-            case .failure(let error):
-                 XCTFail("Failed to sync on a non-master environment \(error)")
+            case let .failure(error):
+                XCTFail("Failed to sync on a non-master environment \(error)")
             }
             expectation.fulfill()
         }

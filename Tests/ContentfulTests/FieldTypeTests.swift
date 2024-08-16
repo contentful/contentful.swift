@@ -8,7 +8,6 @@ import Contentful
 import XCTest
 
 class FieldTypeTests: XCTestCase {
-
     func testFieldTypes() {
         XCTAssertEqual(FieldType.array.rawValue, "Array")
         XCTAssertEqual(FieldType.asset.rawValue, "Asset")

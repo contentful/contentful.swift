@@ -7,10 +7,10 @@
 //
 
 @testable import Contentful
-import XCTest
 import DVR
+import XCTest
 
-struct LocaleFactory {
+enum LocaleFactory {
     static func enUSDefault() -> Contentful.Locale {
         let usLocaleJSONData = JSONDecodingTests.jsonData("en-US-locale")
         let locale = try! JSONDecoder.withoutLocalizationContext().decode(Contentful.Locale.self, from: usLocaleJSONData)
@@ -25,8 +25,7 @@ struct LocaleFactory {
 }
 
 class LocalizationTests: XCTestCase {
-
-    static let client = TestClientFactory.testClient(withCassetteNamed:  "LocalizationTests", contentTypeClasses: [Cat.self])
+    static let client = TestClientFactory.testClient(withCassetteNamed: "LocalizationTests", contentTypeClasses: [Cat.self])
 
     override class func setUp() {
         super.setUp()
@@ -37,7 +36,6 @@ class LocalizationTests: XCTestCase {
         super.tearDown()
         (client.urlSession as? DVR.Session)?.endRecording()
     }
-
 
     func testNormalizingFieldsDictionaryFormat() {
         let singleLocaleJSONData = JSONDecodingTests.jsonData("fields-for-default-locale")
@@ -62,12 +60,11 @@ class LocalizationTests: XCTestCase {
     }
 
     func testWalkingFallbackChain() {
-
-        let expecatation = self.expectation(description: "Entries matching query network expectation")
+        let expecatation = expectation(description: "Entries matching query network expectation")
 
         LocalizationTests.client.fetchArray(of: Entry.self, matching: Query.where(sys: .id, .equals("nyancat")).localizeResults(withLocaleCode: "*")) { result in
             switch result {
-            case .success(let entriesCollection):
+            case let .success(entriesCollection):
                 let entry = entriesCollection.items.first!
 
                 XCTAssertEqual(entry.currentlySelectedLocale.code, "en-US")
@@ -83,7 +80,7 @@ class LocalizationTests: XCTestCase {
                 // fields with no value for "tlh" should fallback.
                 XCTAssertEqual(entry.fields["likes"] as? [String], ["rainbows", "fish"])
 
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("\(error)")
             }
             expecatation.fulfill()
@@ -108,27 +105,26 @@ class LocalizationTests: XCTestCase {
         XCTAssertEqual(asset.urlString, "https://images.ctfassets.net/cfexampleapi/1x0xpXu4pSGS4OukSyWGUK/cc1239c6385428ef26f4180190532818/doge.jpg")
     }
 
-        func testLocalizationForEntryDecodableWorks() {
-            let expecatation = self.expectation(description: "")
+    func testLocalizationForEntryDecodableWorks() {
+        let expecatation = expectation(description: "")
 
-            let query = QueryOn<Cat>.where(sys: .id, .equals("nyancat")).localizeResults(withLocaleCode: "tlh")
-            LocalizationTests.client.fetchArray(of: Cat.self, matching: query) { result in
-                switch result {
-                case .success(let entriesCollection):
-                    let cat = entriesCollection.items.first!
+        let query = QueryOn<Cat>.where(sys: .id, .equals("nyancat")).localizeResults(withLocaleCode: "tlh")
+        LocalizationTests.client.fetchArray(of: Cat.self, matching: query) { result in
+            switch result {
+            case let .success(entriesCollection):
+                let cat = entriesCollection.items.first!
 
-                    XCTAssertEqual(cat.localeCode, "tlh")
-                    XCTAssertEqual(cat.sys.id, "nyancat")
-                    XCTAssertEqual(cat.name, "Nyan vIghro'")
-                    XCTAssertEqual(cat.likes, ["rainbows", "fish"])
+                XCTAssertEqual(cat.localeCode, "tlh")
+                XCTAssertEqual(cat.sys.id, "nyancat")
+                XCTAssertEqual(cat.name, "Nyan vIghro'")
+                XCTAssertEqual(cat.likes, ["rainbows", "fish"])
 
-                case .failure(let error):
-                    XCTFail("\(error)")
-                }
-                expecatation.fulfill()
+            case let .failure(error):
+                XCTFail("\(error)")
             }
-
-            waitForExpectations(timeout: 10.0, handler: nil)
+            expecatation.fulfill()
         }
-}
 
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+}

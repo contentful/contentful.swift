@@ -1,5 +1,5 @@
 //
-//  DecondingTests.swift
+//  JSONDecodingTests.swift
 //  Contentful
 //
 //  Created by Boris Bügling on 29/09/15.
@@ -11,7 +11,6 @@ import Foundation
 import XCTest
 
 class JSONDecodingTests: XCTestCase {
-
     static func jsonData(_ fileName: String) -> Data {
         let path = NSString(string: "Fixtures").appendingPathComponent(fileName)
         let bundle = Bundle(for: JSONDecodingTests.self)
@@ -28,7 +27,7 @@ class JSONDecodingTests: XCTestCase {
             jsonDecoder.userInfo = [CodingUserInfoKey: Any]()
             let _ = try jsonDecoder.decode(Asset.self, from: assetData)
             XCTFail("Mapping without a localizatoin context should throw an error")
-        } catch let error as SDKError  {
+        } catch let error as SDKError {
             switch error {
             case .localeHandlingError:
                 XCTAssert(true)
@@ -40,7 +39,6 @@ class JSONDecodingTests: XCTestCase {
     }
 
     func testHandlingNullJSONValues() {
-
         struct Klass: Decodable {
             let dict: [String: Any]
 
@@ -48,6 +46,7 @@ class JSONDecodingTests: XCTestCase {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
                 dict = try container.decode([String: Any].self)
             }
+
             enum CodingKeys: String, CodingKey {
                 case key1, array
             }
@@ -71,21 +70,21 @@ class JSONDecodingTests: XCTestCase {
         XCTAssertEqual((wrapper.dict["array"] as! [Any])[1] as? Double, 3.3)
         XCTAssertNil(wrapper.dict["key1"])
     }
-    
+
     func testHandlingNestedArrayValues() {
-        
         struct Klass: Decodable {
             let dict: [String: Any]
-            
+
             init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
                 dict = try container.decode([String: Any].self)
             }
+
             enum CodingKeys: String, CodingKey {
                 case key1, array
             }
         }
-        
+
         let json = """
         {
             "key1": null,
@@ -95,12 +94,12 @@ class JSONDecodingTests: XCTestCase {
             ]
         }
         """.data(using: .utf8)!
-        
+
         let jsonDecoder = JSONDecoder.withoutLocalizationContext()
         let wrapper = try! jsonDecoder.decode(Klass.self, from: json)
         XCTAssertEqual(wrapper.dict.keys.count, 1)
-        XCTAssertEqual((wrapper.dict["array"] as! [Any])[0] as? Array<Int>, [1, 2])
-        XCTAssertEqual((wrapper.dict["array"] as! [Any])[1] as? Array<Int>, [3, 4])
+        XCTAssertEqual((wrapper.dict["array"] as! [Any])[0] as? [Int], [1, 2])
+        XCTAssertEqual((wrapper.dict["array"] as! [Any])[1] as? [Int], [3, 4])
         XCTAssertNil(wrapper.dict["key1"])
     }
 
@@ -110,7 +109,6 @@ class JSONDecodingTests: XCTestCase {
             let localesJSONData = JSONDecodingTests.jsonData("all-locales")
             let localesResponse = try! jsonDecoder.decode(HomogeneousArrayResponse<Contentful.Locale>.self, from: localesJSONData)
             jsonDecoder.update(with: LocalizationContext(locales: localesResponse.items)!)
-
 
             let assetJSONData = JSONDecodingTests.jsonData("asset")
             let asset = try jsonDecoder.decode(Asset.self, from: assetJSONData)
@@ -172,7 +170,6 @@ class JSONDecodingTests: XCTestCase {
             let localesResponse = try! jsonDecoder.decode(HomogeneousArrayResponse<Contentful.Locale>.self, from: localesJSONData)
             jsonDecoder.update(with: LocalizationContext(locales: localesResponse.items)!)
 
-
             let syncSpaceJSONData = JSONDecodingTests.jsonData("sync")
             let syncSpace = try jsonDecoder.decode(SyncSpace.self, from: syncSpaceJSONData)
 
@@ -201,7 +198,6 @@ class JSONDecodingTests: XCTestCase {
 
     func testDecodeSyncResponsesWithdeletedEntryIds() {
         do {
-
             let jsonDecoder = JSONDecoder.withoutLocalizationContext()
             let syncDeletedEntryData = JSONDecodingTests.jsonData("deleted")
             let syncSpace = try jsonDecoder.decode(SyncSpace.self, from: syncDeletedEntryData)
@@ -215,4 +211,3 @@ class JSONDecodingTests: XCTestCase {
         }
     }
 }
-

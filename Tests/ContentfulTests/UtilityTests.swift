@@ -10,18 +10,18 @@
 import XCTest
 
 class UtilityTests: XCTestCase {
-    let original = [ "foo": 1, "bar": 2 ]
-    let fallback = [ "moo": 42, "bar": 7 ]
+    let original = ["foo": 1, "bar": 2]
+    let fallback = ["moo": 42, "bar": 7]
 
     func testMergeTwoDictionaries() {
-        let union = self.fallback + self.original
+        let union = fallback + original
 
-        XCTAssertEqual(union, [ "foo": 1, "bar": 2, "moo": 42 ])
+        XCTAssertEqual(union, ["foo": 1, "bar": 2, "moo": 42])
         XCTAssertEqual(union.count, 3)
     }
 
     func testPutsTheCorrectValuesIntoMergedDictionary() {
-        let union = self.fallback + self.original
+        let union = fallback + original
 
         XCTAssertEqual(union["foo"], 1)
         XCTAssertEqual(union["bar"], 2)
@@ -30,7 +30,6 @@ class UtilityTests: XCTestCase {
 }
 
 class StringExtensionTests: XCTestCase {
-
     func testValidKeyPathSelection() {
         let validSelection = "key.path"
         XCTAssert(validSelection.isValidSelection())

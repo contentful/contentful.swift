@@ -7,12 +7,11 @@
 //
 
 @testable import Contentful
-import XCTest
 import DVR
 import Foundation
+import XCTest
 
 final class RichTextContentType: Resource, EntryDecodable, FieldKeysQueryable {
-
     static let contentTypeId = "rich"
 
     let sys: Sys
@@ -37,7 +36,6 @@ final class RichTextContentType: Resource, EntryDecodable, FieldKeysQueryable {
 }
 
 class RichTextNodeDecodingTests: XCTestCase {
-
     static let client = TestClientFactory.testClient(withCassetteNamed: "RichTextNodeDecodingTests",
                                                      spaceId: "pzlh94jb0ghw",
                                                      accessToken: "1859a86ac82f679e8436af5ed5202bdb45f96b1deed3b5d1e20275698b5184c9",
@@ -79,15 +77,16 @@ class RichTextNodeDecodingTests: XCTestCase {
         let expectation = self.expectation(description: "")
 
         RichTextNodeDecodingTests.client.fetchArray(of: RichTextContentType.self,
-                                                       matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_headline_1"))) { result in
+                                                    matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_headline_1")))
+        { result in
             switch result {
-            case .success(let arrayResponse):
+            case let .success(arrayResponse):
                 let model = arrayResponse.items.first!
                 let headingNode = model.rich.content.first as! Heading
                 XCTAssertEqual(headingNode.level, 1)
                 XCTAssertEqual((headingNode.content.first as! Text).value, "This is some simple text")
 
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -99,16 +98,16 @@ class RichTextNodeDecodingTests: XCTestCase {
         let expectation = self.expectation(description: "")
 
         RichTextNodeDecodingTests.client.fetchArray(of: RichTextContentType.self,
-                                                    matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_headline_6"))) { result in
+                                                    matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_headline_6")))
+        { result in
             switch result {
-            case .success(let arrayResponse):
+            case let .success(arrayResponse):
                 let model = arrayResponse.items.first!
                 let headingNode = model.rich.content.first as! Heading
                 XCTAssertEqual(headingNode.level, 6)
                 XCTAssertEqual((headingNode.content.first as! Text).value, "This is some simple text")
 
-
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -120,15 +119,16 @@ class RichTextNodeDecodingTests: XCTestCase {
         let expectation = self.expectation(description: "")
 
         RichTextNodeDecodingTests.client.fetchArray(of: RichTextContentType.self,
-                                                       matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_text"))) { result in
+                                                    matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_text")))
+        { result in
             switch result {
-            case .success(let arrayResponse):
+            case let .success(arrayResponse):
                 let model = arrayResponse.items.first!
                 let paragraph = model.rich.content.first as! Paragraph
                 let text = paragraph.content.first as! Text
                 XCTAssertEqual(text.value, "This is some simple text")
 
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -140,9 +140,10 @@ class RichTextNodeDecodingTests: XCTestCase {
         let expectation = self.expectation(description: "")
 
         RichTextNodeDecodingTests.client.fetchArray(of: RichTextContentType.self,
-                                                       matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_text_mixed_bold_italic_underline_code_all"))) { result in
+                                                    matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_text_mixed_bold_italic_underline_code_all")))
+        { result in
             switch result {
-            case .success(let arrayResponse):
+            case let .success(arrayResponse):
                 let model = arrayResponse.items.first!
 
                 let paragraph = model.rich.content.first as! Paragraph
@@ -157,7 +158,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                 XCTAssert(markTypes.contains(.italic))
                 XCTAssert(markTypes.contains(.underline))
                 XCTAssert(markTypes.contains(.code))
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -169,15 +170,16 @@ class RichTextNodeDecodingTests: XCTestCase {
         let expectation = self.expectation(description: "")
 
         RichTextNodeDecodingTests.client.fetchArray(of: RichTextContentType.self,
-                                                       matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_horizontal_rule"))) { result in
+                                                    matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_horizontal_rule")))
+        { result in
             switch result {
-            case .success(let arrayResponse):
+            case let .success(arrayResponse):
                 let model = arrayResponse.items.first!
 
                 let hr = model.rich.content.first as? HorizontalRule
                 XCTAssertNotNil(hr)
 
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -189,9 +191,10 @@ class RichTextNodeDecodingTests: XCTestCase {
         let expectation = self.expectation(description: "")
 
         RichTextNodeDecodingTests.client.fetchArray(of: RichTextContentType.self,
-                                                       matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_blockquote"))) { result in
+                                                    matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_blockquote")))
+        { result in
             switch result {
-            case .success(let arrayResponse):
+            case let .success(arrayResponse):
                 let model = arrayResponse.items.first!
 
                 let quote = model.rich.content.first as? BlockQuote
@@ -200,7 +203,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                 let text = paragraph?.content.first as? Text
                 XCTAssertEqual(text?.value, "This is some simple blockquote")
 
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -212,9 +215,10 @@ class RichTextNodeDecodingTests: XCTestCase {
         let expectation = self.expectation(description: "")
 
         RichTextNodeDecodingTests.client.fetchArray(of: RichTextContentType.self,
-                                                       matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_ordered_list"))) { result in
+                                                    matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_ordered_list")))
+        { result in
             switch result {
-            case .success(let arrayResponse):
+            case let .success(arrayResponse):
                 let model = arrayResponse.items.first!
 
                 let list = model.rich.content.first as? OrderedList
@@ -225,7 +229,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                 let lastParagraphItem = listItems?.last?.content.first as? Paragraph
                 XCTAssertEqual((lastParagraphItem?.content.first as? Text)?.value, "text")
 
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -237,9 +241,10 @@ class RichTextNodeDecodingTests: XCTestCase {
         let expectation = self.expectation(description: "")
 
         RichTextNodeDecodingTests.client.fetchArray(of: RichTextContentType.self,
-                                                    matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_unordered_list"))) { result in
+                                                    matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_unordered_list")))
+        { result in
             switch result {
-            case .success(let arrayResponse):
+            case let .success(arrayResponse):
                 let model = arrayResponse.items.first!
 
                 let list = model.rich.content.first as? UnorderedList
@@ -250,7 +255,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                 let lastParagraphItem = listItems?.last?.content.first as? Paragraph
                 XCTAssertEqual((lastParagraphItem?.content.first as? Text)?.value, "list")
 
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -264,15 +269,16 @@ class RichTextNodeDecodingTests: XCTestCase {
         let expectation = self.expectation(description: "")
 
         RichTextNodeDecodingTests.client.fetchArray(of: RichTextContentType.self,
-                                                    matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_text_embedded"))) { result in
+                                                    matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_text_embedded")))
+        { result in
             switch result {
-            case .success(let arrayResponse):
+            case let .success(arrayResponse):
                 let model = arrayResponse.items.first!
 
                 let entryLinkBlock = model.rich.content.first as? ResourceLinkBlock
                 XCTAssertEqual((entryLinkBlock?.data.target.entryDecodable as! RichTextContentType).name, "simple_text")
 
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -284,15 +290,16 @@ class RichTextNodeDecodingTests: XCTestCase {
         let expectation = self.expectation(description: "")
 
         RichTextNodeDecodingTests.client.fetchArray(of: RichTextContentType.self,
-                                                    matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_asset_block"))) { result in
+                                                    matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_asset_block")))
+        { result in
             switch result {
-            case .success(let arrayResponse):
+            case let .success(arrayResponse):
                 let model = arrayResponse.items.first!
 
                 let entryLinkBlock = model.rich.content.first as? ResourceLinkBlock
                 XCTAssertEqual(entryLinkBlock?.data.target.asset?.title, "cat")
 
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -304,16 +311,17 @@ class RichTextNodeDecodingTests: XCTestCase {
         let expectation = self.expectation(description: "")
 
         RichTextNodeDecodingTests.client.fetchArray(of: RichTextContentType.self,
-                                                    matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_entry_inline"))) { result in
+                                                    matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_entry_inline")))
+        { result in
             switch result {
-            case .success(let arrayResponse):
+            case let .success(arrayResponse):
                 let model = arrayResponse.items.first!
 
                 let paragraph = model.rich.content.first as? Paragraph
                 let link = paragraph?.content[1] as? ResourceLinkInline
                 XCTAssertEqual((link?.data.target.entryDecodable as! RichTextContentType).name, "Hello World")
 
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -325,9 +333,10 @@ class RichTextNodeDecodingTests: XCTestCase {
         let expectation = self.expectation(description: "")
 
         RichTextNodeDecodingTests.client.fetchArray(of: RichTextContentType.self,
-                                                    matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_hyperlink"))) { result in
+                                                    matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_hyperlink")))
+        { result in
             switch result {
-            case .success(let arrayResponse):
+            case let .success(arrayResponse):
                 let model = arrayResponse.items.first!
 
                 let paragraph = model.rich.content.first as? Paragraph
@@ -335,7 +344,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                 XCTAssertEqual(hyperlink?.data.uri, "https://www.example.com/")
                 XCTAssertEqual((hyperlink?.content.first as? Text)?.value, "Regular hyperlink to example.com")
 
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -347,9 +356,10 @@ class RichTextNodeDecodingTests: XCTestCase {
         let expectation = self.expectation(description: "")
 
         RichTextNodeDecodingTests.client.fetchArray(of: RichTextContentType.self,
-                                                    matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_entry_hyperlink"))) { result in
+                                                    matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_entry_hyperlink")))
+        { result in
             switch result {
-            case .success(let arrayResponse):
+            case let .success(arrayResponse):
                 let model = arrayResponse.items.first!
 
                 let paragraph = model.rich.content.first as? Paragraph
@@ -357,7 +367,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                 XCTAssertEqual((hyperlink?.data.target.entryDecodable as! RichTextContentType).name, "Hello World")
                 XCTAssertEqual((hyperlink?.content.first as? Text)?.value, "Entry hyperlink to \"Hello World\"")
 
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -369,9 +379,10 @@ class RichTextNodeDecodingTests: XCTestCase {
         let expectation = self.expectation(description: "")
 
         RichTextNodeDecodingTests.client.fetchArray(of: RichTextContentType.self,
-                                                    matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_asset_hyperlink"))) { result in
+                                                    matching: QueryOn<RichTextContentType>.where(field: .name, .equals("simple_asset_hyperlink")))
+        { result in
             switch result {
-            case .success(let arrayResponse):
+            case let .success(arrayResponse):
                 let model = arrayResponse.items.first!
 
                 let paragraph = model.rich.content.first as? Paragraph
@@ -379,7 +390,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                 XCTAssertEqual(hyperlink?.data.target.asset?.title, "cat")
                 XCTAssertEqual((hyperlink?.content.first as? Text)?.value, "Asset hyperlink to cat image")
 
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -393,9 +404,10 @@ class RichTextNodeDecodingTests: XCTestCase {
         let expectation = self.expectation(description: "")
 
         RichTextNodeDecodingTests.client.fetchArray(of: RichTextContentType.self,
-                                                    matching: .where(field: .name, .equals("inline_hyperlink_integration"))) { result in
+                                                    matching: .where(field: .name, .equals("inline_hyperlink_integration")))
+        { result in
             switch result {
-            case .success(let arrayResponse):
+            case let .success(arrayResponse):
                 let model = arrayResponse.items.first!
 
                 let paragraph = model.rich.content.first as? Paragraph
@@ -411,7 +423,7 @@ class RichTextNodeDecodingTests: XCTestCase {
                 let entryInlineLink = paragraph?.content[7] as? ResourceLinkInline
                 XCTAssertEqual((entryInlineLink?.data.target.entryDecodable as! RichTextContentType).name, "Hello World")
 
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -424,22 +436,23 @@ class RichTextNodeDecodingTests: XCTestCase {
 
         RichTextNodeDecodingTests.client.fetchArray(
             of: RichTextContentType.self,
-            matching: .where(field: .name, .equals("nested_included_entries"))) { result in
-                switch result {
-                case .success(let arrayResponse):
-                    let rootRichTextContentType = arrayResponse.items.first
-                    let paragraph = rootRichTextContentType?.rich.content.first as? Paragraph
-                    let link = paragraph?.content[1] as? ResourceLinkInline
-                    let inlinedRichTextContentType = link?.data.target.entryDecodable as? RichTextContentType
-                    let crossLinkedRichTextContentType = inlinedRichTextContentType?.linkedEntry
+            matching: .where(field: .name, .equals("nested_included_entries"))
+        ) { result in
+            switch result {
+            case let .success(arrayResponse):
+                let rootRichTextContentType = arrayResponse.items.first
+                let paragraph = rootRichTextContentType?.rich.content.first as? Paragraph
+                let link = paragraph?.content[1] as? ResourceLinkInline
+                let inlinedRichTextContentType = link?.data.target.entryDecodable as? RichTextContentType
+                let crossLinkedRichTextContentType = inlinedRichTextContentType?.linkedEntry
 
-                    XCTAssertNotNil(crossLinkedRichTextContentType)
-                case .failure(let error):
-                    XCTFail("\(error)")
-                }
-                expectation.fulfill()
+                XCTAssertNotNil(crossLinkedRichTextContentType)
+            case let .failure(error):
+                XCTFail("\(error)")
+            }
+            expectation.fulfill()
         }
-        waitForExpectations(timeout: 10_000.0, handler: nil)
+        waitForExpectations(timeout: 10000.0, handler: nil)
     }
 
     func testDecodingNestedEntriesInlinedInRichTextWithoutContentTypeClasses() {
@@ -447,25 +460,25 @@ class RichTextNodeDecodingTests: XCTestCase {
 
         RichTextNodeDecodingTests.clientWithoutContentTypeClasses.fetchArray(
             of: Entry.self,
-            matching: .where(field: "name", .equals("nested_included_entries"))) { result in
-                switch result {
-                case .success(let arrayResponse):
-                    let rootRichTextContentType = arrayResponse.items.first
-                    let paragraph = (rootRichTextContentType?.fields["rich"] as! RichTextDocument).content.first as? Paragraph
-                    let link = paragraph?.content[1] as? ResourceLinkBlock
-                    let inlinedEntry = link?.data.target.entry
+            matching: .where(field: "name", .equals("nested_included_entries"))
+        ) { result in
+            switch result {
+            case let .success(arrayResponse):
+                let rootRichTextContentType = arrayResponse.items.first
+                let paragraph = (rootRichTextContentType?.fields["rich"] as! RichTextDocument).content.first as? Paragraph
+                let link = paragraph?.content[1] as? ResourceLinkBlock
+                let inlinedEntry = link?.data.target.entry
 
-                    XCTAssertNotNil(inlinedEntry, "inlined entry is nil")
-                case .failure(let error):
-                    XCTFail("\(error)")
-                }
-                expectation.fulfill()
+                XCTAssertNotNil(inlinedEntry, "inlined entry is nil")
+            case let .failure(error):
+                XCTFail("\(error)")
+            }
+            expectation.fulfill()
         }
-        waitForExpectations(timeout: 10_000.0, handler: nil)
+        waitForExpectations(timeout: 10000.0, handler: nil)
     }
 
     func testRichTextDocumentCodableAndNSCodingConformance() {
-
         let paragraphText1: Text = {
             let bold = Text.Mark(type: Text.MarkType.bold)
             let italic = Text.Mark(type: Text.MarkType.italic)
@@ -487,7 +500,6 @@ class RichTextNodeDecodingTests: XCTestCase {
 
         let headingH1 = Heading(level: 1, content: [headingText])!
         let headingH2 = Heading(level: 2, content: [headingText])! // test copy of headingText
-
 
         let blockQuoteText: Text = {
             let code = Text.Mark(type: Text.MarkType.code)
@@ -529,9 +541,9 @@ class RichTextNodeDecodingTests: XCTestCase {
                     orderedList,
                     unorderedList,
                     embeddedAssetBlock,
-                    hyperlink
-                    ] as [Node?] // compiler needs this cast
-                ).compactMap { $0 }
+                    hyperlink,
+                ] as [Node?] // compiler needs this cast
+            ).compactMap { $0 }
         )
 
         guard let jsonData = try? JSONEncoder().encode(document) else {
@@ -594,9 +606,9 @@ class RichTextNodeDecodingTests: XCTestCase {
                     }
                 default:
                     XCTFail("""
-                        Unsupported sub nodes passed to areNodesEqual: \(String(describing: type(of: lhsNode))),
-                        \(String(describing: type(of: rhsNode)))
-                        """)
+                    Unsupported sub nodes passed to areNodesEqual: \(String(describing: type(of: lhsNode))),
+                    \(String(describing: type(of: rhsNode)))
+                    """)
                 }
             }
             return equals
@@ -662,5 +674,4 @@ class RichTextNodeDecodingTests: XCTestCase {
             areNodesEqual(lhs: $0.content, rhs: $1.content)
         }
     }
-
 }

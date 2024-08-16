@@ -7,9 +7,9 @@
 //
 
 @testable import Contentful
+import DVR
 import Foundation
 import XCTest
-import DVR
 
 // TODO: Use this in the main target...or seperate dependency.
 extension Date {
@@ -24,7 +24,6 @@ extension Date {
 }
 
 class EntryTests: XCTestCase {
-
     static let client = TestClientFactory.testClient(withCassetteNamed: "EntryTests")
 
     override class func setUp() {
@@ -37,19 +36,18 @@ class EntryTests: XCTestCase {
         (client.urlSession as? DVR.Session)?.endRecording()
     }
 
-    func waitUntilMatchingEntries(_ query: Query, action: @escaping (_ entries: HomogeneousArrayResponse<Entry>) -> ()) {
-        let expecatation = self.expectation(description: "Entries matching query network expectation")
+    func waitUntilMatchingEntries(_ query: Query, action: @escaping (_ entries: HomogeneousArrayResponse<Entry>) -> Void) {
+        let expecatation = expectation(description: "Entries matching query network expectation")
 
         EntryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
-            case .success(let collection):
+            case let .success(collection):
                 action(collection)
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("\(error)")
             }
             expecatation.fulfill()
         }
-
 
         waitForExpectations(timeout: 10.0, handler: nil)
     }
@@ -98,7 +96,7 @@ class EntryTests: XCTestCase {
         "6KntaYXaHSyIw8M6eo26OK",
         "4MU1s3potiUEM2G4okYOqw",
         "garfield",
-        "2FkO00OyCewe0Kdbb4m1Br"
+        "2FkO00OyCewe0Kdbb4m1Br",
     ]
 
     static let orderedEntriesByMultiple = [
@@ -134,7 +132,7 @@ class EntryTests: XCTestCase {
 
     func testFetchEntriesOrderedByMultipleAttributes() {
         let query = try! Query.order(by: Ordering(sys: .id), Ordering(sys: .id))
-        self.waitUntilMatchingEntries(query) {
+        waitUntilMatchingEntries(query) {
             let ids = $0.items.map { $0.sys.id }
             XCTAssertEqual(ids, EntryTests.orderedEntriesByMultiple)
         }
@@ -144,7 +142,7 @@ class EntryTests: XCTestCase {
 
     func testFetchSingleEntry() {
         let expectation = self.expectation(description: "Fetch single entry expectation")
-        EntryTests.client.fetch(Entry.self, id: "nyancat") { (result) in
+        EntryTests.client.fetch(Entry.self, id: "nyancat") { result in
             switch result {
             case let .success(entry):
                 XCTAssertEqual(entry.sys.id, "nyancat")
@@ -160,12 +158,11 @@ class EntryTests: XCTestCase {
     }
 
     func testFetchEntryWithArrayOfLinkedEntries() {
-
         let expectation = self.expectation(description: "Fetch single entry expectation")
 
-        EntryTests.client.fetch(Entry.self, id: "2FkO00OyCewe0Kdbb4m1Br") { (result) in
+        EntryTests.client.fetch(Entry.self, id: "2FkO00OyCewe0Kdbb4m1Br") { result in
             switch result {
-            case .success(let entry):
+            case let .success(entry):
                 if let catsLinks = entry.fields["cats"] as? [Link] {
                     let entries = catsLinks.compactMap { $0.entry }
 
@@ -212,7 +209,7 @@ class EntryTests: XCTestCase {
     func testFetchAllEntriesInSpace() {
         let expectation = self.expectation(description: "Fetch all entries in space expectation")
 
-        EntryTests.client.fetchArray(of: Entry.self) { (result) in
+        EntryTests.client.fetchArray(of: Entry.self) { result in
             switch result {
             case let .success(array):
                 XCTAssertEqual(array.total, 11)
@@ -233,10 +230,10 @@ class EntryTests: XCTestCase {
         let expectation = self.expectation(description: "Fetch entires of content type expectation")
         EntryTests.client.fetchArray(of: Entry.self, matching: .where(contentTypeId: "cat")) { result in
             switch result {
-            case .success(let array):
+            case let .success(array):
                 let cats = array.items.filter { $0.sys.contentTypeId == "cat" }
                 XCTAssertEqual(cats.count, array.items.count)
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -245,7 +242,6 @@ class EntryTests: XCTestCase {
     }
 
     func testFetchSpecificEntryMatchingSysId() {
-
         let expectation = self.expectation(description: "Fetch specific entry with id expectation")
         EntryTests.client.fetchArray(of: Entry.self, matching: .where(valueAtKeyPath: "sys.id", .equals("nyancat"))) { result in
 
@@ -289,7 +285,7 @@ class EntryTests: XCTestCase {
     }
 
     func testFetchEntriesWithInclusionSearch() {
-        let action: (HomogeneousArrayResponse<Entry>) -> () = {
+        let action: (HomogeneousArrayResponse<Entry>) -> Void = {
             XCTAssertEqual($0.items.count, 2)
             let ids = $0.items.map { $0.sys.id }
             XCTAssertEqual(ids, ["jake", "finn"])
@@ -331,7 +327,6 @@ class EntryTests: XCTestCase {
         waitUntilMatchingEntries(query) {
             XCTAssertEqual($0.items.count, 1)
         }
-
     }
 
     func testFetchEntriesWithFullTextSearchOnSpecificField() {
@@ -369,7 +364,6 @@ class EntryTests: XCTestCase {
     }
 
     func testSearchOnReferences() {
-
         let query = Query.where(linkAtFieldNamed: "bestFriend",
                                 onSourceContentTypeWithId: "cat",
                                 hasValueAtKeyPath: "fields.name",
@@ -389,11 +383,11 @@ class EntryTests: XCTestCase {
 
         EntryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
-            case .success(let entriesArrayResponse):
+            case let .success(entriesArrayResponse):
                 XCTAssertEqual(entriesArrayResponse.items.count, 1)
                 XCTAssertEqual(entriesArrayResponse.items.first?.fields["name"] as? String, "Happy Cat")
                 XCTAssertEqual((entriesArrayResponse.items.first?.fields["image"] as? Link)?.asset?.id, "happycat")
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not return an error \(error)")
             }
             expectation.fulfill()
@@ -408,22 +402,22 @@ class EntryTests: XCTestCase {
 
         EntryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
-            case .success(let entriesArrayResponse):
+            case let .success(entriesArrayResponse):
                 XCTAssertEqual(entriesArrayResponse.items.count, 2)
                 XCTAssertEqual(entriesArrayResponse.items.last?.fields["name"] as? String, "Nyan Cat")
                 XCTAssertEqual((entriesArrayResponse.items.last?.fields["bestFriend"] as? Link)?.entry?.id, "happycat")
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not return an error \(error)")
             }
             expectation.fulfill()
         }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
-    
+
     func testMetadataExistsWithEmptyTagsArray() {
         let expectation = self.expectation(description: "Will return empty tags within metadata ")
 
-        EntryTests.client.fetch(Entry.self, id: "happycat") { (result) in
+        EntryTests.client.fetch(Entry.self, id: "happycat") { result in
             switch result {
             case let .success(entry):
                 XCTAssertEqual(entry.sys.id, "happycat")
@@ -439,14 +433,14 @@ class EntryTests: XCTestCase {
 
             expectation.fulfill()
         }
-        
+
         waitForExpectations(timeout: 10.0, handler: nil)
     }
-    
+
     func testMetadataExistsOneTag() {
         let expectation = self.expectation(description: "Will return 1 tag within tags array in metadata ")
 
-        EntryTests.client.fetch(Entry.self, id: "garfield") { (result) in
+        EntryTests.client.fetch(Entry.self, id: "garfield") { result in
             switch result {
             case let .success(entry):
                 XCTAssertEqual(entry.sys.id, "garfield")
@@ -466,7 +460,7 @@ class EntryTests: XCTestCase {
 
             expectation.fulfill()
         }
-        
+
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 }
