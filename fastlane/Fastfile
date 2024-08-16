@@ -19,22 +19,28 @@ platform :ios do
   desc "Description of what the lane does"
   lane :test_ios do
     # test ios
-    clear_derived_data
-    sh("cd .. && xcodebuild -jobs `sysctl -n hw.ncpu` test -workspace Contentful.xcworkspace -scheme Contentful_iOS -sdk iphonesimulator -destination \"platform=iOS Simulator,name=iPhone 15,OS=17.5\" ONLY_ACTIVE_ARCH=YES CODE_SIGNING_IDENTITY="" CODE_SIGNING_REQUIRED=NO")
+    scan(
+      scheme: "Contentful_iOS",
+      clean: true,
+    )
   end
 
   desc "Description of what the lane does"
   lane :test_macos do
     # test macos
-    clear_derived_data
-    sh("cd .. && xcodebuild -jobs `sysctl -n hw.ncpu` test -workspace Contentful.xcworkspace -scheme Contentful_macOS -sdk macosx -destination \"platform=macOS\" ONLY_ACTIVE_ARCH=YES CODE_SIGNING_IDENTITY="" CODE_SIGNING_REQUIRED=NO")
+    scan(
+      scheme: "Contentful_macOS",
+      clean: true,
+    )
   end
 
   desc "Description of what the lane does"
   lane :test_tvos do
     # test tvos
-    clear_derived_data
-    sh("cd .. && xcodebuild -jobs `sysctl -n hw.ncpu` test -workspace Contentful.xcworkspace -scheme Contentful_tvOS -sdk appletvsimulator -destination \"platform=tvOS Simulator,name=Apple TV,OS=17.5\" ONLY_ACTIVE_ARCH=YES CODE_SIGNING_IDENTITY="" CODE_SIGNING_REQUIRED=NO")
+    scan(
+      scheme: "Contentful_tvOS",
+      clean: true,
+    )
   end
 
   desc "Description of what the lane does"

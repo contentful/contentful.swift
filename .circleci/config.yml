@@ -10,10 +10,9 @@ jobs:
           name: Install Carthage
           command: brew install carthage
       - run:
-          name: Bootstrap Carthage Dependencies
-          command: carthage checkout
+          name: Update Carthage Dependencies
+          command: carthage update --use-xcframeworks
       - run: bundle install
-      - run: bundle update
       - run:
           name: Run Tests with Fastlane
           command: bundle exec fastlane test_ios
@@ -27,10 +26,9 @@ jobs:
           name: Install Carthage
           command: brew install carthage
       - run:
-          name: Bootstrap Carthage Dependencies
-          command: carthage checkout
+          name: Update Carthage Dependencies
+          command: carthage update --use-xcframeworks
       - run: bundle install
-      - run: bundle update
       - run:
           name: Run Tests with Fastlane
           command: bundle exec fastlane test_macos
@@ -44,10 +42,9 @@ jobs:
           name: Install Carthage
           command: brew install carthage
       - run:
-          name: Bootstrap Carthage Dependencies
-          command: carthage checkout
+          name: Update Carthage Dependencies
+          command: carthage update --use-xcframeworks
       - run: bundle install
-      - run: bundle update
       - run:
           name: Run Tests with Fastlane
           command: bundle exec fastlane test_tvos
@@ -61,10 +58,9 @@ jobs:
           name: Install Carthage
           command: brew install carthage
       - run:
-          name: Bootstrap Carthage Dependencies
-          command: carthage checkout
+          name: Update Carthage Dependencies
+          command: carthage update --use-xcframeworks
       - run: bundle install
-      - run: bundle update
       - run:
           name: Run Tests with Fastlane
           command: bundle exec fastlane build
