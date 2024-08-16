@@ -7,5 +7,5 @@ gem 'dotenv'
 gem 'cocoapods'
 
 
-
+gem 'rb-readline'
 gem "fastlane"

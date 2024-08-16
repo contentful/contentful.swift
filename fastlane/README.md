@@ -15,10 +15,34 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
-### ios test
+### ios test_ios
 
 ```sh
-[bundle exec] fastlane ios test
+[bundle exec] fastlane ios test_ios
+```
+
+Description of what the lane does
+
+### ios test_macos
+
+```sh
+[bundle exec] fastlane ios test_macos
+```
+
+Description of what the lane does
+
+### ios test_tvos
+
+```sh
+[bundle exec] fastlane ios test_tvos
+```
+
+Description of what the lane does
+
+### ios build
+
+```sh
+[bundle exec] fastlane ios build
 ```
 
 Description of what the lane does
