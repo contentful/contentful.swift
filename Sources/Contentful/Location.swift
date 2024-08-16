@@ -12,7 +12,6 @@ import Foundation
 /// extra linking requirements for the SDK.
 @objc
 public class Location: NSObject, Decodable, NSCoding {
-
     /// The latitude of this location coordinate.
     public let latitude: Double
 
@@ -28,9 +27,9 @@ public class Location: NSObject, Decodable, NSCoding {
     // MARK: Decodable
 
     public required init(from decoder: Decoder) throws {
-        let container   = try decoder.container(keyedBy: CodingKeys.self)
-        latitude        = try container.decode(Double.self, forKey: .latitude)
-        longitude       = try container.decode(Double.self, forKey: .longitude)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        latitude = try container.decode(Double.self, forKey: .latitude)
+        longitude = try container.decode(Double.self, forKey: .longitude)
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -43,8 +42,8 @@ public class Location: NSObject, Decodable, NSCoding {
     /// Required initializer for NSCoding conformance.
     @objc
     public required init?(coder aDecoder: NSCoder) {
-        self.latitude = aDecoder.decodeDouble(forKey: CodingKeys.latitude.rawValue)
-        self.longitude = aDecoder.decodeDouble(forKey: CodingKeys.longitude.rawValue)
+        latitude = aDecoder.decodeDouble(forKey: CodingKeys.latitude.rawValue)
+        longitude = aDecoder.decodeDouble(forKey: CodingKeys.longitude.rawValue)
     }
 
     /// Required encoding function for NSCoding conformance.

@@ -7,7 +7,6 @@ public typealias FieldName = String
 
 /// A Field describes a single value inside an Entry.
 public struct Field: Decodable {
-
     private enum CodingKeys: String, CodingKey {
         case id
         case name
@@ -38,10 +37,10 @@ public struct Field: Decodable {
     public let type: FieldType
 
     /**
-        The item type of this Field (a subtype if `type` is `Array` or `Link`)
-        For `Array`s, itemType is inferred via items.type.
-        For `Link`s, itemType is inferred via "linkType".
-    */
+         The item type of this Field (a subtype if `type` is `Array` or `Link`)
+         For `Array`s, itemType is inferred via items.type.
+         For `Link`s, itemType is inferred via "linkType".
+     */
     public let itemType: FieldType
 
     public init(from decoder: Decoder) throws {
@@ -64,9 +63,9 @@ public struct Field: Decodable {
                 self.itemType = itemType
             }
         case .link:
-            self.itemType = try container.decode(FieldType.self, forKey: .linkType)
+            itemType = try container.decode(FieldType.self, forKey: .linkType)
         default:
-            self.itemType = .none
+            itemType = .none
         }
     }
 }

@@ -10,7 +10,6 @@ import Foundation
 
 /// A `ContentType` represents your content model for entries in a Contentful space.
 public class ContentType: Resource, FlatResource, Decodable, ResourceQueryable {
-
     /// The `QueryType` for `ContentType` is a `ContentTypeQuery`.
     public typealias QueryType = ContentTypeQuery
 
@@ -32,11 +31,11 @@ public class ContentType: Resource, FlatResource, Decodable, ResourceQueryable {
     }
 
     public required init(from decoder: Decoder) throws {
-        let container   = try decoder.container(keyedBy: CodingKeys.self)
-        sys             = try container.decode(Sys.self, forKey: .sys)
-        fields          = try container.decode([Field].self, forKey: .fields)
-        name            = try container.decode(String.self, forKey: .name)
-        description     = try container.decodeIfPresent(String.self, forKey: .description)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        sys = try container.decode(Sys.self, forKey: .sys)
+        fields = try container.decode([Field].self, forKey: .fields)
+        name = try container.decode(String.self, forKey: .name)
+        description = try container.decodeIfPresent(String.self, forKey: .description)
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -52,6 +51,5 @@ public class ContentType: Resource, FlatResource, Decodable, ResourceQueryable {
 }
 
 extension ContentType: EndpointAccessible {
-
     public static let endpoint = Endpoint.contentTypes
 }

@@ -10,18 +10,16 @@ import Foundation
 
 /// A simple protocol to bridge `Contentful.Asset` and other formats for storing asset information.
 public protocol AssetProtocol: FlatResource {
-
     /// String representation for the URL of the media file associated with this asset.
     var urlString: String? { get }
 }
 
 /// Classes conforming to this protocol can be decoded during JSON deserialization as reprsentations
-/// of Contentful assets. 
+/// of Contentful assets.
 public protocol AssetDecodable: AssetProtocol, Decodable {}
 
 /// An asset represents a media file in Contentful.
 public class Asset: LocalizableResource, AssetDecodable {
-
     /// The key paths for member fields of an Asset
     public enum Fields: String, CodingKey {
         /// Title description and file keys.
@@ -31,7 +29,6 @@ public class Asset: LocalizableResource, AssetDecodable {
     /// The URL for the underlying media file. Returns nil if the url was omitted from the response (i.e. `select` operation in query)
     /// or if the underlying media file is still processing with Contentful.
     public var url: URL? {
-
         guard let url = file?.url else { return nil }
         return url
     }
@@ -60,7 +57,6 @@ public class Asset: LocalizableResource, AssetDecodable {
 }
 
 public extension AssetProtocol {
-
     /// The URL for the underlying media file with additional options for server side manipulations
     /// such as format changes, resizing, cropping, and focusing on different areas including on faces,
     /// among others.
@@ -76,11 +72,9 @@ public extension AssetProtocol {
     }
 }
 
-extension Asset {
-
+public extension Asset {
     /// Metadata describing underlying media file.
-    public struct FileMetadata: Decodable {
-
+    struct FileMetadata: Decodable {
         /// Original filename of the file.
         public let fileName: String
 
@@ -111,8 +105,8 @@ extension Asset {
 
                 public init(from decoder: Decoder) throws {
                     let container = try decoder.container(keyedBy: CodingKeys.self)
-                    width         = try container.decode(Double.self, forKey: .width)
-                    height        = try container.decode(Double.self, forKey: .height)
+                    width = try container.decode(Double.self, forKey: .width)
+                    height = try container.decode(Double.self, forKey: .height)
                 }
 
                 private enum CodingKeys: String, CodingKey {
@@ -122,8 +116,8 @@ extension Asset {
 
             public init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
-                size          = try container.decode(Int.self, forKey: .size)
-                imageInfo     = try container.decodeIfPresent(ImageInfo.self, forKey: .image)
+                size = try container.decode(Int.self, forKey: .size)
+                imageInfo = try container.decodeIfPresent(ImageInfo.self, forKey: .image)
             }
 
             private enum CodingKeys: String, CodingKey {
@@ -132,12 +126,12 @@ extension Asset {
         }
 
         public init(from decoder: Decoder) throws {
-            let container   = try decoder.container(keyedBy: CodingKeys.self)
-            fileName        = try container.decode(String.self, forKey: .fileName)
-            contentType     = try container.decode(String.self, forKey: .contentType)
-            details         = try container.decode(Details.self, forKey: .details)
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            fileName = try container.decode(String.self, forKey: .fileName)
+            contentType = try container.decode(String.self, forKey: .contentType)
+            details = try container.decode(Details.self, forKey: .details)
             // Decodable handles URL's automatically but we need to prepend the https protocol.
-            let urlString   = try container.decode(String.self, forKey: .url)
+            let urlString = try container.decode(String.self, forKey: .url)
             guard let url = URL(string: "https:" + urlString) else {
                 throw SDKError.invalidURL(string: "Asset had urlString incapable of being made into a Foundation.URL object \(urlString)")
             }
@@ -151,12 +145,10 @@ extension Asset {
 }
 
 extension Asset: EndpointAccessible {
-
     public static let endpoint = Endpoint.assets
 }
 
 extension Asset: ResourceQueryable {
-
     /// The QueryType for an Asset is AssetQuery
     public typealias QueryType = AssetQuery
 }

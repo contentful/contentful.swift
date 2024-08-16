@@ -10,7 +10,6 @@ import Foundation
 
 /// A Space represents a collection of content types, locales, assets, and entries in Contentful.
 public class Space: Resource, FlatResource, Decodable {
-
     /// System fields.
     public let sys: Sys
 
@@ -28,10 +27,10 @@ public class Space: Resource, FlatResource, Decodable {
     // MARK: <Decodable>
 
     public required init(from decoder: Decoder) throws {
-        let container       = try decoder.container(keyedBy: CodingKeys.self)
-        sys                 = try container.decode(Sys.self, forKey: .sys)
-        name                = try container.decode(String.self, forKey: .name)
-        locales             = try container.decode([Locale].self, forKey: .locales)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        sys = try container.decode(Sys.self, forKey: .sys)
+        name = try container.decode(String.self, forKey: .name)
+        locales = try container.decode([Locale].self, forKey: .locales)
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -42,6 +41,5 @@ public class Space: Resource, FlatResource, Decodable {
 }
 
 extension Space: EndpointAccessible {
-
     public static let endpoint = Endpoint.spaces
 }

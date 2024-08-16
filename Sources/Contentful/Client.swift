@@ -14,7 +14,6 @@ public typealias ResultsHandler<T> = (_ result: Result<T, Error>) -> Void
 
 /// Client object for performing requests against the Contentful Delivery and Preview APIs.
 open class Client {
-
     /// The configuration for this instance of the client.
     public let clientConfiguration: ClientConfiguration
 
@@ -37,11 +36,11 @@ open class Client {
     public let host: String
 
     /**
-    Builder for `JSONDecoder` instance that is used to deserialize JSONs.
+     Builder for `JSONDecoder` instance that is used to deserialize JSONs.
 
-    `Client` will inject information about the locales to the builder and use this information
-    to normalize the fields dictionary of entries and assets.
-     */
+     `Client` will inject information about the locales to the builder and use this information
+     to normalize the fields dictionary of entries and assets.
+      */
     private let jsonDecoderBuilder = JSONDecoderBuilder()
 
     // Always returns new instance of the decoder. For legacy code support.
@@ -55,7 +54,7 @@ open class Client {
     /// persistence integration at <https://github.com/contentful/contentful-persistence.swift>.
     public var persistenceIntegration: PersistenceIntegration? {
         didSet {
-            guard var headers = self.urlSession.configuration.httpAdditionalHeaders else {
+            guard var headers = urlSession.configuration.httpAdditionalHeaders else {
                 assertionFailure("Headers should have already been set on the current URL Session.")
                 return
             }
@@ -64,17 +63,17 @@ open class Client {
 
             // There is a bug in foundation with directly setting the headers like so self.urlSession.configuration.header = ...
             // so we must recreate the URLSession in order to set the headers.
-            let configuration = self.urlSession.configuration
+            let configuration = urlSession.configuration
             configuration.httpAdditionalHeaders = headers
-            self.urlSession = URLSession(configuration: configuration)
+            urlSession = URLSession(configuration: configuration)
         }
     }
 
-    internal var urlSession: URLSession
+    var urlSession: URLSession
 
-    fileprivate(set) internal var space: Space?
+    fileprivate(set) var space: Space?
 
-    fileprivate var scheme: String { return clientConfiguration.secure ? "https": "http" }
+    fileprivate var scheme: String { return clientConfiguration.secure ? "https" : "http" }
 
     /// Initializes a new Contentful client instance
     ///
@@ -96,8 +95,8 @@ open class Client {
                 clientConfiguration: ClientConfiguration = .default,
                 sessionConfiguration: URLSessionConfiguration = .default,
                 persistenceIntegration: PersistenceIntegration? = nil,
-                contentTypeClasses: [EntryDecodable.Type]? = nil) {
-
+                contentTypeClasses: [EntryDecodable.Type]? = nil)
+    {
         self.spaceId = spaceId
         self.environmentId = environmentId
         self.host = host
@@ -123,13 +122,13 @@ open class Client {
         self.persistenceIntegration = persistenceIntegration
         var contentfulHTTPHeaders: [AnyHashable: Any] = [
             "Authorization": "Bearer \(accessToken)",
-            "X-Contentful-User-Agent": clientConfiguration.userAgentString(with: persistenceIntegration)
+            "X-Contentful-User-Agent": clientConfiguration.userAgentString(with: persistenceIntegration),
         ]
         if let additionalHeaders = sessionConfiguration.httpAdditionalHeaders {
-            contentfulHTTPHeaders.merge(additionalHeaders) { (currentPair, _) in currentPair }
+            contentfulHTTPHeaders.merge(additionalHeaders) { currentPair, _ in currentPair }
         }
         sessionConfiguration.httpAdditionalHeaders = contentfulHTTPHeaders
-        self.urlSession = URLSession(configuration: sessionConfiguration)
+        urlSession = URLSession(configuration: sessionConfiguration)
     }
 
     deinit {
@@ -153,14 +152,14 @@ open class Client {
         }
 
         let queryItems: [URLQueryItem]? = parameters?.map { key, value in
-            return URLQueryItem(name: key, value: value)
+            URLQueryItem(name: key, value: value)
         }
         // Since Swift 4.2, the order of a dictionary's keys will vary accross executions so we must sort
         // the parameters so that the URL is consistent accross executions (so that all test recordings are found).
         components.queryItems = queryItems?.sorted { a, b in
-            return a.name > b.name
+            a.name > b.name
         }
-        
+
         // Encode a + sign just in case
         components.percentEncodedQuery = components.percentEncodedQuery?
             .replacingOccurrences(of: "+", with: "%2B")
@@ -169,15 +168,15 @@ open class Client {
         return url
     }
 
-    internal func fetchDecodable<DecodableType: Decodable>(
+    func fetchDecodable<DecodableType: Decodable>(
         url: URL,
         completion: @escaping ResultsHandler<DecodableType>
     ) -> URLSessionDataTask {
-        let finishDataFetch: (ResultsHandler<Data>) = { result in
+        let finishDataFetch: ResultsHandler<Data> = { result in
             switch result {
-            case .success(let mappableData):
+            case let .success(mappableData):
                 self.handleJSON(data: mappableData, completion: completion)
-            case .failure(let error):
+            case let .failure(error):
                 completion(.failure(error))
             }
         }
@@ -192,7 +191,7 @@ open class Client {
                     case .success:
                         // Trigger chain with data we're currently interested in.
                         finishDataFetch(dataResult)
-                    case .failure(let error):
+                    case let .failure(error):
                         // Return the current error.
                         finishDataFetch(.failure(error))
                     }
@@ -202,7 +201,7 @@ open class Client {
         return task
     }
 
-    internal func fetchData(url: URL, completion: @escaping ResultsHandler<Data>) -> URLSessionDataTask {
+    func fetchData(url: URL, completion: @escaping ResultsHandler<Data>) -> URLSessionDataTask {
         let jsonDecoder = jsonDecoderBuilder.build()
 
         let task = urlSession.dataTask(with: url) { data, response, error in
@@ -222,7 +221,8 @@ open class Client {
                     if response.statusCode != 200 {
                         if let apiError = APIError.error(with: jsonDecoder,
                                                          data: data,
-                                                         statusCode: response.statusCode) {
+                                                         statusCode: response.statusCode)
+                        {
                             let errorMessage = """
                             Errored: 'GET' (\(response.statusCode)) \(url.absoluteString)
                             Message: \(apiError.message!)"
@@ -275,7 +275,7 @@ open class Client {
         return task
     }
 
-    internal func fetchResource<ResourceType>(
+    func fetchResource<ResourceType>(
         resourceType: ResourceType.Type,
         id: String,
         include includesLevel: UInt? = nil,
@@ -295,13 +295,13 @@ open class Client {
         // sent as `.success`, or an `.error` is sent.
         let fetchCompletion: (Result<HomogeneousArrayResponse<ResourceType>, Error>) -> Void = { result in
             switch result {
-            case .success(let response):
+            case let .success(response):
                 guard let firstItem = response.items.first else {
                     completion(.failure(SDKError.noResourceFoundFor(id: id)))
                     break
                 }
                 completion(.success(firstItem))
-            case .failure(let error):
+            case let .failure(error):
                 completion(.failure(error))
             }
         }
@@ -320,22 +320,22 @@ open class Client {
     /// Fetches the space this client is configured to interface with.
 
     /**
-    Fetches the `Space` the client is configured to interface with.
+     Fetches the `Space` the client is configured to interface with.
 
-    If there is a space in the cache, it will be returned and no request will be performed.
-    Otherwise, the space will be fetched and stored.
-     */
+     If there is a space in the cache, it will be returned and no request will be performed.
+     Otherwise, the space will be fetched and stored.
+      */
     @discardableResult
-    internal func fetchCurrentSpace(then completion: @escaping ResultsHandler<Space>) -> URLSessionDataTask? {
+    func fetchCurrentSpace(then completion: @escaping ResultsHandler<Space>) -> URLSessionDataTask? {
         // Attempt to pull from cache first.
-        if let space = self.space {
+        if let space = space {
             completion(.success(space))
             return nil
         }
 
         return fetchDecodable(url: url(endpoint: .spaces)) { (result: Result<Space, Error>) in
             switch result {
-            case .success(let space):
+            case let .success(space):
                 self.space = space
             default:
                 break
@@ -351,15 +351,14 @@ open class Client {
     ///   - completion: A handler being called on completion of the request.
     /// - Returns: Returns the `URLSessionDataTask` of the request which can be used for request cancellation.
     @discardableResult
-    internal func fetchCurrentSpaceLocales(then completion: @escaping ResultsHandler<HomogeneousArrayResponse<Contentful.Locale>>) -> URLSessionDataTask {
-
+    func fetchCurrentSpaceLocales(then completion: @escaping ResultsHandler<HomogeneousArrayResponse<Contentful.Locale>>) -> URLSessionDataTask {
         // The robust thing to do would be to fetch all pages of the `/locales` endpoint, however, pagination is not supported
         // at the moment. We also are not expecting any consumers to have > 1000 locales as Contentful subscriptions do not allow that.
         let query = ResourceQuery.limit(to: QueryConstants.maxLimit)
         let url = self.url(endpoint: .locales, parameters: query.parameters)
         return fetchDecodable(url: url) { (result: Result<HomogeneousArrayResponse<Contentful.Locale>, Error>) in
             switch result {
-            case .success(let localesArray):
+            case let .success(localesArray):
                 let locales = localesArray.items
                 self.locales = locales
 
@@ -374,15 +373,15 @@ open class Client {
                 self.localizationContext = localizationContext
                 completion(result)
 
-            case .failure(let error):
+            case let .failure(error):
                 completion(.failure(error))
             }
         }
     }
 
     @discardableResult
-    private func fetchLocalesIfNecessary(then completion: @escaping ResultsHandler<Array<Contentful.Locale>>) -> URLSessionDataTask? {
-        if let locales = self.locales {
+    private func fetchLocalesIfNecessary(then completion: @escaping ResultsHandler<[Contentful.Locale]>) -> URLSessionDataTask? {
+        if let locales = locales {
             let localeCodes = locales.map { $0.code }
             persistenceIntegration?.update(localeCodes: localeCodes)
             completion(Result.success(locales))
@@ -390,9 +389,9 @@ open class Client {
         }
         return fetchCurrentSpaceLocales { result in
             switch result {
-            case .success(let localesResponse):
+            case let .success(localesResponse):
                 completion(Result.success(localesResponse.items))
-            case .failure(let error):
+            case let .failure(error):
                 completion(.failure(error))
             }
         }
@@ -402,7 +401,6 @@ open class Client {
     fileprivate func readRateLimitHeaderIfPresent(response: URLResponse?) -> Int? {
         if let httpResponse = response as? HTTPURLResponse {
             if httpResponse.statusCode == 429 {
-
                 let rateLimitResetPair = httpResponse.allHeaderFields.filter { arg in
                     let (key, _) = arg
                     return (key as? String)?.lowercased() == "x-contentful-ratelimit-reset"
@@ -410,7 +408,6 @@ open class Client {
                 if let rateLimitResetString = rateLimitResetPair.first?.value as? String {
                     return Int(rateLimitResetString)
                 }
-
             }
         }
         return nil
@@ -423,21 +420,21 @@ open class Client {
         jsonDecoder: JSONDecoder,
         completion: ResultsHandler<Data>
     ) -> Bool {
-        guard let timeUntilLimitReset = self.readRateLimitHeaderIfPresent(response: response) else { return false }
+        guard let timeUntilLimitReset = readRateLimitHeaderIfPresent(response: response) else { return false }
 
         // At this point, We know for sure that the type returned by the API can be mapped to an `APIError` instance.
         // Directly handle JSON and exit.
         let statusCode = (response as! HTTPURLResponse).statusCode
-        self.handleRateLimitJSON(
+        handleRateLimitJSON(
             data: data,
             timeUntilLimitReset: timeUntilLimitReset,
             statusCode: statusCode,
             jsonDecoder: jsonDecoder
         ) { (_ result: Result<RateLimitError, Error>) in
             switch result {
-            case .success(let rateLimitError):
+            case let .success(rateLimitError):
                 completion(.failure(rateLimitError))
-            case .failure(let auxillaryError):
+            case let .failure(auxillaryError):
                 // We should never get here, but we'll bubble up what should be a `SDKError.unparseableJSON` error just in case.
                 completion(.failure(auxillaryError))
             }
@@ -477,7 +474,7 @@ open class Client {
         var decodedObject: DecodableType?
         do {
             decodedObject = try jsonDecoder.decode(DecodableType.self, from: data)
-        } catch let error {
+        } catch {
             let sdkError = SDKError.unparseableJSON(data: data, errorMessage: "\(error)")
             ContentfulLogger.log(.error, message: sdkError.message)
             completion(.failure(sdkError))

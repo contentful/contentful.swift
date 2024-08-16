@@ -14,7 +14,6 @@ import Foundation
 /// Proper conformance to this protocol should enable persisting the state changes that happen in your Contentful
 /// space to a persistent store such as `CoreData`.
 public protocol PersistenceIntegration: Integration {
-
     /// Updates the `PersistenceIntegration` with information about the locales supported in the current space.
     func update(localeCodes: [LocaleCode])
 

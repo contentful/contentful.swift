@@ -13,7 +13,7 @@ public enum Endpoint: String {
     /// The spaces endpoint; also the base-path for all other endpoints.
     case spaces = ""
     /// The content types endpoint.
-    case contentTypes  = "content_types"
+    case contentTypes = "content_types"
     /// The entries endpoint.
     case entries
     /// The assets endpoint.

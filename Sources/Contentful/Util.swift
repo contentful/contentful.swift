@@ -9,20 +9,19 @@
 import Foundation
 
 /// Utility method to add two dictionaries of the same time.
-public func +=<K, V> (left: [K: V], right: [K: V]) -> [K: V] {
+public func += <K, V>(left: [K: V], right: [K: V]) -> [K: V] {
     var result = left
     right.forEach { key, value in result[key] = value }
     return result
 }
 
 /// Utility method to add two dictionaries of the same time.
-public func +<K, V> (left: [K: V], right: [K: V]) -> [K: V] {
+public func + <K, V>(left: [K: V], right: [K: V]) -> [K: V] {
     return left += right
 }
 
 /// Convenience methods for reading from dictionaries without conditional casts.
 public extension Dictionary where Key: ExpressibleByStringLiteral {
-
     /// Extract the String at the specified fieldName.
     ///
     /// - Parameter key: The name of the field to extract the `String` from.
@@ -105,7 +104,6 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
         return self[key] as? Bool
     }
 
-
     /// Extracts the `Contentful.Location` at the specified fieldName.
     ///
     /// - Parameter key: The name of the field to extract the `Contentful.Location` value from.
@@ -120,12 +118,12 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
 }
 
 // Convenience protocol and accompanying extension for extracting the type of data wrapped in an Optional.
-internal protocol OptionalProtocol {
+protocol OptionalProtocol {
     static func wrappedType() -> Any.Type
 }
 
 extension Optional: OptionalProtocol {
-    internal static func wrappedType() -> Any.Type {
+    static func wrappedType() -> Any.Type {
         return Wrapped.self
     }
 }

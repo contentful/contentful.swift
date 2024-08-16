@@ -10,7 +10,6 @@ import Foundation
 
 /// Protocol for resources inside Contentful.
 public protocol Resource {
-
     /// System fields.
     var sys: Sys { get }
 }
@@ -54,12 +53,10 @@ public extension FlatResource where Self: Resource {
 
 /// A protocol enabling strongly typed queries to the Contentful Delivery API via the SDK.
 public protocol FieldKeysQueryable {
-
     /// The `CodingKey` representing the field identifiers/JSON keys for the corresponding content type.
     /// These coding keys should be the same as those used when implementing `Decodable`.
     associatedtype FieldKeys: CodingKey
 }
-
 
 /// Classes conforming to this protocol are accessible via an `Endpoint`.
 public protocol EndpointAccessible {
@@ -78,10 +75,9 @@ public typealias ContentTypeId = String
 
 /// Class to represent the information describing a resource that has been deleted from Contentful.
 public class DeletedResource: Resource, FlatResource, Decodable {
-
     public let sys: Sys
 
-    internal init(sys: Sys) {
+    init(sys: Sys) {
         self.sys = sys
     }
 }
@@ -92,7 +88,6 @@ public class DeletedResource: Resource, FlatResource, Decodable {
 /// all locales in moery. This class gives an interface to specify which locale should be used when
 /// reading content from `Resource` instances that are in memory.
 public class LocalizableResource: Resource, FlatResource, Codable {
-
     /// System fields.
     public let sys: Sys
 
@@ -101,7 +96,7 @@ public class LocalizableResource: Resource, FlatResource, Codable {
 
     /// The metadata linking to additional content like tags.
     public var metadata: Metadata?
-    
+
     /// type of resource
     public var type: ContentType?
     /// The fields with content. If there is no value for a field associated with the currently selected `Locale`,
@@ -127,15 +122,14 @@ public class LocalizableResource: Resource, FlatResource, Codable {
     }
 
     // Locale to Field mapping.
-    internal var localizableFields: [FieldName: [LocaleCode: Any]]
+    var localizableFields: [FieldName: [LocaleCode: Any]]
 
     // Context used for handling locales during decoding of `Asset` and `Entry` instances.
-    internal let localizationContext: LocalizationContext
+    let localizationContext: LocalizationContext
 
     public required init(from decoder: Decoder) throws {
-
-        let container       = try decoder.container(keyedBy: CodingKeys.self)
-        let sys             = try container.decode(Sys.self, forKey: .sys)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let sys = try container.decode(Sys.self, forKey: .sys)
 
         guard let localizationContext = decoder.userInfo[.localizationContextKey] as? LocalizationContext else {
             throw SDKError.localeHandlingError(message: """
@@ -154,11 +148,11 @@ public class LocalizableResource: Resource, FlatResource, Codable {
         }
         self.sys = sys
 
-        let fieldsDictionary = try container.decode(Dictionary<FieldName, Any>.self, forKey: .fields)
+        let fieldsDictionary = try container.decode([FieldName: Any].self, forKey: .fields)
         localizableFields = try Localization.fieldsInMultiLocaleFormat(from: fieldsDictionary,
                                                                        selectedLocale: currentlySelectedLocale,
                                                                        wasSelectedOnAPILevel: sys.locale != nil)
-        self.metadata = try? container.decode(Metadata.self, forKey: .metadata)
+        metadata = try? container.decode(Metadata.self, forKey: .metadata)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -180,7 +174,6 @@ public class LocalizableResource: Resource, FlatResource, Codable {
 // MARK: Internal
 
 extension LocalizableResource: Hashable {
-
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
         hasher.combine(sys.updatedAt)
@@ -188,7 +181,6 @@ extension LocalizableResource: Hashable {
 }
 
 extension LocalizableResource: Equatable {
-
     public static func == (lhs: LocalizableResource, rhs: LocalizableResource) -> Bool {
         return lhs.id == rhs.id && lhs.sys.updatedAt == rhs.sys.updatedAt
     }

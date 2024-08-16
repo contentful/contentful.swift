@@ -7,14 +7,13 @@
 
 import Foundation
 
-internal final class JSONDecoderBuilder {
+final class JSONDecoderBuilder {
+    var dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .custom(Date.variableISO8601Strategy)
+    var localizationContext: LocalizationContext?
+    var timeZone: TimeZone?
+    var contentTypes = [ContentTypeId: EntryDecodable.Type]()
 
-    internal var dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .custom(Date.variableISO8601Strategy)
-    internal var localizationContext: LocalizationContext?
-    internal var timeZone: TimeZone?
-    internal var contentTypes = [ContentTypeId: EntryDecodable.Type]()
-
-    internal func build() -> JSONDecoder {
+    func build() -> JSONDecoder {
         let jsonDecoder = JSONDecoder()
         jsonDecoder.dateDecodingStrategy = dateDecodingStrategy
         jsonDecoder.userInfo[.localizationContextKey] = localizationContext

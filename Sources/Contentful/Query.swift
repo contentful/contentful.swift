@@ -12,47 +12,45 @@ import Foundation
 /// Use these static variables to avoid making typos when constructing queries. It is recommended to take
 /// advantage of `Client` "fetch" methods that take `Query` types instead of constructing query dictionaries on your own.
 public enum QueryParameter {
-
     /// The parameter for specifying the content type of returned entries.
-    public static let contentType      = "content_type"
+    public static let contentType = "content_type"
 
     /// The parameter name for incoming links to an entry: See <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/links-to-entry>
-    public static let linksToEntry     = "links_to_entry"
+    public static let linksToEntry = "links_to_entry"
 
     /// The parameter name for incoming links to an asset: See <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/links-to-asset>
-    public static let linksToAsset     = "links_to_asset"
+    public static let linksToAsset = "links_to_asset"
 
     /// The [select operator](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/select-operator)
-    public static let select           = "select"
+    public static let select = "select"
 
     /// The [order parameter](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/order)
-    public static let order            = "order"
+    public static let order = "order"
 
     /// Limit the number of items allowed in a response. See [limit](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/limit).
-    public static let limit            = "limit"
+    public static let limit = "limit"
 
     /// The offset to be used with `limit` for pagination. See [Skip](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/skip).
-    public static let skip             = "skip"
+    public static let skip = "skip"
 
     /// The level depth of including resources to resolve. See [Links](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/links)
-    public static let include          = "include"
+    public static let include = "include"
 
     /// The locale that you want to localize your responses to. See [Localization](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/localization)
-    public static let locale           = "locale"
+    public static let locale = "locale"
 
     /// A query parameter to [filter assets by the mimetype](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/filtering-assets-by-mime-type)
     /// of the referenced binary file
-    public static let mimetypeGroup    = "mimetype_group"
+    public static let mimetypeGroup = "mimetype_group"
 
     /// Use this to pass in a query to search accross all text and symbol fields in your space. See [Full-text search](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/full-text-search)
-    public static let fullTextSearch   = "query"
+    public static let fullTextSearch = "query"
 }
 
 /// A small class to create parameters used for ordering the responses when querying an endpoint
 /// that returns a colleciton of resources.
 /// See: `ChainableQuery.order(by order: Ordering...)`
 public class Ordering {
-
     /// Initializes a new `Ordering` operator.
     ///
     /// - Parameters:
@@ -63,7 +61,7 @@ public class Ordering {
     public init(_ propertyKeyPath: String, inReverse: Bool = false) throws {
         try Ordering.validateKeyPath(propertyKeyPath)
         // If validation fails, control flow will not reach here.
-        self.reverse = inReverse
+        reverse = inReverse
         self.propertyKeyPath = propertyKeyPath
     }
 
@@ -78,12 +76,12 @@ public class Ordering {
     }
 
     private static func validateKeyPath(_ propertyKeyPath: String) throws {
-        if propertyKeyPath.hasPrefix("fields.") == false && propertyKeyPath.hasPrefix("sys.") == false {
+        if propertyKeyPath.hasPrefix("fields.") == false, propertyKeyPath.hasPrefix("sys.") == false {
             throw QueryError.invalidOrderProperty
         }
     }
 
-    internal var parameterValue: String {
+    var parameterValue: String {
         if reverse {
             return "-\(propertyKeyPath)"
         } else {
@@ -91,8 +89,8 @@ public class Ordering {
         }
     }
 
-    internal let propertyKeyPath: String
-    internal let reverse: Bool
+    let propertyKeyPath: String
+    let reverse: Bool
 }
 
 /// A small class to create parameters used for ordering the responses when querying an endpoint
@@ -100,7 +98,6 @@ public class Ordering {
 /// conforms to `ResourceQueryable` in order to take advantage of the `FieldKeys` available on your type.
 /// See: `ChainableQuery.order(by order: Ordering...)`
 public class Ordered<EntryType>: Ordering where EntryType: FieldKeysQueryable {
-
     /// Initializes a new `Ordering<EntryType>` operator.
     ///
     /// - Parameters:
@@ -112,39 +109,35 @@ public class Ordered<EntryType>: Ordering where EntryType: FieldKeysQueryable {
     }
 }
 
-internal enum QueryConstants {
-    internal static let maxLimit: UInt               = 1000
-    internal static let maxSelectedProperties: UInt  = 99
-    internal static let maxIncludes: UInt            = 10
+enum QueryConstants {
+    static let maxLimit: UInt = 1000
+    static let maxSelectedProperties: UInt = 99
+    static let maxIncludes: UInt = 10
 }
 
 /// Use types that conform to QueryableRange to perform queries with the four Range operators
 /// See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/ranges>
 public protocol QueryableRange {
-
     /// A string representation of a query value that can be used in an API query.
     var stringValue: String { get }
 }
 
 extension Int: QueryableRange {
-
     public var stringValue: String {
         return String(self)
     }
 }
 
 extension String: QueryableRange {
-
     public var stringValue: String {
         return self
     }
 }
 
 extension Date: QueryableRange {
-
     /// The ISO8601 string representation of the receiving Date object.
     public var stringValue: String {
-        return self.iso8601String
+        return iso8601String
     }
 }
 
@@ -190,7 +183,6 @@ public enum MimetypeGroup: String {
 /// A base abtract type which holds the bare essentials shared by all query types in the SDK which enable
 /// querying against content types, entries and assets.
 public protocol AbstractQuery: AnyObject {
-
     /// A compiler-forced, required, and designated initializer. Creates affordance that the default implementation
     /// of AbstractQuery guarantees an object is constructed before doing additional mutations in convenience initializers.
     init()
@@ -200,8 +192,8 @@ public protocol AbstractQuery: AnyObject {
 }
 
 // MARK: - KeyPath/Value operations.
-public extension AbstractQuery {
 
+public extension AbstractQuery {
     /// Static method for creating a `Query` with a `Query.Operation`. This variation for initialization guarantees correct query construction
     /// when performing operations on "sys" members. See the concrete types `Query`, `FilterQuery`, `AssetQuery`, and `QueryOn`
     /// for more information and example usage.
@@ -213,7 +205,7 @@ public extension AbstractQuery {
     static func `where`(sys key: Sys.CodingKeys, _ operation: Query.Operation) -> Self {
         return Self.where(valueAtKeyPath: "sys.\(key.stringValue)", operation)
     }
-    
+
     /// Static method for creating a `Query` with a `Query.Operation`. This variation for initialization guarantees correct query construction
     /// when performing operations on "metadata" members. See the concrete types `Query`, `FilterQuery`, `AssetQuery`, and `QueryOn`
     /// for more information and example usage.
@@ -225,7 +217,7 @@ public extension AbstractQuery {
     static func `where`(metadata key: Metadata.CodingKeys, _ operation: Query.Operation) -> Self {
         return Self.where(valueAtKeyPath: "metadata.\(key.stringValue)", operation)
     }
-    
+
     /// Static method for creating a `Query` with a `Query.Operation`. This variation for initialization guarantees correct query construction
     /// when performing operations on "metadata" members. See the concrete types `Query`, `FilterQuery`, `AssetQuery`, and `QueryOn`
     /// for more information and example usage.
@@ -265,7 +257,6 @@ public extension AbstractQuery {
 /// so that all concrete types, `Query`, `AssetQuery`, `FilterQuery`, and `QueryOn<EntryType>`, can use the same implementation.
 public protocol ChainableQuery: AbstractQuery {}
 public extension ChainableQuery {
-
     /// Instance method for appending a `Query.Operation` to a `Query`. This variation for creating a query guarantees correct query construction
     /// when performing operations on "sys" members. See concrete types `Query`, `FilterQuery`, `AssetQuery`, and `QueryOn`
     /// for more information and example usage.
@@ -279,7 +270,7 @@ public extension ChainableQuery {
         self.where(valueAtKeyPath: "sys.\(key.stringValue)", operation)
         return self
     }
-    
+
     /// Instance method for appending a `Query.Operation` to a `Query`. This variation for creating a query guarantees correct query construction
     /// when performing operations on "metadata" members. See concrete types `Query`, `FilterQuery`, `AssetQuery`, and `QueryOn`
     /// for more information and example usage.
@@ -293,7 +284,7 @@ public extension ChainableQuery {
         self.where(valueAtKeyPath: "metadata.\(key.stringValue)", operation)
         return self
     }
-    
+
     /// Instance method for appending a `Query.Operation` to a `Query`. This variation for creating a query guarantees correct query construction
     /// when performing operations on "metadata" members. See concrete types `Query`, `FilterQuery`, `AssetQuery`, and `QueryOn`
     /// for more information and example usage.
@@ -349,10 +340,9 @@ public extension ChainableQuery {
     /// - Returns: A reference to the receiving query to enable chaining.
     @discardableResult
     func `where`(valueAtKeyPath keyPath: String, _ operation: Query.Operation) -> Self {
-
         // Create parameter for this query operation.
         let parameter = keyPath + operation.string
-        self.parameters[parameter] = operation.values
+        parameters[parameter] = operation.values
         return self
     }
 
@@ -383,7 +373,7 @@ public extension ChainableQuery {
     @discardableResult
     func searching(for text: String) throws -> Self {
         guard text.count > 1 else { throw QueryError.textSearchTooShort }
-        self.parameters[QueryParameter.fullTextSearch] = text
+        parameters[QueryParameter.fullTextSearch] = text
         return self
     }
 
@@ -418,7 +408,7 @@ public extension ChainableQuery {
     @discardableResult
     func include(_ includesLevel: UInt) -> Self {
         let includes = min(includesLevel, QueryConstants.maxIncludes)
-        self.parameters[QueryParameter.include] = String(includes)
+        parameters[QueryParameter.include] = String(includes)
         return self
     }
 
@@ -453,7 +443,7 @@ public extension ChainableQuery {
     /// - Returns: A reference to the receiving query to enable chaining.
     @discardableResult
     func skip(theFirst numberOfResults: UInt) -> Self {
-        self.parameters[QueryParameter.skip] = String(numberOfResults)
+        parameters[QueryParameter.skip] = String(numberOfResults)
         return self
     }
 
@@ -501,10 +491,10 @@ public extension ChainableQuery {
     // cannot be passed into a function expecting a variadic parameter.
     @discardableResult
     private func order(by order: [Ordering]) -> Self {
-        let propertyPathsWithReversals = order.map { return $0.parameterValue }
+        let propertyPathsWithReversals = order.map { $0.parameterValue }
         let joinedPropertyNames = propertyPathsWithReversals.joined(separator: ",")
 
-        self.parameters[QueryParameter.order] = joinedPropertyNames
+        parameters[QueryParameter.order] = joinedPropertyNames
         return self
     }
 
@@ -542,7 +532,7 @@ public extension ChainableQuery {
     func limit(to numberOfResults: UInt) -> Self {
         let limit = min(numberOfResults, QueryConstants.maxLimit)
 
-        self.parameters[QueryParameter.limit] = String(limit)
+        parameters[QueryParameter.limit] = String(limit)
         return self
     }
 }
@@ -550,7 +540,6 @@ public extension ChainableQuery {
 /// A base abtract type which holds methods and constructors for all valid queries against resource: i.e. Contentful entries and assets.
 public protocol AbstractResourceQuery: ChainableQuery {}
 public extension AbstractResourceQuery {
-
     /// Static method to create a query which specifies the locale of the entries that should be returned.
     /// If there's no content available for the requested locale the API will try the fallback locale of the requested locale.
     ///
@@ -574,7 +563,7 @@ public extension AbstractResourceQuery {
     /// - Returns: A reference to the receiving query to enable chaining.
     @discardableResult
     func localizeResults(withLocaleCode localeCode: LocaleCode) -> Self {
-        self.parameters[QueryParameter.locale] = localeCode
+        parameters[QueryParameter.locale] = localeCode
         return self
     }
 
@@ -633,7 +622,6 @@ public extension AbstractResourceQuery {
     ///           or if more than 99 properties are selected.
     @discardableResult
     func select(fieldsNamed fieldNames: [FieldName]) throws -> Self {
-
         guard fieldNames.count <= Int(QueryConstants.maxSelectedProperties) else { throw QueryError.maxSelectionLimitExceeded }
 
         let keyPaths = fieldNames.map { "fields.\($0)" }
@@ -652,7 +640,6 @@ public extension AbstractResourceQuery {
 /// See: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters>
 public protocol EntryQuery: AbstractResourceQuery {}
 public extension EntryQuery {
-
     /// Initializes a new query specifying the `content_type` parameter to narrow the results to
     /// entries that have that content type identifier.
     ///
@@ -674,7 +661,7 @@ public extension EntryQuery {
     /// - Returns: A reference to the receiving query to enable chaining.
     @discardableResult
     func `where`(contentTypeId: ContentTypeId) -> Self {
-        self.parameters[QueryParameter.contentType] = contentTypeId
+        parameters[QueryParameter.contentType] = contentTypeId
         return self
     }
 
@@ -699,10 +686,11 @@ public extension EntryQuery {
     ///   - operation: The `Query.Operation` used to match the value of at the target key path.
     /// - Returns: A newly initialized query for searching on references.
     static func `where`(linkAtFieldNamed linkingFieldName: String,
-                               onSourceContentTypeWithId sourceContentTypeId: ContentTypeId,
-                               hasValueAtKeyPath targetKeyPath: String,
-                               withTargetContentTypeId targetContentTypeId: ContentTypeId,
-                               that operation: Query.Operation) -> Self {
+                        onSourceContentTypeWithId sourceContentTypeId: ContentTypeId,
+                        hasValueAtKeyPath targetKeyPath: String,
+                        withTargetContentTypeId targetContentTypeId: ContentTypeId,
+                        that operation: Query.Operation) -> Self
+    {
         let query = Self()
         query.where(linkAtFieldNamed: linkingFieldName,
                     onSourceContentTypeWithId: sourceContentTypeId,
@@ -726,15 +714,16 @@ public extension EntryQuery {
     /// - Returns: A reference to the receiving query to enable chaining.
     @discardableResult
     func `where`(linkAtFieldNamed linkingFieldName: String,
-                        onSourceContentTypeWithId sourceContentTypeId: ContentTypeId,
-                        hasValueAtKeyPath targetKeyPath: String,
-                        withTargetContentTypeId targetContentTypeId: ContentTypeId,
-                        that operation: Query.Operation) -> Self {
-        self.parameters[QueryParameter.contentType] = sourceContentTypeId
-        self.parameters["fields.\(linkingFieldName).sys.contentType.sys.id"] = targetContentTypeId
+                 onSourceContentTypeWithId sourceContentTypeId: ContentTypeId,
+                 hasValueAtKeyPath targetKeyPath: String,
+                 withTargetContentTypeId targetContentTypeId: ContentTypeId,
+                 that operation: Query.Operation) -> Self
+    {
+        parameters[QueryParameter.contentType] = sourceContentTypeId
+        parameters["fields.\(linkingFieldName).sys.contentType.sys.id"] = targetContentTypeId
 
         let filterParameterName = "fields.\(linkingFieldName).\(targetKeyPath)\(operation.string)"
-        self.parameters[filterParameterName] = operation.values
+        parameters[filterParameterName] = operation.values
         return self
     }
 
@@ -757,8 +746,9 @@ public extension EntryQuery {
     ///   - targetId: The identifier of the entry or asset being linked to at the specified linking field.
     /// - Returns: A newly initialized query for searching on references.
     static func `where`(linkAtFieldNamed linkingFieldName: String,
-                               onSourceContentTypeWithId sourceContentTypeId: ContentTypeId,
-                               hasTargetId targetId: String) -> Self {
+                        onSourceContentTypeWithId sourceContentTypeId: ContentTypeId,
+                        hasTargetId targetId: String) -> Self
+    {
         let query = Self()
         query.where(linkAtFieldNamed: linkingFieldName,
                     onSourceContentTypeWithId: sourceContentTypeId,
@@ -778,10 +768,11 @@ public extension EntryQuery {
     /// - Returns: A reference to the receiving query to enable chaining.
     @discardableResult
     func `where`(linkAtFieldNamed linkingFieldName: String,
-                        onSourceContentTypeWithId sourceContentTypeId: ContentTypeId,
-                        hasTargetId targetId: String) -> Self {
-        self.parameters[QueryParameter.contentType] = sourceContentTypeId
-        self.parameters["fields.\(linkingFieldName).sys.id"] = targetId
+                 onSourceContentTypeWithId sourceContentTypeId: ContentTypeId,
+                 hasTargetId targetId: String) -> Self
+    {
+        parameters[QueryParameter.contentType] = sourceContentTypeId
+        parameters["fields.\(linkingFieldName).sys.id"] = targetId
 
         return self
     }
@@ -804,7 +795,7 @@ public extension EntryQuery {
     /// - Returns: A reference to the receiving query to enable chaining.
     @discardableResult
     func `where`(linksToEntryWithId entryId: String) -> Self {
-        self.parameters[QueryParameter.linksToEntry] = entryId
+        parameters[QueryParameter.linksToEntry] = entryId
         return self
     }
 
@@ -826,25 +817,24 @@ public extension EntryQuery {
     /// - Returns: A reference to the receiving query to enable chaining.
     @discardableResult
     func `where`(linksToAssetWithId assetId: String) -> Self {
-        self.parameters[QueryParameter.linksToAsset] = assetId
+        parameters[QueryParameter.linksToAsset] = assetId
         return self
     }
 }
 
 /// A concrete implementation of AbstractResourceQuery which serves as the base class for both EntryQuery and AssetQuery.
 public class ResourceQuery: AbstractResourceQuery {
-
     /// The parameters dictionary that are converted to `URLComponents` (HTTP parameters/arguments) on the HTTP URL. Useful for debugging.
-    public var parameters: [String: String] = [String: String]()
+    public var parameters: [String: String] = .init()
 
     /// Designated initalizer for Query.
     public required init() {
-        self.parameters = [String: String]()
+        parameters = [String: String]()
     }
 
     // MARK: Query.Private
 
-    internal init(parameters: [String: String] = [:]) {
+    init(parameters: [String: String] = [:]) {
         self.parameters = parameters
     }
 
@@ -866,8 +856,7 @@ public class ResourceQuery: AbstractResourceQuery {
     }
 }
 
-internal extension String {
-
+extension String {
     func isValidSelection() -> Bool {
         if split(separator: ".", maxSplits: 3, omittingEmptySubsequences: false).count > 2 {
             return false

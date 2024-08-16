@@ -10,7 +10,6 @@ import Foundation
 
 /// Possible errors being thrown by the SDK
 public enum SDKError: Error, CustomDebugStringConvertible {
-
     /// Thrown when receiving an invalid HTTP response.
     /// - Parameter response: Optional URL response that has triggered the error.
     case invalidHTTPResponse(response: URLResponse?)
@@ -42,21 +41,21 @@ public enum SDKError: Error, CustomDebugStringConvertible {
         return message
     }
 
-    internal var message: String {
+    var message: String {
         switch self {
-        case .invalidHTTPResponse(let response):
+        case let .invalidHTTPResponse(response):
             return "The HTTP request returned a corrupted HTTP response: \(response.debugDescription)"
-        case .invalidURL(let string):
+        case let .invalidURL(string):
             return string
         case .previewAPIDoesNotSupportSync:
             return "The Content Preview API does not support subsequent sync operations."
-        case .unparseableJSON(_, let errorMessage):
+        case let .unparseableJSON(_, errorMessage):
             return errorMessage
-        case .noResourceFoundFor(let id):
+        case let .noResourceFoundFor(id):
             return "No resource was found with the id: \(id)"
         case .unableToDecodeImageData:
             return "The binary data returned was not convertible to a native UIImage or NSImage"
-        case .localeHandlingError(let message):
+        case let .localeHandlingError(message):
             return message
         }
     }
@@ -64,14 +63,13 @@ public enum SDKError: Error, CustomDebugStringConvertible {
 
 /// Errors thrown for queries which have invalid construction.
 public enum QueryError: Error, CustomDebugStringConvertible {
-
     public var debugDescription: String {
         return message
     }
 
-    internal var message: String {
+    var message: String {
         switch self {
-        case .invalidSelection(let fieldKeyPath):
+        case let .invalidSelection(fieldKeyPath):
             return "Selection for \(fieldKeyPath) is invalid. Make sure it has at most 1 '.' character in it."
         case .maxSelectionLimitExceeded:
             return "Can select at most 99 key paths when using the select operator on a content type."
@@ -98,16 +96,15 @@ public enum QueryError: Error, CustomDebugStringConvertible {
 
 /// Information regarding an error received from Contentful's API.
 public class APIError: Decodable, Error, CustomDebugStringConvertible {
-
     public var debugDescription: String {
         let statusCodeString = "HTTP status code " + String(statusCode)
-        let detailsStrings = details?.errors.compactMap({ $0.details }).joined(separator: "\n") ?? ""
+        let detailsStrings = details?.errors.compactMap { $0.details }.joined(separator: "\n") ?? ""
         let debugDescription =
-        """
-        \(statusCodeString): \(message!)
-        \(detailsStrings).
-        Contentful Request ID: \(requestId!)
-        """
+            """
+            \(statusCodeString): \(message!)
+            \(detailsStrings).
+            Contentful Request ID: \(requestId!)
+            """
         return debugDescription
     }
 
@@ -136,7 +133,6 @@ public class APIError: Decodable, Error, CustomDebugStringConvertible {
 
     /// A lightweight struct describing other details about the error.
     public struct Details: Decodable {
-
         /// All the errors, enumerated.
         public let errors: [Details.Error]
 
@@ -163,18 +159,18 @@ public class APIError: Decodable, Error, CustomDebugStringConvertible {
     }
 
     public required init(from decoder: Decoder) throws {
-        let container   = try decoder.container(keyedBy: CodingKeys.self)
-        sys             = try container.decode(Sys.self, forKey: .sys)
-        message         = try container.decodeIfPresent(String.self, forKey: .message)
-        requestId       = try container.decodeIfPresent(String.self, forKey: .requestId)
-        details         = try container.decodeIfPresent(Details.self, forKey: .details)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        sys = try container.decode(Sys.self, forKey: .sys)
+        message = try container.decodeIfPresent(String.self, forKey: .message)
+        requestId = try container.decodeIfPresent(String.self, forKey: .requestId)
+        details = try container.decodeIfPresent(Details.self, forKey: .details)
     }
 
     // API Errors from the Contentful Delivery API are special cased for JSON deserialization:
     // Rather than throw an error and trigger a Swift error breakpoint in Xcode,
     // we use failable initializers so that consumers don't experience error breakpoints when
     // no error was returned from the API.
-    internal static func error(with decoder: JSONDecoder, data: Data, statusCode: Int) -> APIError? {
+    static func error(with decoder: JSONDecoder, data: Data, statusCode: Int) -> APIError? {
         if let error = try? decoder.decode(APIError.self, from: data) {
             // An error must have these things.
             guard error.message != nil && error.requestId != nil else {
@@ -194,7 +190,6 @@ public class APIError: Decodable, Error, CustomDebugStringConvertible {
 /// For requests that do hit the Contentful Delivery API enforces rate limits of 78 requests per second
 /// and 280800 requests per hour by default. Higher rate limits may apply depending on your current plan.
 public final class RateLimitError: APIError {
-
     /// An integer specifying the amount of time to wait before requests will succeed again after the rate limit has been
     /// passed.
     /// See: https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/api-rate-limits
@@ -203,7 +198,7 @@ public final class RateLimitError: APIError {
     /// A textual representation of this instance, suitable for debugging.
     override public var debugDescription: String {
         let debugDescription = super.debugDescription
-        let timeInfoString = ( timeBeforeLimitReset == nil ? "" : "Wait " + String(timeBeforeLimitReset!)) + " seconds before making more requests."
+        let timeInfoString = (timeBeforeLimitReset == nil ? "" : "Wait " + String(timeBeforeLimitReset!)) + " seconds before making more requests."
         return """
         \(debugDescription)
         \(timeInfoString)

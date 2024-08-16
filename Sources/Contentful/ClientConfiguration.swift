@@ -19,7 +19,6 @@ public enum Host {
 /// The `Integration` protocol describes the libary name and version number for external integrations
 /// to be used in conjunction with the contentful.swift SDK.
 public protocol Integration {
-
     /// The name of the integrated library.
     var name: String { get }
 
@@ -29,7 +28,6 @@ public protocol Integration {
 
 /// ClientConfiguration parameters for a `Client` instance.
 public struct ClientConfiguration {
-
     /// An instance of `ClientConfiguration` with sane defaults. This is a singleton instance.
     public static let `default` = ClientConfiguration()
 
@@ -47,7 +45,7 @@ public struct ClientConfiguration {
     public var timeZone: TimeZone?
 
     /// Computed version of the user agent, including OS name and version
-    internal func userAgentString(with integration: Integration?) -> String {
+    func userAgentString(with integration: Integration?) -> String {
         // Inspired by Alamofire https://github.com/Alamofire/Alamofire/blob/25d8fdd8a36f510a2bc4fe98289f367ec385d337/Source/SessionManager.swift
 
         var userAgentString = ""
@@ -100,20 +98,19 @@ public struct ClientConfiguration {
 
     private func operatingSystemPlatform() -> String? {
         let osName: String? = {
-
-        #if os(iOS)
-            return "iOS"
-        #elseif os(OSX)
-            return "macOS"
-        #elseif os(tvOS)
-            return "tvOS"
-        #elseif os(watchOS)
-            return "watchOS"
-        #elseif os(Linux)
-            return "Linux"
-        #else
-            return nil
-        #endif
+            #if os(iOS)
+                return "iOS"
+            #elseif os(OSX)
+                return "macOS"
+            #elseif os(tvOS)
+                return "tvOS"
+            #elseif os(watchOS)
+                return "watchOS"
+            #elseif os(Linux)
+                return "Linux"
+            #else
+                return nil
+            #endif
         }()
         return osName
     }
@@ -122,7 +119,7 @@ public struct ClientConfiguration {
         guard
             let bundleInfo = Bundle(for: Client.self).infoDictionary,
             let versionNumberString = bundleInfo["CFBundleShortVersionString"] as? String
-            else { return "Unknown" }
+        else { return "Unknown" }
 
         return "contentful.swift/\(versionNumberString)"
     }
