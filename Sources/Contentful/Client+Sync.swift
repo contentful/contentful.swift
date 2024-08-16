@@ -8,20 +8,19 @@
 import Foundation
 
 extension Client {
-
     /**
-    Performs a synchronization operation, updating the passed in `SyncSpace` instance with latest content from the server.
+     Performs a synchronization operation, updating the passed in `SyncSpace` instance with latest content from the server.
 
-    If passed in `SyncSpace` is an instance with empty sync token, full synchronization will be done.
+     If passed in `SyncSpace` is an instance with empty sync token, full synchronization will be done.
 
-    Calling this will mutate passed in `SyncSpace `and also pass back  a reference to it in the completion handler
-    in order to allow chaining of operations.
+     Calling this will mutate passed in `SyncSpace `and also pass back  a reference to it in the completion handler
+     in order to allow chaining of operations.
 
-    - Parameters:
-        - syncSpace: Instance to perform subsqeuent sync on. Empty instance by default.
-        - syncableTypes: The types that can be synchronized.
-        - completion: The completion handler to call when the operation is complete.
-     */
+     - Parameters:
+         - syncSpace: Instance to perform subsqeuent sync on. Empty instance by default.
+         - syncableTypes: The types that can be synchronized.
+         - completion: The completion handler to call when the operation is complete.
+      */
     @discardableResult
     public func sync(
         for syncSpace: SyncSpace = SyncSpace(),
@@ -31,7 +30,7 @@ extension Client {
         // Preview mode only supports `initialSync` not `nextSync`. The only reason `nextSync` should
         // be called while in preview mode, is internally by the SDK to finish a multiple page sync.
         // We are doing a multi page sync only when syncSpace.hasMorePages is true.
-        if !syncSpace.syncToken.isEmpty && host == Host.preview && syncSpace.hasMorePages == false {
+        if !syncSpace.syncToken.isEmpty, host == Host.preview, syncSpace.hasMorePages == false {
             completion(.failure(SDKError.previewAPIDoesNotSupportSync))
             return nil
         }
@@ -45,45 +44,46 @@ extension Client {
         }
 
         return fetchDecodable(
-            url: self.url(
+            url: url(
                 endpoint: .sync,
                 parameters: parameters
             )
         ) { (result: Result<SyncSpace, Error>) in
             switch result {
-            case .success(let newSyncSpace):
+            case let .success(newSyncSpace):
                 syncSpace.updateWithDiffs(from: newSyncSpace)
-                
+
                 if newSyncSpace.hasMorePages {
                     self.sync(for: syncSpace, syncableTypes: syncableTypes, then: completion)
                 } else {
-                    _ = self.fetchContentTypes{ contentTypeResult in
+                    _ = self.fetchContentTypes { contentTypeResult in
                         switch contentTypeResult {
-                        case .success(let contentTypes):
+                        case let .success(contentTypes):
                             for entry in syncSpace.entries {
-                                let type = contentTypes.first { $0.sys.id == entry.sys.contentTypeId}
+                                let type = contentTypes.first { $0.sys.id == entry.sys.contentTypeId }
                                 entry.type = type
                             }
                             self.persistenceIntegration?.update(with: syncSpace)
                             completion(.success(syncSpace))
-                        case .failure(let error):
+                        case let .failure(error):
                             completion(.failure(error))
                         }
                     }
                 }
-            case .failure(let error):
+            case let .failure(error):
                 completion(.failure(error))
             }
         }
     }
+
     private func fetchContentTypes(
         completion: @escaping ResultsHandler<[ContentType]>
     ) -> URLSessionDataTask {
-        return fetchDecodable(url: url(endpoint: .contentTypes)){ (result: Result<HomogeneousArrayResponse<Contentful.ContentType>, Error>) in
+        return fetchDecodable(url: url(endpoint: .contentTypes)) { (result: Result<HomogeneousArrayResponse<Contentful.ContentType>, Error>) in
             switch result {
-            case .success(let contents):
+            case let .success(contents):
                 completion(.success(contents.items))
-            case .failure(let error):
+            case let .failure(error):
                 completion(.failure(error))
             }
         }

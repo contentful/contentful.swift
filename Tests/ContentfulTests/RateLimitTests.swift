@@ -7,14 +7,12 @@
 //
 
 @testable import Contentful
-import XCTest
 import DVR
-
+import XCTest
 
 // TODO: fix
 #if !API_COVERAGE
-class RateLimitTests: XCTestCase {
-
+    class RateLimitTests: XCTestCase {
 //    static let client = TestClientFactory.testClient(withCassetteNamed: "RateLimitTests",
 //                                                     spaceId: "bc32cj3kyfet",
 //                                                     accessToken: "264dcca6ce14912f4940ac9d7de5425236b5658ed678da25718aa98438687a6f")
@@ -29,7 +27,7 @@ class RateLimitTests: XCTestCase {
 //        (client.urlSession as? DVR.Session)?.endRecording()
 //    }
 //
-    func testRateLimit() {
+        func testRateLimit() {
 //        // Test org is configured so that 5 unique requests in an hour will trigger rate limit.
 //        let networkExpectation = expectation(description: "API will return rate limit error")
 //
@@ -63,6 +61,6 @@ class RateLimitTests: XCTestCase {
 //            }
 //        }
 //        waitForExpectations(timeout: 100, handler: nil)
+        }
     }
-}
 #endif

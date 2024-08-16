@@ -7,29 +7,27 @@
 //
 
 @testable import Contentful
-import XCTest
 import DVR
+import XCTest
 
 class FakePersistenceIntegration: PersistenceIntegration {
     let name = "fake-integration"
 
     let version = "1.0.0"
 
-    func update(localeCodes: [LocaleCode]) {}
-    func update(with syncSpace: SyncSpace) {}
-    func create(asset: Asset) {}
-    func delete(assetWithId: String) {}
-    func create(entry: Entry) {}
-    func delete(entryWithId: String) {}
-    func update(syncToken: String) {}
+    func update(localeCodes _: [LocaleCode]) {}
+    func update(with _: SyncSpace) {}
+    func create(asset _: Asset) {}
+    func delete(assetWithId _: String) {}
+    func create(entry _: Entry) {}
+    func delete(entryWithId _: String) {}
+    func update(syncToken _: String) {}
     func resolveRelationships() {}
     func save() {}
 }
 
 class ClientConfigurationTests: XCTestCase {
-
     func testUserAgentString() {
-
         let osVersion = ProcessInfo.processInfo.operatingSystemVersion
         let osVersionString = String(osVersion.majorVersion) + "." + String(osVersion.minorVersion) + "." + String(osVersion.patchVersion)
 
@@ -46,7 +44,7 @@ class ClientConfigurationTests: XCTestCase {
             XCTAssertEqual(matches.count, 1)
         }
 
-        for invalidVersionString in ["0..9","0.a.9", "9.1", "0.10.9-", "0.10.9-ri", "0.10.9-RCHU"] {
+        for invalidVersionString in ["0..9", "0.a.9", "9.1", "0.10.9-", "0.10.9-ri", "0.10.9-RCHU"] {
             // expect 0 matches
             let matches = versionMatchingRegex.matches(in: invalidVersionString, options: [], range: NSRange(location: 0, length: invalidVersionString.count))
             XCTAssertEqual(matches.count, 0)
@@ -60,14 +58,14 @@ class ClientConfigurationTests: XCTestCase {
             let platform = "iOS"
         #endif
 
-        let regex = try! NSRegularExpression(pattern: "sdk contentful.swift/\(onlyVersionNumberRegexString); platform Swift/4.0; os \(platform)/\(osVersionString);" , options: [])
+        let regex = try! NSRegularExpression(pattern: "sdk contentful.swift/\(onlyVersionNumberRegexString); platform Swift/4.0; os \(platform)/\(osVersionString);", options: [])
         let matches = regex.matches(in: userAgentString, options: [], range: NSRange(location: 0, length: userAgentString.count))
         XCTAssertEqual(matches.count, 1)
 
         let client = Client(spaceId: "", accessToken: "", clientConfiguration: clientConfiguration)
 
         if let userAgent = client.urlSession.configuration.httpAdditionalHeaders?["X-Contentful-User-Agent"] as? String {
-            let regex = try! NSRegularExpression(pattern: "sdk contentful.swift/\(onlyVersionNumberRegexString); platform Swift/4.0; os \(platform)/\(osVersionString);" , options: [])
+            let regex = try! NSRegularExpression(pattern: "sdk contentful.swift/\(onlyVersionNumberRegexString); platform Swift/4.0; os \(platform)/\(osVersionString);", options: [])
             let matches = regex.matches(in: userAgent, options: [], range: NSRange(location: 0, length: userAgent.count))
             XCTAssertEqual(matches.count, 1)
         } else {
@@ -76,7 +74,7 @@ class ClientConfigurationTests: XCTestCase {
 
         client.persistenceIntegration = FakePersistenceIntegration()
         if let userAgent = client.urlSession.configuration.httpAdditionalHeaders?["X-Contentful-User-Agent"] as? String {
-            let regex = try! NSRegularExpression(pattern: "sdk contentful.swift/\(onlyVersionNumberRegexString); platform Swift/4.0; os \(platform)/\(osVersionString); integration fake-integration/1.0.0;" , options: [])
+            let regex = try! NSRegularExpression(pattern: "sdk contentful.swift/\(onlyVersionNumberRegexString); platform Swift/4.0; os \(platform)/\(osVersionString); integration fake-integration/1.0.0;", options: [])
             let matches = regex.matches(in: userAgent, options: [], range: NSRange(location: 0, length: userAgent.count))
             XCTAssertEqual(matches.count, 1)
         } else {

@@ -1,13 +1,13 @@
 //
-//  Image.swift
+//  ImageOptions.swift
 //  Contentful
 //
 //  Created by JP Wright on 24.05.17.
 //  Copyright © 2017 Contentful GmbH. All rights reserved.
 //
 
-import Foundation
 import CoreGraphics
+import Foundation
 
 #if os(iOS) || os(tvOS) || os(watchOS)
     import UIKit
@@ -15,10 +15,9 @@ import CoreGraphics
     import Cocoa
 #endif
 
-public extension String {
-
+extension String {
     // Will make a `URL` from the current `String` instance if possible.
-    internal func toURL() throws -> URL {
+    func toURL() throws -> URL {
         guard var urlComponents = URLComponents(string: self) else {
             throw ImageOptionError(message: "Invalid URL String: \(self)")
         }
@@ -36,7 +35,6 @@ public extension String {
 }
 
 public extension String {
-
     /// The URL for the underlying media file with additional options for server side manipulations
     /// such as format changes, resizing, cropping, and focusing on different areas including on faces,
     /// among others.
@@ -45,7 +43,6 @@ public extension String {
     /// - Returns: A `URL` for the image with query parameters corresponding to server-side image transformations.
     /// - Throws: An `ImageOptionError` if the SDK is unable to generate a valid URL with the desired ImageOptions.
     func url(with imageOptions: [ImageOption]) throws -> URL {
-
         // Check that there are no two image options that specifiy the same query parameter.
         // https://stackoverflow.com/a/27624476/4068264z
         // A Set is a collection of unique elements, so constructing them will invoke the Equatable implementation
@@ -82,7 +79,6 @@ public extension String {
 /// An enum-based API for specifying retrieval and server-side manipulation of images referenced by Contentful assets.
 /// See [Images API Reference](https://www.contentful.com/developers/docs/references/images-api/)
 public enum ImageOption: Equatable, Hashable {
-
     /// Specify the height of the image in pixels to be returned from the API. Valid ranges for height are between 0 and 4000.
     case height(UInt)
 
@@ -98,24 +94,24 @@ public enum ImageOption: Equatable, Hashable {
     /// Specify the radius for rounded corners for an image.
     case withCornerRadius(Float)
 
-    internal func urlQueryItems() throws -> [URLQueryItem] {
+    func urlQueryItems() throws -> [URLQueryItem] {
         switch self {
-        case .height(let height) where height > 0 && height <= 4000:
+        case let .height(height) where height > 0 && height <= 4000:
             return [URLQueryItem(name: ImageParameters.height, value: String(height))]
 
-        case .width(let width) where width > 0 && width <= 4000:
+        case let .width(width) where width > 0 && width <= 4000:
             return [URLQueryItem(name: ImageParameters.width, value: String(width))]
 
         case .width, .height:
             throw ImageOptionError(message: "The specified width or height parameters are not within the acceptable range")
 
-        case .formatAs(let format):
+        case let .formatAs(format):
             return try format.urlQueryItems()
 
-        case .fit(let fit):
+        case let .fit(fit):
             return try fit.urlQueryItems()
 
-        case .withCornerRadius(let radius):
+        case let .withCornerRadius(radius):
             return [URLQueryItem(name: ImageParameters.radius, value: String(radius))]
         }
     }
@@ -125,14 +121,13 @@ public enum ImageOption: Equatable, Hashable {
     // Used to unique'ify an Array of ImageOption instances by converting to a Set.
     public func hash(into hasher: inout Hasher) {
         switch self {
-        case .width:                hasher.combine(0)
-        case .height:               hasher.combine(1)
-        case .formatAs:             hasher.combine(2)
-        case .fit:                  hasher.combine(3)
-        case .withCornerRadius:     hasher.combine(4)
+        case .width: hasher.combine(0)
+        case .height: hasher.combine(1)
+        case .formatAs: hasher.combine(2)
+        case .fit: hasher.combine(3)
+        case .withCornerRadius: hasher.combine(4)
         }
     }
-
 }
 
 /// Equatable implementation for `ImageOption`
@@ -162,7 +157,6 @@ public func == (lhs: ImageOption, rhs: ImageOption) -> Bool {
 /// let imageOptions = [.formatAs(.jpg(withQuality: .asPercent(50)))]
 /// ```
 public enum JPGQuality {
-
     /// Don't specify any quality for the JPG image.
     case unspecified
 
@@ -177,7 +171,7 @@ public enum JPGQuality {
         switch self {
         case .unspecified:
             return nil
-        case .asPercent(let quality):
+        case let .asPercent(quality):
             if quality > 100 {
                 throw ImageOptionError(message: "JPG quality must be between 0 and 100 (inclusive).")
             }
@@ -195,7 +189,6 @@ public enum JPGQuality {
 /// let imageOptions = [.formatAs(.png(bits: .standard))]
 /// ```
 public enum PngBits {
-
     /// Specify that the PNG should be represented with standard bit-depth.
     case standard
 
@@ -212,12 +205,10 @@ public enum PngBits {
     }
 }
 
-
 /// Use `Format` to specify the image file formats supported by Contentful's Images API.
 /// Supported formats are `jpg` `png` and `webp`.
 public enum Format: URLImageQueryExtendable {
-
-    internal var imageQueryParameter: String {
+    var imageQueryParameter: String {
         return ImageParameters.format
     }
 
@@ -232,18 +223,18 @@ public enum Format: URLImageQueryExtendable {
     case webp
 
     fileprivate func urlArgument() -> String {
-        switch  self {
-        case .jpg:          return "jpg"
-        case .png:          return "png"
-        case .webp:         return "webp"
+        switch self {
+        case .jpg: return "jpg"
+        case .png: return "png"
+        case .webp: return "webp"
         }
     }
 
     fileprivate func additionalQueryItem() throws -> URLQueryItem? {
         switch self {
-        case .jpg(let quality):
+        case let .jpg(quality):
             return try quality.urlQueryItem()
-        case .png(let bits):
+        case let .png(bits):
             return bits.urlQueryItem()
         default:
             return nil
@@ -265,13 +256,13 @@ public enum Focus: String {
     /// Focus on the right of the image.
     case right
     /// Focus on the top left of the image.
-    case topLeft            = "top_left"
+    case topLeft = "top_left"
     /// Focus on the top right of the image.
-    case topRight           = "top_right"
+    case topRight = "top_right"
     /// Focus on the bottom left of the image.
-    case bottomLeft         = "bottom_left"
+    case bottomLeft = "bottom_left"
     /// Focus on the bottom right of the image.
-    case bottomRight        = "bottom_right"
+    case bottomRight = "bottom_right"
     /// Focus on a face in the image, if detected.
     case face
     /// Focus on a collection of faces in the image, if detected.
@@ -279,19 +270,18 @@ public enum Focus: String {
 }
 
 /// The various options available within Fit specify different resizing behaviors for use in
-/// conjunction with the `ImageOption.fit(for: Fit)` option. By default, images are resized to fit 
+/// conjunction with the `ImageOption.fit(for: Fit)` option. By default, images are resized to fit
 /// inside the bounding box given by `w and `h while retaining their aspect ratio.
 /// Using the `Fit` options, you can change this behavior.
 public enum Fit: URLImageQueryExtendable {
-
     #if os(iOS) || os(tvOS) || os(watchOS)
-    /// If building for iOS, tvOS, or watchOS, `Color` aliases to `UIColor`. If building for macOS
-    /// `Color` aliases to `NSColor`
-    public typealias Color = UIColor
+        /// If building for iOS, tvOS, or watchOS, `Color` aliases to `UIColor`. If building for macOS
+        /// `Color` aliases to `NSColor`
+        public typealias Color = UIColor
     #else
-    /// If building for iOS, tvOS, or watchOS, `Color` aliases to `UIColor`. If building for macOS
-    /// `Color` aliases to `NSColor`
-    public typealias Color = NSColor
+        /// If building for iOS, tvOS, or watchOS, `Color` aliases to `UIColor`. If building for macOS
+        /// `Color` aliases to `NSColor`
+        public typealias Color = NSColor
     #endif
 
     /// If specifying an optional `UIColor` or `NSColor` make sure to also provide a custom width and height
@@ -311,11 +301,11 @@ public enum Fit: URLImageQueryExtendable {
     // String so we must reimplement returning the raw case value.
     fileprivate func urlArgument() -> String {
         switch self {
-        case .pad:          return "pad"
-        case .crop:         return "crop"
-        case .fill:         return "fill"
-        case .thumb:        return "thumb"
-        case .scale:        return "scale"
+        case .pad: return "pad"
+        case .crop: return "crop"
+        case .fill: return "fill"
+        case .thumb: return "thumb"
+        case .scale: return "scale"
         }
     }
 
@@ -325,18 +315,18 @@ public enum Fit: URLImageQueryExtendable {
 
     fileprivate func additionalQueryItem() throws -> URLQueryItem? {
         switch self {
-        case .pad(let .some(color)):
+        case let .pad(.some(color)):
             let cgColor = color.cgColor
             let hexRepresentation = cgColor.hexRepresentation()
             return URLQueryItem(name: ImageParameters.backgroundColor, value: "rgb:" + hexRepresentation)
 
-        case .thumb(let .some(focus)):
+        case let .thumb(.some(focus)):
             return URLQueryItem(name: ImageParameters.focus, value: focus.rawValue)
 
-        case .fill(let .some(focus)):
+        case let .fill(.some(focus)):
             return URLQueryItem(name: ImageParameters.focus, value: focus.rawValue)
 
-        case .crop(let .some(focus)):
+        case let .crop(.some(focus)):
             return URLQueryItem(name: ImageParameters.focus, value: focus.rawValue)
 
         default:
@@ -345,12 +335,10 @@ public enum Fit: URLImageQueryExtendable {
     }
 }
 
-
 /// Error type thrown when ImageOptions are constructed in a way that makes them incompatible with the
 /// Contentful Images API
 public struct ImageOptionError: Error, CustomDebugStringConvertible {
-
-    internal let message: String
+    let message: String
 
     public var debugDescription: String {
         return message
@@ -360,7 +348,6 @@ public struct ImageOptionError: Error, CustomDebugStringConvertible {
 // MARK: - Private
 
 private protocol URLImageQueryExtendable {
-
     var imageQueryParameter: String { get }
 
     func additionalQueryItem() throws -> URLQueryItem?
@@ -368,9 +355,8 @@ private protocol URLImageQueryExtendable {
     func urlArgument() -> String
 }
 
-extension URLImageQueryExtendable {
-
-    fileprivate func urlQueryItems() throws -> [URLQueryItem] {
+private extension URLImageQueryExtendable {
+    func urlQueryItems() throws -> [URLQueryItem] {
         var urlQueryItems = [URLQueryItem]()
 
         let firstItem = URLQueryItem(name: imageQueryParameter, value: urlArgument())
@@ -385,22 +371,19 @@ extension URLImageQueryExtendable {
 }
 
 private enum ImageParameters {
-
-    static let width            = "w"
-    static let height           = "h"
-    static let radius           = "r"
-    static let focus            = "f"
-    static let backgroundColor  = "bg"
-    static let fit              = "fit"
-    static let format           = "fm"
-    static let formatFlag       = "fl"
-    static let quality          = "q"
+    static let width = "w"
+    static let height = "h"
+    static let radius = "r"
+    static let focus = "f"
+    static let backgroundColor = "bg"
+    static let fit = "fit"
+    static let format = "fm"
+    static let formatFlag = "fl"
+    static let quality = "q"
 }
 
-
 // Use CGColor instead of UIColor to enable cross-platform compatibility: macOS, iOS, tvOS, watchOS.
-internal extension CGColor {
-
+extension CGColor {
     // If for some reason the following code fails to create a hex string, the color black will be
     // returned.
     func hexRepresentation() -> String {
@@ -421,6 +404,7 @@ internal extension CGColor {
             r = Float(colorComponents[0])
             g = Float(colorComponents[1])
             b = Float(colorComponents[2])
+
         default:
             return hexForBlack
         }

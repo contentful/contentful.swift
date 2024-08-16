@@ -8,14 +8,13 @@
 import Foundation
 
 public extension Client {
-
     /**
-    Fetches the raw `Data` objects and bypass the JSON parsing provided by the SDK.
+     Fetches the raw `Data` objects and bypass the JSON parsing provided by the SDK.
 
-    - Parameters:
-        - url: The URL representing the endpoint with query parameters.
-        - completion: The completion handler to call when the request is complete.
-     */
+     - Parameters:
+         - url: The URL representing the endpoint with query parameters.
+         - completion: The completion handler to call when the request is complete.
+      */
     @discardableResult
     func fetch(
         url: URL,
@@ -28,12 +27,12 @@ public extension Client {
     }
 
     /**
-    Fetches the JSON data at the specified URL and decoding it.
+     Fetches the JSON data at the specified URL and decoding it.
 
-    - Parameters:
-        - url: The URL representing the endpoint with query parameters.
-        - completion: The completion handler wrapping `DecodableType` to call when the request is complete.
-     */
+     - Parameters:
+         - url: The URL representing the endpoint with query parameters.
+         - completion: The completion handler wrapping `DecodableType` to call when the request is complete.
+      */
     @discardableResult
     func fetch<DecodableType: Decodable>(
         url: URL,
@@ -46,19 +45,19 @@ public extension Client {
     }
 
     /**
-    Fetches a resource by id.
+     Fetches a resource by id.
 
-    Available resource types that match this function's constraints are: `Space`, `Asset`, `ContentType`, `Entry`,
-    or any of custom types conforming to `EntryDecodable` or `AssetDecodable`.
+     Available resource types that match this function's constraints are: `Space`, `Asset`, `ContentType`, `Entry`,
+     or any of custom types conforming to `EntryDecodable` or `AssetDecodable`.
 
-    - Parameters:
-        - resourceType: A reference to the Swift type which conforms to `Decodable & EndpointAccessible`.
-        - id: The identifier of the resource.
-        - include: The level of includes to be resolved. Default value when nil. See more: [Retrieval of linked items].
-        - completion: The completion handler to call when the request is complete.
+     - Parameters:
+         - resourceType: A reference to the Swift type which conforms to `Decodable & EndpointAccessible`.
+         - id: The identifier of the resource.
+         - include: The level of includes to be resolved. Default value when nil. See more: [Retrieval of linked items].
+         - completion: The completion handler to call when the request is complete.
 
-    [Retrieval of linked items]: https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/links/retrieval-of-linked-items
-     */
+     [Retrieval of linked items]: https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/links/retrieval-of-linked-items
+      */
     @discardableResult
     func fetch<ResourceType>(
         _ resourceType: ResourceType.Type,
@@ -75,16 +74,16 @@ public extension Client {
     }
 
     /**
-    Fetches collections of `ContentType`, `Entry`, and `Asset` types.
+     Fetches collections of `ContentType`, `Entry`, and `Asset` types.
 
-    - Parameters:
-        - resourceType: A reference to concrete resource class which conforms to `Decodable & EndpointAccessible & ResourceQueryable`.
-        - query: Query to match results against.
-        - completion: The completion handler with `ArrayResponse` to call when the request is complete.
-     */
+     - Parameters:
+         - resourceType: A reference to concrete resource class which conforms to `Decodable & EndpointAccessible & ResourceQueryable`.
+         - query: Query to match results against.
+         - completion: The completion handler with `ArrayResponse` to call when the request is complete.
+      */
     @discardableResult
     func fetchArray<ResourceType, QueryType>(
-        of resourceType: ResourceType.Type,
+        of _: ResourceType.Type,
         matching query: QueryType? = nil,
         then completion: @escaping ResultsHandler<HomogeneousArrayResponse<ResourceType>>
     ) -> URLSessionDataTask where ResourceType: ResourceQueryable, QueryType == ResourceType.QueryType {
@@ -95,16 +94,16 @@ public extension Client {
     }
 
     /**
-    Fetches collections of `EntryDecodable` of your own definition.
+     Fetches collections of `EntryDecodable` of your own definition.
 
-    - Parameters:
-        - entryType: A reference to a concrete Swift class conforming to `EntryDecodable` that will be fetched.
-        - query: Query to match results against.
-        - completion: The completion handler with `ArrayResponse` to call when the request is complete.
-     */
+     - Parameters:
+         - entryType: A reference to a concrete Swift class conforming to `EntryDecodable` that will be fetched.
+         - query: Query to match results against.
+         - completion: The completion handler with `ArrayResponse` to call when the request is complete.
+      */
     @discardableResult
     func fetchArray<EntryType>(
-        of entryType: EntryType.Type,
+        of _: EntryType.Type,
         matching query: QueryOn<EntryType> = QueryOn<EntryType>(),
         then completion: @escaping ResultsHandler<HomogeneousArrayResponse<EntryType>>
     ) -> URLSessionDataTask {
@@ -115,12 +114,12 @@ public extension Client {
     }
 
     /**
-    Fetches heterogenous collections of types conforming to `EntryDecodable`.
+     Fetches heterogenous collections of types conforming to `EntryDecodable`.
 
-    - Parameters:
-        - query: Query to match results against.
-        - completion: The completion handler to call when the request is complete.
-     */
+     - Parameters:
+         - query: Query to match results against.
+         - completion: The completion handler to call when the request is complete.
+      */
     @discardableResult
     func fetchArray(
         matching query: Query? = nil,
@@ -133,13 +132,13 @@ public extension Client {
     }
 
     /**
-    Fetches data associated with `AssetProtocol` object.
+     Fetches data associated with `AssetProtocol` object.
 
-    - Parameters:
-        - asset: Instance that has the URL for media file.
-        - imageOptions: Options for server-side manipulations of image files.
-        - completion: The completion handler to call when the request is complete.
-     */
+     - Parameters:
+         - asset: Instance that has the URL for media file.
+         - imageOptions: Options for server-side manipulations of image files.
+         - completion: The completion handler to call when the request is complete.
+      */
     @discardableResult
     func fetchData(
         for asset: AssetProtocol,
@@ -152,28 +151,29 @@ public extension Client {
                 url: url,
                 completion: completion
             )
-        } catch let error {
+        } catch {
             completion(.failure(error))
             return nil
         }
     }
-    /**
-    Fetches the space this client is configured to interface with.
 
-    - Parameters:
-        - completion: The completion handler to call when the reqeust is complete.
-     */
+    /**
+     Fetches the space this client is configured to interface with.
+
+     - Parameters:
+         - completion: The completion handler to call when the reqeust is complete.
+      */
     @discardableResult
     func fetchSpace(then completion: @escaping ResultsHandler<Space>) -> URLSessionDataTask? {
         fetchCurrentSpace(then: completion)
     }
 
     /**
-    Fetches all `Locale`s belonging to the current space the client is configured to interface with.
+     Fetches all `Locale`s belonging to the current space the client is configured to interface with.
 
-    - Parameters:
-        - completion: The completion handler to call when the request is complete.
-     */
+     - Parameters:
+         - completion: The completion handler to call when the request is complete.
+      */
     @discardableResult
     func fetchLocales(then completion: @escaping ResultsHandler<HomogeneousArrayResponse<Contentful.Locale>>) -> URLSessionDataTask {
         fetchCurrentSpaceLocales(then: completion)

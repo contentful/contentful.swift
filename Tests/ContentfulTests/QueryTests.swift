@@ -7,16 +7,15 @@
 //
 
 @testable import Contentful
-import XCTest
 import DVR
+import XCTest
 
 final class QueryTests: XCTestCase {
-
     static let client: Client = {
         let contentTypeClasses: [EntryDecodable.Type] = [
             Cat.self,
             Dog.self,
-            City.self
+            City.self,
         ]
         return TestClientFactory.testClient(withCassetteNamed: "QueryTests", contentTypeClasses: contentTypeClasses)
     }()
@@ -36,11 +35,11 @@ final class QueryTests: XCTestCase {
             "content_type": "<content_type_id>",
             "fields.<field_name>.sys.id": "<entry_id>",
             "include": String(
-                2)
+                2),
         ]
         let query = Query.where(contentTypeId: "<content_type_id>")
-                         .where(valueAtKeyPath: "fields.<field_name>.sys.id", .equals("<entry_id>"))
-                         .include(2)
+            .where(valueAtKeyPath: "fields.<field_name>.sys.id", .equals("<entry_id>"))
+            .include(2)
         XCTAssertEqual(query.parameters, expectedQueryParameters)
     }
 
@@ -52,7 +51,7 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
-            case .success(let catsResponse):
+            case let .success(catsResponse):
                 let cats = catsResponse.items
 
                 guard let cat = cats.first(where: { $0.id == "nyancat" }) else {
@@ -67,7 +66,7 @@ final class QueryTests: XCTestCase {
 
                 // Test uniqueness in memory.
                 XCTAssert(cat === cat.bestFriend?.bestFriend)
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -81,7 +80,7 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Cat.self, matching: .select(fieldsNamed: [.bestFriend, .color, .name])) { (result: Result<HomogeneousArrayResponse<Cat>, Error>) in
             switch result {
-            case .success(let catsResponse):
+            case let .success(catsResponse):
                 let cats = catsResponse.items
 
                 guard let cat = cats.first(where: { $0.id == "happycat" }) else {
@@ -96,24 +95,22 @@ final class QueryTests: XCTestCase {
 
                 // Test uniqueness in memory.
                 XCTAssert(cat === cat.bestFriend?.bestFriend)
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
-
         }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
     func testQueryReturningHeterogeneousArray() {
-
         let expectation = self.expectation(description: "Fetch all entries expectation")
 
         let query = try! Query.order(by: Ordering(sys: .updatedAt))
         QueryTests.client.fetchArray(matching: query) { (result: Result<HeterogeneousArrayResponse, Error>) in
 
             switch result {
-            case .success(let response):
+            case let .success(response):
                 let entries = response.items
                 // We didn't decode the "human" content type so only 9 decoded entries should be returned instead of 10
                 XCTAssertEqual(entries.count, 9)
@@ -121,7 +118,6 @@ final class QueryTests: XCTestCase {
                 if let cat = entries.last as? Cat, let bestFriend = cat.bestFriend {
                     XCTAssertEqual(bestFriend.name, "Nyan Cat")
                 } else {
-                    
                     XCTFail("The first entry in the heterogenous array should be a cat with a best friend named 'Nyan Cat'")
                 }
 
@@ -132,7 +128,7 @@ final class QueryTests: XCTestCase {
                     XCTFail("The 4th entry in the heterogenous array should be a dog with an image with named 'jake'")
                 }
 
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -151,7 +147,7 @@ final class QueryTests: XCTestCase {
         QueryTests.client.fetchArray(of: Dog.self, matching: query) { (result: Result<HomogeneousArrayResponse<Dog>, Error>) in
 
             switch result {
-            case .success(let dogsResponse):
+            case let .success(dogsResponse):
                 let dogs = dogsResponse.items
                 let doge = dogs.first
                 XCTAssertEqual(doge?.name, "Doge")
@@ -159,7 +155,7 @@ final class QueryTests: XCTestCase {
                 // Test links
                 XCTAssertNotNil(doge?.image)
                 XCTAssertEqual(doge?.image?.id, "1x0xpXu4pSGS4OukSyWGUK")
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -176,7 +172,7 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
-            case .success(let catsResponse):
+            case let .success(catsResponse):
                 let cats = catsResponse.items
                 for cat in cats {
                     XCTAssertEqual(cat.sys.contentTypeId, "cat")
@@ -191,12 +187,11 @@ final class QueryTests: XCTestCase {
     }
 
     func testEqualityQuery() {
-
         let expectation = self.expectation(description: "Equality operator expectation")
 
         QueryTests.client.fetchArray(of: Cat.self, matching: .where(field: .color, .equals("gray"))) { result in
             switch result {
-            case .success(let catsResponse):
+            case let .success(catsResponse):
                 let cats = catsResponse.items
                 XCTAssertEqual(cats.count, 1)
                 XCTAssertEqual(cats.first?.color, "gray")
@@ -210,18 +205,17 @@ final class QueryTests: XCTestCase {
     }
 
     func testInequalityQuery() {
-
         let expectation = self.expectation(description: "Inequality operator expectation")
 
         let query = QueryOn<Cat>.where(valueAtKeyPath: "fields.color", .doesNotEqual("gray"))
 
         QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
-            case .success(let catsResponse):
+            case let .success(catsResponse):
                 let cats = catsResponse.items
                 XCTAssertGreaterThan(cats.count, 0)
                 XCTAssertNotEqual(cats.first?.color, "gray")
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -237,7 +231,7 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
-            case .success(let catsResponse):
+            case let .success(catsResponse):
                 let cats = catsResponse.items
                 XCTAssertEqual(cats.count, 1)
                 XCTAssertEqual(cats.first?.name, "Nyan Cat")
@@ -245,7 +239,7 @@ final class QueryTests: XCTestCase {
                 XCTAssert(cats.first!.likes!.contains("rainbows"))
                 XCTAssert(cats.first!.likes!.contains("fish"))
 
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -262,7 +256,7 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
-            case .success(let catsResponse):
+            case let .success(catsResponse):
                 let cats = catsResponse.items
                 XCTAssertEqual(cats.count, 2)
                 XCTAssertNotNil(cats.first)
@@ -271,7 +265,7 @@ final class QueryTests: XCTestCase {
                     XCTAssertEqual(happyCat.likes?.count, 1)
                     XCTAssert(happyCat.likes!.contains("cheezburger"))
                 }
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -283,11 +277,11 @@ final class QueryTests: XCTestCase {
     func testMultipleValuesQuery() {
         let expectation = self.expectation(description: "Multiple values operator expectation")
 
-        let query = QueryOn<Cat>.where(valueAtKeyPath: "fields.likes", .hasAll(["rainbows","fish"]))
+        let query = QueryOn<Cat>.where(valueAtKeyPath: "fields.likes", .hasAll(["rainbows", "fish"]))
 
         QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
-            case .success(let catsResponse):
+            case let .success(catsResponse):
                 let cats = catsResponse.items
                 XCTAssertEqual(cats.count, 1)
                 XCTAssertEqual(cats.first?.name, "Nyan Cat")
@@ -295,7 +289,7 @@ final class QueryTests: XCTestCase {
                 XCTAssert(cats.first!.likes!.contains("rainbows"))
                 XCTAssert(cats.first!.likes!.contains("fish"))
 
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -311,7 +305,7 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
-            case .success(let catsResponse):
+            case let .success(catsResponse):
                 let cats = catsResponse.items
                 XCTAssertGreaterThan(cats.count, 0)
 
@@ -321,7 +315,7 @@ final class QueryTests: XCTestCase {
                 }
 
                 XCTAssertEqual(cat.color, "gray")
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -331,20 +325,19 @@ final class QueryTests: XCTestCase {
     }
 
     func testChainingQueries() {
-
         let expectation = self.expectation(description: "Chained operator expectation")
 
         let query = QueryOn<Cat>.where(valueAtKeyPath: "fields.color", .doesNotEqual("gray"))
-            query.where(valueAtKeyPath:"fields.lives", .equals("9"))
+        query.where(valueAtKeyPath: "fields.lives", .equals("9"))
 
         QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
-            case .success(let catsResponse):
+            case let .success(catsResponse):
                 let cats = catsResponse.items
                 XCTAssertEqual(cats.count, 1)
                 XCTAssertEqual(cats.first?.lives, 9)
 
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -362,12 +355,12 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
-            case .success(let catsResponse):
+            case let .success(catsResponse):
                 let cats = catsResponse.items
                 XCTAssertEqual(cats.count, 1)
                 XCTAssertEqual(cats.first?.fields["lives"] as? Int, 9)
 
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -384,12 +377,12 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Asset.self, matching: query) { result in
             switch result {
-            case .success(let assetsResponse):
+            case let .success(assetsResponse):
                 let assets = assetsResponse.items
                 XCTAssertEqual(assets.count, 1)
                 XCTAssertEqual(assets.first?.sys.id, "1x0xpXu4pSGS4OukSyWGUK")
                 XCTAssertEqual(assets.first?.fields["title"] as? String, "doge")
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -405,12 +398,12 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Asset.self, matching: query) { result in
             switch result {
-            case .success(let assetsResponse):
+            case let .success(assetsResponse):
                 let assets = assetsResponse.items
                 XCTAssertEqual(assets.count, 1)
                 XCTAssertEqual(assets.first?.sys.id, "1x0xpXu4pSGS4OukSyWGUK")
                 XCTAssertEqual(assets.first?.fields["title"] as? String, "doge")
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -433,7 +426,6 @@ final class QueryTests: XCTestCase {
     }
 
     func testFetchEntriesOfAnyTypeWithRangeSearch() {
-
         let expectation = self.expectation(description: "Range query")
         let date = Date.fromComponents(year: 2021, month: 3, day: 20, hour: 0, minute: 0, second: 0)
 
@@ -441,14 +433,13 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
-            case .success(let entriesResponse):
+            case let .success(entriesResponse):
                 let entries = entriesResponse.items
                 XCTAssertEqual(entries.count, 8)
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
-
         }
 
         waitForExpectations(timeout: 10.0, handler: nil)
@@ -457,17 +448,16 @@ final class QueryTests: XCTestCase {
     // MARK: - Ranges
 
     func testFetchCatsWithRangeSearch() {
-
         let expectation = self.expectation(description: "Range query")
 
         let query = QueryOn<Cat>.where(valueAtKeyPath: "sys.updatedAt", .isLessThanOrEqualTo("2021-03-20T00:00:00Z"))
 
         QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
-            case .success(let catsResponse):
+            case let .success(catsResponse):
                 let cats = catsResponse.items
                 XCTAssertEqual(cats.count, 1)
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -484,11 +474,11 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
-            case .success(let entriesResponse):
+            case let .success(entriesResponse):
                 let entries = entriesResponse.items
                 let ids = entries.map { $0.sys.id }
                 XCTAssertEqual(ids, EntryTests.orderedEntries)
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("\(error)")
             }
             expectation.fulfill()
@@ -503,11 +493,11 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
-            case .success(let entriesResponse):
+            case let .success(entriesResponse):
                 let entries = entriesResponse.items
                 let ids = entries.map { $0.sys.id }
                 XCTAssertEqual(ids, EntryTests.orderedEntries.reversed())
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -515,7 +505,7 @@ final class QueryTests: XCTestCase {
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
-    static let orderedCatNames = [ "happycat", "nyancat", "garfield"]
+    static let orderedCatNames = ["happycat", "nyancat", "garfield"]
 
     func testFetchEntriesWithTypeInOrder() {
         let expectation = self.expectation(description: "Ordered search with content type specified.")
@@ -524,12 +514,12 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
-            case .success(let catsResponse):
+            case let .success(catsResponse):
                 let cats = catsResponse.items
                 let ids = cats.map { $0.id }
                 XCTAssertEqual(cats.count, 3)
                 XCTAssertEqual(ids, QueryTests.orderedCatNames)
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -544,11 +534,11 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
-            case .success(let entriesResponse):
+            case let .success(entriesResponse):
                 let entries = entriesResponse.items
                 let ids = entries.map { $0.sys.id }
                 XCTAssertEqual(ids, EntryTests.orderedEntriesByMultiple)
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -565,10 +555,10 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Dog.self, matching: query) { result in
             switch result {
-            case .success(let dogsResponse):
+            case let .success(dogsResponse):
                 let dogs = dogsResponse.items
                 XCTAssertEqual(dogs.count, 1)
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -583,11 +573,11 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Dog.self, matching: query) { result in
             switch result {
-            case .success(let dogsResponse):
+            case let .success(dogsResponse):
                 let dogs = dogsResponse.items
                 XCTAssertEqual(dogs.count, 1)
                 XCTAssertEqual(dogs.first?.name, "Jake")
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -602,14 +592,14 @@ final class QueryTests: XCTestCase {
     func testFetchEntriesWithLocationProximitySearch() {
         let expectation = self.expectation(description: "Location proximity search")
 
-        let query = QueryOn<City>.where(valueAtKeyPath:  "fields.center", .isNear(Location(latitude: 38, longitude: -122)))
+        let query = QueryOn<City>.where(valueAtKeyPath: "fields.center", .isNear(Location(latitude: 38, longitude: -122)))
 
         QueryTests.client.fetchArray(of: City.self, matching: query) { result in
             switch result {
-            case .success(let citiesResponse):
+            case let .success(citiesResponse):
                 let cities = citiesResponse.items
                 XCTAssertEqual(cities.count, 4)
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -622,14 +612,14 @@ final class QueryTests: XCTestCase {
 
         let bounds = Bounds.box(bottomLeft: Location(latitude: 36, longitude: -124), topRight: Location(latitude: 40, longitude: -120))
 
-        let query = QueryOn<City>.where(valueAtKeyPath:  "fields.center", .isWithin(bounds))
+        let query = QueryOn<City>.where(valueAtKeyPath: "fields.center", .isWithin(bounds))
 
         QueryTests.client.fetchArray(of: City.self, matching: query) { result in
             switch result {
-            case .success(let citiesResponse):
+            case let .success(citiesResponse):
                 let cities = citiesResponse.items
                 XCTAssertEqual(cities.count, 1)
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -647,7 +637,7 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
-            case .success(let entriesResponse):
+            case let .success(entriesResponse):
                 let entries = entriesResponse.items
                 let catEntries = entries.filter { $0.sys.contentTypeId == "cat" }
                 XCTAssertNotNil(catEntries.first)
@@ -667,7 +657,7 @@ final class QueryTests: XCTestCase {
                     XCTFail("there should be an unresolved link at image field when includes are 0")
                 }
 
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -682,10 +672,10 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
-            case .success(let entriesResponse):
+            case let .success(entriesResponse):
                 let entries = entriesResponse.items
                 XCTAssertEqual(entries.count, 5)
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -701,11 +691,11 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
-            case .success(let entriesResponse):
+            case let .success(entriesResponse):
                 let entries = entriesResponse.items
                 XCTAssertEqual(entries.count, 2)
                 XCTAssertEqual(entries.first?.sys.id, "garfield")
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -720,19 +710,17 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
-            case .success(let entriesResponse):
+            case let .success(entriesResponse):
                 let entries = entriesResponse.items
                 XCTAssertEqual(entriesResponse.skip, 10)
                 XCTAssertEqual(entries.count, 1)
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
-
-
 
     // MARK: - Search on References
 
@@ -743,12 +731,12 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Cat.self, matching: .where(linkAtField: .bestFriend, matches: linkQuery)) { result in
             switch result {
-            case .success(let catsWithHappyCatAsBestFriendResponse):
+            case let .success(catsWithHappyCatAsBestFriendResponse):
                 let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
                 XCTAssertEqual(catsWithHappyCatAsBestFriend.count, 1)
                 XCTAssertEqual(catsWithHappyCatAsBestFriend.first?.name, "Nyan Cat")
                 XCTAssertEqual(catsWithHappyCatAsBestFriend.first?.bestFriend?.name, "Happy Cat")
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -767,7 +755,7 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
-            case .success(let catsWithHappyCatAsBestFriendResponse):
+            case let .success(catsWithHappyCatAsBestFriendResponse):
                 let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
                 XCTAssertEqual(catsWithHappyCatAsBestFriend.count, 1)
                 XCTAssertEqual(catsWithHappyCatAsBestFriend.first?.fields["name"] as? String, "Nyan Cat")
@@ -776,7 +764,7 @@ final class QueryTests: XCTestCase {
                 } else {
                     XCTFail("Should be able to get linked entry.")
                 }
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -792,12 +780,12 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
-            case .success(let catsWithHappyCatAsBestFriendResponse):
+            case let .success(catsWithHappyCatAsBestFriendResponse):
                 let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
                 XCTAssertEqual(catsWithHappyCatAsBestFriend.count, 1)
                 XCTAssertEqual(catsWithHappyCatAsBestFriend.first?.name, "Nyan Cat")
                 XCTAssertEqual(catsWithHappyCatAsBestFriend.first?.bestFriend?.name, "Happy Cat")
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -814,7 +802,7 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
-            case .success(let catsWithHappyCatAsBestFriendResponse):
+            case let .success(catsWithHappyCatAsBestFriendResponse):
                 let catsWithHappyCatAsBestFriend = catsWithHappyCatAsBestFriendResponse.items
                 XCTAssertEqual(catsWithHappyCatAsBestFriend.count, 1)
                 XCTAssertEqual(catsWithHappyCatAsBestFriend.first?.fields["name"] as? String, "Nyan Cat")
@@ -823,7 +811,7 @@ final class QueryTests: XCTestCase {
                 } else {
                     XCTFail("Should be able to get linked entry.")
                 }
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -840,10 +828,10 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
-            case .success(let catsResponse):
+            case let .success(catsResponse):
                 let cats = catsResponse.items
                 XCTAssertEqual(cats.count, 1)
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -860,10 +848,10 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Asset.self, matching: query) { result in
             switch result {
-            case .success(let assetsResponse):
+            case let .success(assetsResponse):
                 let assets = assetsResponse.items
                 XCTAssertEqual(assets.count, 4)
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -871,13 +859,13 @@ final class QueryTests: XCTestCase {
 
         waitForExpectations(timeout: 10.0, handler: nil)
     }
-    
+
     func testQueryReturningClientDefinedModelWithMetadata() {
         let expectation = self.expectation(description: "Select operator expectation")
 
         QueryTests.client.fetchArray(of: Cat.self, matching: .where(field: .name, .equals("Nyan Cat"))) { result in
             switch result {
-            case .success(let catsResponse):
+            case let .success(catsResponse):
                 let cats = catsResponse.items
 
                 guard let cat = cats.first(where: { $0.id == "nyancat" }) else {
@@ -890,7 +878,7 @@ final class QueryTests: XCTestCase {
                     return
                 }
                 XCTAssertEqual(tags.count, 0)
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -898,13 +886,13 @@ final class QueryTests: XCTestCase {
 
         waitForExpectations(timeout: 10.0, handler: nil)
     }
-    
+
     func testQueryReturningClientDefinedModelWithMetadataAndTags() {
         let expectation = self.expectation(description: "Select operator expectation")
 
         QueryTests.client.fetchArray(of: Cat.self, matching: .where(field: .name, .equals("Garfield"))) { result in
             switch result {
-            case .success(let catsResponse):
+            case let .success(catsResponse):
                 let cats = catsResponse.items
 
                 guard let cat = cats.first(where: { $0.id == "garfield" }) else {
@@ -917,7 +905,7 @@ final class QueryTests: XCTestCase {
                     return
                 }
                 XCTAssertEqual(tags.count, 1)
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -925,7 +913,7 @@ final class QueryTests: XCTestCase {
 
         waitForExpectations(timeout: 10.0, handler: nil)
     }
-    
+
     func testTagsExistence() {
         let expectation = self.expectation(description: "Existence operator expectation")
 
@@ -933,7 +921,7 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
-            case .success(let catsResponse):
+            case let .success(catsResponse):
                 let cats = catsResponse.items
                 XCTAssertEqual(cats.count, 1)
 
@@ -941,14 +929,14 @@ final class QueryTests: XCTestCase {
                     XCTFail("Couldn't find Garfield.")
                     return
                 }
-                
+
                 guard let tags = cat.metadata?.tags else {
                     XCTFail("Could not find tags")
                     return
                 }
-                
+
                 XCTAssertTrue(tags.count > 0)
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -956,7 +944,7 @@ final class QueryTests: XCTestCase {
 
         waitForExpectations(timeout: 10.0, handler: nil)
     }
-    
+
     func testTagsNotExistence() {
         let expectation = self.expectation(description: "Existence operator expectation")
 
@@ -964,13 +952,13 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
-            case .success(let catsResponse):
+            case let .success(catsResponse):
                 let cats = catsResponse.items
                 XCTAssertEqual(cats.count, 2)
                 for cat in cats {
                     XCTAssertTrue(cat.metadata?.tags.count == .some(0))
                 }
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -978,7 +966,7 @@ final class QueryTests: XCTestCase {
 
         waitForExpectations(timeout: 10.0, handler: nil)
     }
-    
+
     func testFetchEntriesContainingSpecificTags() {
         let expectation = self.expectation(description: "Existence operator expectation")
 
@@ -986,7 +974,7 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
-            case .success(let catsResponse):
+            case let .success(catsResponse):
                 let cats = catsResponse.items
                 XCTAssertEqual(cats.count, 1)
 
@@ -994,16 +982,16 @@ final class QueryTests: XCTestCase {
                     XCTFail("Couldn't find Garfield.")
                     return
                 }
-                
+
                 let allTagsIds = garfield.metadata?.tags.map { $0.id } ?? []
-                
+
                 guard !allTagsIds.isEmpty else {
                     XCTFail("Tags array should not be empty")
                     return
                 }
-                
+
                 XCTAssertTrue(allTagsIds.contains("garfieldTag"))
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -1011,7 +999,7 @@ final class QueryTests: XCTestCase {
 
         waitForExpectations(timeout: 10.0, handler: nil)
     }
-    
+
     func testFetchEntriesContainingSpecificTags2() {
         let expectation = self.expectation(description: "Existence operator expectation")
 
@@ -1019,7 +1007,7 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
-            case .success(let catsResponse):
+            case let .success(catsResponse):
                 let cats = catsResponse.items
                 XCTAssertEqual(cats.count, 1)
 
@@ -1027,16 +1015,16 @@ final class QueryTests: XCTestCase {
                     XCTFail("Couldn't find Garfield.")
                     return
                 }
-                
+
                 let allTagsIds = garfield.metadata?.tags.map { $0.id } ?? []
-                
+
                 guard !allTagsIds.isEmpty else {
                     XCTFail("Tags array should not be empty")
                     return
                 }
-                
+
                 XCTAssertTrue(allTagsIds.contains("garfieldTag"))
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -1044,7 +1032,7 @@ final class QueryTests: XCTestCase {
 
         waitForExpectations(timeout: 10.0, handler: nil)
     }
-    
+
     func testTagsExistence2() {
         let expectation = self.expectation(description: "Existence operator expectation")
 
@@ -1052,7 +1040,7 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
-            case .success(let catsResponse):
+            case let .success(catsResponse):
                 let cats = catsResponse.items
                 XCTAssertEqual(cats.count, 1)
 
@@ -1060,14 +1048,14 @@ final class QueryTests: XCTestCase {
                     XCTFail("Couldn't find Garfield.")
                     return
                 }
-                
+
                 guard let tags = cat.metadata?.tags else {
                     XCTFail("Could not find tags")
                     return
                 }
-                
+
                 XCTAssertTrue(tags.count > 0)
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -1075,7 +1063,7 @@ final class QueryTests: XCTestCase {
 
         waitForExpectations(timeout: 10.0, handler: nil)
     }
-    
+
     func testTagsNotExistence2() {
         let expectation = self.expectation(description: "Existence operator expectation")
 
@@ -1083,13 +1071,13 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
-            case .success(let catsResponse):
+            case let .success(catsResponse):
                 let cats = catsResponse.items
                 XCTAssertEqual(cats.count, 2)
                 for cat in cats {
                     XCTAssertTrue(cat.metadata?.tags.count == .some(0))
                 }
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -1105,7 +1093,7 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
-            case .success(let catsResponse):
+            case let .success(catsResponse):
                 let cats = catsResponse.items
                 XCTAssertEqual(cats.count, 1)
 
@@ -1122,7 +1110,7 @@ final class QueryTests: XCTestCase {
                 }
 
                 XCTAssertTrue(allTagsIds.contains("garfieldTag"))
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -1138,7 +1126,7 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
-            case .success(let catsResponse):
+            case let .success(catsResponse):
                 let cats = catsResponse.items
                 XCTAssertEqual(cats.count, 1)
 
@@ -1155,7 +1143,7 @@ final class QueryTests: XCTestCase {
                 }
 
                 XCTAssertTrue(allTagsIds.contains("garfieldTag"))
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -1172,7 +1160,7 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
-            case .success(let catsResponse):
+            case let .success(catsResponse):
                 let cats = catsResponse.items
                 XCTAssertEqual(cats.count, 1)
 
@@ -1189,7 +1177,7 @@ final class QueryTests: XCTestCase {
                 }
 
                 XCTAssertTrue(allTagsIds.contains("garfieldTag"))
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -1206,7 +1194,7 @@ final class QueryTests: XCTestCase {
 
         QueryTests.client.fetchArray(of: Cat.self, matching: query) { result in
             switch result {
-            case .success(let catsResponse):
+            case let .success(catsResponse):
                 let cats = catsResponse.items
                 XCTAssertEqual(cats.count, 1)
 
@@ -1223,7 +1211,7 @@ final class QueryTests: XCTestCase {
                 }
 
                 XCTAssertTrue(allTagsIds.contains("garfieldTag"))
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()

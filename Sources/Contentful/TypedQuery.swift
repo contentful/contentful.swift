@@ -11,7 +11,6 @@ import Foundation
 /// A concrete implementation of ChainableQuery which can be used to make queries on `/entries/`
 /// or `/entries`. All methods from ChainableQuery are available.
 public class Query: ResourceQuery, EntryQuery {
-
     public static var any: Query {
         return Query()
     }
@@ -22,9 +21,8 @@ public class Query: ResourceQuery, EntryQuery {
 /// and see the init<LinkType: EntryDecodable>(whereLinkAt fieldNameForLink: String, matches filterQuery: FilterQuery<LinkType>? = nil) methods
 /// on QueryOn for example usage.
 public final class LinkQuery<EntryType>: AbstractQuery where EntryType: EntryDecodable & FieldKeysQueryable {
-
     /// The parameters dictionary that are converted to `URLComponents` (HTTP parameters/arguments) on the HTTP URL. Useful for debugging.
-    public var parameters: [String: String] = [String: String]()
+    public var parameters = [String: String]()
 
     // Different function name to ensure inner call to where(valueAtKeyPath:operation:) doesn't recurse.
     private static func with(valueAtKeyPath keyPath: String, _ operation: Query.Operation) -> LinkQuery<EntryType> {
@@ -64,40 +62,40 @@ public final class LinkQuery<EntryType>: AbstractQuery where EntryType: EntryDec
     }
 
     /**
-     Static method for creating a new LinkQuery with an operation. This variation for initializing guarantees
-     correct query contruction by utilizing the associated Sys CodingKeys type required by ResourceQueryable on
-     the type you are linking to.
+      Static method for creating a new LinkQuery with an operation. This variation for initializing guarantees
+      correct query contruction by utilizing the associated Sys CodingKeys type required by ResourceQueryable on
+      the type you are linking to.
 
-     Example usage:
-     ```
-     let linkQuery = LinkQuery<Cat>.where(sys: .id, .matches("happycat"))
-     let query = QueryOn<Cat>(whereLinkAtField: .bestFriend, matches: linkQuery)
-     client.fetchArray(of: Cat.self, matching: query) { (result: Result<ArrayResponse<Cat>>) in
-         switch result {
-         case .success(let arrayResponse):
-             let cats = arrayResponse.items
-             // Do stuff with cats.
-         case .failure(let error):
-             print(error)
-         }
-     }
-     ```
+      Example usage:
+      ```
+      let linkQuery = LinkQuery<Cat>.where(sys: .id, .matches("happycat"))
+      let query = QueryOn<Cat>(whereLinkAtField: .bestFriend, matches: linkQuery)
+      client.fetchArray(of: Cat.self, matching: query) { (result: Result<ArrayResponse<Cat>>) in
+          switch result {
+          case .success(let arrayResponse):
+              let cats = arrayResponse.items
+              // Do stuff with cats.
+          case .failure(let error):
+              print(error)
+          }
+      }
+      ```
 
-     See: [Search on references](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references)
+      See: [Search on references](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/search-on-references)
 
-    - Parameters:
-        - sys: The member of the `Sys.CodingKeys` type associated with your type conforming
-            to `EntryDecodable & ResourceQueryable` that you are performing your search on reference against.
-        - operation: The query operation used in the query.
-        - Returns: A newly initialized `QueryOn` query.
-    */
+     - Parameters:
+         - sys: The member of the `Sys.CodingKeys` type associated with your type conforming
+             to `EntryDecodable & ResourceQueryable` that you are performing your search on reference against.
+         - operation: The query operation used in the query.
+         - Returns: A newly initialized `QueryOn` query.
+     */
     public static func `where`(sys key: Sys.CodingKeys, _ operation: Query.Operation) -> LinkQuery<EntryType> {
         return LinkQuery<EntryType>.with(valueAtKeyPath: "sys.\(key.stringValue)", operation)
     }
 
     /// Designated initializer for FilterQuery.
     public init() {
-        self.parameters = [String: String]()
+        parameters = [String: String]()
     }
 
     // MARK: FilterQuery<EntryType>.Private
@@ -111,13 +109,12 @@ public final class LinkQuery<EntryType>: AbstractQuery where EntryType: EntryDec
 /// The "content_type" parameter of the query will be set using the `contentTypeID` of the generic parameter conforming
 /// to `EntryDecodable`. You must also implement `ResourceQueryable` in order to utilize these generic queries.
 public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodable & FieldKeysQueryable {
-
     /// The parameters dictionary that are converted to `URLComponents` (HTTP parameters/arguments) on the HTTP URL. Useful for debugging.
-    public var parameters: [String: String] = [String: String]()
+    public var parameters = [String: String]()
 
     /// Designated initializer for `QueryOn<EntryType>`.
     public init() {
-        self.parameters = [QueryParameter.contentType: EntryType.contentTypeId]
+        parameters = [QueryParameter.contentType: EntryType.contentTypeId]
     }
 
     /// Static method for creating a new `QueryOn` with an operation. This variation for initialization guarantees correct query construction
@@ -243,7 +240,7 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
     @discardableResult
     public func select(fieldsNamed fieldsKeys: [EntryType.FieldKeys]) -> QueryOn<EntryType> {
         let fieldPaths = fieldsKeys.map { $0.stringValue }
-        try! self.select(fieldsNamed: fieldPaths)
+        try! select(fieldsNamed: fieldPaths)
         return self
     }
 
@@ -272,7 +269,8 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
     ///   - linkQuery: The filter query applied to the linked objects which are being searched.
     /// - Returns: A newly initialized `QueryOn` query.
     public static func `where`<LinkType>(linkAtField fieldsKey: EntryType.FieldKeys,
-                                         matches linkQuery: LinkQuery<LinkType>) -> QueryOn<EntryType> {
+                                         matches linkQuery: LinkQuery<LinkType>) -> QueryOn<EntryType>
+    {
         let query = QueryOn<EntryType>()
         query.where(linkAtField: fieldsKey, matches: linkQuery)
         return query
@@ -304,8 +302,8 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
     /// - Returns: A reference to the receiving query to enable chaining.
     @discardableResult
     public func `where`<LinkType>(linkAtField fieldsKey: EntryType.FieldKeys,
-                                                     matches linkQuery: LinkQuery<LinkType>) -> QueryOn<EntryType> {
-
+                                  matches linkQuery: LinkQuery<LinkType>) -> QueryOn<EntryType>
+    {
         parameters["fields.\(fieldsKey.stringValue).sys.contentType.sys.id"] = LinkType.contentTypeId
 
         // If propertyName isn't unrwrapped, the string isn't constructed correctly for some reason.
@@ -340,7 +338,8 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
     ///   - targetId: The identifier of the entry or asset being linked to at the specified linking field.
     /// - Returns: A newly initialized `QueryOn` query.
     public static func `where`(linkAtField fieldsKey: EntryType.FieldKeys,
-                               hasTargetId targetId: String) -> QueryOn<EntryType> {
+                               hasTargetId targetId: String) -> QueryOn<EntryType>
+    {
         let query = QueryOn<EntryType>()
         query.where(linkAtField: fieldsKey, hasTargetId: targetId)
         return query
@@ -371,8 +370,8 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
     /// - Returns: A reference to the receiving query to enable chaining.
     @discardableResult
     public func `where`(linkAtField fieldsKey: EntryType.FieldKeys,
-                        hasTargetId targetId: String) -> QueryOn<EntryType> {
-
+                        hasTargetId targetId: String) -> QueryOn<EntryType>
+    {
         let filterParameterName = "fields.\(fieldsKey.stringValue).sys.id"
         parameters[filterParameterName] = targetId
 
@@ -382,7 +381,6 @@ public final class QueryOn<EntryType>: EntryQuery where EntryType: EntryDecodabl
 
 /// Queries on Asset types. All methods from `ChainableQuery` are available.
 public final class AssetQuery: ResourceQuery {
-
     /// Convenience initializer for creating an `AssetQuery` with the "mimetype_group" parameter specified. Example usage:
     ///
     /// ```
@@ -403,7 +401,7 @@ public final class AssetQuery: ResourceQuery {
     /// - Returns: A reference to the receiving query to enable chaining.
     @discardableResult
     public func `where`(mimetypeGroup: MimetypeGroup) -> AssetQuery {
-        self.parameters[QueryParameter.mimetypeGroup] = mimetypeGroup.rawValue
+        parameters[QueryParameter.mimetypeGroup] = mimetypeGroup.rawValue
         return self
     }
 
@@ -458,7 +456,7 @@ public final class AssetQuery: ResourceQuery {
     public func select(fields fieldsKeys: [Asset.Fields]) -> AssetQuery {
         let fieldPaths = fieldsKeys.map { $0.stringValue }
         // Because we're guaranteed the keyPath doesn't have a "." in it, we can force try
-        try! self.select(fieldsNamed: fieldPaths)
+        try! select(fieldsNamed: fieldPaths)
         return self
     }
 }
@@ -466,13 +464,12 @@ public final class AssetQuery: ResourceQuery {
 /// Queries on content types. All methods from ChainableQuery are available, are inherited and available.
 public final class ContentTypeQuery: ChainableQuery {
     /// The parameters dictionary that is converted to `URLComponents` (HTTP parameters/arguments) on the HTTP URL. Useful for debugging.
-    public var parameters: [String: String] = [String: String]()
+    public var parameters: [String: String] = .init()
 
     /// Designated initalizer for Query.
     public required init() {
-        self.parameters = [String: String]()
+        parameters = [String: String]()
     }
-
 
     /// Static method for creating a ContentTypeQuery with an operation.
     /// This variation for initializing guarantees correct query contruction by utilizing the ContentType.QueryableCodingKey CodingKeys.

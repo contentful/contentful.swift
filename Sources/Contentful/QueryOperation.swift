@@ -9,7 +9,6 @@
 import Foundation
 
 public extension Query {
-
     /// Property-value query operations used for matching patterns on either "sys" or "fields" properties of assets and entries.
     /// Each operation specifies a property name on the left-hand side, with a value to match on the right.
     /// For instance, using the `.doesNotEqual` operation in an a concrete `Query` like:
@@ -26,7 +25,6 @@ public extension Query {
     ///
     /// Refer to the documentation for the various Query classes for more information.
     enum Operation {
-
         /// The equality operator: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/equality-operator>
         case equals(String)
         /// The inequality operator: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/inequality-operator>
@@ -63,56 +61,52 @@ public extension Query {
         /// Location within bounding box operator: <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/locations-in-a-bounding-object>
         case isWithin(Bounds)
 
-        internal var string: String {
+        var string: String {
             switch self {
-            case .equals:                                       return ""
-            case .doesNotEqual:                                 return "[ne]"
-            case .hasAll:                                       return "[all]"
-            case .includes:                                     return "[in]"
-            case .excludes:                                     return "[nin]"
-            case .exists:                                       return "[exists]"
-            case .matches:                                      return "[match]"
-
-            case .isLessThan:                                   return "[lt]"
-            case .isLessThanOrEqualTo:                          return "[lte]"
-            case .isGreaterThan:                                return "[gt]"
-            case .isGreaterThanOrEqualTo:                       return "[gte]"
-            case .isBefore:                                     return "[lte]"
-            case .isAfter:                                      return "[gte]"
-
-            case .isNear:                                       return "[near]"
-            case .isWithin:                                     return "[within]"
+            case .equals: return ""
+            case .doesNotEqual: return "[ne]"
+            case .hasAll: return "[all]"
+            case .includes: return "[in]"
+            case .excludes: return "[nin]"
+            case .exists: return "[exists]"
+            case .matches: return "[match]"
+            case .isLessThan: return "[lt]"
+            case .isLessThanOrEqualTo: return "[lte]"
+            case .isGreaterThan: return "[gt]"
+            case .isGreaterThanOrEqualTo: return "[gte]"
+            case .isBefore: return "[lte]"
+            case .isAfter: return "[gte]"
+            case .isNear: return "[near]"
+            case .isWithin: return "[within]"
             }
         }
 
-        internal var values: String {
+        var values: String {
             switch self {
-            case .equals(let value):                            return value
-            case .doesNotEqual(let value):                      return value
-            case .hasAll(let values):                           return values.joined(separator: ",")
-            case .includes(let values):                         return values.joined(separator: ",")
-            case .excludes(let values):                         return values.joined(separator: ",")
-            case .exists(let value):                            return String(value)
-            case .matches(let value):                           return value
-
-            case .isLessThan(let queryableRange):               return queryableRange.stringValue
-            case .isLessThanOrEqualTo(let queryableRange):      return queryableRange.stringValue
-            case .isGreaterThan(let queryableRange):            return queryableRange.stringValue
-            case .isGreaterThanOrEqualTo(let queryableRange):   return queryableRange.stringValue
-            case .isBefore(let queryableRange):                 return queryableRange.stringValue
-            case .isAfter(let queryableRange):                  return queryableRange.stringValue
-
-            case .isNear(let coordinates):                      return "\(coordinates.latitude),\(coordinates.longitude)"
-            case .isWithin(let bounds):                         return string(for: bounds)
+            case let .equals(value): return value
+            case let .doesNotEqual(value): return value
+            case let .hasAll(values): return values.joined(separator: ",")
+            case let .includes(values): return values.joined(separator: ",")
+            case let .excludes(values): return values.joined(separator: ",")
+            case let .exists(value): return String(value)
+            case let .matches(value): return value
+            case let .isLessThan(queryableRange): return queryableRange.stringValue
+            case let .isLessThanOrEqualTo(queryableRange): return queryableRange.stringValue
+            case let .isGreaterThan(queryableRange): return queryableRange.stringValue
+            case let .isGreaterThanOrEqualTo(queryableRange): return queryableRange.stringValue
+            case let .isBefore(queryableRange): return queryableRange.stringValue
+            case let .isAfter(queryableRange): return queryableRange.stringValue
+            case let .isNear(coordinates): return "\(coordinates.latitude),\(coordinates.longitude)"
+            case let .isWithin(bounds): return string(for: bounds)
             }
         }
 
         private func string(for bounds: Bounds) -> String {
             switch bounds {
-            case .box(let bottomLeft, let topRight):
+            case let .box(bottomLeft, topRight):
                 return "\(bottomLeft.latitude),\(bottomLeft.longitude),\(topRight.latitude),\(topRight.longitude)"
 
-            case .circle(let center, let radius):
+            case let .circle(center, radius):
                 return "\(center.latitude),\(center.longitude),\(radius)"
             }
         }

@@ -7,17 +7,14 @@
 //
 
 @testable import Contentful
-import XCTest
 import DVR
+import XCTest
 
 // TODO: fix
 
 class SyncTests: XCTestCase {
+    func testDummy() {}
 
-    func testDummy() {
-        
-    }
-    
 //    static let client = TestClientFactory.testClient(withCassetteNamed: "SyncTests")
 //
 //    override class func setUp() {
@@ -105,66 +102,65 @@ class SyncTests: XCTestCase {
 }
 
 #if !API_COVERAGE
-class PreviewSyncTests: XCTestCase {
+    class PreviewSyncTests: XCTestCase {
+        static let client: Client = {
+            let client = TestClientFactory.testClient(withCassetteNamed: "PreviewSyncTests",
+                                                      accessToken: "fd53c0a7a0a9bdd930efe1ec9d1f1bcc9b29628d5d4a7a409b160d00b1b2910b",
+                                                      host: Host.preview)
+            return client
+        }()
 
-    static let client: Client = {
-        let client = TestClientFactory.testClient(withCassetteNamed: "PreviewSyncTests",
-                                                  accessToken: "fd53c0a7a0a9bdd930efe1ec9d1f1bcc9b29628d5d4a7a409b160d00b1b2910b",
-                                                  host: Host.preview)
-        return client
-    }()
-
-    override class func setUp() {
-        super.setUp()
-        (client.urlSession as? DVR.Session)?.beginRecording()
-    }
-
-    override class func tearDown() {
-        super.tearDown()
-        (client.urlSession as? DVR.Session)?.endRecording()
-    }
-
-    func testDoInitialSyncWithPreviewAPI() {
-        let expectation = self.expectation(description: "Can do initial sync with preview API Sync test expecation")
-
-        PreviewSyncTests.client.sync { result in
-            switch result {
-            case .success(let syncSpace):
-                XCTAssertGreaterThan(syncSpace.entries.count, 0)
-                XCTAssertGreaterThan(syncSpace.assets.count, 0)
-
-            case .failure(let error):
-                XCTFail("\(error)")
-            }
-            expectation.fulfill()
+        override class func setUp() {
+            super.setUp()
+            (client.urlSession as? DVR.Session)?.beginRecording()
         }
-        waitForExpectations(timeout: 10.0, handler: nil)
-    }
 
-    func testSubsequentSyncWithPreviewAPIReturnsSDKError() {
-        let expectation = self.expectation(description: "Can do initial sync with preview API Sync test expecation")
+        override class func tearDown() {
+            super.tearDown()
+            (client.urlSession as? DVR.Session)?.endRecording()
+        }
 
-        PreviewSyncTests.client.sync { result in
-            switch result {
-            case .success(let syncSpace):
-                XCTAssertGreaterThan(syncSpace.entries.count, 0)
-                XCTAssertGreaterThan(syncSpace.assets.count, 0)
+        func testDoInitialSyncWithPreviewAPI() {
+            let expectation = self.expectation(description: "Can do initial sync with preview API Sync test expecation")
 
-                PreviewSyncTests.client.sync(for: syncSpace) { nextSyncResult in
-                    switch nextSyncResult {
-                    case .success:
-                        XCTFail("Should not be able to do subsequent sync")
-                    case .failure(let error):
-                        XCTAssert(error is SDKError)
-                        expectation.fulfill()
-                    }
+            PreviewSyncTests.client.sync { result in
+                switch result {
+                case let .success(syncSpace):
+                    XCTAssertGreaterThan(syncSpace.entries.count, 0)
+                    XCTAssertGreaterThan(syncSpace.assets.count, 0)
+
+                case let .failure(error):
+                    XCTFail("\(error)")
                 }
-            case .failure(let error):
-                XCTFail("\(error)")
                 expectation.fulfill()
             }
+            waitForExpectations(timeout: 10.0, handler: nil)
         }
-        waitForExpectations(timeout: 10.0, handler: nil)
+
+        func testSubsequentSyncWithPreviewAPIReturnsSDKError() {
+            let expectation = self.expectation(description: "Can do initial sync with preview API Sync test expecation")
+
+            PreviewSyncTests.client.sync { result in
+                switch result {
+                case let .success(syncSpace):
+                    XCTAssertGreaterThan(syncSpace.entries.count, 0)
+                    XCTAssertGreaterThan(syncSpace.assets.count, 0)
+
+                    PreviewSyncTests.client.sync(for: syncSpace) { nextSyncResult in
+                        switch nextSyncResult {
+                        case .success:
+                            XCTFail("Should not be able to do subsequent sync")
+                        case let .failure(error):
+                            XCTAssert(error is SDKError)
+                            expectation.fulfill()
+                        }
+                    }
+                case let .failure(error):
+                    XCTFail("\(error)")
+                    expectation.fulfill()
+                }
+            }
+            waitForExpectations(timeout: 10.0, handler: nil)
+        }
     }
-}
 #endif

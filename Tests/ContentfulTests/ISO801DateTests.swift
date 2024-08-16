@@ -11,7 +11,6 @@ import Foundation
 import XCTest
 
 class ISO8601DateTests: XCTestCase {
-
     func testDateFormatter() {
         let decoder = JSONDecoder.withoutLocalizationContext()
         let datesJSON = """

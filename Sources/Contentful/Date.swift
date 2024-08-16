@@ -11,7 +11,6 @@ import Foundation
 // Formatter and extensions pulled from: https://stackoverflow.com/a/28016692/4068264
 // and https://stackoverflow.com/a/46538676/4068264
 public extension Date {
-
     // An array of 4 date formats: the format present on `sys` properties in Contentful,
     // and the 3 formats used when creating entries in the Contentful web app. See this reference
     // for date symbols: http://userguide.icu-project.org/formatparse/datetime
@@ -22,7 +21,7 @@ public extension Date {
         "yyyy-MM-dd'T'HH:mm",
         // Handle UTC offsets.
         "yyyy-MM-dd'T'HH:mmxxx",
-        "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+        "yyyy-MM-dd'T'HH:mm:ssZZZZZ",
     ]
 
     /// A small error type thrown when the date found in JSON cannot be deserialized.
@@ -72,7 +71,6 @@ public extension Date {
 }
 
 public extension String {
-
     /// Return a `Date` object if the current String is in the right format.
     var iso8601StringDate: Date? {
         return Date.iso8601Formatter().date(from: self)

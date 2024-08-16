@@ -25,7 +25,6 @@ class CustomTestLogger: CustomLogger {
 }
 
 class LoggerTests: XCTestCase {
-
     func testLoggerRespectsLogLevel() {
         let customLogger = CustomTestLogger()
 
@@ -52,11 +51,11 @@ class LoggerTests: XCTestCase {
         ContentfulLogger.logLevel = .info
         message = "This message SHOULD be logged as long as logLevel is not none."
         ContentfulLogger.log(.error, message: message)
-        XCTAssertEqual(customLogger.currentMessage,  "[Contentful] Error: " + message)
+        XCTAssertEqual(customLogger.currentMessage, "[Contentful] Error: " + message)
         customLogger.reset()
         XCTAssertNil(customLogger.currentMessage) // Sanity check on reset
         ContentfulLogger.log(.info, message: message)
-        XCTAssertEqual(customLogger.currentMessage,  "[Contentful] " + message)
+        XCTAssertEqual(customLogger.currentMessage, "[Contentful] " + message)
 
         // Log to none, nothing should log.
         customLogger.reset()

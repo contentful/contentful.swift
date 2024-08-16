@@ -7,13 +7,12 @@
 //
 
 @testable import Contentful
-import XCTest
 import DVR
 import OHHTTPStubs
+import XCTest
 
 class ErrorTests: XCTestCase {
-
-    static let client = TestClientFactory.testClient(withCassetteNamed:  "ErrorTests")
+    static let client = TestClientFactory.testClient(withCassetteNamed: "ErrorTests")
 
     override class func setUp() {
         super.setUp()
@@ -27,19 +26,19 @@ class ErrorTests: XCTestCase {
 
     func testErrorMessageForInvalidPath() {
         let expectation = self.expectation(description: "Invalid path")
-        
+
         ErrorTests.client.fetchArray(of: Entry.self, matching: .where(valueAtKeyPath: "sys.888", .equals("GO"))) { result in
             switch result {
             case .success:
                 XCTFail("Request should not succeed")
-            case .failure(let error as APIError):
+            case let .failure(error as APIError):
                 // The DVR recorder fails to record not 200 status codes, so using a regex to check the status code intead (it returns 0 since the recorder is plugging it as nil).
                 let expectedRegexString =
-                """
-                HTTP status code 400: The query you sent was invalid. Probably a filter or ordering specification is not applicable to the type of a field.
-                The path \"sys.888\" is not recognized.
-                Contentful Request ID: \\w+
-                """
+                    """
+                    HTTP status code 400: The query you sent was invalid. Probably a filter or ordering specification is not applicable to the type of a field.
+                    The path \"sys.888\" is not recognized.
+                    Contentful Request ID: \\w+
+                    """
                 let regex = try! NSRegularExpression(pattern: expectedRegexString, options: [])
                 let matches = regex.matches(in: error.debugDescription, options: [], range: NSRange(location: 0, length: error.debugDescription.count))
                 XCTAssertEqual(matches.count, 1)
@@ -48,15 +47,13 @@ class ErrorTests: XCTestCase {
             }
             expectation.fulfill()
         }
-        
+
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 }
 
 class UnparsableErrorTests: XCTestCase {
-
     func testUnparsableErrorPassesSDKError() {
-
         let expectation = self.expectation(description: "Error is passed into callback")
 
         stub(condition: isPath("/spaces/cfexampleapi")) { _ in
@@ -69,7 +66,7 @@ class UnparsableErrorTests: XCTestCase {
             switch result {
             case .success:
                 XCTFail("Error should have been returned")
-            case .failure(let error):
+            case let .failure(error):
                 XCTAssert(error is SDKError)
             }
             expectation.fulfill()

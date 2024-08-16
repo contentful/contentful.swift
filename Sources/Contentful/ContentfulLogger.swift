@@ -17,13 +17,12 @@ public protocol CustomLogger {
 
 /// A logger for outputting status messages to the console from Contentful SDK.
 public enum ContentfulLogger {
-
     #if os(iOS) || os(tvOS) || os(watchOS) || os(macOS)
-    /// The type of logger used to log messages; defaults to `NSLog` on iOS, tvOS, watchOS, macOS. Defaults to `print` on other platforms.
-    public static var logType: LogType = .nsLog
+        /// The type of logger used to log messages; defaults to `NSLog` on iOS, tvOS, watchOS, macOS. Defaults to `print` on other platforms.
+        public static var logType: LogType = .nsLog
     #else
-    /// The type of logger used to log messages; defaults to `NSLog` on iOS, tvOS, watchOS, macOS. Defaults to `print` on other platforms.
-    public static var logType: LogType = .print
+        /// The type of logger used to log messages; defaults to `NSLog` on iOS, tvOS, watchOS, macOS. Defaults to `print` on other platforms.
+        public static var logType: LogType = .print
     #endif
 
     /// The highest order of message types that should be logged. Defaults to `LogLevel.error`.
@@ -49,8 +48,8 @@ public enum ContentfulLogger {
         case custom(CustomLogger)
     }
 
-    internal static func log(_ level: LogLevel, message: String) {
-        guard level.rawValue <= self.logLevel.rawValue && level != .none else { return }
+    static func log(_ level: LogLevel, message: String) {
+        guard level.rawValue <= logLevel.rawValue, level != .none else { return }
 
         var formattedMessage = "[Contentful] "
         switch level {
@@ -60,12 +59,12 @@ public enum ContentfulLogger {
         }
         formattedMessage += message
 
-        switch self.logType {
+        switch logType {
         case .print:
             Swift.print(formattedMessage)
         case .nsLog:
             NSLog(formattedMessage)
-        case .custom(let customLogger):
+        case let .custom(customLogger):
             customLogger.log(message: formattedMessage)
         }
     }

@@ -7,12 +7,11 @@
 //
 
 @testable import Contentful
-import XCTest
 import DVR
+import XCTest
 
 class ContentTypeTests: XCTestCase {
-
-    static let client = TestClientFactory.testClient(withCassetteNamed:  "ContentTypeTests")
+    static let client = TestClientFactory.testClient(withCassetteNamed: "ContentTypeTests")
 
     override class func setUp() {
         super.setUp()
@@ -27,7 +26,7 @@ class ContentTypeTests: XCTestCase {
     func testFetchContentType() {
         let expectation = self.expectation(description: "Client can fetch a content type")
 
-        ContentTypeTests.client.fetch(ContentType.self, id: "cat") { (result) in
+        ContentTypeTests.client.fetch(ContentType.self, id: "cat") { result in
 
             switch result {
             case let .success(type):
@@ -83,9 +82,8 @@ class ContentTypeTests: XCTestCase {
         }
         waitForExpectations(timeout: 10, handler: nil)
     }
-    
-    func testFetchAllContentTypesInSpaceWithOrder() {
 
+    func testFetchAllContentTypesInSpaceWithOrder() {
         let expectation = self.expectation(description: "can fetch all content types of a space")
 
         let query = try! ContentTypeQuery.order(by: Ordering(sys: .id))
