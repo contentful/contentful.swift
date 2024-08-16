@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-  cancel: circleci/cancel-in-progress@1.1.0
-
 jobs:
   test-ios:
     macos:
@@ -70,7 +67,6 @@ jobs:
 workflows:
   test-workflow:
     jobs:
-      - cancel/cancel-in-progress
       - test-ios
       - test-macos
       - test-tvos
