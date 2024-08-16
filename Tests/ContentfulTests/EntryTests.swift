@@ -66,7 +66,7 @@ class EntryTests: XCTestCase {
     func testSkipEntriesInAQuery() {
         let query = try! Query.order(by: Ordering(sys: .createdAt)).skip(theFirst: 9)
         waitUntilMatchingEntries(query) {
-            XCTAssertEqual($0.items.count, 1)
+            XCTAssertEqual($0.items.count, 2)
             XCTAssertEqual($0.items.first?.sys.id, "garfield")
         }
     }
@@ -97,10 +97,12 @@ class EntryTests: XCTestCase {
         "5ETMRzkl9KM4omyMwKAOki",
         "6KntaYXaHSyIw8M6eo26OK",
         "4MU1s3potiUEM2G4okYOqw",
-        "garfield"
+        "garfield",
+        "2FkO00OyCewe0Kdbb4m1Br"
     ]
 
     static let orderedEntriesByMultiple = [
+        "2FkO00OyCewe0Kdbb4m1Br",
         "4MU1s3potiUEM2G4okYOqw",
         "5ETMRzkl9KM4omyMwKAOki",
         "6KntaYXaHSyIw8M6eo26OK",
@@ -158,20 +160,17 @@ class EntryTests: XCTestCase {
     }
 
     func testFetchEntryWithArrayOfLinkedEntries() {
-        // JPs_product space
-        let client = Client(spaceId: "p35j0pp5t9t8",
-                            accessToken: "6a1664bde31fa797778838ded3e755ab5e4834af1abdf2007c816086caf172c4")
 
         let expectation = self.expectation(description: "Fetch single entry expectation")
 
-        client.fetch(Entry.self, id: "5KsDBWseXY6QegucYAoacS") { result in
+        EntryTests.client.fetch(Entry.self, id: "2FkO00OyCewe0Kdbb4m1Br") { (result) in
             switch result {
             case .success(let entry):
-                if let categoryLinks = entry.fields["categories"] as? [Link] {
-                    let entries = categoryLinks.compactMap { $0.entry }
+                if let catsLinks = entry.fields["cats"] as? [Link] {
+                    let entries = catsLinks.compactMap { $0.entry }
 
                     XCTAssertNotNil(entries.first)
-                    XCTAssertEqual(entries.first!.sys.id, "24DPGBDeGEaYy8ms4Y8QMQ")
+                    XCTAssertEqual(entries.first!.sys.id, "happycat")
                 } else {
                     XCTFail("Expected entry with linked array to resolve links")
                 }
@@ -216,10 +215,10 @@ class EntryTests: XCTestCase {
         EntryTests.client.fetchArray(of: Entry.self) { (result) in
             switch result {
             case let .success(array):
-                XCTAssertEqual(array.total, 10)
+                XCTAssertEqual(array.total, 11)
                 XCTAssertEqual(array.limit, 100)
                 XCTAssertEqual(array.skip, 0)
-                XCTAssertEqual(array.items.count, 10)
+                XCTAssertEqual(array.items.count, 11)
             case let .failure(error):
                 XCTFail("\(error)")
             }
@@ -276,7 +275,7 @@ class EntryTests: XCTestCase {
 
     func testFetchEntriesWithInequalitySearch() {
         waitUntilMatchingEntries(Query.where(sys: .id, .doesNotEqual("nyancat"))) {
-            XCTAssertEqual($0.items.count, 9)
+            XCTAssertEqual($0.items.count, 10)
             let nyancat = $0.items.filter { $0.sys.id == "nyancat" }
             XCTAssertEqual(nyancat.count, 0)
         }
@@ -319,11 +318,11 @@ class EntryTests: XCTestCase {
     func testFetchEntriesWithRangeSearch() {
         let date = Date.fromComponents(year: 2021, month: 3, day: 20, hour: 0, minute: 0, second: 0)
         waitUntilMatchingEntries(Query.where(sys: .updatedAt, .isBefore(date))) {
-            XCTAssertEqual($0.items.count, 10)
+            XCTAssertEqual($0.items.count, 8)
         }
 
         waitUntilMatchingEntries(Query.where(sys: .updatedAt, .isBefore("2021-03-20T00:00:00Z"))) {
-            XCTAssertEqual($0.items.count, 10)
+            XCTAssertEqual($0.items.count, 8)
         }
     }
 
@@ -410,9 +409,9 @@ class EntryTests: XCTestCase {
         EntryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
             case .success(let entriesArrayResponse):
-                XCTAssertEqual(entriesArrayResponse.items.count, 1)
-                XCTAssertEqual(entriesArrayResponse.items.first?.fields["name"] as? String, "Nyan Cat")
-                XCTAssertEqual((entriesArrayResponse.items.first?.fields["bestFriend"] as? Link)?.entry?.id, "happycat")
+                XCTAssertEqual(entriesArrayResponse.items.count, 2)
+                XCTAssertEqual(entriesArrayResponse.items.last?.fields["name"] as? String, "Nyan Cat")
+                XCTAssertEqual((entriesArrayResponse.items.last?.fields["bestFriend"] as? Link)?.entry?.id, "happycat")
             case .failure(let error):
                 XCTFail("Should not return an error \(error)")
             }

@@ -118,13 +118,14 @@ final class QueryTests: XCTestCase {
                 // We didn't decode the "human" content type so only 9 decoded entries should be returned instead of 10
                 XCTAssertEqual(entries.count, 9)
 
-                if let cat = entries.first as? Cat, let bestFriend = cat.bestFriend {
+                if let cat = entries.last as? Cat, let bestFriend = cat.bestFriend {
                     XCTAssertEqual(bestFriend.name, "Nyan Cat")
                 } else {
+                    
                     XCTFail("The first entry in the heterogenous array should be a cat with a best friend named 'Nyan Cat'")
                 }
 
-                if let dog = entries[4] as? Dog, let image = dog.image {
+                if let dog = entries[3] as? Dog, let image = dog.image {
                     XCTAssertEqual(dog.description, "Bacon pancakes, makin' bacon pancakes!")
                     XCTAssertEqual(image.id, "jake")
                 } else {
@@ -442,7 +443,7 @@ final class QueryTests: XCTestCase {
             switch result {
             case .success(let entriesResponse):
                 let entries = entriesResponse.items
-                XCTAssertEqual(entries.count, 9)
+                XCTAssertEqual(entries.count, 8)
             case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
             }
@@ -465,7 +466,7 @@ final class QueryTests: XCTestCase {
             switch result {
             case .success(let catsResponse):
                 let cats = catsResponse.items
-                XCTAssertEqual(cats.count, 2)
+                XCTAssertEqual(cats.count, 1)
             case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
             }
@@ -702,7 +703,7 @@ final class QueryTests: XCTestCase {
             switch result {
             case .success(let entriesResponse):
                 let entries = entriesResponse.items
-                XCTAssertEqual(entries.count, 1)
+                XCTAssertEqual(entries.count, 2)
                 XCTAssertEqual(entries.first?.sys.id, "garfield")
             case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
@@ -715,13 +716,13 @@ final class QueryTests: XCTestCase {
     func testSkipEntries() {
         let expectation = self.expectation(description: "Skip results")
 
-        let query = Query.skip(theFirst: 9)
+        let query = Query.skip(theFirst: 10)
 
         QueryTests.client.fetchArray(of: Entry.self, matching: query) { result in
             switch result {
             case .success(let entriesResponse):
                 let entries = entriesResponse.items
-                XCTAssertEqual(entriesResponse.skip, 9)
+                XCTAssertEqual(entriesResponse.skip, 10)
                 XCTAssertEqual(entries.count, 1)
             case .failure(let error):
                 XCTFail("Should not throw an error \(error)")

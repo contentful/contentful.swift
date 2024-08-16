@@ -44,16 +44,45 @@ extension Client {
             parameters = syncableTypes.parameters + syncSpace.parameters
         }
 
-        return fetchDecodable(url: url(endpoint: .sync, parameters: parameters)) { (result: Result<SyncSpace, Error>) in
+        return fetchDecodable(
+            url: self.url(
+                endpoint: .sync,
+                parameters: parameters
+            )
+        ) { (result: Result<SyncSpace, Error>) in
             switch result {
             case .success(let newSyncSpace):
                 syncSpace.updateWithDiffs(from: newSyncSpace)
-                self.persistenceIntegration?.update(with: newSyncSpace)
+                
                 if newSyncSpace.hasMorePages {
                     self.sync(for: syncSpace, syncableTypes: syncableTypes, then: completion)
                 } else {
-                    completion(.success(syncSpace))
+                    _ = self.fetchContentTypes{ contentTypeResult in
+                        switch contentTypeResult {
+                        case .success(let contentTypes):
+                            for entry in syncSpace.entries {
+                                let type = contentTypes.first { $0.sys.id == entry.sys.contentTypeId}
+                                entry.type = type
+                            }
+                            self.persistenceIntegration?.update(with: syncSpace)
+                            completion(.success(syncSpace))
+                        case .failure(let error):
+                            completion(.failure(error))
+                        }
+                    }
                 }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    private func fetchContentTypes(
+        completion: @escaping ResultsHandler<[ContentType]>
+    ) -> URLSessionDataTask {
+        return fetchDecodable(url: url(endpoint: .contentTypes)){ (result: Result<HomogeneousArrayResponse<Contentful.ContentType>, Error>) in
+            switch result {
+            case .success(let contents):
+                completion(.success(contents.items))
             case .failure(let error):
                 completion(.failure(error))
             }

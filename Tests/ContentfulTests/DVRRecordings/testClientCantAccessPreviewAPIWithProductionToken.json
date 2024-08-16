@@ -1,39 +1,41 @@
 {
+  "name" : "testClientCantAccessPreviewAPIWithProductionToken",
   "interactions" : [
     {
+      "recorded_at" : 1649952593.04756,
       "response" : {
-        "status" : 401,
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJFcnJvciIsCiAgICAiaWQiOiAiQWNjZXNzVG9rZW5JbnZhbGlkIgogIH0sCiAgIm1lc3NhZ2UiOiAiVGhlIGFjY2VzcyB0b2tlbiB5b3Ugc2VudCBjb3VsZCBub3QgYmUgZm91bmQgb3IgaXMgaW52YWxpZC4iLAogICJyZXF1ZXN0SWQiOiAiYWU3OTk0YmUtZjc0OS00NzU5LWE3NzQtYmVlNDFhMTMwYTE4Igp9Cg==",
         "headers" : {
-          "Content-Length" : "198",
-          "Access-Control-Expose-Headers" : "Etag",
-          "Access-Control-Max-Age" : "1728000",
-          "Contentful-Api" : "cpa",
-          "Etag" : "\"9b46020da737f1632b7ecdfd1c328e62\"",
-          "Access-Control-Allow-Headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent,X-Contentful-Enable-Alpha-Feature",
-          "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
-          "Access-Control-Allow-Methods" : "GET,HEAD,OPTIONS",
-          "Connection" : "keep-alive",
-          "X-Contentful-Request-Id" : "1ee736bb938700e4f3c3c130274a3177",
-          "X-Content-Type-Options" : "nosniff",
-          "CF-Cache-Name" : "content_delivery",
-          "Access-Control-Allow-Origin" : "*",
-          "CF-Space-Id" : "dumri3ebknon",
+          "Date" : "Thu, 14 Apr 2022 16:09:53 GMT",
+          "access-control-max-age" : "1728000",
+          "access-control-expose-headers" : "Etag",
+          "Etag" : "\"18109845099019896367\"",
+          "x-content-type-options" : "nosniff",
+          "cf-space-id" : "dumri3ebknon",
+          "Content-Length" : "202",
+          "access-control-allow-headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent,X-Contentful-Enable-Alpha-Feature",
+          "access-control-allow-methods" : "GET,HEAD,OPTIONS",
+          "x-contentful-route" : "\/spaces\/:id",
+          "Accept-Ranges" : "bytes",
+          "cf-environment-id" : "master",
           "Server" : "Contentful",
-          "Date" : "Fri, 22 Jun 2018 12:29:26 GMT"
+          "Access-Control-Allow-Origin" : "*",
+          "contentful-upstream" : "content-api",
+          "contentful-api" : "cpa",
+          "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
+          "x-contentful-request-id" : "ae7994be-f749-4759-a774-bee41a130a18"
         },
-        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJFcnJvciIsCiAgICAiaWQiOiAiQWNjZXNzVG9rZW5JbnZhbGlkIgogIH0sCiAgIm1lc3NhZ2UiOiAiVGhlIGFjY2VzcyB0b2tlbiB5b3Ugc2VudCBjb3VsZCBub3QgYmUgZm91bmQgb3IgaXMgaW52YWxpZC4iLAogICJyZXF1ZXN0SWQiOiAiMWVlNzM2YmI5Mzg3MDBlNGYzYzNjMTMwMjc0YTMxNzciCn0K",
-        "url" : "https:\/\/preview.contentful.com\/spaces\/dumri3ebknon\/"
+        "url" : "https:\/\/preview.contentful.com\/spaces\/dumri3ebknon\/",
+        "status" : 401
       },
-      "recorded_at" : 1529670565.4635091,
       "request" : {
         "headers" : {
-          "X-Contentful-User-Agent" : "sdk contentful.swift\/3.0.0; platform Swift\/4.0; os macOS\/10.13.5;",
+          "X-Contentful-User-Agent" : "app com.apple.dt.xctest.tool\/13.3.1; sdk contentful.swift\/5.5.1; platform Swift\/4.0; os iOS\/15.4.0;",
           "Authorization" : "Bearer e566e6f1d0545862159b6c63fddd25bebe0aa5c1bb8cbf9418c8531feff0d564"
         },
         "method" : "GET",
         "url" : "https:\/\/preview.contentful.com\/spaces\/dumri3ebknon\/"
       }
     }
-  ],
-  "name" : "testClientCantAccessPreviewAPIWithProductionToken"
+  ]
 }

@@ -1,0 +1,215 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites name='ContentfulTests_iOS.xctest' tests='162' failures='0'>
+  <testsuite name='ContentfulTests_iOS.AssetTests' tests='7' failures='0'>
+    <testcase classname='ContentfulTests_iOS.AssetTests' name='testDeserializingVideoAssetURL' time='0.006'/>
+    <testcase classname='ContentfulTests_iOS.AssetTests' name='testFetchAllAssetsInSpace' time='0.004'/>
+    <testcase classname='ContentfulTests_iOS.AssetTests' name='testFetchImageForAsset' time='0.006'/>
+    <testcase classname='ContentfulTests_iOS.AssetTests' name='testFetchSingleAsset' time='0.003'/>
+    <testcase classname='ContentfulTests_iOS.AssetTests' name='testFilterAssetsByMIMETypeGroup' time='0.003'/>
+    <testcase classname='ContentfulTests_iOS.AssetTests' name='testMetadataExistsOneTag' time='0.003'/>
+    <testcase classname='ContentfulTests_iOS.AssetTests' name='testMetadataExistsWithEmptyTagsArray' time='0.003'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_iOS.ClientConfigurationTests' tests='2' failures='0'>
+    <testcase classname='ContentfulTests_iOS.ClientConfigurationTests' name='testDefaultConfiguration' time='0.001'/>
+    <testcase classname='ContentfulTests_iOS.ClientConfigurationTests' name='testUserAgentString' time='0.001'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_iOS.ContentTypeTests' tests='4' failures='0'>
+    <testcase classname='ContentfulTests_iOS.ContentTypeTests' name='testFetchAllContentTypesInSpace' time='0.005'/>
+    <testcase classname='ContentfulTests_iOS.ContentTypeTests' name='testFetchAllContentTypesInSpaceWithOrder' time='0.003'/>
+    <testcase classname='ContentfulTests_iOS.ContentTypeTests' name='testFetchContentType' time='0.002'/>
+    <testcase classname='ContentfulTests_iOS.ContentTypeTests' name='testFetchContentTypeMatchingQuery' time='0.002'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_iOS.EntryTests' tests='29' failures='0'>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testFetchAllEntriesInSpace' time='0.016'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testFetchEntriesForAllLocales' time='0.007'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testFetchEntriesForSpecificLocale' time='0.007'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testFetchEntriesInReverseOrder' time='0.010'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testFetchEntriesInSpecifiedOrder' time='0.010'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testFetchEntriesOfContentType' time='0.007'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testFetchEntriesOrderedByMultipleAttributes' time='0.011'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testFetchEntriesWithBoundingBoxLocationsSearch' time='0.006'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testFetchEntriesWithEqualitySearchForArrays' time='0.006'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testFetchEntriesWithExclusionSearch' time='0.007'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testFetchEntriesWithExistenceSearch' time='0.007'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testFetchEntriesWithFullTextSearch' time='0.006'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testFetchEntriesWithFullTextSearchOnSpecificField' time='0.006'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testFetchEntriesWithInclusionSearch' time='0.012'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testFetchEntriesWithInequalitySearch' time='0.010'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testFetchEntriesWithLocationProximitySearch' time='0.007'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testFetchEntriesWithRangeSearch' time='0.019'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testFetchEntryWithArrayOfLinkedEntries' time='0.008'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testFetchSingleEntry' time='0.007'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testFetchSpecificEntryMatchingSysId' time='0.007'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testFilterEntriesByLinkedEntriesSearch' time='0.007'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testIncomingLinksToAsset' time='0.007'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testIncomingLinksToEntry' time='0.008'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testLimitNumberOfEntriesBeingFetched' time='0.008'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testMetadataExistsOneTag' time='0.005'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testMetadataExistsWithEmptyTagsArray' time='0.006'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testMultiLevelIncludesAreResolved' time='0.007'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testSearchOnReferences' time='0.007'/>
+    <testcase classname='ContentfulTests_iOS.EntryTests' name='testSkipEntriesInAQuery' time='0.008'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_iOS.EnvironmentsTests' tests='2' failures='0'>
+    <testcase classname='ContentfulTests_iOS.EnvironmentsTests' name='testInitialSyncOnNonMasterEnvironment' time='0.010'/>
+    <testcase classname='ContentfulTests_iOS.EnvironmentsTests' name='testQueryReturningHeterogeneousArray' time='0.007'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_iOS.ErrorTests' tests='1' failures='0'>
+    <testcase classname='ContentfulTests_iOS.ErrorTests' name='testErrorMessageForInvalidPath' time='0.002'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_iOS.FieldTests' tests='2' failures='0'>
+    <testcase classname='ContentfulTests_iOS.FieldTests' name='testFieldTypeArray' time='0.001'/>
+    <testcase classname='ContentfulTests_iOS.FieldTests' name='testFieldTypeLink' time='0.000'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_iOS.FieldTypeTests' tests='1' failures='0'>
+    <testcase classname='ContentfulTests_iOS.FieldTypeTests' name='testFieldTypes' time='0.000'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_iOS.ISO8601DateTests' tests='2' failures='0'>
+    <testcase classname='ContentfulTests_iOS.ISO8601DateTests' name='testConfiguringTimeZone' time='0.000'/>
+    <testcase classname='ContentfulTests_iOS.ISO8601DateTests' name='testDateFormatter' time='0.003'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_iOS.ImageTests' tests='12' failures='0'>
+    <testcase classname='ContentfulTests_iOS.ImageTests' name='testAllCropFitOptionsThatUseFocusParameters' time='0.001'/>
+    <testcase classname='ContentfulTests_iOS.ImageTests' name='testAllImageFormatOptions' time='0.000'/>
+    <testcase classname='ContentfulTests_iOS.ImageTests' name='testColorHexRepresenations' time='0.000'/>
+    <testcase classname='ContentfulTests_iOS.ImageTests' name='testComplexURLIsProperlyConstructed' time='0.001'/>
+    <testcase classname='ContentfulTests_iOS.ImageTests' name='testFetchingImageWithComplexOptionSet' time='0.000'/>
+    <testcase classname='ContentfulTests_iOS.ImageTests' name='testInvalidJPGQualityThrowsError' time='0.000'/>
+    <testcase classname='ContentfulTests_iOS.ImageTests' name='testInvalidWidthAndHeightThrowsError' time='0.000'/>
+    <testcase classname='ContentfulTests_iOS.ImageTests' name='testMakingURLWithPaddingAndBackgroundColor' time='0.000'/>
+    <testcase classname='ContentfulTests_iOS.ImageTests' name='testMultipleImageOptionsOfSameTypeAreInvalid' time='0.000'/>
+    <testcase classname='ContentfulTests_iOS.ImageTests' name='testThumbFillAndScaleFitOptions' time='0.000'/>
+    <testcase classname='ContentfulTests_iOS.ImageTests' name='testURLIsPropertyConstructedForJPGWithQuality' time='0.000'/>
+    <testcase classname='ContentfulTests_iOS.ImageTests' name='testURLsWithFormatFlagsAreProperlyConstructed' time='0.000'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_iOS.JSONDecodingTests' tests='9' failures='0'>
+    <testcase classname='ContentfulTests_iOS.JSONDecodingTests' name='testDecodeAsset' time='0.001'/>
+    <testcase classname='ContentfulTests_iOS.JSONDecodingTests' name='testDecodeLocalizedEntries' time='0.002'/>
+    <testcase classname='ContentfulTests_iOS.JSONDecodingTests' name='testDecodeSpaces' time='0.001'/>
+    <testcase classname='ContentfulTests_iOS.JSONDecodingTests' name='testDecodeSyncResponses' time='0.007'/>
+    <testcase classname='ContentfulTests_iOS.JSONDecodingTests' name='testDecodeSyncResponsesWithDeletedAssetIds' time='0.001'/>
+    <testcase classname='ContentfulTests_iOS.JSONDecodingTests' name='testDecodeSyncResponsesWithdeletedEntryIds' time='0.001'/>
+    <testcase classname='ContentfulTests_iOS.JSONDecodingTests' name='testDecodingWithoutLocalizationContextThrows' time='0.001'/>
+    <testcase classname='ContentfulTests_iOS.JSONDecodingTests' name='testHandlingNestedArrayValues' time='0.000'/>
+    <testcase classname='ContentfulTests_iOS.JSONDecodingTests' name='testHandlingNullJSONValues' time='0.001'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_iOS.LinkResolverTests' tests='5' failures='0'>
+    <testcase classname='ContentfulTests_iOS.LinkResolverTests' name='testDecoderCanResolveArrayOfLinks' time='0.008'/>
+    <testcase classname='ContentfulTests_iOS.LinkResolverTests' name='testEntriesLinkingToSameLinkCanResolveLinks' time='0.003'/>
+    <testcase classname='ContentfulTests_iOS.LinkResolverTests' name='testEntryLinkingToAssetsArrayDoesResolveLinks' time='0.003'/>
+    <testcase classname='ContentfulTests_iOS.LinkResolverTests' name='testFetchZeroIncludesOmitsLinkResolving' time='0.002'/>
+    <testcase classname='ContentfulTests_iOS.LinkResolverTests' name='testUnresolvableLinkDoesNotResolve' time='0.002'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_iOS.LocalizationTests' tests='4' failures='0'>
+    <testcase classname='ContentfulTests_iOS.LocalizationTests' name='testLocalizationForEntryDecodableWorks' time='0.004'/>
+    <testcase classname='ContentfulTests_iOS.LocalizationTests' name='testNormalizingFieldsDictionaryFormat' time='0.001'/>
+    <testcase classname='ContentfulTests_iOS.LocalizationTests' name='testWalkingFallbackChain' time='0.003'/>
+    <testcase classname='ContentfulTests_iOS.LocalizationTests' name='testWalkingFallbackchainOnAsset' time='0.001'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_iOS.LoggerTests' tests='1' failures='0'>
+    <testcase classname='ContentfulTests_iOS.LoggerTests' name='testLoggerRespectsLogLevel' time='0.000'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_iOS.PersistenceIntegrationTests' tests='1' failures='0'>
+    <testcase classname='ContentfulTests_iOS.PersistenceIntegrationTests' name='testSerializingLocationWithNSCdoing' time='0.001'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_iOS.PreviewAPITests' tests='2' failures='0'>
+    <testcase classname='ContentfulTests_iOS.PreviewAPITests' name='testClientCanAccessPreviewAPI' time='0.001'/>
+    <testcase classname='ContentfulTests_iOS.PreviewAPITests' name='testClientCantAccessPreviewAPIWithProductionToken' time='0.001'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_iOS.PreviewSyncTests' tests='2' failures='0'>
+    <testcase classname='ContentfulTests_iOS.PreviewSyncTests' name='testDoInitialSyncWithPreviewAPI' time='0.012'/>
+    <testcase classname='ContentfulTests_iOS.PreviewSyncTests' name='testSubsequentSyncWithPreviewAPIReturnsSDKError' time='0.011'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_iOS.QueryTests' tests='49' failures='0'>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testChainingQueries' time='0.016'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testChainingQueriesWithUntypedQuery' time='0.008'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testEqualityQuery' time='0.010'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testExclusionQuery' time='0.010'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testExistenceQuery' time='0.010'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testFetchCatsWithRangeSearch' time='0.010'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testFetchEntriesContainingSpecificTags' time='0.008'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testFetchEntriesContainingSpecificTags2' time='0.008'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testFetchEntriesContainingSpecificTags2Chaining' time='0.008'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testFetchEntriesContainingSpecificTags3' time='0.008'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testFetchEntriesContainingSpecificTags4' time='0.008'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testFetchEntriesContainingSpecificTagsChaining' time='0.008'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testFetchEntriesInReverseOrder' time='0.012'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testFetchEntriesInSpecifiedOrder' time='0.012'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testFetchEntriesOfAnyTypeWithRangeSearch' time='0.011'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testFetchEntriesOrderedByMultipleAttributes' time='0.012'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testFetchEntriesWithBoundingBoxLocationsSearch' time='0.008'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testFetchEntriesWithFullTextSearch' time='0.009'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testFetchEntriesWithFullTextSearchOnSpecificField' time='0.008'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testFetchEntriesWithLocationProximitySearch' time='0.009'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testFetchEntriesWithTypeInOrder' time='0.010'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testFetchingEntriesOfContentType' time='0.009'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testFilterAssetsByMIMETypeGroup' time='0.009'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testIncludeParameter' time='0.011'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testInclusionQuery' time='0.010'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testInequalityQuery' time='0.010'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testLimitNumberOfEntriesBeingFetched' time='0.010'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testLinksToEntryWithField' time='0.009'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testLinksToEntryWithSysId' time='0.009'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testMultipleValuesQuery' time='0.010'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testQueryAssetsWithSelect' time='0.008'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testQueryAssetsWithSelectUsingFields' time='0.008'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testQueryClientDefinedModelResolvesIncludes' time='0.009'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testQueryConstruction' time='0.000'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testQueryReturningClientDefinedModel' time='0.009'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testQueryReturningClientDefinedModelUsingFields' time='0.008'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testQueryReturningClientDefinedModelWithMetadata' time='0.009'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testQueryReturningClientDefinedModelWithMetadataAndTags' time='0.008'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testQueryReturningHeterogeneousArray' time='0.014'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testQueryValidation' time='0.000'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testSearchOnReferences' time='0.009'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testSkipEntries' time='0.008'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testSkipEntriesInAQueryWithOrder' time='0.009'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testTagsExistence' time='0.007'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testTagsExistence2' time='0.008'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testTagsNotExistence' time='0.009'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testTagsNotExistence2' time='0.009'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testUnTypedLinksToEntryWithField' time='0.009'/>
+    <testcase classname='ContentfulTests_iOS.QueryTests' name='testUntypedSearchOnReferences' time='0.009'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_iOS.RateLimitTests' tests='1' failures='0'>
+    <testcase classname='ContentfulTests_iOS.RateLimitTests' name='testRateLimit' time='0.000'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_iOS.RichTextNodeDecodingTests' tests='19' failures='0'>
+    <testcase classname='ContentfulTests_iOS.RichTextNodeDecodingTests' name='testDecodingBlockQuote' time='0.008'/>
+    <testcase classname='ContentfulTests_iOS.RichTextNodeDecodingTests' name='testDecodingH1' time='0.005'/>
+    <testcase classname='ContentfulTests_iOS.RichTextNodeDecodingTests' name='testDecodingH6' time='0.004'/>
+    <testcase classname='ContentfulTests_iOS.RichTextNodeDecodingTests' name='testDecodingHorizontalRule' time='0.004'/>
+    <testcase classname='ContentfulTests_iOS.RichTextNodeDecodingTests' name='testDecodingNestedEntriesInlinedInRichText' time='0.008'/>
+    <testcase classname='ContentfulTests_iOS.RichTextNodeDecodingTests' name='testDecodingNestedEntriesInlinedInRichTextWithoutContentTypeClasses' time='0.009'/>
+    <testcase classname='ContentfulTests_iOS.RichTextNodeDecodingTests' name='testDecodingOrderedListAndListItems' time='0.009'/>
+    <testcase classname='ContentfulTests_iOS.RichTextNodeDecodingTests' name='testDecodingParagraphWithAllInlineAndHyperlinkNodes' time='0.011'/>
+    <testcase classname='ContentfulTests_iOS.RichTextNodeDecodingTests' name='testDecodingParagraphWithTextOnly' time='0.004'/>
+    <testcase classname='ContentfulTests_iOS.RichTextNodeDecodingTests' name='testDecodingStructuredText' time='0.005'/>
+    <testcase classname='ContentfulTests_iOS.RichTextNodeDecodingTests' name='testDecodingTextWithAssetHyperlink' time='0.006'/>
+    <testcase classname='ContentfulTests_iOS.RichTextNodeDecodingTests' name='testDecodingTextWithAssetLinkBlock' time='0.005'/>
+    <testcase classname='ContentfulTests_iOS.RichTextNodeDecodingTests' name='testDecodingTextWithEntryHyperlink' time='0.007'/>
+    <testcase classname='ContentfulTests_iOS.RichTextNodeDecodingTests' name='testDecodingTextWithEntryLinkBlock' time='0.006'/>
+    <testcase classname='ContentfulTests_iOS.RichTextNodeDecodingTests' name='testDecodingTextWithEntryLinkInline' time='0.007'/>
+    <testcase classname='ContentfulTests_iOS.RichTextNodeDecodingTests' name='testDecodingTextWithHyperlink' time='0.005'/>
+    <testcase classname='ContentfulTests_iOS.RichTextNodeDecodingTests' name='testDecodingTextWithMarks' time='0.007'/>
+    <testcase classname='ContentfulTests_iOS.RichTextNodeDecodingTests' name='testDecodingUnorderedListAndListItems' time='0.010'/>
+    <testcase classname='ContentfulTests_iOS.RichTextNodeDecodingTests' name='testRichTextDocumentCodableAndNSCodingConformance' time='0.010'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_iOS.SpaceTests' tests='2' failures='0'>
+    <testcase classname='ContentfulTests_iOS.SpaceTests' name='testErrorWhenFetchingSpaceIsCalled' time='0.080'/>
+    <testcase classname='ContentfulTests_iOS.SpaceTests' name='testFetchSpace' time='0.001'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_iOS.StringExtensionTests' tests='1' failures='0'>
+    <testcase classname='ContentfulTests_iOS.StringExtensionTests' name='testValidKeyPathSelection' time='0.000'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_iOS.SyncTests' tests='1' failures='0'>
+    <testcase classname='ContentfulTests_iOS.SyncTests' name='testDummy' time='0.000'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_iOS.UnparsableErrorTests' tests='1' failures='0'>
+    <testcase classname='ContentfulTests_iOS.UnparsableErrorTests' name='testUnparsableErrorPassesSDKError' time='0.002'/>
+  </testsuite>
+  <testsuite name='ContentfulTests_iOS.UtilityTests' tests='2' failures='0'>
+    <testcase classname='ContentfulTests_iOS.UtilityTests' name='testMergeTwoDictionaries' time='0.000'/>
+    <testcase classname='ContentfulTests_iOS.UtilityTests' name='testPutsTheCorrectValuesIntoMergedDictionary' time='0.000'/>
+  </testsuite>
+</testsuites>

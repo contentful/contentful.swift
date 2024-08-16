@@ -121,10 +121,13 @@ open class Client {
         }
 
         self.persistenceIntegration = persistenceIntegration
-        let contentfulHTTPHeaders = [
+        var contentfulHTTPHeaders: [AnyHashable: Any] = [
             "Authorization": "Bearer \(accessToken)",
             "X-Contentful-User-Agent": clientConfiguration.userAgentString(with: persistenceIntegration)
         ]
+        if let additionalHeaders = sessionConfiguration.httpAdditionalHeaders {
+            contentfulHTTPHeaders.merge(additionalHeaders) { (currentPair, _) in currentPair }
+        }
         sessionConfiguration.httpAdditionalHeaders = contentfulHTTPHeaders
         self.urlSession = URLSession(configuration: sessionConfiguration)
     }
@@ -157,6 +160,10 @@ open class Client {
         components.queryItems = queryItems?.sorted { a, b in
             return a.name > b.name
         }
+        
+        // Encode a + sign just in case
+        components.percentEncodedQuery = components.percentEncodedQuery?
+            .replacingOccurrences(of: "+", with: "%2B")
 
         let url = components.url!
         return url
@@ -474,6 +481,7 @@ open class Client {
             let sdkError = SDKError.unparseableJSON(data: data, errorMessage: "\(error)")
             ContentfulLogger.log(.error, message: sdkError.message)
             completion(.failure(sdkError))
+            return
         }
 
         guard let linkResolver = jsonDecoder.userInfo[.linkResolverContextKey] as? LinkResolver else {

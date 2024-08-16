@@ -10,9 +10,9 @@
   </a>
 </p>
 
-# contentful.swift - Swift Delivery SDK for Contentful
+# contentful.swift - Swift Content Delivery Library for Contentful
 
-> Swift SDK for the Contentful [Content Delivery API](https://www.contentful.com/developers/docs/references/content-delivery-api/) and [Content Preview API](https://www.contentful.com/developers/docs/references/content-preview-api/). It helps you to easily access your Content stored in Contentful with your Swift applications.
+> Swift library for the Contentful [Content Delivery API](https://www.contentful.com/developers/docs/references/content-delivery-api/) and [Content Preview API](https://www.contentful.com/developers/docs/references/content-preview-api/). It helps you to easily access your Content stored in Contentful with your Swift applications.
 
 <p align="center">
   <img src="https://img.shields.io/badge/Status-Maintained-green.svg" alt="This repository is actively maintained" />
@@ -23,10 +23,6 @@
   &nbsp;
   <a href="https://travis-ci.org/contentful/contentful.swift">
     <img src="https://img.shields.io/travis/contentful/contentful.swift/master.svg?style=flat" alt="Build Status">
-  </a>
-  &nbsp;
-  <a href="https://coveralls.io/github/contentful/contentful.swift">
-    <img src="https://img.shields.io/coveralls/contentful/contentful.swift.svg" alt="Coverage Status">
   </a>
   &nbsp;
   <a href="https://codebeat.co/projects/github-com-contentful-contentful-swift">
@@ -62,7 +58,7 @@
 <summary>Table of contents</summary>
 <!-- TOC -->
 
-- [contentful.swift - Swift Delivery SDK for Contentful](#contentfulswift---swift-delivery-sdk-for-contentful)
+- [contentful.swift - Swift Delivery library for Contentful](#contentfulswift---swift-delivery-library-for-contentful)
   - [Core Features](#core-features)
   - [Getting started](#getting-started)
     - [Installation](#installation)
@@ -104,7 +100,7 @@
 - Experimental: to render [Rich Text](https://www.contentful.com/developers/docs/concepts/rich-text/) on iOS apps, check out [rich-text-renderer.swift](https://github.com/contentful-labs/rich-text-renderer.swift) on Github.
 ## Getting started
 
-In order to get started with the Contentful Swift SDK you'll need not only to install it, but also to get credentials which will allow you to have access to your content in Contentful.
+In order to get started with the Contentful Swift library you'll need not only to install it, but also to get credentials which will allow you to have access to your content in Contentful.
 
 - [Installation](#installation)
 - [Your first request](#your-first-request)
@@ -145,7 +141,7 @@ Add the following line to your array of dependencies:
 
 ### Your first request
 
-The following code snippet is the most basic one you can use to fetch content from Contentful with this SDK:
+The following code snippet is the most basic one you can use to fetch content from Contentful with this library:
 
 ```swift
 import Contentful
@@ -194,9 +190,9 @@ client.fetchArray(of: Cat.self, matching: query) { (result: Result<ArrayResponse
 }
 ```
 
-The asynchronously returned result will be an instance of `ArrayResponse` in which the generic type parameter is the same type you've passed into the `fetch` method. If you are using a `Query` that does not restrict the response to contain entries of one content type, you will use methods that return `MixedArrayResponse` instead of `ArrayResponse`. The `EntryDecodable` protocol extends the `Decodable` protocol in Swift 4's Foundation standard library. The SDK provides helper methods for resolving relationships between `EntryDecodable`s and also for grabbing values from the fields container in the JSON for each resource.
+The asynchronously returned result will be an instance of `ArrayResponse` in which the generic type parameter is the same type you've passed into the `fetch` method. If you are using a `Query` that does not restrict the response to contain entries of one content type, you will use methods that return `MixedArrayResponse` instead of `ArrayResponse`. The `EntryDecodable` protocol extends the `Decodable` protocol in Swift 4's Foundation standard SDK. The library provides helper methods for resolving relationships between `EntryDecodable`s and also for grabbing values from the fields container in the JSON for each resource.
 
-In the example above, `Cat` is a type of our own definition conforming to `EntryDecodable` and `FieldKeysQueryable`. In order for the SDK to properly create your model types when receiving JSON, you must pass in these types to your `Client` instance:
+In the example above, `Cat` is a type of our own definition conforming to `EntryDecodable` and `FieldKeysQueryable`. In order for the library to properly create your model types when receiving JSON, you must pass in these types to your `Client` instance:
 
 ```swift
 let contentTypeClasses: [EntryDecodable.Type] = [
@@ -210,7 +206,7 @@ let client = Client(spaceId: spaceId,
                     contentTypeClasses: contentTypeClasses)
 ```
 
-The source for the `Cat` model class is below; note the helper methods the SDK adds to Swift 4's `Decoder` type to simplify for parsing JSON returned by Contentful. You also need to pass in these types to your `Client` instance in order to use the fetch methods which take `EntryDecodable` type references:
+The source for the `Cat` model class is below; note the helper methods the library adds to Swift 4's `Decoder` type to simplify for parsing JSON returned by Contentful. You also need to pass in these types to your `Client` instance in order to use the fetch methods which take `EntryDecodable` type references:
 
 ```swift
 final class Cat: EntryDecodable, FieldKeysQueryable {
@@ -264,13 +260,13 @@ If you want to simplify the implementation of an `EntryDecodable`, declare confo
 
 Optionally, decoder has a helper function to decode metadata. 
 
-Additionally, the SDK requires that instances of a type representing an entry or asset must be a `class` instance, not a `struct`—this is because the SDK ensures that the in-memory object graph is complete, but also that it has no duplicates.
+Additionally, the library requires that instances of a type representing an entry or asset must be a `class` instance, not a `struct`—this is because the library ensures that the in-memory object graph is complete, but also that it has no duplicates.
 
 ## Documentation & References
 
 ### Reference Documentation
 
-The SDK has 100% documentation coverage of all public variables, types, and functions. You can view the docs on the [web](https://contentful.github.io/contentful.swift/docs/index.html) or browse them in Xcode. For further information about the Content Delivery API, check out the [Content Delivery API Reference Documentation](https://www.contentful.com/developers/documentation/content-delivery-api/).
+The library has 100% documentation coverage of all public variables, types, and functions. You can view the docs on the [web](https://contentful.github.io/contentful.swift/docs/index.html) or browse them in Xcode. For further information about the Content Delivery API, check out the [Content Delivery API Reference Documentation](https://www.contentful.com/developers/documentation/content-delivery-api/).
 
 ### Tutorials & other resources
 
@@ -299,7 +295,7 @@ We gathered all information related to migrating from older versions of the libr
 
 ## Swift Versioning
 
-It is recommended to use Swift 5.0, as older versions of the SDK will not have fixes backported. If you must use older Swift versions, see the compatible tags below.
+It is recommended to use Swift 5.0, as older versions of the library will not have fixes backported. If you must use older Swift versions, see the compatible tags below.
 
  Swift version | Compatible Contentful tag |
 | --- | --- |

@@ -1,83 +1,94 @@
 {
   "interactions" : [
     {
+      "request" : {
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/dumri3ebknon\/environments\/master\/entries?sys.888=GO",
+        "headers" : {
+          "Authorization" : "Bearer e566e6f1d0545862159b6c63fddd25bebe0aa5c1bb8cbf9418c8531feff0d564",
+          "X-Contentful-User-Agent" : "app com.apple.dt.xctest.tool\/13.3.1; sdk contentful.swift\/5.5.1; platform Swift\/4.0; os iOS\/15.4.0;"
+        },
+        "method" : "GET"
+      },
+      "recorded_at" : 1649936924.3702989,
       "response" : {
         "status" : 400,
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/dumri3ebknon\/environments\/master\/entries?sys.888=GO",
+        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJFcnJvciIsCiAgICAiaWQiOiAiSW52YWxpZFF1ZXJ5IgogIH0sCiAgIm1lc3NhZ2UiOiAiVGhlIHF1ZXJ5IHlvdSBzZW50IHdhcyBpbnZhbGlkLiBQcm9iYWJseSBhIGZpbHRlciBvciBvcmRlcmluZyBzcGVjaWZpY2F0aW9uIGlzIG5vdCBhcHBsaWNhYmxlIHRvIHRoZSB0eXBlIG9mIGEgZmllbGQuIiwKICAiZGV0YWlscyI6IHsKICAgICJlcnJvcnMiOiBbCiAgICAgIHsKICAgICAgICAibmFtZSI6ICJ1bmtub3duIiwKICAgICAgICAicGF0aCI6IFsKICAgICAgICAgICJzeXMiLAogICAgICAgICAgIjg4OCIKICAgICAgICBdLAogICAgICAgICJkZXRhaWxzIjogIlRoZSBwYXRoIFwic3lzLjg4OFwiIGlzIG5vdCByZWNvZ25pemVkIgogICAgICB9CiAgICBdCiAgfSwKICAicmVxdWVzdElkIjogIjRiYWI2YTEyLWZjMmMtNGI2OC1iNjRiLTc3N2U3NTAyYjBlZCIKfQo=",
         "headers" : {
-          "Date" : "Fri, 22 Jun 2018 12:26:36 GMT",
-          "Content-Length" : "457",
-          "access-control-expose-headers" : "Etag",
-          "access-control-allow-headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent,X-Contentful-Enable-Alpha-Feature",
-          "x-cache" : "MISS",
-          "Age" : "0",
-          "x-served-by" : "cache-hhn1528-HHN",
-          "Etag" : "\"26885b78d2541ca47e71a4acdb9203a8\"",
-          "x-timer" : "S1529670396.440418,VS0,VE223",
-          "Accept-Ranges" : "bytes",
-          "contentful-api" : "cda_cached",
-          "x-contentful-request-id" : "e99d1daebad55b1dd0737806e347607d",
-          "Vary" : "Accept-Encoding",
-          "access-control-allow-methods" : "GET,HEAD,OPTIONS",
+          "cf-environment-id" : "master",
           "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
+          "x-timer" : "S1649936924.264046,VS0,VE170",
+          "Etag" : "\"4573084737950033522\"",
+          "Accept-Ranges" : "bytes",
+          "access-control-allow-headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent,X-Contentful-Enable-Alpha-Feature",
           "x-content-type-options" : "nosniff",
-          "access-control-max-age" : "86400",
-          "x-cache-hits" : "0",
-          "Access-Control-Allow-Origin" : "*",
+          "Age" : "0",
+          "contentful-api" : "cda",
+          "cf-organization-id" : "3ubGFD1MWA6VgVYbIwSBg8",
+          "x-served-by" : "cache-iad-kjyo7100114-IAD, cache-man4136-MAN",
+          "x-cache-hits" : "0, 0",
+          "access-control-expose-headers" : "Etag",
+          "access-control-allow-methods" : "GET,HEAD,OPTIONS",
+          "Vary" : "Accept-Encoding",
+          "x-contentful-region" : "us-east-1",
+          "x-cache" : "MISS",
+          "x-contentful-route" : "\/spaces\/:space\/environments\/:environment\/entries",
+          "cf-environment-uuid" : "16636ca4-edd1-4d3b-a75c-446953e37408",
+          "Content-Length" : "461",
           "Server" : "Contentful",
-          "Cache-Control" : "max-age=0",
-          "Via" : "1.1 varnish"
-        },
-        "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJFcnJvciIsCiAgICAiaWQiOiAiSW52YWxpZFF1ZXJ5IgogIH0sCiAgIm1lc3NhZ2UiOiAiVGhlIHF1ZXJ5IHlvdSBzZW50IHdhcyBpbnZhbGlkLiBQcm9iYWJseSBhIGZpbHRlciBvciBvcmRlcmluZyBzcGVjaWZpY2F0aW9uIGlzIG5vdCBhcHBsaWNhYmxlIHRvIHRoZSB0eXBlIG9mIGEgZmllbGQuIiwKICAiZGV0YWlscyI6IHsKICAgICJlcnJvcnMiOiBbCiAgICAgIHsKICAgICAgICAibmFtZSI6ICJ1bmtub3duIiwKICAgICAgICAicGF0aCI6IFsKICAgICAgICAgICJzeXMiLAogICAgICAgICAgIjg4OCIKICAgICAgICBdLAogICAgICAgICJkZXRhaWxzIjogIlRoZSBwYXRoIFwic3lzLjg4OFwiIGlzIG5vdCByZWNvZ25pemVkIgogICAgICB9CiAgICBdCiAgfSwKICAicmVxdWVzdElkIjogImU5OWQxZGFlYmFkNTViMWRkMDczNzgwNmUzNDc2MDdkIgp9Cg==",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/dumri3ebknon\/environments\/master\/entries?sys.888=GO"
-      },
-      "recorded_at" : 1529670395.5588531,
-      "request" : {
-        "headers" : {
-          "X-Contentful-User-Agent" : "sdk contentful.swift\/3.0.0; platform Swift\/4.0; os macOS\/10.13.5;",
-          "Authorization" : "Bearer e566e6f1d0545862159b6c63fddd25bebe0aa5c1bb8cbf9418c8531feff0d564"
-        },
-        "method" : "GET",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/dumri3ebknon\/environments\/master\/entries?sys.888=GO"
+          "access-control-max-age" : "86400",
+          "Access-Control-Allow-Origin" : "*",
+          "cf-space-id" : "dumri3ebknon",
+          "Via" : "1.1 varnish, 1.1 varnish",
+          "Date" : "Thu, 14 Apr 2022 11:48:44 GMT",
+          "x-contentful-request-id" : "4bab6a12-fc2c-4b68-b64b-777e7502b0ed"
+        }
       }
     },
     {
       "response" : {
-        "status" : 200,
         "headers" : {
-          "Date" : "Fri, 22 Jun 2018 12:26:36 GMT",
+          "Age" : "6572",
           "Content-Length" : "546",
-          "access-control-expose-headers" : "Etag",
+          "x-contentful-region" : "us-east-1",
           "access-control-allow-headers" : "Accept,Accept-Language,Authorization,Cache-Control,Content-Length,Content-Range,Content-Type,DNT,Destination,Expires,If-Match,If-Modified-Since,If-None-Match,Keep-Alive,Last-Modified,Origin,Pragma,Range,User-Agent,X-Http-Method-Override,X-Mx-ReqToken,X-Requested-With,X-Contentful-Version,X-Contentful-Content-Type,X-Contentful-Organization,X-Contentful-Skip-Transformation,X-Contentful-User-Agent,X-Contentful-Enable-Alpha-Feature",
-          "x-cache" : "MISS",
-          "Age" : "0",
-          "x-served-by" : "cache-hhn1528-HHN",
-          "Etag" : "\"efc303b0236e7208c740feefeedc0cec\"",
-          "x-timer" : "S1529670397.689916,VS0,VE128",
-          "Accept-Ranges" : "bytes",
-          "Vary" : "Accept-Encoding",
-          "x-contentful-request-id" : "568d1280a018117388cb28a5cb47d795",
-          "x-content-type-options" : "nosniff",
-          "access-control-allow-methods" : "GET,HEAD,OPTIONS",
-          "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
-          "access-control-max-age" : "86400",
-          "x-cache-hits" : "0",
+          "Via" : "1.1 varnish",
+          "x-contentful-request-id" : "71203183-de07-4bc3-8d22-d71f6c233449",
           "Access-Control-Allow-Origin" : "*",
+          "x-content-type-options" : "nosniff",
+          "contentful-api" : "cda",
+          "cf-organization-id" : "3ubGFD1MWA6VgVYbIwSBg8",
+          "Content-Type" : "application\/vnd.contentful.delivery.v1+json",
+          "Vary" : "Accept-Encoding",
+          "Date" : "Thu, 14 Apr 2022 11:48:44 GMT",
+          "Etag" : "\"18370520584452451084\"",
+          "Accept-Ranges" : "bytes",
+          "x-cache-hits" : "1",
+          "x-served-by" : "cache-man4136-MAN",
+          "access-control-expose-headers" : "Etag",
+          "cf-environment-uuid" : "16636ca4-edd1-4d3b-a75c-446953e37408",
+          "x-cache" : "HIT",
+          "cf-space-id" : "dumri3ebknon",
+          "access-control-allow-methods" : "GET,HEAD,OPTIONS",
+          "cf-environment-id" : "master",
           "Server" : "Contentful",
-          "Cache-Control" : "max-age=0",
-          "Via" : "1.1 varnish"
+          "access-control-max-age" : "86400",
+          "x-contentful-route" : "\/spaces\/:space\/environments\/:environment\/locales",
+          "x-timer" : "S1649936924.462839,VS0,VE1"
         },
         "body" : "ewogICJzeXMiOiB7CiAgICAidHlwZSI6ICJBcnJheSIKICB9LAogICJ0b3RhbCI6IDIsCiAgInNraXAiOiAwLAogICJsaW1pdCI6IDEwMDAsCiAgIml0ZW1zIjogWwogICAgewogICAgICAiY29kZSI6ICJlbi1VUyIsCiAgICAgICJuYW1lIjogIkVuZ2xpc2giLAogICAgICAiZGVmYXVsdCI6IHRydWUsCiAgICAgICJmYWxsYmFja0NvZGUiOiBudWxsLAogICAgICAic3lzIjogewogICAgICAgICJpZCI6ICIwc2xicXV0NXFQam1UQlhxN01HaFhjIiwKICAgICAgICAidHlwZSI6ICJMb2NhbGUiLAogICAgICAgICJ2ZXJzaW9uIjogMgogICAgICB9CiAgICB9LAogICAgewogICAgICAiY29kZSI6ICJ0bGgiLAogICAgICAibmFtZSI6ICJLbGluZ29uIiwKICAgICAgImRlZmF1bHQiOiBmYWxzZSwKICAgICAgImZhbGxiYWNrQ29kZSI6ICJlbi1VUyIsCiAgICAgICJzeXMiOiB7CiAgICAgICAgImlkIjogIjI1eWJ5V2lyYVpGenkwQVk2dlBVbU0iLAogICAgICAgICJ0eXBlIjogIkxvY2FsZSIsCiAgICAgICAgInZlcnNpb24iOiAwCiAgICAgIH0KICAgIH0KICBdCn0K",
-        "url" : "https:\/\/cdn.contentful.com\/spaces\/dumri3ebknon\/environments\/master\/locales?limit=1000"
+        "url" : "https:\/\/cdn.contentful.com\/spaces\/dumri3ebknon\/environments\/master\/locales?limit=1000",
+        "status" : 200
       },
-      "recorded_at" : 1529670395.7093191,
       "request" : {
         "headers" : {
-          "X-Contentful-User-Agent" : "sdk contentful.swift\/3.0.0; platform Swift\/4.0; os macOS\/10.13.5;",
-          "Authorization" : "Bearer e566e6f1d0545862159b6c63fddd25bebe0aa5c1bb8cbf9418c8531feff0d564"
+          "Authorization" : "Bearer e566e6f1d0545862159b6c63fddd25bebe0aa5c1bb8cbf9418c8531feff0d564",
+          "X-Contentful-User-Agent" : "app com.apple.dt.xctest.tool\/13.3.1; sdk contentful.swift\/5.5.1; platform Swift\/4.0; os iOS\/15.4.0;"
         },
         "method" : "GET",
         "url" : "https:\/\/cdn.contentful.com\/spaces\/dumri3ebknon\/environments\/master\/locales?limit=1000"
-      }
+      },
+      "recorded_at" : 1649936924.3989301
     }
   ],
   "name" : "ErrorTests"
