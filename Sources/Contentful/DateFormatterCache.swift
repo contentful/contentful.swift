@@ -8,14 +8,14 @@
 import Foundation
 
 class DateFormatterCache {
-    public static let shared = DateFormatterCache()
+    static let shared = DateFormatterCache()
     
     private let queue = DispatchQueue(label: "com.contentful.formattercache")
     private var cache = [String: DateFormatter]()
     
     private init() {}
     
-    public func get(_ format: String, timeZone: TimeZone? = nil) -> DateFormatter {
+    func get(_ format: String, timeZone: TimeZone? = nil) -> DateFormatter {
         return queue.sync {
             if let formatter = cache[format] {
                 return formatter
