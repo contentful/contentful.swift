@@ -109,8 +109,8 @@ public enum Link: Codable {
 
     var needsResolution: Bool {
         switch self {
-        case .asset, .entry, .entryDecodable: return true
-        case .unresolved: return false
+        case .asset, .entry, .entryDecodable: return false
+        case .unresolved: return true
         }
     }
 
