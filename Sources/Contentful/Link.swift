@@ -107,10 +107,10 @@ public enum Link: Codable {
         return sys
     }
 
-    var needsResolution: Bool {
+    var isResolved: Bool {
         switch self {
-        case .asset, .entry, .entryDecodable: return false
-        case .unresolved: return true
+        case .asset, .entry, .entryDecodable: return true
+        case .unresolved: return false
         }
     }
 
@@ -178,11 +178,12 @@ public enum Link: Codable {
 }
 
 // MARK: - Hashable, Equatable
+
 extension Link: Hashable, Equatable {
-    public var hashValue: Int {
-        return id.hashValue
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
-    
+
     public static func == (lhs: Link, rhs: Link) -> Bool {
         return lhs.id == rhs.id
     }

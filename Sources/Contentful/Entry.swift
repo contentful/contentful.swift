@@ -92,7 +92,7 @@ public class Entry: LocalizableResource {
 
                     // Resolve all links
                     let resolvedLinks = oneToManyLinks.map { link -> Link in
-                        link.needsResolution
+                        link.isResolved
                             ? link
                             : link.resolve(against: includedEntries, and: includedAssets)
                     }
@@ -100,7 +100,7 @@ public class Entry: LocalizableResource {
                     resolvedLocalizableFieldMap[localeCode] = resolvedLinks
                     SyncSpace.cachedLinks[id + fieldName] = resolvedLinks
 
-                case let oneToOneLink as Link where oneToOneLink.needsResolution == false:
+                case let oneToOneLink as Link where oneToOneLink.isResolved == false:
                     let resolvedLink = oneToOneLink.resolve(against: includedEntries, and: includedAssets)
                     resolvedLocalizableFieldMap[localeCode] = resolvedLink
 
@@ -129,8 +129,7 @@ extension Entry: ResourceQueryable {
 
 extension [Link] {
     /// Needs resolution if any of the links in the array need resolution
-    /// or if the array is empty.
     var needsResolution: Bool {
-        return isEmpty || contains { $0.needsResolution }
+        return contains { $0.isResolved == false }
     }
 }
