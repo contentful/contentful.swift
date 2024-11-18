@@ -76,20 +76,37 @@ public class Entry: LocalizableResource {
             // those that are of type Link.
             for (localeCode, fieldValueForLocaleCode) in localizableFieldMap {
                 switch fieldValueForLocaleCode {
-                case let oneToOneLink as Link where oneToOneLink.isResolved == false:
+                case let oneToManyLinks as [Link]:
+
+                    // If the links do not need resolution, we can skip the resolution
+                    guard oneToManyLinks.needsResolution else {
+                        resolvedLocalizableFieldMap[localeCode] = oneToManyLinks
+                        continue
+                    }
+
+                    // Check if the links are already cached
+                    if let resolvedLinks = SyncSpace.cachedLinks[id + fieldName] {
+                        resolvedLocalizableFieldMap[localeCode] = resolvedLinks
+                        continue
+                    }
+
+                    // Resolve all links
+                    let resolvedLinks = oneToManyLinks.map { link -> Link in
+                        link.needsResolution
+                            ? link
+                            : link.resolve(against: includedEntries, and: includedAssets)
+                    }
+
+                    resolvedLocalizableFieldMap[localeCode] = resolvedLinks
+                    SyncSpace.cachedLinks[id + fieldName] = resolvedLinks
+
+                case let oneToOneLink as Link where oneToOneLink.needsResolution == false:
                     let resolvedLink = oneToOneLink.resolve(against: includedEntries, and: includedAssets)
                     resolvedLocalizableFieldMap[localeCode] = resolvedLink
-                case let oneToManyLinks as [Link]:
-                    let resolvedLinks = oneToManyLinks.map { link -> Link in
-                        if link.isResolved {
-                            return link
-                        } else {
-                            return link.resolve(against: includedEntries, and: includedAssets)
-                        }
-                    }
-                    resolvedLocalizableFieldMap[localeCode] = resolvedLinks
+
                 case let recursiveNode as RecursiveNode:
                     recursiveNode.resolveLinks(against: includedEntries, and: includedAssets)
+
                 default:
                     continue
                 }
@@ -108,4 +125,12 @@ extension Entry: EndpointAccessible {
 extension Entry: ResourceQueryable {
     /// The QueryType for an EntryQuery is Query.
     public typealias QueryType = Query
+}
+
+extension [Link] {
+    /// Needs resolution if any of the links in the array need resolution
+    /// or if the array is empty.
+    var needsResolution: Bool {
+        return isEmpty || contains { $0.needsResolution }
+    }
 }

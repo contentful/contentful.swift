@@ -107,7 +107,7 @@ public enum Link: Codable {
         return sys
     }
 
-    var isResolved: Bool {
+    var needsResolution: Bool {
         switch self {
         case .asset, .entry, .entryDecodable: return true
         case .unresolved: return false
@@ -174,5 +174,16 @@ public enum Link: Codable {
 
     private enum CodingKeys: String, CodingKey {
         case sys
+    }
+}
+
+// MARK: - Hashable, Equatable
+extension Link: Hashable, Equatable {
+    public var hashValue: Int {
+        return id.hashValue
+    }
+    
+    public static func == (lhs: Link, rhs: Link) -> Bool {
+        return lhs.id == rhs.id
     }
 }
