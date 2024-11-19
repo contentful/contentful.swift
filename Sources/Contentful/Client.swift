@@ -488,10 +488,11 @@ open class Client {
         } else {
             let error = SDKError.unparseableJSON(
                 data: data,
-                errorMessage: "Unknown error occured during decoding."
+                errorMessage: "Unknown error occurred during decoding."
             )
             ContentfulLogger.log(.error, message: error.message)
             return .failure(error)
         }
     }
 }
+

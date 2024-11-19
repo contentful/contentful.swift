@@ -176,3 +176,15 @@ public enum Link: Codable {
         case sys
     }
 }
+
+// MARK: - Hashable, Equatable
+
+extension Link: Hashable, Equatable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+
+    public static func == (lhs: Link, rhs: Link) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
