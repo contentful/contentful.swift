@@ -79,16 +79,6 @@ public extension JSONDecoder {
     }
 }
 
-public extension Decodable where Self: EntryDecodable {
-    // This is a magic workaround for the fact that dynamic metatypes cannot be passed into
-    // initializers such as UnkeyedDecodingContainer.decode(Decodable.Type), yet static methods CAN
-    // be called on metatypes. (Visitor pattern)
-    static func popEntryDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
-        let entryDecodable = try container.decode(self)
-        return entryDecodable
-    }
-}
-
 extension Decodable where Self: AssetDecodable {
     static func popAssetDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
         let assetDecodable = try container.decode(self)

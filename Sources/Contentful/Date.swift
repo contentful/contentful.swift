@@ -53,7 +53,6 @@ public extension Date {
         let dateString = try container.decode(String.self)
 
         let timeZone = decoder.timeZone
-        let formatter = Date.iso8601Formatter(timeZone: timeZone)
 
         for format in Date.supportedFormats {
             let formatter = DateFormatterCache.shared.get(format, timeZone: timeZone)
