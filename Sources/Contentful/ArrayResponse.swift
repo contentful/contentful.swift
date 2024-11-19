@@ -147,7 +147,7 @@ extension HomogeneousArrayResponse: Decodable {
                     """
                     throw SDKError.unparseableJSON(data: nil, errorMessage: errorMessage)
                 }
-                let entryDecodable = try entryDecodableType.popEntryDecodable(from: &entriesJSONContainer)
+                let entryDecodable = try entriesJSONContainer.decode(entryDecodableType)
                 entries.append(entryDecodable)
             }
 
@@ -331,7 +331,7 @@ extension KeyedDecodingContainer {
             // For includes, if the type of this entry isn't defined by the user, we skip serialization.
             if let type = contentTypes[contentTypeInfo.id] {
                 do {
-                    let entryModellable = try type.popEntryDecodable(from: &entriesJSONContainer)
+                    let entryModellable = try entriesJSONContainer.decode(type)
                     entries.append(entryModellable)
                 } catch {
                     if throwIfNotPresent {
