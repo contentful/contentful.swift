@@ -173,7 +173,10 @@ public final class SyncSpace: Decodable {
         case items
     }
 
+    static var cachedLinks = [String: [Link]]()
+
     func updateWithDiffs(from syncSpace: SyncSpace) {
+        Self.cachedLinks = [:]
         // Resolve all entries in-memory.
         for entry in entries {
             entry.resolveLinks(against: entriesMap, and: assetsMap)

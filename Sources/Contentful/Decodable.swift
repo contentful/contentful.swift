@@ -28,7 +28,7 @@ public extension Decoder {
         guard let contentTypes = userInfo[.contentTypesContextKey] as? [ContentTypeId: EntryDecodable.Type] else {
             fatalError(
                 """
-                Make sure to pass your content types into the Client intializer
+                Make sure to pass your content types into the Client initializer
                 so the SDK can properly deserializer your own types if you are using the `fetchMappedEntries` methods
                 """)
         }
@@ -76,16 +76,6 @@ public extension JSONDecoder {
     /// resources returned in the multi-locale format with the locale information provided by the space.
     func update(with localizationContext: LocalizationContext) {
         userInfo[.localizationContextKey] = localizationContext
-    }
-}
-
-public extension Decodable where Self: EntryDecodable {
-    // This is a magic workaround for the fact that dynamic metatypes cannot be passed into
-    // initializers such as UnkeyedDecodingContainer.decode(Decodable.Type), yet static methods CAN
-    // be called on metatypes. (Visitor pattern)
-    static func popEntryDecodable(from container: inout UnkeyedDecodingContainer) throws -> Self {
-        let entryDecodable = try container.decode(self)
-        return entryDecodable
     }
 }
 

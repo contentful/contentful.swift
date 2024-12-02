@@ -1,7 +1,24 @@
 {
   "object": {
     "pins": [
-
+      {
+        "package": "DVR",
+        "repositoryURL": "https://github.com/mariuskatcontentful/DVR.git",
+        "state": {
+          "branch": "master",
+          "revision": "fb4f8678b1479320b9926d37732494d8cce85432",
+          "version": null
+        }
+      },
+      {
+        "package": "OHHTTPStubs",
+        "repositoryURL": "https://github.com/mariuskatcontentful/OHHTTPStubs.git",
+        "state": {
+          "branch": "master",
+          "revision": "1c5f7b4348cccdd1128fe5fb89f0e1f3191adc68",
+          "version": null
+        }
+      }
     ]
   },
   "version": 1

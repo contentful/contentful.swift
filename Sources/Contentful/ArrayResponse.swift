@@ -31,7 +31,7 @@ private protocol HomogeneousArray: Array {
 public struct ArrayResponseError: Decodable {
     /// The system fields of the error.
     public struct Sys: Decodable {
-        /// The identifer of the error.
+        /// The identifier of the error.
         public let id: String
         /// The type identifier for the error.
         public let type: String
@@ -111,7 +111,7 @@ extension HomogeneousArrayResponse: Decodable {
 
         if areItemsOfCustomType {
             // Since self's items are of a custom (i.e. user-defined) type,
-            // we must accomodate the scenario that included Entries are
+            // we must accommodate the scenario that included Entries are
             // heterogeneous, since items can link to whatever custom Entries
             // the user defined.
             // As a consequence, we have to use the LinkResolver in order to
@@ -147,7 +147,7 @@ extension HomogeneousArrayResponse: Decodable {
                     """
                     throw SDKError.unparseableJSON(data: nil, errorMessage: errorMessage)
                 }
-                let entryDecodable = try entryDecodableType.popEntryDecodable(from: &entriesJSONContainer)
+                let entryDecodable = try entriesJSONContainer.decode(entryDecodableType)
                 entries.append(entryDecodable)
             }
 
@@ -182,7 +182,7 @@ extension HomogeneousArrayResponse: Decodable {
                 entriesMap[entry.sys.id] = entry
             }
 
-            // Rememember `Entry`s are classes (passed by reference) so we can change them in place.
+            // Remember `Entry`s are classes (passed by reference) so we can change them in place.
             for entry in allIncludedEntries {
                 entry.resolveLinks(against: entriesMap, and: assetsMap)
             }
@@ -331,7 +331,7 @@ extension KeyedDecodingContainer {
             // For includes, if the type of this entry isn't defined by the user, we skip serialization.
             if let type = contentTypes[contentTypeInfo.id] {
                 do {
-                    let entryModellable = try type.popEntryDecodable(from: &entriesJSONContainer)
+                    let entryModellable = try entriesJSONContainer.decode(type)
                     entries.append(entryModellable)
                 } catch {
                     if throwIfNotPresent {
