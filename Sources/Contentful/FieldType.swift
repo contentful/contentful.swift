@@ -45,4 +45,7 @@ public enum FieldType: String, Decodable {
 
     /// The rich text field type.
     case richText = "RichText"
+    
+    /// The resource link field type
+    case resourceLink = "ResourceLink"
 }
