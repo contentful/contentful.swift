@@ -155,7 +155,7 @@ extension HomogeneousArrayResponse: Decodable {
             items = entries.compactMap { $0 as? ItemType }
 
             // Cache to enable link resolution.
-            decoder.linkResolver.cache(entryDecodables: items as! [EntryDecodable])
+            decoder.linkResolver.cache(entryDecodables: items.compactMap { $0 as? EntryDecodable })
         } else {
             // Since self's items are NOT of a custom (i.e. user-defined) type,
             // we can assume that they are of one of the known concrete types in this SDK.
