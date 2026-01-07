@@ -30,7 +30,7 @@ class DataCache {
     }
 
     private var assetCache = [String: Asset]()
-    private var entryCache = [String: Any]()
+    private var entryCache = [String: EntryDecodable]()
 
     func add(asset: Asset) {
         assetCache[DataCache.cacheKey(id: asset.id, linkType: "Asset")] = asset
@@ -45,7 +45,7 @@ class DataCache {
     }
 
     func entry(for identifier: String) -> EntryDecodable? {
-        return entryCache[identifier] as? EntryDecodable
+        return entryCache[identifier]
     }
 
     func item<T>(for identifier: String) -> T? {
