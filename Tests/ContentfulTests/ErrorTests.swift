@@ -8,7 +8,7 @@
 
 @testable import Contentful
 import DVR
-import OHHTTPStubsSwift
+import OHHTTPStubs
 import XCTest
 
 class ErrorTests: XCTestCase {
