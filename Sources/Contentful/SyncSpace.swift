@@ -152,7 +152,9 @@ public final class SyncSpace: Decodable {
                 let item = try DeletedResource(from: itemDecoder)
                 resources.append(item)
             default:
-                fatalError("Unsupported resource type '\(type)'")
+                // Future-proof: skip unknown types rather than terminating the process.
+                // New resource types introduced by the Contentful API won't crash the app.
+                ContentfulLogger.log(.error, message: "Unknown sync item type '\(type)' — skipping")
             }
         }
 

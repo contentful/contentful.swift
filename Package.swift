@@ -26,7 +26,7 @@ public let package = Package(
                     dependencies: [
                         "Contentful",
                         .product(name: "DVR", package: "DVR"),
-                        .product(name: "OHHTTPStubs", package: "OHHTTPStubs")
+                        .product(name: "OHHTTPStubsSwift", package: "OHHTTPStubs")
                     ],
                     path: "Tests")
     ]
