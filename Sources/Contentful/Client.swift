@@ -142,13 +142,25 @@ open class Client {
     ///   - parameters: A dictionary of query parameters which be appended at the end of the URL in a URL safe format.
     /// - Returns: A valid URL for the Content Delivery or Preview API, or nil if the URL could not be constructed.
     public func url(endpoint: Endpoint, parameters: [String: String]? = nil) -> URL {
-        var components: URLComponents
+        var components = URLComponents()
+        components.scheme = scheme
 
+        // `host` may carry a port suffix (e.g. "127.0.0.1:5000" in test environments).
+        // URLComponents requires host and port to be set separately.
+        let hostParts = host.split(separator: ":", maxSplits: 1)
+        components.host = String(hostParts[0])
+        if hostParts.count > 1, let port = Int(hostParts[1]) {
+            components.port = port
+        }
+
+        // Setting `path` directly (rather than parsing a full URL string) lets
+        // URLComponents percent-encode any URL-unsafe characters in spaceId /
+        // environmentId, preventing the force-unwrap crash in the original code.
         switch endpoint {
         case .spaces:
-            components = URLComponents(string: "\(scheme)://\(host)/spaces/\(spaceId)/\(endpoint.pathComponent)")!
+            components.path = "/spaces/\(spaceId)/\(endpoint.pathComponent)"
         case .assets, .contentTypes, .locales, .entries, .sync:
-            components = URLComponents(string: "\(scheme)://\(host)/spaces/\(spaceId)/environments/\(environmentId)/\(endpoint.pathComponent)")!
+            components.path = "/spaces/\(spaceId)/environments/\(environmentId)/\(endpoint.pathComponent)"
         }
 
         let queryItems: [URLQueryItem]? = parameters?.map { key, value in
@@ -164,7 +176,13 @@ open class Client {
         components.percentEncodedQuery = components.percentEncodedQuery?
             .replacingOccurrences(of: "+", with: "%2B")
 
-        let url = components.url!
+        guard let url = components.url else {
+            preconditionFailure(
+                "Could not construct a valid URL. " +
+                "Verify that spaceId '\(spaceId)', environmentId '\(environmentId)', " +
+                "and host '\(host)' are correctly configured."
+            )
+        }
         return url
     }
 
@@ -415,11 +433,12 @@ open class Client {
         jsonDecoder: JSONDecoder,
         completion: ResultsHandler<Data>
     ) -> Bool {
-        guard let timeUntilLimitReset = readRateLimitHeaderIfPresent(response: response) else { return false }
+        guard let timeUntilLimitReset = readRateLimitHeaderIfPresent(response: response),
+              let httpResponse = response as? HTTPURLResponse else { return false }
 
         // At this point, We know for sure that the type returned by the API can be mapped to an `APIError` instance.
         // Directly handle JSON and exit.
-        let statusCode = (response as! HTTPURLResponse).statusCode
+        let statusCode = httpResponse.statusCode
         let result = handleRateLimitJSON(
             data: data,
             timeUntilLimitReset: timeUntilLimitReset,
