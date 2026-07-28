@@ -15,7 +15,13 @@ public extension Decoder {
     }
 
     internal var linkResolver: LinkResolver {
-        return userInfo[.linkResolverContextKey] as! LinkResolver
+        guard let resolver = userInfo[.linkResolverContextKey] as? LinkResolver else {
+            fatalError(
+                "LinkResolver not found in decoder userInfo. " +
+                "Use the JSONDecoder provided by the Contentful Client rather than a plain JSONDecoder."
+            )
+        }
+        return resolver
     }
 
     /// The `TimeZone` the `Decoder` is using to offset dates by.
@@ -38,7 +44,13 @@ public extension Decoder {
     /// The localization context of the connected Contentful space necessary to properly serialize
     /// entries and assets to Swift models from Contentful API responses.
     var localizationContext: LocalizationContext {
-        return userInfo[.localizationContextKey] as! LocalizationContext
+        guard let context = userInfo[.localizationContextKey] as? LocalizationContext else {
+            fatalError(
+                "LocalizationContext not found in decoder userInfo. " +
+                "Use the JSONDecoder provided by the Contentful Client rather than a plain JSONDecoder."
+            )
+        }
+        return context
     }
 
     /// Helper method to extract the sys property of a Contentful resource.
