@@ -328,7 +328,7 @@ It is recommended to use Swift 5.0, as older versions of the library will not ha
 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?maxAge=31557600)](http://makeapullrequest.com)
 
-We appreciate any help on our repositories. For more details about how to contribute see our [Contributing.md](Contributing.md) document.
+We appreciate any help on our repositories. For more details about how to contribute see our [CONTRIBUTING.md](CONTRIBUTING.md) document.
 
 ## License
 
