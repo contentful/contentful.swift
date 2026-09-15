@@ -113,7 +113,7 @@ Notes before you run anything:
   (filename, module, author, copyright) — match it.
 - Public API carries doc comments; Jazzy publishes them.
 - Add a `CHANGELOG.md` entry for anything user-facing.
-- Review is owned by `@contentful/team-developer-experience`
+- Review is owned by `@contentful/group-applied-ai-solutions`
   (`.github/CODEOWNERS`, `catalog-info.yaml`).
 
 ## Definition of done
