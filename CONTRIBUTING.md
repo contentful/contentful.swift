@@ -92,7 +92,7 @@ and `Contentful.playground` are excluded.
 - Reference the Jira ticket in brackets when there is one, e.g.
   `chore: set up Renovate for dependency updates [MEC-3447]`.
 - Open pull requests against `master`. `.github/CODEOWNERS` assigns review to
-  `@contentful/team-developer-experience`.
+  `@contentful/group-applied-ai-solutions`.
 - CircleCI runs `test-ios`, `test-macos`, `test-tvos`, and `build` on every
   pull request; all four must be green.
 - Add a `CHANGELOG.md` entry for anything user-facing.

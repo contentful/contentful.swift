@@ -12,4 +12,4 @@ metadata:
 spec:
   type: library 
   lifecycle: production
-  owner: group:team-developer-experience
+  owner: group:group-applied-ai-solutions
