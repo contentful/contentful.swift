@@ -495,6 +495,8 @@ public struct Text: Node, Equatable {
         case superscript
         /// Text formatted as subscript
         case `subscript`
+        /// Strikethrough text
+        case strikethrough
     }
 }
 
