@@ -167,6 +167,9 @@ Then add the product to the targets that need it:
 
 #### CocoaPods
 
+> [!IMPORTANT]
+> **CocoaPods is frozen at version 5.5.15.** The [CocoaPods trunk becomes read-only on December 2, 2026](https://blog.cocoapods.org/CocoaPods-Specs-Repo/), so new versions of the SDK are no longer published to CocoaPods. Existing versions stay installable, and the snippet below keeps working. New releases ship through [Swift Package Manager](#swift-package-manager) and [Carthage](#carthage) only, so please migrate to one of them to get future fixes and features.
+
 ```ruby
 platform :ios, '12.0'
 use_frameworks!
@@ -797,9 +800,11 @@ Common tasks:
 | `make lint` | Run SwiftLint and the CocoaPods podspec linter. |
 | `make coverage` | Generate a code-coverage report with Slather. |
 | `make docs` | Build the reference documentation with Jazzy. |
-| `./Scripts/set-version.sh 5.5.15` | Update the version in `Config.xcconfig` and `.env` together. |
+| `./Scripts/set-version.sh 5.5.16` | Update the version in `Config.xcconfig` and `.env` together. |
 
-Tests stub their network traffic, so they neither depend on live content nor consume your API quota. Pull requests are validated on CircleCI against Xcode 15.4.
+Tests stub their network traffic, so they neither depend on live content nor consume your API quota. Pull requests are validated on CircleCI against Xcode 26.2.
+
+Releases are cut from `master` by CircleCI when a maintainer triggers the release pipeline. See [RELEASING.md](RELEASING.md).
 
 ## License
 

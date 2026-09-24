@@ -2,6 +2,9 @@
 
 require 'dotenv/load'
 
+# CocoaPods trunk becomes read-only on 2026-12-02 and the SDK is frozen there at 5.5.15.
+# This podspec is kept for existing users, and new versions are not pushed (see RELEASING.md).
+
 Pod::Spec.new do |spec|
   spec.name             = "Contentful"
   spec.version          = ENV['CONTENTFUL_SDK_VERSION']

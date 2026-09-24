@@ -21,6 +21,7 @@ platform :ios do
     # test ios
     scan(
       scheme: "Contentful_iOS",
+      destination: "platform=iOS Simulator,name=#{ENV.fetch("IOS_SIMULATOR", "iPhone 17")},OS=latest",
       clean: true,
     )
   end

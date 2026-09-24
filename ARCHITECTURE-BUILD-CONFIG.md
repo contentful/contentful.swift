@@ -198,20 +198,16 @@ There are a few places where the version number needs to be changed:
 
 ### Releasing
 
-- Firstly, bump the version using the `set-version` script and make sure to add all the relevant release information to the CHANGELOG.md file.
-- There is a `make` command for releasing. Simply run `make release` to:
-	- Push a new version to the Cocoapods trunk
-	- Compile the binaries to be attached to the relevant Github release
-	- Build the SDK documentation website and push it to the `gh-pages` branch—deployed to the web with Github pages. The documentation is generated with a Ruby-gem called [Jazzy](https://github.com/realm/jazzy).
-- After running this command, you must manually attach the `Contentful.framework.zip` file to the Github release. 
-- Also, copy the text from the changelog entry into the Github release.
+> The release process changed in 2026: releases are cut by CircleCI from `master`, and new versions are no longer pushed to CocoaPods. [RELEASING.md](RELEASING.md) is the source of truth.
 
+- Bump the version with `./Scripts/set-version.sh X.Y.Z` in a pull request and merge it to `master`.
+- Trigger the CircleCI release pipeline on `master` (parameter `run-release` = `true`, or `make trigger_release`). It runs the tests, builds and zips `Contentful.xcframework`, tags the release, creates the GitHub release with generated notes and the zip attached, and publishes the [Jazzy](https://github.com/realm/jazzy) docs to `gh-pages`.
+- `make release` runs the same steps (`Scripts/release.sh all`) from a maintainer machine.
 
 ### Cocoapods
 
 - Cocoapods is the only "centralized" package manager of the three that are supported by the SDK. What this means is that Cocoapods maintains a special "specs" repo which authorized framework and libraries developers must push to in order to release new versions for distribution.
-	- Only registered Cocoapods users who have been added as "owners" to the project can push new versions of the SDK.
-- The `Contentful.podspec` file describes the package that will be distributed to the Cocoapods "trunk".
+- **The CocoaPods trunk becomes read-only on 2026-12-02. The SDK is frozen on CocoaPods at 5.5.15.** `Contentful.podspec` stays in the repo so existing versions keep resolving, but no new versions are pushed.
 
 ### Carthage
 
