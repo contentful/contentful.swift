@@ -802,7 +802,7 @@ Common tasks:
 | `make docs` | Build the reference documentation with Jazzy. |
 | `./Scripts/set-version.sh 5.5.16` | Update the version in `Config.xcconfig` and `.env` together. |
 
-Tests stub their network traffic, so they neither depend on live content nor consume your API quota. Pull requests are validated on CircleCI against Xcode 27.0.
+Tests stub their network traffic, so they neither depend on live content nor consume your API quota. Pull requests are validated on CircleCI against Xcode 26.2.
 
 Releases are cut from `master` by CircleCI when a maintainer triggers the release pipeline. See [RELEASING.md](RELEASING.md).
 

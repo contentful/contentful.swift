@@ -10,7 +10,7 @@ parameters:
     description: Release the version in .env from master (tests, xcframework, tag, GitHub release, docs).
   xcode:
     type: string
-    default: "27.0.0"
+    default: "26.2.0"
     description: Xcode image for tests and for the released xcframework.
 
 executors:
