@@ -1,73 +1,194 @@
 version: 2.1
 
+# Release: trigger a pipeline on master with run-release = true, either from the CircleCI UI
+# (Trigger Pipeline -> add parameter) or with ./Scripts/trigger-release.sh. See RELEASING.md.
+
+parameters:
+  run-release:
+    type: boolean
+    default: false
+    description: Release the version in .env from master (tests, xcframework, tag, GitHub release, docs).
+  xcode:
+    type: string
+    default: "27.0.0"
+    description: Xcode image for tests and for the released xcframework.
+
+executors:
+  mac:
+    macos:
+      xcode: << pipeline.parameters.xcode >>
+    environment:
+      HOMEBREW_NO_AUTO_UPDATE: "1"
+      HOMEBREW_NO_INSTALL_CLEANUP: "1"
+      FASTLANE_SKIP_UPDATE_CHECK: "1"
+      FASTLANE_HIDE_CHANGELOG: "1"
+
+commands:
+  setup-ruby:
+    description: Use the preinstalled Ruby matching .ruby-version (major.minor) and install the bundle.
+    steps:
+      - run:
+          name: Select Ruby
+          command: |
+            wanted="$(cat .ruby-version)"
+            prefix="${wanted%.*}"
+            installed="$(rbenv versions --bare | grep -E "^${prefix//./\\.}\.[0-9]+$" | sort -V | tail -1 || true)"
+            if [ -z "$installed" ]; then
+              echo "Ruby $prefix is not preinstalled on this image, installing $wanted"
+              rbenv install --skip-existing "$wanted"
+              installed="$wanted"
+            fi
+            echo "export RBENV_VERSION=$installed" >> "$BASH_ENV"
+            RBENV_VERSION="$installed" ruby -v
+      - restore_cache:
+          keys:
+            - gems-v2-{{ arch }}-{{ checksum ".ruby-version" }}-{{ checksum "Gemfile.lock" }}
+      - run:
+          name: Install gems
+          command: |
+            gem install bundler --conservative -v "$(awk '/^BUNDLED WITH/{getline; print $1}' Gemfile.lock)"
+            bundle install --jobs 4 --retry 3
+      - save_cache:
+          key: gems-v2-{{ arch }}-{{ checksum ".ruby-version" }}-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+  setup-carthage:
+    description: Install Carthage and fetch the test-only dependencies pinned in Cartfile.resolved.
+    steps:
+      - run:
+          name: Install Carthage
+          command: brew list carthage >/dev/null 2>&1 || brew install carthage
+      - run:
+          name: Carthage bootstrap
+          command: carthage bootstrap --use-xcframeworks
+
 jobs:
-  test-ios:
-    macos:
-      xcode: 15.4
+  release-wrong-branch:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
     steps:
-      - checkout
       - run:
-          name: Install Carthage
-          command: brew install carthage
-      - run:
-          name: Update Carthage Dependencies
-          command: carthage update --use-xcframeworks
-      - run: bundle install
-      - run:
-          name: Run Tests with Fastlane
-          command: bundle exec fastlane test_ios
+          name: Releases run from master only
+          command: |
+            echo "run-release was set on branch '<< pipeline.git.branch >>'. Trigger it on master."
+            exit 1
 
-  test-macos:
-    macos:
-      xcode: 15.4
+  test:
+    executor: mac
+    parameters:
+      lane:
+        type: string
     steps:
       - checkout
+      - setup-ruby
+      - setup-carthage
       - run:
-          name: Install Carthage
-          command: brew install carthage
-      - run:
-          name: Update Carthage Dependencies
-          command: carthage update --use-xcframeworks
-      - run: bundle install
-      - run:
-          name: Run Tests with Fastlane
-          command: bundle exec fastlane test_macos
+          name: fastlane << parameters.lane >>
+          command: bundle exec fastlane << parameters.lane >>
+      - store_test_results:
+          path: fastlane/test_output
 
-  test-tvos:
-    macos:
-      xcode: 15.4
+  release-validate:
+    executor: mac
     steps:
       - checkout
       - run:
-          name: Install Carthage
-          command: brew install carthage
-      - run:
-          name: Update Carthage Dependencies
-          command: carthage update --use-xcframeworks
-      - run: bundle install
-      - run:
-          name: Run Tests with Fastlane
-          command: bundle exec fastlane test_tvos
+          name: Validate release
+          command: RELEASE_COMMIT="$CIRCLE_SHA1" ./Scripts/release.sh validate
 
-  build:
-    macos:
-      xcode: 15.4
+  release-xcframework:
+    executor: mac
     steps:
       - checkout
+      - setup-carthage
       - run:
-          name: Install Carthage
-          command: brew install carthage
+          name: Build and zip Contentful.xcframework
+          command: ./Scripts/release.sh xcframework
+      - store_artifacts:
+          path: build/release
+      - persist_to_workspace:
+          root: build/release
+          paths:
+            - Contentful.xcframework.zip
+            - Contentful.xcframework.zip.sha256
+
+  release-publish:
+    executor: mac
+    steps:
+      - checkout
+      - setup-ruby
+      - attach_workspace:
+          at: build/release
       - run:
-          name: Update Carthage Dependencies
-          command: carthage update --use-xcframeworks
-      - run: bundle install
+          name: Install GitHub CLI
+          command: command -v gh >/dev/null 2>&1 || brew install gh
       - run:
-          name: Run Tests with Fastlane
-          command: bundle exec fastlane build
+          name: Tag
+          command: RELEASE_COMMIT="$CIRCLE_SHA1" ./Scripts/release.sh tag
+      - run:
+          name: GitHub release with xcframework
+          command: ./Scripts/release.sh github-release
+      - run:
+          name: Reference docs to gh-pages
+          command: RELEASE_COMMIT="$CIRCLE_SHA1" ./Scripts/release.sh docs
+
 workflows:
   test-workflow:
+    when:
+      not: << pipeline.parameters.run-release >>
     jobs:
-      - test-ios
-      - test-macos
-      - test-tvos
-      - build
+      - test:
+          name: test-ios
+          lane: test_ios
+      - test:
+          name: test-macos
+          lane: test_macos
+      - test:
+          name: test-tvos
+          lane: test_tvos
+      - test:
+          name: build
+          lane: build
+
+  release-workflow:
+    when:
+      and:
+        - << pipeline.parameters.run-release >>
+        - equal: [master, << pipeline.git.branch >>]
+    jobs:
+      - test:
+          name: test-ios
+          lane: test_ios
+      - test:
+          name: test-macos
+          lane: test_macos
+      - test:
+          name: test-tvos
+          lane: test_tvos
+      - test:
+          name: build
+          lane: build
+      - release-validate
+      - release-xcframework:
+          requires:
+            - release-validate
+      - release-publish:
+          context: contentful-swift-release
+          requires:
+            - test-ios
+            - test-macos
+            - test-tvos
+            - build
+            - release-validate
+            - release-xcframework
+
+  release-wrong-branch-workflow:
+    when:
+      and:
+        - << pipeline.parameters.run-release >>
+        - not:
+            equal: [master, << pipeline.git.branch >>]
+    jobs:
+      - release-wrong-branch

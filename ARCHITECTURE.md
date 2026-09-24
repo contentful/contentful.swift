@@ -112,7 +112,8 @@ project differently:
   at `path: "Tests"`, with `Package.resolved` pinning the test dependencies.
 - **CocoaPods** — `Contentful.podspec` is a Ruby file that reads its version
   from `.env` via the `dotenv` gem, declares per-platform `source_files`, and
-  exposes `ImageOptions` as a subspec.
+  exposes `ImageOptions` as a subspec. CocoaPods is frozen at 5.5.15: the
+  podspec is kept for existing users, but new versions are not pushed to trunk.
 
 Both test-dependency manifests point at Contentful-maintained forks of DVR and
 OHHTTPStubs rather than upstream; see
@@ -123,8 +124,8 @@ and injected into the `X-Contentful-User-Agent` header) and `.env` (read by the
 podspec and sourced by the release and docs scripts). `Scripts/set-version.sh`
 writes both so they cannot drift.
 
-Ruby tooling is pinned through `Gemfile` / `Gemfile.lock` (`_ruby-version` is
-3.0.5) and covers cocoapods, jazzy, slather, xcpretty, and fastlane. Renovate
+Ruby tooling is pinned through `Gemfile` / `Gemfile.lock` (`.ruby-version` is
+3.4.8) and covers cocoapods, jazzy, slather, xcpretty, and fastlane. Renovate
 (`renovate.json`, extending `contentful/renovate-config`) handles bumps.
 
 ## Testing strategy
@@ -148,10 +149,11 @@ not wired into the current CircleCI config.
 
 ## CI and release
 
-CircleCI (`.circleci/config.yml`, macOS image with Xcode 15.4) runs four jobs on
+CircleCI (`.circleci/config.yml`, macOS image with Xcode 27.0) runs four jobs on
 every pull request — `test-ios`, `test-macos`, `test-tvos`, and `build` — each
-installing Carthage, running `carthage update --use-xcframeworks`,
-`bundle install`, and then the matching `bundle exec fastlane` lane. The `build`
+selecting the Ruby from `.ruby-version`, running `bundle install`, installing
+Carthage, running `carthage bootstrap --use-xcframeworks`, and then the matching
+`bundle exec fastlane` lane. The `build`
 lane shells out to `swift build` so the SPM path stays verified.
 `.github/workflows/codeql.yml` adds CodeQL scanning. SwiftLint skips itself in
 CI (`Scripts/BuildPhases/swiftlint.sh` exits early when `CIRCLECI` is set).
@@ -160,8 +162,10 @@ CI (`Scripts/BuildPhases/swiftlint.sh` exits early when `CIRCLECI` is set).
 parts of `ARCHITECTURE-BUILD-CONFIG.md` still describe that era. The move to
 CircleCI plus fastlane happened in `7d2399e`.
 
-Releases run from `master` via `make release` (`Scripts/release.sh`): tag, push
-to the CocoaPods trunk, build the XCFramework, regenerate the Jazzy docs onto
-`gh-pages`. The XCFramework zip is attached to the GitHub release by hand.
+Releases run in CircleCI when a maintainer triggers a pipeline on `master` with
+`run-release = true`: tests, `Scripts/release.sh validate`, build and zip the
+XCFramework, then tag, create the GitHub release with the zip attached, and
+regenerate the Jazzy docs onto `gh-pages`. `make release` runs the same script
+locally. Nothing is pushed to CocoaPods trunk any more. See `RELEASING.md`.
 Ownership is `group:team-developer-experience` (`catalog-info.yaml`,
 `.github/CODEOWNERS`); service tier 4.

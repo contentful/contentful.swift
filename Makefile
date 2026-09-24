@@ -1,6 +1,6 @@
 WORKSPACE=Contentful.xcworkspace
 
-.PHONY: open test integration_test setup lint coverage carthage docs release
+.PHONY: open test integration_test setup lint coverage carthage docs release release_dry_run trigger_release
 
 open:
 	open $(WORKSPACE)
@@ -34,11 +34,17 @@ coverage:
 	bundle exec slather coverage -s  
 
 carthage:
-	carthage build Contentful --no-skip-current --platform all --use-xcframeworks
+	./Scripts/release.sh xcframework
 
 docs:
 	./Scripts/reference-docs.sh
 
 release:
-	./Scripts/release.sh
+	./Scripts/release.sh all
+
+release_dry_run:
+	DRY_RUN=1 ./Scripts/release.sh all
+
+trigger_release:
+	./Scripts/trigger-release.sh
 
