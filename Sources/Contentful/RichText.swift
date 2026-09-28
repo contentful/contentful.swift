@@ -466,10 +466,17 @@ public struct Text: Node, Equatable {
     /// An array of the markup styles which should be applied to the text.
     public let marks: [Mark]
 
-    public init(value: String, marks: [Mark]) {
-        nodeType = .text
+    init(value: String, marks: [Mark]) {
+        self.nodeType = .text
         self.value = value
         self.marks = marks
+    }
+
+    public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: JSONCodingKeys.self)
+        self.marks = try values.decodeIfPresent([Mark].self, forKey: JSONCodingKeys(stringValue: "marks")!) ?? []
+        self.value = try values.decodeIfPresent(String.self, forKey: JSONCodingKeys(stringValue: "value")!) ?? ""
+        self.nodeType = .text
     }
 
     /// THe markup styling which should be applied to the text.
